@@ -1,0 +1,196 @@
+---
+title: "Pooled OLS en panel salarial: un benchmark util, pero no la estimacion final"
+subtitle: "Inferencia en datos de panel con errores robustos, cluster por individuo y diagnosticos basicos"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t02_panel_pooled_salarios"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t02_panel_pooled_salarios_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css: ../assets/portfolio.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+::: {.hero-box}
+::: {.hero-title}
+En panel salarial, la inferencia cambia cuando se respeta la estructura del error
+:::
+
+::: {.hero-sub}
+El pooled OLS puede ser un benchmark util, pero la lectura econometrica mejora cuando la inferencia se corrige con varianzas robustas y clusterizadas por individuo.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
+
+::: {.metric-value}
+Pooled + cluster
+:::
+
+::: {.metric-note}
+`reg ..., i.year, vce(cluster nr)`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Coeficiente de `educ`
+:::
+
+::: {.metric-value}
+0.091
+:::
+
+::: {.metric-note}
+Con `i.year` y `vce(cluster nr)`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+AR(1) en residuos
+:::
+
+::: {.metric-value}
+p < 0.001
+:::
+
+::: {.metric-note}
+`uhat_L1` significativo
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+LM heterocedasticidad
+:::
+
+::: {.metric-value}
+p = 0.021
+:::
+
+::: {.metric-note}
+Se rechaza homocedasticidad
+:::
+:::
+
+::::
+
+## Resumen
+
+Este caso evalua que puede y que no puede decir un pooled OLS cuando los datos tienen estructura de panel. El mensaje central es practico: el modelo puede usarse como baseline, siempre que la inferencia se corrija para heterocedasticidad y dependencia serial dentro de individuo.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+Como cambia la validez de la inferencia estadistica en una ecuacion salarial de panel cuando pasamos de errores clasicos a errores robustos y clusterizados por individuo?
+
+::: {.small-note}
+Variable dependiente: `lwage`. Regresores centrales: `educ`, `exper`, `expersq`, `union`, `married`, `black` y dummies de ano.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+En esta pieza se separan dos planos:  
+inferencia (errores estandar mal calibrados si ignoramos la estructura panel) y sesgo potencial en coeficientes por heterogeneidad inobservable fija (`c_i`) no tratada por pooled OLS.
+
+<span class="badge">Portfolio econometrico</span>
+:::
+
+::::
+
+## Por que este problema importa
+
+Tratar un panel como si fuera una seccion cruzada simple puede producir inferencia poco confiable: errores estandar subestimados y sobreconfianza en la significancia estadistica.
+
+Corregir la varianza con `vce(cluster nr)` mejora la validez inferencial frente a heterocedasticidad y autocorrelacion intraindividuo. Sin embargo, eso no elimina automaticamente el posible sesgo por heterogeneidad inobservable fija correlacionada con los regresores.
+
+## Datos y variables
+
+Se trabaja con un panel balanceado de trabajadores (`N = 4360` observaciones, `545` individuos observados entre 1980 y 1987).
+
+- Variable dependiente: `lwage`
+- Variables explicativas principales: `educ`, `exper`, `expersq`, `union`, `married`, `black`
+- Controles de tiempo: `i.year`
+- Unidad de cluster: individuo (`nr`)
+
+## Estrategia empirica
+
+La secuencia aplicada en el taller es:
+
+1. Estimar pooled OLS con varianza clasica.
+2. Reestimar con varianza robusta tipo Huber-White.
+3. Reestimar con varianza clusterizada por individuo.
+4. Agregar dummies de ano para capturar shocks comunes en el tiempo.
+5. Ejecutar diagnosticos de dependencia serial (AR(1) en residuos) y heterocedasticidad (LM).
+6. Reportar FGLS como contraste secundario, no como especificacion principal.
+
+## Que pasa con un analisis ingenuo
+
+Si nos quedamos con inferencia clasica, podemos sobrestimar precision. En cambio, al clusterizar por individuo, los errores estandar aumentan de forma relevante en varias covariables, aunque los coeficientes mantienen signo y orden de magnitud.
+
+Esta estabilidad en magnitudes, junto con cambios en incertidumbre, muestra que el punto critico del caso no es "cambiar de historia economica", sino calibrar correctamente la inferencia.
+
+::: {.table-box}
+## Resultados principales
+
+El coeficiente de `educ` se mantiene alrededor de 0.09-0.10 en las especificaciones pooled. La diferencia econometricamente relevante aparece en los errores estandar cuando se usa `vce(cluster nr)`.
+
+| Modelo | Coeficiente de `educ` | Error estandar | p-valor | N |
+|---|---:|---:|---:|---:|
+| Pooled OLS (clasico) | 0.0988 | 0.0046 | 0.000 | 4360 |
+| Pooled OLS robusto | 0.0988 | 0.0045 | 0.000 | 4360 |
+| Pooled OLS cluster `nr` | 0.0988 | 0.0089 | 0.000 | 4360 |
+| Pooled OLS + `i.year` + cluster `nr` | 0.0907 | 0.0108 | 0.000 | 4360 |
+| FGLS AR(1) hetero panel (contraste) | 0.0939 | 0.0048 | 0.000 | 4360 |
+:::
+
+::: {.table-box}
+## Diagnosticos clave
+
+La evidencia empirica es consistente con dos hechos:
+
+1. Dependencia serial dentro de individuo: en la regresion auxiliar, `uhat_L1` es altamente significativo (`coef. = 0.555`, `p < 0.001`).
+2. Heterocedasticidad: prueba LM con `LM = 28.02`, `df = 15`, `p = 0.021`, por lo que se rechaza homocedasticidad al 5%.
+
+Por lo tanto, la inferencia clasica no es adecuada para este caso; la especificacion con `vce(cluster nr)` es la opcion mas defendible como baseline operativo.
+
+| Diagnostico | Resultado | Lectura |
+|---|---:|---|
+| AR(1) auxiliar con residuos | `uhat_L1` p < 0.001 | Evidencia compatible con dependencia serial intraindividuo |
+| LM heterocedasticidad | p = 0.021 | Evidencia compatible con heterocedasticidad |
+| Modelo operativo del caso | Pooled + `i.year` + cluster | Inferencia robusta para baseline de panel |
+:::
+
+## Lectura profesional del caso
+
+La conclusion aplicada es directa: pooled OLS en panel puede ser un benchmark util, siempre que la inferencia se ajuste a la estructura del error.
+
+Al mismo tiempo, hay un limite que no debe diluirse: clusterizar corrige inferencia, pero no resuelve por si solo la heterogeneidad inobservable fija (`c_i`) potencialmente correlacionada con `x_it`.
+
+Esa distincion permite una lectura madura del resultado: baseline defendible hoy, y paso natural hacia FE/RE para tratar el problema de heterogeneidad en la siguiente etapa del analisis.
+
+## Cierre
+
+Este caso muestra una practica clave de econometria aplicada en panel: antes de sofisticar el modelo estructural, hay que asegurar que la inferencia estadistica este bien calibrada.
+
+El pooled OLS corregido por cluster no es el destino final, pero si un punto de partida profesionalmente util cuando se comunica evidencia con criterio.
