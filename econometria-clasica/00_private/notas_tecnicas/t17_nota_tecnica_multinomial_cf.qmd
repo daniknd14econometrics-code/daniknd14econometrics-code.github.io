@@ -1,0 +1,76 @@
+---
+title: "Sensibilidad en modelos multinomiales con regresor potencialmente endógeno"
+author: "Daniel Mendez"
+date: "2026-03-26"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: flatly
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Introduccion metodologica
+
+Esta nota tecnica documenta el Taller 17 como respaldo interno. El objetivo es revisar, con foco metodologico, que cambia cuando una covariable continua potencialmente endogena se trata mediante control function dentro de un multinomial logit.
+
+El valor del ejercicio no esta en producir una conclusion empirica final fuerte, sino en ordenar una lectura de sensibilidad: como se mueven probabilidades y APEs cuando cambia el tratamiento de la endogeneidad y como debe ajustarse la inferencia.
+
+## Problema econometrico central
+
+El problema es la posible endogeneidad de `educ` en un modelo multinomial para `status` (escuela, casa, trabajo). En este contexto no lineal, una estrategia tipo "2SLS directo" no es apropiada para interpretar probabilidades.
+
+La correccion implementada sigue una logica de control function en dos etapas:
+
+1. Primera etapa para `educ` con instrumento excluido `numyrs` y controles observables.
+2. Inclusion del residual estimado (`vhat`) en el `mlogit`.
+3. Comparacion de APEs entre especificacion exogena y especificacion corregida.
+
+## Contexto empirico minimo
+
+Se usa `keane.dta` como panel corto tratado en forma pooled con inferencia `cluster(id)`.
+
+- Unidad de observacion: individuo-anio (`id`, `year`).
+- Muestra operativa: `N=12,665`.
+- Unidades de cluster: `1,881` individuos.
+- Cobertura temporal: `1981-1987`.
+- Resultado: `status` (`1=escuela`, `2=casa`, `3=trabajo`).
+- Regresores principales: `educ`, `exper`, `expersq`, `black`, dummies anuales.
+
+## Comparacion de enfoques
+
+La secuencia tecnica compara tres bloques:
+
+1. `mlogit` exogeno con APEs por categoria.
+2. `mlogit` con control function (`vhat`) y APEs "naive".
+3. Bootstrap cluster para APEs del bloque control function (`reps=100`, `cluster(id)`).
+
+La primera etapa muestra relevancia estadistica de `numyrs` (`F(1,1880)=139.97`, `p<0.001`). En la segunda etapa, el test conjunto sobre `vhat` reporta `chi2(2)=188.22` (`p<0.001`) dentro de la especificacion estimada.
+
+## Hallazgos tecnicos
+
+El resultado principal de esta nota es de sensibilidad metodologica:
+
+- Al pasar de exogeneidad a control function, cambian de forma importante varios APEs por categoria.
+- Por ejemplo, para `educ`, el APE sobre `Pr(status=1)` pasa de aproximadamente `+0.0418` (exogeno) a `-0.0633` (CF), y el efecto sobre `Pr(status=2)` pasa de `-0.0570` a `+0.0396`.
+- Estos movimientos no se presentan como "resultado sustantivo final", sino como ilustracion de cuan sensible puede ser la lectura de probabilidades cuando el tratamiento de la endogeneidad depende de supuestos discutibles.
+
+En inferencia, el bootstrap cluster confirma significancia en APEs centrales del bloque CF (por ejemplo `ape_educ1`, `ape_exper3`, `ape_black2`), con errores estandar mayores que la lectura naive en componentes clave.
+
+## Advertencias y limites
+
+Este ejercicio requiere cautela explicita:
+
+- El propio taller trata `numyrs` como instrumento didactico para `educ`; su restriccion de exclusion es debatible en este contexto.
+- Por esa razon, la correccion CF debe leerse como auditoria de sensibilidad y no como validacion definitiva de identificacion estructural.
+- El porcentaje de clasificacion in-sample (`70.31%`) es descriptivo y no equivale a validacion externa.
+- La nota no busca inferencia causal fuerte ni recomendacion aplicada final; su aporte es tecnico y de criterio econometrico.
+
+## Cierre tecnico
+
+T17 queda mejor resuelto como nota tecnica privada breve. Documenta como una correccion tipo control function en multinomial puede alterar de manera sustancial la lectura de APEs y probabilidades, y por que la inferencia debe apoyarse en bootstrap cluster para no subestimar incertidumbre.
+
+Su utilidad profesional es metodologica: hacer explicita la sensibilidad de resultados frente a supuestos de identificacion no plenamente convincentes, y evitar sobreinterpretaciones aplicadas cuando la credibilidad del instrumento es limitada.

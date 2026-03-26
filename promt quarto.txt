@@ -59,7 +59,12 @@ nota t10
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica\00_private\notas_tecnicas"
 start "t10_nota_tecnica_gmm_chamberlain.html"
 
-asclogit (extra a t16)
+nota asclogit (segunda parte de t16)
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica\00_private\notas_tecnicas"
 start "t16_nota_tecnica_asclogit_autos.html"
+
+nota t17
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica\00_private\notas_tecnicas"
+start "t17_nota_tecnica_multinomial_cf.html"
+
 
