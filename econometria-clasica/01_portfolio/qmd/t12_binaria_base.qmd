@@ -1,0 +1,186 @@
+---
+title: "Participación laboral femenina y estructura del hogar"
+subtitle: "Una lectura con modelos binarios sobre ingreso, experiencia y presencia de hijos"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t12_binaria_base"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t12_binaria_base_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css: ../assets/portfolio.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+Que factores del hogar se asocian con mayor o menor participacion laboral femenina?
+:::
+
+::: {.hero-sub}
+La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretacion lineal donde la respuesta observada es 0/1.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
+
+::: {.metric-value}
+Probit y logit con APE
+:::
+
+::: {.metric-note}
+`margins, dydx(*)` para leer cambios promedio en probabilidad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Contexto aplicado
+:::
+
+::: {.metric-value}
+Mujeres y hogares
+:::
+
+::: {.metric-note}
+`N=753` observaciones; `inlf=1` en `56.84%` de la muestra
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Lectura sustantiva
+:::
+
+::: {.metric-value}
+Senal fuerte en hijos pequenos
+:::
+
+::: {.metric-note}
+`kidslt6`: APE aprox. `-0.26` puntos de probabilidad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Diagnostico clave
+:::
+
+::: {.metric-value}
+Limite del MPL
+:::
+
+::: {.metric-note}
+`33/753` predicciones fuera de `[0,1]` (`4.38%`)
+:::
+:::
+
+::::
+
+## Resumen
+
+Esta pieza estudia participacion laboral femenina (`inlf`) en un contexto de decisiones de hogar. La lectura principal se organiza por asociaciones sustantivas: presencia de hijos pequenos, educacion, experiencia e ingreso no laboral del hogar.
+
+El valor econometrico del caso no es competir entre tecnicas, sino mostrar criterio de especificacion para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+Como se asocia la participacion laboral con el ingreso del hogar, la educacion, la experiencia y la presencia de hijos pequenos?
+
+::: {.small-note}
+Resultado: `inlf` (0/1). Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+La pieza prioriza el problema sustantivo: entender patrones de participacion laboral femenina en funcion de condiciones familiares y de capital humano. La metodologia queda subordinada a esa lectura aplicada.
+
+<span class="badge">Portfolio econometrico</span>
+:::
+
+::::
+
+## Por que este problema importa
+
+La participacion laboral no depende solo de caracteristicas individuales: tambien refleja restricciones y decisiones del hogar. En especial, la presencia de hijos pequenos puede cambiar de forma marcada la disponibilidad para trabajar fuera del hogar.
+
+Una lectura profesional necesita reportar asociaciones con prudencia, sin lenguaje causal automatico y con una escala interpretable en probabilidad.
+
+## Datos y variables
+
+Se trabaja con `mroz.dta`, un corte transversal clasico de economia laboral.
+
+- Unidad de observacion: mujer/hogar
+- Tamano de muestra: `N=753`
+- Variable de resultado: `inlf` (`1` participa, `0` no participa)
+- Proporcion en `inlf=1`: `56.84%` (`428` casos)
+- Proporcion en `inlf=0`: `43.16%` (`325` casos)
+- Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`
+
+## Estrategia empirica
+
+1. Usar MPL robusto como benchmark inicial.
+2. Estimar probit y logit para modelar respuesta binaria con rango probabilistico coherente.
+3. Reportar efectos parciales promedio (APE) como unidad principal de interpretacion.
+4. Mantener diagnosticos breves y funcionales al caso aplicado.
+
+## Resultados principales
+
+La lectura abre por contenido sustantivo:
+
+- `kidslt6` muestra una asociacion negativa fuerte con `inlf`: APE alrededor de `-0.26`, consistente en probit y logit.
+- `educ` y `exper` muestran asociaciones positivas y estables con la participacion laboral.
+- `nwifeinc` aparece con asociacion negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.
+- `kidsge6` no muestra una asociacion robusta de magnitud comparable.
+
+En segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma mas creible que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra.
+
+::: {.table-box}
+## Sintesis de magnitudes (APE)
+
+| Variable | Evidencia numerica | Lectura aplicada |
+|---|---:|---|
+| `kidslt6` | Probit `-0.261`, Logit `-0.258` | Asociacion negativa fuerte con participacion |
+| `educ` | Probit `+0.039`, Logit `+0.040` | Mayor educacion se asocia con mayor participacion |
+| `exper` | Probit `+0.037`, Logit `+0.037` | Mayor experiencia se asocia con mayor participacion |
+| `nwifeinc` | Probit `-0.0036`, Logit `-0.0038` | Ingreso no laboral mas alto se asocia con menor participacion |
+:::
+
+## Diagnosticos de respaldo
+
+Los diagnosticos se usan solo como apoyo del caso:
+
+- MPL genera `33` predicciones fuera de `[0,1]` (`4.38%`), lo que ilustra su limite para respuesta binaria.
+- Ajuste global similar entre binarios: pseudo-`R2` aprox. `0.221` (probit) y `0.220` (logit).
+
+Estos elementos respaldan la eleccion de especificacion, pero no reemplazan la lectura sustantiva del fenomeno.
+
+## Lectura profesional
+
+El aporte profesional de T12 no es "ganar" entre MPL, probit o logit. El aporte es mostrar criterio para elegir una especificacion coherente con una variable binaria y, despues, interpretar resultados en terminos de probabilidad con claridad y prudencia.
+
+## Cierre
+
+En este caso de participacion laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decision y analisis: menor participacion con hijos pequenos, mayor participacion con educacion y experiencia, y menor participacion cuando crece el ingreso no laboral del hogar.
+
+El valor profesional de la pieza es ese criterio: elegir una especificacion coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.
