@@ -42,6 +42,8 @@ start ".\01_portfolio\html\01_portfolio\qmd\t12_binaria_base.html"
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t13_binaria_vi_continua.html"
 
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
+start ".\01_portfolio\html\01_portfolio\qmd\t14_binaria_vi_discreta.html"
 
 
 
