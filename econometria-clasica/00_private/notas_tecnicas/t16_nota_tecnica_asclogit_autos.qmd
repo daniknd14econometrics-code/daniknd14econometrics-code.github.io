@@ -1,0 +1,85 @@
+---
+title: "Elección discreta con atributos específicos de alternativa"
+author: "Daniel Mendez"
+date: "2026-03-26"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: flatly
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Introducción metodológica
+
+Esta nota documenta, como respaldo técnico interno, un bloque breve de elección discreta estimado con `asclogit` sobre la base didáctica `choice` de Stata.
+
+El objetivo no es construir evidencia sustantiva fuerte sobre el mercado automotor, sino dejar trazabilidad de criterio de especificación cuando conviven covariables que varían por alternativa y covariables propias del decisor.
+
+## Problema econométrico central
+
+La pregunta metodológica es cómo modelar una decisión entre alternativas mutuamente excluyentes cuando:
+
+- algunos regresores cambian dentro del conjunto de elección (`x_ij`);
+- otros regresores son atributos del individuo (`z_i`) y no cambian entre alternativas.
+
+Una formulación multinomial simple en formato "una fila por individuo" no es la arquitectura más natural para este tipo de información alternativa-específica. El enfoque de logit condicional permite mantener explícita esa estructura.
+
+## Contexto empírico mínimo
+
+El ejercicio usa `webuse choice`:
+
+- Casos (`id`): `295`.
+- Alternativas por caso (`car`): `American`, `Japan`, `Europe`.
+- Observaciones en formato largo: `885` (`295 x 3`).
+- Variable de elección por fila: `choice = 1` si esa alternativa fue elegida por el caso, `0` en las no elegidas.
+- Covariable específica de alternativa: `dealer` (cantidad de concesionarios de esa nacionalidad en la ciudad del caso).
+- Covariables del decisor: `sex`, `income`.
+
+Es un contexto empírico mínimo, útil para mostrar mecánica del estimador.
+
+## Estructura del modelo
+
+La especificación operativa fue:
+
+`asclogit choice dealer, case(id) alternatives(car) casevars(i.sex income) vce(robust)`
+
+En términos de utilidad relativa:
+
+`U_ij = beta*dealer_ij + gamma_j' z_i + alpha_j + e_ij`
+
+donde `j` indexa alternativas y `i` casos. La implementación permite:
+
+- incluir `dealer_ij` como atributo que cambia por alternativa;
+- incorporar `sex` e `income` como `casevars`, con efectos diferenciales por alternativa relativa;
+- obtener probabilidades predichas y efectos marginales promedio consistentes con la restricción de suma de probabilidades.
+
+IIA, formato largo y alternativa base son supuestos/elementos de implementación relevantes, pero en esta nota quedan como soporte metodológico breve.
+
+## Hallazgos técnicos
+
+El bloque deja cinco mensajes técnicos útiles:
+
+- La estructura de datos en formato largo es coherente con decisiones de elección discreta por conjunto de alternativas.
+- `asclogit` integra de forma limpia covariables alternativa-específicas (`dealer`) y covariables del decisor (`sex`, `income`) en una misma función de utilidad relativa.
+- La lectura de `margins, dydx(*)` muestra que mover un atributo de una alternativa redistribuye probabilidades en todo el set de opciones, no solo en la alternativa intervenida.
+- En este ejercicio, `dealer` funciona como ilustración metodológica de ese mecanismo de reasignación de probabilidades entre alternativas.
+- El chequeo de predicción por argmax (`76.7%` in-sample) es secundario y descriptivo; no sustituye validación externa ni justifica conclusiones sustantivas.
+
+## Advertencias y límites
+
+Las limitaciones del caso deben quedar explícitas:
+
+- Es una base docente de referencia, no un diseño aplicado robusto para inferencia de política o negocio.
+- El set de covariables es reducido para explicar elección de auto en términos sustantivos.
+- No se incluyen atributos centrales de producto (precio, desempeño, calidad percibida, financiamiento), por lo que la interpretación empírica es necesariamente acotada.
+- El valor de la nota es metodológico: criterio de especificación e interpretación en modelos con atributos de alternativa.
+
+## Cierre técnico
+
+Este bloque queda mejor posicionado como nota técnica interna breve. Su aporte principal es documentar cómo especificar e interpretar un modelo de elección discreta con atributos específicos de alternativa, sin sobreextender el alcance empírico del ejemplo.
+
+Como material de trabajo, sirve para justificar decisiones de modelado en casos futuros con estructura de elección más rica y datos sustantivamente más informativos.
