@@ -7,9 +7,15 @@ start 01_vi.html
 
 
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
-
 start ".\01_portfolio\html\01_portfolio\qmd\t01_vi.html"
 
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t02_panel_pooled_salarios.html"
 
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t03_panel_qtobin_pooled.html"
+
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
+start ".\01_portfolio\html\01_portfolio\qmd\t04_panel_pooled_heterogeneidad.html"
+
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
