@@ -96,6 +96,8 @@ La lectura econometrica central es intraindividuo
 
 Este caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construccion, los regresores invariantes en `t` quedan absorbidos y no se estiman en la ecuacion within.
 
+En terminos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulacion de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.
+
 Ademas, el test `F test that all u_i=0` aporta evidencia central de que la heterogeneidad individual no observada es relevante, por lo que no conviene tratar estos datos como pooled simple.
 
 :::: {.quick-grid}
@@ -123,7 +125,7 @@ Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticament
 
 ## Por que este problema importa
 
-En paneles salariales, rasgos persistentes no observados del individuo pueden distorsionar la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.
+En paneles salariales, pueden operar rasgos persistentes no observados o imperfectamente medidos del trabajador que distorsionen la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.
 
 El costo es metodologicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimacion, sino tambien el tipo de pregunta que efectivamente podemos contestar con los datos.
 
@@ -172,6 +174,8 @@ La evidencia principal del taller descansa en tres hechos:
 | Estructura panel | `F(544,3811)=9.71`, `p=0.0000` | Rechazo fuerte de `all u_i=0`; pooled simple es insuficiente |
 :::
 
+En lectura economica y siempre dentro de esta especificacion FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula `exper` en su propia trayectoria, su `lwage` tiende a aumentar a una tasa decreciente (`expersq < 0`); cuando cambia su condicion de `union` de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia `married` de 0 a 1, tambien se observa una asociacion positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por si mismos.
+
 ::: {.table-box}
 ## Hallazgos secundarios y especificacion
 
@@ -199,7 +203,6 @@ La conclusion metodologica es deliberadamente prudente: FE organiza mejor la ide
 
 ## Cierre
 
-Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimacion.
+Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimacion. En este caso, esa diferencia mejora la lectura empirica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
 
-Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional de alcance metodologico claro.
-
+Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional util para analisis aplicado: mejora la interpretacion econometrica del ejemplo sin exagerar su alcance causal.

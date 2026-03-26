@@ -68,7 +68,7 @@ Evidencia conjunta subsidios
 :::
 
 ::: {.metric-value}
-No robusta
+Inferencia convencional
 :::
 
 ::: {.metric-note}
@@ -106,7 +106,7 @@ Por eso, la pieza usa FE como modelo operativo para concentrarse en variacion wi
 Como cambia la lectura del vinculo entre subsidios de capacitacion y desperdicio productivo cuando seguimos a las mismas plantas en el tiempo y controlamos heterogeneidad fija no observada?
 
 ::: {.small-note}
-Resultado: `lscrap`. Regressors de interes: `grant`, `grant_1`. Controles de periodo: `d88`, `d89`. Unidad panel: `fcode`.
+Resultado: `lscrap`. Regresores de interes: `grant`, `grant_1`. Controles de periodo: `d88`, `d89`. Unidad de panel: `fcode`.
 :::
 :::
 
@@ -124,16 +124,16 @@ En este caso, la econometria esta al servicio de la historia aplicada: FE se usa
 
 El interes sustantivo del ejemplo es si plantas con subsidios de capacitacion muestran menor desperdicio productivo en el tiempo. Esa lectura puede distorsionarse si algunas firmas tienen rasgos persistentes no observados (gestion, tecnologia, cultura operativa) que afectan `lscrap` y tambien se asocian con la recepcion de subsidios.
 
-En ese contexto, pasar de pooled a FE es razonable: cambia la comparacion desde "entre firmas" hacia "dentro de la misma firma a lo largo del tiempo".
+En ese contexto, pasar de pooled a FE es razonable: cambia la comparacion desde "entre plantas" hacia "dentro de la misma planta a lo largo del tiempo", que es la escala relevante para leer desempeno productivo en este caso.
 
 ## Datos y variables
 
-Se trabaja con `jtrain1`, un panel corto de plantas/firms.
+Se trabaja con `jtrain1`, un panel corto de plantas.
 
 - Unidad de observacion: planta/firma (`fcode`)
 - Estructura: 54 firmas, 3 periodos (1987-1989), `N=162` en FE
 - Variable de resultado: `lscrap` (log del desperdicio/scrap rate)
-- Regressors clave: `grant` (subsidio actual), `grant_1` (subsidio rezagado)
+- Regresores clave: `grant` (subsidio actual), `grant_1` (subsidio rezagado)
 - Controles temporales: `d88`, `d89`
 - Variable absorbida en FE por invarianza temporal: `union`
 
@@ -161,6 +161,10 @@ La lectura profesional separa ambos temas: FE atiende el problema de sesgo por `
 
 La lectura final no descansa en un coeficiente puntual, sino en la evidencia conjunta sobre los subsidios y en una interpretacion prudente de su magnitud economica.
 
+En terminos aplicados, los signos estimados son compatibles con una reduccion de `lscrap` asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precision estadistica se debilita.
+
+Por eso, la lectura profesional para desempeno productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion causal.
+
 | Bloque | Evidencia | Lectura |
 |---|---:|---|
 | FE clasico | `grant=-0.252` (p=0.097), `grant_1=-0.422` (p=0.047) | Senal inicial en clasico, sujeta a supuestos fuertes FE.3 |
@@ -185,9 +189,9 @@ Los contrastes siguientes son utiles para auditar consistencia del caso, pero qu
 
 ## Lectura profesional del caso
 
-T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva (subsidios y desperdicio), despues elegir una estrategia de identificacion coherente (FE within), y finalmente comunicar inferencia con estandar robusto (cluster y tests conjuntos).
+T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitacion y desperdicio productivo, despues elegir una estrategia de identificacion coherente (FE within), y finalmente comunicar inferencia con estandar robusto (cluster y tests conjuntos).
 
-Esta secuencia evita dos excesos frecuentes: tratar significancia clasica como veredicto final y presentar tecnicas de panel como un fin en si mismo.
+Esta secuencia evita dos excesos frecuentes: tratar la significancia convencional como veredicto final y presentar tecnicas de panel como un fin en si mismo.
 
 ## Cierre
 

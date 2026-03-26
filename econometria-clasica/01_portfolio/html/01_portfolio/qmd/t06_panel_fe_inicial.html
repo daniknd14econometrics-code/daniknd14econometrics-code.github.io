@@ -156,6 +156,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <p>Este caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construccion, los regresores invariantes en <code>t</code> quedan absorbidos y no se estiman en la ecuacion within.</p>
+<p>En terminos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulacion de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.</p>
 <p>Ademas, el test <code>F test that all u_i=0</code> aporta evidencia central de que la heterogeneidad individual no observada es relevante, por lo que no conviene tratar estos datos como pooled simple.</p>
 </section>
 <div class="quick-grid">
@@ -175,7 +176,7 @@ Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticament
 </div>
 <section id="por-que-este-problema-importa" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>En paneles salariales, rasgos persistentes no observados del individuo pueden distorsionar la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.</p>
+<p>En paneles salariales, pueden operar rasgos persistentes no observados o imperfectamente medidos del trabajador que distorsionen la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.</p>
 <p>El costo es metodologicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimacion, sino tambien el tipo de pregunta que efectivamente podemos contestar con los datos.</p>
 </section>
 <section id="datos-y-variables" class="level2">
@@ -249,6 +250,7 @@ Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticament
 </tbody>
 </table>
 </section>
+<p>En lectura economica y siempre dentro de esta especificacion FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula <code>exper</code> en su propia trayectoria, su <code>lwage</code> tiende a aumentar a una tasa decreciente (<code>expersq &lt; 0</code>); cuando cambia su condicion de <code>union</code> de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia <code>married</code> de 0 a 1, tambien se observa una asociacion positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por si mismos.</p>
 <section id="hallazgos-secundarios-y-especificacion" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-especificacion">Hallazgos secundarios y especificacion</h2>
 <p>Los contrastes temporales se reportan como chequeos auxiliares, subordinados al mensaje principal del caso.</p>
@@ -298,8 +300,8 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimacion.</p>
-<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional de alcance metodologico claro.</p>
+<p>Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimacion. En este caso, esa diferencia mejora la lectura empirica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.</p>
+<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional util para analisis aplicado: mejora la interpretacion econometrica del ejemplo sin exagerar su alcance causal.</p>
 </section>
 
 </main>
