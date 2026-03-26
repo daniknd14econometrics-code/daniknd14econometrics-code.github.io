@@ -1,0 +1,202 @@
+---
+title: "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas"
+subtitle: "Una lectura de la innovacion empresarial con efectos fijos y dinamica temporal del gasto en I+D"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t08_panel_fe_patentes"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t08_panel_fe_patentes_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css: ../assets/portfolio.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+En este panel de firmas, la pregunta aplicada es cuando el esfuerzo en I+D se traduce en patentamiento observable dentro de la misma empresa
+:::
+
+::: {.hero-sub}
+La estrategia combina efectos fijos con rezagos distribuidos de I+D para leer dinamica temporal sin confundir heterogeneidad fija entre firmas con cambios dentro de cada trayectoria.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
+
+::: {.metric-value}
+FE + rezagos I+D
+:::
+
+::: {.metric-note}
+`xtreg lpat lrnd lrnd_1-lrnd_5 lsales return i.year, fe vce(cluster cusip)`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Contexto aplicado
+:::
+
+::: {.metric-value}
+Panel de firmas
+:::
+
+::: {.metric-note}
+`226` firmas, 1972-1981; muestra efectiva de modelo operativo: `N=1122`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Lectura sustantiva
+:::
+
+::: {.metric-value}
+Relacion acumulativa
+:::
+
+::: {.metric-note}
+La historia temporal de I+D aporta en bloque aunque cada rezago sea inestable por separado
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Test conjunto rezagos
+:::
+
+::: {.metric-value}
+Evidencia conjunta
+:::
+
+::: {.metric-note}
+Clasico: `F(5,884)=3.18`, `p=0.0075`; Cluster: `F(5,225)=2.96`, `p=0.0131`
+:::
+:::
+
+::::
+
+## Resumen
+
+Este caso analiza innovacion empresarial con una pregunta concreta: cuando rinde la I+D en terminos de patentamiento dentro de las firmas. La variable de resultado es `lpat` (log de `1 + patents`) y el foco esta en la trayectoria temporal de `lrnd` y sus rezagos.
+
+La pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociacion acumulativa con el patentamiento.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+Cuando se traduce el esfuerzo en I+D en patentamiento observable dentro de las firmas: en el mismo ano o como acumulacion a lo largo de varios anos?
+
+::: {.small-note}
+Resultado: `lpat`. Regresores clave: `lrnd`, `lrnd_1`...`lrnd_5`. Controles: `lsales`, `return`, dummies de ano. Unidad de panel: `cusip`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+La econometria se ordena al servicio del caso aplicado de innovacion: distinguir dinamica temporal real de I+D frente a tres fuentes distintas de confusion empirica.
+
+<span class="badge">Portfolio econometrico</span>
+:::
+
+::::
+
+## Por que este problema importa
+
+Las decisiones de I+D no siempre producen resultados observables en el mismo periodo. En la practica, la innovacion suele tener maduracion: investigacion, desarrollo, validacion y finalmente patente.
+
+Por eso, para una lectura profesional del caso, importa separar si el patentamiento responde al flujo contemporaneo de I+D o a su historia acumulada reciente dentro de cada firma.
+
+## Datos y variables
+
+Se trabaja con `patent.dta`, un panel de firmas.
+
+- Unidad de observacion: firma-ano (`cusip`)
+- Rango temporal: 1972-1981
+- Dimension descriptiva de la base: `2,260` observaciones, `226` firmas
+- Modelo FE base (sin bloque largo de rezagos): `N=2,252`
+- Modelo operativo con 5 rezagos de I+D: `N=1,122`, `226` firmas
+- Variable de resultado: `lpat`
+- Regresores clave: `lrnd`, `lrnd_1`...`lrnd_5`
+- Controles: `lsales`, `return`, dummies de ano
+
+La inclusion de cinco rezagos reduce de forma importante la muestra efectiva y concentra la estimacion en la parte final del panel; en este caso, esa restriccion no es un detalle tecnico menor porque condiciona la ventana temporal sobre la que se construye la lectura aplicada.
+
+## Estrategia empirica
+
+La secuencia del taller prioriza consistencia entre pregunta aplicada y decisiones econometricas:
+
+1. Estimar FE para controlar heterogeneidad fija no observada de firma.
+2. Modelar la dinamica temporal con rezagos distribuidos de I+D (`lrnd_1`...`lrnd_5`), manteniendo `lrnd` contemporanea.
+3. Usar inferencia cluster por firma como estandar operativo.
+4. Evaluar evidencia conjunta de rezagos para evitar sobreinterpretar coeficientes individuales inestables.
+5. Mantener especificaciones secundarias (stock de I+D y FE-AR(1)) como contraste, no como mensaje principal.
+
+## Que pasa con un analisis ingenuo
+
+Un analisis ingenuo puede confundir tres planos diferentes:
+
+1. Control de heterogeneidad fija no observada: FE atiende este punto.
+2. Inferencia con dependencia intra-firma: cluster mejora credibilidad de errores estandar y tests.
+3. Precision de coeficientes con muchos rezagos correlacionados: la colinealidad puede volver ruidosos los rezagos individuales.
+
+La lectura profesional separa estos planos en lugar de resumirlos como un solo "problema econometrico".
+
+::: {.table-box}
+## Resultados principales
+
+Primero, la lectura sustantiva: la evidencia es mas consistente con una relacion acumulativa entre I+D y patentamiento que con una historia de efectos limpios por rezago individual.
+
+En el modelo operativo, los coeficientes de rezagos por separado son inestables y con precision desigual, algo esperable cuando la trayectoria de I+D anual esta fuertemente correlacionada consigo misma. Aun asi, el bloque temporal de I+D aporta informacion relevante en conjunto para explicar `lpat`.
+
+| Bloque | Evidencia | Lectura |
+|---|---:|---|
+| FE con rezagos (lectura individual) | Varios `lrnd_k` con baja precision individual | No conviene interpretar cada rezago como efecto aislado |
+| FE con rezagos (lectura de bloque) | Test conjunto `lrnd_1=...=lrnd_5=0` se rechaza | La historia temporal de I+D agrega poder explicativo sobre patentamiento |
+| Test conjunto clasico | `F(5,884)=3.18`, `p=0.0075` | Evidencia conjunta de rezagos en inferencia convencional |
+| Test conjunto cluster | `F(5,225)=2.96`, `p=0.0131` | Evidencia conjunta persiste con inferencia robusta por firma |
+:::
+
+::: {.table-box}
+## Hallazgos secundarios y validacion
+
+Los siguientes resultados se reportan como soporte del caso:
+
+| Chequeo secundario | Resultado | Lectura |
+|---|---:|---|
+| FE base sin bloque largo de rezagos | `N=2252`, `226` firmas | Referencia para comparar perdida de muestra y estabilidad |
+| FE con rezagos: estructura panel | `rho=0.964`, `F all u_i=0` p=0.0000 | La heterogeneidad fija de firma es empiricamente relevante |
+| Especificacion con `rndstck` | Coeficiente negativo y significativo en ese modelo | Contraste util, subordinado al modelo operativo |
+| FE-AR(1) | Sensibilidad de coeficientes individuales | Se usa como validacion adicional, no como conclusion principal |
+:::
+
+## Lectura profesional del caso
+
+Esta pieza muestra una forma aplicada de leer innovacion en panel: fijar primero la pregunta de negocio empirica (cuando rinde la I+D), despues elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).
+
+La contribucion de la pieza no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.
+
+## Cierre
+
+La evidencia de T8 es consistente con una narrativa de innovacion de maduracion temporal: el patentamiento observable no se explica de forma limpia por una sola variacion anual de I+D, sino por el bloque de esfuerzo acumulado reciente.
+
+La lectura final queda deliberadamente prudente, distinguiendo claramente control de heterogeneidad no observada (FE), inferencia (cluster) y precision de coeficientes (colinealidad).
