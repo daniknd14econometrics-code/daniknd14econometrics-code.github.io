@@ -1,0 +1,79 @@
+---
+title: "Equivalencias entre RE, FE y GMM en datos de panel"
+author: "Daniel Mendez"
+date: "2026-03-26"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: flatly
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Introduccion metodologica
+
+Esta nota documenta el Taller 10 como respaldo tecnico interno. El objetivo no es construir una narrativa aplicada amplia, sino revisar con precision como ciertos estimadores de panel pueden escribirse como casos particulares de GMM bajo elecciones especificas de momentos y matriz de ponderacion.
+
+El foco esta en la arquitectura del estimador: que condiciones hacen que las soluciones coincidan, que cambia cuando se relaja esa estructura, y que limites aparecen en implementaciones exigentes.
+
+## Problema econometrico central
+
+La pregunta metodologica es la siguiente: bajo que construccion de momentos e inicializacion de pesos un problema GMM reproduce los resultados de RE y FE en panel.
+
+En terminos operativos, el taller separa dos planos:
+
+- La inferencia (por ejemplo, `vce(unadjusted)` vs `vce(cluster id)`).
+- La eficiencia estructural del criterio GMM (matriz `W`, incluyendo `W_RE` construida a partir de `Omega_RE`).
+
+Esta separacion es central porque cambiar la VCE no equivale a imponer la estructura RE en la funcion objetivo.
+
+## Contexto empirico minimo
+
+El ejemplo principal usa `wagepan` (Wooldridge), con panel balanceado de trabajadores:
+
+- Unidad: trabajador-anio (`nr`, `year`).
+- Muestra base: `N=4,360`, `545` trabajadores, `1980-1987`.
+- En formulaciones GMM por individuo tras `reshape wide`: `N=545`.
+- Variable resultado: `lwage`.
+- Regresores: `educ`, `exper`, `expersq`, `union`, `married`, `black`.
+
+El bloque final agrega `airfare` como prueba de implementacion Chamberlain (historia completa), sin usarlo como historia empirica principal.
+
+## Metodos comparados
+
+Se comparan cuatro bloques:
+
+1. `xtreg, re` como referencia estructural.
+2. GMM tipo 11.4 con momentos apilados y ponderacion RE fijada (`winitial(W_RE)`).
+3. GMM con ponderacion flexible (`wmatrix(cluster nr)`, `twostep`) para contrastar cuando no se fuerza estructura RE en `W`.
+4. `xtreg, fe` frente a GMM con transformacion Helmert y ponderacion basada en `Omega_RE` para verificar coincidencia en coeficientes within.
+
+Adicionalmente, se intenta una especificacion Chamberlain full-history en sistema GMM con instrumentos de historia completa y arranque por OLS.
+
+## Hallazgos tecnicos
+
+Los resultados del log muestran tres mensajes tecnicos utiles:
+
+- En el bloque RE, la version GMM con `W_RE` reproduce numericamente los coeficientes de `xtreg, re` en esta configuracion.
+- Al pasar a ponderacion flexible y VCE cluster, las magnitudes cambian de forma moderada, aunque se mantiene la lectura general de signos.
+- En el bloque FE, la construccion GMM con Helmert coincide con `xtreg, fe` en los coeficientes de regresores que varian en el tiempo (`exper`, `expersq`, `union`, `married`).
+
+En conjunto, el taller confirma la equivalencia como resultado de diseno del problema, no como propiedad automatica de "usar GMM".
+
+## Advertencias y limites
+
+Esta implementacion deja advertencias importantes para uso profesional:
+
+- En los GMM principales aparece una tension entre la estructura de momentos impuesta y la informacion de la muestra (`Hansen J` con `p=0.0000` en ambos bloques), por lo que la lectura debe ser cauta y centrada en comparacion estructural, no en validacion total de restricciones.
+- La formulacion Chamberlain full-history muestra sensibilidad numerica: muchas iteraciones con mensajes de no concavidad y cierre interrumpido (`r(1)` en el log corrido).
+- El costo computacional y la fragilidad de convergencia crecen rapido cuando aumenta la dimension de historia/instrumentos.
+- La nota no debe usarse para inferencia causal; su valor es metodologico y de criterio de especificacion.
+
+## Cierre tecnico
+
+El Taller 10 queda mejor posicionado como nota tecnica interna: demuestra dominio de equivalencias RE/FE/GMM, separa con claridad inferencia y ponderacion, y explicita limites de identificacion numerica cuando la arquitectura del estimador se vuelve exigente.
+
+Como documento de respaldo, su aporte principal es disciplinar decisiones de modelado en panel avanzado, no producir una pieza aplicada para audiencia general.
