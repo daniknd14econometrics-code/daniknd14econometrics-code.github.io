@@ -183,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
-<p>Se trabaja con datos de corte transversal a nivel de individuos.</p>
+<p>Se trabaja con datos de corte transversal a nivel de individuos. La base corresponde a un ejercicio clásico de economía laboral con microdatos de salarios y educación. Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados. En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.</p>
 <ul>
 <li>Variable dependiente: <code>lwage</code></li>
 <li>Variable endógena de interés: <code>educ</code></li>
@@ -210,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>En MCO, el coeficiente estimado de <code>educ</code> es aproximadamente 0.078. Cuando se instrumenta la educación con la educación de la madre y del padre, el coeficiente IV/2SLS robusto sube a aproximadamente 0.146.</p>
-<p>Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV.</p>
+<p>Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV. En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV. No es una prueba causal definitiva por sí sola, pero sí una señal fuerte de que tratar <code>educ</code> como exógena puede subestimar de manera relevante el efecto de interés.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -252,6 +252,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>La diferencia de muestra (<code>N = 935</code> en MCO frente a <code>N = 722</code> en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV. Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional.</p>
 </section>
 <section id="diagnósticos-clave" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="diagnósticos-clave">Diagnósticos clave</h2>
@@ -265,7 +266,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sobreidentificación" class="level3">
 <h3 class="anchored" data-anchor-id="sobreidentificación">3. Sobreidentificación</h3>
-<p>Los tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta.</p>
+<p>Los tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta. En este contexto, <code>meduc</code> y <code>feduc</code> se usan como instrumentos plausibles porque están correlacionados con la escolaridad de la persona y aportan variación relevante en primera etapa. Esa plausibilidad sigue siendo una hipótesis económica sustantiva: los tests estadísticos ayudan a evaluarla, pero no reemplazan la discusión de mecanismo y contexto.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -311,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.</p>
+<p>Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble. En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta causal que se quiere responder.</p>
 </section>
 
 </main>
