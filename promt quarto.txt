@@ -20,3 +20,6 @@ start ".\01_portfolio\html\01_portfolio\qmd\t04_panel_pooled_heterogeneidad.html
 
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t05_panel_re.html"
+
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
+start ".\01_portfolio\html\01_portfolio\qmd\t06_panel_fe_inicial.html"
