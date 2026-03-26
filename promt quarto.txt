@@ -11,3 +11,5 @@ cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_
 start ".\01_portfolio\html\01_portfolio\qmd\t01_vi.html"
 
 start ".\01_portfolio\html\01_portfolio\qmd\t02_panel_pooled_salarios.html"
+
+start ".\01_portfolio\html\01_portfolio\qmd\t03_panel_qtobin_pooled.html"
