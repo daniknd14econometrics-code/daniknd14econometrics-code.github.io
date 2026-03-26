@@ -1,0 +1,43 @@
+﻿# OS/editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+
+# Quarto intermediates
+.quarto/
+**/.quarto/
+*_cache/
+
+# Private econometrics inputs (new structure)
+econometria-clasica/00_private/do/
+econometria-clasica/00_private/log/
+econometria-clasica/00_private/briefs/
+econometria-clasica/00_private/data_public_raw/
+econometria-clasica/00_private/data_private/
+
+# Legacy private folders (while coexistence/migration)
+econometria clásica/1_do files/
+econometria clásica/2_log/
+econometria clásica/3_txt/
+econometria clásica/4_bases publicas/
+
+# Common sensitive data patterns
+*.dta
+*.sav
+*.RData
+*.rds
+*.sqlite
+*.db
+
+# Keep rendered portfolio HTML tracked by default
+# (intentionally no *.html ignore)
+
+# Temporales de diagnóstico de Quarto
+**/html_test_diag/
+**/html_diag2/
+**/html_diag*/
+git_add_output.txt

@@ -1,0 +1,41 @@
+﻿---
+title: "Título del taller"
+subtitle: "Subtítulo breve"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "tXX_slug"
+date: "YYYY-MM-DD"
+fuente_brief: "../../00_private/briefs/tXX_slug_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css: ../assets/portfolio.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Resumen
+
+## Pregunta
+
+## Por qué importa
+
+## Datos y variables
+
+## Estrategia empírica
+
+## Resultados principales
+
+## Diagnósticos clave
+
+## Lectura profesional
+
+## Cierre

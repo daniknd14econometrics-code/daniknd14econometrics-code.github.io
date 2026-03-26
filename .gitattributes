@@ -1,0 +1,10 @@
+* text=auto
+*.qmd text eol=lf
+*.css text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.do text eol=lf
+*.log text eol=lf
+*.csv text eol=lf
