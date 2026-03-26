@@ -1,0 +1,200 @@
+---
+title: "Subsidios de capacitacion y desperdicio productivo en plantas industriales"
+subtitle: "Comparacion aplicada entre FE, RE y CRE (Mundlak) para tratar heterogeneidad persistente en panel corto"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t09_panel_re_fe_cre"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t09_panel_re_fe_cre_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css: ../assets/portfolio.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+En este panel de plantas industriales, la pregunta aplicada es si la asociacion entre subsidios de capacitacion y scrap cambia de forma relevante al controlar heterogeneidad persistente entre firmas
+:::
+
+::: {.hero-sub}
+La comparacion FE, RE y CRE se usa como contraste disciplinado para elegir especificacion sin sobreactuar sobre un solo test: la econometria esta al servicio de una lectura empirica mas creible del caso productivo.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
+
+::: {.metric-value}
+RE + cluster
+:::
+
+::: {.metric-note}
+`xtreg lscrap grant grant_1 d88 d89, re vce(cluster fcode)`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Contexto aplicado
+:::
+
+::: {.metric-value}
+Panel corto de plantas
+:::
+
+::: {.metric-note}
+`N=162`, `54` firmas, `1987-1989` (panel balanceado de 3 anos)
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Lectura sustantiva
+:::
+
+::: {.metric-value}
+Patron estable
+:::
+
+::: {.metric-note}
+`grant` y `grant_1` mantienen signo y magnitud parecida en FE, RE y CRE
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Respaldo formal
+:::
+
+::: {.metric-value}
+Sin rechazo de RE
+:::
+
+::: {.metric-note}
+Hausman `p=0.2425`; Mundlak clasico `p=0.3591`; Mundlak robusto `p=0.3965`
+:::
+:::
+
+::::
+
+## Resumen
+
+Esta pieza estudia la relacion empirica entre subsidios de capacitacion (`grant`, `grant_1`) y desperdicio productivo (`lscrap`) en plantas industriales. El punto central no es defender un test aislado, sino verificar si la lectura sustantiva del caso cambia al tratar la heterogeneidad no observada con FE, RE o CRE.
+
+La evidencia muestra coeficientes de interes muy cercanos entre especificaciones, y los contrastes formales no aportan evidencia fuerte contra la formulacion RE en esta muestra. Por eso, se toma RE como modelo operativo y FE/CRE como controles disciplinados de robustez conceptual.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+La relacion entre subsidios de capacitacion y scrap, cambia de forma relevante cuando se controla por heterogeneidad persistente entre plantas?
+
+::: {.small-note}
+Resultado: `lscrap`. Regresores de interes: `grant`, `grant_1`. Controles temporales: `d88`, `d89`. Unidad de panel: `fcode`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+La comparacion FE, RE y CRE no se presenta como competencia tecnica abstracta: se usa para auditar si la historia aplicada del caso productivo se mantiene al cambiar el supuesto sobre la correlacion entre heterogeneidad no observada y regresores.
+
+<span class="badge">Portfolio econometrico</span>
+:::
+
+::::
+
+## Por que este problema importa
+
+El caso analiza plantas que pueden diferir de manera persistente en gestion, tecnologia o calidad operativa. Si esas diferencias inobservadas tambien se relacionan con el acceso a subsidios, una lectura ingenua podria confundir patron estructural de cada planta con la asociacion de interes en `lscrap`.
+
+En terminos aplicados, importa saber si el mensaje sobre subsidios y desperdicio es estable cuando se cambia el tratamiento de esa heterogeneidad. Esa estabilidad, o su ausencia, es la que sostiene una lectura profesional del ejemplo.
+
+## Datos y variables
+
+Se trabaja con `jtrain1.dta`, en formato panel de firmas.
+
+- Unidad de observacion: planta-ano (`fcode`)
+- Ventana temporal operativa: `1987-1989`
+- Muestra de estimacion: `N=162`, `54` firmas, panel balanceado de 3 anos
+- Variable de resultado: `lscrap`
+- Regresores clave: `grant`, `grant_1`
+- Controles: `d88`, `d89`
+- En CRE/Mundlak: medias temporales `grant_bar`, `grant_1_bar`
+
+El tamano operativo queda en `162` observaciones porque el modelo se estima sobre el panel balanceado efectivo de firmas con informacion completa para `lscrap`, subsidio actual, subsidio rezagado y controles temporales en los tres periodos.
+
+## Estrategia empirica
+
+La secuencia se organiza para mantener foco aplicado y disciplina de especificacion:
+
+1. Estimar FE, RE y CRE/Mundlak con la misma estructura central de regresores.
+2. Comparar primero signos y magnitudes de `grant` y `grant_1` entre modelos.
+3. Tomar RE+cluster como modelo operativo si la lectura sustantiva es estable y los contrastes formales no muestran evidencia fuerte en contra.
+4. Usar Hausman clasico y tests de Mundlak como respaldo formal de la decision, no como unica base narrativa.
+
+## Que evita una lectura automatica
+
+Una lectura automatica puede confundir planos distintos:
+
+1. Relevancia de usar panel frente a pooling.
+2. Eleccion entre FE y RE/CRE segun posible correlacion `Cov(c_i, x_it)`.
+3. Precision inferencial bajo errores clusterizados.
+
+La pieza separa esos planos para no convertir una salida de test en conclusion mecanica.
+
+::: {.table-box}
+## Resultados principales
+
+La lectura principal abre por lo sustantivo: los coeficientes de `grant` y `grant_1` son parecidos en FE, RE y CRE, con signos consistentes y orden de magnitud cercano. En este caso, la historia aplicada sobre subsidios y scrap no cambia de forma relevante al mover la especificacion de heterogeneidad no observada.
+
+Con esa base, RE se usa como modelo operativo por parsimonia y por compatibilidad con la evidencia robusta tipo Mundlak; FE y CRE quedan como contrastes disciplinados que auditan el supuesto de correlacion entre `c_i` y regresores.
+
+| Bloque | Evidencia | Lectura |
+|---|---:|---|
+| Similitud sustantiva FE/RE/CRE | `grant`: FE `-0.252`, RE `-0.214`, CRE `-0.252`; `grant_1`: FE `-0.422`, RE `-0.373`, CRE `-0.422` | Patron estable en variables clave |
+| Implicancia aplicada | Cambios de especificacion no alteran de forma fuerte el mensaje de fondo | La lectura central del caso productivo se mantiene |
+| Evidencia robusta CRE/Mundlak | Test conjunto medias temporales (cluster): `chi2(2)=1.85`, `p=0.3965` | Compatible con usar RE como operativo en esta muestra |
+| Respaldo formal adicional | Hausman clasico: `chi2(2)=2.83`, `p=0.2425`; Mundlak clasico: `chi2(2)=2.05`, `p=0.3591` | No aparece evidencia fuerte contra RE |
+:::
+
+::: {.table-box}
+## Diagnosticos y respaldo formal
+
+El `F test all u_i=0` en FE (`F(53,104)=24.66`, `p=0.0000`) indica que la estructura panel es relevante: pooling simple no alcanza para este caso.
+
+Ese diagnostico no decide por si solo entre RE y FE/CRE. La eleccion entre esos marcos depende del punto clave `Cov(c_i, x_it)`, evaluado con comparacion de magnitudes y contrastes tipo Hausman/Mundlak.
+
+| Diagnostico | Resultado | Lectura correcta |
+|---|---:|---|
+| Relevancia panel vs pooling | `F(53,104)=24.66`, `p=0.0000` | Hay heterogeneidad no observada importante |
+| Hausman clasico (FE vs RE) | `chi2(2)=2.83`, `p=0.2425` | No hay evidencia fuerte contra RE |
+| Mundlak clasico | `chi2(2)=2.05`, `p=0.3591` | Coherente con lectura de Hausman |
+| Mundlak robusto (cluster) | `chi2(2)=1.85`, `p=0.3965` | Respaldo formal robusto a la misma conclusion |
+:::
+
+## Lectura profesional del caso
+
+La conclusion se formula con prudencia aplicada: no rechazar RE no significa probar que RE sea verdadero; significa que en esta muestra no aparece evidencia fuerte contra esa formulacion. Por eso, la interpretacion final se apoya en la combinacion de estabilidad sustantiva de coeficientes, contexto del caso y respaldo formal de contrastes.
+
+En terminos de portfolio, T9 muestra una practica profesional util: cuando FE, RE y CRE cuentan una historia economica parecida, la decision de modelo puede justificarse sin exagerar precision ni convertir metodologia en protagonista.
+
+## Cierre
+
+En este panel corto de plantas industriales, la relacion entre subsidios de capacitacion y desperdicio productivo mantiene un patron similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente no causal y condicionada a los supuestos del marco.

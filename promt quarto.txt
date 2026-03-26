@@ -29,3 +29,8 @@ start ".\01_portfolio\html\01_portfolio\qmd\t07_panel_fe_completo.html"
 
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t08_panel_fe_patentes.html"
+
+
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
+start ".\01_portfolio\html\01_portfolio\qmd\t09_panel_re_fe_cre.html"
+
