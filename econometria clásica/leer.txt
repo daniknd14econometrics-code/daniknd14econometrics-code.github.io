@@ -1,3 +1,0 @@
-aspectos a mejorar: diseño visual
-                    quizá, en algún caso, sumar un grafico
-                    que refuerce historia narrativa (ejemplo efecto de educación sobre salarios, o valor de las acciones sobre ...).
