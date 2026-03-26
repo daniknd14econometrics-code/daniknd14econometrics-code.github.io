@@ -1,0 +1,32 @@
+id_taller: 06
+archivo_do: 6taller_Panel_FE_aInicial.do
+archivo_log: 6_taller.log
+familia_metodo: lineal_vi_panel
+
+titulo_provisorio: Primer contacto con efectos fijos: leer la estimación within correctamente
+subtitulo_portfolio: Introducción aplicada a FE con foco en interpretación, variación within y efectos temporales.
+
+pregunta_central: ¿Qué cambia en un modelo salarial cuando pasamos de una lectura agrupada a un estimador de efectos fijos?
+tipo_datos: panel
+unidad_de_analisis: trabajadores
+variable_dependiente: lwage
+variables_clave: exper, expersq, union, married, dummies de año; variables invariantes absorbidas por FE
+
+problema_econometrico: Correlación entre la heterogeneidad individual y los regresores.
+riesgo_del_analisis_ingenuo: Leer FE como si fuera una regresión “más” y no como una estimación basada solo en variación dentro del individuo.
+intuicion_del_problema: FE limpia el componente fijo no observado, pero a cambio sacrifica regresores invariantes y exige interpretar coeficientes como efectos within.
+
+metodo_principal: xtreg, fe con y sin efectos temporales, más pruebas sobre dummies de año e interacciones.
+metodos_comparados: FE básico, FE con tiempo, FE con interacciones y discusión de variables absorbidas.
+por_que_este_metodo: Muestra de forma pedagógica qué información usa FE y cómo se reordena la interpretación.
+
+resultado_principal: El taller deja claro que FE reorienta la estimación hacia cambios dentro de cada individuo y que muchas variables de corte transversal desaparecen por construcción.
+resultado_secundario: Las dummies e interacciones temporales permiten discutir cuándo los efectos comunes del tiempo valen la pena y cuándo no agregan demasiado.
+aprendizaje_clave: Entender FE no es solo correr xtreg, fe; es entender la fuente de variación que lo identifica.
+
+que_mostrar_en_portfolio: Una pieza corta y clara sobre cómo leer FE y qué se pierde/gana frente a modelos agrupados.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Cuadro “qué entra y qué se absorbe en FE”.
+visual_sugerido_2: Tabla FE base vs FE con tiempo.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio

@@ -1,0 +1,1489 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\10_taller.log
+  log type:  text
+ opened on:  26 Mar 2026, 04:16:58
+
+. do "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\3. Estrategia empirica\3. Modelos\talleres por tema - teoria econometrica\10taller_Panel_
+> gmm_chamb.do"
+
+. **# Capitulo 11
+.         
+.         
+.         
+. /********************************************************************/
+. /*  SECCION 11.1 CAPITULO WOOLDRIDGE (AVANZADO)                                         */
+. /********************************************************************/
+. /********************************************************************/
+. 
+. * especificar el modelo a estimar
+. * generar los instrumentos necesarios: ver formula 11.4.
+. * generar la estructura de matriz de varianza del error compuesto v_i del estimador RE
+. * Luego, estimar por gmm-3sls utilizando la estructura anterior. (no coincide con el del capitulo 8 teorico)
+. * Como es una unica ecuacion, pero es un panel, para verlo como sistema, se necesita estimar la misma ecuacion para cada periodo: T=8.
+. * Tendremos que especificar todo identico para los 8 años (8 ecuaciones)
+. 
+. ** dos desafios grandes cuando pasamos a stata: por un lado decirle que tome cada periodo como una ecuacion, aunque no es lo mas delicado. 
+.                                              ** por otro lado, lo mas dificil es recuperar esa estructura RE e imponerla en el gmm. 
+.                                                                                          ** parece que el costo de estimar la version "gmm-3sls con estructura RE" 
+> para un panel puede ser costoso. 
+.                                              ** Nos queda como algo teorico, didactico, mostrando su equivalencia.
+. 
+.                                                                                          
+. **# IASW: implementar una version de GMM-3SLS = RE
+. 
+.                                                                                          
+. /********************************************************************/
+. /*  GMM (Wooldridge/IASW 11.4) imponiendo estructura RE en W         */
+. /*  - NO balancea el panel                                           */
+. /*  - Momentos por i: g_i = Z_i' v_i  => K+M momentos (no T*(K+M))   */
+. /*  - "Imponer RE" = fijar W = [E(Z_i' Omega_RE Z_i)]^{-1}           */
+. /********************************************************************/
+. 
+. clear all
+
+. bcuse wagepan, clear
+
+Contains data from http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta
+ Observations:         4,360                  
+    Variables:            27                  15 Mar 2021 18:24
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nr              float   %9.0g                 person identifier
+year            float   %9.0g                 1980 to 1987
+black           float   %9.0g                 =1 if black
+exper           float   %9.0g                 labor mkt experience
+hisp            float   %9.0g                 =1 if Hispanic
+hours           float   %9.0g                 annual hours worked
+married         float   %9.0g                 =1 if married
+occ1            float   %9.0g                 =1 if Professional, Technical and kindred
+occ2            float   %9.0g                 =1 if Managers, Offcials and Proprietors
+occ3            float   %9.0g                 =1 if Sales Workers
+occ4            float   %9.0g                 =1 if Clerical and kindred
+occ5            float   %9.0g                 =1 if Craftsmen, Foremen and kindred
+occ6            float   %9.0g                 =1 if Operatives and kindred
+occ7            float   %9.0g                 =1 if Laborers and farmers
+occ8            float   %9.0g                 =1 if Farm Laborers and Foreman
+occ9            float   %9.0g                 =1 if Service Workers
+educ            float   %9.0g                 years of schooling
+union           float   %9.0g                 =1 if in union
+lwage           float   %9.0g                 log(wage)
+d81             float   %9.0g                 =1 if year == 1981
+d82             float   %9.0g                 =1 if year == 1982
+d83             float   %9.0g                 =1 if year == 1983
+d84             float   %9.0g                 =1 if year == 1984
+d85             float   %9.0g                 =1 if year == 1985
+d86             float   %9.0g                 =1 if year == 1986
+d87             float   %9.0g                 =1 if year == 1987
+expersq         float   %9.0g                 exper^2
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. tab year
+
+    1980 to |
+       1987 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       1980 |        545       12.50       12.50
+       1981 |        545       12.50       25.00
+       1982 |        545       12.50       37.50
+       1983 |        545       12.50       50.00
+       1984 |        545       12.50       62.50
+       1985 |        545       12.50       75.00
+       1986 |        545       12.50       87.50
+       1987 |        545       12.50      100.00
+------------+-----------------------------------
+      Total |      4,360      100.00
+
+. /********************************************************************/
+. /*  0) LOCALS (EDITÁ ACÁ)                                            */
+. /********************************************************************/
+. preserve
+
+. local id   nr
+
+. local time year
+
+. 
+. local y    lwage
+
+. local X    educ exper expersq union married black
+
+. local W    exper expersq union married     // solo las que varían en t
+
+. 
+. /* switches */
+. local use_cluster 0   // 1 = vce(cluster id), 0 = vce(unadjusted)
+
+. 
+. /* VCE según switch (esto NO impone RE; solo cambia inferencia) */
+. local VCE "vce(unadjusted)"
+
+. if `use_cluster' local VCE "vce(cluster `id')"
+
+. 
+. /********************************************************************/
+. /*  1) DECLARAR PANEL                                                */
+. /********************************************************************/
+. xtset `id' `time'
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+. sort `id' `time'
+
+. 
+. /********************************************************************/
+. /*  2) ESTIMAR RE PARA OBTENER sigma_u^2 y sigma_e^2 (Omega_RE)      */
+. /********************************************************************/
+. xtreg `y' `X', re
+
+Random-effects GLS regression                   Number of obs     =      4,360
+Group variable: nr                              Number of groups  =        545
+
+R-squared:                                      Obs per group:
+     Within  = 0.1774                                         min =          8
+     Between = 0.1834                                         avg =        8.0
+     Overall = 0.1807                                         max =          8
+
+                                                Wald chi2(6)      =     943.90
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+       lwage | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .1003702   .0087212    11.51   0.000     .0832769    .1174635
+       exper |   .1120669   .0082603    13.57   0.000     .0958771    .1282567
+     expersq |  -.0040646   .0005918    -6.87   0.000    -.0052244   -.0029047
+       union |   .1076277   .0178226     6.04   0.000     .0726961    .1425593
+     married |   .0627744   .0167705     3.74   0.000     .0299048    .0956439
+       black |  -.1478995   .0469019    -3.15   0.002    -.2398254   -.0559735
+       _cons |  -.0937571   .1067709    -0.88   0.380    -.3030242      .11551
+-------------+----------------------------------------------------------------
+     sigma_u |  .32422561
+     sigma_e |  .35125535
+         rho |  .46004843   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. scalar su2 = e(sigma_u)^2   // Var(c_i)   (efecto individual)
+
+. scalar se2 = e(sigma_e)^2   // Var(u_it)  (idiosincrático)
+
+. 
+. /********************************************************************/
+. /*  3) INSTRUMENTOS (11.4) EN FORMATO LONG                           */
+. /*     - x_bar: medias temporales de TODOS los X                      */
+. /*     - w_dm : demean SOLO para W (w_it - w_bar)                     */
+. /********************************************************************/
+. foreach v of local X {
+  2.     capture drop `v'_bar
+  3.     bys `id': egen `v'_bar = mean(`v')
+  4. }
+
+. 
+. foreach w of local W {
+  2.     capture drop `w'_dm
+  3.     gen `w'_dm = `w' - `w'_bar
+  4. }
+
+. 
+. /* lista de columnas z_it = [1, X_bar, W_dm] en long (para construir W_RE) */
+. local Zlong "one"
+
+. capture drop one
+
+. gen one = 1
+
+. 
+. foreach v of local X {
+  2.     local Zlong "`Zlong' `v'_bar"
+  3. }
+
+. foreach w of local W {
+  2.     local Zlong "`Zlong' `w'_dm"
+  3. }
+
+. 
+. /********************************************************************/
+. /*  4) CONSTRUIR W_RE = inv( (1/N) sum_i Z_i' Omega_RE,i Z_i )       */
+. /*     - esto es lo que realmente "impone RE" en GMM                  */
+. /*     - soporta panel NO balanceado (Omega_RE,i usa Ti de cada i)    */
+. /********************************************************************/
+. mata:
+------------------------------------------------- mata (type end to exit) -------------------------------------------------------------------------------------------
+:     su2 = st_numscalar("su2")
+
+:     se2 = st_numscalar("se2")
+
+: 
+:     Z   = st_data(., tokens(st_local("Zlong")))
+
+:     idv = st_data(., st_local("id"))
+
+: 
+:     p    = panelsetup(idv, 1)
+
+:     Npan = rows(p)
+
+:     L    = cols(Z)
+
+: 
+:     S = J(L, L, 0)
+
+: 
+:     for (i=1; i<=Npan; i++) {
+>         a  = p[i,1]
+>         b  = p[i,2]
+>         Ti = b - a + 1
+> 
+>         Zi = Z[|a,1 \ b,L|] 
+> 
+>         Omega = se2*I(Ti) + su2*J(Ti,Ti,1)
+> 
+>         S = S + Zi' * Omega * Zi
+>     }
+
+: 
+:     S = S / Npan
+
+: 
+:     st_matrix("W_RE", invsym(S))
+
+: end
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+. matlist W_RE
+
+             |        c1         c2         c3         c4         c5         c6         c7         c8         c9        c10        c11 
+-------------+------------------------------------------------------------------------------------------------------------------------
+          r1 |  27.79395                                                                                                               
+          r2 | -.8523497   .0681339                                                                                                    
+          r3 | -4.616642  -.0223715   1.474267                                                                                         
+          r4 |  .2405168   .0041617   -.091617   .0059982                                                                              
+          r5 |  .4078969   .0055667  -.2162808   .0135792   1.261259                                                                   
+          r6 |  .4139379  -.0321169  -.0928181   .0025004  -.0817044   .9924895                                                        
+          r7 |   .276202  -.0064596  -.0968828    .004299  -.1821156   .2320716     1.3561                                             
+          r8 | -4.15e-16  -7.61e-16   3.22e-15  -2.26e-16  -6.63e-16  -1.39e-16  -2.30e-16   2.538027                                  
+          r9 |  2.81e-16   4.61e-17  -2.71e-16   1.84e-17   5.13e-17   1.45e-17   2.01e-17  -.1737676   .0131162                       
+         r10 | -2.82e-15   1.50e-16   2.15e-16  -5.87e-18  -2.87e-16  -6.86e-18   5.16e-17  -.0146695   .0051961   13.32299            
+         r11 | -1.63e-15   3.34e-16  -8.86e-16   6.72e-17   2.57e-16   5.24e-17   4.58e-17  -1.347561   .0479866  -.3302956   12.00235 
+
+. 
+. /********************************************************************/
+. /*  5) AHORA PASAMOS A WIDE SOLO PARA ESCRIBIR LOS MOMENTOS g_i      */
+. /*     (gmm trabaja a nivel "observación"; acá 1 obs = 1 individuo)   */
+. /********************************************************************/
+. egen t = group(`time')
+
+. quietly levelsof t, local(tlist)
+
+. local T : word count `tlist'
+
+. di ">> Tmax en la muestra (para reshape) = `T'"
+>> Tmax en la muestra (para reshape) = 8
+
+. 
+. /* Nos quedamos con lo necesario antes de reshape */
+. keep `id' t `y' `X' ///
+>      one ///
+>      *_bar ///
+>      exper_dm expersq_dm union_dm married_dm
+
+. 
+. reshape wide `y' `X' exper_dm expersq_dm union_dm married_dm, i(`id') j(t)
+(j = 1 2 3 4 5 6 7 8)
+
+Data                               Long   ->   Wide
+-----------------------------------------------------------------------------
+Number of observations            4,360   ->   545         
+Number of variables                  20   ->   96          
+j variable (8 values)                 t   ->   (dropped)
+xij variables:
+                                  lwage   ->   lwage1 lwage2 ... lwage8
+                                   educ   ->   educ1 educ2 ... educ8
+                                  exper   ->   exper1 exper2 ... exper8
+                                expersq   ->   expersq1 expersq2 ... expersq8
+                                  union   ->   union1 union2 ... union8
+                                married   ->   married1 married2 ... married8
+                                  black   ->   black1 black2 ... black8
+                               exper_dm   ->   exper_dm1 exper_dm2 ... exper_dm8
+                             expersq_dm   ->   expersq_dm1 expersq_dm2 ... expersq_dm8
+                               union_dm   ->   union_dm1 union_dm2 ... union_dm8
+                             married_dm   ->   married_dm1 married_dm2 ... married_dm8
+-----------------------------------------------------------------------------
+
+. 
+. /********************************************************************/
+. /*  6) ARMAR MOMENTOS (K+M) EXACTOS DE (11.4)                         */
+. /*     - Momento "constante": sum_t v_it = 0                          */
+. /*     - Para cada x_bar: x_bar * sum_t v_it = 0                      */
+. /*     - Para cada w: sum_t (w_dm_it * v_it) = 0                      */
+. /********************************************************************/
+. local Rsum ""
+
+. forvalues tt=1/`T' {
+  2.     // indicador obs en t para evitar propagación de missing
+.     local obs = "(!missing(`y'`tt'))"
+  3. 
+.     // residuo en t
+.     local rt = "(`y'`tt' - {b0} - {b_educ}*educ`tt' - {b_exper}*exper`tt' - {b_expersq}*expersq`tt' - {b_union}*union`tt' - {b_married}*married`tt' - {b_black}*bla
+> ck`tt')"
+  4. 
+.     // sumar solo si obs
+.     if "`Rsum'"=="" local Rsum "cond(`obs', `rt', 0)"
+  5.     else            local Rsum "`Rsum' + cond(`obs', `rt', 0)"
+  6. }
+
+. 
+. /* Momentos within: sum_t w_dm_t * v_t */
+. local M_exper    ""
+
+. local M_expersq  ""
+
+. local M_union    ""
+
+. local M_married  ""
+
+. 
+. forvalues tt=1/`T' {
+  2.     local obs = "(!missing(`y'`tt'))"
+  3.     local rt  = "(`y'`tt' - {b0} - {b_educ}*educ`tt' - {b_exper}*exper`tt' - {b_expersq}*expersq`tt' - {b_union}*union`tt' - {b_married}*married`tt' - {b_black}
+> *black`tt')"
+  4. 
+.     // cada término: cond(obs & !missing(w_dm_t), w_dm_t*rt, 0)
+.     local te = "cond(`obs' & !missing(exper_dm`tt'),   exper_dm`tt'*(`rt'),   0)"
+  5.     local ts = "cond(`obs' & !missing(expersq_dm`tt'), expersq_dm`tt'*(`rt'), 0)"
+  6.     local tu = "cond(`obs' & !missing(union_dm`tt'),   union_dm`tt'*(`rt'),   0)"
+  7.     local tm = "cond(`obs' & !missing(married_dm`tt'), married_dm`tt'*(`rt'), 0)"
+  8. 
+.     if "`M_exper'"==""   local M_exper   "`te'"
+  9.     else                 local M_exper   "`M_exper' + `te'"
+ 10. 
+.     if "`M_expersq'"=="" local M_expersq "`ts'"
+ 11.     else                 local M_expersq "`M_expersq' + `ts'"
+ 12. 
+.     if "`M_union'"==""   local M_union   "`tu'"
+ 13.     else                 local M_union   "`M_union' + `tu'"
+ 14. 
+.     if "`M_married'"=="" local M_married "`tm'"
+ 15.     else                 local M_married "`M_married' + `tm'"
+ 16. }
+
+. 
+. /********************************************************************/
+. /*  7) ESTIMAR GMM CON W_RE FIJA (onestep)                            */
+. /*     - esto implementa "ponderación RE"                             */
+. /********************************************************************/
+. gmm ///
+>     (m0:        `Rsum') ///
+>     (m_educ:    educ_bar    * (`Rsum')) ///
+>     (m_experB:  exper_bar   * (`Rsum')) ///
+>     (m_expersqB:expersq_bar * (`Rsum')) ///
+>     (m_unionB:  union_bar   * (`Rsum')) ///
+>     (m_marB:    married_bar * (`Rsum')) ///
+>     (m_blackB:  black_bar   * (`Rsum')) ///
+>     (m_experW:  `M_exper') ///
+>     (m_expersqW:`M_expersq') ///
+>     (m_unionW:  `M_union') ///
+>     (m_marW:    `M_married'), ///
+>     onestep winitial(W_RE) ///
+>     `VCE' ///
+>     title("GMM (11.4) con ponderación RE fijada (W_RE)")
+
+Step 1:
+Iteration 0:  GMM criterion Q(b) = 24.353437  
+Iteration 1:  GMM criterion Q(b) = .05051506  
+Iteration 2:  GMM criterion Q(b) = .05051506  
+
+GMM estimation 
+
+Number of parameters =   7
+Number of moments    =  11
+Initial weight matrix: user                       Number of obs   =        545
+
+GMM (11.4) con ponderación RE fijada (W_RE)
+------------------------------------------------------------------------------
+             | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         /b0 |  -.0937571   .1064835    -0.88   0.379    -.3024609    .1149467
+     /b_educ |   .1003702   .0086978    11.54   0.000     .0833229    .1174175
+    /b_exper |   .1120669    .008238    13.60   0.000     .0959207    .1282131
+  /b_expersq |  -.0040646   .0005902    -6.89   0.000    -.0052213   -.0029079
+    /b_union |   .1076277   .0177746     6.06   0.000     .0727901    .1424653
+  /b_married |   .0627744   .0167253     3.75   0.000     .0299933    .0955555
+    /b_black |  -.1478995   .0467756    -3.16   0.002     -.239578    -.056221
+------------------------------------------------------------------------------
+Instruments for equation m0: _cons
+Instruments for equation m_educ: _cons
+Instruments for equation m_experB: _cons
+Instruments for equation m_expersqB: _cons
+Instruments for equation m_unionB: _cons
+Instruments for equation m_marB: _cons
+Instruments for equation m_blackB: _cons
+Instruments for equation m_experW: _cons
+Instruments for equation m_expersqW: _cons
+Instruments for equation m_unionW: _cons
+Instruments for equation m_marW: _cons
+
+. estimates store gmm_3sls_RE
+
+. estat overid
+
+  Test of overidentifying restriction:
+
+  Hansen's J chi2(4) = 27.5307 (p = 0.0000)
+
+. 
+. gmm ///
+>     (m0:        `Rsum') ///
+>     (m_educ:    educ_bar    * (`Rsum')) ///
+>     (m_experB:  exper_bar   * (`Rsum')) ///
+>     (m_expersqB:expersq_bar * (`Rsum')) ///
+>     (m_unionB:  union_bar   * (`Rsum')) ///
+>     (m_marB:    married_bar * (`Rsum')) ///
+>     (m_blackB:  black_bar   * (`Rsum')) ///
+>     (m_experW:  `M_exper') ///
+>     (m_expersqW:`M_expersq') ///
+>     (m_unionW:  `M_union') ///
+>     (m_marW:    `M_married'), ///
+>      winitial(unadjusted, independent) wmatrix(cluster nr) twostep vce(cluster nr)   ///
+>     title("GMM (11.4) con ponderación flexible + estructura var-cov robusta")
+
+Step 1:
+Iteration 0:  GMM criterion Q(b) = 464493.41  
+Iteration 1:  GMM criterion Q(b) = .01278463  
+Iteration 2:  GMM criterion Q(b) = .01278463  
+
+Step 2:
+Iteration 0:  GMM criterion Q(b) = .07160762  
+Iteration 1:  GMM criterion Q(b) = .04810385  
+Iteration 2:  GMM criterion Q(b) = .04810385  
+
+GMM estimation 
+
+Number of parameters =   7
+Number of moments    =  11
+Initial weight matrix: Unadjusted                 Number of obs   =        545
+GMM weight matrix:     Cluster (nr)
+
+GMM (11.4) con ponderación flexible + estructura var-cov robusta
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+             | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         /b0 |  -.1286625   .1107056    -1.16   0.245    -.3456416    .0883165
+     /b_educ |   .1035316   .0086699    11.94   0.000     .0865388    .1205243
+    /b_exper |   .1085694   .0104273    10.41   0.000     .0881323    .1290064
+  /b_expersq |  -.0038735    .000669    -5.79   0.000    -.0051848   -.0025622
+    /b_union |   .1282238   .0207118     6.19   0.000     .0876295    .1688182
+  /b_married |   .0783152   .0188023     4.17   0.000     .0414634    .1151669
+    /b_black |  -.1485253   .0487689    -3.05   0.002    -.2441106   -.0529399
+------------------------------------------------------------------------------
+Instruments for equation m0: _cons
+Instruments for equation m_educ: _cons
+Instruments for equation m_experB: _cons
+Instruments for equation m_expersqB: _cons
+Instruments for equation m_unionB: _cons
+Instruments for equation m_marB: _cons
+Instruments for equation m_blackB: _cons
+Instruments for equation m_experW: _cons
+Instruments for equation m_expersqW: _cons
+Instruments for equation m_unionW: _cons
+Instruments for equation m_marW: _cons
+
+. estimates store gmm_panel_re_flexible
+
+. estat overid
+
+  Test of overidentifying restriction:
+
+  Hansen's J chi2(4) = 26.2166 (p = 0.0000)
+
+. 
+. restore
+
+. 
+. xtset nr year
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+. xtreg lwage  educ exper expersq union married black, re
+
+Random-effects GLS regression                   Number of obs     =      4,360
+Group variable: nr                              Number of groups  =        545
+
+R-squared:                                      Obs per group:
+     Within  = 0.1774                                         min =          8
+     Between = 0.1834                                         avg =        8.0
+     Overall = 0.1807                                         max =          8
+
+                                                Wald chi2(6)      =     943.90
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+       lwage | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .1003702   .0087212    11.51   0.000     .0832769    .1174635
+       exper |   .1120669   .0082603    13.57   0.000     .0958771    .1282567
+     expersq |  -.0040646   .0005918    -6.87   0.000    -.0052244   -.0029047
+       union |   .1076277   .0178226     6.04   0.000     .0726961    .1425593
+     married |   .0627744   .0167705     3.74   0.000     .0299048    .0956439
+       black |  -.1478995   .0469019    -3.15   0.002    -.2398254   -.0559735
+       _cons |  -.0937571   .1067709    -0.88   0.380    -.3030242      .11551
+-------------+----------------------------------------------------------------
+     sigma_u |  .32422561
+     sigma_e |  .35125535
+         rho |  .46004843   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. estimates store re_xtreg
+
+. 
+. * Tabla básica en pantalla
+. esttab gmm_3sls_RE re_xtreg gmm_panel_re_flexible, ///
+>     se b(%9.4f) se(%9.4f) ///
+>     star(* 0.10 ** 0.05 *** 0.01) ///
+>     stats(N, labels("N obs.")) ///
+>     title("GMM–3SLS-RE vs RE vs GMM–3SLS-FLEXIBLE") ///
+>     nonote
+
+GMM–3SLS-RE vs RE vs GMM–3SLS-FLEXIBLE
+------------------------------------------------------------
+                      (1)             (2)             (3)   
+                                    lwage                   
+------------------------------------------------------------
+main                                                        
+educ                               0.1004***                
+                                 (0.0087)                   
+
+exper                              0.1121***                
+                                 (0.0083)                   
+
+expersq                           -0.0041***                
+                                 (0.0006)                   
+
+union                              0.1076***                
+                                 (0.0178)                   
+
+married                            0.0628***                
+                                 (0.0168)                   
+
+black                             -0.1479***                
+                                 (0.0469)                   
+
+_cons             -0.0938         -0.0938         -0.1287   
+                 (0.1065)        (0.1068)        (0.1107)   
+------------------------------------------------------------
+b_educ                                                      
+_cons              0.1004***                       0.1035***
+                 (0.0087)                        (0.0087)   
+------------------------------------------------------------
+b_exper                                                     
+_cons              0.1121***                       0.1086***
+                 (0.0082)                        (0.0104)   
+------------------------------------------------------------
+b_expersq                                                   
+_cons             -0.0041***                      -0.0039***
+                 (0.0006)                        (0.0007)   
+------------------------------------------------------------
+b_union                                                     
+_cons              0.1076***                       0.1282***
+                 (0.0178)                        (0.0207)   
+------------------------------------------------------------
+b_married                                                   
+_cons              0.0628***                       0.0783***
+                 (0.0167)                        (0.0188)   
+------------------------------------------------------------
+b_black                                                     
+_cons             -0.1479***                      -0.1485***
+                 (0.0468)                        (0.0488)   
+------------------------------------------------------------
+N obs.           545.0000       4360.0000        545.0000   
+------------------------------------------------------------
+
+.  
+. 
+. /* ----------------------------------------------------------------------
+> CONCLUSION 
+> 
+> La idea NO es "mejorar" RE, sino mostrar la equivalencia teórica:
+> RE puede verse como un caso particular de GMM–3SLS con estructura RE (Wooldridge 11.1 / IASW).
+> 
+> Para que "GMM–3SLS = RE" pase numéricamente, se necesitan DOS cosas a la vez:
+> 
+> (1) Instrumentos reducidos (ec. 11.4):
+>     - Para TODOS los regresores en X: sus medias temporales por individuo  x_bar = mean_t(x_it)
+>     - Para los regresores que varían en t y en i, (W): la parte within     w_dm  = w_it - w_bar
+>     (En total: K + M instrumentos, con M sobreidentificaciones.)
+> 
+> (2) Ponderación/varianza tipo RE en el criterio GMM:
+>     - La estructura de varianza-covarianza dentro de i debe ser RE:
+>         Omega_RE,i = se2*I_Ti + su2*J_Ti
+>     - En Stata esto NO se impone con vce().     (vce() solo cambia la INFERENCIA.)
+>     - La estructura RE se impone con la MATRIZ DE PONDERACIÓN del GMM:
+>         winitial()/wmatrix() (o winitial(W_RE) si la construís como "user weight").
+> 
+> Moraleja práctica:
+> hacer esto "a mano" en Stata es muy costoso y nadie lo usa para estimar RE;
+> se hace solo para demostrar la equivalencia. Pero.... es util aclarar lo siguiente:
+> Si se sospecha que no se sostiene el supuesto RE.3 del libro, es decir, no se sostiene la homocedasticidad y la no correlacion serial,
+> entonces, si es por un tema solamente de INFERENCIA: aplicamos "xtreg (...), re vce(cluster id)" y listo, es el camino directo y mas facil. 
+> pero si además de inferencia, nos preocupa la EFICIENCIA del estimador, podemos aplicar un estimador gmm 
+> reinterpretando a cada periodo como una ecuacion, tal como hicimos recien, pero NO con la estructura de varianzas RE,
+> sino con otra estructura flexible generica, por ejemplo con W robust, con eso atacamos el tema de la eficiencia
+> cuando no se cumple RE.3, y por ultimo, agregando "vce(cluster id)", atacamos adicionalmente el tema de la inferencia.
+>  
+>  -------------------------------------------------------------------- */
+. 
+. **# IASW: implementar una version de GMM-3SLS = FE
+. 
+. 
+. ************************************ Parte B) FE = gmm_3sls_FE **************************************
+. 
+. /*Si usamos la misma estructura RE, pero cambiamos los instrumentos a unos generados con otra transformacion,
+>  la de Helmert, podemos eliminar los c_i, y en ese caso, si replicamos lo mismo que antes, 
+>  el gmm_3sls_FE nos coindice con FE.
+> */
+. 
+. /********************************************************************/
+. /*  FE = GMM con Helmert + ponderación RE (IASW Thm 4.1, versión que
+>     coincide con xtreg, fe en los betas)                             */
+. /*  - Panel balanceado                                                */
+. /********************************************************************/
+. 
+. clear all
+
+. bcuse wagepan, clear
+
+Contains data from http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta
+ Observations:         4,360                  
+    Variables:            27                  15 Mar 2021 18:24
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nr              float   %9.0g                 person identifier
+year            float   %9.0g                 1980 to 1987
+black           float   %9.0g                 =1 if black
+exper           float   %9.0g                 labor mkt experience
+hisp            float   %9.0g                 =1 if Hispanic
+hours           float   %9.0g                 annual hours worked
+married         float   %9.0g                 =1 if married
+occ1            float   %9.0g                 =1 if Professional, Technical and kindred
+occ2            float   %9.0g                 =1 if Managers, Offcials and Proprietors
+occ3            float   %9.0g                 =1 if Sales Workers
+occ4            float   %9.0g                 =1 if Clerical and kindred
+occ5            float   %9.0g                 =1 if Craftsmen, Foremen and kindred
+occ6            float   %9.0g                 =1 if Operatives and kindred
+occ7            float   %9.0g                 =1 if Laborers and farmers
+occ8            float   %9.0g                 =1 if Farm Laborers and Foreman
+occ9            float   %9.0g                 =1 if Service Workers
+educ            float   %9.0g                 years of schooling
+union           float   %9.0g                 =1 if in union
+lwage           float   %9.0g                 log(wage)
+d81             float   %9.0g                 =1 if year == 1981
+d82             float   %9.0g                 =1 if year == 1982
+d83             float   %9.0g                 =1 if year == 1983
+d84             float   %9.0g                 =1 if year == 1984
+d85             float   %9.0g                 =1 if year == 1985
+d86             float   %9.0g                 =1 if year == 1986
+d87             float   %9.0g                 =1 if year == 1987
+expersq         float   %9.0g                 exper^2
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. preserve
+
+. 
+. local id   nr
+
+. local time year
+
+. local y    lwage
+
+. 
+. * FE: solo variables que varían en t
+. local Xtv  exper expersq union married
+
+. 
+. /* inferencia (no afecta W) */
+. local use_cluster 0
+
+. local VCE "vce(unadjusted)"
+
+. if `use_cluster' local VCE "vce(cluster `id')"
+
+. 
+. xtset `id' `time'
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+. sort `id' `time'
+
+. 
+. /*** 1) Recuperar varianzas RE para Ω_RE (solo para construir la ponderación) ***/
+. xtreg `y' educ `Xtv' black, re
+
+Random-effects GLS regression                   Number of obs     =      4,360
+Group variable: nr                              Number of groups  =        545
+
+R-squared:                                      Obs per group:
+     Within  = 0.1774                                         min =          8
+     Between = 0.1834                                         avg =        8.0
+     Overall = 0.1807                                         max =          8
+
+                                                Wald chi2(6)      =     943.90
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+       lwage | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .1003702   .0087212    11.51   0.000     .0832769    .1174635
+       exper |   .1120669   .0082603    13.57   0.000     .0958771    .1282567
+     expersq |  -.0040646   .0005918    -6.87   0.000    -.0052244   -.0029047
+       union |   .1076277   .0178226     6.04   0.000     .0726961    .1425593
+     married |   .0627744   .0167705     3.74   0.000     .0299048    .0956439
+       black |  -.1478995   .0469019    -3.15   0.002    -.2398254   -.0559735
+       _cons |  -.0937571   .1067709    -0.88   0.380    -.3030242      .11551
+-------------+----------------------------------------------------------------
+     sigma_u |  .32422561
+     sigma_e |  .35125535
+         rho |  .46004843   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. scalar su2 = e(sigma_u)^2
+
+. scalar se2 = e(sigma_e)^2
+
+. 
+. /*** 2) Pasar a WIDE (1 obs = 1 individuo) ***/
+. egen t = group(`time')
+
+. quietly levelsof t, local(tlist)
+
+. local T : word count `tlist'
+
+. 
+. keep `id' t `y' `Xtv'
+
+. reshape wide `y' `Xtv', i(`id') j(t)
+(j = 1 2 3 4 5 6 7 8)
+
+Data                               Long   ->   Wide
+-----------------------------------------------------------------------------
+Number of observations            4,360   ->   545         
+Number of variables                   7   ->   41          
+j variable (8 values)                 t   ->   (dropped)
+xij variables:
+                                  lwage   ->   lwage1 lwage2 ... lwage8
+                                  exper   ->   exper1 exper2 ... exper8
+                                expersq   ->   expersq1 expersq2 ... expersq8
+                                  union   ->   union1 union2 ... union8
+                                married   ->   married1 married2 ... married8
+-----------------------------------------------------------------------------
+
+. scalar Tmax = `T'
+
+. 
+. /*** 3) Crear listas wide para Mata ***/
+. local ywide ""
+
+. forvalues tt=1/`T' {
+  2.     local ywide "`ywide' `y'`tt'"
+  3. }
+
+. foreach x of local Xtv {
+  2.     local `x'wide ""
+  3.     forvalues tt=1/`T' {
+  4.         local `x'wide "``x'wide' `x'`tt'"
+  5.     }
+  6. }
+
+. 
+. /*** 4) Helmert (FOD) y transformación de y y Xtv ***/
+. mata:
+------------------------------------------------- mata (type end to exit) -------------------------------------------------------------------------------------------
+:     T   = st_numscalar("Tmax")
+
+:     su2 = st_numscalar("su2")
+
+:     se2 = st_numscalar("se2")
+
+: 
+:     // L = (T-1)xT, forward orthogonal deviations, filas ortonormales y L*1=0
+:     L = J(T-1, T, 0)
+
+:     for (t=1; t<=T-1; t++) {
+>         a = sqrt((T-t)/(T-t+1))
+>         L[t,t] = a
+>         for (s=t+1; s<=T; s++) L[t,s] = -a/(T-t)
+>     }
+
+: 
+:     // Ω_RE en niveles y su versión en Helmert: Ω_H = L Ω L'
+:     Omega  = se2*I(T) + su2*J(T,T,1)
+
+:     OmegaH = L*Omega*L'
+
+: 
+:     // Transformar y: YH = Y * L'
+:     Y  = st_data(., tokens(st_local("ywide")))          // N x T
+
+:     YH = Y * L'                                         // N x (T-1)
+
+: 
+:     // guardar yH1..yH(T-1)
+:     for (h=1; h<=T-1; h++) {
+>         vn = sprintf("yH%g", h)
+>         st_addvar("double", vn)
+>         st_store(., vn, YH[,h])
+>     }
+  42
+  43
+  44
+  45
+  46
+  47
+  48
+
+: 
+:     // Transformar cada Xtv y guardar xH#
+:     xlist = tokens(st_local("Xtv"))
+
+:     for (j=1; j<=cols(xlist); j++) {
+>         xname = xlist[j]
+>         Xw    = st_data(., tokens(st_local(xname+"wide")))   // N x T
+>         XH    = Xw * L'                                      // N x (T-1)
+>         for (h=1; h<=T-1; h++) {
+>             vn = sprintf("%sH%g", xname, h)
+>             st_addvar("double", vn)
+>             st_store(., vn, XH[,h])
+>         }
+>     }
+  49
+  50
+  51
+  52
+  53
+  54
+  55
+  56
+  57
+  58
+  59
+  60
+  61
+  62
+  63
+  64
+  65
+  66
+  67
+  68
+  69
+  70
+  71
+  72
+  73
+  74
+  75
+  76
+
+: 
+:     // Construir W_H para los K momentos compactos: S = (1/N) Σ XHi' Ω_H XHi
+:     K = cols(xlist)
+
+:     N = rows(Y)
+
+: 
+:     // armar XH_all: N x ((T-1)*K) en orden [x1H1..xKH1, x1H2..xKH2, ...]
+:     XH_all = J(N, (T-1)*K, .)
+
+:     for (h=1; h<=T-1; h++) {
+>         for (j=1; j<=K; j++) {
+>             xname = xlist[j]
+>             vn = sprintf("%sH%g", xname, h)
+>             XH_all[., (h-1)*K + j] = st_data(., vn)
+>         }
+>     }
+
+: 
+:     S = J(K, K, 0)
+
+:     for (i=1; i<=N; i++) {
+>         XHi = J(T-1, K, 0)
+>         for (h=1; h<=T-1; h++) {
+>             XHi[h,.] = XH_all[i, ((h-1)*K+1)..(h*K)]
+>         }
+>         S = S + XHi' * OmegaH * XHi
+>     }
+
+:     S = S / N
+
+: 
+:     st_matrix("W_H", invsym(S))
+
+: end
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+. matlist W_H
+
+             |        c1         c2         c3         c4 
+-------------+-------------------------------------------
+          r1 |  2.538027                                  
+          r2 | -.1737676   .0131162                       
+          r3 | -.0146695   .0051961   13.32299            
+          r4 | -1.347561   .0479866  -.3302956   12.00235 
+
+. 
+. /*** 5) Armar momentos FE compactos: Σ_h xH_h * (yH_h - β'xH_h) = 0 ***/
+. local Klist `Xtv'
+
+. local Hmax = `T' - 1
+
+. 
+. local M_exper   ""
+
+. local M_expersq ""
+
+. local M_union   ""
+
+. local M_married ""
+
+. 
+. forvalues h=1/`Hmax' {
+  2.     local rH "(yH`h' - {b_exper}*experH`h' - {b_expersq}*expersqH`h' - {b_union}*unionH`h' - {b_married}*marriedH`h')"
+  3. 
+.     local te "experH`h'*(`rH')"
+  4.     local ts "expersqH`h'*(`rH')"
+  5.     local tu "unionH`h'*(`rH')"
+  6.     local tm "marriedH`h'*(`rH')"
+  7. 
+.     if "`M_exper'"==""   local M_exper   "`te'"
+  8.     else                 local M_exper   "`M_exper' + `te'"
+  9. 
+.     if "`M_expersq'"=="" local M_expersq "`ts'"
+ 10.     else                 local M_expersq "`M_expersq' + `ts'"
+ 11. 
+.     if "`M_union'"==""   local M_union   "`tu'"
+ 12.     else                 local M_union   "`M_union' + `tu'"
+ 13. 
+.     if "`M_married'"=="" local M_married "`tm'"
+ 14.     else                 local M_married "`M_married' + `tm'"
+ 15. }
+
+. 
+. /*** 6) GMM one-step con ponderación basada en Ω_RE (en Helmert) ***/
+. gmm ///
+>     (m_exper:   `M_exper') ///
+>     (m_expersq: `M_expersq') ///
+>     (m_union:   `M_union') ///
+>     (m_married: `M_married'), ///
+>     onestep winitial(W_H) ///
+>     `VCE' ///
+>     title("FE = GMM (Helmert) con ponderación Ω_RE")
+
+Step 1:
+Iteration 0:  GMM criterion Q(b) = 1.5146822  
+Iteration 1:  GMM criterion Q(b) = 6.368e-25  
+Iteration 2:  GMM criterion Q(b) = 3.467e-32  
+
+GMM estimation 
+
+Number of parameters =   4
+Number of moments    =   4
+Initial weight matrix: user                       Number of obs   =        545
+
+FE = GMM (Helmert) con ponderación Ω_RE
+------------------------------------------------------------------------------
+             | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    /b_exper |   .1168467   .0084197    13.88   0.000     .1003444     .133349
+  /b_expersq |  -.0043009   .0006053    -7.11   0.000    -.0054872   -.0031146
+    /b_union |   .0820871   .0192907     4.26   0.000      .044278    .1198963
+  /b_married |   .0453033   .0183097     2.47   0.013      .009417    .0811896
+------------------------------------------------------------------------------
+Instruments for equation m_exper: _cons
+Instruments for equation m_expersq: _cons
+Instruments for equation m_union: _cons
+Instruments for equation m_married: _cons
+
+. 
+. estimates store gmm_FE_helm_RE
+
+. 
+. /*** 7) Comparar con FE estándar ***/
+. restore
+
+. xtset `id' `time'
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+. xtreg `y' `Xtv', fe
+
+Fixed-effects (within) regression               Number of obs     =      4,360
+Group variable: nr                              Number of groups  =        545
+
+R-squared:                                      Obs per group:
+     Within  = 0.1780                                         min =          8
+     Between = 0.0005                                         avg =        8.0
+     Overall = 0.0638                                         max =          8
+
+                                                F(4, 3811)        =     206.38
+corr(u_i, Xb) = -0.1139                         Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+       lwage | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       exper |   .1168467   .0084197    13.88   0.000     .1003392    .1333542
+     expersq |  -.0043009   .0006053    -7.11   0.000    -.0054876   -.0031142
+       union |   .0820871   .0192907     4.26   0.000      .044266    .1199083
+     married |   .0453033   .0183097     2.47   0.013     .0094056     .081201
+       _cons |    1.06488   .0266607    39.94   0.000     1.012609     1.11715
+-------------+----------------------------------------------------------------
+     sigma_u |  .40005389
+     sigma_e |  .35125535
+         rho |  .56467848   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(544, 3811) = 9.71                   Prob > F = 0.0000
+
+. estimates store fe_xtreg
+
+. 
+.  *============================================================
+. * Convertir stripes b_exper:_cons etc -> exper expersq union married
+. * (para que esttab alinee bien)
+. *============================================================
+. capture program drop _gmm_make_singleeq
+
+. program define _gmm_make_singleeq, eclass
+  1.     tempname b V b2 V2
+  2.     matrix `b' = e(b)
+  3.     matrix `V' = e(V)
+  4. 
+.     local peqs "b_exper b_expersq b_union b_married"
+  5.     local pnam "exper expersq union married"
+  6. 
+.     matrix `b2' = J(1,4,.)
+  7.     matrix `V2' = J(4,4,.)
+  8. 
+.     forvalues i=1/4 {
+  9.         local eqi : word `i' of `peqs'
+ 10.         matrix `b2'[1,`i'] = `b'[1,"`eqi':_cons"]
+ 11. 
+.         forvalues j=1/4 {
+ 12.             local eqj : word `j' of `peqs'
+ 13.             matrix `V2'[`i',`j'] = `V'["`eqi':_cons","`eqj':_cons"]
+ 14.         }
+ 15.     }
+ 16. 
+.     matrix colnames `b2' = `pnam'
+ 17.     matrix rownames `V2' = `pnam'
+ 18.     matrix colnames `V2' = `pnam'
+ 19. 
+.     * Postear como si fuera un modelo "normal"
+.     ereturn post `b2' `V2', obs(`e(N)')
+ 20.     ereturn local cmd "gmm_FE_helm_RE_clean"
+ 21. end
+
+. 
+. estimates restore gmm_FE_helm_RE
+(results gmm_FE_helm_RE are active now)
+
+. _gmm_make_singleeq
+
+. estimates store gmm_FE_helm_RE_clean
+
+. 
+. * Ahora sí: tabla alineada
+. esttab gmm_FE_helm_RE_clean fe_xtreg, ///
+>     se b(%9.4f) se(%9.4f) ///
+>     order(exper expersq union married) ///
+>     stats(N, labels("N")) nonote
+
+--------------------------------------------
+                      (1)             (2)   
+                                    lwage   
+--------------------------------------------
+exper              0.1168***       0.1168***
+                 (0.0084)        (0.0084)   
+
+expersq           -0.0043***      -0.0043***
+                 (0.0006)        (0.0006)   
+
+union              0.0821***       0.0821***
+                 (0.0193)        (0.0193)   
+
+married            0.0453*         0.0453*  
+                 (0.0183)        (0.0183)   
+
+_cons                              1.0649***
+                                 (0.0267)   
+--------------------------------------------
+N                545.0000       4360.0000   
+--------------------------------------------
+
+. 
+.         
+.         
+.         
+. ********************************************************************************
+.  
+. **# Especificacion de Chamberlain (historia completa)
+. 
+. 
+. ***********************************************************************************
+. ********************* 11.2 Chamberlain ********************************************
+. ************************************************************************************
+. clear all
+
+. set more off
+
+. 
+. ****************************************************
+. * CHAMBERLAIN (1982) - FULL HISTORY + GMM (airfare)
+. * y_it = c + sum_s x_is' λ_s + x_it' β + r_it
+. * instrumentos: historia completa (sin redundancias) + constante
+. 
+. ** para que esta estrategia funcione bien necesito dos cosas en la practica:
+.         ** N >> KT
+.         ** La variabilidad within (para cada i) debe ser suficiente para lograr la identificacion. De lo contrario, poca variacion de mis instrumentos.
+.         ** Si estas dos condiciones no se cumplen, gmm iterara muchisimo, y posiblemente no converja nunca.
+.     ** de todas formas, se deja el codigo.
+. ****************************************************
+. 
+. use airfare.dta, clear
+
+. 
+. 
+. *----------------------------*
+. * 0) Declarar panel
+. *----------------------------*
+. isid id year, sort
+(data already sorted by id year)
+
+. xtset id year
+
+Panel variable: id (strongly balanced)
+ Time variable: year, 1997 to 2000
+         Delta: 1 unit
+
+. 
+. *----------------------------*
+. * 1) Definir y y x (x TIEMPO-VARIANTES preferible, pero acá incluimos ldist también)
+. *----------------------------*
+. local y     lfare
+
+. local xvars ldist lpassen bmktshr
+
+. 
+. * índice de tiempo 1..T (robusto y sirve si fuera desbalanceado)
+. capture drop __tindex
+
+. egen int __tindex = group(year), label
+
+. levelsof __tindex, local(TS)
+1 2 3 4
+
+. local T : word count `TS'
+
+. local K : word count `xvars'
+
+. 
+. * N (rutas)
+. egen __tag = tag(id)
+
+. count if __tag
+  1,149
+
+. local N = r(N)
+
+. drop __tag
+
+. 
+. di "N = `N'   T = `T'   K = `K'   TK = " (`T'*`K') "   p = " (1+`T'*`K'+`K')
+N = 1149   T = 4   K = 3   TK = 12   p = 16
+
+. 
+. *----------------------------*
+. * 2) Construir historia completa h_x_s = x_{i,s} replicado a todas las filas de i
+. *----------------------------*
+. local HIST ""
+
+. foreach x of local xvars {
+  2.     foreach s of local TS {
+  3.         local hx = "h_`x'_t`s'"
+  4.         capture drop `hx'
+  5.         bysort id: egen double `hx' = max(cond(__tindex==`s', `x', .))
+  6.         local HIST "`HIST' `hx'"
+  7.     }
+  8. }
+
+. 
+. * diagnóstico de huecos en historia (si fuera desbalanceado)
+. capture drop miss_hist
+
+. egen miss_hist = rowmiss(`HIST')
+
+. summ miss_hist
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+   miss_hist |      4,596           0           0          0          0
+
+. 
+. *----------------------------*
+. * 2.1) Quitar redundancias (colinealidad perfecta) en la historia
+. *----------------------------*
+. preserve
+
+. bysort id (__tindex): keep if _n==1
+(3,447 observations deleted)
+
+. qui _rmcoll `HIST'
+
+. local HIST_keep `r(varlist)'
+
+. restore
+
+. 
+. di "Historia retenida (sin redundancias): " wordcount("`HIST_keep'")
+Historia retenida (sin redundancias): 12
+
+. 
+. * constante explícita (por si querés verla en instrumentos)
+. capture drop zconst
+
+. gen byte zconst = 1
+
+. 
+. *----------------------------*
+. * 3) Componente común: c + sum_s x_is' λ_s  (solo historia retenida)
+. *----------------------------*
+. local COMMON "{c}"
+
+. foreach x of local xvars {
+  2.     foreach s of local TS {
+  3.         local hx = "h_`x'_t`s'"
+  4.         local in : list hx in HIST_keep
+  5.         if "`in'" != "" {
+  6.             local COMMON "`COMMON' + {lam_`x'_t`s'}*`hx'"
+  7.         }
+  8.     }
+  9. }
+
+. 
+. *----------------------------*
+. * 4) Sistema: una ecuación por período (mismos parámetros y mismos instrumentos)
+. *     Usamos dummies d_s para "seleccionar" el período dentro de gmm
+. *----------------------------*
+. foreach s of local TS {
+  2.     capture drop d`s'
+  3.     gen byte d`s' = (__tindex==`s')
+  4. }
+
+. 
+. local EQS ""
+
+. foreach s of local TS {
+  2.     local oneeq "(eq`s': d`s' * ( `y' - ( `COMMON'"
+  3.     foreach x of local xvars {
+  4.         local oneeq "`oneeq' + {b_`x'}*`x'"
+  5.     }
+  6.     local oneeq "`oneeq' )) )"
+  7.     local EQS "`EQS' `oneeq'"
+  8. }
+
+. 
+. *----------------------------*
+. * 5) Instrumentos = historia completa (sin redundancias) + constante
+. *----------------------------*
+. local Z "`HIST_keep'"
+
+. 
+. 
+. *----------------------------*
+. * 6) Start values por OLS (misma RHS expandida) -> ayuda a gmm
+. *----------------------------*
+. quietly regress `y' `HIST_keep' `xvars', vce(cluster id)
+
+. 
+. matrix b_ols = e(b)
+
+. 
+. local pnames "c"
+
+. foreach hx of local HIST_keep {
+  2.     local stem = substr("`hx'",3,.)          // quita "h_"
+  3.     local pnames "`pnames' lam_`stem'"
+  4. }
+
+. foreach x of local xvars {
+  2.     local pnames "`pnames' b_`x'"
+  3. }
+
+. 
+. local P = wordcount("`pnames'")
+
+. tempname bstart
+
+. matrix `bstart' = J(1, `P', 0)
+
+. matrix colnames `bstart' = `pnames'
+
+. 
+. * (1) constante = columna 1 (porque pnames empieza con "c")
+. matrix `bstart'[1,1] = el(b_ols,1,colnumb(b_ols,"_cons"))
+
+. 
+. * (2) lambdas: en el MISMO orden de HIST_keep
+. local col = 2
+
+. foreach hx of local HIST_keep {
+  2.     local j = colnumb(b_ols,"`hx'")
+  3.     if (`j'>0) matrix `bstart'[1,`col'] = el(b_ols,1,`j')
+  4.     local ++col
+  5. }
+
+. 
+. * (3) betas: en el MISMO orden de xvars
+. foreach x of local xvars {
+  2.     local j = colnumb(b_ols,"`x'")
+  3.     if (`j'>0) matrix `bstart'[1,`col'] = el(b_ols,1,`j')
+  4.     local ++col
+  5. }
+
+. 
+. 
+. *----------------------------*
+. * 7) GMM: onestep (arranque) + twostep (W óptima) con cluster por ruta
+. *----------------------------*
+. gmm `EQS', ///
+>     instruments(`Z') ///
+>     winitial(identity) onestep ///
+>     vce(cluster id) ///
+>     from(`bstart') ///
+>     technique(nr) /// technique(bfgs) ///
+>     iterate(200) 
+
+Step 1:
+Iteration 0:  GMM criterion Q(b) = .10043245  (not concave)
+Iteration 1:  GMM criterion Q(b) = .08425083  (not concave)
+Iteration 2:  GMM criterion Q(b) = .07414128  (not concave)
+Iteration 3:  GMM criterion Q(b) = .07345486  (not concave)
+Iteration 4:  GMM criterion Q(b) =  .0734337  (not concave)
+Iteration 5:  GMM criterion Q(b) = .07339808  (not concave)
+Iteration 6:  GMM criterion Q(b) = .07334735  (not concave)
+Iteration 7:  GMM criterion Q(b) =  .0732923  (not concave)
+Iteration 8:  GMM criterion Q(b) = .07326643  (not concave)
+Iteration 9:  GMM criterion Q(b) = .07321194  (not concave)
+Iteration 10: GMM criterion Q(b) = .07318128  (not concave)
+Iteration 11: GMM criterion Q(b) = .07315602  (not concave)
+Iteration 12: GMM criterion Q(b) = .07313108  (not concave)
+Iteration 13: GMM criterion Q(b) = .07310744  (not concave)
+Iteration 14: GMM criterion Q(b) = .07308359  (not concave)
+Iteration 15: GMM criterion Q(b) = .07305943  (not concave)
+Iteration 16: GMM criterion Q(b) = .07303541  (not concave)
+Iteration 17: GMM criterion Q(b) = .07301154  (not concave)
+Iteration 18: GMM criterion Q(b) = .07298762  (not concave)
+Iteration 19: GMM criterion Q(b) = .07296368  (not concave)
+Iteration 20: GMM criterion Q(b) = .07293978  (not concave)
+Iteration 21: GMM criterion Q(b) = .07291592  (not concave)
+Iteration 22: GMM criterion Q(b) = .07289206  (not concave)
+Iteration 23: GMM criterion Q(b) = .07286821  (not concave)
+Iteration 24: GMM criterion Q(b) = .07284439  (not concave)
+Iteration 25: GMM criterion Q(b) = .07282059  (not concave)
+Iteration 26: GMM criterion Q(b) = .07279681  (not concave)
+Iteration 27: GMM criterion Q(b) = .07277304  (not concave)
+Iteration 28: GMM criterion Q(b) = .07274928  (not concave)
+Iteration 29: GMM criterion Q(b) = .07272555  (not concave)
+Iteration 30: GMM criterion Q(b) = .07270184  (not concave)
+Iteration 31: GMM criterion Q(b) = .07267813  (not concave)
+Iteration 32: GMM criterion Q(b) = .07265445  (not concave)
+Iteration 33: GMM criterion Q(b) = .07263079  (not concave)
+Iteration 34: GMM criterion Q(b) = .07260715  (not concave)
+Iteration 35: GMM criterion Q(b) = .07258352  (not concave)
+Iteration 36: GMM criterion Q(b) =  .0725599  (not concave)
+Iteration 37: GMM criterion Q(b) = .07253631  (not concave)
+Iteration 38: GMM criterion Q(b) = .07251274  (not concave)
+Iteration 39: GMM criterion Q(b) = .07248919  (not concave)
+Iteration 40: GMM criterion Q(b) = .07246565  (not concave)
+Iteration 41: GMM criterion Q(b) = .07244213  (not concave)
+Iteration 42: GMM criterion Q(b) = .07241863  (not concave)
+Iteration 43: GMM criterion Q(b) = .07239514  (not concave)
+Iteration 44: GMM criterion Q(b) = .07237167  (not concave)
+Iteration 45: GMM criterion Q(b) = .07234822  (not concave)
+Iteration 46: GMM criterion Q(b) = .07232479  (not concave)
+Iteration 47: GMM criterion Q(b) = .07230137  (not concave)
+Iteration 48: GMM criterion Q(b) = .07227797  (not concave)
+Iteration 49: GMM criterion Q(b) = .07225459  (not concave)
+Iteration 50: GMM criterion Q(b) = .07223122  (not concave)
+Iteration 51: GMM criterion Q(b) = .07220787  (not concave)
+Iteration 52: GMM criterion Q(b) = .07218454  (not concave)
+Iteration 53: GMM criterion Q(b) = .07216124  (not concave)
+Iteration 54: GMM criterion Q(b) = .07213794  (not concave)
+Iteration 55: GMM criterion Q(b) = .07211466  (not concave)
+Iteration 56: GMM criterion Q(b) = .07209141  (not concave)
+Iteration 57: GMM criterion Q(b) = .07206816  (not concave)
+Iteration 58: GMM criterion Q(b) = .07204494  (not concave)
+Iteration 59: GMM criterion Q(b) = .07202172  (not concave)
+Iteration 60: GMM criterion Q(b) = .07199853  (not concave)
+Iteration 61: GMM criterion Q(b) = .07197536  (not concave)
+Iteration 62: GMM criterion Q(b) =  .0719522  (not concave)
+Iteration 63: GMM criterion Q(b) = .07192906  (not concave)
+Iteration 64: GMM criterion Q(b) = .07190594  (not concave)
+Iteration 65: GMM criterion Q(b) = .07188283  (not concave)
+Iteration 66: GMM criterion Q(b) = .07185974  (not concave)
+Iteration 67: GMM criterion Q(b) = .07183667  (not concave)
+Iteration 68: GMM criterion Q(b) = .07181362  (not concave)
+Iteration 69: GMM criterion Q(b) = .07179058  (not concave)
+Iteration 70: GMM criterion Q(b) = .07176756  (not concave)
+Iteration 71: GMM criterion Q(b) = .07174456  (not concave)
+Iteration 72: GMM criterion Q(b) = .07172157  (not concave)
+Iteration 73: GMM criterion Q(b) = .07169861  (not concave)
+Iteration 74: GMM criterion Q(b) = .07167566  (not concave)
+Iteration 75: GMM criterion Q(b) = .07165272  (not concave)
+Iteration 76: GMM criterion Q(b) = .07162981  (not concave)
+Iteration 77: GMM criterion Q(b) = .07160691  (not concave)
+Iteration 78: GMM criterion Q(b) = .07158402  (not concave)
+Iteration 79: GMM criterion Q(b) = .07156115  (not concave)
+Iteration 80: GMM criterion Q(b) =  .0715383  (not concave)
+Iteration 81: GMM criterion Q(b) = .07151547  (not concave)
+Iteration 82: GMM criterion Q(b) = .07149266  (not concave)
+Iteration 83: GMM criterion Q(b) = .07146986  (not concave)
+Iteration 84: GMM criterion Q(b) = .07144707  (not concave)
+Iteration 85: GMM criterion Q(b) = .07142431  (not concave)
+Iteration 86: GMM criterion Q(b) = .07140157  (not concave)
+Iteration 87: GMM criterion Q(b) = .07137883  (not concave)
+Iteration 88: GMM criterion Q(b) = .07135611  (not concave)
+Iteration 89: GMM criterion Q(b) = .07133342  (not concave)
+Iteration 90: GMM criterion Q(b) = .07131074  (not concave)
+Iteration 91: GMM criterion Q(b) = .07128807  (not concave)
+Iteration 92: GMM criterion Q(b) = .07126543  (not concave)
+Iteration 93: GMM criterion Q(b) = .07124279  (not concave)
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\10_taller.log
+  log type:  text
+ closed on:  26 Mar 2026, 04:21:59
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,35 @@
+id_taller: 13
+archivo_do: 13taller_Binaria_VI_Continua.do
+archivo_log: 13_taller.log
+familia_metodo: binaria
+
+titulo_provisorio: Binaria con regresor endógeno continuo: control function e IV-probit
+subtitulo_portfolio: Extensión de modelos binarios cuando una covariable continua es potencialmente endógena.
+
+pregunta_central: ¿Cómo estimar una respuesta binaria cuando una de las covariables centrales es continua pero endógena?
+tipo_datos: corte transversal
+unidad_de_analisis: hogares / mujeres
+variable_dependiente_binaria: inlf
+variables_clave: nwifeinc como endógena continua; instrumento principal: huseduc; controles demográficos habituales
+
+problema_econometrico: Endogeneidad de un regresor continuo dentro de un modelo probit.
+riesgo_del_analisis_ingenuo: Un probit exógeno puede confundir correlación estructural con componente no observado compartido con la variable endógena.
+intuicion_del_problema: En no lineales, la corrección de endogeneidad requiere algo más fino que “hacer 2SLS y listo”.
+
+modelo_binario_principal: Probit con control function (Rivers-Vuong), comparado con ivprobit y LPM-IV.
+metodos_comparados: probit exógeno, control function, IV-probit por máxima verosimilitud, LPM-IV, bootstrap de APEs.
+comparacion_lpm_probit_logit: El foco no está en probit vs logit sino en exógeno vs endógeno.
+por_que_este_metodo: Es el enfoque natural cuando la dependiente es binaria y la covariable problemática es continua.
+
+efecto_marginal_o_probabilidad_clave: El taller organiza la comparación de APEs corrigiendo por endogeneidad y muestra cómo cambia la lectura frente al modelo exógeno.
+resultado_principal: La historia central es metodológica: cómo llevar IV a un contexto binario de manera consistente y cómo interpretar APEs estructurales.
+resultado_secundario: La primera etapa aparece fuerte y la sobreidentificación no muestra señales claras de invalidez, aunque la lectura sigue siendo cuidadosa y pedagógica.
+advertencia_de_interpretacion: En este contexto, los APEs corregidos por endogeneidad son más informativos que los coeficientes crudos del modelo.
+aprendizaje_clave: En binaria con endogeneidad continua, el salto importante es pasar de un probit estándar a una estrategia de control function/IV bien diagnosticada.
+
+que_mostrar_en_portfolio: Caso técnico fuerte sobre cómo resolver endogeneidad en modelos binarios.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Esquema de dos etapas CF.
+visual_sugerido_2: Tabla de APEs: exógeno vs CF-IV vs IV-probit.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio_alto

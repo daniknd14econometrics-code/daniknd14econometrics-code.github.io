@@ -1,0 +1,303 @@
+---
+title: "Cuando MCO no alcanza"
+subtitle: "Educación endógena y salario con variables instrumentales"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+<style>
+.hero-box {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+  border: 1px solid #dbe4ff;
+  border-radius: 18px;
+  padding: 28px 30px;
+  margin-bottom: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.hero-sub {
+  font-size: 1.08rem;
+  color: #475569;
+  margin-bottom: 0;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 24px 0 28px 0;
+}
+
+.metric-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+.metric-label {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.metric-note {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.section-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+  margin: 18px 0;
+}
+
+.section-box h2, .section-box h3 {
+  margin-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.table-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+  margin: 18px 0;
+}
+
+.small-note {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .metric-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quick-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+::: {.hero-box}
+::: {.hero-title}
+La estimación cambia fuerte cuando trato a `educ` como endógena
+:::
+
+::: {.hero-sub}
+En este caso, pasar de MCO a IV/2SLS no es un detalle técnico: cambia la magnitud del retorno estimado de la educación y mejora la credibilidad de la interpretación.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+MCO robusto
+:::
+
+::: {.metric-value}
+0.078
+:::
+
+::: {.metric-note}
+Coeficiente de `educ`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+IV/2SLS robusto
+:::
+
+::: {.metric-value}
+0.146
+:::
+
+::: {.metric-note}
+Coeficiente de `educ`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Test de endogeneidad
+:::
+
+::: {.metric-value}
+p = 0.0000
+:::
+
+::: {.metric-note}
+Se rechaza exogeneidad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Primera etapa / Hansen
+:::
+
+::: {.metric-value}
+70.1 / 0.877
+:::
+
+::: {.metric-note}
+KP F fuerte, Hansen no rechaza
+:::
+:::
+
+::::
+
+## Resumen
+
+Este caso analiza cómo cambia la estimación del retorno de la educación sobre el salario cuando la educación se trata como potencialmente endógena. La comparación entre MCO e IV/2SLS muestra que, cuando hay evidencia de endogeneidad, el análisis ingenuo puede subestimar o distorsionar la magnitud del efecto.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+¿Cómo cambia la estimación del retorno de la educación sobre el salario cuando tratamos a la educación como potencialmente endógena?
+
+::: {.small-note}
+Variable dependiente: `lwage`. Variable endógena: `educ`. Controles: `exper`, `expersq`. Instrumentos: `meduc`, `feduc`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+Un MCO simple puede mezclar el efecto de la educación con habilidad u otros factores no observados. La estrategia IV usa la variación exógena inducida por la educación de los padres para identificar un parámetro más creíble.
+
+<span class="badge">Portfolio econométrico</span>
+:::
+
+::::
+
+## Por qué este problema importa
+
+En una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO deja de tener interpretación causal.
+
+Ese es el problema central del caso: distinguir entre una simple asociación y un efecto estimado con una estrategia más creíble de identificación.
+
+## Datos y variables
+
+Se trabaja con datos de corte transversal a nivel de individuos.
+
+- Variable dependiente: `lwage`
+- Variable endógena de interés: `educ`
+- Controles: `exper`, `expersq`
+- Instrumentos excluidos: `meduc`, `feduc`
+
+## Estrategia empírica
+
+La secuencia del análisis es la siguiente:
+
+1. Estimar una ecuación salarial por MCO.
+2. Reestimar el modelo usando IV/2SLS, tratando a `educ` como endógena.
+3. Evaluar si la endogeneidad es empíricamente relevante.
+4. Revisar la fortaleza de la primera etapa.
+5. Verificar si los instrumentos superan los tests de sobreidentificación.
+
+## Qué pasa con un análisis ingenuo
+
+Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno causal.
+
+La lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.
+
+::: {.table-box}
+## Resultados principales
+
+En MCO, el coeficiente estimado de `educ` es aproximadamente 0.078. Cuando se instrumenta la educación con la educación de la madre y del padre, el coeficiente IV/2SLS robusto sube a aproximadamente 0.146.
+
+Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV.
+
+| Modelo | Coeficiente de `educ` | Error estándar | p-valor | N |
+|---|---:|---:|---:|---:|
+| MCO estándar | 0.0780 | 0.0066 | 0.000 | 935 |
+| MCO robusto | 0.0780 | 0.0068 | 0.000 | 935 |
+| IV/2SLS | 0.1457 | 0.0196 | 0.000 | 722 |
+| IV/2SLS robusto | 0.1457 | 0.0183 | 0.000 | 722 |
+:::
+
+::: {.table-box}
+## Diagnósticos clave
+
+### 1. Endogeneidad
+
+El test de endogeneidad rechaza la hipótesis nula de exogeneidad de `educ`. Por lo tanto, no hay una buena base empírica para quedarse con MCO como especificación principal.
+
+### 2. Relevancia de instrumentos
+
+La primera etapa muestra que `meduc` y `feduc` tienen poder explicativo sobre `educ`. Los estadísticos reportados para relevancia son altos, lo que reduce la preocupación por instrumentos débiles.
+
+### 3. Sobreidentificación
+
+Los tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta.
+
+| Diagnóstico | Resultado | Lectura |
+|---|---:|---|
+| Test de endogeneidad | chi2 = 17.2702, p = 0.0000 | Se rechaza exogeneidad de `educ` |
+| Primera etapa | KP rk Wald F = 70.135 | Instrumentos fuertes |
+| Sobreidentificación (Hansen J) | p = 0.8767 | No hay evidencia contra la validez conjunta |
+:::
+
+## Lectura profesional del caso
+
+La enseñanza principal no es simplemente “correr 2SLS”. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:
+
+- justificar por qué MCO puede estar sesgado;
+- demostrar que la primera etapa es suficientemente fuerte;
+- no sobreinterpretar los tests de sobreidentificación.
+
+En otras palabras, el valor del caso no está solo en la técnica, sino en el criterio econométrico con el que se decide cuándo abandonar una estimación ingenua.
+
+## Cierre
+
+Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.

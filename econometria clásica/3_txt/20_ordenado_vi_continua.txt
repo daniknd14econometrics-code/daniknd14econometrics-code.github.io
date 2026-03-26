@@ -1,0 +1,35 @@
+id_taller: 20
+archivo_do: 20taller_Ordenado_VI_Continua.do
+archivo_log: 20_taller.log
+familia_metodo: ordenada
+
+titulo_provisorio: Ordenado con regresor endógeno continuo: control function en ordered probit
+subtitulo_portfolio: Extensión del ordered probit cuando una covariable continua se trata como potencialmente endógena.
+
+pregunta_central: ¿Cómo corregir endogeneidad en un modelo ordered probit cuando la covariable principal es continua?
+tipo_datos: corte transversal
+unidad_de_analisis: individuos
+variable_dependiente_ordinal: pctstck
+naturaleza_ordinal_del_resultado: tres categorías ordenadas
+variables_clave: educ como endógena aproximada; pyears como instrumento didáctico; controles demográficos y financieros
+
+problema_econometrico: Endogeneidad de educación en un contexto ordinal no lineal.
+riesgo_del_analisis_ingenuo: Un ordered probit exógeno puede atribuir a educación un efecto que en parte proviene de componentes no observados.
+intuicion_del_problema: La estrategia de residual/control function puede adaptarse al entorno ordinal para capturar la parte endógena.
+
+modelo_ordenado_principal: ordered probit con residual de primera etapa
+metodos_comparados: ordered probit exógeno, primera etapa lineal, ordered probit con residual, APEs y bootstrap.
+por_que_este_metodo: Es una vía práctica para extender la corrección de endogeneidad a respuestas ordinales.
+
+interpretacion_de_cortes_o_probabilidades: La lectura relevante está en los cambios de probabilidad por categoría una vez corregida la endogeneidad.
+resultado_ordinal_clave: La pieza debe apoyarse en el modelo principal y en la lógica del control function más que en incidentes secundarios del bootstrap.
+resultado_principal: El taller muestra cómo combinar una estructura ordinal con corrección de endogeneidad sin caer en simplificaciones lineales.
+resultado_secundario: El bootstrap aparece como complemento de inferencia y no como el eje narrativo del caso.
+aprendizaje_clave: Los modelos no lineales con endogeneidad requieren adaptar la estrategia al tipo de variable dependiente.
+
+que_mostrar_en_portfolio: Caso técnico breve sobre endogeneidad en modelos ordinales.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Esquema de dos etapas para ordered probit con residual.
+visual_sugerido_2: Tabla de probabilidades/APE por categoría antes y después de corregir endogeneidad.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio_alto

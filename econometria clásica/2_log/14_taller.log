@@ -1,0 +1,854 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\14_taller.log
+  log type:  text
+ opened on:  26 Mar 2026, 04:28:14
+
+. do "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\3. Estrategia empirica\3. Modelos\talleres por tema - teoria econometrica\14taller_Binari
+> a_VI_Discreta.do"
+
+. * Capitulo 15.
+. 
+. * En el taller previo vimos el caso en el cual tenemos una variable dependiente binaria y una variable endogena continua. 
+. * Bajo ese enfoque podemos estimar tanto por la estrategia de Control Function (un enfoque de residuo en dos etapas).
+. * o mediante el enfoque de estimar la log-verosimiltud conjunta de un modelo donde y1 es binaria pero y2 es continua,
+. * lo cual nos lleva a una log-verosimiltud que tiene una parte bernoulli (por y1) y una parte normal (por y2).
+. * Lo importante es que esta log-verosimiltud es diferente si, por el contrario, y2 fuese binaria. 
+. 
+. * En el presente taller, ahora la variable que suponemos endogena tambien es binaria.
+. * En este caso, como explica Wooldridge, se nos anula la estrategia de Control Function, ya que no nos arroja estimaciones consistentes de los APE.
+. * Por lo que el comando cfprobit lo abandonamos.
+. * Pero tambien debemos abandonar el comando ivprobit, ya que este comando esta hecho para log-verosimiltud que surje cuando y2 es continua. 
+. * El comando que usa la log-verosimiltud correcta para el caso donde y2 es binaria, es el comando biprobit.
+. * Para detalles de las log-verosimiltudes en un caso y en otro, ver el libro de wooldridge.
+. 
+. * Si pensamos por ejemplo, en el caso de estimar una binaria que representa si se esforzaron o no en innovar, entonces esa variable dependiente es binaria.
+. * Pero quiza en ese contexto, podria pasar que no tenemos una variable endogena siquiera. Y si la tenemos, si es continua, no estariamos en el caso de este taller,
+>  sino del caso del taller anterior.
+. * Pero si nuestra variable dependiente es, en cambio, la binaria que representa si innovaron o no, y dado que esto acontece luego de haberse esforzado, entonces ah
+> ora si,
+. * tenemos nuestra dependiente innova=1 como y1 que dependera de si se esforzaron o no, la binaria y2=1 si se esforzaron. En este caso, y2 claramente seria endogena
+> , y dado que ambas son binarias,
+. * estamos en el caso del presente taller. Posiblemente sea de interes ver el impacto de y2 en y1, lo que incluso representa el efecto promedio del tratamiento (ATE
+> ). 
+. * Es decir, el efecto promedio de haberse esforzado sobre la probabilidad de innovar. Estos detalles se encuentran en el manual de Wooldridge.
+. * Eso si, hay que tener instrumentos no triviales para y2 para la identificacion.
+. * recordar que siempre podemos estimar, alternativamente, para referencia, el MPL-IV, asi como un MPL exogeno o un probit exogeno.
+. 
+. * Ojo, si la variable dependiente y1 fuese continua, pero y2 sigue siendo binaria (un tratamiento), entonces sigue pasando que y2 sera endogena en la ecuacion de y
+> 1, pero
+. * pero como y1 es ahora continua, no estariamos en el contexto de modelos de respuesta binaria, y en particular, no vamos a estimar este escenario con esta log-ver
+> osimiltud,
+. * sino que simplemente es un caso del mundo de los modelos lineales, con un regresor endogeno, que no importa si es binario o continuo, se trata igual. (ver teoria
+>  de IV-2SLS).
+. 
+. ***************************************************************************
+. 
+. clear all
+
+. set more off
+
+. set seed 12345
+
+. 
+. use labsup, clear
+
+. 
+. describe 
+
+Contains data from labsup.dta
+ Observations:        31,857                  
+    Variables:            19                  2 Jan 2002 10:01
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+kidcount        byte    %8.0g                 number of kids
+morekids        byte    %8.0g                 had more than 2 kids
+boys2           byte    %8.0g                 first two births boys
+girls2          byte    %8.0g                 first two births girls
+boy1st          byte    %8.0g                 first birth boy
+boy2nd          byte    %8.0g                 second birth boy
+samesex         byte    %8.0g                 first two kids are of same sex
+multi2nd        byte    %8.0g                 =1 if 2nd birth is twin
+age             byte    %8.0g                 age of mom
+agefstm         byte    %8.0g                 age of mom at first birth
+black           byte    %8.0g                 =1 of black
+hispan          byte    %8.0g                 =1 if hispanic
+worked          byte    %8.0g                 mom worked last year
+weeks           byte    %8.0g                 weeks worked mom
+hours           byte    %8.0g                 hours of work per week, mom
+labinc          float   %9.0g                 mom's labor income, $1000s
+faminc          float   %9.0g                 family income, $1000s
+nonmomi         float   %9.0g                 'non-mom' income, $1000s
+educ            byte    %8.0g                 moms years of education
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. summarize 
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+    kidcount |     31,857    2.752237    .9771916          2         12
+    morekids |     31,857    .4910067     .499927          0          1
+       boys2 |     31,857    .2599429    .4386099          0          1
+      girls2 |     31,857    .2428352     .428803          0          1
+      boy1st |     31,857    .5112848    .4998805          0          1
+-------------+---------------------------------------------------------
+      boy2nd |     31,857    .5058229    .4999739          0          1
+     samesex |     31,857     .502778    .5000001          0          1
+    multi2nd |     31,857    .0086637    .0926765          0          1
+         age |     31,857    29.74175    3.613745         21         35
+     agefstm |     31,857    20.11774    2.888592         15         32
+-------------+---------------------------------------------------------
+       black |     31,857    .4129705    .4923753          0          1
+      hispan |     31,857     .593182    .4912481          0          1
+      worked |     31,857    .5897919    .4918791          0          1
+       weeks |     31,857    22.67354    22.60146          0         52
+       hours |     31,857    21.22011    19.49892          0         99
+-------------+---------------------------------------------------------
+      labinc |     31,857    8.531143    11.43481          0   185.7872
+      faminc |     31,857    40.18001    23.83131  -20.98123    157.438
+     nonmomi |     31,857     31.7618    20.41241  -39.93675    157.438
+        educ |     31,857    11.00534    3.305196          0         20
+
+. 
+. gen age2 = age^2
+
+. 
+. ****************************************************************************
+. *************** Modelos de referencia para este caso ***********************
+. ****************************************************************************
+. 
+. **# MPL (exogeno)
+. regress worked i.morekids nonmomi educ age age2 black hispan, vce(robust)
+
+Linear regression                               Number of obs     =     31,857
+                                                F(7, 31849)       =     452.07
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0817
+                                                Root MSE          =      .4714
+
+------------------------------------------------------------------------------
+             |               Robust
+      worked | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |  -.1091198   .0055043   -19.82   0.000    -.1199084   -.0983312
+     nonmomi |  -.0011675    .000139    -8.40   0.000      -.00144    -.000895
+        educ |   .0206475   .0009112    22.66   0.000     .0188614    .0224336
+         age |   .0562704   .0113556     4.96   0.000      .034013    .0785278
+        age2 |  -.0007829   .0001948    -4.02   0.000    -.0011646   -.0004011
+       black |   .0176482   .0347904     0.51   0.612    -.0505423    .0858387
+      hispan |  -.1285859   .0347921    -3.70   0.000    -.1967798   -.0603919
+       _cons |   -.448645   .1670992    -2.68   0.007    -.7761658   -.1211242
+------------------------------------------------------------------------------
+
+. estimates store mpl  
+
+. 
+. **# Probit (exogeno)
+. probit worked i.morekids nonmomi educ age age2 i.black i.hispan, vce(robust)
+
+Iteration 0:  Log pseudolikelihood = -21565.093  
+Iteration 1:  Log pseudolikelihood = -20222.271  
+Iteration 2:  Log pseudolikelihood = -20218.111  
+Iteration 3:  Log pseudolikelihood = -20218.111  
+
+Probit regression                                      Number of obs =  31,857
+                                                       Wald chi2(7)  = 2579.91
+                                                       Prob > chi2   =  0.0000
+Log pseudolikelihood = -20218.111                      Pseudo R2     =  0.0625
+
+------------------------------------------------------------------------------
+             |               Robust
+      worked | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |  -.2986554   .0150563   -19.84   0.000    -.3281652   -.2691457
+     nonmomi |  -.0031412   .0003771    -8.33   0.000    -.0038803   -.0024021
+        educ |   .0554282   .0025219    21.98   0.000     .0504853    .0603711
+         age |   .1479387   .0309247     4.78   0.000     .0873275    .2085499
+        age2 |  -.0020364   .0005317    -3.83   0.000    -.0030786   -.0009943
+     1.black |   .0412891   .0912742     0.45   0.651     -.137605    .2201833
+    1.hispan |  -.3586388   .0914759    -3.92   0.000    -.5379284   -.1793493
+       _cons |  -2.496476   .4530146    -5.51   0.000    -3.384368   -1.608583
+------------------------------------------------------------------------------
+
+. *  APE promedio (margins usa método delta)
+. margins, dydx(*) post
+
+Average marginal effects                                Number of obs = 31,857
+Model VCE: Robust
+
+Expression: Pr(worked), predict()
+dy/dx wrt:  1.morekids nonmomi educ age age2 1.black 1.hispan
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |   -.109466   .0055056   -19.88   0.000    -.1202568   -.0986753
+     nonmomi |  -.0011387   .0001362    -8.36   0.000    -.0014058   -.0008717
+        educ |   .0200938   .0008936    22.49   0.000     .0183425    .0218452
+         age |   .0536308   .0111984     4.79   0.000     .0316823    .0755792
+        age2 |  -.0007383   .0001926    -3.83   0.000    -.0011158   -.0003607
+     1.black |   .0150252    .033333     0.45   0.652    -.0503064    .0803567
+    1.hispan |  -.1321581   .0336373    -3.93   0.000     -.198086   -.0662301
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store  ape_probit
+
+. 
+. **# MPL-IV (justoid)
+. ivregress 2sls worked nonmomi educ age age2 black hispan (i.morekids = samesex), vce(robust)
+
+Instrumental-variables 2SLS regression            Number of obs   =     31,857
+                                                  Wald chi2(7)    =    2622.78
+                                                  Prob > chi2     =     0.0000
+                                                  R-squared       =     0.0737
+                                                  Root MSE        =     .47341
+
+------------------------------------------------------------------------------
+             |               Robust
+      worked | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |   -.200832   .0964607    -2.08   0.037    -.3898915   -.0117726
+     nonmomi |    -.00126   .0001698    -7.42   0.000    -.0015928   -.0009271
+        educ |   .0175522   .0033773     5.20   0.000     .0109329    .0241715
+         age |   .0603517   .0121644     4.96   0.000     .0365098    .0841935
+        age2 |  -.0008178   .0001988    -4.11   0.000    -.0012075   -.0004281
+       black |   .0168118   .0351678     0.48   0.633    -.0521159    .0857396
+      hispan |  -.1308112   .0352412    -3.71   0.000    -.1998827   -.0617397
+       _cons |   -.454969   .1678221    -2.71   0.007    -.7838942   -.1260437
+------------------------------------------------------------------------------
+Endogenous: 1.morekids
+Exogenous:  nonmomi educ age age2 black hispan samesex
+
+. estimates store mpl_iv   
+
+. * recordar que APE en MPL = coeficiente
+. 
+. ivregress 2sls worked nonmomi educ age age2 black hispan (morekids = samesex), vce(robust)
+
+Instrumental-variables 2SLS regression            Number of obs   =     31,857
+                                                  Wald chi2(7)    =    2622.78
+                                                  Prob > chi2     =     0.0000
+                                                  R-squared       =     0.0737
+                                                  Root MSE        =     .47341
+
+------------------------------------------------------------------------------
+             |               Robust
+      worked | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    morekids |   -.200832   .0964607    -2.08   0.037    -.3898915   -.0117726
+     nonmomi |    -.00126   .0001698    -7.42   0.000    -.0015928   -.0009271
+        educ |   .0175522   .0033773     5.20   0.000     .0109329    .0241715
+         age |   .0603517   .0121644     4.96   0.000     .0365098    .0841935
+        age2 |  -.0008178   .0001988    -4.11   0.000    -.0012075   -.0004281
+       black |   .0168118   .0351678     0.48   0.633    -.0521159    .0857396
+      hispan |  -.1308112   .0352412    -3.71   0.000    -.1998827   -.0617397
+       _cons |   -.454969   .1678221    -2.71   0.007    -.7838942   -.1260437
+------------------------------------------------------------------------------
+Endogenous: morekids
+Exogenous:  nonmomi educ age age2 black hispan samesex
+
+. * Relevancia (1ra etapa) 
+. estat firststage
+
+  First-stage regression summary statistics
+  --------------------------------------------------------------------------
+               |            Adjusted      Partial       Robust
+      Variable |   R-sq.       R-sq.        R-sq.    F(1,31849)   Prob > F
+  -------------+------------------------------------------------------------
+      morekids |  0.0717      0.0714       0.0032       103.808    0.0000
+  --------------------------------------------------------------------------
+
+
+. * validez (solo si hay sobreidentificación)
+. *estat overid
+. 
+.  
+. *************************************************************************
+. ***************Biprobit con y2 = binaria y v2~N(0,1) ********************
+. *************************************************************************
+. 
+. **# Bi-Probit: dos probit conjuntos con VI
+. 
+. /*
+> El caso 15.7.3 es un recursive bivariate probit (dos ecuaciones probit con errores correlacionados, 
+> y y2 aparece como regressor en la ecuación de y1). Eso en Stata se estima por MLE con biprobit.
+> 
+> Opción A (directa y "Wooldridge 15.7.3"): 
+> biprobit estima modelos probit bivariados por máxima verosimilitud. 
+> Para el caso recursivo, lo clave es poner y2 en la ecuación 1:
+> biprobit (y1 = y2 z1) (y2 = z1 z2), vce(robust)
+> z2 son los instrumentos excluidos (idealmente al menos uno).
+> El parámetro de dependencia entre errores aparece como rho (o athrho internamente).
+> Esto corresponde a tu verosimilitud en términos de (⋅): una sola log-verosimilitud total que suma 
+> sobre i, evaluando cada observación en el "caso" que le toca (00,01,10,11).
+> */
+. 
+. ** Pero falta un pequeño ajuste: biprobit estima dos ecuaciones, una para worked y otra para morekids.
+. ** En ambas ecuaciones las estima por probit, y de hecho las estima conjuntamente, por eso es un biprobit. 
+. ** si hacemos un tab morekids vemos que solamente toma dos valores. ¿que pasa con morekids cuando entra como regresor en la ecuacion de worked?
+. **  es lo mismo para Stata ponerlo como morekids o como i.morekids a la hora de que nos calcule los coeficientes.
+. ** Sin embargo, luego queremos pedir efectos parciales, por ejemplo, el efecto parcial promedio (APE) para cada coeficiente, y ahi si conviene ser claros con Stata
+> ,
+. ** cuando pidamos el APE, es mejor indicarle sin rodeos a Stata si la variable z es binaria o categorica con "i.z" 
+. ** Esto es porque al calcular un efecto parcial, si stata interpreta que es continua, entonces aplica la derivada parcial.
+. ** pero si la variable es binaria o categorica, hay que ser claros con stata para que no haga la derivada en ese caso, si no que debe hacer la diferencia entre dos
+>  "indices" diferentes.
+. 
+. biprobit (worked = i.morekids nonmomi educ age age2 i.black i.hispan) (morekids = nonmomi educ age age2 i.black i.hispan i.samesex), vce(robust)
+
+Fitting comparison equation 1:
+
+Iteration 0:  Log pseudolikelihood = -21565.093  
+Iteration 1:  Log pseudolikelihood = -20222.271  
+Iteration 2:  Log pseudolikelihood = -20218.111  
+Iteration 3:  Log pseudolikelihood = -20218.111  
+
+Fitting comparison equation 2:
+
+Iteration 0:  Log pseudolikelihood = -22076.436  
+Iteration 1:  Log pseudolikelihood = -20893.502  
+Iteration 2:  Log pseudolikelihood = -20889.981  
+Iteration 3:  Log pseudolikelihood = -20889.981  
+
+Comparison:   Log pseudolikelihood = -41108.092
+
+Fitting full model:
+
+Iteration 0:  Log pseudolikelihood = -41108.092  
+Iteration 1:  Log pseudolikelihood = -41106.857  
+Iteration 2:  Log pseudolikelihood = -41106.459  
+Iteration 3:  Log pseudolikelihood = -41106.423  
+Iteration 4:  Log pseudolikelihood = -41106.422  
+
+Seemingly unrelated bivariate probit                   Number of obs =  31,857
+                                                       Wald chi2(14) = 5018.79
+Log pseudolikelihood = -41106.422                      Prob > chi2   =  0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+             | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+worked       |
+  1.morekids |  -.7025719   .1984941    -3.54   0.000    -1.091613   -.3135307
+     nonmomi |  -.0034903   .0003997    -8.73   0.000    -.0042738   -.0027068
+        educ |   .0405621    .008347     4.86   0.000     .0242022     .056922
+         age |   .1632256   .0312564     5.22   0.000     .1019642     .224487
+        age2 |  -.0021524   .0005286    -4.07   0.000    -.0031884   -.0011163
+     1.black |   .0367322    .091713     0.40   0.689     -.143022    .2164864
+    1.hispan |  -.3614826   .0919009    -3.93   0.000    -.5416051   -.1813601
+       _cons |  -2.475317   .4506098    -5.49   0.000    -3.358496   -1.592138
+-------------+----------------------------------------------------------------
+morekids     |
+     nonmomi |  -.0027063   .0003765    -7.19   0.000    -.0034442   -.0019683
+        educ |  -.0907148   .0026006   -34.88   0.000    -.0958118   -.0856177
+         age |   .1190243   .0308385     3.86   0.000      .058582    .1794666
+        age2 |   -.001028   .0005296    -1.94   0.052    -.0020661    9.99e-06
+     1.black |  -.0277804   .0907831    -0.31   0.760    -.2057119    .1501512
+    1.hispan |  -.0690523   .0909279    -0.76   0.448    -.2472676     .109163
+   1.samesex |   .1446566   .0145496     9.94   0.000     .1161399    .1731734
+       _cons |  -1.572557   .4523086    -3.48   0.001    -2.459066   -.6860488
+-------------+----------------------------------------------------------------
+     /athrho |   .2599507   .1358308     1.91   0.056    -.0062728    .5261742
+-------------+----------------------------------------------------------------
+         rho |   .2542495   .1270503                     -.0062727    .4824512
+------------------------------------------------------------------------------
+Wald test of rho=0: chi2(1) = 3.66257                     Prob > chi2 = 0.0556
+
+. margins, dydx(*) 
+
+Average marginal effects                                Number of obs = 31,857
+Model VCE: Robust
+
+Expression: Pr(worked=1,morekids=1), predict()
+dy/dx wrt:  1.morekids nonmomi educ age age2 1.black 1.hispan 1.samesex
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |  -.1206849   .0308832    -3.91   0.000    -.1812149   -.0601549
+     nonmomi |  -.0011809   .0001111   -10.63   0.000    -.0013987   -.0009632
+        educ |  -.0134871   .0017617    -7.66   0.000      -.01694   -.0100342
+         age |   .0535482   .0091256     5.87   0.000     .0356623    .0714341
+        age2 |  -.0005855   .0001572    -3.72   0.000    -.0008937   -.0002774
+     1.black |  -.0001251   .0280606    -0.00   0.996    -.0551228    .0548725
+    1.hispan |  -.0763524   .0288428    -2.65   0.008    -.1328832   -.0198216
+   1.samesex |   .0322717   .0032606     9.90   0.000      .025881    .0386624
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. 
+. /* Stata lo dice explícito:
+> Expression: Pr(worked=1,morekids=1), predict()
+> O sea: con biprobit, cuando vos ponés "margins, dydx(*)" sin especificar predict(), Stata usa por defecto la probabilidad conjunta 
+> P(y1=1,y2=1) (el caso "11", pero nos falta el caso "10"). Esto es estándar: en modelos bivariados, el default suele ser el evento conjunto 
+> Entonces el −0.1206 para morekids es el efecto marginal sobre: 
+> Pr(worked=1, morekids=1), no sobre Pr(worked=1).
+> */
+. 
+. biprobit (worked = i.morekids nonmomi educ age age2 i.black i.hispan) (morekids = nonmomi educ age age2 i.black i.hispan i.samesex), vce(robust)
+
+Fitting comparison equation 1:
+
+Iteration 0:  Log pseudolikelihood = -21565.093  
+Iteration 1:  Log pseudolikelihood = -20222.271  
+Iteration 2:  Log pseudolikelihood = -20218.111  
+Iteration 3:  Log pseudolikelihood = -20218.111  
+
+Fitting comparison equation 2:
+
+Iteration 0:  Log pseudolikelihood = -22076.436  
+Iteration 1:  Log pseudolikelihood = -20893.502  
+Iteration 2:  Log pseudolikelihood = -20889.981  
+Iteration 3:  Log pseudolikelihood = -20889.981  
+
+Comparison:   Log pseudolikelihood = -41108.092
+
+Fitting full model:
+
+Iteration 0:  Log pseudolikelihood = -41108.092  
+Iteration 1:  Log pseudolikelihood = -41106.857  
+Iteration 2:  Log pseudolikelihood = -41106.459  
+Iteration 3:  Log pseudolikelihood = -41106.423  
+Iteration 4:  Log pseudolikelihood = -41106.422  
+
+Seemingly unrelated bivariate probit                   Number of obs =  31,857
+                                                       Wald chi2(14) = 5018.79
+Log pseudolikelihood = -41106.422                      Prob > chi2   =  0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+             | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+worked       |
+  1.morekids |  -.7025719   .1984941    -3.54   0.000    -1.091613   -.3135307
+     nonmomi |  -.0034903   .0003997    -8.73   0.000    -.0042738   -.0027068
+        educ |   .0405621    .008347     4.86   0.000     .0242022     .056922
+         age |   .1632256   .0312564     5.22   0.000     .1019642     .224487
+        age2 |  -.0021524   .0005286    -4.07   0.000    -.0031884   -.0011163
+     1.black |   .0367322    .091713     0.40   0.689     -.143022    .2164864
+    1.hispan |  -.3614826   .0919009    -3.93   0.000    -.5416051   -.1813601
+       _cons |  -2.475317   .4506098    -5.49   0.000    -3.358496   -1.592138
+-------------+----------------------------------------------------------------
+morekids     |
+     nonmomi |  -.0027063   .0003765    -7.19   0.000    -.0034442   -.0019683
+        educ |  -.0907148   .0026006   -34.88   0.000    -.0958118   -.0856177
+         age |   .1190243   .0308385     3.86   0.000      .058582    .1794666
+        age2 |   -.001028   .0005296    -1.94   0.052    -.0020661    9.99e-06
+     1.black |  -.0277804   .0907831    -0.31   0.760    -.2057119    .1501512
+    1.hispan |  -.0690523   .0909279    -0.76   0.448    -.2472676     .109163
+   1.samesex |   .1446566   .0145496     9.94   0.000     .1161399    .1731734
+       _cons |  -1.572557   .4523086    -3.48   0.001    -2.459066   -.6860488
+-------------+----------------------------------------------------------------
+     /athrho |   .2599507   .1358308     1.91   0.056    -.0062728    .5261742
+-------------+----------------------------------------------------------------
+         rho |   .2542495   .1270503                     -.0062727    .4824512
+------------------------------------------------------------------------------
+Wald test of rho=0: chi2(1) = 3.66257                     Prob > chi2 = 0.0556
+
+. margins, dydx(*) predict(pmarg1) post
+
+Average marginal effects                                Number of obs = 31,857
+Model VCE: Robust
+
+Expression: Pr(worked=1), predict(pmarg1)
+dy/dx wrt:  1.morekids nonmomi educ age age2 1.black 1.hispan 1.samesex
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |  -.2559131    .070974    -3.61   0.000    -.3950196   -.1168067
+     nonmomi |  -.0012191   .0001315    -9.27   0.000    -.0014768   -.0009615
+        educ |   .0141681    .003252     4.36   0.000     .0077942    .0205419
+         age |   .0570136   .0107202     5.32   0.000     .0360024    .0780247
+        age2 |  -.0007518   .0001842    -4.08   0.000    -.0011128   -.0003908
+     1.black |     .01287   .0322388     0.40   0.690    -.0503169    .0760568
+    1.hispan |  -.1281197   .0327383    -3.91   0.000    -.1922855   -.0639539
+   1.samesex |          0  (omitted)
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store ape_biprobit
+
+. 
+. ** AHORA SI: vemos que ahora si obtenemos el valor exacto de la tabla de Wooldridge.
+. ** incluso un error estandar similar, mas alla que estos fueron calculados por metodo delta. 
+. biprobit (worked = i.morekids nonmomi educ age age2 i.black i.hispan) (morekids = nonmomi educ age age2 i.black i.hispan i.samesex), vce(robust)
+
+Fitting comparison equation 1:
+
+Iteration 0:  Log pseudolikelihood = -21565.093  
+Iteration 1:  Log pseudolikelihood = -20222.271  
+Iteration 2:  Log pseudolikelihood = -20218.111  
+Iteration 3:  Log pseudolikelihood = -20218.111  
+
+Fitting comparison equation 2:
+
+Iteration 0:  Log pseudolikelihood = -22076.436  
+Iteration 1:  Log pseudolikelihood = -20893.502  
+Iteration 2:  Log pseudolikelihood = -20889.981  
+Iteration 3:  Log pseudolikelihood = -20889.981  
+
+Comparison:   Log pseudolikelihood = -41108.092
+
+Fitting full model:
+
+Iteration 0:  Log pseudolikelihood = -41108.092  
+Iteration 1:  Log pseudolikelihood = -41106.857  
+Iteration 2:  Log pseudolikelihood = -41106.459  
+Iteration 3:  Log pseudolikelihood = -41106.423  
+Iteration 4:  Log pseudolikelihood = -41106.422  
+
+Seemingly unrelated bivariate probit                   Number of obs =  31,857
+                                                       Wald chi2(14) = 5018.79
+Log pseudolikelihood = -41106.422                      Prob > chi2   =  0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+             | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+worked       |
+  1.morekids |  -.7025719   .1984941    -3.54   0.000    -1.091613   -.3135307
+     nonmomi |  -.0034903   .0003997    -8.73   0.000    -.0042738   -.0027068
+        educ |   .0405621    .008347     4.86   0.000     .0242022     .056922
+         age |   .1632256   .0312564     5.22   0.000     .1019642     .224487
+        age2 |  -.0021524   .0005286    -4.07   0.000    -.0031884   -.0011163
+     1.black |   .0367322    .091713     0.40   0.689     -.143022    .2164864
+    1.hispan |  -.3614826   .0919009    -3.93   0.000    -.5416051   -.1813601
+       _cons |  -2.475317   .4506098    -5.49   0.000    -3.358496   -1.592138
+-------------+----------------------------------------------------------------
+morekids     |
+     nonmomi |  -.0027063   .0003765    -7.19   0.000    -.0034442   -.0019683
+        educ |  -.0907148   .0026006   -34.88   0.000    -.0958118   -.0856177
+         age |   .1190243   .0308385     3.86   0.000      .058582    .1794666
+        age2 |   -.001028   .0005296    -1.94   0.052    -.0020661    9.99e-06
+     1.black |  -.0277804   .0907831    -0.31   0.760    -.2057119    .1501512
+    1.hispan |  -.0690523   .0909279    -0.76   0.448    -.2472676     .109163
+   1.samesex |   .1446566   .0145496     9.94   0.000     .1161399    .1731734
+       _cons |  -1.572557   .4523086    -3.48   0.001    -2.459066   -.6860488
+-------------+----------------------------------------------------------------
+     /athrho |   .2599507   .1358308     1.91   0.056    -.0062728    .5261742
+-------------+----------------------------------------------------------------
+         rho |   .2542495   .1270503                     -.0062727    .4824512
+------------------------------------------------------------------------------
+Wald test of rho=0: chi2(1) = 3.66257                     Prob > chi2 = 0.0556
+
+. margins, at(morekids=(0 1)) predict(pmarg1) post
+
+Predictive margins                                      Number of obs = 31,857
+Model VCE: Robust
+
+Expression: Pr(worked=1), predict(pmarg1)
+1._at: morekids = 0
+2._at: morekids = 1
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .7109564   .0308594    23.04   0.000      .650473    .7714397
+          2  |   .4550432   .0402966    11.29   0.000     .3760634    .5340231
+------------------------------------------------------------------------------
+
+. lincom _b[2._at] - _b[1._at]
+
+ ( 1)  - 1bn._at + 2._at = 0
+
+------------------------------------------------------------------------------
+             | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         (1) |  -.2559131    .070974    -3.61   0.000    -.3950196   -.1168067
+------------------------------------------------------------------------------
+
+. disp (.4550432 -  .7109564)
+-.2559132
+
+. 
+. ** Notar que este es el ATE(z1) = P(worked=1 | z1, morekids=1) - P(worked=1 | z1, morekids=0)
+. 
+. 
+. /*
+> Opción B (más general, soporta varios tipos de endogeneidad): comando eprobit
+> eprobit (extended probit) permite covariables endógenas continuas, binarias u ordinales y te deja especificar que la endógena es binaria vía "probit" dentro de end
+> ogenous(). 
+> Para tu caso:
+> eprobit y1 z1, endogenous(y2 = z1 z2, probit)
+> Esto también es MLE y, conceptualmente, está alineado con el modelo de 15.7.3 (dos índices latentes con errores correlacionados y varianzas normalizadas).
+> */
+. 
+. eprobit worked nonmomi educ age age2 i.black i.hispan, endogenous(morekids = nonmomi educ age age2 i.black i.hispan i.samesex, probit) vce(robust)
+
+Iteration 0:  Log pseudolikelihood = -41106.785  
+Iteration 1:  Log pseudolikelihood = -41106.423  
+Iteration 2:  Log pseudolikelihood = -41106.422  
+
+Extended probit regression                             Number of obs =  31,857
+                                                       Wald chi2(7)  = 2510.51
+Log pseudolikelihood = -41106.422                      Prob > chi2   =  0.0000
+
+-------------------------------------------------------------------------------------------
+                          |               Robust
+                          | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+--------------------------+----------------------------------------------------------------
+worked                    |
+                  nonmomi |  -.0034903   .0003997    -8.73   0.000    -.0042738   -.0027068
+                     educ |   .0405643   .0083461     4.86   0.000     .0242062    .0569223
+                      age |   .1632257   .0312564     5.22   0.000     .1019643    .2244871
+                     age2 |  -.0021524   .0005286    -4.07   0.000    -.0031884   -.0011163
+                  1.black |   .0367332   .0917131     0.40   0.689    -.1430212    .2164875
+                 1.hispan |  -.3614863    .091901    -3.93   0.000     -.541609   -.1813637
+               1.morekids |  -.7025345   .1984726    -3.54   0.000    -1.091534   -.3135354
+                    _cons |  -2.475347   .4506104    -5.49   0.000    -3.358527   -1.592167
+--------------------------+----------------------------------------------------------------
+morekids                  |
+                  nonmomi |  -.0027063   .0003765    -7.19   0.000    -.0034442   -.0019683
+                     educ |  -.0907148   .0026006   -34.88   0.000    -.0958119   -.0856177
+                      age |   .1190242   .0308385     3.86   0.000     .0585819    .1794665
+                     age2 |   -.001028   .0005296    -1.94   0.052    -.0020661    1.00e-05
+                  1.black |  -.0277801   .0907831    -0.31   0.760    -.2057117    .1501514
+                 1.hispan |  -.0690521   .0909278    -0.76   0.448    -.2472674    .1091632
+                1.samesex |   .1446588   .0145495     9.94   0.000     .1161423    .1731752
+                    _cons |  -1.572558   .4523087    -3.48   0.001    -2.459066    -.686049
+--------------------------+----------------------------------------------------------------
+ corr(e.morekids,e.worked)|    .254225    .127036     2.00   0.045    -.0062652    .4824054
+-------------------------------------------------------------------------------------------
+
+. margins, dydx(*) post
+
+Average marginal effects                                Number of obs = 31,857
+Model VCE: Robust
+
+Expression: Average structural function probability, predict()
+dy/dx wrt:  nonmomi educ age age2 1.black 1.hispan 1.morekids 1.samesex
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     nonmomi |  -.0012907   .0001585    -8.14   0.000    -.0016013     -.00098
+        educ |   .0150001   .0027936     5.37   0.000     .0095247    .0204754
+         age |   .0603584   .0118431     5.10   0.000     .0371463    .0835706
+        age2 |  -.0007959   .0001971    -4.04   0.000    -.0011822   -.0004096
+     1.black |   .0136306   .0341359     0.40   0.690    -.0532746    .0805358
+    1.hispan |  -.1358661   .0344763    -3.94   0.000    -.2034384   -.0682939
+  1.morekids |  -.2558636   .0519339    -4.93   0.000    -.3576522    -.154075
+   1.samesex |          0  (omitted)
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store  ape_eprobit
+
+. 
+. /*
+> En eprobit, margins te reporta:
+> Average structural function probability
+> Eso corresponde a la probabilidad estructural del outcome, tipo:
+> Pr(worked=1 | intervengo morekids=0/1, x),
+> y por eso el APE de 1.morekids te da el famoso −0.256 que coincide con Wooldridge.
+> 
+> */
+. 
+. 
+. **# BI-Probit: dos probit conjuntos EXOGENO
+. 
+. biprobit (worked = i.morekids nonmomi educ age age2 i.black i.hispan) (morekids = nonmomi educ age age2 i.black i.hispan), vce(robust)
+
+Fitting comparison equation 1:
+
+Iteration 0:  Log pseudolikelihood = -21565.093  
+Iteration 1:  Log pseudolikelihood = -20222.271  
+Iteration 2:  Log pseudolikelihood = -20218.111  
+Iteration 3:  Log pseudolikelihood = -20218.111  
+
+Fitting comparison equation 2:
+
+Iteration 0:  Log pseudolikelihood = -22076.436  
+Iteration 1:  Log pseudolikelihood = -20945.401  
+Iteration 2:  Log pseudolikelihood = -20941.729  
+Iteration 3:  Log pseudolikelihood = -20941.729  
+
+Comparison:   Log pseudolikelihood =  -41159.84
+
+Fitting full model:
+
+Iteration 0:  Log pseudolikelihood =  -41159.84  
+Iteration 1:  Log pseudolikelihood = -41159.003  
+Iteration 2:  Log pseudolikelihood = -41158.409  
+Iteration 3:  Log pseudolikelihood = -41158.043  
+Iteration 4:  Log pseudolikelihood =  -41157.99  
+Iteration 5:  Log pseudolikelihood = -41157.989  
+
+Seemingly unrelated bivariate probit                   Number of obs =  31,857
+                                                       Wald chi2(13) = 5763.97
+Log pseudolikelihood = -41157.989                      Prob > chi2   =  0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+             | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+worked       |
+  1.morekids |  -.9663993   .1990892    -4.85   0.000    -1.356607   -.5761916
+     nonmomi |  -.0036516   .0003813    -9.58   0.000     -.004399   -.0029042
+        educ |   .0292476    .009477     3.09   0.002     .0106731    .0478221
+         age |   .1701076   .0304944     5.58   0.000     .1103397    .2298755
+        age2 |  -.0021836   .0005196    -4.20   0.000     -.003202   -.0011653
+     1.black |   .0325432   .0911358     0.36   0.721    -.1460797     .211166
+    1.hispan |  -.3550572   .0916697    -3.87   0.000    -.5347265    -.175388
+       _cons |  -2.403905   .4480761    -5.36   0.000    -3.282118   -1.525692
+-------------+----------------------------------------------------------------
+morekids     |
+     nonmomi |  -.0026773   .0003771    -7.10   0.000    -.0034164   -.0019381
+        educ |   -.090503   .0025923   -34.91   0.000    -.0955837   -.0854222
+         age |   .1204846   .0307773     3.91   0.000     .0601621     .180807
+        age2 |  -.0010565   .0005287    -2.00   0.046    -.0020927   -.0000203
+     1.black |    -.02663   .0913346    -0.29   0.771    -.2056425    .1523826
+    1.hispan |  -.0667949   .0914824    -0.73   0.465    -.2460972    .1125074
+       _cons |  -1.522285   .4513806    -3.37   0.001    -2.406975   -.6375953
+-------------+----------------------------------------------------------------
+     /athrho |   .4545144    .161488     2.81   0.005     .1380039     .771025
+-------------+----------------------------------------------------------------
+         rho |   .4256028   .1322364                      .1371344    .6475251
+------------------------------------------------------------------------------
+Wald test of rho=0: chi2(1) = 7.92164                     Prob > chi2 = 0.0049
+
+. margins, dydx(*) predict(pmarg1) post
+
+Average marginal effects                                Number of obs = 31,857
+Model VCE: Robust
+
+Expression: Pr(worked=1), predict(pmarg1)
+dy/dx wrt:  1.morekids nonmomi educ age age2 1.black 1.hispan
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  1.morekids |  -.3489256   .0690534    -5.05   0.000    -.4842677   -.2135836
+     nonmomi |  -.0012262   .0001235    -9.93   0.000    -.0014682   -.0009842
+        educ |   .0098213   .0035075     2.80   0.005     .0029467    .0166959
+         age |   .0571217   .0101442     5.63   0.000     .0372394     .077004
+        age2 |  -.0007333   .0001757    -4.17   0.000    -.0010777   -.0003889
+     1.black |   .0109546   .0307633     0.36   0.722    -.0493403    .0712494
+    1.hispan |  -.1207463   .0317921    -3.80   0.000    -.1830576    -.058435
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store ape_biprobit_exog
+
+. 
+. 
+. 
+. 
+. **# Tabla comparativa final
+. 
+. estimates dir
+
+-------------------------------------------------------------------------------------
+             |           Dependent  Number of        
+        Name | Command    variable     param.  Title 
+-------------+-----------------------------------------------------------------------
+         mpl | regress      worked          9  Linear regression
+  ape_probit | margins   no depvar         10  Average marginal effects
+      mpl_iv | ivregress    worked          9  Instrumental-variables 2SLS regression
+ape_biprobit | margins   no depvar         12  Average marginal effects
+ ape_eprobit | margins   no depvar         12  Average marginal effects
+ape_biprob~g | margins   no depvar         10  Average marginal effects
+-------------------------------------------------------------------------------------
+
+. 
+. esttab ///
+>     mpl ///
+>     ape_probit ///
+>     mpl_iv ///
+>     ape_biprobit ///
+>     ape_eprobit ///
+>     ape_biprobit_exog ///
+>     , ///
+>     se label ///
+>     b(%9.4f) se(%9.4f) ///
+>     star(* 0.10 ** 0.05 *** 0.01) ///
+>     mtitles("MPL" "Probit" ///
+>             "MPL-IV" ///
+>             "BIProb-VI" "eBIProb-VI" ///
+>             "BIProb") ///
+>     stats(N, fmt(%9.0g) labels("N")) ///
+>     compress nogaps
+
+----------------------------------------------------------------------------------------------
+                       (1)          (2)          (3)          (4)          (5)          (6)   
+                       MPL       Probit       MPL-IV    BIProb-VI    eBIProb~I       BIProb   
+----------------------------------------------------------------------------------------------
+had more than ~0    0.0000       0.0000       0.0000       0.0000       0.0000       0.0000   
+                       (.)          (.)          (.)          (.)          (.)          (.)   
+had more than ~1   -0.1091***   -0.1095***   -0.2008**    -0.2559***   -0.2559***   -0.3489***
+                  (0.0055)     (0.0055)     (0.0965)     (0.0710)     (0.0519)     (0.0691)   
+'non-mom' ~1000s   -0.0012***   -0.0011***   -0.0013***   -0.0012***   -0.0013***   -0.0012***
+                  (0.0001)     (0.0001)     (0.0002)     (0.0001)     (0.0002)     (0.0001)   
+moms years of ~n    0.0206***    0.0201***    0.0176***    0.0142***    0.0150***    0.0098***
+                  (0.0009)     (0.0009)     (0.0034)     (0.0033)     (0.0028)     (0.0035)   
+age of mom          0.0563***    0.0536***    0.0604***    0.0570***    0.0604***    0.0571***
+                  (0.0114)     (0.0112)     (0.0122)     (0.0107)     (0.0118)     (0.0101)   
+age2               -0.0008***   -0.0007***   -0.0008***   -0.0008***   -0.0008***   -0.0007***
+                  (0.0002)     (0.0002)     (0.0002)     (0.0002)     (0.0002)     (0.0002)   
+=1 of black         0.0176                    0.0168                                          
+                  (0.0348)                  (0.0352)                                          
+=1 if hispanic     -0.1286***                -0.1308***                                       
+                  (0.0348)                  (0.0352)                                          
+=1 of black=0                    0.0000                    0.0000       0.0000       0.0000   
+                                    (.)                       (.)          (.)          (.)   
+=1 of black=1                    0.0150                    0.0129       0.0136       0.0110   
+                               (0.0333)                  (0.0322)     (0.0341)     (0.0308)   
+=1 if hispanic=0                 0.0000                    0.0000       0.0000       0.0000   
+                                    (.)                       (.)          (.)          (.)   
+=1 if hispanic=1                -0.1322***                -0.1281***   -0.1359***   -0.1207***
+                               (0.0336)                  (0.0327)     (0.0345)     (0.0318)   
+first two kids~0                                           0.0000       0.0000                
+                                                              (.)          (.)                
+first two kids~1                                           0.0000       0.0000                
+                                                              (.)          (.)                
+Constant           -0.4486***                -0.4550***                                       
+                  (0.1671)                  (0.1678)                                          
+----------------------------------------------------------------------------------------------
+N                    31857        31857        31857        31857        31857        31857   
+----------------------------------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+.         
+.         
+. **# Prueba de exogeneidad
+. 
+. ** si usamos el comando biprobit, podemos ver directamente en la salida esta prueba de exogeneidad
+. ** alternativamente, tambien podemos solicitarla o armarla con la informacion que guarda el comando biprobit
+. ** tambien podemos hacer lo mismo con el comando eprobit
+. 
+. **# Prueba de relevancia
+. 
+. ** podemos armar una prueba pero no con estos comandos en forma directa, si no que lo que podemos hacer es una primera etapa como hicimos en el taller anterior.
+. 
+. 
+. **# Prueba de sobreidentificación
+. 
+. ** en el caso de contar con mas de un instrumento no trivial, podriamos armar una prueba al estilo Wooldridge, como hicimos en el taller anterior.
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\14_taller.log
+  log type:  text
+ closed on:  26 Mar 2026, 04:30:38
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

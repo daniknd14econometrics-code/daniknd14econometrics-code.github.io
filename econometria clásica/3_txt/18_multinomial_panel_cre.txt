@@ -1,0 +1,35 @@
+id_taller: 18
+archivo_do: 18taller_Multinomial_Panel.do
+archivo_log: 18_taller.log
+familia_metodo: multinomial
+
+titulo_provisorio: Multinomial en panel: una solución parsimoniosa vía correlated random effects
+subtitulo_portfolio: Extensión del logit multinomial a panel incorporando heterogeneidad inobservable con promedios temporales.
+
+pregunta_central: ¿Cómo introducir heterogeneidad inobservable en una elección multinomial de panel sin entrar en una maquinaria computacional excesiva?
+tipo_datos: panel
+unidad_de_analisis: individuos
+variable_dependiente_multicategoria: status
+categorias_resultado: escuela, casa, trabajo
+variables_clave: educ, exper, expersq, black, dummies de año, promedios temporales de covariables
+
+problema_econometrico: Heterogeneidad inobservable correlacionada en un modelo multinomial de panel.
+riesgo_del_analisis_ingenuo: Un mlogit agrupado con cluster puede ignorar una parte persistente de la decisión y sesgar la lectura de las probabilidades.
+intuicion_del_problema: CRE/Mundlak ofrece una vía simple para dejar entrar la heterogeneidad correlacionada sin abandonar la estructura multinomial.
+
+modelo_multinomial_principal: mlogit con promedios temporales (CRE/Mundlak)
+metodos_comparados: mlogit pooled y mlogit-CRE con test de promedios temporales.
+por_que_este_metodo: Es una forma parsimoniosa y enseñable de hacer “panel multinomial” con criterio.
+
+probabilidades_o_apes_clave: La comparación entre APEs pooled y CRE permite ver cuánto cambia la historia cuando se admite heterogeneidad correlacionada.
+comparacion_entre_categorias: Interesa mostrar qué variables mueven la probabilidad de cada estado cuando se incorpora Mundlak.
+resultado_principal: La pieza puede venderse como un caso de panel no lineal donde el valor está en la forma de absorber heterogeneidad con una solución simple y potente.
+resultado_secundario: El test sobre promedios temporales resume si esa heterogeneidad correlacionada parece relevante.
+aprendizaje_clave: CRE es una herramienta muy valiosa cuando FE puro no es práctico o no existe de forma natural en el modelo multinomial.
+
+que_mostrar_en_portfolio: Una historia metodológica de panel multinomial con Mundlak.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Tabla pooled vs CRE con APEs.
+visual_sugerido_2: Recuadro conceptual sobre promedios temporales.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio_alto

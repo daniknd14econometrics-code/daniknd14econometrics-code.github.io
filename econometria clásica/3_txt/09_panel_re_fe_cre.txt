@@ -1,0 +1,32 @@
+id_taller: 09
+archivo_do: 9taller_Panel_REvsFEvsCRE.do
+archivo_log: 9_taller.log
+familia_metodo: lineal_vi_panel
+
+titulo_provisorio: RE, FE o CRE: cómo decidir entre modelos de panel sin caer en automatismos
+subtitulo_portfolio: Comparación aplicada entre random effects, fixed effects y correlated random effects (Mundlak).
+
+pregunta_central: ¿Cómo elegir entre RE, FE y CRE cuando el punto crítico es la relación entre c_i y los regresores?
+tipo_datos: panel
+unidad_de_analisis: firmas
+variable_dependiente: lscrap
+variables_clave: grant, grant_1, d88, d89, promedios temporales tipo Mundlak
+
+problema_econometrico: Decidir entre estimadores de panel cuando la heterogeneidad inobservable puede o no estar correlacionada con x_it.
+riesgo_del_analisis_ingenuo: Elegir solo por un test aislado puede esconder diferencias de magnitud o problemas de robustez.
+intuicion_del_problema: RE es más eficiente si el supuesto se sostiene; FE es más robusto; CRE permite chequear y flexibilizar la estructura.
+
+metodo_principal: Comparación FE vs RE vs CRE/Mundlak con versiones cluster y test conjuntos sobre promedios temporales.
+metodos_comparados: xtreg, re; xtreg, fe; xtreg, re con Mundlak; Hausman clásico y test tipo Mundlak.
+por_que_este_metodo: Es la forma más didáctica de mostrar que la elección del estimador es un problema de supuestos, no de costumbre.
+
+resultado_principal: El taller enseña a tomar decisiones con panel evitando automatismos: Hausman ayuda, pero la lectura robusta mejora al sumar CRE/Mundlak y comparar magnitudes.
+resultado_secundario: CRE aparece como puente útil entre la eficiencia de RE y la robustez conceptual de FE.
+aprendizaje_clave: En panel, la mejor práctica es combinar tests, diferencias de magnitud y sentido económico, no obedecer ciegamente una salida.
+
+que_mostrar_en_portfolio: Una historia metodológica fuerte sobre elección de estimador en panel.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Tabla comparativa RE vs FE vs CRE.
+visual_sugerido_2: Recuadro “cómo decidir entre FE, RE y CRE”.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio

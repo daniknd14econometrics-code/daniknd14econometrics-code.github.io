@@ -1,0 +1,32 @@
+id_taller: 03
+archivo_do: 3taller_PANEL_POOLED_Qtobin.do
+archivo_log: 3_taller.log
+familia_metodo: lineal_vi_panel
+
+titulo_provisorio: Inversión y q de Tobin en panel: lectura económica con pooled OLS
+subtitulo_portfolio: Estimación agrupada de la relación entre inversión y q de Tobin con correcciones de inferencia y extensiones dinámicas.
+
+pregunta_central: ¿Qué relación aparece entre la tasa de inversión y q de Tobin cuando se trabaja con un panel de firmas?
+tipo_datos: panel
+unidad_de_analisis: firmas
+variable_dependiente: ikb
+variables_clave: qb, qb_1, posibles términos cuadrados y dummies de año
+
+problema_econometrico: Medir una relación económica en panel sin confundir significancia con relevancia económica, y sin sobrecargar el modelo con dinámica mal tratada.
+riesgo_del_analisis_ingenuo: Un pooled OLS sin controles temporales ni inferencia adecuada puede exagerar precisión y llevar a interpretar mal patrones dinámicos.
+intuicion_del_problema: La q de Tobin puede tener un vínculo económicamente importante con inversión, pero la dinámica y la heterogeneidad de firma complican la lectura.
+
+metodo_principal: Pooled OLS con cluster por firma, efectos temporales y exploración parsimoniosa de dinámica y no linealidad.
+metodos_comparados: MCO básico, robusto, cluster, con lag de la dependiente, con dummies de año y con términos no lineales.
+por_que_este_metodo: Sirve para mostrar cómo pasar de una regresión simple a una lectura económica más cuidadosa sin perder parsimonia.
+
+resultado_principal: El taller enfatiza que q de Tobin tiene un efecto importante en términos económicos sobre inversión y que la interpretación más útil surge de una especificación parsimoniosa con dummies de año y errores cluster.
+resultado_secundario: Las extensiones no lineales o con más rezagos agregan poca ganancia relativa y pueden complicar innecesariamente la narrativa empírica.
+aprendizaje_clave: No alcanza con “significativo”: hay que mostrar magnitud, estabilidad y sentido económico.
+
+que_mostrar_en_portfolio: Historia aplicada sobre inversión y q de Tobin, con énfasis en magnitud económica y parsimonia.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Gráfico simple de efecto marginal aproximado de q sobre inversión.
+visual_sugerido_2: Tabla con modelo base y dos extensiones parsimoniosas.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio

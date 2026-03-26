@@ -1,0 +1,859 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\4_taller.log
+  log type:  text
+ opened on:  26 Mar 2026, 04:14:09
+
+. do "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\3. Estrategia empirica\3. Modelos\talleres por tema - teoria econometrica\4taller_Panel_P
+> ooled_con_heterogeneidad.do"
+
+. **# Capitulo 10.1
+. 
+. clear all  
+
+.   
+. bcuse wagepan, clear
+
+Contains data from http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta
+ Observations:         4,360                  
+    Variables:            27                  15 Mar 2021 18:24
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nr              float   %9.0g                 person identifier
+year            float   %9.0g                 1980 to 1987
+black           float   %9.0g                 =1 if black
+exper           float   %9.0g                 labor mkt experience
+hisp            float   %9.0g                 =1 if Hispanic
+hours           float   %9.0g                 annual hours worked
+married         float   %9.0g                 =1 if married
+occ1            float   %9.0g                 =1 if Professional, Technical and kindred
+occ2            float   %9.0g                 =1 if Managers, Offcials and Proprietors
+occ3            float   %9.0g                 =1 if Sales Workers
+occ4            float   %9.0g                 =1 if Clerical and kindred
+occ5            float   %9.0g                 =1 if Craftsmen, Foremen and kindred
+occ6            float   %9.0g                 =1 if Operatives and kindred
+occ7            float   %9.0g                 =1 if Laborers and farmers
+occ8            float   %9.0g                 =1 if Farm Laborers and Foreman
+occ9            float   %9.0g                 =1 if Service Workers
+educ            float   %9.0g                 years of schooling
+union           float   %9.0g                 =1 if in union
+lwage           float   %9.0g                 log(wage)
+d81             float   %9.0g                 =1 if year == 1981
+d82             float   %9.0g                 =1 if year == 1982
+d83             float   %9.0g                 =1 if year == 1983
+d84             float   %9.0g                 =1 if year == 1984
+d85             float   %9.0g                 =1 if year == 1985
+d86             float   %9.0g                 =1 if year == 1986
+d87             float   %9.0g                 =1 if year == 1987
+expersq         float   %9.0g                 exper^2
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. describe
+
+Contains data from http://fmwww.bc.edu/ec-p/data/wooldridge/wagepan.dta
+ Observations:         4,360                  
+    Variables:            27                  15 Mar 2021 18:24
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nr              float   %9.0g                 person identifier
+year            float   %9.0g                 1980 to 1987
+black           float   %9.0g                 =1 if black
+exper           float   %9.0g                 labor mkt experience
+hisp            float   %9.0g                 =1 if Hispanic
+hours           float   %9.0g                 annual hours worked
+married         float   %9.0g                 =1 if married
+occ1            float   %9.0g                 =1 if Professional, Technical and kindred
+occ2            float   %9.0g                 =1 if Managers, Offcials and Proprietors
+occ3            float   %9.0g                 =1 if Sales Workers
+occ4            float   %9.0g                 =1 if Clerical and kindred
+occ5            float   %9.0g                 =1 if Craftsmen, Foremen and kindred
+occ6            float   %9.0g                 =1 if Operatives and kindred
+occ7            float   %9.0g                 =1 if Laborers and farmers
+occ8            float   %9.0g                 =1 if Farm Laborers and Foreman
+occ9            float   %9.0g                 =1 if Service Workers
+educ            float   %9.0g                 years of schooling
+union           float   %9.0g                 =1 if in union
+lwage           float   %9.0g                 log(wage)
+d81             float   %9.0g                 =1 if year == 1981
+d82             float   %9.0g                 =1 if year == 1982
+d83             float   %9.0g                 =1 if year == 1983
+d84             float   %9.0g                 =1 if year == 1984
+d85             float   %9.0g                 =1 if year == 1985
+d86             float   %9.0g                 =1 if year == 1986
+d87             float   %9.0g                 =1 if year == 1987
+expersq         float   %9.0g                 exper^2
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. * Declarar la estructura de panel y ordenar observaciones
+.  xtset nr year
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+.  sort nr year
+
+. 
+. **# POOL-MCO con c_i
+.  
+. ************************************************* POOL-OLS con presencia de Heterogeneidad inobservable: c_i *************************************************
+. **************************************************************************************************************************************************************
+. 
+. 
+. ** Retomemos el caso del taller anterior, pero ahora asumamos que c_i se correlaciona con los regresores. Lo consideramos de forma explicita en nuestro POOL-OLS.
+. 
+. /* Si admitimos la presencia de un componente inobservable que es especifico de la unidad de observacion i, llamemosle c_i, 
+>    entonces sabemos que estimar por POOLED-MCO debe exigir algo mas que la exogeneidad contemporanea dada por POLS.1, E(x_it,u_it)=0.
+>    Ademas de ello, DEBE exigir que E(x_it,c_i)=0, que juntas forman la condición (22) del capitulo 10 del libro del autor.. 
+>    
+>    Pero entonces, si estimamos una regresión por POOL-OLS deberiamos preguntarnos, ¿es cierto que se cumple que (22) y, en particular, E(x_it,c_i)=0? 
+>    Si no podemos sostener este argumento, la estimación tendrá un sesgo por variable omitida ya que c_i es inobservable y a su vez estará correlacionado con los re
+> gresores. 
+>    */
+.    
+.   *MCO agrupado (pooled OLS) con varianza clásica:   lwage_it ​= β0​ + β1​educ_it ​+ β2​exper_it​ + β3​expersq_it ​+ β4​union_i + β5​married_i ​+ β6​black_i ​+ c_i
+> ​ + u_it​        (con c_i inobservable, nos queda v_it = c_i+u_it)
+. regress  lwage educ exper expersq union married black 
+
+      Source |       SS           df       MS      Number of obs   =     4,360
+-------------+----------------------------------   F(6, 4353)      =    166.30
+       Model |   230.58825         6   38.431375   Prob > F        =    0.0000
+    Residual |  1005.94137     4,353  .231091517   R-squared       =    0.1865
+-------------+----------------------------------   Adj R-squared   =    0.1854
+       Total |  1236.52962     4,359  .283672774   Root MSE        =    .48072
+
+------------------------------------------------------------------------------
+       lwage | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0987582   .0046023    21.46   0.000     .0897353     .107781
+       exper |   .0889479   .0101059     8.80   0.000     .0691352    .1087606
+     expersq |  -.0028299   .0007069    -4.00   0.000    -.0042158   -.0014441
+       union |   .1807191   .0170982    10.57   0.000     .1471979    .2142403
+     married |   .1075152   .0156944     6.85   0.000     .0767461    .1382843
+       black |   -.146868   .0232142    -6.33   0.000    -.1923797   -.1013563
+       _cons |  -.0240286   .0629953    -0.38   0.703    -.1475315    .0994742
+------------------------------------------------------------------------------
+
+.  
+. /* Dada la salida anterior, si sospechamos que elementos que podrian representar a c_i como la habilidad de la persona
+>    (si asumimos ademas que la habilidad no cambia en el tiempo, solo entre individuos), 
+>    están correlacionados con la educación, entonces esta regresión se "come" un sesgo por variable omitida, c_i.
+>    
+>    En modelos estaticos como el de este taller, a veces si se suele asumir que se cumple E(x_it,c_i)=0 (junto con E(x_it,u_it)=0), pero en este caso del taller no 
+> parece tan creíble esperar que E(x_it,c_i)=0: 
+>    En modelos con variables exogenas (regresores) rezagados, también se suele asumir que se podria cumplir E(x_it,c_i)=0 y E(x_it,u_it)=0, pero dependerá del conte
+> xto de esos datos su defensa. 
+>    En modelos con variable dependiente rezagada, se viola necesariamente la condición E(x_it,c_i)=0 y por tanto no se sostiene (22).
+>  
+>    Por otro lado, otra consecuencia de asumir que existe c_i, es que entonces será seguro que tiene consecuencias sobre la estructura de matriz de varianzas y cova
+> rianzas:
+>    esto es, si existe c_i, su presencia impone correlación serial a nivel del mismo individuo en el tiempo, por lo que estimar pool-ols con la matriz de varianza-c
+> ovarianza homocedastica no es correcto, 
+>    pero tampoco alcanza con la versión robusta a la huber-white para heterocedasticidad de sección cruzada, tenemos que estimar con la versión robusta a todo: a la
+>  heterocedasticidad y a la correlacion serial. */ 
+.   
+.   *MCO agrupado con matrizde varianza robusta (cluster enid)
+. regress  lwage educ exper expersq union married black, vce(cluster nr)
+
+Linear regression                               Number of obs     =      4,360
+                                                F(6, 544)         =      68.07
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1865
+                                                Root MSE          =     .48072
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0987582   .0089413    11.05   0.000     .0811944    .1163219
+       exper |   .0889479   .0124591     7.14   0.000     .0644741    .1134217
+     expersq |  -.0028299   .0008731    -3.24   0.001    -.0045449    -.001115
+       union |   .1807191    .027687     6.53   0.000     .1263326    .2351056
+     married |   .1075152   .0260666     4.12   0.000     .0563118    .1587186
+       black |   -.146868   .0492885    -2.98   0.003    -.2436872   -.0500489
+       _cons |  -.0240286   .1143511    -0.21   0.834    -.2486524    .2005952
+------------------------------------------------------------------------------
+
+.  
+.  /* esto hace que ahora podamos usar el modelo para inferencia estadistica como las pruebas de hipotesis tipicas. 
+>    Pero debemos ser conscientes de que los coeficientes son los mismos, y por lo tanto, posiblemente sean sesgados si c_i está correlacionado con al menos uno de l
+> os regresores, 
+>    como podria ser con la educación en este caso. */
+. 
+.  * Podemos agregar dummies temporales como controles adicionales ya que disponemos de datos agrupados: lwage_it ​= β0​ + β1​educ_it ​+ β2​exper_it​ + β3​expersq_it
+>  ​+ β4​union_i + β5​married_i ​+ β6​black_i ​+ γ_t​ + c_i​ + u_it​
+. 
+.  regress lwage educ exper expersq union married black i.year, vce(cluster nr)
+
+Linear regression                               Number of obs     =      4,360
+                                                F(13, 544)        =      49.98
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1892
+                                                Root MSE          =     .48031
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0907146   .0108457     8.36   0.000     .0694101    .1120191
+       exper |   .0669274   .0195469     3.42   0.001     .0285307     .105324
+     expersq |  -.0023875   .0010244    -2.33   0.020    -.0043998   -.0003752
+       union |   .1831315   .0275341     6.65   0.000     .1290453    .2372177
+     married |    .108094   .0260188     4.15   0.000     .0569845    .1592036
+       black |  -.1423222   .0497384    -2.86   0.004     -.240025   -.0446194
+             |
+        year |
+       1981  |   .0584744   .0281803     2.08   0.038     .0031189    .1138299
+       1982  |   .0630235   .0369094     1.71   0.088    -.0094789    .1355259
+       1983  |   .0623225   .0461705     1.35   0.178    -.0283717    .1530167
+       1984  |   .0907742   .0578867     1.57   0.117    -.0229345     .204483
+       1985  |   .1095213   .0667783     1.64   0.102    -.0216535    .2406962
+       1986  |   .1421435    .076196     1.87   0.063    -.0075309    .2918178
+       1987  |   .1738353   .0851938     2.04   0.042     .0064861    .3411844
+             |
+       _cons |   .1028863   .1562062     0.66   0.510     -.203955    .4097276
+------------------------------------------------------------------------------
+
+. 
+. /* ahora los coeficientes cambian un poquito...: al incluir otros controles, hay mas información a priori. 
+>   Se puede ver que algunos coeficientes de año son significativos y otros no. 
+>    Observar que el F global del modelo cae respecto de la anterior regresion sin dummies temporales, y el R2 apenas aumenta.
+>    Pero ademas el R2 siempre aumenta cuando se agregan variables, lo que nos da la sensación que por parsimonia, en este caso, podria considerarse no incluir estas
+>  dummies de año.
+>    Veamos una prueba F de exclusión para las dummies temporales, para evaluarlo con rigor estadístico:
+>    */
+.    
+. **# Prueba para binarias temporales
+.    
+.  regress lwage educ exper expersq union married black d81 d82 d83 d84 d85 d86 d87, vce(cluster nr)
+
+Linear regression                               Number of obs     =      4,360
+                                                F(13, 544)        =      49.98
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1892
+                                                Root MSE          =     .48031
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0907146   .0108457     8.36   0.000     .0694101    .1120191
+       exper |   .0669274   .0195469     3.42   0.001     .0285307     .105324
+     expersq |  -.0023875   .0010244    -2.33   0.020    -.0043998   -.0003752
+       union |   .1831315   .0275341     6.65   0.000     .1290453    .2372177
+     married |    .108094   .0260188     4.15   0.000     .0569845    .1592036
+       black |  -.1423222   .0497384    -2.86   0.004     -.240025   -.0446194
+         d81 |   .0584744   .0281803     2.08   0.038     .0031189    .1138299
+         d82 |   .0630235   .0369094     1.71   0.088    -.0094789    .1355259
+         d83 |   .0623225   .0461705     1.35   0.178    -.0283717    .1530167
+         d84 |   .0907742   .0578867     1.57   0.117    -.0229345     .204483
+         d85 |   .1095213   .0667783     1.64   0.102    -.0216535    .2406962
+         d86 |   .1421435    .076196     1.87   0.063    -.0075309    .2918178
+         d87 |   .1738353   .0851938     2.04   0.042     .0064861    .3411844
+       _cons |   .1028863   .1562062     0.66   0.510     -.203955    .4097276
+------------------------------------------------------------------------------
+
+.  test d81 d82 d83 d84 d85 d86 d87 
+
+ ( 1)  d81 = 0
+ ( 2)  d82 = 0
+ ( 3)  d83 = 0
+ ( 4)  d84 = 0
+ ( 5)  d85 = 0
+ ( 6)  d86 = 0
+ ( 7)  d87 = 0
+
+       F(  7,   544) =    1.34
+            Prob > F =    0.2296
+
+. 
+.  /* No rechazá HO) d81=d82=...=d87=0 al 5%.
+>    Traducción: dado este modelo y esta varianza robusta agrupada, no hay evidencia fuerte de que los efectos de año sean distintos de 0 en promedio.
+>    Con estos controles y esta especificación, los años no están apareciendo como significativamente distintos de 1980 en el log-salario.
+> */
+.   
+. **# Modelo final
+.   
+.  ** Entonces el "modelo final" será sin dummies por año y con la matriz de var-cov robusta por cluster como corresponde:
+. regress  lwage educ exper expersq union married black, vce(cluster nr)
+
+Linear regression                               Number of obs     =      4,360
+                                                F(6, 544)         =      68.07
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1865
+                                                Root MSE          =     .48072
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0987582   .0089413    11.05   0.000     .0811944    .1163219
+       exper |   .0889479   .0124591     7.14   0.000     .0644741    .1134217
+     expersq |  -.0028299   .0008731    -3.24   0.001    -.0045449    -.001115
+       union |   .1807191    .027687     6.53   0.000     .1263326    .2351056
+     married |   .1075152   .0260666     4.12   0.000     .0563118    .1587186
+       black |   -.146868   .0492885    -2.98   0.003    -.2436872   -.0500489
+       _cons |  -.0240286   .1143511    -0.21   0.834    -.2486524    .2005952
+------------------------------------------------------------------------------
+
+. 
+. /* si no podemos sostener el argumento de que E(x_it,c_i)=0, entonces estos coeficientes estarán sesgados: sesgo por variable omitida. Pero con inferencia válida.
+> Si por el contrario, tenemos una historia para sostener E(x_it,c_i)=0, entonces estos coeficientes son consistentes.  */
+.   
+.  
+. **************************************************************************************************************************************************************
+. **# opcional
+.  
+. ** podemos analizar algo más que es muy didactico: el modelo pool-ols con todos los datos (usando vce(cluster nr)) 
+. ** vs ols por cada seccion transversal (usando vce(robust) ya que no es posible modelar la correlacion serial):
+. 
+. regress  lwage educ exper expersq union married black, vce(cluster nr)
+
+Linear regression                               Number of obs     =      4,360
+                                                F(6, 544)         =      68.07
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1865
+                                                Root MSE          =     .48072
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0987582   .0089413    11.05   0.000     .0811944    .1163219
+       exper |   .0889479   .0124591     7.14   0.000     .0644741    .1134217
+     expersq |  -.0028299   .0008731    -3.24   0.001    -.0045449    -.001115
+       union |   .1807191    .027687     6.53   0.000     .1263326    .2351056
+     married |   .1075152   .0260666     4.12   0.000     .0563118    .1587186
+       black |   -.146868   .0492885    -2.98   0.003    -.2436872   -.0500489
+       _cons |  -.0240286   .1143511    -0.21   0.834    -.2486524    .2005952
+------------------------------------------------------------------------------
+
+. /* un error estandar de educ de  0.0089413 */
+. 
+.  regress  lwage educ exper expersq union married black if year==1980, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      15.48
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1272
+                                                Root MSE          =     .52375
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .1010957   .0165309     6.12   0.000     .0686227    .1335687
+       exper |   .1055589   .0382672     2.76   0.006     .0303874    .1807303
+     expersq |  -.0032887   .0039195    -0.84   0.402    -.0109882    .0044108
+       union |   .2305329   .0532696     4.33   0.000      .125891    .3351749
+     married |   .1316507    .053164     2.48   0.014     .0272162    .2360851
+       black |  -.0970877   .0706376    -1.37   0.170    -.2358469    .0416716
+       _cons |  -.1465859   .2122473    -0.69   0.490    -.5635209    .2703492
+------------------------------------------------------------------------------
+
+.   regress  lwage educ exper expersq union married black if year==1981, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      13.83
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1184
+                                                Root MSE          =     .50107
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0999725   .0155472     6.43   0.000     .0694317    .1305132
+       exper |   .0287013   .0428094     0.67   0.503    -.0553928    .1127955
+     expersq |   .0022142   .0037246     0.59   0.552    -.0051024    .0095308
+       union |   .2177691   .0479147     4.54   0.000     .1236462     .311892
+     married |   .1042951     .04623     2.26   0.024     .0134818    .1951085
+       black |   -.050927   .0569213    -0.89   0.371    -.1627423    .0608883
+       _cons |   .1010272   .2341278     0.43   0.666    -.3588895    .5609439
+------------------------------------------------------------------------------
+
+.    regress  lwage educ exper expersq union married black if year==1982, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      15.64
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1531
+                                                Root MSE          =     .46032
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0992808   .0137564     7.22   0.000      .072258    .1263036
+       exper |   .0122739   .0527044     0.23   0.816    -.0912577    .1158055
+     expersq |   .0027217   .0036445     0.75   0.456    -.0044375    .0098808
+       union |   .1989291   .0442354     4.50   0.000     .1120339    .2858243
+     married |   .1372681   .0381611     3.60   0.000      .062305    .2122312
+       black |  -.1743818   .0775261    -2.25   0.025    -.3266729   -.0220908
+       _cons |   .1859431   .2638077     0.70   0.481    -.3322763    .7041626
+------------------------------------------------------------------------------
+
+.     regress  lwage educ exper expersq union married black if year==1983, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      15.04
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1403
+                                                Root MSE          =     .44831
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0949542   .0149908     6.33   0.000     .0655065    .1244019
+       exper |   .0110818    .058037     0.19   0.849    -.1029251    .1250888
+     expersq |   .0015906   .0038696     0.41   0.681    -.0060107    .0091919
+       union |    .202437   .0444737     4.55   0.000     .1150737    .2898003
+     married |   .1039831   .0401538     2.59   0.010     .0251057    .1828605
+       black |   -.141914   .0674783    -2.10   0.036    -.2744672   -.0093607
+       _cons |    .293472   .2698361     1.09   0.277    -.2365895    .8235336
+------------------------------------------------------------------------------
+
+.          regress  lwage educ exper expersq union married black if year==1984, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      14.73
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1034
+                                                Root MSE          =     .49909
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0904172   .0151441     5.97   0.000     .0606684    .1201661
+       exper |  -.1148462   .0602496    -1.91   0.057    -.2331995     .003507
+     expersq |   .0081007   .0033396     2.43   0.016     .0015404    .0146609
+       union |   .1773261   .0442873     4.00   0.000     .0903288    .2643234
+     married |   .0867231   .0438216     1.98   0.048     .0006406    .1728055
+       black |  -.1178062   .0651103    -1.81   0.071    -.2457078    .0100953
+       _cons |   .9368239   .3182005     2.94   0.003     .3117562    1.561892
+------------------------------------------------------------------------------
+
+.           regress  lwage educ exper expersq union married black if year==1985, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      18.60
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1505
+                                                Root MSE          =     .48426
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0937022   .0152527     6.14   0.000     .0637401    .1236642
+       exper |  -.1519584   .0655788    -2.32   0.021    -.2807803   -.0231366
+     expersq |   .0090251   .0033316     2.71   0.007     .0024805    .0155696
+       union |   .2454296   .0417514     5.88   0.000     .1634138    .3274453
+     married |   .0981354   .0413164     2.38   0.018     .0169742    .1792966
+       black |  -.2192675   .0718479    -3.05   0.002    -.3604042   -.0781308
+       _cons |   1.167608   .3636531     3.21   0.001     .4532538    1.881962
+------------------------------------------------------------------------------
+
+.            regress  lwage educ exper expersq union married black if year==1986, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      12.96
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1180
+                                                Root MSE          =     .48638
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0889859   .0155298     5.73   0.000     .0584795    .1194923
+       exper |  -.0525179   .0939409    -0.56   0.576    -.2370539    .1320181
+     expersq |   .0028243   .0043915     0.64   0.520    -.0058024     .011451
+       union |     .12765   .0515677     2.48   0.014     .0263512    .2289488
+     married |    .120252   .0439508     2.74   0.006     .0339158    .2065883
+       black |  -.0908694   .0699644    -1.30   0.195    -.2283064    .0465676
+       _cons |   .9031045   .5254453     1.72   0.086    -.1290713     1.93528
+------------------------------------------------------------------------------
+
+.             regress  lwage educ exper expersq union married black if year==1987, vce(robust)
+
+Linear regression                               Number of obs     =        545
+                                                F(6, 538)         =      20.27
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.1644
+                                                Root MSE          =     .42916
+
+------------------------------------------------------------------------------
+             |               Robust
+       lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |   .0940807   .0130676     7.20   0.000      .068411    .1197503
+       exper |  -.2287677   .0722539    -3.17   0.002    -.3707021   -.0868333
+     expersq |   .0102181   .0030458     3.35   0.001      .004235    .0162012
+       union |   .1305242   .0411144     3.17   0.002     .0497598    .2112886
+     married |   .0892282   .0393252     2.27   0.024     .0119784    .1664779
+       black |  -.2006272   .0621706    -3.23   0.001    -.3227542   -.0785003
+       _cons |   1.931821    .439808     4.39   0.000      1.06787    2.795772
+------------------------------------------------------------------------------
+
+.  
+. /* los errores estandar para educ están basicamente en el doble de tamaño: 0.015 aprox, lo que implica intervalos de confianza más amplios --> más imprecisión. 
+>    esta es una forma de ver que pool-ols es mejor que ols en corte transversal al usar más datos, y eligiendo bien la varianza estimada.
+>    ambos enfoques son susceptibles a "comerse" sesgo por variable omitida.
+>    -En corte transversal tenemos proxys o estrategias de variables instrumentales
+>    -mientras que en panel tenemos, ademas de proxy o de VI, la posibilidad nueva de modelar ese componenente c_i: ver en siguiente taller Modelos RE,FE,CRE.  
+>    
+>    asi que podriamos mejorar el modelo (regress lwage educ exper expersq union married black, vce(cluster nr)) si contaramos: 
+>    a) o con un buen proxy de c_i (proxy para la habilidad si entendemos que c_i en este caso es habilidad)
+>    b) o si contaramos con instrumentos para la endogena (educ) 
+>    c) o si implementamos alternativas propias de panel como RE/FE.
+>    d) o incluso estrategias VI-RE o VI-FE
+>    
+>    todo esto, tambien esta sujeta a la forma de la variable dependiente: una cosa es si es continua: todo barbaro. 
+>    Pero si es binaria: logit/probit 
+>               categorica: multinomiales
+>                           ordenada: probit/logit ordenados. 
+>    donde estos modelos son todos  'no lineales', y ya no es igual el tema de VI, ni el tema de RE o de FE. Eso te mete "en un lio".
+>    Para ello: capitulos 15 y 16 del libro de wooldridge. Ver talleres posteriores.
+>    
+>    En lo que sigue, tocará talleres para RE/FE, antes de meternos con variables dependientes no continuas.
+>   */
+.  
+.  
+. *******************************************************************************************************************************************************************
+> *
+. **************************************************EXTRA (opcional): probar transformación del pooled mco en primera diferencia con c_i ****************************
+> *************** ***************************************************************************************************************************************************
+> *******************
+.  
+. **# POOL-MCO en primera diferencia (opcional)
+.  
+.  /* Una manera de "lidiar" con c_i es transformar el modelo en niveles a un modelo en primeras diferencias. Esto hace que la variable inobservable c_i se elimine d
+> el modelo. 
+>     Pero también se eliminarán otras variables que no cambien a nivel de individuo en el tiempo, como es el caso de black. 
+>         
+>         Si hacemos esta transformacion a primeras diferencias, aunque c_i podria estar correlacionado con x_it (con al menos un regresor), es producto de la transf
+> ormación que desaparece de la ecuacion a estimarse.
+>         Sin embargo, el costo que se debe pagar es doble: 
+>         Esta ecuacion en primeras diferencias sólo será consistente bajo el supuesto de "exogeneidad estricta", que es mucho más exigente que la POLS.1 (version de
+> bil de la exogeneidad contemporanea). 
+>         Parte de la condicion (22) corresponde justamente a POLS.1: E(x_it,u_it)=0.
+>         
+>         La exogeneidad estricta exige que el error de un periodo cualquiera, u_it, no este correlacionado con los regresores en ningun otro periodo. 
+>         (Tiene una version fuerte basada en medias condicionales y otra version debil basada en medias sin condicionar, pero en ambas es estricta.)
+>         Este costo puede ser bastante alto ya que en muchas ocasiones no podemos sostener este supuesto.
+>         El contexto del problema que estamos analizando hace muy dificil creer que ese supuesto se cumpla, ya que no alcanza con asumir exogeneidad contemporanea, 
+> sino que los errores
+>         de un periodo no podrian correlacionarse con los regresores en ninguno de los periodos (pasado, presente y futuro). 
+>         Esto hace que, contexto como modelos de evaluaciones de programas con participacion, modelos con rezagos distribuidos del regresor de interes, entre otros 
+> contextos, sea dificil justificar que se pueda cumplir la exogeneidad estricta:
+>         es decir, es dificil que encontremos una historia que nos justifique que en nuestro proceso generador de datos se cumpla la exogeneidad estricta. Es mas fa
+> ctible encontrar fundamentos que la violen en algun punto.
+>         Por otro lado, si se pretende modelar la variable dependiente como rezagada (modelo dinámico), esto necesariamente viola la exogeneidad estricta. 
+>         Con lo cual el modelo planteado en primeras diferencias, lidia con c_i, pero debe saberse que es consistente sólo bajo exogeneidad estricta.
+>         
+>         Por otro lado, perderemos las variables que no tienen variación en el tiempo para la observacion i, ejemplo: black siempre vale 1 o siempre vale 0 para la 
+> observacion i,
+>         no puede pasar que para la misma observacion, black una vez valga 0 y luego en otro año valga 1. 
+>         Esto ultimo impacta en la condicion de rango: Stata omitirá estas variables como black si la ponemos en la regresion, para que de todas formas nos arroje u
+> na estimación. 
+>         Ojo con variables que varien muy poco como married o union, pueden variar, pero poco y esto no es muy bueno. 
+>         
+>         En esta base de datos, tenemos un problema mayor, e inesperado:
+>          en Wagepad la variable educ: es casi constante por persona, entonces cuando tomamos su primera diferencia, es practicamente 0 para todo el panel. 
+>                    en cuanto a exper, esta aumenta exactamente en 1 unidad por año para cada individuo (cuando no hay huecos), por lo que cuando tomamos su primera
+>  diferencia, es practicamente 1 en todo el panel. 
+> */
+.  
+. 
+. *--------------------------------------------------------------
+. * Modelo en primeras diferencias
+. *   D.lwage sobre D.educ D.exper D.expersq, D.union, D.married i.year
+. 
+. 
+. xtset nr year
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+. summ D.exper D.educ
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+       exper |
+         D1. |      3,815           1           0          1          1
+             |
+        educ |
+         D1. |      3,815           0           0          0          0
+
+. reg D.lwage D.educ D.exper D.expersq D.union D.married i.year, vce(cluster nr)
+note: D.educ omitted because of collinearity.
+note: D.exper omitted because of collinearity.
+
+Linear regression                               Number of obs     =      3,815
+                                                F(9, 544)         =       5.46
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0064
+                                                Root MSE          =     .44289
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+     D.lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |
+         D1. |          0  (omitted)
+             |
+       exper |
+         D1. |          0  (omitted)
+             |
+     expersq |
+         D1. |  -.0057546   .0009443    -6.09   0.000    -.0076094   -.0038998
+             |
+       union |
+         D1. |   .0411497   .0219043     1.88   0.061    -.0018777     .084177
+             |
+     married |
+         D1. |   .0381433    .024233     1.57   0.116    -.0094584    .0857451
+             |
+        year |
+       1982  |  -.0481988   .0367812    -1.31   0.191    -.1204493    .0240517
+       1983  |  -.0479079   .0293842    -1.63   0.104    -.1056283    .0098124
+       1984  |  -.0122432   .0293453    -0.42   0.677    -.0698873    .0454009
+       1985  |  -.0208014   .0320854    -0.65   0.517    -.0838278    .0422251
+       1986  |   .0015071   .0320025     0.05   0.962    -.0613566    .0643707
+       1987  |   .0166858   .0295147     0.57   0.572     -.041291    .0746625
+             |
+       _cons |   .1559977   .0256573     6.08   0.000     .1055983    .2063971
+------------------------------------------------------------------------------
+
+. 
+. 
+. * Nota:
+. * - D.educ se omite porque educ es constante por individuo:
+. *   educ_it = educ_i  =>  D.educ_it = 0 para todo t.
+. *   => no hay variación dentro de nr, no se puede identificar
+. *      el retorno a la educación con FD.
+. *
+. * - D.exper se omite porque exper aumenta exactamente en 1 por año
+. *   para cada individuo (perfil determinista):
+. *   exper_it = exper_i0 + (t - t0)  =>  D.exper_it = 1.
+. *   => D.exper es colineal con la constante (_cons).
+. *
+. * - D.expersq sí varía en el tiempo:
+. *   D.expersq_it = 2*exper_{i,t-1} + 1,
+. *   por eso captura la curvatura del perfil experiencia–salario.
+. *
+. * - D.union y D.married miden el efecto de CAMBIAR de estado
+. *   (por ejemplo 0->1) sobre el cambio en log(salario).
+. *
+. * - i.year en esta regresión no se diferencia como datos, pero
+. *   algebraicamente está parametrizando las diferencias de los
+. *   efectos de año (gamma_t - gamma_{t-1}) discutidos en la teoría.
+. *--------------------------------------------------------------
+. 
+. 
+. ** comprobamos que se omiten d.exper y d.educ, no se pueden identificar para estos datos de wagepan. 
+. ** Asi que en esta base de datos, la estrategia de Primeras Diferencias NO es factible. 
+. 
+. **# Nota: dummies de año en primeras diferencias
+. 
+. /* *--------------------------------------------------------------
+> * Nota sobre dummies de año en el modelo en primeras diferencias
+> *
+> * Modelo en niveles:
+> *   y_it = x_it*b + gamma_t + c_i + u_it
+> *
+> * Al tomar primeras diferencias:
+> *   Δy_it = b*Δx_it + (gamma_t - gamma_{t-1}) + Δu_it
+> *
+> * Es decir, los efectos de año no desaparecen: pasan a estar en
+> * forma de diferencias (gamma_t - gamma_{t-1}).
+> *
+> * En la práctica, esto se implementa de manera muy cómoda
+> * incluyendo dummies de año (i.year) en la regresión sobre
+> * las diferencias:
+> *
+> *   reg D.y D.x ..., i.year, vce(cluster id)
+> *
+> * Esas dummies ya están parametrizando los términos
+> * (gamma_t - gamma_{t-1}) hasta una constante (una categoría base).
+> *
+> * Por eso NO hace falta, ni tiene sentido práctico, intentar
+> * usar algo como D.i.year: el modelo con D.y, D.x e i.year es
+> * algebraicamente equivalente al modelo en primeras diferencias
+> * con los efectos de año diferenciados.
+> 
+> *--------------------------------------------------------------
+> * Versión didáctica: diferenciar explícitamente las dummies de año
+> * y comparar con la especificación estándar con i.year
+> *--------------------------------------------------------------
+> */
+. 
+. 
+. tab year, gen(yd)
+
+    1980 to |
+       1987 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       1980 |        545       12.50       12.50
+       1981 |        545       12.50       25.00
+       1982 |        545       12.50       37.50
+       1983 |        545       12.50       50.00
+       1984 |        545       12.50       62.50
+       1985 |        545       12.50       75.00
+       1986 |        545       12.50       87.50
+       1987 |        545       12.50      100.00
+------------+-----------------------------------
+      Total |      4,360      100.00
+
+. local J = r(r)
+
+. xtset nr year
+
+Panel variable: nr (strongly balanced)
+ Time variable: year, 1980 to 1987
+         Delta: 1 unit
+
+. 
+. forvalues j = 2/`J' {
+  2.     gen D_yd`j' = D.yd`j'
+  3. }
+(545 missing values generated)
+(545 missing values generated)
+(545 missing values generated)
+(545 missing values generated)
+(545 missing values generated)
+(545 missing values generated)
+(545 missing values generated)
+
+. 
+. *  Modelo FD "estándar" con i.year
+. reg D.lwage D.educ D.exper D.expersq D.married i.year, vce(cluster nr)
+note: D.educ omitted because of collinearity.
+note: D.exper omitted because of collinearity.
+
+Linear regression                               Number of obs     =      3,815
+                                                F(8, 544)         =       5.75
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0053
+                                                Root MSE          =     .44309
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+     D.lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |
+         D1. |          0  (omitted)
+             |
+       exper |
+         D1. |          0  (omitted)
+             |
+     expersq |
+         D1. |  -.0058173   .0009395    -6.19   0.000    -.0076628   -.0039717
+             |
+     married |
+         D1. |    .038337   .0243276     1.58   0.116    -.0094506    .0861246
+             |
+        year |
+       1982  |  -.0476896   .0367987    -1.30   0.196    -.1199746    .0245954
+       1983  |  -.0480324   .0294391    -1.63   0.103    -.1058605    .0097958
+       1984  |  -.0115557   .0293388    -0.39   0.694     -.069187    .0460755
+       1985  |  -.0213452   .0321575    -0.66   0.507    -.0845134    .0418229
+       1986  |   .0016936   .0319586     0.05   0.958    -.0610838    .0644709
+       1987  |   .0196395    .029565     0.66   0.507     -.038436     .077715
+             |
+       _cons |   .1563426   .0256876     6.09   0.000     .1058836    .2068016
+------------------------------------------------------------------------------
+
+. predict xb_fd_std, xb
+(545 missing values generated)
+
+. 
+. *  Modelo FD con dummies de año en diferencias
+. *    (usamos D_yd2,...,D_ydJ en lugar de i.year)
+. reg D.lwage D.educ D.exper D.expersq D.married D_yd2-D_yd`J', vce(cluster nr)
+note: D.educ omitted because of collinearity.
+note: D.exper omitted because of collinearity.
+note: D_yd8 omitted because of collinearity.
+
+Linear regression                               Number of obs     =      3,815
+                                                F(8, 544)         =       5.75
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0053
+                                                Root MSE          =     .44309
+
+                                   (Std. err. adjusted for 545 clusters in nr)
+------------------------------------------------------------------------------
+             |               Robust
+     D.lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        educ |
+         D1. |          0  (omitted)
+             |
+       exper |
+         D1. |          0  (omitted)
+             |
+     expersq |
+         D1. |  -.0058173   .0009395    -6.19   0.000    -.0076628   -.0039717
+             |
+     married |
+         D1. |    .038337   .0243276     1.58   0.116    -.0094506    .0861246
+             |
+       D_yd2 |   .0153271   .0223878     0.68   0.494    -.0286501    .0593043
+       D_yd3 |  -.0170354   .0212617    -0.80   0.423    -.0588005    .0247297
+       D_yd4 |  -.0497406   .0207641    -2.40   0.017    -.0905282    -.008953
+       D_yd5 |  -.0459692   .0220042    -2.09   0.037    -.0891929   -.0027455
+       D_yd6 |  -.0519873   .0187743    -2.77   0.006    -.0888663   -.0151084
+       D_yd7 |  -.0349666   .0167081    -2.09   0.037    -.0677869   -.0021464
+       D_yd8 |          0  (omitted)
+       _cons |   .1410155   .0135313    10.42   0.000     .1144355    .1675955
+------------------------------------------------------------------------------
+
+. predict xb_fd_diff, xb
+(545 missing values generated)
+
+. 
+. *  Comparación: los valores ajustados son (prácticamente) iguales
+. corr xb_fd_std xb_fd_diff if !missing(xb_fd_std, xb_fd_diff)
+(obs=3,815)
+
+             | xb_fd_~d xb_fd_~f
+-------------+------------------
+   xb_fd_std |   1.0000
+  xb_fd_diff |   1.0000   1.0000
+
+
+. 
+. * La correlación ~ 1 muestra que ambos modelos generan el mismo ajuste:
+. * solo cambian los coeficientes porque es una reparametrización lineal
+. * del mismo conjunto de efectos de tiempo.
+. *--------------------------------------------------------------
+. 
+. 
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\4_taller.log
+  log type:  text
+ closed on:  26 Mar 2026, 04:14:17
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

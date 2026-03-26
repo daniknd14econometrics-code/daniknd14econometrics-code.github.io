@@ -1,0 +1,6 @@
+en powershell, taller 1:
+
+
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto"
+quarto render 01_vi.qmd
+start 01_vi.html

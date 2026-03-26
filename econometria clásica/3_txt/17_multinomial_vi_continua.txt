@@ -1,0 +1,35 @@
+id_taller: 17
+archivo_do: 17taller_Multinomial_VI_Continua.do
+archivo_log: 17_taller.log
+familia_metodo: multinomial
+
+titulo_provisorio: Multinomial con endogeneidad aproximada: control function en elecciones múltiples
+subtitulo_portfolio: Extensión del logit multinomial cuando una covariable continua se trata como endógena.
+
+pregunta_central: ¿Cómo corregir endogeneidad aproximada en un modelo multinomial cuando la covariable problemática es continua?
+tipo_datos: panel tratado en forma agrupada
+unidad_de_analisis: individuos-año
+variable_dependiente_multicategoria: status
+categorias_resultado: escuela, casa, trabajo
+variables_clave: educ como endógena aproximada; instrumento didáctico: numyrs; exper, expersq, black, dummies de año
+
+problema_econometrico: Endogeneidad de una covariable continua en un entorno multinomial no lineal.
+riesgo_del_analisis_ingenuo: Un mlogit exógeno puede contaminar la interpretación de los cambios de probabilidad entre estados.
+intuicion_del_problema: La lógica de control function puede trasladarse al multinomial para capturar el componente no observado ligado a la endogeneidad.
+
+modelo_multinomial_principal: mlogit con residual de primera etapa (control function)
+metodos_comparados: mlogit exógeno, control function, test del residual, APEs y PCP.
+por_que_este_metodo: Permite construir una corrección práctica y pedagógica cuando no existe un comando “automático” estándar para el caso.
+
+probabilidades_o_apes_clave: La comparación útil es entre APEs bajo exogeneidad y APEs tras la corrección por residual.
+comparacion_entre_categorias: El interés está en cómo educación redistribuye probabilidades entre escuela, casa y trabajo una vez tratada la endogeneidad.
+resultado_principal: El taller vale como demostración de criterio: cómo adaptar una estrategia de endogeneidad a un multinomial sin caer en soluciones lineales impropias.
+resultado_secundario: La primera etapa aparece fuerte, pero el propio taller remarca que la validez del instrumento se usa con un fin principalmente didáctico.
+aprendizaje_clave: En modelos multinomiales, la corrección de endogeneidad exige creatividad disciplinada y mucha honestidad sobre la identificación.
+
+que_mostrar_en_portfolio: Pieza técnica corta, más de criterio que de exhibición masiva.
+que_no_publicar: No publicar el do-file completo, el log completo ni la base; tampoco scripts auxiliares, rutas locales ni detalles puramente pedagógicos del taller.
+visual_sugerido_1: Esquema de primera etapa + residual + multinomial.
+visual_sugerido_2: Tabla de APEs exógeno vs corregido.
+tono_sugerido_quarto: profesional_aplicado
+nivel_tecnico_quarto: medio_alto

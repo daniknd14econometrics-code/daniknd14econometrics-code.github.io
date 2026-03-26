@@ -1,0 +1,788 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\18_taller.log
+  log type:  text
+ opened on:  26 Mar 2026, 05:28:34
+
+. do "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\3. Estrategia empirica\3. Modelos\talleres por tema - teoria econometrica\18taller_Multin
+> omial_Panel.do"
+
+. *** Capitulo 16 ***
+. 
+. clear all
+
+. bcuse keane, clear 
+
+Contains data from http://fmwww.bc.edu/ec-p/data/wooldridge/keane.dta
+ Observations:        12,723                  
+    Variables:            25                  6 Sep 1999 22:41
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+id              int     %9.0g                 identifier
+numyrs          byte    %9.0g                 number of years in sample
+year            byte    %9.0g                 81 to 87
+choice          byte    %9.0g                 sch=1,home=2,wc=3,bc=4,serv=5
+wage            float   %9.0g                 annual wage, 1987 $
+educ            byte    %9.0g                 years of schooling
+expwc           byte    %9.0g                 experience in white collar
+expbc           byte    %9.0g                 experience in blue collar
+expser          byte    %9.0g                 experience in services
+manuf           byte    %9.0g                 =1 if in manufacturing
+black           byte    %9.0g                 =1 if black
+lwage           float   %9.0g                 log(wage)
+y81             byte    %9.0g                 =1 if year == 81
+y82             byte    %9.0g                 
+y83             byte    %9.0g                 
+y84             byte    %9.0g                 
+y85             byte    %9.0g                 
+y86             byte    %9.0g                 
+y87             byte    %9.0g                 
+enroll          byte    %9.0g                 =1 if choice == 1
+employ          byte    %9.0g                 =1 if choice == 3, 4, or 5
+attrit          byte    %9.0g                 =1 if attrit in next year
+exper           byte    %9.0g                 expwc + expbc + expser
+expersq         byte    %9.0g                 exper^2
+status          byte    %9.0g                 sch=1,home=2,work=3
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: id  year
+
+. describe
+
+Contains data from http://fmwww.bc.edu/ec-p/data/wooldridge/keane.dta
+ Observations:        12,723                  
+    Variables:            25                  6 Sep 1999 22:41
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+id              int     %9.0g                 identifier
+numyrs          byte    %9.0g                 number of years in sample
+year            byte    %9.0g                 81 to 87
+choice          byte    %9.0g                 sch=1,home=2,wc=3,bc=4,serv=5
+wage            float   %9.0g                 annual wage, 1987 $
+educ            byte    %9.0g                 years of schooling
+expwc           byte    %9.0g                 experience in white collar
+expbc           byte    %9.0g                 experience in blue collar
+expser          byte    %9.0g                 experience in services
+manuf           byte    %9.0g                 =1 if in manufacturing
+black           byte    %9.0g                 =1 if black
+lwage           float   %9.0g                 log(wage)
+y81             byte    %9.0g                 =1 if year == 81
+y82             byte    %9.0g                 
+y83             byte    %9.0g                 
+y84             byte    %9.0g                 
+y85             byte    %9.0g                 
+y86             byte    %9.0g                 
+y87             byte    %9.0g                 
+enroll          byte    %9.0g                 =1 if choice == 1
+employ          byte    %9.0g                 =1 if choice == 3, 4, or 5
+attrit          byte    %9.0g                 =1 if attrit in next year
+exper           byte    %9.0g                 expwc + expbc + expser
+expersq         byte    %9.0g                 exper^2
+status          byte    %9.0g                 sch=1,home=2,work=3
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: id  year
+
+. 
+. * Ahora implementamos una estrategia de "efectos fijos" en el contexto de multiples categorias en datos de panel.
+. * en realidad, nos estamos refiriendo a incorporar la heterogeneidad inobserbable en el modelo.
+. * la forma mas parsimoniosa de hacerlo es mediante un enfoque CRE: promedios temporales.
+. 
+. 
+. * Declarar la estructura de panel y ordenar observaciones
+. xtset id year
+
+Panel variable: id (unbalanced)
+ Time variable: year, 81 to 87
+         Delta: 1 unit
+
+. sort id year
+
+. 
+. **# MNL: status
+. 
+. *====================================================================================*
+. * 1) Logit multinomial (MNL) con variables específicas del individuo + CRE (Mundlak)
+. *====================================================================================*
+. 
+. /* MNL: es un modelo LOGIT multinomial. Por lo tanto, la distribucion de los errores provienen de la distribucion logistica estandar.
+>                 ver detalles en el libro/manuscrito en espaniol elaborado por mi.
+>                 en este modelo, las covariables son identicas para cada alternativa (eleccion), pero se permite que los coeficientes sean distintos en cada alterna
+> tiva.
+> */
+. 
+. 
+. * Inspeccionar la variable dependiente y verificar que sea categorica NO ordenada
+. tabulate status
+
+sch=1,home= |
+   2,work=3 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      2,473       19.53       19.53
+          2 |      3,233       25.53       45.05
+          3 |      6,959       54.95      100.00
+------------+-----------------------------------
+      Total |     12,665      100.00
+
+. 
+. ** Como vemos, las 3 opciones son: escuela, casa, y trabajo
+. 
+. mdesc lwage wage educ exper expersq manuf black y81 y82 y83     y84     y85     y86     y87 status
+
+    Variable    |     Missing          Total     Percent Missing
+----------------+-----------------------------------------------
+          lwage |       6,690         12,723          52.58
+           wage |       6,690         12,723          52.58
+           educ |           0         12,723           0.00
+          exper |           0         12,723           0.00
+        expersq |           0         12,723           0.00
+          manuf |         107         12,723           0.84
+          black |           0         12,723           0.00
+            y81 |           0         12,723           0.00
+            y82 |           0         12,723           0.00
+            y83 |           0         12,723           0.00
+            y84 |           0         12,723           0.00
+            y85 |           0         12,723           0.00
+            y86 |           0         12,723           0.00
+            y87 |           0         12,723           0.00
+         status |          58         12,723           0.46
+----------------+-----------------------------------------------
+
+. 
+. misstable summarize wage lwage educ exper expersq manuf black y81 y82 y83 y84 y85 y86 y87 status
+                                                               Obs<.
+                                                +------------------------------
+               |                                | Unique
+      Variable |     Obs=.     Obs>.     Obs<.  | values        Min         Max
+  -------------+--------------------------------+------------------------------
+          wage |     6,690               6,033  |   >500     416.44      362800
+         lwage |     6,690               6,033  |   >500   6.031743    12.80161
+         manuf |       107              12,616  |      2          0           1
+        status |        58              12,665  |      3          1           3
+  -----------------------------------------------------------------------------
+
+. 
+. ** observar que no se puede usar wage (o lwage) como covariable puesto que el salario solo esta presente para la alternativa work
+. ** dicho de otra manera, no hay salario en las alternativas "scholar" o "home". Por lo que si pones wage, se pierden todas las observaciones de las categorias scho
+> lar, home, etc
+. ** y directamente se cae la posibilidad de estimar por un modelo de multiples opciones.
+. 
+. 
+. **# **# Medias temporales
+. 
+. ** no necesitamos para la variable dependiente, tampoco para variables que no varian en i y en t.
+. bysort id: egen educ_bar  = mean(educ)
+
+. bysort id: egen exper_bar  = mean(exper)
+
+. bysort id: egen expersq_bar  = mean(expersq)
+
+. *bysort id: egen numyrs_bar  = mean(numyrs)
+. 
+. **# MLN-pooled
+. 
+. 
+. mlogit status educ exper expersq i.black y82-y87, baseoutcome(1) vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -12620.959  
+Iteration 1:  Log pseudolikelihood = -9567.2926  
+Iteration 2:  Log pseudolikelihood = -9311.0678  
+Iteration 3:  Log pseudolikelihood = -9295.8677  
+Iteration 4:  Log pseudolikelihood = -9295.7565  
+Iteration 5:  Log pseudolikelihood = -9295.7564  
+
+Multinomial logistic regression                        Number of obs =  12,665
+                                                       Wald chi2(20) = 2830.23
+                                                       Prob > chi2   =  0.0000
+Log pseudolikelihood = -9295.7564                      Pseudo R2     =  0.2635
+
+                                 (Std. err. adjusted for 1,881 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+      status | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+1            |  (base outcome)
+-------------+----------------------------------------------------------------
+2            |
+        educ |   -.548333   .0197059   -27.83   0.000    -.5869559   -.5097101
+       exper |   .7669432    .075354    10.18   0.000     .6192521    .9146343
+     expersq |   -.115481   .0103551   -11.15   0.000    -.1357766   -.0951853
+     1.black |   .8709583   .0835949    10.42   0.000     .7071154    1.034801
+         y82 |   .9976134   .0738386    13.51   0.000     .8528925    1.142334
+         y83 |   1.348789   .0868544    15.53   0.000     1.178557     1.51902
+         y84 |   1.588466   .1031368    15.40   0.000     1.386321     1.79061
+         y85 |   2.070129   .1257401    16.46   0.000     1.823683    2.316575
+         y86 |   2.653988   .1504149    17.64   0.000      2.35918    2.948796
+         y87 |    2.72804   .1656325    16.47   0.000     2.403406    3.052674
+       _cons |   5.170643   .2463362    20.99   0.000     4.687833    5.653453
+-------------+----------------------------------------------------------------
+3            |
+        educ |  -.2559274   .0174155   -14.70   0.000    -.2900612   -.2217936
+       exper |   1.817056   .0711427    25.54   0.000     1.677619    1.956493
+     expersq |  -.1954317   .0098997   -19.74   0.000    -.2148347   -.1760287
+     1.black |    .339938   .0767018     4.43   0.000     .1896052    .4902708
+         y82 |   .5691177   .0765836     7.43   0.000     .4190166    .7192187
+         y83 |   1.160879   .0881137    13.17   0.000     .9881794    1.333579
+         y84 |   1.400606   .1000748    14.00   0.000     1.204463    1.596749
+         y85 |   1.662853   .1214984    13.69   0.000     1.424721    1.900985
+         y86 |   2.006811   .1497433    13.40   0.000      1.71332    2.300303
+         y87 |   1.984341    .162321    12.22   0.000     1.666198    2.302485
+       _cons |   1.885207   .2205445     8.55   0.000     1.452948    2.317467
+------------------------------------------------------------------------------
+
+. margins, dydx(educ exper expersq black) post
+
+Average marginal effects                                Number of obs = 12,665
+Model VCE: Robust
+
+dy/dx wrt: educ exper expersq 1.black
+
+1._predict: Pr(status==1), predict(pr outcome(1))
+2._predict: Pr(status==2), predict(pr outcome(2))
+3._predict: Pr(status==3), predict(pr outcome(3))
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+educ         |
+    _predict |
+          1  |   .0418011   .0016653    25.10   0.000     .0385371     .045065
+          2  |  -.0570051   .0019753   -28.86   0.000    -.0608767   -.0531335
+          3  |    .015204   .0020333     7.48   0.000     .0112188    .0191892
+-------------+----------------------------------------------------------------
+exper        |
+    _predict |
+          1  |  -.1492667   .0061565   -24.25   0.000    -.1613332   -.1372002
+          2  |  -.0756084   .0060138   -12.57   0.000    -.0873952   -.0638216
+          3  |   .2248751   .0049533    45.40   0.000     .2151668    .2345834
+-------------+----------------------------------------------------------------
+expersq      |
+    _predict |
+          1  |   .0176111   .0009072    19.41   0.000      .015833    .0193892
+          2  |   .0030626   .0009858     3.11   0.002     .0011305    .0049946
+          3  |  -.0206737   .0009559   -21.63   0.000    -.0225471   -.0188002
+-------------+----------------------------------------------------------------
+0.black      |  (base outcome)
+-------------+----------------------------------------------------------------
+1.black      |
+    _predict |
+          1  |  -.0635178   .0079057    -8.03   0.000    -.0790128   -.0480228
+          2  |    .102724   .0098016    10.48   0.000     .0835133    .1219347
+          3  |  -.0392062   .0092387    -4.24   0.000    -.0573137   -.0210987
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store ape_mln_pooled
+
+. 
+. 
+. // mlogit estima por MLE el modelo logit multinomial
+. // baseoutcome(1) fija la categoría "scholar" como 1 (normalización)
+. // vce(cluster id) pide errores robustos (útil ante heterocedasticidad + correlacion serial)
+. // deje un anio fuera (1981)
+. // ponemos i.black para que la interprete como binaria/categorica
+. // ojo: si incluimos muchas dummies, puede que tengamos problemas numericos en la estimacion.
+. 
+. 
+. 
+. **# MLN-CRE
+. 
+. 
+. mlogit status educ exper expersq i.black y82-y87 educ_bar exper_bar expersq_bar, baseoutcome(1) vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -12620.959  
+Iteration 1:  Log pseudolikelihood =  -7485.177  
+Iteration 2:  Log pseudolikelihood = -7150.4667  
+Iteration 3:  Log pseudolikelihood = -7125.6029  
+Iteration 4:  Log pseudolikelihood = -7124.9848  
+Iteration 5:  Log pseudolikelihood =  -7124.984  
+Iteration 6:  Log pseudolikelihood =  -7124.984  
+
+Multinomial logistic regression                        Number of obs =  12,665
+                                                       Wald chi2(26) = 3157.12
+                                                       Prob > chi2   =  0.0000
+Log pseudolikelihood = -7124.984                       Pseudo R2     =  0.4355
+
+                                 (Std. err. adjusted for 1,881 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+      status | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+1            |  (base outcome)
+-------------+----------------------------------------------------------------
+2            |
+        educ |   1.883261   .1019934    18.46   0.000     1.683357    2.083164
+       exper |   .7985977   .1043051     7.66   0.000     .5941634    1.003032
+     expersq |   -.054811   .0187126    -2.93   0.003     -.091487    -.018135
+     1.black |   .9418802   .1014016     9.29   0.000     .7431367    1.140624
+         y82 |   .6998583     .12568     5.57   0.000     .4535301    .9461865
+         y83 |   .4405337   .1337364     3.29   0.001     .1784153    .7026522
+         y84 |  -.2472087   .1511224    -1.64   0.102    -.5434033    .0489858
+         y85 |  -.7790527   .1733963    -4.49   0.000    -1.118903   -.4392022
+         y86 |  -1.020631   .1957104    -5.22   0.000    -1.404216   -.6370452
+         y87 |  -1.410481   .2337581    -6.03   0.000    -1.868639   -.9523237
+    educ_bar |   -2.69431   .1083964   -24.86   0.000    -2.906763   -2.481857
+   exper_bar |   .4724993   .1956065     2.42   0.016     .0891177    .8558809
+ expersq_bar |   -.119199   .0430628    -2.77   0.006    -.2036005   -.0347975
+       _cons |   9.853048   .3718873    26.49   0.000     9.124162    10.58193
+-------------+----------------------------------------------------------------
+3            |
+        educ |   1.660093    .121344    13.68   0.000     1.422263    1.897923
+       exper |   .2051504   .1095908     1.87   0.061    -.0096437    .4199444
+     expersq |  -.1091258   .0176243    -6.19   0.000    -.1436689   -.0745828
+     1.black |    .521046   .0887182     5.87   0.000     .3471615    .6949306
+         y82 |   1.291211   .1608311     8.03   0.000     .9759882    1.606434
+         y83 |   2.352306   .1897173    12.40   0.000     1.980467    2.724145
+         y84 |   2.618971   .2247486    11.65   0.000     2.178472     3.05947
+         y85 |   2.799648   .2595143    10.79   0.000     2.291009    3.308286
+         y86 |   3.239576   .2904525    11.15   0.000     2.670299    3.808852
+         y87 |   3.715813    .320764    11.58   0.000     3.087127    4.344498
+    educ_bar |  -2.128733   .1300493   -16.37   0.000    -2.383625   -1.873841
+   exper_bar |   2.833069   .2427013    11.67   0.000     2.357383    3.308754
+ expersq_bar |  -.1737712   .0446853    -3.89   0.000    -.2613527   -.0861896
+       _cons |   1.856366   .4136939     4.49   0.000     1.045541    2.667191
+------------------------------------------------------------------------------
+
+. margins, dydx(educ exper expersq black) post
+
+Average marginal effects                                Number of obs = 12,665
+Model VCE: Robust
+
+dy/dx wrt: educ exper expersq 1.black
+
+1._predict: Pr(status==1), predict(pr outcome(1))
+2._predict: Pr(status==2), predict(pr outcome(2))
+3._predict: Pr(status==3), predict(pr outcome(3))
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+educ         |
+    _predict |
+          1  |  -.1219836   .0054696   -22.30   0.000    -.1327037   -.1112635
+          2  |   .0822806   .0075847    10.85   0.000     .0674148    .0971464
+          3  |    .039703   .0090279     4.40   0.000     .0220087    .0573973
+-------------+----------------------------------------------------------------
+exper        |
+    _predict |
+          1  |  -.0335048   .0068535    -4.89   0.000    -.0469373   -.0200722
+          2  |   .0817018   .0094992     8.60   0.000     .0630838    .1003198
+          3  |   -.048197   .0101149    -4.76   0.000    -.0680219   -.0283722
+-------------+----------------------------------------------------------------
+expersq      |
+    _predict |
+          1  |   .0057717    .001217     4.74   0.000     .0033864    .0081571
+          2  |   .0033119   .0013632     2.43   0.015     .0006401    .0059837
+          3  |  -.0090837   .0013151    -6.91   0.000    -.0116612   -.0065061
+-------------+----------------------------------------------------------------
+0.black      |  (base outcome)
+-------------+----------------------------------------------------------------
+1.black      |
+    _predict |
+          1  |  -.0501622   .0061172    -8.20   0.000    -.0621516   -.0381728
+          2  |   .0729142   .0091512     7.97   0.000     .0549782    .0908501
+          3  |  -.0227519   .0079122    -2.88   0.004    -.0382595   -.0072444
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store ape_mln_cre
+
+. 
+. 
+. **# Prueba heterogeneidad inobserbable tipo Mundlak
+. mlogit status educ exper expersq i.black y82-y87 educ_bar exper_bar expersq_bar, baseoutcome(1) vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -12620.959  
+Iteration 1:  Log pseudolikelihood =  -7485.177  
+Iteration 2:  Log pseudolikelihood = -7150.4667  
+Iteration 3:  Log pseudolikelihood = -7125.6029  
+Iteration 4:  Log pseudolikelihood = -7124.9848  
+Iteration 5:  Log pseudolikelihood =  -7124.984  
+Iteration 6:  Log pseudolikelihood =  -7124.984  
+
+Multinomial logistic regression                        Number of obs =  12,665
+                                                       Wald chi2(26) = 3157.12
+                                                       Prob > chi2   =  0.0000
+Log pseudolikelihood = -7124.984                       Pseudo R2     =  0.4355
+
+                                 (Std. err. adjusted for 1,881 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+      status | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+1            |  (base outcome)
+-------------+----------------------------------------------------------------
+2            |
+        educ |   1.883261   .1019934    18.46   0.000     1.683357    2.083164
+       exper |   .7985977   .1043051     7.66   0.000     .5941634    1.003032
+     expersq |   -.054811   .0187126    -2.93   0.003     -.091487    -.018135
+     1.black |   .9418802   .1014016     9.29   0.000     .7431367    1.140624
+         y82 |   .6998583     .12568     5.57   0.000     .4535301    .9461865
+         y83 |   .4405337   .1337364     3.29   0.001     .1784153    .7026522
+         y84 |  -.2472087   .1511224    -1.64   0.102    -.5434033    .0489858
+         y85 |  -.7790527   .1733963    -4.49   0.000    -1.118903   -.4392022
+         y86 |  -1.020631   .1957104    -5.22   0.000    -1.404216   -.6370452
+         y87 |  -1.410481   .2337581    -6.03   0.000    -1.868639   -.9523237
+    educ_bar |   -2.69431   .1083964   -24.86   0.000    -2.906763   -2.481857
+   exper_bar |   .4724993   .1956065     2.42   0.016     .0891177    .8558809
+ expersq_bar |   -.119199   .0430628    -2.77   0.006    -.2036005   -.0347975
+       _cons |   9.853048   .3718873    26.49   0.000     9.124162    10.58193
+-------------+----------------------------------------------------------------
+3            |
+        educ |   1.660093    .121344    13.68   0.000     1.422263    1.897923
+       exper |   .2051504   .1095908     1.87   0.061    -.0096437    .4199444
+     expersq |  -.1091258   .0176243    -6.19   0.000    -.1436689   -.0745828
+     1.black |    .521046   .0887182     5.87   0.000     .3471615    .6949306
+         y82 |   1.291211   .1608311     8.03   0.000     .9759882    1.606434
+         y83 |   2.352306   .1897173    12.40   0.000     1.980467    2.724145
+         y84 |   2.618971   .2247486    11.65   0.000     2.178472     3.05947
+         y85 |   2.799648   .2595143    10.79   0.000     2.291009    3.308286
+         y86 |   3.239576   .2904525    11.15   0.000     2.670299    3.808852
+         y87 |   3.715813    .320764    11.58   0.000     3.087127    4.344498
+    educ_bar |  -2.128733   .1300493   -16.37   0.000    -2.383625   -1.873841
+   exper_bar |   2.833069   .2427013    11.67   0.000     2.357383    3.308754
+ expersq_bar |  -.1737712   .0446853    -3.89   0.000    -.2613527   -.0861896
+       _cons |   1.856366   .4136939     4.49   0.000     1.045541    2.667191
+------------------------------------------------------------------------------
+
+. test educ_bar exper_bar expersq_bar
+
+ ( 1)  [1]o.educ_bar = 0
+ ( 2)  [2]educ_bar = 0
+ ( 3)  [3]educ_bar = 0
+ ( 4)  [1]o.exper_bar = 0
+ ( 5)  [2]exper_bar = 0
+ ( 6)  [3]exper_bar = 0
+ ( 7)  [1]o.expersq_bar = 0
+ ( 8)  [2]expersq_bar = 0
+ ( 9)  [3]expersq_bar = 0
+       Constraint 1 dropped
+       Constraint 4 dropped
+       Constraint 7 dropped
+
+           chi2(  6) = 1636.61
+         Prob > chi2 =    0.0000
+
+. 
+. 
+. **# TABLA COMPARATIVA FINAL
+. 
+. *  chequear que estén todas
+. estimates dir
+
+-----------------------------------------------------------------------
+             |           Dependent  Number of        
+        Name | Command    variable     param.  Title 
+-------------+---------------------------------------------------------
+ape_mln_po~d | margins   no depvar         15  Average marginal effects
+ ape_mln_cre | margins   no depvar         15  Average marginal effects
+-----------------------------------------------------------------------
+
+. 
+. esttab ape_mln_pooled ape_mln_cre, ///
+>     b se nolabel ///
+>     b(%9.4f) se(%9.4f) ///
+>     star(* 0.10 ** 0.05 *** 0.01) ///
+>     mtitles("MLN" "MLN-CRE" ///
+>     stats(N, fmt(%9.0g) labels("N"))) ///
+>     compress nogaps
+
+------------------------------------
+                 (1)          (2)   
+                 MLN      MLN-CRE   
+------------------------------------
+educ                                
+1._predict    0.0418***   -0.1220***
+            (0.0017)     (0.0055)   
+2._predict   -0.0570***    0.0823***
+            (0.0020)     (0.0076)   
+3._predict    0.0152***    0.0397***
+            (0.0020)     (0.0090)   
+------------------------------------
+exper                               
+1._predict   -0.1493***   -0.0335***
+            (0.0062)     (0.0069)   
+2._predict   -0.0756***    0.0817***
+            (0.0060)     (0.0095)   
+3._predict    0.2249***   -0.0482***
+            (0.0050)     (0.0101)   
+------------------------------------
+expersq                             
+1._predict    0.0176***    0.0058***
+            (0.0009)     (0.0012)   
+2._predict    0.0031***    0.0033** 
+            (0.0010)     (0.0014)   
+3._predict   -0.0207***   -0.0091***
+            (0.0010)     (0.0013)   
+------------------------------------
+0b.black                            
+1._predict    0.0000       0.0000   
+                 (.)          (.)   
+2._predict    0.0000       0.0000   
+                 (.)          (.)   
+3._predict    0.0000       0.0000   
+                 (.)          (.)   
+------------------------------------
+1.black                             
+1._predict   -0.0635***   -0.0502***
+            (0.0079)     (0.0061)   
+2._predict    0.1027***    0.0729***
+            (0.0098)     (0.0092)   
+3._predict   -0.0392***   -0.0228***
+            (0.0092)     (0.0079)   
+------------------------------------
+N              12665        12665   
+------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. 
+. 
+. 
+. 
+. **# **# PCP
+. 
+. * Predicción por máxima probabilidad:
+. mlogit status educ exper expersq i.black y82-y87 educ_bar exper_bar expersq_bar, baseoutcome(1) vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -12620.959  
+Iteration 1:  Log pseudolikelihood =  -7485.177  
+Iteration 2:  Log pseudolikelihood = -7150.4667  
+Iteration 3:  Log pseudolikelihood = -7125.6029  
+Iteration 4:  Log pseudolikelihood = -7124.9848  
+Iteration 5:  Log pseudolikelihood =  -7124.984  
+Iteration 6:  Log pseudolikelihood =  -7124.984  
+
+Multinomial logistic regression                        Number of obs =  12,665
+                                                       Wald chi2(26) = 3157.12
+                                                       Prob > chi2   =  0.0000
+Log pseudolikelihood = -7124.984                       Pseudo R2     =  0.4355
+
+                                 (Std. err. adjusted for 1,881 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+      status | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+1            |  (base outcome)
+-------------+----------------------------------------------------------------
+2            |
+        educ |   1.883261   .1019934    18.46   0.000     1.683357    2.083164
+       exper |   .7985977   .1043051     7.66   0.000     .5941634    1.003032
+     expersq |   -.054811   .0187126    -2.93   0.003     -.091487    -.018135
+     1.black |   .9418802   .1014016     9.29   0.000     .7431367    1.140624
+         y82 |   .6998583     .12568     5.57   0.000     .4535301    .9461865
+         y83 |   .4405337   .1337364     3.29   0.001     .1784153    .7026522
+         y84 |  -.2472087   .1511224    -1.64   0.102    -.5434033    .0489858
+         y85 |  -.7790527   .1733963    -4.49   0.000    -1.118903   -.4392022
+         y86 |  -1.020631   .1957104    -5.22   0.000    -1.404216   -.6370452
+         y87 |  -1.410481   .2337581    -6.03   0.000    -1.868639   -.9523237
+    educ_bar |   -2.69431   .1083964   -24.86   0.000    -2.906763   -2.481857
+   exper_bar |   .4724993   .1956065     2.42   0.016     .0891177    .8558809
+ expersq_bar |   -.119199   .0430628    -2.77   0.006    -.2036005   -.0347975
+       _cons |   9.853048   .3718873    26.49   0.000     9.124162    10.58193
+-------------+----------------------------------------------------------------
+3            |
+        educ |   1.660093    .121344    13.68   0.000     1.422263    1.897923
+       exper |   .2051504   .1095908     1.87   0.061    -.0096437    .4199444
+     expersq |  -.1091258   .0176243    -6.19   0.000    -.1436689   -.0745828
+     1.black |    .521046   .0887182     5.87   0.000     .3471615    .6949306
+         y82 |   1.291211   .1608311     8.03   0.000     .9759882    1.606434
+         y83 |   2.352306   .1897173    12.40   0.000     1.980467    2.724145
+         y84 |   2.618971   .2247486    11.65   0.000     2.178472     3.05947
+         y85 |   2.799648   .2595143    10.79   0.000     2.291009    3.308286
+         y86 |   3.239576   .2904525    11.15   0.000     2.670299    3.808852
+         y87 |   3.715813    .320764    11.58   0.000     3.087127    4.344498
+    educ_bar |  -2.128733   .1300493   -16.37   0.000    -2.383625   -1.873841
+   exper_bar |   2.833069   .2427013    11.67   0.000     2.357383    3.308754
+ expersq_bar |  -.1737712   .0446853    -3.89   0.000    -.2613527   -.0861896
+       _cons |   1.856366   .4136939     4.49   0.000     1.045541    2.667191
+------------------------------------------------------------------------------
+
+. *mlogit status educ exper expersq i.black y82-y87, baseoutcome(1) vce(cluster id)
+. predict phat1 phat2 phat3, pr
+
+. 
+. /* 1) ¿Qué calcula predict phat1 ... phat3, pr?
+> 
+> Después de mlogit, Stata estima, para cada observación i y cada alternativa j (1,2,3), la probabilidad predicha
+> Pr(choice_{i}=j | x_{i})= exp(x_{i}′b_{j})/ (∑k=1,...,3 exp⁡(x_{i}′b_{k}).
+> 
+> Para la base (outcome 1), Stata normaliza b_{1}=0. Eso no significa que P_{i1}=0, sino que la utilidad sistemática de la base se fija a cero como referencia.
+> Con "predict ..., pr" Stata te devuelve esas probabilidades.
+> 
+> Entonces:
+> 
+> phat1 = P_{i1} = probabilidad predicha de escuela (1)
+> phat2 = P_{i2} = prob predicha de casa (2)
+> phat3 = P_{i3} = prob predicha de trabajar (3)
+> 
+> Chequeo simple (debería dar ~1 salvo redondeo):*/
+. 
+. gen psum = phat1+phat2+phat3
+
+. summ psum
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+        psum |     12,723           1    7.25e-09   .9999999          1
+
+. 
+. ** o sea: son probabilidades predichas por alternativa, tal como queríamos.
+. 
+. * Categoría predicha = argmax
+. gen yhat = 1
+
+. replace yhat = 2 if phat2>phat1 & phat2>=phat3 
+(2,498 real changes made)
+
+. replace yhat = 3 if phat3>phat1 & phat3>=phat2  
+(8,032 real changes made)
+
+. 
+. gen correct = (status==yhat) if !missing(status)
+(58 missing values generated)
+
+. summ correct
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     correct |     12,665    .7954994    .4033521          0          1
+
+. display "Porcentaje correctamente predicho = " 100*r(mean) "%"
+Porcentaje correctamente predicho = 79.549941%
+
+. 
+. 
+. ** da  79.54%.
+. ** interesante que, sin enfoque CRE, el PCP es de 69.02%. Un poco menor.
+. 
+. ** Interpretación: el clasificador "argmax" acierta más de la mitad de las veces, un poco por encima de 3/4. (Parece un rendimiento algo bueno si tengo en cuenta q
+> ue al azar seria 1/3=0.33, un 33.33%)
+. **  Ojo con algo importante: este 79.54% es in-sample (en la misma muestra con la que estimaste). No es out-of-sample. 
+. ** Si tuvieramos en un enfoque de prediccion de Machine Learning, es posible que el resultado de acierto de PCP sea bastante peor fuera de la muestra. Por eso para
+>  multiples categorias, en ML se usan otras tecnicas.
+. 
+. * Matriz de clasificación (real vs predicho)
+. tab status yhat, row
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+sch=1,home |               yhat
+ =2,work=3 |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |     1,828        222        423 |     2,473 
+           |     73.92       8.98      17.10 |    100.00 
+-----------+---------------------------------+----------
+         2 |       262      1,826      1,145 |     3,233 
+           |      8.10      56.48      35.42 |    100.00 
+-----------+---------------------------------+----------
+         3 |       102        436      6,421 |     6,959 
+           |      1.47       6.27      92.27 |    100.00 
+-----------+---------------------------------+----------
+     Total |     2,192      2,484      7,989 |    12,665 
+           |     17.31      19.61      63.08 |    100.00 
+
+. 
+. /* Tu matriz es la pieza clave. La diagonal (aciertos por categoría real) es:
+> 
+> status=1 (school):  73.92% correcto
+> status=2 (home):  56.48% correcto 
+> status=3 (work):  92.27% correcto 
+> 
+> 
+> */
+. 
+. **# APRENDIZAJE
+. 
+. 
+. /* =====================================================================================
+>    INTERPRETACIÓN (para do-file): APEs en mlogit + por qué cambian con CRE (Mundlak)
+>    =====================================================================================
+> 
+> 1) ¿Qué son los APEs que reporta `margins, dydx(...)` después de `mlogit`?
+> 
+>    - Stata reporta Average Partial Effects (APEs): el promedio muestral del efecto marginal.
+>    - En `mlogit`, `margins, dydx(X)` devuelve el efecto de cada covariable X sobre
+>      cada probabilidad predicha Pr(status==j).
+> 
+>    En tu caso:
+>      _predict 1 = Pr(status==1) = escuela
+>      _predict 2 = Pr(status==2) = casa
+>      _predict 3 = Pr(status==3) = trabajo
+> 
+>    Por eso, para cada variable (educ, exper, expersq, black) aparecen 3 filas:
+>    una por outcome/categoría.
+> 
+> 2) ¿Por qué "interactúan" las probabilidades y por qué aparecen efectos en todas?
+> 
+>    En MNL:
+>                 P_ij = exp(X_i * beta_j)
+>                         --------------------
+>                         sum_k exp(X_i * beta_k)
+> 
+>    Como el denominador incluye todas las alternativas, un cambio en X afecta
+>    simultáneamente todas las probabilidades. Entonces:
+>      - si sube Pr(trabajo), necesariamente deben bajar Pr(escuela) y/o Pr(casa) (y viceversa).
+>    Implicación práctica:
+>      - para cada variable, los APEs sobre outcomes suelen sumar aproximadamente 0
+>        (salvo redondeo), porque las probabilidades deben sumar 1.
+> 
+> 3) ¿Cómo interpretar los APEs concretamente?
+> 
+>    - Para variables continuas (educ, exper, expersq):
+>        APE = cambio promedio (en puntos porcentuales si multiplicás por 100) en Pr(status==j) ante un aumento de 1 unidad en X.
+> 
+>    - Para variables factor/binarias (i.black):
+>        Stata reporta "discrete change from base level":  el cambio en Pr(status==j) al pasar de black=0 a black=1.
+> 
+> 4) ¿Qué cambia al pasar de MLN pooled a MLN-CRE (Mundlak) y por qué los APEs pueden "darse vuelta"?
+> 
+>    En MLN-CRE agregaste promedios por individuo:
+>      educ_bar, exper_bar, expersq_bar
+> 
+>    Eso implementa un enfoque tipo Mundlak/CRE para capturar heterogeneidad inobservable
+>    correlacionada con X. Con esa parametrización:
+> 
+>      - Los coeficientes/APE de educ, exper, expersq se interpretan como efectos "within"
+>        (intra-individuo): cómo cambia la elección cuando X cambia en el tiempo dentro
+>        de la misma persona, manteniendo fijo su "tipo" promedio.
+> 
+>      - Los promedios (educ_bar, exper_bar, expersq_bar) capturan el componente "between"
+>        (diferencias permanentes entre individuos) y absorben parte de la selección.
+> 
+>    Por eso es esperable que:
+>      - Cambien magnitudes,
+>      - y hasta cambien signos,
+>    porque el pooled mezcla within + between, mientras el CRE separa esos componentes.
+> 
+> 5) ¿Qué significa el test de Mundlak que hiciste?
+> 
+>    `test educ_bar exper_bar expersq_bar` con p-valor ~0 implica que
+>    los promedios son conjuntamente significativos => evidencia fuerte de que hay
+>    heterogeneidad inobservable correlacionada con X.
+> 
+>    Interpretación:
+>      - el pooled MLN es potencialmente sesgado por "tipo de persona" (efectos no observados),
+>      - y el CRE está más justificado porque controla esa correlación vía promedios.
+> 
+> ===================================================================================== */
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\18_taller.log
+  log type:  text
+ closed on:  26 Mar 2026, 05:28:47
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

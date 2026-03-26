@@ -1,0 +1,1965 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\15_taller.log
+  log type:  text
+ opened on:  26 Mar 2026, 04:43:27
+
+. do "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\3. Estrategia empirica\3. Modelos\talleres por tema - teoria econometrica\15taller_Binari
+> a_Panel.do"
+
+. *** Capitulo 15 ***
+. /**********************************************************************
+> TALLER (Wooldridge 15.8.1–15.8.2): lfp.dta
+> - Probit agrupado (pooled) con EE cluster(id)
+> - RE-probit: xtprobit, re con EE cluster(id)
+> - CRE-probit "agrupado": pooled probit + promedios individuales (Mundlak)
+> - Pruebas:
+>     (i)  Mundlak / "ci correlacionado con xit": test kidsbar=lhincbar=0
+>     (ii) Completitud dinámica: agregar rezagos (L1,L2) y test conjunto
+>     (iii) Exogeneidad estricta (diagnóstico): agregar adelantados (F1) y test conjunto
+> - Reportar siempre: Var(c_i) y s = sqrt(1+Var(c_i)) cuando corresponda (RE y CRE-RE)
+> - Tabla final: APEs comparables (3 modelos: Pooled, RE, CRE-pooled)
+> **********************************************************************/
+.  
+. version 17.0
+
+. clear all
+
+. set more off
+
+. 
+. 
+. *========================
+. * 0) Conseguir y cargar LFP
+. *========================
+. capture which frause
+
+. if _rc {
+.     di as txt "Instalando frause (datasets de Wooldridge)..."
+.     ssc install frause, replace
+. }
+
+. 
+. * Cargar la base
+. capture noisily frause lfp, clear
+
+. if _rc {
+.     di as error "No pude cargar lfp con frause."
+.     di as error "Plan B: probá (si tenés internet):"
+.     di as error "  net install frause, from(""https://fmwww.bc.edu/repec/bocode/f"") replace"
+.     di as error "y luego: frause lfp, clear"
+.     exit 601
+. }
+
+. 
+. 
+. describe
+
+Contains data from https://friosavila.github.io/playingwithstata/data2/lfp.dta
+ Observations:        28,315                  
+    Variables:            15                  7 Mar 2007 15:07
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+id              int     %9.0g                 identifier, 1 through 5,663
+period          byte    %9.0g                 1 through 5, each 4 months long
+lfp             byte    %9.0g                 =1 if in labor force
+black           byte    %9.0g                 =1 if black
+educ            byte    %9.0g                 years of schooling, period 1
+age             byte    %9.0g                 in years, period 1
+agesq           int     %9.0g                 age^2
+kids            byte    %9.0g                 number children < 18
+hinc            float   %9.0g                 husband's monthly income, $
+per1            byte    %9.0g                 =1 if period == 1
+per2            byte    %9.0g                 =1 if period == 2
+per3            byte    %9.0g                 =1 if period == 3
+per4            byte    %9.0g                 =1 if period == 4
+per5            byte    %9.0g                 =1 if period == 5
+lhinc           float   %9.0g                 log(hinc)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: id  period
+
+. summ lfp black educ age agesq kids hinc 
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+         lfp |     28,315    .6819001    .4657467          0          1
+       black |     28,315    .0672788    .2505087          0          1
+        educ |     28,315    13.20872    2.667213          0         18
+         age |     28,315    39.04061    9.974456         18         64
+       agesq |     28,315    1623.656    819.8108        324       4096
+-------------+---------------------------------------------------------
+        kids |     28,315    1.241286    1.205365          0         10
+        hinc |     28,315    2974.945    1836.063   .5058056   15659.72
+
+. 
+. 
+. **# Declaro panel
+. 
+. *========================
+. * 1) Panel: id y year
+. sort id period
+
+. xtset id period
+
+Panel variable: id (strongly balanced)
+ Time variable: period, 1 to 5
+         Delta: 1 unit
+
+. 
+. **# Probit agrupado
+. 
+. *========================
+. * 3) MODELO 1: PROBIT AGRUPADO (pooled) + EE cluster(id)
+. *    (omite c_i)
+. *========================
+. probit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5, ///
+>     vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -17709.021  
+Iteration 1:  Log pseudolikelihood = -16561.609  
+Iteration 2:  Log pseudolikelihood = -16556.671  
+Iteration 3:  Log pseudolikelihood = -16556.671  
+
+Probit regression                                       Number of obs = 28,315
+                                                        Wald chi2(10) = 537.36
+                                                        Prob > chi2   = 0.0000
+Log pseudolikelihood = -16556.671                       Pseudo R2     = 0.0651
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.1989144   .0153153   -12.99   0.000    -.2289319   -.1688969
+       lhinc |  -.2110738   .0242901    -8.69   0.000    -.2586816   -.1634661
+        educ |   .0796863   .0065453    12.17   0.000     .0668577    .0925149
+     1.black |   .2209396   .0659041     3.35   0.001       .09177    .3501093
+         age |   .1449159   .0122179    11.86   0.000     .1209693    .1688624
+       agesq |  -.0019912   .0001522   -13.08   0.000    -.0022895   -.0016928
+        per2 |  -.0124245   .0104551    -1.19   0.235    -.0329162    .0080672
+        per3 |  -.0325178   .0127431    -2.55   0.011    -.0574938   -.0075418
+        per4 |   -.046097   .0136286    -3.38   0.001    -.0728087   -.0193853
+        per5 |  -.0577767    .014632    -3.95   0.000    -.0864548   -.0290985
+       _cons |  -1.064449    .261872    -4.06   0.000    -1.577709   -.5511895
+------------------------------------------------------------------------------
+
+. estimates store POOLED
+
+. 
+. * APEs (kids, lhinc, educ, black, age, agesq)
+. margins, dydx(kids lhinc educ i.black age agesq) post
+
+Average marginal effects                                Number of obs = 28,315
+Model VCE: Robust
+
+Expression: Pr(lfp), predict()
+dy/dx wrt:  kids lhinc educ 1.black age agesq
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.0660184   .0049222   -13.41   0.000    -.0756657   -.0563711
+       lhinc |   -.070054   .0079821    -8.78   0.000    -.0856987   -.0544093
+        educ |   .0264473   .0021117    12.52   0.000     .0223085    .0305862
+     1.black |   .0698835   .0197251     3.54   0.000      .031223     .108544
+         age |   .0480966   .0039217    12.26   0.000     .0404102     .055783
+       agesq |  -.0006609   .0000485   -13.61   0.000     -.000756   -.0005657
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store APE_probit_pooled
+
+. 
+. 
+. 
+. **# Prueba de completitud dinamica (diagnóstico)
+. 
+. *======================================================================
+. * PRUEBA DE "COMPLETITUD DINÁMICA" (Wooldridge 15.64)
+. *
+. * Idea:
+. * 1) Estimar el probit pooled y obtener p_hat_it = F(x_it * b_hat)
+. * 2) Construir u_hat_it = y_it - p_hat_it
+. * 3) Estimar, para t = 2,...,T, el "modelo artificial":
+. *       P(y_it=1 | x_it, u_hat_i,t-1) = F(x_it*b + gamma1*u_hat_i,t-1)
+. * 4) Testear H0: gamma1 = 0 (un grado de libertad)
+. *
+. * Nota práctica:
+. * - Para LR/LM hay que usar exactamente la misma submuestra (t>=2) en
+. *   restringido y no restringido. Con vce(cluster) LR no es recomendable.
+. * - En la práctica (como dice Wooldridge), alcanza con mirar el z/t de gamma1
+. *   (Wald). Aquí lo hago con "test uhat_l1".
+. *======================================================================
+. 
+. * (A) Predicción del pooled probit (Modelo 1)
+. probit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5, vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -17709.021  
+Iteration 1:  Log pseudolikelihood = -16561.609  
+Iteration 2:  Log pseudolikelihood = -16556.671  
+Iteration 3:  Log pseudolikelihood = -16556.671  
+
+Probit regression                                       Number of obs = 28,315
+                                                        Wald chi2(10) = 537.36
+                                                        Prob > chi2   = 0.0000
+Log pseudolikelihood = -16556.671                       Pseudo R2     = 0.0651
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.1989144   .0153153   -12.99   0.000    -.2289319   -.1688969
+       lhinc |  -.2110738   .0242901    -8.69   0.000    -.2586816   -.1634661
+        educ |   .0796863   .0065453    12.17   0.000     .0668577    .0925149
+     1.black |   .2209396   .0659041     3.35   0.001       .09177    .3501093
+         age |   .1449159   .0122179    11.86   0.000     .1209693    .1688624
+       agesq |  -.0019912   .0001522   -13.08   0.000    -.0022895   -.0016928
+        per2 |  -.0124245   .0104551    -1.19   0.235    -.0329162    .0080672
+        per3 |  -.0325178   .0127431    -2.55   0.011    -.0574938   -.0075418
+        per4 |   -.046097   .0136286    -3.38   0.001    -.0728087   -.0193853
+        per5 |  -.0577767    .014632    -3.95   0.000    -.0864548   -.0290985
+       _cons |  -1.064449    .261872    -4.06   0.000    -1.577709   -.5511895
+------------------------------------------------------------------------------
+
+. estimates store POOLED_nocs
+
+. 
+. 
+. estimates restore POOLED_nocs
+(results POOLED_nocs are active now)
+
+. 
+. capture drop phat_pooled uhat_pooled uhat_l1
+
+. predict double phat_pooled, pr
+
+. gen double uhat_pooled = lfp - phat_pooled
+
+. 
+. * (B) Rezago del residuo: uhat_{i,t-1}
+. *     Requiere xtset id period (ya lo hiciste).
+. gen double uhat_l1 = L1.uhat_pooled
+(5,663 missing values generated)
+
+. 
+. * (C) Modelo artificial, SOLO t>=2 (porque uhat_l1 no existe en t=1)
+. probit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5 ///
+>     uhat_l1 ///
+>     if period>=2
+
+note: per5 omitted because of collinearity.
+Iteration 0:  Log likelihood = -14204.637  
+Iteration 1:  Log likelihood = -5393.1711  
+Iteration 2:  Log likelihood = -5361.2877  
+Iteration 3:  Log likelihood = -5361.2216  
+Iteration 4:  Log likelihood = -5361.2216  
+
+Probit regression                                     Number of obs =   22,652
+                                                      LR chi2(10)   = 17686.83
+                                                      Prob > chi2   =   0.0000
+Log likelihood = -5361.2216                           Pseudo R2     =   0.6226
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.2537906   .0121541   -20.88   0.000    -.2776121   -.2299691
+       lhinc |  -.2510571   .0211276   -11.88   0.000    -.2924664   -.2096478
+        educ |   .1034514   .0052141    19.84   0.000     .0932319    .1136708
+     1.black |   .3046131   .0537502     5.67   0.000     .1992647    .4099615
+         age |   .2235043   .0100221    22.30   0.000     .2038612    .2431473
+       agesq |  -.0030381   .0001239   -24.52   0.000    -.0032809   -.0027952
+        per2 |   .0682588    .037076     1.84   0.066    -.0044089    .1409265
+        per3 |   .0230569   .0368441     0.63   0.531    -.0491562      .09527
+        per4 |   .0344678   .0370666     0.93   0.352    -.0381813     .107117
+        per5 |          0  (omitted)
+     uhat_l1 |   2.875871   .0270809   106.20   0.000     2.822793    2.928948
+       _cons |  -2.218462   .2214107   -10.02   0.000    -2.652418   -1.784505
+------------------------------------------------------------------------------
+
+. estimates store POOLED_DYNTEST
+
+. 
+. * (D) Test 1 gdl: H0: gamma1 = 0
+. test uhat_l1
+
+ ( 1)  [lfp]uhat_l1 = 0
+
+           chi2(  1) =11277.52
+         Prob > chi2 =    0.0000
+
+. scalar p_dyn = r(p)
+
+. 
+. /*La intuición es directa:
+>   si existe dependencia dinámica omitida (o un efecto no observado persistente) que induce correlación serial en los residuos, 
+>   entonces uhat_l1 contiene información adicional sobre y_it más allá de x_it, y el coeficiente gamma1 tenderá a ser distinto de 0.
+> */
+. 
+. di as txt "Completitud dinámica (Wooldridge 15.64): H0 gamma1=0"
+Completitud dinámica (Wooldridge 15.64): H0 gamma1=0
+
+. di as txt "p-value = " %9.4f p_dyn
+p-value =    0.0000
+
+. 
+. 
+. *======================================================================
+. * INTERPRETACIÓN DEL TEST DE COMPLETITUD DINÁMICA (Wooldridge 15.64)
+. *
+. * (1) Qué testea realmente:
+. *     Este NO es un test de "si faltan rezagos de x" en el índice.
+. *     Tampoco es un test estándar de endogeneidad tipo IV.
+. *     Es un diagnóstico específico: si el probit pooled está "dinámicamente completo".
+. *
+. *     La condición de completitud dinámica (15.63) dice, en esencia, que:
+. *       dado x_it, ni el pasado de y_it ni el historial de x_it aportan información adicional
+. *       para explicar y_it.
+. *     Bajo esa condición, el "residuo" u_it = y_it - F(x_it b) se comporta como una
+. *     diferencia de martingala (no hay correlación serial relevante) y por eso
+. *     la inferencia usual que trata observaciones en el tiempo como "no correlacionadas"
+. *     puede ser válida (varianzas ingenuas).
+. *
+. * (2) Cómo se implementa el test:
+. *     - Primero se estima el probit pooled y se calcula p_hat_it = F(x_it b_hat).
+. *     - Luego se aproxima el residuo poblacional u_it por:
+. *           uhat_it = y_it - p_hat_it.
+. *     - Después se estima el "modelo artificial" (t=2,...,T):
+. *           P(y_it=1 | x_it, uhat_i,t-1) = F( x_it*b + gamma1*uhat_i,t-1 )
+. *       y se testea H0: gamma1 = 0 (un grado de libertad).
+. *
+. *     La intuición:
+. *       Si hay dependencia dinámica omitida (p.ej. estado previo de participación)
+. *       o un componente persistente no observado (tipo c_i), entonces los residuos
+. *       van a estar correlacionados en el tiempo. En ese caso, uhat_i,t-1 contiene
+. *       información extra sobre y_it, y gamma1 tiende a ser distinto de 0.
+. *
+. * (3) Qué significa el resultado que obtuvimos (p-value = 0.0000):
+. *     Rechazamos H0: gamma1=0. Es decir:
+. *       uhat_i,t-1 "predice" y_it aun controlando por x_it.
+. *     Esto es evidencia muy fuerte de que (15.63) NO se cumple en estos datos:
+. *       hay persistencia/serialidad importante (puede estar inducida por heterogeneidad persistente c_i
+. *       y/o por verdadera dinámica en la decisión).
+. *
+. * (4) Por qué el coeficiente de uhat_l1 es enorme y el Pseudo R2 sube muchísimo:
+. *     uhat_i,t-1 = y_i,t-1 - p_hat_i,t-1.
+. *     Como y_i,t-1 es 0/1, uhat_i,t-1 queda muy ligado a y_i,t-1.
+. *     En participación laboral suele haber mucha persistencia (costos fijos,
+. *     preferencias, shocks persistentes, etc.), así que no sorprende que el test
+. *     rechace "por goleada".
+. *     IMPORTANTE: el tamaño del coeficiente de uhat_l1 NO se interpreta como un
+. *     "efecto estructural"; es un dispositivo para testear gamma1=0.
+. *
+. * (5) Nota sobre colinealidad y la dummy per5 omitida:
+. *     Al estimar el modelo artificial con la submuestra period>=2, las dummies de
+. *     período cumplen per2+per3+per4+per5=1. Con constante, una dummy sobra y Stata
+. *     omite una (acá omitió per5). No es un problema.
+. *
+. * (6) Relación con APEs y con 15.7.1:
+. *     Rechazar completitud dinámica NO implica automáticamente que los APEs pooled
+. *     sean "inconsistentes" como objeto reducido. Son cosas distintas:
+. *       - 15.7.1 discute casos donde, aun omitiendo heterogeneidad independiente,
+. *         el probit pooled puede identificar correctamente una probabilidad reducida
+. *         (integrada) y, por ende, APEs de esa probabilidad.
+. *       - El test 15.64 ataca la presencia de correlación serial/persistencia que hace
+. *         inválida la inferencia "iid en el tiempo" (varianzas ingenuas).
+. *     En práctica, como aquí usamos vce(cluster id) en el pooled, la inferencia ya está
+. *     robustecida contra correlación intra-mujer; el test se interpreta como evidencia
+. *     de dinámica/persistencia fuerte y como advertencia contra usar varianza ingenua.
+. *
+. * por lo tanto, hacemos bien en usar vce(cluster id).
+. 
+. *======================================================================
+. 
+. 
+. 
+. 
+. **# Prueba de exogeneidad estricta (diagnostico)
+. 
+. 
+. *========================
+. * 7) (Diagnóstico) EXOGENEIDAD ESTRICTA vía adelantados
+. *    Agregar F1 de kids y lhinc y test conjunto.
+. *========================
+. capture drop F1_kids F1_lhinc
+
+. gen double F1_kids  = F1.kids
+(5,663 missing values generated)
+
+. gen double F1_lhinc = F1.lhinc
+(5,663 missing values generated)
+
+. 
+. probit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5 ///
+>     F1_kids F1_lhinc, ///
+>     vce(cluster id)
+
+note: per5 omitted because of collinearity.
+Iteration 0:  Log pseudolikelihood = -14129.918  
+Iteration 1:  Log pseudolikelihood = -13165.013  
+Iteration 2:  Log pseudolikelihood = -13160.981  
+Iteration 3:  Log pseudolikelihood = -13160.981  
+
+Probit regression                                       Number of obs = 22,652
+                                                        Wald chi2(11) = 518.03
+                                                        Prob > chi2   = 0.0000
+Log pseudolikelihood = -13160.981                       Pseudo R2     = 0.0686
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |   .0269443   .0371714     0.72   0.469    -.0459102    .0997989
+       lhinc |  -.1317787   .0194956    -6.76   0.000    -.1699893   -.0935681
+        educ |   .0839995   .0067633    12.42   0.000     .0707437    .0972553
+     1.black |    .214482   .0669734     3.20   0.001     .0832165    .3457475
+         age |   .1436017   .0125548    11.44   0.000     .1189947    .1682086
+       agesq |  -.0019821    .000156   -12.70   0.000    -.0022879   -.0016762
+        per2 |  -.0094236   .0104144    -0.90   0.366    -.0298354    .0109883
+        per3 |  -.0362656   .0127865    -2.84   0.005    -.0613266   -.0112045
+        per4 |  -.0429331   .0136588    -3.14   0.002    -.0697039   -.0161623
+        per5 |          0  (omitted)
+     F1_kids |  -.2351233   .0381463    -6.16   0.000    -.3098887    -.160358
+    F1_lhinc |  -.1102013   .0191602    -5.75   0.000    -.1477545   -.0726481
+       _cons |  -.8312367   .2779064    -2.99   0.003    -1.375923   -.2865502
+------------------------------------------------------------------------------
+
+. estimates store POOL_LEADS
+
+. 
+. test F1_kids  F1_lhinc
+
+ ( 1)  [lfp]F1_kids = 0
+ ( 2)  [lfp]F1_lhinc = 0
+
+           chi2(  2) =   70.58
+         Prob > chi2 =    0.0000
+
+. scalar p_strict = r(p)
+
+. 
+. di as txt "Exogeneidad estricta (diagnóstico) (H0: adelantados = 0): p = " %9.4f p_strict
+Exogeneidad estricta (diagnóstico) (H0: adelantados = 0): p =    0.0000
+
+. 
+. *===============================================================================
+. * (ii) OJO con cómo interpretar "rechazo" en la prueba de adelantados (leads)
+. *===============================================================================
+. * Este test es un diagnóstico:
+. * si x_{i,t+1} (un adelantado) ayuda a predecir y_{it} una vez que controlás por x_{it},
+. * eso sugiere que la hipótesis de EXOGENEIDAD ESTRICTA (en sentido fuerte) (15.65) no es creíble.
+. *
+. * Exogeneidad estricta aquí significa, a grandes rasgos:
+. *   - nada de feedback de y_it hacia x_it (ni inmediato ni anticipado),
+. *   - y ausencia de correlación entre x_it y shocks no observados relevantes para y_it,
+. *     en todos los períodos (pasado/presente/futuro).
+. *
+. *       POOLED:
+. *       Como no controlás heterogeneidad persistente c_i, el "rechazo" puede venir
+. *       simplemente de que x_{i,t+1} está correlacionado con c_i y c_i afecta y_{it}.
+. *       O sea: el lead test en pooled mezcla "endogeneidad" con "heterogeneidad omitida".
+. 
+. *===============================================================================
+. * (iii) Interpretación concreta de los resultados 
+. *===============================================================================
+. * - POOLED + leads:
+. *     Rechazo fuerte y con ambos adelantados (kids y lhinc)  -> señal clara de que
+. *     "exogeneidad estricta" NO es un supuesto cómodo en el pooled.
+. *
+. 
+.   
+. 
+. **# Probit CRE agrupado
+. 
+. *========================
+. *  MODELO: CRE "AGRUPADO" (Mundlak)
+. *    pooled probit + kidsbar + lhincbar + EE cluster(id)
+. *    Test Mundlak: H0 kidsbar=lhincbar=0
+. *========================
+. 
+. * Promedios individuales: diagnostico
+. xtset id period
+
+Panel variable: id (strongly balanced)
+ Time variable: period, 1 to 5
+         Delta: 1 unit
+
+. 
+. xtsum lhinc kids
+
+Variable         |      Mean   Std. dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+lhinc    overall |  7.805027   .6666122   -.681603   9.658847 |     N =   28315
+         between |             .5818195   4.524198   9.444125 |     n =    5663
+         within  |             .3254316   .9722741   10.56548 |     T =       5
+                 |                                            |
+kids     overall |  1.241286   1.205365          0         10 |     N =   28315
+         between |             1.186881          0         10 |     n =    5663
+         within  |             .2107515  -1.158714   3.641286 |     T =       5
+
+. 
+. by id: egen sd_lhinc = sd(lhinc)
+
+. by id: egen sd_kids  = sd(kids)
+
+. 
+. summ sd_lhinc, detail
+
+                          sd_lhinc
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     .0182481       .0071039
+ 5%     .0303326       .0071039
+10%     .0466363       .0071039       Obs              28,315
+25%     .0866522       .0071039       Sum of wgt.      28,315
+
+50%     .1803164                      Mean            .257905
+                        Largest       Std. dev.      .2566414
+75%     .3368238       3.875381
+90%     .5713816       3.875381       Variance       .0658648
+95%     .7763823       3.875381       Skewness       2.681421
+99%      1.20405       3.875381       Kurtosis       17.08008
+
+. count if sd_lhinc==0
+  0
+
+. 
+. summ sd_kids, detail
+
+                           sd_kids
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            0              0       Obs              28,315
+25%            0              0       Sum of wgt.      28,315
+
+50%            0                      Mean           .0916363
+                        Largest       Std. dev.      .2170777
+75%            0        2.19089
+90%     .5477226        2.19089       Variance       .0471227
+95%     .5477226        2.19089       Skewness       2.657298
+99%       .83666        2.19089       Kurtosis       12.56198
+
+. count if sd_kids==0
+  23,570
+
+. 
+. 
+. capture confirm variable lhincbar
+
+. if _rc {
+.     bys id: egen double lhincbar = mean(lhinc)
+.     label var lhincbar "mean_i(lhinc)"
+. }
+
+. 
+. 
+. capture confirm variable kidsbar
+
+. if _rc {
+.     bys id: egen double kidsbar = mean(kids)
+.     label var kidsbar "mean_i(kids)"
+. }
+
+. 
+. 
+. corr lhinc lhincbar
+(obs=28,315)
+
+             |    lhinc lhincbar
+-------------+------------------
+       lhinc |   1.0000
+    lhincbar |   0.8727   1.0000
+
+
+. corr kids  kidsbar
+(obs=28,315)
+
+             |     kids  kidsbar
+-------------+------------------
+        kids |   1.0000
+     kidsbar |   0.9846   1.0000
+
+
+. ** kids practicamente no varia en el tiempo... por eso la correlacion entre kids y kidsbar es casi 1.
+. ** la usamos igual, aunque numericamente puede dar problemas por colinealidad
+. 
+. 
+. 
+. probit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5 ///
+>     kidsbar lhincbar, ///
+>     vce(cluster id)
+
+Iteration 0:  Log pseudolikelihood = -17709.021  
+Iteration 1:  Log pseudolikelihood = -16521.245  
+Iteration 2:  Log pseudolikelihood = -16516.437  
+Iteration 3:  Log pseudolikelihood = -16516.436  
+
+Probit regression                                       Number of obs = 28,315
+                                                        Wald chi2(12) = 538.09
+                                                        Prob > chi2   = 0.0000
+Log pseudolikelihood = -16516.436                       Pseudo R2     = 0.0673
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.1173749   .0269743    -4.35   0.000    -.1702435   -.0645064
+       lhinc |  -.0288098    .014344    -2.01   0.045    -.0569234   -.0006962
+        educ |   .0841338   .0067302    12.50   0.000     .0709428    .0973248
+     1.black |   .2030668   .0663945     3.06   0.002     .0729359    .3331976
+         age |   .1516424   .0124831    12.15   0.000      .127176    .1761089
+       agesq |  -.0020672   .0001553   -13.31   0.000    -.0023717   -.0017628
+        per2 |  -.0135701   .0103752    -1.31   0.191    -.0339051    .0067648
+        per3 |  -.0331991   .0127197    -2.61   0.009    -.0581293    -.008269
+        per4 |  -.0390317   .0136244    -2.86   0.004    -.0657351   -.0123284
+        per5 |  -.0552425   .0146067    -3.78   0.000    -.0838711   -.0266139
+     kidsbar |  -.0856913   .0311857    -2.75   0.006     -.146814   -.0245685
+    lhincbar |  -.2501781   .0352907    -7.09   0.000    -.3193465   -.1810096
+       _cons |  -.7260562   .2836985    -2.56   0.010    -1.282095   -.1700174
+------------------------------------------------------------------------------
+
+. estimates store CRE_POOL
+
+. 
+. 
+. **# Prueba para c_i a la Mundlak
+. 
+. ** prueba de: "ci correlacionado con xit"
+. * test conjunto (Hausman/Mundlak-type)
+. test kidsbar lhincbar 
+
+ ( 1)  [lfp]kidsbar = 0
+ ( 2)  [lfp]lhincbar = 0
+
+           chi2(  2) =   57.50
+         Prob > chi2 =    0.0000
+
+. scalar p_mundlak = r(p)
+
+. 
+. di as txt "Test Mundlak (H0: kidsbar=lhincbar=0): p-value = " %9.4f p_mundlak
+Test Mundlak (H0: kidsbar=lhincbar=0): p-value =    0.0000
+
+. 
+. 
+. * APEs bajo CRE pooled (para los x_it originales)
+. margins, dydx(kids lhinc educ black age agesq) post
+
+Average marginal effects                                Number of obs = 28,315
+Model VCE: Robust
+
+Expression: Pr(lfp), predict()
+dy/dx wrt:  kids lhinc educ 1.black age agesq
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |   -.038852   .0089243    -4.35   0.000    -.0563433   -.0213608
+       lhinc |  -.0095363   .0047482    -2.01   0.045    -.0188426     -.00023
+        educ |    .027849   .0021586    12.90   0.000     .0236182    .0320797
+     1.black |   .0643443   .0200207     3.21   0.001     .0251043    .1035842
+         age |   .0501948   .0039823    12.60   0.000     .0423896    .0580001
+       agesq |  -.0006843   .0000492   -13.89   0.000    -.0007808   -.0005878
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store APE_CRE_pooled
+
+. 
+. 
+. **# Prueba de exogeneidad estricta (diagnostico)
+. 
+. 
+. *========================
+. * 7) (Diagnóstico) EXOGENEIDAD ESTRICTA vía adelantados
+. *    Agregar F1 de kids y lhinc y test conjunto.
+. *========================
+. capture drop F1_kids F1_lhinc
+
+. gen double F1_kids  = F1.kids
+(5,663 missing values generated)
+
+. gen double F1_lhinc = F1.lhinc
+(5,663 missing values generated)
+
+. 
+. probit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5 ///
+>         kidsbar lhincbar ///
+>     F1_kids F1_lhinc, ///
+>     vce(cluster id)
+
+note: per5 omitted because of collinearity.
+Iteration 0:  Log pseudolikelihood = -14129.918  
+Iteration 1:  Log pseudolikelihood = -13150.391  
+Iteration 2:  Log pseudolikelihood = -13146.397  
+Iteration 3:  Log pseudolikelihood = -13146.397  
+
+Probit regression                                       Number of obs = 22,652
+                                                        Wald chi2(13) = 521.85
+                                                        Prob > chi2   = 0.0000
+Log pseudolikelihood = -13146.397                       Pseudo R2     = 0.0696
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |   .0665936   .0447441     1.49   0.137    -.0211032    .1542903
+       lhinc |  -.0286113   .0208234    -1.37   0.169    -.0694243    .0122018
+        educ |   .0861489   .0068664    12.55   0.000      .072691    .0996068
+     1.black |   .2067688   .0672394     3.08   0.002      .074982    .3385557
+         age |     .14691   .0126887    11.58   0.000     .1220406    .1717794
+       agesq |  -.0020199   .0001576   -12.81   0.000    -.0023289    -.001711
+        per2 |  -.0097075   .0104173    -0.93   0.351    -.0301251      .01071
+        per3 |  -.0317974   .0127966    -2.48   0.013    -.0568783   -.0067165
+        per4 |  -.0366821   .0136658    -2.68   0.007    -.0634667   -.0098976
+        per5 |          0  (omitted)
+     kidsbar |  -.0781858   .0411778    -1.90   0.058    -.1588927    .0025212
+    lhincbar |  -.2375872    .045462    -5.23   0.000    -.3266911   -.1484834
+     F1_kids |  -.1990325   .0387701    -5.13   0.000    -.2750205   -.1230445
+    F1_lhinc |  -.0082912   .0197143    -0.42   0.674    -.0469305    .0303481
+       _cons |  -.6719422   .2887656    -2.33   0.020    -1.237912    -.105972
+------------------------------------------------------------------------------
+
+. estimates store POOL_LEADS_cre
+
+. 
+. test F1_kids  F1_lhinc
+
+ ( 1)  [lfp]F1_kids = 0
+ ( 2)  [lfp]F1_lhinc = 0
+
+           chi2(  2) =   26.79
+         Prob > chi2 =    0.0000
+
+. scalar p_strict = r(p)
+
+. 
+. di as txt "Exogeneidad estricta (diagnóstico) (H0: adelantados = 0): p = " %9.4f p_strict
+Exogeneidad estricta (diagnóstico) (H0: adelantados = 0): p =    0.0000
+
+. 
+. *===============================================================================
+. * (ii) OJO con cómo interpretar "rechazo" en la prueba de adelantados (leads)
+. *===============================================================================
+. * Este test es un diagnóstico:
+. * si x_{i,t+1} (un adelantado) ayuda a predecir y_{it} una vez que controlás por x_{it},
+. * eso sugiere que la hipótesis de EXOGENEIDAD ESTRICTA (en sentido fuerte) (15.65) no es creíble.
+. *
+. * Exogeneidad estricta aquí significa, a grandes rasgos:
+. *   - nada de feedback de y_it hacia x_it (ni inmediato ni anticipado),
+. *   - y ausencia de correlación entre x_it y shocks no observados relevantes para y_it,
+. *     en todos los períodos (pasado/presente/futuro).
+. *
+. * Matiz clave según el modelo:
+. *   (1) POOLED:
+. *       Como no controlás heterogeneidad persistente c_i, el "rechazo" puede venir
+. *       simplemente de que x_{i,t+1} está correlacionado con c_i y c_i afecta y_{it}.
+. *       O sea: el lead test en pooled mezcla "endogeneidad" con "heterogeneidad omitida".
+. *
+. *   (2) CRE (Mundlak / CRE en pooled):
+. *       Al incluir promedios por individuo (xbar_i), ese canal se reduce.
+. *       Si AUN ASÍ un lead sale significativo (p.ej., F1_kids) y el test conjunto rechaza,
+. *       sugiere algo más estructural: esa variable no parece estrictamente exógena
+. *       (o, como mínimo, hay feedback/dinámica/anticipación que la especificación no captura).
+. *        
+. *===============================================================================
+. * (iii) Interpretación concreta de los resultados 
+. *===============================================================================
+. * - POOLED + leads:
+. *     Rechazo fuerte y con ambos adelantados (kids y lhinc)  -> señal clara de que
+. *     "exogeneidad estricta" NO es un supuesto cómodo en el pooled.
+. *
+. * - CRE + leads:
+. *     El rechazo lo empuja casi todo F1_kids (porque F1_lhinc no es significativo) -> lectura
+. *     natural: kids es el problema, probablemente por anticipación (embarazo/planes),
+. *     feedback de participación sobre decisiones familiares, o dinámica omitida fuerte.
+.   
+.   
+.    
+. 
+. 
+. **# RE-Probit 
+. 
+. 
+. *========================
+. * 4) MODELO 2: RE-PROBIT (xtprobit, re) + EE cluster(id)
+. *    Reportar Var(c_i) y s
+. *========================
+. 
+. xtprobit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5, ///
+>     re vce(cluster id)
+
+Fitting comparison model:
+
+Iteration 0:  Log pseudolikelihood = -17709.021  
+Iteration 1:  Log pseudolikelihood = -16561.609  
+Iteration 2:  Log pseudolikelihood = -16556.671  
+Iteration 3:  Log pseudolikelihood = -16556.671  
+
+Fitting full model:
+
+rho =  0.0    Log pseudolikelihood = -16556.671
+rho =  0.1    Log pseudolikelihood = -14620.757
+rho =  0.2    Log pseudolikelihood = -13283.154
+rho =  0.3    Log pseudolikelihood = -12275.526
+rho =  0.4    Log pseudolikelihood = -11474.799
+rho =  0.5    Log pseudolikelihood = -10815.032
+rho =  0.6    Log pseudolikelihood =  -10257.36
+rho =  0.7    Log pseudolikelihood = -9780.5461
+rho =  0.8    Log pseudolikelihood = -9387.7399
+
+Iteration 0:  Log pseudolikelihood = -9788.9539  
+Iteration 1:  Log pseudolikelihood = -8877.5079  
+Iteration 2:  Log pseudolikelihood = -8844.1348  
+Iteration 3:  Log pseudolikelihood = -8702.9211  (not concave)
+Iteration 4:  Log pseudolikelihood = -8702.9211  (not concave)
+Iteration 5:  Log pseudolikelihood = -8670.4917  (not concave)
+Iteration 6:  Log pseudolikelihood = -8661.0286  
+Iteration 7:  Log pseudolikelihood = -8657.6582  
+Iteration 8:  Log pseudolikelihood = -8656.9074  
+Iteration 9:  Log pseudolikelihood = -8656.8378  
+Iteration 10: Log pseudolikelihood = -8656.8377  
+
+Calculating robust standard errors ...
+
+Random-effects probit regression                     Number of obs    = 28,315
+Group variable: id                                   Number of groups =  5,663
+
+Random effects u_i ~ Gaussian                        Obs per group:
+                                                                  min =      5
+                                                                  avg =    5.0
+                                                                  max =      5
+
+Integration method: mvaghermite                      Integration pts. =     12
+
+                                                     Wald chi2(7)     =      .
+Log pseudolikelihood = -8656.8377                    Prob > chi2      =      .
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.6285721   .2416195    -2.60   0.009    -1.102138   -.1550065
+       lhinc |  -.2112145          .        .       .            .           .
+        educ |   .2757696          .        .       .            .           .
+     1.black |   .7142804   .4143549     1.72   0.085    -.0978403    1.526401
+         age |   .6573304          .        .       .            .           .
+       agesq |  -.0090051   .0004684   -19.22   0.000    -.0099232    -.008087
+        per2 |  -.0478659   .0638707    -0.75   0.454    -.1730502    .0773184
+        per3 |  -.1241058   .0693236    -1.79   0.073    -.2599776    .0117661
+        per4 |  -.1393095   .0714942    -1.95   0.051    -.2794356    .0008166
+        per5 |  -.2000575   .0738553    -2.71   0.007    -.3448113   -.0553037
+       _cons |  -9.563548          .        .       .            .           .
+-------------+----------------------------------------------------------------
+    /lnsig2u |   3.024696          .                             .           .
+-------------+----------------------------------------------------------------
+     sigma_u |   4.537371          .                             .           .
+         rho |   .9536774          .                             .           .
+------------------------------------------------------------------------------
+
+.         
+. * en Stata el "u" es el "c" de la notacion de Wooldridge.
+. scalar sigma_c_RE = e(sigma_u)
+
+. scalar var_c_RE   = sigma_c_RE^2
+
+. scalar s_RE       = sqrt(1 + var_c_RE)
+
+. 
+. di as txt "RE-PROBIT: sigma_c = " %9.4f sigma_c_RE ///
+>           " ; Var(c_i)= " %9.4f var_c_RE ///
+>           " ; s = sqrt(1+Var)= " %9.4f s_RE
+RE-PROBIT: sigma_c =    4.5374 ; Var(c_i)=   20.5877 ; s = sqrt(1+Var)=    4.6463
+
+.                   
+. scalar invs = 1/sqrt(1 + e(sigma_u)^2)
+
+. display as txt "Inverso de s = " %9.4f invs
+Inverso de s =    0.2152
+
+. * o alternativamente mas directo:
+. display  sqrt(1 - e(rho))
+.21522686
+
+. 
+. * APEs bajo RE
+. margins, dydx(kids lhinc educ black age agesq) post
+
+Average marginal effects                                Number of obs = 28,315
+Model VCE: Robust
+
+Expression: Pr(lfp=1), predict(pr)
+dy/dx wrt:  kids lhinc educ 1.black age agesq
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.0463283     .01552    -2.99   0.003    -.0767469   -.0159098
+       lhinc |  -.0155674   .0021025    -7.40   0.000    -.0196881   -.0114466
+        educ |   .0203254    .002745     7.40   0.000     .0149452    .0257055
+     1.black |    .047175   .0299101     1.58   0.115    -.0114477    .1057976
+         age |    .048448   .0065431     7.40   0.000     .0356236    .0612723
+       agesq |  -.0006637   .0001221    -5.44   0.000    -.0009031   -.0004244
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. 
+. 
+. ** vemos que aparecen muchos "." en las estimaciones, esto no es una buena señal.
+. ** muchas veces esto es por colinealidad y en relacion con los metodos numericos usados.
+. 
+. /* CLAVE:
+> intpoints() no es un "detalle"; en RE-probit es literalmente la precisión con la que Stata aproxima la integral del efecto aleatorio. 
+> Con pocos puntos, la integral queda mal aproximada → el máximo de la verosimilitud puede moverse, la Hessiana puede quedar rara, aparecen "not concave" y hasta SE 
+> en ".".
+> En xtprobit, re, la probabilidad marginal requiere integrar sobre ci. Stata usa cuadratura Gauss-Hermite (adaptativa) para aproximar esa integral, y intpoints(K) e
+> s cuántos puntos de cuadratura usa.
+> Más puntos → más precisión, pero más tiempo.
+> por defecto: intpoints(12), podemos usar un valor mayor, este parametro va desde 4 hasta 195.
+> 
+> Tu propio resumen muestra ρ muy alto en algunos corridas y/o σ_u grande (en tu RE-Probit te dio σ_u≈4.36, ρ≈0.95). 
+> Cuando el efecto aleatorio es grande, la integral es más "difícil" → necesitás más puntos para que la aproximación sea estable.
+> 
+> Entonces: ¿qué valor "dejar"?
+> La regla práctica en estos modelos no es "K=12 siempre", sino:
+> Subí K hasta que (i) el log-likelihood y (ii) los parámetros/APE de interés se estabilicen.
+> 
+> **              resumen de probar con diferentes valores de intpoints:
+> ** intpoints(4) da un invs=0.3297; coeficientes estimados y todas las iteraciones concavas
+> ** kids -.0335007   .0023838   -14.05   0.000   .0381728   -.0288287
+> ** lhinc        -.0179985   .0032375    -5.56   0.000   -.0243439   -.0116531
+> ** intpoints(5) da un invs=0.2344; ALGUNOS COEFICIENTES NO ESTIMADOS "." y algunas iteraciones no concavas
+> ** kids -.0119159   .0028237    -4.22   0.000   -.0174503   -.0063815
+> ** lhinc   -.0050691   .0012012 -4.22   0.000    -.0074235   -.0027147
+> ** intpoints(6) da un invs=0.2448; ALGUNOS COEFICIENTES NO ESTIMADOS "." y algunas iteraciones no concavas
+> ** kids -.0672019    .001441   -46.64   0.000   -.0700262   -.0643776
+> ** lhinc   -.0257066   .0005512 46.64   0.000    -.0267869   -.0246262
+> ** intpoints(7) da un invs=0.5446; coeficientes estimados y todas las iteraciones concavas 
+> ** kids -.0798141   .0044253   -18.04   0.000   -.0884876   -.0711405
+> **      lhinc   -.0416653   .0053078    -7.85   0.000    -.0520685   -.0312622
+> ** intpoints(8) da un invs=0.2398; ALGUNOS COEFICIENTES NO ESTIMADOS "." y algunas iteraciones no concavas
+> ** kids -.0553157   .0009393   -58.89   0.000   -.0571567   -.0534747
+> **      lhinc   -.0229948   .0003905    58.89   0.000    -.0237602   -.0222295
+> ** intpoints(9) da un invs=0.3464; coeficientes estimados y todas las iteraciones concavas.
+> ** kids   -.0511741   .0027679   -18.49 0.000    -.0565991   -.0457492
+> ** lhinc   -.0270246   .0037821 7.15   0.000    -.0344374   -.0196119
+> ** intpoints(10) da un invs= 0.2384; ALGUNOS COEFICIENTES NO ESTIMADOS "." y algunas iteraciones no concavas
+> **kids   -.0513013   .0007978   -64.31   0.000    -.0528649   -.0497377
+> ** lhinc   -.0204675   .0003183   -64.31   0.000    -.0210913   -.0198437
+> ** intpoints(11) da un invs= 0.2909; coeficientes estimados mas alla de  algunas iteraciones no concavas
+> ** kids   -.0465458    .005557    -8.38 0.000    -.0574374   -.0356543
+> ** lhinc   -.0192931   .0043387 4.45   0.000    -.0277967   -.0107895
+> ** intpoints(12) da un invs=0.2152; ALGUNOS COEFICIENTES NO ESTIMADOS "."  y algunas iteraciones no concavas
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids -.0463283     .01552    -2.99   0.003   -.0767469   -.0159098
+> ** lhinc   -.0155674   .0021025 -7.40   0.000    -.0196881   -.0114466    
+> ** intpoints(16) da un invs=0.2669; coeficientes estimados y todas las iteraciones concavas.
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids -.0513761   .0028621   -17.95   0.000   -.0569858   -.0457663
+> **      lhinc   -.0210107    .003724    -5.64   0.000    -.0283097   -.0137117
+> ** intpoints(20) da un invs=0.2669; coeficientes estimados mas alla de  algunas iteraciones no concavas
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids   -.0515619   .0060734    -8.49 0.000    -.0634655   -.0396582
+> ** lhinc   -.0202845   .0045581 4.45   0.000    -.0292183   -.0113507
+> ** intpoints(25) da un invs= 0.2494; coeficientes estimados y todas las iteraciones concavas.
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids -.0513915   .0037449    13.72   0.000   -.0587313       .0440517
+> ** lhinc        -.0189945   .0038696    -4.91   0.000   -.0265787       -.0114103
+> ** intpoints(50) da un invs=  0.2413; coeficientes estimados y todas las iteraciones concavas.
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids   -.0517527   .0052908    -9.78 0.000    -.0621225   -.0413829
+> ** lhinc   -.0184971   .0041467 4.46   0.000    -.0266246   -.0103697
+> ** intpoints(75) da un invs= 0.2430; coeficientes estimados y todas las iteraciones concavas.
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids -.0516734   .0050572    10.22   0.000   -.0615853       .0417615
+> ** lhinc        -.0186312   .0041267    -4.51   0.000   -.0267194       -.010543 
+> ** intpoints(99) da un invs=0.2429; coeficientes estimados y todas las iteraciones concavas.
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids -.051696   .0050854     10.17   0.000   -.0616632       .0417288
+> ** lhinc        -.0186313   .0041312    -4.51   0.000   -.0267283       -.0105344
+> ** intpoints(190) da un invs= 0.2430; coeficientes estimados y todas las iteraciones concavas.
+> **                      dy/dx   std.    err.    z       P>z     [95%    conf.   interval]
+> ** kids .0516946   .0050842   -10.17   0.000    .0616595   -.0417297
+> ** lhinc        -.0186341   .0041314    -4.51   0.000   -.0267314   -.0105367
+> ** intpoints(195) da un invs= 0.2430; coeficientes estimados y todas las iteraciones concavas.
+> ** kids -.0516946   .0050842   -10.17   0.000   -.0616595   -.0417298
+> ** lhinc   -.0186341   .0041314 -4.51   0.000    -.0267314   -.0105367
+> 
+> Lectura:
+> 
+> Para K chicos (4–12) tenés saltos grandes en invs=1/s y APEs, y a veces "." en los SE o "not concave" en las iteraciones.
+> Desde K≈16 ya estás bastante cerca.
+> Desde K≈25 en adelante, tus APE de kids y lhinc se estabilizan muchísimo (y el invs=1/s se te mueve poco).
+> Entre 50, 75, 99, 190, 195 prácticamente no cambia nada relevante (salvo ruido numérico mínimo).
+> 
+> Recomendación:
+> Para reportar resultados finales (paper/tabla): intpoints(50)
+> Es el punto donde ya estás en zona "estable" y te evita sorpresas.
+> Si querés algo más liviano pero aún confiable: intpoints(25) o intpoints(30)
+> En tu resumen, desde ahí ya se ve convergencia fuerte.
+> 
+> */
+. 
+. xtprobit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>     per2 per3 per4 per5, ///
+>     re vce(cluster id) intpoints(40) 
+
+Fitting comparison model:
+
+Iteration 0:  Log pseudolikelihood = -17709.021  
+Iteration 1:  Log pseudolikelihood = -16561.609  
+Iteration 2:  Log pseudolikelihood = -16556.671  
+Iteration 3:  Log pseudolikelihood = -16556.671  
+
+Fitting full model:
+
+rho =  0.0    Log pseudolikelihood = -16556.671
+rho =  0.1    Log pseudolikelihood = -14620.757
+rho =  0.2    Log pseudolikelihood = -13283.154
+rho =  0.3    Log pseudolikelihood =  -12275.53
+rho =  0.4    Log pseudolikelihood = -11474.894
+rho =  0.5    Log pseudolikelihood = -10815.838
+rho =  0.6    Log pseudolikelihood = -10260.827
+rho =  0.7    Log pseudolikelihood = -9789.0371
+rho =  0.8    Log pseudolikelihood = -9395.1213
+
+Iteration 0:  Log pseudolikelihood = -9789.0434  
+Iteration 1:  Log pseudolikelihood = -8845.0079  
+Iteration 2:  Log pseudolikelihood = -8763.0273  
+Iteration 3:  Log pseudolikelihood = -8677.1133  
+Iteration 4:  Log pseudolikelihood = -8676.5393  
+Iteration 5:  Log pseudolikelihood = -8676.5393  (backed up)
+Iteration 6:  Log pseudolikelihood = -8676.3296  
+Iteration 7:  Log pseudolikelihood = -8676.3282  
+Iteration 8:  Log pseudolikelihood = -8676.3282  
+
+Calculating robust standard errors ...
+
+Random-effects probit regression                     Number of obs    = 28,315
+Group variable: id                                   Number of groups =  5,663
+
+Random effects u_i ~ Gaussian                        Obs per group:
+                                                                  min =      5
+                                                                  avg =    5.0
+                                                                  max =      5
+
+Integration method: mvaghermite                      Integration pts. =     40
+
+                                                     Wald chi2(10)    = 383.72
+Log pseudolikelihood = -8676.3282                    Prob > chi2      = 0.0000
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |    -.61575   .0612743   -10.05   0.000    -.7358455   -.4956545
+       lhinc |  -.2263384   .0491539    -4.60   0.000    -.3226784   -.1299985
+        educ |   .2819206   .0252393    11.17   0.000     .2324523    .3313888
+     1.black |   .9463767   .2661888     3.56   0.000     .4246563    1.468097
+         age |   .4973447   .0436542    11.39   0.000     .4117839    .5829054
+       agesq |  -.0069054    .000549   -12.58   0.000    -.0079813   -.0058294
+        per2 |  -.0466285   .0428099    -1.09   0.276    -.1305343    .0372773
+        per3 |  -.1209098   .0517698    -2.34   0.020    -.2223767    -.019443
+        per4 |  -.1365201    .054868    -2.49   0.013    -.2440593   -.0289808
+        per5 |  -.1952387   .0587808    -3.32   0.001    -.3104469   -.0800304
+       _cons |  -7.398263   .8771947    -8.43   0.000    -9.117533   -5.678993
+-------------+----------------------------------------------------------------
+    /lnsig2u |   2.732009   .0578709                      2.618584    2.845434
+-------------+----------------------------------------------------------------
+     sigma_u |   3.919658    .113417                      3.703551    4.148376
+         rho |   .9388892   .0033204                      .9320481    .9450822
+------------------------------------------------------------------------------
+
+. estimates store RE
+
+. 
+. ** ahora la salida ya no tiene ".", esto lo hace mas confiable.
+. 
+. * en Stata el "u" es el "c" de la notacion de Wooldridge.
+. scalar sigma_c_RE = e(sigma_u)
+
+. scalar var_c_RE   = sigma_c_RE^2
+
+. scalar s_RE       = sqrt(1 + var_c_RE)
+
+. 
+. di as txt "RE-PROBIT: sigma_c = " %9.4f sigma_c_RE ///
+>           " ; Var(c_i)= " %9.4f var_c_RE ///
+>           " ; s = sqrt(1+Var)= " %9.4f s_RE
+RE-PROBIT: sigma_c =    3.9197 ; Var(c_i)=   15.3637 ; s = sqrt(1+Var)=    4.0452
+
+.                   
+. scalar invs = 1/sqrt(1 + e(sigma_u)^2)
+
+. display as txt "Inverso de s = " %9.4f invs
+Inverso de s =    0.2472
+
+. * o alternativamente mas directo:
+. display  sqrt(1 - e(rho))
+.24720598
+
+. 
+. * APEs bajo RE
+. margins, dydx(kids lhinc educ black age agesq) post
+
+Average marginal effects                                Number of obs = 28,315
+Model VCE: Robust
+
+Expression: Pr(lfp=1), predict(pr)
+dy/dx wrt:  kids lhinc educ 1.black age agesq
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.0516484   .0049714   -10.39   0.000    -.0613922   -.0419046
+       lhinc |   -.018985   .0041581    -4.57   0.000    -.0271347   -.0108353
+        educ |   .0236472   .0020424    11.58   0.000     .0196442    .0276502
+     1.black |   .0754268   .0198664     3.80   0.000     .0364893    .1143642
+         age |   .0417167    .003579    11.66   0.000     .0347019    .0487315
+       agesq |  -.0005792   .0000446   -12.99   0.000    -.0006666   -.0004918
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store APE_RE_probit
+
+. 
+. 
+. 
+. 
+. 
+.   
+. **# RE-Probit-CRE 
+. 
+. *-----------------------------------------------------------
+. * Chamberlain-Mundlak en RE-PROBIT:
+. *incluir promedios temporales de regresores que varían en el tiempo.
+. *Esta especificación permite correlación entre heterogeneidad y x_it vía \bar{x}_i.
+. *
+. *-----------------------------------------------------------
+. * Versión "MLE" tipo RE (normalidad del efecto no observado + promedios)
+. 
+. xtprobit lfp ///
+>     kids lhinc educ i.black age agesq ///
+>         kidsbar lhincbar ///
+>     per2 per3 per4 per5, ///
+>     re vce(cluster id)  intpoints(40)
+
+Fitting comparison model:
+
+Iteration 0:  Log pseudolikelihood = -17709.021  
+Iteration 1:  Log pseudolikelihood = -16521.245  
+Iteration 2:  Log pseudolikelihood = -16516.437  
+Iteration 3:  Log pseudolikelihood = -16516.436  
+
+Fitting full model:
+
+rho =  0.0    Log pseudolikelihood = -16516.436
+rho =  0.1    Log pseudolikelihood = -14581.008
+rho =  0.2    Log pseudolikelihood = -13246.031
+rho =  0.3    Log pseudolikelihood = -12241.872
+rho =  0.4    Log pseudolikelihood = -11445.089
+rho =  0.5    Log pseudolikelihood = -10790.116
+rho =  0.6    Log pseudolikelihood = -10239.392
+rho =  0.7    Log pseudolikelihood = -9772.1559
+rho =  0.8    Log pseudolikelihood = -9383.3028
+
+Iteration 0:  Log pseudolikelihood = -9772.1606  
+Iteration 1:  Log pseudolikelihood = -8816.6071  
+Iteration 2:  Log pseudolikelihood = -8733.8658  
+Iteration 3:  Log pseudolikelihood = -8635.5085  
+Iteration 4:  Log pseudolikelihood = -8635.2285  
+Iteration 5:  Log pseudolikelihood = -8634.7482  
+Iteration 6:  Log pseudolikelihood = -8634.7482  (backed up)
+Iteration 7:  Log pseudolikelihood = -8634.5074  
+Iteration 8:  Log pseudolikelihood = -8634.5031  
+Iteration 9:  Log pseudolikelihood = -8634.5031  
+
+Calculating robust standard errors ...
+
+Random-effects probit regression                     Number of obs    = 28,315
+Group variable: id                                   Number of groups =  5,663
+
+Random effects u_i ~ Gaussian                        Obs per group:
+                                                                  min =      5
+                                                                  avg =    5.0
+                                                                  max =      5
+
+Integration method: mvaghermite                      Integration pts. =     40
+
+                                                     Wald chi2(12)    = 433.43
+Log pseudolikelihood = -8634.5031                    Prob > chi2      = 0.0000
+
+                                 (Std. err. adjusted for 5,663 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.3924586   .1042937    -3.76   0.000    -.5968706   -.1880466
+       lhinc |  -.0986343   .0518787    -1.90   0.057    -.2003147    .0030461
+        educ |   .3369675    .027676    12.18   0.000     .2827235    .3912115
+     1.black |   .7814472   .2725646     2.87   0.004     .2472304    1.315664
+         age |   .6095474   .0473178    12.88   0.000     .5168062    .7022887
+       agesq |  -.0082716   .0005919   -13.97   0.000    -.0094318   -.0071115
+     kidsbar |  -.4011477   .1218385    -3.29   0.001    -.6399468   -.1623487
+    lhincbar |  -1.019185   .1399643    -7.28   0.000     -1.29351   -.7448599
+        per2 |   -.044833   .0428274    -1.05   0.295    -.1287732    .0391072
+        per3 |  -.1234852   .0518592    -2.38   0.017    -.2251275    -.021843
+        per4 |  -.1342627   .0549367    -2.44   0.015    -.2419367   -.0265886
+        per5 |   -.197999   .0587254    -3.37   0.001    -.3130987   -.0828993
+       _cons |   -3.06804   1.043004    -2.94   0.003    -5.112291    -1.02379
+-------------+----------------------------------------------------------------
+    /lnsig2u |   2.746739   .0571847                      2.634659    2.858819
+-------------+----------------------------------------------------------------
+     sigma_u |   3.948633   .1129007                      3.733438    4.176232
+         rho |   .9397289   .0032389                      .9330591    .9457728
+------------------------------------------------------------------------------
+
+. estimates store CRE_RE
+
+. 
+. 
+. 
+. ** prueba de: "ci correlacionado con xit"
+. * test conjunto (Hausman/Mundlak-type)
+. test kidsbar lhincbar 
+
+ ( 1)  [lfp]kidsbar = 0
+ ( 2)  [lfp]lhincbar = 0
+
+           chi2(  2) =   61.34
+         Prob > chi2 =    0.0000
+
+. scalar p_mundlak = r(p)
+
+. 
+. di as txt "Test Mundlak (H0: kidsbar=lhincbar=0): p-value = " %9.4f p_mundlak
+Test Mundlak (H0: kidsbar=lhincbar=0): p-value =    0.0000
+
+. 
+. 
+. 
+. * en Stata el "u" es el "a" de la notacion de Wooldridge.
+. scalar sigma_a_CRE = e(sigma_u)
+
+. scalar var_a_CRE   = sigma_a_CRE^2
+
+. scalar s_CRE       = sqrt(1 + var_a_CRE)
+
+. 
+. di as txt "RE-PROBIT: sigma_a = " %9.4f sigma_a_CRE ///
+>           " ; Var(a_i)= " %9.4f var_a_CRE ///
+>           " ; s = sqrt(1+Var)= " %9.4f s_CRE
+RE-PROBIT: sigma_a =    3.9486 ; Var(a_i)=   15.5917 ; s = sqrt(1+Var)=    4.0733
+
+. 
+. scalar invs = 1/sqrt(1 + e(sigma_u)^2)
+
+. display as txt "Inverso de s = " %9.4f invs
+Inverso de s =    0.2455
+
+. * o alternativamente mas directo:
+. display  sqrt(1 - e(rho))
+.24550172
+
+. 
+. ** advertencia: dio diferente del 1/s=0.38 que esta en la tabla de Wooldridge
+. 
+. * APEs bajo CRE
+. margins, dydx(kids lhinc educ black age agesq) post
+
+Average marginal effects                                Number of obs = 28,315
+Model VCE: Robust
+
+Expression: Pr(lfp=1), predict(pr)
+dy/dx wrt:  kids lhinc educ 1.black age agesq
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.0322141   .0085408    -3.77   0.000    -.0489538   -.0154744
+       lhinc |  -.0080962   .0042584    -1.90   0.057    -.0164426    .0002502
+        educ |   .0276592   .0021369    12.94   0.000      .023471    .0318474
+     1.black |   .0616243     .02045     3.01   0.003     .0215431    .1017055
+         age |   .0500333   .0037117    13.48   0.000     .0427586     .057308
+       agesq |   -.000679   .0000459   -14.78   0.000     -.000769   -.0005889
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+. estimates store APE_CRE_probit
+
+. 
+.  ** Wooldridge multiplica por 1/s solo para comparar coeficientes del RE-probit (escala condicional) con los del pooled probit (escala marginal). Es una comparació
+> n pedagógica, no un paso requerido.
+.  ** el problema no es ese, porque uno puede dejar los APE reportados directos como salen, en la escala condicional lo cual esta bien, si el objetivo no es comparar
+>  con lo otro.
+.  ** el problema es que a mi me da un valor de 1/s diferente del de Wooldridge. Me da 0.22 y a el le da 0.38. De hecho, uno podria hacer una version reescalada usan
+> do el 0.22, tampoco llegara a -0.040, estara en -0.036 aprox.
+.  ** el efecto de kids.
+.  
+. 
+.  
+.  
+. **# FE-Logit
+.   
+. *-----------------------------------------------------------
+. *  Logit FE (CMLE): elimina c_i condicionando en n_i
+. *
+. *- Solo usa individuos con variación en lfp (0 < n_i < T)- Las variables constantes en el tiempo se omiten automáticamente (educ black age agesq)
+. *-----------------------------------------------------------
+. xtset id period
+
+Panel variable: id (strongly balanced)
+ Time variable: period, 1 to 5
+         Delta: 1 unit
+
+. xtlogit lfp kids lhinc per2 per3 per4 per5, fe 
+note: multiple positive outcomes within groups encountered.
+note: 4,608 groups (23,040 obs) omitted because of all positive or
+      all negative outcomes.
+
+Iteration 0:  Log likelihood = -2016.7565  
+Iteration 1:  Log likelihood = -2003.4478  
+Iteration 2:  Log likelihood = -2003.4184  
+Iteration 3:  Log likelihood = -2003.4184  
+
+Conditional fixed-effects logistic regression        Number of obs    =  5,275
+Group variable: id                                   Number of groups =  1,055
+
+                                                     Obs per group:
+                                                                  min =      5
+                                                                  avg =    5.0
+                                                                  max =      5
+
+                                                     LR chi2(6)       =  57.27
+Log likelihood = -2003.4184                          Prob > chi2      = 0.0000
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.6438386   .1247828    -5.16   0.000    -.8884084   -.3992688
+       lhinc |  -.1842911   .0826019    -2.23   0.026    -.3461878   -.0223943
+        per2 |  -.0928039   .0889937    -1.04   0.297    -.2672283    .0816205
+        per3 |  -.2247989   .0887976    -2.53   0.011     -.398839   -.0507587
+        per4 |  -.2479323   .0888953    -2.79   0.005     -.422164   -.0737006
+        per5 |  -.3563745   .0888354    -4.01   0.000    -.5304886   -.1822604
+------------------------------------------------------------------------------
+
+. * Alternativa equivalente (conditional logit):
+. clogit lfp kids lhinc per2 per3 per4 per5, group(id) vce(cluster id)
+note: multiple positive outcomes within groups encountered.
+note: 4,608 groups (23,040 obs) omitted because of all positive or
+      all negative outcomes.
+
+Iteration 0:  Log pseudolikelihood = -2016.7565  
+Iteration 1:  Log pseudolikelihood = -2003.4478  
+Iteration 2:  Log pseudolikelihood = -2003.4184  
+Iteration 3:  Log pseudolikelihood = -2003.4184  
+
+Conditional (fixed-effects) logistic regression         Number of obs =  5,275
+                                                        Wald chi2(6)  =  29.08
+                                                        Prob > chi2   = 0.0001
+Log pseudolikelihood = -2003.4184                       Pseudo R2     = 0.0141
+
+                                 (Std. err. adjusted for 1,055 clusters in id)
+------------------------------------------------------------------------------
+             |               Robust
+         lfp | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        kids |  -.6438386   .1936963    -3.32   0.001    -1.023476   -.2642009
+       lhinc |  -.1842911   .0903849    -2.04   0.041    -.3614422     -.00714
+        per2 |  -.0928039   .0762688    -1.22   0.224     -.242288    .0566802
+        per3 |  -.2247989   .0933348    -2.41   0.016    -.4077317    -.041866
+        per4 |  -.2479323    .099702    -2.49   0.013    -.4433447   -.0525199
+        per5 |  -.3563745   .1073182    -3.32   0.001    -.5667144   -.1460346
+------------------------------------------------------------------------------
+
+. * Nota: los coeficientes son efectos sobre log-odds; Stata no puede entregar APEs "estructurales" sin supuestos adicionales sobre c_i.  
+.   
+.   
+. 
+.   
+. **# Un poco de teoria
+. 
+. /**********************************************************************
+> INTERPRETACIÓN DE RESULTADOS (hasta acá)
+> 
+> DATOS
+> - Panel fuertemente balanceado: 5,663 mujeres (id) por 5 períodos (period=1..5).
+> - lfp es binaria (=1 participa en la fuerza laboral).
+> - "kids" y "lhinc" varían en el tiempo; mientras que "educ", "age", "agesq", "black" son (en esencia) de período 1
+>   (por eso su variación es principalmente "entre individuos", no "dentro de individuo").
+> 
+>  ** antes de interpretar, hagamos un repaso teorico:
+>  
+>  /**************************************************************************************************
+> INTERPRETACIÓN: ¿LOS APE DEL PROBIT AGRUPADO SON "CONSISTENTES" O NO?
+> 
+> En la subseccion 15.7.1 (heterogeneidad omitida "independiente"), Wooldridge muestra que el probit agrupado sin c_i puede
+>     entregar APEs consistentes (para el objeto correcto). La clave es que esto es cierto SOLO bajo supuestos fuertes
+>         (independencia entre c_i y las covariables x_it).
+> De hecho, el enfoque CRE existe para relajar en parte exactamente esa independencia.
+> 
+> -----------------------------------------------------------------------------------------------
+> 1) Qué dice 15.7.1 y CUÁNDO el pooled APE es consistente
+> 
+> En 15.7.1 el escenario es "neglected heterogeneity" pero con un supuesto CENTRAL:
+> 
+>     - c _||_ x  (independencia, no solo covarianza cero)
+>     - normalidad (para que al integrar c el modelo siga siendo un probit con reescalamiento)
+> 
+> Bajo esos supuestos, aun si el probit agrupado estimado "sin c" no identifica el parámetro estructural b (porque
+> queda reescalado por un factor s), el punto importante es que:
+> 
+>     - La probabilidad reducida P(y=1|x) es el promedio (integración) de la probabilidad estructural
+>       sobre la distribución de c, y resulta ser un probit con índice reescalado.
+>     - El APE definido como "promedio (sobre c) del efecto parcial estructural" coincide con el efecto
+>       parcial de esa probabilidad reducida.
+> 
+> En castellano: si c es realmente independiente de x, podés ignorar c y aun así obtener APEs consistentes
+> (para el APE que promedia la heterogeneidad). O sea: el pooled probit puede estar "mal" en coeficientes
+> estructurales, pero "bien" para APEs promedio sobre c, gracias al reescalamiento.
+> 
+> IMPORTANTE: esto NO es una afirmación universal ("siempre funciona"), sino condicional al supuesto c _||_ x.
+> 
+> -----------------------------------------------------------------------------------------------
+> 2) Por qué aparece la advertencia de "puede sesgar"
+> 
+> Cuando pasamos a panel, en la practica, el tema central es que ya NO se quiere asumir a priori que la heterogeneidad
+> individual de cada mujer c_i sea independiente de los regresores x_it.
+> 
+> La independencia relevante es más exigente aún en términos conceptuales:
+>     - No solo c_i independiente de x_it en un período,
+>     - sino independiente de la historia completa {x_it} 
+>         (intuición: que las mujeres con distinta c_i (propensión permanente a participar en este caso) no estén sistemáticamente asociadas a distintos niveles de k
+> ids, lhinc, etc.)
+> 
+> Si esa independencia falla, entonces:
+>     - El probit agrupado "mezcla" variación dentro de mujer (within) y entre mujeres (between),
+>     - y al omitir c_i puede atribuir a x_it diferencias que en realidad son diferencias persistentes entre mujeres
+>       (capturadas por c_i). En ese caso, los APE del probit agrupado dejan de ser consistentes para el APE estructural promediado.
+> 
+> Por eso, la advertencia "puede sesgar" NO contradice 15.7.1: simplemente está diciendo que el supuesto
+> que hacía funcionar la consistencia en 15.7.1 (c _||_ x) ya no es creíble.
+> 
+> -----------------------------------------------------------------------------------------------
+> 3) Qué aporta CRE (Mundlak/Chamberlain) y por qué es una "prueba" relevante
+> 
+> El enfoque CRE (Mundlak/Chamberlain) modela la dependencia entre c_i y x_it usando los promedios individuales
+> xbar_i (en esta base: kidsbar, lhincbar). La lógica:
+> 
+>     - Si c_i está correlacionado con x_it, esa correlación suele manifestarse como relación entre c_i y el nivel promedio
+>       histórico de x_it (xbar_i).
+>     - Entonces, al incluir xbar_i en el probit "agrupado", se capta esa parte sistemática de la heterogeneidad correlacionada.
+>     - El test conjunto de coeficientes de xbar_i igual a cero es el test tipo Mundlak/Hausman:
+>           H0: coef(xbar)=0  (consistente con independencia: c_i no correlacionado con x_it)
+>           H1: coef(xbar)≠0  (evidencia de correlación: RE clásico/pooled bajo independencia es dudoso)
+> 
+> En los resultados, el test Mundlak (kidsbar=lhincbar=0) rechaza muy fuerte (p≈0.000).
+> Interpretación: hay evidencia de que la independencia c_i _||_ x_it no es compatible con los datos.
+> 
+> Entonces:
+>     - El resultado "benigno" de 15.7.1 (pooled APE consistente) deja de aplicar en la práctica, porque su supuesto clave (de independencia) falla.
+>     - Justamente por eso CRE es relevante: apunta a un modelo donde permitís esa correlación sistemática.
+> 
+> -----------------------------------------------------------------------------------------------
+> 4) Cómo leer los APE de los tres modelos (POOLED, RE, CRE-pooled) sin mezclar objetivos
+> 
+> A partir de la teoría, los tres APE no están "compitiendo" por el mismo supuesto:
+> 
+> (1) Pooled probit (sin c_i):
+>     - Sus APE pueden interpretarse como consistentes SOLO si c_i es independiente de x_it (el caso "15.7.1").
+>     - Si el test Mundlak sugiere correlación, entonces no hay garantía de consistencia y puede haber sesgo.
+> 
+> (2) RE probit (xtprobit, re):
+>     - Modela c_i como aleatorio gaussiano y, en su versión estándar, mantiene la independencia respecto de x_it.
+>     - Si esa independencia falla, RE puede ser inconsistente como descripción estructural (o para APEs estructurales promedio).
+>         - por lo tanto, si no podemos sostener que c _||_ x , estos APEs tambien estaran sesgados. 
+>         - solo bajo c _||_ x, estos APEs seran consistentes, y ademas, necesitan el supuesto de "indepencia condicional" (15.67) que es un supuesto extra. 
+>         - podria ser mas eficiente quiza, pero bajo c _||_ x y bajo (15.67).
+> 
+> (3) CRE "agrupado" (pooled probit + xbar_i):
+>     - CLAVE: permite correlación entre c_i y x_it a través de xbar_i.
+>     - Por eso, cuando el test Mundlak rechaza, CRE es el camino natural para ajustar la especificación y producir APEs
+>       coherentes con un mundo donde c_i y x_it no son independientes.
+> 
+> -----------------------------------------------------------------------------------------------
+> 5) Sobre "reporte de varianza y factor de escala s"
+> 
+> En modelos con heterogeneidad aleatoria (RE, y también CRE-RE si se estima con xtprobit re + xbar),
+> Stata reporta sigma_u (desvío estándar del efecto aleatorio). Es común reportar:
+> 
+>     Var(c_i) = sigma_u^2
+>     s = sqrt(1 + Var(c_i))
+> 
+> Interpretación pedagógica (conectada con 15.7.1): s actúa como factor de escala que "aplasta" el índice del probit
+> cuando integrás heterogeneidad normal. Esto ayuda a entender por qué en escenarios benignos el pooled identifica un
+> reescalamiento. Pero si c_i está correlacionado con x_it, ese argumento ya no salva la consistencia del pooled.
+> 
+> -----------------------------------------------------------------------------------------------
+> 6) Conclusión operativa para este taller (según lo que salió en tus resultados)
+> 
+> - En estos datos, el test Mundlak rechaza (p≈0.000), lo que sugiere correlación c_i–x_it.
+> - Por lo tanto, la lectura "benigna" de 15.7.1 (pooled APE consistente aun omitiendo c_i) NO es el benchmark apropiado aquí.
+> - En este contexto, CRE es el modelo que está alineado con la evidencia empírica del panel, y el pooled queda como referencia
+>   (o como caso particular bajo un supuesto que parece fallar).
+> 
+> **************************************************************************************************/
+> 
+> */
+. 
+. 
+. 
+. **# Tabla comparativa
+. 
+. *========================
+. * 8) TABLA FINAL: comparar APEs (3 modelos)
+. *    (requiere esttab / estout)
+. *========================
+. capture which esttab
+
+. if _rc {
+.     di as txt "No encontré esttab. Instalando estout desde SSC..."
+.     ssc install estout, replace
+. }
+
+. 
+. esttab APE_probit_pooled APE_RE_probit APE_CRE_pooled  APE_CRE_probit , ///
+>     se label ///
+>     b(%9.4f) se(%9.4f) ///
+>     star(* 0.10 ** 0.05 *** 0.01) ///
+>     mtitles("Pool-Probit" "RE-Probit" "CRE-Pool-Probit-" "CRE-Probit") ///
+>     stats(N, fmt(%9.0g) labels("N")) ///
+>     compress nogaps
+
+--------------------------------------------------------------------
+                       (1)          (2)          (3)          (4)   
+                 Pool-Pr~t    RE-Probit    CRE-Poo~-    CRE-Pro~t   
+--------------------------------------------------------------------
+number childr~18   -0.0660***   -0.0516***   -0.0389***   -0.0322***
+                  (0.0049)     (0.0050)     (0.0089)     (0.0085)   
+log(hinc)          -0.0701***   -0.0190***   -0.0095**    -0.0081*  
+                  (0.0080)     (0.0042)     (0.0047)     (0.0043)   
+years of schoo~1    0.0264***    0.0236***    0.0278***    0.0277***
+                  (0.0021)     (0.0020)     (0.0022)     (0.0021)   
+=1 if black=0       0.0000       0.0000       0.0000       0.0000   
+                       (.)          (.)          (.)          (.)   
+=1 if black=1       0.0699***    0.0754***    0.0643***    0.0616***
+                  (0.0197)     (0.0199)     (0.0200)     (0.0204)   
+in years, peri~1    0.0481***    0.0417***    0.0502***    0.0500***
+                  (0.0039)     (0.0036)     (0.0040)     (0.0037)   
+age^2              -0.0007***   -0.0006***   -0.0007***   -0.0007***
+                  (0.0000)     (0.0000)     (0.0000)     (0.0000)   
+--------------------------------------------------------------------
+N                    28315        28315        28315        28315   
+--------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. 
+. **# Interpretacion de los resultados
+.         
+. /*
+> 
+> MODELO 1: PROBIT AGRUPADO (POOLED) con vce(cluster id)
+> - Signos "razonables" y altamente significativos:
+>   kids < 0: más hijos reduce la prob. de participación.
+>   lhinc < 0: mayor ingreso del esposo (en log) reduce participación.
+>   educ > 0: más educación aumenta participación.
+>   black > 0: efecto positivo y significativo en pooled.
+>   age > 0 y agesq < 0: perfil cóncavo con la edad.
+> - Efectos parciales promedio (APEs):
+>   magnitudes relativamente grandes (por ejemplo kids ~ -6.6 p.p. por hijo; lhinc ~ -7.0 p.p.).
+> - Lectura clave: este modelo "mezcla" variación dentro de mujer y entre mujeres,
+>   y además ignora heterogeneidad no observada persistente (c_i). Eso puede inflar o sesgar efectos.
+> 
+> MODELO 2: RE-PROBIT (xtprobit, re) con vce(cluster id)
+> - Estimación sugiere heterogeneidad individual MUY importante:
+>   sigma_u ≈ 4.54  => Var(c_i) ≈ 20.6
+>   rho ≈ 0.954     => fuerte correlación intra-individuo de la propensión latente.
+>   (Esto es consistente con que hay "tipos" de mujeres con distinta propensión permanente a participar.)
+> - APEs bajo RE:
+>   kids sigue negativo pero de menor magnitud que en pooled (~ -4.6 p.p.).
+>   lhinc se achica muchísimo (~ -1.6 p.p.).
+>   black pasa a no ser claramente significativo.
+>   => Interpretación: una parte grande del efecto pooled estaba capturando diferencias permanentes entre mujeres.
+> - ATENCIÓN TÉCNICA: en la salida del RE aparecen varios errores estándar como ".".
+>   Eso suele indicar problemas numéricos con la VCE robust/cluster (matriz singular o no bien calculada)
+>   aun cuando el punto estimado converge. Si necesitás inferencia sobre coeficientes (no solo APE),
+>   puede convenir: 
+>   (i) probar vce(oim) o vce(robust) sin cluster como chequeo, 
+>   o (ii) bootstrap por cluster,
+>   o (iii) reescalar/centrar covariables muy colineales (age y agesq) para estabilidad numérica.
+> 
+> MODELO 3: CRE "AGRUPADO" (Mundlak) = pooled probit + kidsbar + lhincbar
+> - kidsbar y lhincbar salen muy significativos y el test conjunto rechaza fuerte (p≈0.000).
+>   Lectura: hay evidencia clara de que c_i está correlacionado con X_it (al menos con kids y/o lhinc).
+>   => Por eso, el supuesto clásico de RE "c_i independiente de X_it" es dudoso.
+> - Dentro del CRE:
+>   - El efecto "within" contemporáneo de kids y lhinc (coef. de kids y lhinc) se achica
+>     respecto al pooled simple.
+>   - Los promedios (kidsbar, lhincbar) capturan el componente "entre" / persistente:
+>     mujeres con mayor kids promedio o mayor ingreso promedio del esposo tienden a participar menos.
+> - APEs CRE-pooled:
+>   quedan entre pooled y RE, pero más cerca de un efecto "within" depurado del componente permanente.
+> 
+>   
+>  /**************************************************************************************************
+> INTERPRETACIÓN: ¿Por qué el test Mundlak rechaza, pero los APE(RE) quedan cerca de APE(CRE)?
+> 
+> En estos resultados:
+> 
+>     APE pooled-probit  :    kids=-0.066 ; lhinc=-0.070
+>     APE RE-probit     :     kids=-0.052 ; lhinc=-0.019
+>     APE CRE-pooled-probit : kids=-0.039 ; lhinc=-0.010
+> 
+> y a la vez el test Mundlak (H0: kidsbar=lhincbar=0) rechaza fuerte (p≈0.000).
+> 
+> Esto NO es una contradicción. El test Mundlak y la cercanía numérica de APEs no miden lo mismo.
+> 
+> 1) El "driver" principal acá es la magnitud de la heterogeneidad permanente:
+>    En RE-probit salió sigma_u grande (≈4.54) y rho ≈0.95. Eso sugiere que gran parte de la variación/persistencia
+>    en lfp se explica por diferencias permanentes entre mujeres (c_i).
+>    Cuando integramos una heterogeneidad tan grande (RE), las probabilidades se vuelven menos sensibles a x_it,
+>    y por eso los APE bajan mucho en magnitud respecto del pooled probit, que ignora c_i y tiende a inflar sensibilidad.
+> 
+> 2) El test Mundlak (kidsbar, lhincbar) detecta correlación c_i–x_it (o, más precisamente, que la historia/promedio
+>    individual de x ayuda a explicar y). Eso puede afectar FUERTE los NIVELES (probabilidades) y la composición
+>    de quién está cerca del umbral, sin necesariamente cambiar enormemente la pendiente promedio (APE) respecto a kids o lhinc.
+>    En modelos no lineales, "correlación existe" no implica "APE cambia muchísimo": depende de cómo la correlación
+>    altera el índice y dónde cae la masa de observaciones (cerca o lejos del umbral).
+> 
+> 3) Con N=28,315, rechazar H0 en Mundlak es fácil incluso si el efecto económico no es gigantesco.
+>    p≈0.000 significa "no es exactamente cero", no "la diferencia numérica en APE tiene que ser enorme".
+> 
+> 4) Importante: que APE(RE) quede cerca de APE(CRE) NO valida el supuesto de independencia del RE.
+>    RE puede ser inconsistente si c_i está correlacionado con x_it, aunque en este dataset el APE resulte parecido.
+>    La comparación relevante es conceptual: pooled ignora heterogeneidad -> APE suele inflarse; RE integra heterogeneidad
+>    (y por eso se "encoge"); CRE intenta además capturar correlación sistemática vía promedios individuales.
+> 
+> Conclusión práctica: la gran distancia es (pooled) vs (RE/CRE) y es por la magnitud de Var(c_i). La diferencia APE-RE vs APE-CRE puede
+> ser más chica en APE aunque Mundlak rechace, porque el rechazo puede reflejar cambios de nivel y no necesariamente un cambio
+> grande en la pendiente promedio.
+> 
+> **************************************************************************************************/
+>  
+>   
+> */
+. 
+. 
+. 
+. 
+. **# RE-Probit-CRE con SD por BOOTSTRAP
+. 
+. 
+. ****************************************************************
+. * RE-Probit-CRE: APE puntuales (fijos) + SE bootstrap (cluster id)
+. * SIN locals / SIN foreach
+. ****************************************************************
+. 
+. set more off
+
+. * 0) Chequeo panel
+. duplicates report id period
+
+Duplicates in terms of id period
+
+--------------------------------------
+   Copies | Observations       Surplus
+----------+---------------------------
+        1 |        28315             0
+--------------------------------------
+
+. 
+. * 1) Guardar base original (porque simulate reemplaza el dataset en memoria)
+. preserve
+
+. tempfile base_original
+
+. save `base_original', replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_42f4_000002.tmp not found)
+file C:\Users\Equipo\AppData\Local\Temp\ST_42f4_000002.tmp saved as .dta format
+
+. 
+. ****************************************************************
+. * A) APE PUNTUAL FIJO (muestra completa) usando margins
+. ****************************************************************
+. xtset id period
+
+Panel variable: id (strongly balanced)
+ Time variable: period, 1 to 5
+         Delta: 1 unit
+
+. 
+. quietly xtprobit lfp kids lhinc educ i.black age agesq ///
+>     kidsbar lhincbar i.period, ///
+>     re intpoints(40) nolog 
+
+. 
+. quietly margins, dydx(kids lhinc educ 1.black age agesq) predict(pr)
+
+. matrix b0 = r(b)
+
+. 
+. scalar APE_kids0  = el(b0,1,colnumb(b0,"kids"))
+
+. scalar APE_lhinc0 = el(b0,1,colnumb(b0,"lhinc"))
+
+. scalar APE_educ0  = el(b0,1,colnumb(b0,"educ"))
+
+. scalar APE_age0   = el(b0,1,colnumb(b0,"age"))
+
+. scalar APE_agesq0 = el(b0,1,colnumb(b0,"agesq"))
+
+. scalar APE_black0 = el(b0,1,colnumb(b0,"1.black"))
+
+. 
+. ****************************************************************
+. * B) Programa de UNA réplica bootstrap (cluster id) con margins
+. ****************************************************************
+. capture program drop one_rep_ape_m
+
+. program define one_rep_ape_m, rclass
+  1.     version 15.0
+  2.     preserve
+  3. 
+.     bsample, cluster(id) idcluster(id_b)
+  4.     quietly xtset id_b
+  5. 
+.     quietly xtprobit lfp kids lhinc educ i.black age agesq ///
+>         kidsbar lhincbar i.period, ///
+>         re intpoints(16) nolog
+  6.     * pongo intpoints(16) para que no demore una eternidad, esto es para el bootstrap para los SE
+.         
+.     return scalar conv = e(converged)
+  7.     if (e(converged)==0) restore
+  8.     if (e(converged)==0) exit
+  9. 
+.     quietly margins, dydx(kids lhinc educ 1.black age agesq) predict(pr)
+ 10.     matrix bb = r(b)
+ 11. 
+.     return scalar ape_kids  = el(bb,1,colnumb(bb,"kids"))
+ 12.     return scalar ape_lhinc = el(bb,1,colnumb(bb,"lhinc"))
+ 13.     return scalar ape_educ  = el(bb,1,colnumb(bb,"educ"))
+ 14.     return scalar ape_age   = el(bb,1,colnumb(bb,"age"))
+ 15.     return scalar ape_agesq = el(bb,1,colnumb(bb,"agesq"))
+ 16. 
+.     capture scalar __tmp = el(bb,1,colnumb(bb,"1.black"))
+ 17.     if (_rc) return scalar conv = 0
+ 18.     if (_rc) restore
+ 19.     if (_rc) exit
+ 20.     return scalar ape_black = __tmp
+ 21.     scalar drop __tmp
+ 22. 
+.     restore
+ 23. end
+
+. 
+. ****************************************************************
+. * C) Bootstrap SOLO para SE: simulate guarda las réplicas
+. ****************************************************************
+. bootstrap ///
+>     conv=r(conv) ///
+>     ape_kids=r(ape_kids) ///
+>     ape_lhinc=r(ape_lhinc) ///
+>     ape_educ=r(ape_educ) ///
+>     ape_black=r(ape_black) ///
+>     ape_age=r(ape_age) ///
+>     ape_agesq=r(ape_agesq), ///
+>     reps(4) seed(12345) cluster (id): ///
+>     one_rep_ape_m
+(running one_rep_ape_m on estimation sample)
+
+warning: one_rep_ape_m does not set e(sample), so no observations will be excluded from the resampling because of missing values or other reasons. To exclude
+         observations, press Break, save the data, drop any observations that are to be excluded, and rerun bootstrap.
+
+Bootstrap replications (4): repeated time values within panel
+the most likely cause for this error is misspecifying the cluster(), idcluster(), or group() option
+r(451);
+
+end of do-file
+
+r(451);
+
+. do "C:\Users\Equipo\AppData\Local\Temp\STD42f4_000000.tmp"
+
+. ****************************************************************
+. * C) Bootstrap SOLO para SE: simulate guarda las réplicas
+. ****************************************************************
+. simulate ///
+>     conv=r(conv) ///
+>     ape_kids=r(ape_kids) ///
+>     ape_lhinc=r(ape_lhinc) ///
+>     ape_educ=r(ape_educ) ///
+>     ape_black=r(ape_black) ///
+>     ape_age=r(ape_age) ///
+>     ape_agesq=r(ape_agesq), ///
+>     reps(4) seed(12345) : ///
+>     one_rep_ape_m
+
+      Command: one_rep_ape_m
+         conv: r(conv)
+     ape_kids: r(ape_kids)
+    ape_lhinc: r(ape_lhinc)
+     ape_educ: r(ape_educ)
+    ape_black: r(ape_black)
+      ape_age: r(ape_age)
+    ape_agesq: r(ape_agesq)
+
+Simulations (4): .... done
+
+. 
+. ** en panel agregar "cluster (id)" 
+. 
+. ** puse solo 35 reps porque no quiero esperar mucho, asi y todo, ya demora como 1,5 hora. Si fuese para un paper, final, me tomo tiempo y pondria 200 reps quiza. P
+> ero seria algo para una sola vez.
+. 
+. save "ape_boot_reps.dta", replace
+file ape_boot_reps.dta saved
+
+. 
+. drop if conv==0 | missing(conv)
+(0 observations deleted)
+
+. 
+. * SE bootstrap = sd de las réplicas 
+. quietly summarize ape_kids
+
+. scalar SE_kids = r(sd)
+
+. 
+. quietly summarize ape_lhinc
+
+. scalar SE_lhinc = r(sd)
+
+. 
+. quietly summarize ape_educ
+
+. scalar SE_educ = r(sd)
+
+. 
+. quietly summarize ape_black
+
+. scalar SE_black = r(sd)
+
+. 
+. quietly summarize ape_age
+
+. scalar SE_age = r(sd)
+
+. 
+. quietly summarize ape_agesq
+
+. scalar SE_agesq = r(sd)
+
+. 
+. ****************************************************************
+. * D) Guardar tabla final: APE puntual fijo + SE bootstrap
+. ****************************************************************
+. clear
+
+. input str10 var double ape se
+
+            var         ape         se
+  1. "kids"   . .
+  2. "lhinc"  . .
+  3. "educ"   . .
+  4. "black"  . .
+  5. "age"    . .
+  6. "agesq"  . .
+  7. end
+
+. 
+. replace ape = APE_kids0   in 1
+(1 real change made)
+
+. replace se  = SE_kids     in 1
+(1 real change made)
+
+. 
+. replace ape = APE_lhinc0  in 2
+(1 real change made)
+
+. replace se  = SE_lhinc    in 2
+(1 real change made)
+
+. 
+. replace ape = APE_educ0   in 3
+(1 real change made)
+
+. replace se  = SE_educ     in 3
+(1 real change made)
+
+. 
+. replace ape = APE_black0  in 4
+(1 real change made)
+
+. replace se  = SE_black    in 4
+(1 real change made)
+
+. 
+. replace ape = APE_age0    in 5
+(1 real change made)
+
+. replace se  = SE_age      in 5
+(1 real change made)
+
+. 
+. replace ape = APE_agesq0  in 6
+(1 real change made)
+
+. replace se  = SE_agesq    in 6
+(1 real change made)
+
+. 
+. save "ape_cre_re_table.dta", replace
+file ape_cre_re_table.dta saved
+
+. *export delimited using "ape_cre_re_table.csv", replace
+. 
+. ****************************************************************
+. * E) Volver a la base original
+. ****************************************************************
+. use `base_original', clear
+invalid file specification
+r(198);
+
+end of do-file
+
+r(198);
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\15_taller.log
+  log type:  text
+ closed on:  26 Mar 2026, 05:08:53
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
