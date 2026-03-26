@@ -123,11 +123,15 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 
 En decisiones de inversion, la q de Tobin suele leerse como senal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser util como benchmark, pero solo si la inferencia respeta la estructura del error.
 
+La relacion economica que se explora es directa: si una firma enfrenta una q mas alta, tiende a observarse mayor inversion, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, ademas de preguntar si la asociacion existe, importa leer su forma y su magnitud economica.
+
 Al mismo tiempo, una inferencia mejor calibrada no equivale automaticamente a identificacion limpia. Esa distincion evita sobreinterpretar resultados estadisticamente significativos como evidencia causal.
 
 ## Datos y variables
 
 Se trabaja con un panel de firmas (`N = 2,068` observaciones; `188` firmas) para el periodo 1975-1985.
+
+Sustantivamente, este panel representa decisiones de inversion observadas repetidamente para las mismas firmas a lo largo de once anos. Ese seguimiento temporal permite evaluar si el patron entre q e inversion se sostiene al controlar shocks comunes por ano, en lugar de depender de una sola foto de corte transversal.
 
 - Variable dependiente: `ikb` (tasa de inversion sobre capital)
 - Regresores de interes: `qb` y `qb_sq`
@@ -162,6 +166,8 @@ El modelo operativo (`ikb` sobre `qb`, `qb_sq` e indicadores de ano, con cluster
 
 El punto de giro implicito cae en una zona muy alta de la distribucion de `qb` (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decision.
 
+En terminos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de `qb`, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante mas chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la direccion general del vinculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.
+
 | Modelo | Especificacion | Lectura | N |
 |---|---|---|---:|
 | Benchmark lineal | `ikb ~ qb + i.year`, cluster firma | Asociacion positiva promedio | 2068 |
@@ -195,5 +201,4 @@ Esta separacion entre inferencia valida y limitaciones de identificacion es el a
 
 T3 deja un mensaje claro para trabajo aplicado: la relacion entre q e inversion aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.
 
-Ese hallazgo es util como punto de partida empirico, no como cierre causal. El siguiente paso natural para una agenda de identificacion mas exigente es avanzar hacia estrategias de panel que traten de forma explicita la heterogeneidad no observada.
-
+Para un analista aplicado, esta pieza si permite concluir que la asociacion promedio entre valorizacion e inversion no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empirico, no un cierre causal: el siguiente paso natural para una agenda de identificacion mas exigente es avanzar hacia estrategias de panel que traten de forma explicita la heterogeneidad no observada.
