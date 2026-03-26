@@ -104,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
 <p>¿Cómo cambian las probabilidades de participación laboral femenina cuando se reconoce heterogeneidad persistente entre mujeres en un panel corto?</p>
 </div>
 <div class="hero-sub">
-<p>La pieza prioriza el caso aplicado de oferta laboral y estructura del hogar, y usa pooled, RE y CRE como auditoria disciplinada de magnitudes en probabilidad.</p>
+<p>La pieza prioriza el caso aplicado de oferta laboral y estructura del hogar, y contrasta pooled, RE y CRE para verificar si la historia sustantiva cambia en magnitud.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -253,13 +253,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Este bloque se mantiene subordinado al caso aplicado:</p>
+<p>Como respaldo de la lectura aplicada, la evidencia de diagnostico deja tres mensajes:</p>
 <ul>
 <li><strong>Evidencia Mundlak fuerte:</strong> test conjunto de <code>kidsbar</code> y <code>lhincbar</code> rechaza de forma contundente (<code>chi2(2)=57.50</code> en CRE-pooled y <code>chi2(2)=61.34</code> en CRE-probit; <code>p&lt;0.001</code>), consistente con heterogeneidad correlacionada.</li>
-<li><strong>Sensibilidad numerica en RE (nota breve):</strong> en RE-probit, la estabilidad mejora cuando se aumenta <code>intpoints</code>; las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.</li>
-<li><strong>Leads como robustez secundaria:</strong> los test con adelantados rechazan exogeneidad estricta en pooled y tambien en CRE (con senal concentrada en <code>F1_kids</code>), por lo que se reportan como advertencia de robustez y no como protagonista de la pieza.</li>
+<li><strong>Sensibilidad numerica en RE (nota breve):</strong> al aumentar <code>intpoints</code>, las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.</li>
+<li><strong>Leads como robustez secundaria:</strong> los test con adelantados se reportan como chequeo auxiliar de robustez (con senal concentrada en <code>F1_kids</code>) y no como eje principal de interpretacion.</li>
 </ul>
-<p>Como nota tecnica menor, al incluir promedios individuales de variables con variacion temporal limitada puede aumentar superposicion de informacion y afectar precision de algunos parametros, sin alterar la direccion sustantiva principal.</p>
+<p>Como nota tecnica menor, incluir promedios individuales de variables con variacion temporal limitada puede ampliar incertidumbre en algunos parametros, sin alterar la direccion sustantiva principal.</p>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>

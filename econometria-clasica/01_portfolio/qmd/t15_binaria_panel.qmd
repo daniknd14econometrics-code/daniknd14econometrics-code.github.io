@@ -28,7 +28,7 @@ execute:
 :::
 
 ::: {.hero-sub}
-La pieza prioriza el caso aplicado de oferta laboral y estructura del hogar, y usa pooled, RE y CRE como auditoria disciplinada de magnitudes en probabilidad.
+La pieza prioriza el caso aplicado de oferta laboral y estructura del hogar, y contrasta pooled, RE y CRE para verificar si la historia sustantiva cambia en magnitud.
 :::
 :::
 
@@ -167,13 +167,13 @@ Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas
 
 ## Diagnosticos de respaldo
 
-Este bloque se mantiene subordinado al caso aplicado:
+Como respaldo de la lectura aplicada, la evidencia de diagnostico deja tres mensajes:
 
 - **Evidencia Mundlak fuerte:** test conjunto de `kidsbar` y `lhincbar` rechaza de forma contundente (`chi2(2)=57.50` en CRE-pooled y `chi2(2)=61.34` en CRE-probit; `p<0.001`), consistente con heterogeneidad correlacionada.
-- **Sensibilidad numerica en RE (nota breve):** en RE-probit, la estabilidad mejora cuando se aumenta `intpoints`; las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.
-- **Leads como robustez secundaria:** los test con adelantados rechazan exogeneidad estricta en pooled y tambien en CRE (con senal concentrada en `F1_kids`), por lo que se reportan como advertencia de robustez y no como protagonista de la pieza.
+- **Sensibilidad numerica en RE (nota breve):** al aumentar `intpoints`, las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.
+- **Leads como robustez secundaria:** los test con adelantados se reportan como chequeo auxiliar de robustez (con senal concentrada en `F1_kids`) y no como eje principal de interpretacion.
 
-Como nota tecnica menor, al incluir promedios individuales de variables con variacion temporal limitada puede aumentar superposicion de informacion y afectar precision de algunos parametros, sin alterar la direccion sustantiva principal.
+Como nota tecnica menor, incluir promedios individuales de variables con variacion temporal limitada puede ampliar incertidumbre en algunos parametros, sin alterar la direccion sustantiva principal.
 
 ## Lectura profesional
 
