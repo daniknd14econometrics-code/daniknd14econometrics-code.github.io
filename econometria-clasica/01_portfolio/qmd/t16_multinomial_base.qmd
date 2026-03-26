@@ -1,0 +1,189 @@
+---
+title: "Trayectorias de actividad en un panel laboral corto"
+subtitle: "Como cambian las probabilidades de estudio, hogar y empleo segun educacion y experiencia"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t16_multinomial_base"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t16_multinomial_base_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css: ../assets/portfolio.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+Como se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo segun educacion, experiencia y perfil demografico?
+:::
+
+::: {.hero-sub}
+La pieza sigue trayectorias de actividad en el panel laboral `keane` y usa un logit multinomial, tratado como pooled con `cluster(id)`, para traducir una variable multiclase en probabilidades comparables y utiles para lectura profesional.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
+
+::: {.metric-value}
+Logit multinomial pooled con `cluster(id)`
+:::
+
+::: {.metric-note}
+Panel no balanceado tratado como pooled para priorizar interpretacion aplicada en probabilidades
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Contexto aplicado
+:::
+
+::: {.metric-value}
+Trayectorias de actividad en panel laboral
+:::
+
+::: {.metric-note}
+`N=12,665`, `1,881` personas, `1981-1987`, cinco categorias nominales de actividad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Senales sustantivas
+:::
+
+::: {.metric-value}
+Educacion y experiencia reubican probabilidades
+:::
+
+::: {.metric-note}
+Mas educacion mueve masa hacia escuela y white collar; mas experiencia desplaza desde escuela/hogar hacia empleo
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Limite principal
+:::
+
+::: {.metric-value}
+Menor discriminacion en `services`
+:::
+
+::: {.metric-note}
+La categoria `services` se separa peor que escuela o blue collar bajo esta especificacion
+:::
+:::
+
+::::
+
+## Resumen
+
+Esta pieza analiza como se distribuyen estados de actividad (`choice`) en un panel laboral corto, con categorias nominales mutuamente excluyentes: escuela, hogar, white collar, blue collar y services. El foco no es metodologico en abstracto, sino sustantivo: leer como cambian probabilidades entre alternativas frente a educacion, experiencia y perfil demografico.
+
+La econometria se usa para ordenar una pregunta aplicada. El panel se trata como pooled con inferencia robusta `cluster(id)`, y la lectura principal se apoya en APEs y probabilidades predichas por categoria.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+Como se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo segun educacion, experiencia y perfil demografico?
+
+::: {.small-note}
+Resultado: `choice` (1 escuela, 2 hogar, 3 white collar, 4 blue collar, 5 services). Variables clave: `educ`, `exper`, `expersq`, `black`, dummies anuales.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+El valor profesional de la pieza es transformar una variable multiclase en una lectura comparativa de probabilidades entre alternativas de actividad, explicita en sus alcances y limites de discriminacion.
+
+<span class="badge">Portfolio econometrico</span>
+:::
+
+::::
+
+## Por que este problema importa
+
+En decisiones de actividad laboral no alcanza con preguntar si una persona trabaja o no. En la practica, compiten varias alternativas: estudiar, permanecer en el hogar o insertarse en distintos segmentos ocupacionales. Si se simplifica forzando una variable binaria, se pierde parte central de la pregunta empirica.
+
+Para un lector profesional, lo relevante es entender que variables desplazan probabilidades entre alternativas y donde el modelo separa mejor o peor perfiles observables.
+
+## Datos y variables
+
+Se usa `keane.dta` con estructura de panel corto.
+
+- Unidad de observacion: persona-anio (`id`, `year`)
+- Cobertura temporal: `1981-1987`
+- Muestra operativa: `N=12,665`, `1,881` personas (panel no balanceado)
+- Resultado principal: `choice` con cinco categorias nominales
+- Variables clave: `educ`, `exper`, `expersq`, `i.black`, `y82-y87`
+- Nota de diseno: `wage/lwage` no se incluye como regresor porque no esta definido de forma comparable en todas las alternativas de `choice`
+
+## Estrategia empirica
+
+La secuencia mantiene foco aplicado:
+
+1. Estimar `mlogit choice educ exper expersq i.black y82-y87, baseoutcome(1) vce(cluster id)`.
+2. Traducir resultados a probabilidades con efectos marginales promedio (APE), evitando lectura mecanica de coeficientes.
+3. Complementar con probabilidades predichas y clasificacion por maxima probabilidad como referencia descriptiva.
+4. Reportar un chequeo secundario con `status` (escuela/hogar/trabajo) para verificar estabilidad general de la historia sustantiva.
+
+En todo el analisis, el panel se trata como pooled con `cluster(id)`: esta pieza no busca modelar heterogeneidad no observada con una estructura multinomial de panel, sino ofrecer una lectura clara y util de reasignacion de probabilidades.
+
+## Resultados principales
+
+La lectura comparativa del caso deja tres mensajes sustantivos:
+
+1. **Educacion:** aumenta la probabilidad de escuela y white collar, y reduce hogar y blue collar; en services la variacion promedio es pequena.
+2. **Experiencia:** reduce la probabilidad de escuela y hogar, y la desplaza hacia alternativas de empleo (white collar, blue collar y services), con patron no lineal por `expersq`.
+3. **Perfil demografico (`black`):** se observan redistribuciones de probabilidad entre categorias, en particular mayor peso relativo en hogar y services bajo la especificacion estimada.
+
+::: {.table-box}
+## Sintesis comparativa de magnitudes (APE)
+
+| Variable | Escuela (1) | Hogar (2) | White collar (3) | Blue collar (4) | Services (5) | Lectura sustantiva |
+|---|---:|---:|---:|---:|---:|---|
+| `educ` | `+0.041` | `-0.056` | `+0.055` | `-0.036` | `-0.003` | Mas educacion desplaza probabilidad hacia estudio y empleo white collar |
+| `exper` | `-0.150` | `-0.080` | `+0.080` | `+0.128` | `+0.022` | Mas experiencia desplaza desde inactividad hacia empleo, sobre todo blue collar |
+| `black=1` vs `0` | `-0.063` | `+0.099` | `-0.035` | `-0.046` | `+0.044` | Cambios de composicion entre alternativas bajo el perfil demografico observado |
+:::
+
+En terminos de separacion entre categorias, escuela y blue collar muestran mejor distincion relativa bajo esta especificacion, hogar queda en zona intermedia y white collar presenta mayor solapamiento. La categoria `services` muestra menor capacidad de discriminacion, sin cambiar el mensaje sustantivo principal sobre reasignacion de probabilidades por educacion y experiencia.
+
+## Diagnosticos de respaldo
+
+Estos diagnosticos se reportan solo como respaldo de lectura aplicada:
+
+- **Calidad de clasificacion in-sample (choice, 5 categorias):** `53.8%`, util como referencia descriptiva y no como evidencia de capacidad predictiva fuera de muestra.
+- **Menor discriminacion en `services`:** en clasificacion argmax no aparece como categoria modal predicha, lo que sugiere solapamiento con blue collar y hogar en este set de covariables.
+- **Chequeo secundario con `status` (3 categorias):** clasificacion in-sample `69.0%`, consistente con una agregacion donde la separacion entre estados amplios es mas nitida.
+
+## Lectura profesional
+
+El aporte de T16 no es "mostrar multinomial" por si mismo. El aporte es traducir una decision multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva util para un lector externo.
+
+Tambien deja una practica profesional importante: explicitar limites. Con panel tratado como pooled y `cluster(id)`, la pieza ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es mas debil.
+
+## Cierre
+
+Esta pieza convierte un problema de eleccion nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.
+
+El valor de portfolio queda en una traduccion rigurosa y util para lectura profesional: panel pooled con `cluster(id)`, probabilidades interpretables y limites de discriminacion explicitados con prudencia.

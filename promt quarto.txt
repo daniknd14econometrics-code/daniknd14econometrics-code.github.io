@@ -48,6 +48,10 @@ start ".\01_portfolio\html\01_portfolio\qmd\t14_binaria_vi_discreta.html"
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t15_binaria_panel.html"
 
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
+start ".\01_portfolio\html\01_portfolio\qmd\t16_multinomial_base.html"
+ 
+
 
 
 
