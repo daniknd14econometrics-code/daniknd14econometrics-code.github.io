@@ -104,7 +104,7 @@ Este caso separa con claridad dos planos que no conviene mezclar en analisis de 
 Como cambia la lectura de una ecuacion salarial en panel cuando reconocemos que la heterogeneidad individual no observada puede estar correlacionada con los regresores?
 
 ::: {.small-note}
-Variable dependiente: `lwage`. Regressors centrales: `educ`, `exper`, `expersq`, `union`, `married`, `black`.
+Variable dependiente: `lwage`. Regresores centrales: `educ`, `exper`, `expersq`, `union`, `married`, `black`.
 :::
 :::
 
@@ -121,7 +121,9 @@ No es una solucion final al problema de identificacion cuando `c_i` no observado
 
 ## Por que este problema importa
 
-En paneles de salarios, es comun que existan rasgos persistentes no observados del individuo (por ejemplo, habilidad o atributos estables) que afecten el salario y, a la vez, se relacionen con variables explicativas. Cuando eso ocurre, pooled OLS puede mezclar asociacion estadistica con sesgo por variable omitida.
+Una ecuacion salarial en panel resume como cambian los ingresos laborales cuando cambian caracteristicas observables del trabajador a lo largo del tiempo. En esa lectura, el objetivo no es solo describir correlaciones, sino separar de forma razonable diferencias permanentes entre personas y cambios dentro de cada trayectoria laboral.
+
+En este contexto, `c_i` representa rasgos persistentes no observados o imperfectamente medidos del trabajador. Si esos rasgos se relacionan con `educ`, `union` u otras covariables, el pooled OLS puede mezclar asociacion estadistica con sesgo por variable omitida.
 
 Corregir la matriz de varianzas con cluster es necesario para no sobreconfiar en la precision inferencial, pero esa correccion no limpia por si sola el problema de identificacion.
 
@@ -152,10 +154,14 @@ Un analisis ingenuo confunde dos mensajes distintos:
 
 La leccion profesional del caso es mantener esa distincion: mejorar inferencia no equivale a resolver sesgo por heterogeneidad inobservable.
 
+Si pooled OLS se reporta como resultado final sin esta salvedad, puede comunicarse una lectura salarial insuficientemente depurada por heterogeneidad persistente. El riesgo no es "tecnico" en abstracto: puede sesgar la interpretacion economica de retornos salariales y relaciones laborales relevantes para comparaciones aplicadas.
+
 ::: {.table-box}
 ## Resultados principales
 
 El benchmark pooled con cluster mantiene magnitudes economicas similares a las versiones clasica/robusta, pero con errores estandar mas exigentes para inferencia. Esa es una mejora de reporte, no una garantia de identificacion.
+
+En terminos aplicados, los coeficientes de la ecuacion salarial deben leerse como asociaciones condicionadas al modelo: cuando `c_i` no esta bien tratado, parte de las diferencias persistentes entre trabajadores puede quedar absorbida en esos parametros.
 
 | Modelo | Coef. `educ` | Error estandar | p-valor | N |
 |---|---:|---:|---:|---:|
@@ -193,5 +199,4 @@ Por eso, el resultado debe comunicarse como evidencia de referencia econometrica
 
 Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.
 
-El pooled con cluster funciona como punto de partida robusto para reporte comparativo. La agenda de identificacion exige avanzar hacia estrategias de panel que traten `c_i` de manera explicita.
-
+El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE segun el problema y los supuestos defendibles, para tratar de forma explicita el limite detectado en pooled.

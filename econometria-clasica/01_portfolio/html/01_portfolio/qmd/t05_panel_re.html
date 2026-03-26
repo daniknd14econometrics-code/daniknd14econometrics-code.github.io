@@ -174,7 +174,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="por-que-este-problema-importa" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
 <p>En paneles salariales, parte de la variacion de <code>lwage</code> responde a rasgos persistentes del individuo que no observamos directamente. Ignorar ese componente puede degradar el modelado del error compuesto.</p>
+<p>En terminos aplicados, esta especificacion ayuda a estudiar diferencias salariales entre trabajadores cuando interesa separar lo que cambia en el tiempo (por ejemplo, experiencia o estado sindical) de rasgos relativamente estables de cada persona. Por eso el formato panel es natural en este ejemplo: permite seguir a los mismos trabajadores y distinguir mejor patrones persistentes de variaciones anuales.</p>
 <p>La propuesta RE captura esa heterogeneidad como parte de la estructura estocastica y, al mismo tiempo, evita perder covariables invariantes en el tiempo. Ese beneficio viene con una condicion fuerte de exogeneidad entre <code>c_i</code> y los regresores.</p>
+<p>En este caso, preservar <code>educ</code> no es solo una conveniencia tecnica frente a FE: es sustantivamente relevante porque la escolaridad es una variable central para describir diferencias salariales entre trabajadores y forma parte del nucleo interpretativo del ejercicio.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -206,10 +208,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La evidencia principal del caso se concentra en dos hechos:</p>
 <ol type="1">
-<li><code>rho</code> cercano a 0.46, indicando que una fraccion importante de la varianza total se asocia al componente individual no observado.</li>
-<li>Rechazo fuerte de <code>H0: var(c_i)=0</code> con <code>Z = 10.66</code>, lo que refuerza que la estructura panel es sustantiva y no un detalle menor.</li>
+<li><code>rho</code> cercano a 0.46, indicando que una fraccion relevante de la variacion salarial observada parece estar asociada a diferencias persistentes entre trabajadores.</li>
+<li>Rechazo fuerte de <code>H0: var(c_i)=0</code> con <code>Z = 10.66</code>, consistente con la presencia de heterogeneidad individual persistente y con la importancia de tratar la estructura panel de forma explicita.</li>
 </ol>
 <p>Como referencia de magnitudes, el coeficiente de <code>educ</code> en RE se ubica alrededor de 0.100 tanto en version clasica como robusta, mientras cambian los errores estandar al robustecer la inferencia.</p>
+<p>En lectura aplicada, ese coeficiente resume una asociacion salarial estimada positiva entre mayor escolaridad y <code>lwage</code> dentro de esta especificacion RE; no debe leerse como un efecto causal cerrado ni extrapolarse fuera de este marco sin evidencia adicional.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -279,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Esta pieza posiciona a RE como una especificacion operativa bajo un supuesto fuerte, no como cierre definitivo de identificacion. El aporte profesional del caso es combinar eficiencia, lectura de componentes de varianza y prudencia metodologica al comunicar resultados.</p>
+<p>Esta pieza posiciona a RE como una especificacion operativa bajo un supuesto fuerte, no como cierre definitivo de identificacion. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como <code>educ</code> y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explicita el supuesto <code>corr(c_i, x_it)=0</code>, por ejemplo con una prueba tipo Hausman.</p>
 </section>
 
 </main>

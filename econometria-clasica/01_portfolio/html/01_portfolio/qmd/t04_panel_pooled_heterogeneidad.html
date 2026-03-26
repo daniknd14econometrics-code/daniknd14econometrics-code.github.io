@@ -162,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>Como cambia la lectura de una ecuacion salarial en panel cuando reconocemos que la heterogeneidad individual no observada puede estar correlacionada con los regresores?</p>
 <div class="small-note">
-<p>Variable dependiente: <code>lwage</code>. Regressors centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code>.</p>
+<p>Variable dependiente: <code>lwage</code>. Regresores centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -174,7 +174,8 @@ No es una solucion final al problema de identificacion cuando <code>c_i</code> n
 </div>
 <section id="por-que-este-problema-importa" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>En paneles de salarios, es comun que existan rasgos persistentes no observados del individuo (por ejemplo, habilidad o atributos estables) que afecten el salario y, a la vez, se relacionen con variables explicativas. Cuando eso ocurre, pooled OLS puede mezclar asociacion estadistica con sesgo por variable omitida.</p>
+<p>Una ecuacion salarial en panel resume como cambian los ingresos laborales cuando cambian caracteristicas observables del trabajador a lo largo del tiempo. En esa lectura, el objetivo no es solo describir correlaciones, sino separar de forma razonable diferencias permanentes entre personas y cambios dentro de cada trayectoria laboral.</p>
+<p>En este contexto, <code>c_i</code> representa rasgos persistentes no observados o imperfectamente medidos del trabajador. Si esos rasgos se relacionan con <code>educ</code>, <code>union</code> u otras covariables, el pooled OLS puede mezclar asociacion estadistica con sesgo por variable omitida.</p>
 <p>Corregir la matriz de varianzas con cluster es necesario para no sobreconfiar en la precision inferencial, pero esa correccion no limpia por si sola el problema de identificacion.</p>
 </section>
 <section id="datos-y-variables" class="level2">
@@ -205,10 +206,12 @@ No es una solucion final al problema de identificacion cuando <code>c_i</code> n
 <li>Identificacion: aun con cluster, pooled puede estar sesgado si <code>c_i</code> se correlaciona con <code>x_it</code>.</li>
 </ol>
 <p>La leccion profesional del caso es mantener esa distincion: mejorar inferencia no equivale a resolver sesgo por heterogeneidad inobservable.</p>
+<p>Si pooled OLS se reporta como resultado final sin esta salvedad, puede comunicarse una lectura salarial insuficientemente depurada por heterogeneidad persistente. El riesgo no es “tecnico” en abstracto: puede sesgar la interpretacion economica de retornos salariales y relaciones laborales relevantes para comparaciones aplicadas.</p>
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>El benchmark pooled con cluster mantiene magnitudes economicas similares a las versiones clasica/robusta, pero con errores estandar mas exigentes para inferencia. Esa es una mejora de reporte, no una garantia de identificacion.</p>
+<p>En terminos aplicados, los coeficientes de la ecuacion salarial deben leerse como asociaciones condicionadas al modelo: cuando <code>c_i</code> no esta bien tratado, parte de las diferencias persistentes entre trabajadores puede quedar absorbida en esos parametros.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 15%">
@@ -305,7 +308,7 @@ No es una solucion final al problema de identificacion cuando <code>c_i</code> n
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.</p>
-<p>El pooled con cluster funciona como punto de partida robusto para reporte comparativo. La agenda de identificacion exige avanzar hacia estrategias de panel que traten <code>c_i</code> de manera explicita.</p>
+<p>El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE segun el problema y los supuestos defendibles, para tratar de forma explicita el limite detectado en pooled.</p>
 </section>
 
 </main>

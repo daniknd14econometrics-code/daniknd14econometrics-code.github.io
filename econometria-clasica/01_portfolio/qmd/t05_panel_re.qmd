@@ -122,7 +122,11 @@ RE no solo ofrece una via eficiente para modelar heterogeneidad no observada baj
 
 En paneles salariales, parte de la variacion de `lwage` responde a rasgos persistentes del individuo que no observamos directamente. Ignorar ese componente puede degradar el modelado del error compuesto.
 
+En terminos aplicados, esta especificacion ayuda a estudiar diferencias salariales entre trabajadores cuando interesa separar lo que cambia en el tiempo (por ejemplo, experiencia o estado sindical) de rasgos relativamente estables de cada persona. Por eso el formato panel es natural en este ejemplo: permite seguir a los mismos trabajadores y distinguir mejor patrones persistentes de variaciones anuales.
+
 La propuesta RE captura esa heterogeneidad como parte de la estructura estocastica y, al mismo tiempo, evita perder covariables invariantes en el tiempo. Ese beneficio viene con una condicion fuerte de exogeneidad entre `c_i` y los regresores.
+
+En este caso, preservar `educ` no es solo una conveniencia tecnica frente a FE: es sustantivamente relevante porque la escolaridad es una variable central para describir diferencias salariales entre trabajadores y forma parte del nucleo interpretativo del ejercicio.
 
 ## Datos y variables
 
@@ -154,10 +158,12 @@ Por eso, en este taller se presenta RE como especificacion operativa condicional
 
 La evidencia principal del caso se concentra en dos hechos:
 
-1. `rho` cercano a 0.46, indicando que una fraccion importante de la varianza total se asocia al componente individual no observado.
-2. Rechazo fuerte de `H0: var(c_i)=0` con `Z = 10.66`, lo que refuerza que la estructura panel es sustantiva y no un detalle menor.
+1. `rho` cercano a 0.46, indicando que una fraccion relevante de la variacion salarial observada parece estar asociada a diferencias persistentes entre trabajadores.
+2. Rechazo fuerte de `H0: var(c_i)=0` con `Z = 10.66`, consistente con la presencia de heterogeneidad individual persistente y con la importancia de tratar la estructura panel de forma explicita.
 
 Como referencia de magnitudes, el coeficiente de `educ` en RE se ubica alrededor de 0.100 tanto en version clasica como robusta, mientras cambian los errores estandar al robustecer la inferencia.
+
+En lectura aplicada, ese coeficiente resume una asociacion salarial estimada positiva entre mayor escolaridad y `lwage` dentro de esta especificacion RE; no debe leerse como un efecto causal cerrado ni extrapolarse fuera de este marco sin evidencia adicional.
 
 | Modelo | Coef. `educ` | Error estandar | N |
 |---|---:|---:|---:|
@@ -185,5 +191,4 @@ Pero la validez econometrica de esa eleccion sigue siendo condicional al supuest
 
 ## Cierre
 
-Esta pieza posiciona a RE como una especificacion operativa bajo un supuesto fuerte, no como cierre definitivo de identificacion. El aporte profesional del caso es combinar eficiencia, lectura de componentes de varianza y prudencia metodologica al comunicar resultados.
-
+Esta pieza posiciona a RE como una especificacion operativa bajo un supuesto fuerte, no como cierre definitivo de identificacion. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como `educ` y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explicita el supuesto `corr(c_i, x_it)=0`, por ejemplo con una prueba tipo Hausman.

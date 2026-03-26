@@ -175,11 +175,13 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <section id="por-que-este-problema-importa" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
 <p>En decisiones de inversion, la q de Tobin suele leerse como senal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser util como benchmark, pero solo si la inferencia respeta la estructura del error.</p>
+<p>La relacion economica que se explora es directa: si una firma enfrenta una q mas alta, tiende a observarse mayor inversion, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, ademas de preguntar si la asociacion existe, importa leer su forma y su magnitud economica.</p>
 <p>Al mismo tiempo, una inferencia mejor calibrada no equivale automaticamente a identificacion limpia. Esa distincion evita sobreinterpretar resultados estadisticamente significativos como evidencia causal.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <p>Se trabaja con un panel de firmas (<code>N = 2,068</code> observaciones; <code>188</code> firmas) para el periodo 1975-1985.</p>
+<p>Sustantivamente, este panel representa decisiones de inversion observadas repetidamente para las mismas firmas a lo largo de once anos. Ese seguimiento temporal permite evaluar si el patron entre q e inversion se sostiene al controlar shocks comunes por ano, en lugar de depender de una sola foto de corte transversal.</p>
 <ul>
 <li>Variable dependiente: <code>ikb</code> (tasa de inversion sobre capital)</li>
 <li>Regresores de interes: <code>qb</code> y <code>qb_sq</code></li>
@@ -212,6 +214,7 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>El modelo operativo (<code>ikb</code> sobre <code>qb</code>, <code>qb_sq</code> e indicadores de ano, con cluster por firma) muestra una relacion estimada positiva pero decreciente entre q e inversion en casi toda la muestra.</p>
 <p>El punto de giro implicito cae en una zona muy alta de la distribucion de <code>qb</code> (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decision.</p>
+<p>En terminos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de <code>qb</code>, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante mas chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la direccion general del vinculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 23%">
@@ -297,7 +300,7 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>T3 deja un mensaje claro para trabajo aplicado: la relacion entre q e inversion aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.</p>
-<p>Ese hallazgo es util como punto de partida empirico, no como cierre causal. El siguiente paso natural para una agenda de identificacion mas exigente es avanzar hacia estrategias de panel que traten de forma explicita la heterogeneidad no observada.</p>
+<p>Para un analista aplicado, esta pieza si permite concluir que la asociacion promedio entre valorizacion e inversion no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empirico, no un cierre causal: el siguiente paso natural para una agenda de identificacion mas exigente es avanzar hacia estrategias de panel que traten de forma explicita la heterogeneidad no observada.</p>
 </section>
 
 </main>
