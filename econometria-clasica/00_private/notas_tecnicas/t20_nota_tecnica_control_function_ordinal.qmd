@@ -1,0 +1,91 @@
+---
+title: "Control function en ordered probit con covariable continua potencialmente endógena"
+author: "Daniel Mendez"
+date: "2026-03-26"
+lang: es
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: flatly
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Alcance editorial y motivo de nota privada
+
+Esta nota documenta T20 como respaldo técnico interno y **no** como pieza pública del portfolio.
+
+La decisión editorial es explícita por cuatro razones:
+
+1. Predomina el componente metodológico sobre la historia aplicada.
+2. El instrumento usado en el ejercicio (`pyears`) cumple un rol didáctico y no sostiene una base aplicada fuerte para publicación principal.
+3. Existe riesgo de sobreventa metodológica si se presenta como evidencia empírica robusta.
+4. Conviene mantener T19 como pieza pública del caso ordinal previsional y dejar T20 como soporte técnico.
+
+## Objetivo metodológico
+
+Mostrar, de forma breve y replicable, cómo implementar un enfoque de control function en un modelo ordered probit cuando una covariable continua (`educ`) se trata como potencialmente endógena.
+
+El objetivo no es producir una conclusión sustantiva final del caso, sino dejar trazabilidad de criterio econométrico para modelos ordinales no lineales con posible endogeneidad.
+
+## Problema econométrico
+
+El resultado (`pctstck`) es ordinal con tres categorías (`0`, `50`, `100`). En este entorno, una solución lineal tipo 2SLS no es una traducción directa para lectura en probabilidades por categoría.
+
+Si `educ` está correlacionada con no observables del índice latente ordinal, el ordered probit exógeno puede mezclar señal estructural con sesgo de omisión.
+
+## Idea del control function en modelo ordinal
+
+La lógica es separar, en una primera etapa, la parte explicada y no explicada de la covariable potencialmente endógena.
+
+- Primera etapa: modelar `educ` con controles y un instrumento excluido, y recuperar el residuo (`vhat`).
+- Segunda etapa: estimar ordered probit para `pctstck` incorporando `vhat` junto con `educ` y controles.
+
+En esta arquitectura, `vhat` captura la componente endógena remanente de `educ`. Su inclusión corrige la ecuación estructural bajo los supuestos del enfoque control function.
+
+## Esquema de implementación en dos etapas
+
+Muestra usada en el ejercicio:
+
+- Muestra base ordenada: `N=194`.
+- Muestra operativa en CF: `N=191` (por faltantes en variables de primera etapa).
+
+Secuencia aplicada:
+
+1. Primera etapa lineal para `educ` con controles demográficos/financieros e instrumento `pyears`.
+2. Generación del residuo estimado `vhat`.
+3. Segunda etapa ordered probit de `pctstck` sobre `educ`, controles y `vhat`.
+4. Cálculo de probabilidades y APEs por outcome como unidad de lectura.
+
+## Por qué hace falta bootstrap
+
+En control function hay estimación en dos etapas y uso de un regressor generado (`vhat`). Por eso, la inferencia "naive" de segunda etapa puede subestimar incertidumbre.
+
+El ejercicio incorpora bootstrap para propagar la variabilidad conjunta de ambas etapas al estimar APEs. En el log se ejecutan `100` réplicas con `cluster(id)` y quedan `99` réplicas completas.
+
+## Qué muestra el ejercicio
+
+Como nota metodológica, T20 deja tres mensajes útiles:
+
+1. El flujo ordered probit + control function es operable en práctica y permite sostener lectura en probabilidades por categoría.
+2. Al introducir CF, las magnitudes de algunos APEs cambian respecto al modelo exógeno, lo que sirve como auditoría de sensibilidad.
+3. Al pasar a bootstrap, la incertidumbre aumenta en varios efectos, reforzando una lectura prudente.
+
+## Límites del caso
+
+Los límites deben quedar explícitos:
+
+- `pyears` se usa con fin didáctico en este taller y no debe presentarse como instrumento fuerte para una pieza pública.
+- En la primera etapa, la relevancia puntual de `pyears` es débil en esta corrida (`p=0.301`).
+- En la segunda etapa, el coeficiente de `vhat` no muestra evidencia estadística robusta (`p=0.550`), por lo que no corresponde sobrerreaccionar.
+- El ejercicio es de corte transversal y muestra pequeña (`N=194`/`191`), con alcance empírico acotado.
+- Esta nota no respalda interpretación causal y no reemplaza una estrategia de identificación aplicada más sólida.
+
+## Cierre técnico honesto
+
+T20 funciona mejor como nota técnica privada breve: documenta el procedimiento de control function en un modelo ordinal, justifica el uso de bootstrap en inferencia de dos etapas y deja claras las limitaciones de identificación del ejemplo.
+
+Su valor es metodológico y de criterio profesional interno, no de evidencia aplicada robusta para audiencia pública.

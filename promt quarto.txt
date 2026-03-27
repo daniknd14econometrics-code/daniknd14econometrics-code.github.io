@@ -6,6 +6,7 @@ quarto render 01_vi.qmd
 start 01_vi.html
 
 
+HTML CREADOS POR CODEX:
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t01_vi.html"
 
@@ -70,4 +71,6 @@ nota t17
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica\00_private\notas_tecnicas"
 start "t17_nota_tecnica_multinomial_cf.html"
 
-
+nota t20
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica\00_private\notas_tecnicas"
+start "t20_nota_tecnica_control_function_ordinal.html"
