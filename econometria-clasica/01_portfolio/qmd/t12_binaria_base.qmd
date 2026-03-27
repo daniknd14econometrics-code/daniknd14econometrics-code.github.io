@@ -162,10 +162,10 @@ En segundo plano metodologico, probit y logit permiten leer estas relaciones en 
 
 | Variable | Probit | Logit | Lectura aplicada |
 |---|---:|---:|---|
-| kidslt6 | -0.261 | -0.258 | Asociacion negativa fuerte con participación |
-| educ | +0.039 | +0.040 | Mayor educación se asocia con mayor participación |
-| exper | +0.037 | +0.037 | Mayor experiencia se asocia con mayor participación |
-| nwifeinc | -0.0036 | -0.0038 | Ingreso no laboral más alto se asocia con menor participación |
+| kidslt6 | -0.261 (EE=0.032; IC95% [-0.324, -0.199]) | -0.258 (EE=0.032; IC95% [-0.320, -0.195]) | Asociacion negativa fuerte con participación |
+| educ | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | Mayor educación se asocia con mayor participación |
+| exper | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | Mayor experiencia se asocia con mayor participación |
+| nwifeinc | -0.0036 (EE=0.0014; IC95% [-0.0064, -0.0008]) | -0.0038 (EE=0.0015; IC95% [-0.0067, -0.0009]) | Ingreso no laboral más alto se asocia con menor participación |
 :::
 
 ## Diagnosticos de respaldo
@@ -186,7 +186,6 @@ El aporte profesional de T12 no es plantear una competencia entre MPL, probit y 
 En este caso de participación laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decisión y análisis: menor participación con hijos pequeños, mayor participación con educación y experiencia, y menor participación cuando crece el ingreso no laboral del hogar.
 
 El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.
-
 
 
 

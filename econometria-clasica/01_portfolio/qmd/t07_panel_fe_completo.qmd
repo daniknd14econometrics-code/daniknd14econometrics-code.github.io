@@ -169,8 +169,8 @@ Por eso, la lectura profesional para desempeño productivo es de evidencia suges
 
 | Bloque | Evidencia | Lectura |
 |---|---:|---|
-| FE clásico | grant=-0.252 (p=0.097), grant_1=-0.422 (p=0.047) | Señal inicial en clásico, sujeta a supuestos fuertes de FE |
-| FE + cluster (operativo) | grant=-0.252 (p=0.084), grant_1=-0.422 (p=0.141) | Cambia la precisión; la evidencia individual se debilita |
+| FE clásico | grant=-0.252 (EE=0.151; IC95% [-0.551, 0.046]), grant_1=-0.422 (EE=0.210; IC95% [-0.838, -0.005]) | Señal inicial en clásico, sujeta a supuestos fuertes de FE |
+| FE + cluster (operativo) | grant=-0.252 (EE=0.143; IC95% [-0.540, 0.035]), grant_1=-0.422 (EE=0.282; IC95% [-0.988, 0.145]) | Cambia la precisión; la evidencia individual se debilita |
 | Test conjunto robusto grant=grant_1=0 | F(2,53)=1.56, p=0.2198 | Sin evidencia conjunta robusta al 5% |
 | Restriccion grant + grant_1 = 0 | F(1,53)=2.63, p=0.1105 | No rechazo en inferencia robusta |
 | Estructura panel | rho=0.893, F all u_i=0 p=0.0000 | La heterogeneidad fija de firma es econométricamente relevante |
@@ -198,7 +198,6 @@ Esta secuencia evita dos excesos frecuentes: tratar la significancia convenciona
 ## Cierre
 
 La contribución de T7 no es establecer una conclusión definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.
-
 
 
 

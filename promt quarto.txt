@@ -1,3 +1,7 @@
+ultima mejora: debería revisarse si la pregunta planteada queda respondida, y si queda claramente expuesta dicha respuesta.
+		lo que no puede pasar es que no se termine de responder. asi que leer  do file, logs, el qmt curado y ver eso para cada taller
+
+
 en powershell, taller 1:
 
 
