@@ -1,0 +1,61 @@
+FICHA TÉCNICA-EDITORIAL PRIVADA — T1
+
+1. Identificación básica
+
+Taller 01. Tema central: variables instrumentales en corte transversal para una ecuación salarial. La pregunta del brief está bien planteada: cómo cambia la estimación del retorno de la educación sobre el salario cuando la educación se trata como potencialmente endógena. La variable dependiente es `lwage`; las variables centrales son `educ`, `exper`, `expersq`; y los instrumentos excluidos son `meduc` y `feduc`. El brief además pide mostrar comparación MCO vs IV, first stage, endogeneidad y una conclusión clara sobre cuándo salir de MCO.
+
+2. Qué es realmente este taller
+
+Este taller no es, en esencia, una pieza de “hallazgo sustantivo puro”. Es una comparación metodológica con anclaje aplicado. La historia sustantiva existe —retorno de la educación sobre salarios—, pero el centro real del taller es otro: mostrar qué pasa cuando una regresión salarial estándar enfrenta endogeneidad de `educ` y se corrige con IV/2SLS. Yo lo clasificaría editorialmente como “comparación metodológica”, no como “pieza principalmente técnica” ni como “hallazgo sustantivo” a secas. El propio brief empuja en esa dirección al enfatizar endogeneidad, first stage, sobreidentificación y decisión entre MCO e IV.
+
+3. Núcleo empírico y métodos comparados
+
+En el log aparecen MCO estándar, MCO robusto, IV/2SLS homocedástico, IV/2SLS robusto, test de endogeneidad tipo Hausman/`estat endogenous`, diagnósticos de primera etapa, tests de weak ID, sobreidentificación y una extensión pedagógica a GMM y contrastes de hipótesis. Para la pieza pública, el núcleo no debería intentar mostrar todo eso. El corazón es: MCO robusto versus IV/2SLS robusto, más un bloque corto de diagnóstico que justifique por qué IV gana. El resto puede quedar como material técnico secundario o fuera de la pieza pública.
+
+4. Objeto de decisión final
+
+Acá el “objeto de decisión final” debe ser una tabla comparativa corta que deje una lectura inequívoca. Mi propuesta: una tabla final con `educ` en MCO robusto y IV/2SLS robusto, idealmente sobre la misma muestra, y debajo un bloque de decisión con tres mensajes: el test de endogeneidad rechaza exogeneidad; los instrumentos son relevantes; y no hay evidencia de weak ID ni de violación de sobreidentificación en los tests reportados. Esa tabla, y no la proliferación de comandos, es lo que el lector debe retener.
+
+5. Especificación ganadora
+
+Mi lectura es que la especificación ganadora, dentro de lo que hoy está corrido, es IV/2SLS robusta. La razón no es estética, sino empírica: el coeficiente de `educ` en MCO robusto es 0.078, mientras que en IV robusto es 0.146; además, el test de endogeneidad rechaza exogeneidad con p-valor 0.0000, y la primera etapa muestra fuerza suficiente de los instrumentos. Entonces, si hay que decidir entre MCO e IV dentro del taller, IV/2SLS robusta gana. Pero esa victoria debe presentarse como provisional/condicionada a resolver el problema de comparabilidad muestral que se marca abajo.
+
+6. Evidencia clave del log
+
+La evidencia decisiva del taller está concentrada en cuatro bloques. Primero, la diferencia de coeficiente de `educ` entre MCO e IV. Segundo, el test de endogeneidad, que rechaza la exogeneidad de `educ`. Tercero, la primera etapa y el F robusto de instrumentos excluidos, en torno a 70.14. Cuarto, los diagnósticos de identificación y sobreidentificación: KP LM p=0.0000, KP Wald F=70.14 y Hansen J p=0.8767. Eso alcanza para sostener la narrativa pública. Los bloques de GMM2S y las pruebas de hipótesis adicionales son útiles pedagógicamente, pero no son el centro del portfolio.
+
+7. Historia narrativa posible, sin forzarla
+
+La historia buena acá no es “la educación causa exactamente X% más salario” como si fuera un paper aplicado cerrado. La historia correcta es: en una ecuación salarial, tratar a `educ` como exógena puede ser engañoso; cuando se instrumenta con educación de madre y padre, la estimación cambia de forma importante y los diagnósticos empujan a preferir IV/2SLS frente a MCO. O sea: la pieza trata sobre cómo una pregunta conocida —retorno de la educación— cambia cuando el problema econométrico se toma en serio. Esa narrativa es profesional, clara y no sobreactúa más de lo que el taller puede sostener.
+
+8. Hallazgo principal
+
+La frase de salida debería ser algo así: “En esta base, la corrección por endogeneidad eleva de manera marcada el retorno estimado de la educación, y los diagnósticos favorecen una lectura IV/2SLS por encima de MCO.” Si se quiere más prolijidad: “En la muestra con instrumentos observados, la evidencia disponible favorece IV/2SLS.” Esta segunda versión es más fina por el tema muestral.
+
+9. Qué sí puede decir la pieza
+
+Sí puede decir que, en este ejercicio, MCO e IV entregan estimaciones bastante distintas del retorno de la educación; que hay evidencia estadística de endogeneidad; que la primera etapa es fuerte; y que no aparecen señales de identificación débil en los diagnósticos reportados. También puede decir que el taller enseña que usar IV no es solo correr 2SLS, sino justificar exogeneidad, revisar first stage y mirar diagnósticos.
+
+10. Qué no debe decir la pieza
+
+No debería decir que MCO “no alcanza”, porque eso suena coloquial y además no es preciso. Lo correcto es hablar de sesgo potencial por endogeneidad. Tampoco debería decir que el test de Hansen “prueba” la validez de los instrumentos; solo que no encuentra evidencia en contra bajo las condiciones del test. Y, muy importante, no debería afirmar sin matiz que el salto de 7.8% a 14.6% se debe enteramente a corregir endogeneidad, porque hoy la comparación también está contaminada por el cambio de muestra. Ese punto hay que escribirlo bien o corregirlo antes.
+
+11. Requisitos mínimos para el `.qmd`
+
+Para este `.qmd` deberían aparecer sí o sí cinco piezas. Primero, una apertura con la pregunta y el problema: retorno a la educación con sospecha de endogeneidad. Segundo, una tabla comparativa final MCO robusto vs IV robusto, preferentemente sobre muestra homogénea. Tercero, un bloque muy breve de identificación: instrumentos, primera etapa y test de endogeneidad. Cuarto, un cierre de decisión que diga explícitamente que la lectura preferida es IV/2SLS robusta. Quinto, una nota metodológica breve aclarando que la no-rechazo de Hansen no es prueba definitiva de validez y que la comparación de coeficientes exige cuidar la muestra.
+
+12. Nota para la tarjeta del sitio
+
+Propuesta: “¿Cuánto cambia el retorno estimado de la educación cuando se corrige su endogeneidad? Comparo MCO e IV/2SLS en una ecuación salarial y muestro por qué la decisión metodológica cambia la lectura del resultado.” Método principal: IV/2SLS. Tipo de pieza: comparación metodológica. Estado de la evidencia: resultado claro, con cautela muestral.
+
+13. Observación adicional de metadatos
+
+En el brief figura `familia_metodo: lineal_vi_panel`, pero el taller y el log son claramente de VI en sección cruzada. No es grave, pero conviene corregir ese metadato para no contaminar clasificación o navegación del sitio.
+
+14. Riesgo editorial principal a chequear antes de tocar el taller
+
+El MCO está corrido con 935 observaciones, pero el IV/2SLS con 722. O sea: la comparación actual mezcla cambio de método con cambio de muestra. Eso no invalida el taller, pero sí obliga a que en la auditoría de Codex se verifique una de estas dos cosas: o se reestima MCO en la muestra IV, o se explicita de forma limpia que la diferencia entre coeficientes no puede atribuirse solo al método.
+
+15. Diagnóstico final
+
+T1 está bien encaminado, tiene una historia natural razonable y una especificación ganadora clara, pero arrastra un riesgo editorial real si se presenta la comparación MCO vs IV sin controlar la diferencia de muestra. Ese debería ser el primer chequeo obligatorio en la auditoría.
