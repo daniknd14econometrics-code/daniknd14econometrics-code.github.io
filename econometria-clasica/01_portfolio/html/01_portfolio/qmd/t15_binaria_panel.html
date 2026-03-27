@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Participación laboral femenina y estructura del hogar en un panel corto</title>
+<title>t15_binaria_panel</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,34 +38,16 @@ ul.task-list li input[type="checkbox"] {
 <link href="t15_binaria_panel_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t15_binaria_panel_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t15_binaria_panel_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t15_binaria_panel_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t15_binaria_panel_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#sintesis-de-magnitudes-ape" id="toc-sintesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</a></li>
-  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
-  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -75,12 +57,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -113,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Modelo operativo</p>
 </div>
 <div class="metric-value">
-<p>Panel binario con comparacion pooled, RE y CRE</p>
+<p>Panel binario con comparación pooled, RE y CRE</p>
 </div>
 <div class="metric-note">
 <p>Lectura principal en APEs y no en coeficientes latentes</p>
@@ -135,10 +117,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Senales sustantivas</p>
 </div>
 <div class="metric-value">
-<p><code>kids</code> y <code>lhinc</code> con asociacion negativa</p>
+<p><code>kids</code> y <code>lhinc</code> con asociación negativa</p>
 </div>
 <div class="metric-note">
-<p>Menor participacion laboral asociada a mas hijos y mayor ingreso del esposo</p>
+<p>Menor participación laboral asociada a más hijos y mayor ingreso del esposo</p>
 </div>
 </div>
 <div class="metric-card">
@@ -146,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Lectura de sensibilidad</p>
 </div>
 <div class="metric-value">
-<p>Magnitudes mas bajas en RE y CRE</p>
+<p>Magnitudes más bajas en RE y CRE</p>
 </div>
 <div class="metric-note">
 <p>Parte de la lectura pooled absorbia heterogeneidad persistente no modelada</p>
@@ -155,8 +137,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participacion laboral femenina (<code>lfp</code>) en relacion con estructura del hogar y caracteristicas individuales en un panel corto. El foco principal es sustantivo: entender como cambian las probabilidades asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres.</p>
-<p>La econometria se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparacion pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificacion unica.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>lfp</code>) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es sustantivo: entender como cambian las probabilidades asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres.</p>
+<p>La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
@@ -169,13 +151,13 @@ ul.task-list li input[type="checkbox"] {
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
 <p>La pieza no busca “ganar” entre pooled, RE y CRE. Busca mostrar criterio de modelado en panel binario: si la heterogeneidad persistente importa, la lectura aplicada en probabilidades puede cambiar de forma relevante en magnitud.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>La participacion laboral femenina se decide dentro de hogares con diferencias persistentes de contexto, preferencias y restricciones no totalmente observables. Si esa heterogeneidad no se modela, una lectura pooled puede mezclar diferencias estructurales entre mujeres con asociaciones contemporaneas de interes.</p>
-<p>Para un lector profesional, lo importante es saber si el mensaje sustantivo se mantiene y cuanto cambia en magnitud cuando el panel permite capturar parte de esa persistencia.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>La participación laboral femenina se decide dentro de hogares con diferencias persistentes de contexto, preferencias y restricciones no totalmente observables. Si esa heterogeneidad no se modela, una lectura pooled puede mezclar diferencias estructurales entre mujeres con asociaciones contemporaneas de interés.</p>
+<p>Para un lector profesional, lo importante es saber si el mensaje sustantivo se mantiene y cuánto cambia en magnitud cuando el panel permite capturar parte de esa persistencia.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -190,21 +172,21 @@ ul.task-list li input[type="checkbox"] {
 <li>Controles: <code>educ</code>, <code>i.black</code>, <code>age</code>, <code>agesq</code>, <code>per2</code>-<code>per5</code></li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <ol type="1">
 <li>Estimar probit pooled con <code>vce(cluster id)</code> como referencia base.</li>
 <li>Estimar RE-probit para incorporar heterogeneidad no observada persistente.</li>
-<li>Estimar CRE (Mundlak) agregando promedios individuales (<code>kidsbar</code>, <code>lhincbar</code>) para permitir correlacion entre heterogeneidad y regresores.</li>
-<li>Comparar APEs entre especificaciones y usar diagnosticos como respaldo, sin desplazar la historia aplicada.</li>
+<li>Estimar CRE (Mundlak) agregando promedios individuales (<code>kidsbar</code>, <code>lhincbar</code>) para permitir correlación entre heterogeneidad y regresores.</li>
+<li>Comparar APEs entre especificaciones y usar diagnósticos como respaldo, sin desplazar la historia aplicada.</li>
 </ol>
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La lectura se organiza en cuatro pasos:</p>
 <ol type="1">
-<li>Se observa una asociacion negativa entre <code>kids</code> y la probabilidad de participacion laboral.</li>
-<li>Se observa una asociacion negativa entre <code>lhinc</code> y la probabilidad de participacion laboral.</li>
+<li>Se observa una asociación negativa entre <code>kids</code> y la probabilidad de participación laboral.</li>
+<li>Se observa una asociación negativa entre <code>lhinc</code> y la probabilidad de participación laboral.</li>
 <li>Ambas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.</li>
 <li>Esa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.</li>
 </ol>
@@ -246,29 +228,29 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;"><code>-0.019</code></td>
 <td style="text-align: right;"><code>-0.010</code></td>
 <td style="text-align: right;"><code>-0.008</code></td>
-<td>Asociacion negativa robusta, tambien atenuada en RE/CRE</td>
+<td>Asociacion negativa robusta, también atenuada en RE/CRE</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Como respaldo de la lectura aplicada, la evidencia de diagnostico deja tres mensajes:</p>
+<p>Como respaldo de la lectura aplicada, la evidencia de diagnóstico deja tres mensajes:</p>
 <ul>
 <li><strong>Evidencia Mundlak fuerte:</strong> test conjunto de <code>kidsbar</code> y <code>lhincbar</code> rechaza de forma contundente (<code>chi2(2)=57.50</code> en CRE-pooled y <code>chi2(2)=61.34</code> en CRE-probit; <code>p&lt;0.001</code>), consistente con heterogeneidad correlacionada.</li>
 <li><strong>Sensibilidad numerica en RE (nota breve):</strong> al aumentar <code>intpoints</code>, las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.</li>
-<li><strong>Leads como robustez secundaria:</strong> los test con adelantados se reportan como chequeo auxiliar de robustez (con senal concentrada en <code>F1_kids</code>) y no como eje principal de interpretacion.</li>
+<li><strong>Leads como robustez secundaria:</strong> los test con adelantados se reportan como chequeo auxiliar de robustez (con señal concentrada en <code>F1_kids</code>) y no como eje principal de interpretación.</li>
 </ul>
-<p>Como nota tecnica menor, incluir promedios individuales de variables con variacion temporal limitada puede ampliar incertidumbre en algunos parametros, sin alterar la direccion sustantiva principal.</p>
+<p>Como nota técnica menor, incluir promedios individuales de variables con variación temporal limitada puede ampliar incertidumbre en algunos parámetros, sin alterar la dirección sustantiva principal.</p>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
-<p>El valor de T15 no esta en exhibir complejidad metodologica, sino en mostrar criterio aplicado para interpretar probabilidades en panel binario. La comparacion pooled, RE y CRE permite distinguir patron sustantivo de posible sesgo por heterogeneidad persistente no observada.</p>
-<p>En terminos de portfolio, la pieza muestra una decision profesional concreta: cuando el panel ofrece informacion para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.</p>
+<p>El valor de T15 no está en exhibir complejidad metodológica, sino en mostrar criterio aplicado para interpretar probabilidades en panel binario. La comparación pooled, RE y CRE permite distinguir patrón sustantivo de posible sesgo por heterogeneidad persistente no observada.</p>
+<p>En términos de portfolio, la pieza muestra una decisión profesional concreta: cuando el panel ofrece información para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Esta pieza no busca declarar un “metodo ganador” entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.</p>
+<p>Esta pieza no busca declarar un “método ganador” entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.</p>
 </section>
 
 </main>
@@ -678,5 +660,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t15_binaria_panel_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

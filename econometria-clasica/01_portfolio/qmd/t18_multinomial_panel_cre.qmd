@@ -1,7 +1,7 @@
----
+﻿---
 title: "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE"
 subtitle: "Lectura aplicada sobre heterogeneidad persistente no observada en escuela, hogar y trabajo"
-author: "Daniel Mendez"
+author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
@@ -192,7 +192,7 @@ El respaldo formal y técnico se mantiene acotado y funcional a la narrativa apl
 
 | Diagnóstico | Evidencia | Lectura profesional |
 |---|---:|---|
-| Test conjunto Mundlak | `chi2(6)=1636.61`, `p=0.0000` | La heterogeneidad persistente correlacionada es relevante en esta aplicación |
+| Test conjunto Mundlak | `chi2(6)=1636.61`, `p=0.0000` | La heterogeneidad persistente correlacionada es relevante En esta aplicación |
 | Comparación APE pooled vs CRE | Cambios de magnitud y signo en `educ` y `exper` | La especificación afecta la interpretación aplicada de probabilidades |
 | Clasificación in-sample (secundaria) | `79.55%` en `status` | Se informa como referencia descriptiva, no como meta predictiva |
 :::
@@ -206,3 +206,6 @@ En este caso, la comparación pooled vs CRE cambia varias magnitudes y algunos s
 ## Cierre
 
 La pieza muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es su valor de portfolio: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados.
+
+
+

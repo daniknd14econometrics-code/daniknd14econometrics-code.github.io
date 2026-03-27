@@ -9,7 +9,7 @@
 <meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Cuando MCO no alcanza</title>
+<title>t01_vi</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,39 +38,16 @@ ul.task-list li input[type="checkbox"] {
 <link href="t01_vi_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t01_vi_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t01_vi_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t01_vi_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t01_vi_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
-  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#diagnósticos-clave" id="toc-diagnósticos-clave" class="nav-link" data-scroll-target="#diagnósticos-clave">Diagnósticos clave</a>
-  <ul class="collapse">
-  <li><a href="#endogeneidad" id="toc-endogeneidad" class="nav-link" data-scroll-target="#endogeneidad">1. Endogeneidad</a></li>
-  <li><a href="#relevancia-de-instrumentos" id="toc-relevancia-de-instrumentos" class="nav-link" data-scroll-target="#relevancia-de-instrumentos">2. Relevancia de instrumentos</a></li>
-  <li><a href="#sobreidentificación" id="toc-sobreidentificación" class="nav-link" data-scroll-target="#sobreidentificación">3. Sobreidentificación</a></li>
-  </ul></li>
-  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -80,7 +57,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -167,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>¿Cómo cambia la estimación del retorno de la educación sobre el salario cuando tratamos a la educación como potencialmente endógena?</p>
 <div class="small-note">
-<p>Variable dependiente: <code>lwage</code>. Variable endógena: <code>educ</code>. Controles: <code>exper</code>, <code>expersq</code>. Instrumentos: <code>meduc</code>, <code>feduc</code>.</p>
+<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Variable endógena: <code>educ</code>. Controles: <code>exper</code>, <code>expersq</code>. Instrumentos: <code>meduc</code>, <code>feduc</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -185,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <p>Se trabaja con datos de corte transversal a nivel de individuos. La base corresponde a un ejercicio clásico de economía laboral con microdatos de salarios y educación. Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados. En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.</p>
 <ul>
-<li>Variable dependiente: <code>lwage</code></li>
+<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
 <li>Variable endógena de interés: <code>educ</code></li>
 <li>Controles: <code>exper</code>, <code>expersq</code></li>
 <li>Instrumentos excluidos: <code>meduc</code>, <code>feduc</code></li>
@@ -722,5 +699,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t01_vi_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

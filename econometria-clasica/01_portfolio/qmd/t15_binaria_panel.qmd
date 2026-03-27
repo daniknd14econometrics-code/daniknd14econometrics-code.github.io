@@ -1,8 +1,8 @@
----
+﻿---
 title: "Participación laboral femenina y estructura del hogar en un panel corto"
 subtitle: "Qué cambia al modelar heterogeneidad no observada en probabilidades de participación"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t15_binaria_panel"
@@ -40,7 +40,7 @@ Modelo operativo
 :::
 
 ::: {.metric-value}
-Panel binario con comparacion pooled, RE y CRE
+Panel binario con comparación pooled, RE y CRE
 :::
 
 ::: {.metric-note}
@@ -68,11 +68,11 @@ Senales sustantivas
 :::
 
 ::: {.metric-value}
-`kids` y `lhinc` con asociacion negativa
+`kids` y `lhinc` con asociación negativa
 :::
 
 ::: {.metric-note}
-Menor participacion laboral asociada a mas hijos y mayor ingreso del esposo
+Menor participación laboral asociada a más hijos y mayor ingreso del esposo
 :::
 :::
 
@@ -82,7 +82,7 @@ Lectura de sensibilidad
 :::
 
 ::: {.metric-value}
-Magnitudes mas bajas en RE y CRE
+Magnitudes más bajas en RE y CRE
 :::
 
 ::: {.metric-note}
@@ -94,9 +94,9 @@ Parte de la lectura pooled absorbia heterogeneidad persistente no modelada
 
 ## Resumen
 
-Esta pieza estudia participacion laboral femenina (`lfp`) en relacion con estructura del hogar y caracteristicas individuales en un panel corto. El foco principal es sustantivo: entender como cambian las probabilidades asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres.
+Esta pieza estudia participación laboral femenina (`lfp`) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es sustantivo: entender como cambian las probabilidades asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres.
 
-La econometria se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparacion pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificacion unica.
+La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.
 
 :::: {.quick-grid}
 
@@ -115,16 +115,16 @@ Resultado: `lfp` (0/1). Variables clave: `kids`, `lhinc`. Controles: `educ`, `bl
 
 La pieza no busca "ganar" entre pooled, RE y CRE. Busca mostrar criterio de modelado en panel binario: si la heterogeneidad persistente importa, la lectura aplicada en probabilidades puede cambiar de forma relevante en magnitud.
 
-<span class="badge">Portfolio econometrico</span>
+<span class="badge">Portfolio econométrico</span>
 :::
 
 ::::
 
-## Por que este problema importa
+## Por qué este problema importa
 
-La participacion laboral femenina se decide dentro de hogares con diferencias persistentes de contexto, preferencias y restricciones no totalmente observables. Si esa heterogeneidad no se modela, una lectura pooled puede mezclar diferencias estructurales entre mujeres con asociaciones contemporaneas de interes.
+La participación laboral femenina se decide dentro de hogares con diferencias persistentes de contexto, preferencias y restricciones no totalmente observables. Si esa heterogeneidad no se modela, una lectura pooled puede mezclar diferencias estructurales entre mujeres con asociaciones contemporaneas de interés.
 
-Para un lector profesional, lo importante es saber si el mensaje sustantivo se mantiene y cuanto cambia en magnitud cuando el panel permite capturar parte de esa persistencia.
+Para un lector profesional, lo importante es saber si el mensaje sustantivo se mantiene y cuánto cambia en magnitud cuando el panel permite capturar parte de esa persistencia.
 
 ## Datos y variables
 
@@ -138,19 +138,19 @@ Se usa `lfp.dta` en panel corto balanceado.
 - Variables clave: `kids`, `lhinc`
 - Controles: `educ`, `i.black`, `age`, `agesq`, `per2`-`per5`
 
-## Estrategia empirica
+## Estrategia empírica
 
 1. Estimar probit pooled con `vce(cluster id)` como referencia base.
 2. Estimar RE-probit para incorporar heterogeneidad no observada persistente.
-3. Estimar CRE (Mundlak) agregando promedios individuales (`kidsbar`, `lhincbar`) para permitir correlacion entre heterogeneidad y regresores.
-4. Comparar APEs entre especificaciones y usar diagnosticos como respaldo, sin desplazar la historia aplicada.
+3. Estimar CRE (Mundlak) agregando promedios individuales (`kidsbar`, `lhincbar`) para permitir correlación entre heterogeneidad y regresores.
+4. Comparar APEs entre especificaciones y usar diagnósticos como respaldo, sin desplazar la historia aplicada.
 
 ## Resultados principales
 
 La lectura se organiza en cuatro pasos:
 
-1. Se observa una asociacion negativa entre `kids` y la probabilidad de participacion laboral.
-2. Se observa una asociacion negativa entre `lhinc` y la probabilidad de participacion laboral.
+1. Se observa una asociación negativa entre `kids` y la probabilidad de participación laboral.
+2. Se observa una asociación negativa entre `lhinc` y la probabilidad de participación laboral.
 3. Ambas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.
 4. Esa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.
 
@@ -162,25 +162,30 @@ Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas
 | Variable | Pooled probit | RE-probit | CRE-pooled | CRE-probit | Lectura aplicada |
 |---|---:|---:|---:|---:|---|
 | `kids` | `-0.066` | `-0.052` | `-0.039` | `-0.032` | Asociacion negativa robusta, con menor magnitud al modelar heterogeneidad |
-| `lhinc` | `-0.070` | `-0.019` | `-0.010` | `-0.008` | Asociacion negativa robusta, tambien atenuada en RE/CRE |
+| `lhinc` | `-0.070` | `-0.019` | `-0.010` | `-0.008` | Asociacion negativa robusta, también atenuada en RE/CRE |
 ::: 
 
 ## Diagnosticos de respaldo
 
-Como respaldo de la lectura aplicada, la evidencia de diagnostico deja tres mensajes:
+Como respaldo de la lectura aplicada, la evidencia de diagnóstico deja tres mensajes:
 
 - **Evidencia Mundlak fuerte:** test conjunto de `kidsbar` y `lhincbar` rechaza de forma contundente (`chi2(2)=57.50` en CRE-pooled y `chi2(2)=61.34` en CRE-probit; `p<0.001`), consistente con heterogeneidad correlacionada.
 - **Sensibilidad numerica en RE (nota breve):** al aumentar `intpoints`, las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.
-- **Leads como robustez secundaria:** los test con adelantados se reportan como chequeo auxiliar de robustez (con senal concentrada en `F1_kids`) y no como eje principal de interpretacion.
+- **Leads como robustez secundaria:** los test con adelantados se reportan como chequeo auxiliar de robustez (con señal concentrada en `F1_kids`) y no como eje principal de interpretación.
 
-Como nota tecnica menor, incluir promedios individuales de variables con variacion temporal limitada puede ampliar incertidumbre en algunos parametros, sin alterar la direccion sustantiva principal.
+Como nota técnica menor, incluir promedios individuales de variables con variación temporal limitada puede ampliar incertidumbre en algunos parámetros, sin alterar la dirección sustantiva principal.
 
 ## Lectura profesional
 
-El valor de T15 no esta en exhibir complejidad metodologica, sino en mostrar criterio aplicado para interpretar probabilidades en panel binario. La comparacion pooled, RE y CRE permite distinguir patron sustantivo de posible sesgo por heterogeneidad persistente no observada.
+El valor de T15 no está en exhibir complejidad metodológica, sino en mostrar criterio aplicado para interpretar probabilidades en panel binario. La comparación pooled, RE y CRE permite distinguir patrón sustantivo de posible sesgo por heterogeneidad persistente no observada.
 
-En terminos de portfolio, la pieza muestra una decision profesional concreta: cuando el panel ofrece informacion para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.
+En términos de portfolio, la pieza muestra una decisión profesional concreta: cuando el panel ofrece información para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.
 
 ## Cierre
 
-Esta pieza no busca declarar un "metodo ganador" entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.
+Esta pieza no busca declarar un "método ganador" entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.
+
+
+
+
+

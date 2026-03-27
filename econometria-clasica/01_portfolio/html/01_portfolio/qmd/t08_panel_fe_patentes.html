@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Cuando rinde la I+D: evidencia de patentamiento en panel de firmas</title>
+<title>t08_panel_fe_patentes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,49 +38,31 @@ ul.task-list li input[type="checkbox"] {
 <link href="t08_panel_fe_patentes_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t08_panel_fe_patentes_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t08_panel_fe_patentes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t08_panel_fe_patentes_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t08_panel_fe_patentes_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#que-pasa-con-un-analisis-ingenuo" id="toc-que-pasa-con-un-analisis-ingenuo" class="nav-link" data-scroll-target="#que-pasa-con-un-analisis-ingenuo">Que pasa con un analisis ingenuo</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#hallazgos-secundarios-y-validacion" id="toc-hallazgos-secundarios-y-validacion" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-validacion">Hallazgos secundarios y validacion</a></li>
-  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Cuando rinde la I+D: evidencia de patentamiento en panel de firmas</h1>
-<p class="subtitle lead">Una lectura de la innovacion empresarial con efectos fijos y dinamica temporal del gasto en I+D</p>
+<p class="subtitle lead">Una lectura de la innovación empresarial con efectos fijos y dinamica temporal del gasto en I+D</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -155,68 +137,68 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Este caso analiza innovacion empresarial con una pregunta concreta: cuando rinde la I+D en terminos de patentamiento dentro de las firmas. La variable de resultado es <code>lpat</code> (log de <code>1 + patents</code>) y el foco esta en la trayectoria temporal de <code>lrnd</code> y sus rezagos.</p>
-<p>La pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociacion acumulativa con el patentamiento.</p>
+<p>Este caso analiza innovación empresarial con una pregunta concreta: cuando rinde la I+D en términos de patentamiento dentro de las firmas. La variable de resultado es <code>lpat</code> (log de <code>1 + patents</code>) y el foco está en la trayectoria temporal de <code>lrnd</code> y sus rezagos.</p>
+<p>La pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociación acumulativa con el patentamiento.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>Cuando se traduce el esfuerzo en I+D en patentamiento observable dentro de las firmas: en el mismo ano o como acumulacion a lo largo de varios anos?</p>
+<p>¿Cuándo se traduce el esfuerzo en I+D en patentamiento observable dentro de las firmas: en el mismo año o como acumulación a lo largo de varios años?</p>
 <div class="small-note">
-<p>Resultado: <code>lpat</code>. Regresores clave: <code>lrnd</code>, <code>lrnd_1</code>…<code>lrnd_5</code>. Controles: <code>lsales</code>, <code>return</code>, dummies de ano. Unidad de panel: <code>cusip</code>.</p>
+<p>Resultado: <code>lpat</code>. Regresores clave: <code>lrnd</code>, <code>lrnd_1</code>…<code>lrnd_5</code>. Controles: <code>lsales</code>, <code>return</code>, dummies de año. Unidad de panel: <code>cusip</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>La econometria se ordena al servicio del caso aplicado de innovacion: distinguir dinamica temporal real de I+D frente a tres fuentes distintas de confusion empirica.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+<p>La econometría se ordena al servicio del caso aplicado de innovación: distinguir dinamica temporal real de I+D frente a tres fuentes distintas de confusion empírica.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>Las decisiones de I+D no siempre producen resultados observables en el mismo periodo. En la practica, la innovacion suele tener maduracion: investigacion, desarrollo, validacion y finalmente patente.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>Las decisiones de I+D no siempre producen resultados observables en el mismo periodo. En la práctica, la innovación suele tener maduracion: investigacion, desarrollo, validación y finalmente patente.</p>
 <p>Por eso, para una lectura profesional del caso, importa separar si el patentamiento responde al flujo contemporaneo de I+D o a su historia acumulada reciente dentro de cada firma.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <p>Se trabaja con <code>patent.dta</code>, un panel de firmas.</p>
 <ul>
-<li>Unidad de observacion: firma-ano (<code>cusip</code>)</li>
+<li>Unidad de observacion: firma-año (<code>cusip</code>)</li>
 <li>Rango temporal: 1972-1981</li>
 <li>Dimension descriptiva de la base: <code>2,260</code> observaciones, <code>226</code> firmas</li>
 <li>Modelo FE base (sin bloque largo de rezagos): <code>N=2,252</code></li>
 <li>Modelo operativo con 5 rezagos de I+D: <code>N=1,122</code>, <code>226</code> firmas</li>
 <li>Variable de resultado: <code>lpat</code></li>
 <li>Regresores clave: <code>lrnd</code>, <code>lrnd_1</code>…<code>lrnd_5</code></li>
-<li>Controles: <code>lsales</code>, <code>return</code>, dummies de ano</li>
+<li>Controles: <code>lsales</code>, <code>return</code>, dummies de año</li>
 </ul>
-<p>La inclusion de cinco rezagos reduce de forma importante la muestra efectiva y concentra la estimacion en la parte final del panel; en este caso, esa restriccion no es un detalle tecnico menor porque condiciona la ventana temporal sobre la que se construye la lectura aplicada.</p>
+<p>La inclusion de cinco rezagos reduce de forma importante la muestra efectiva y concentra la estimación en la parte final del panel; en este caso, esa restriccion no es un detalle técnico menor porque condiciona la ventana temporal sobre la que se construye la lectura aplicada.</p>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <p>La secuencia del taller prioriza consistencia entre pregunta aplicada y decisiones econometricas:</p>
 <ol type="1">
 <li>Estimar FE para controlar heterogeneidad fija no observada de firma.</li>
 <li>Modelar la dinamica temporal con rezagos distribuidos de I+D (<code>lrnd_1</code>…<code>lrnd_5</code>), manteniendo <code>lrnd</code> contemporanea.</li>
-<li>Usar inferencia cluster por firma como estandar operativo.</li>
+<li>Usar inferencia cluster por firma como estándar operativo.</li>
 <li>Evaluar evidencia conjunta de rezagos para evitar sobreinterpretar coeficientes individuales inestables.</li>
 <li>Mantener especificaciones secundarias (stock de I+D y FE-AR(1)) como contraste, no como mensaje principal.</li>
 </ol>
 </section>
-<section id="que-pasa-con-un-analisis-ingenuo" class="level2">
-<h2 class="anchored" data-anchor-id="que-pasa-con-un-analisis-ingenuo">Que pasa con un analisis ingenuo</h2>
-<p>Un analisis ingenuo puede confundir tres planos diferentes:</p>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Un análisis ingenuo puede confundir tres planos diferentes:</p>
 <ol type="1">
 <li>Control de heterogeneidad fija no observada: FE atiende este punto.</li>
-<li>Inferencia con dependencia intra-firma: cluster mejora credibilidad de errores estandar y tests.</li>
+<li>Inferencia con dependencia intra-firma: cluster mejora credibilidad de errores estándar y tests.</li>
 <li>Precision de coeficientes con muchos rezagos correlacionados: la colinealidad puede volver ruidosos los rezagos individuales.</li>
 </ol>
-<p>La lectura profesional separa estos planos en lugar de resumirlos como un solo “problema econometrico”.</p>
+<p>La lectura profesional separa estos planos en lugar de resumirlos como un solo “problema econométrico”.</p>
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>Primero, la lectura sustantiva: la evidencia es mas consistente con una relacion acumulativa entre I+D y patentamiento que con una historia de efectos limpios por rezago individual.</p>
-<p>En el modelo operativo, los coeficientes de rezagos por separado son inestables y con precision desigual, algo esperable cuando la trayectoria de I+D anual esta fuertemente correlacionada consigo misma. Aun asi, el bloque temporal de I+D aporta informacion relevante en conjunto para explicar <code>lpat</code>.</p>
+<p>Primero, la lectura sustantiva: la evidencia es más consistente con una relación acumulativa entre I+D y patentamiento que con una historia de efectos limpios por rezago individual.</p>
+<p>En el modelo operativo, los coeficientes de rezagos por separado son inestables y con precisión desigual, algo esperable cuando la trayectoria de I+D anual está fuertemente correlacionada consigo misma. Aun así, el bloque temporal de I+D aporta información relevante en conjunto para explicar <code>lpat</code>.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -233,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>FE con rezagos (lectura individual)</td>
-<td style="text-align: right;">Varios <code>lrnd_k</code> con baja precision individual</td>
+<td style="text-align: right;">Varios <code>lrnd_k</code> con baja precisión individual</td>
 <td>No conviene interpretar cada rezago como efecto aislado</td>
 </tr>
 <tr class="even">
@@ -242,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 <td>La historia temporal de I+D agrega poder explicativo sobre patentamiento</td>
 </tr>
 <tr class="odd">
-<td>Test conjunto clasico</td>
+<td>Test conjunto clásico</td>
 <td style="text-align: right;"><code>F(5,884)=3.18</code>, <code>p=0.0075</code></td>
 <td>Evidencia conjunta de rezagos en inferencia convencional</td>
 </tr>
@@ -254,8 +236,8 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="hallazgos-secundarios-y-validacion" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-validacion">Hallazgos secundarios y validacion</h2>
+<section id="hallazgos-secundarios-y-validación" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-validación">Hallazgos secundarios y validación</h2>
 <p>Los siguientes resultados se reportan como soporte del caso:</p>
 <table class="caption-top table">
 <colgroup>
@@ -284,25 +266,25 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>Especificacion con <code>rndstck</code></td>
 <td style="text-align: right;">Coeficiente negativo y significativo en ese modelo</td>
-<td>Contraste util, subordinado al modelo operativo</td>
+<td>Contraste útil, subordinado al modelo operativo</td>
 </tr>
 <tr class="even">
 <td>FE-AR(1)</td>
 <td style="text-align: right;">Sensibilidad de coeficientes individuales</td>
-<td>Se usa como validacion adicional, no como conclusion principal</td>
+<td>Se usa como validación adicional, no como conclusión principal</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="lectura-profesional-del-caso" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
-<p>Esta pieza muestra una forma aplicada de leer innovacion en panel: fijar primero la pregunta de negocio empirica (cuando rinde la I+D), despues elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).</p>
-<p>La contribucion de la pieza no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.</p>
+<p>Esta pieza muestra una forma aplicada de leer innovación en panel: fijar primero la pregunta de negocio empírica (cuando rinde la I+D), después elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).</p>
+<p>La contribución de la pieza no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>La evidencia de T8 es consistente con una narrativa de innovacion de maduracion temporal: el patentamiento observable no se explica de forma limpia por una sola variacion anual de I+D, sino por el bloque de esfuerzo acumulado reciente.</p>
-<p>La lectura final queda deliberadamente prudente, distinguiendo claramente control de heterogeneidad no observada (FE), inferencia (cluster) y precision de coeficientes (colinealidad).</p>
+<p>La evidencia de T8 es consistente con una narrativa de innovación de maduracion temporal: el patentamiento observable no se explica de forma limpia por una sola variación anual de I+D, sino por el bloque de esfuerzo acumulado reciente.</p>
+<p>La lectura final queda deliberadamente prudente, distinguiendo claramente control de heterogeneidad no observada (FE), inferencia (cluster) y precisión de coeficientes (colinealidad).</p>
 </section>
 
 </main>
@@ -712,5 +694,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t08_panel_fe_patentes_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

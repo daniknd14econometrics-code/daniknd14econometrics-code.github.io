@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Participación laboral femenina e ingreso no laboral del hogar</title>
+<title>t13_binaria_vi_continua</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,34 +38,16 @@ ul.task-list li input[type="checkbox"] {
 <link href="t13_binaria_vi_continua_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t13_binaria_vi_continua_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t13_binaria_vi_continua_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t13_binaria_vi_continua_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t13_binaria_vi_continua_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#sintesis-de-magnitudes-ape" id="toc-sintesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</a></li>
-  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
-  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -75,12 +57,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -101,10 +83,10 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>Como se asocia la participacion laboral femenina con el ingreso no laboral del hogar y cuanto cambia esa lectura cuando se admite posible endogeneidad?</p>
+<p>¿Cómo se asocia la participación laboral femenina con el ingreso no laboral del hogar y cuánto cambia esa lectura cuando se admite posible endogeneidad?</p>
 </div>
 <div class="hero-sub">
-<p>La pieza organiza una lectura aplicada sobre decisiones laborales en el hogar y usa una estrategia de sensibilidad por endogeneidad, sin desplazar automaticamente el modelo base.</p>
+<p>La pieza organiza una lectura aplicada sobre decisiones laborales en el hogar y usa una estrategia de sensibilidad por endogeneidad, sin desplazar automáticamente el modelo base.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -146,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Auditoria de sensibilidad</p>
 </div>
 <div class="metric-value">
-<p><code>nwifeinc</code> mas negativo en IV/CF</p>
+<p><code>nwifeinc</code> más negativo en IV/CF</p>
 </div>
 <div class="metric-note">
 <p>APE aprox. <code>-0.0036</code> (probit exogeno) vs <code>-0.0108</code> a <code>-0.0105</code> (IV/CF)</p>
@@ -155,8 +137,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participacion laboral femenina (<code>inlf</code>) en relacion con ingreso no laboral del hogar, educacion, experiencia y composicion familiar. El foco principal es sustantivo: leer patrones empiricos relevantes para decisiones de hogar.</p>
-<p>El componente metodologico se usa con prudencia. La correccion IV/CF no se presenta como fin en si mismo, sino como auditoria de sensibilidad para evaluar si la lectura aplicada cambia de forma material.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en relación con ingreso no laboral del hogar, educación, experiencia y composicion familiar. El foco principal es sustantivo: leer patrones empiricos relevantes para decisiones de hogar.</p>
+<p>El componente metodologico se usa con prudencia. La correccion IV/CF no se presenta como fin en sí mismo, sino como auditoría de sensibilidad para evaluar si la lectura aplicada cambia de forma material.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
@@ -168,14 +150,14 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>La econometria se ordena al caso aplicado: primero entender la historia laboral y familiar, despues evaluar si tratar <code>nwifeinc</code> como potencialmente endogena cambia de manera sustantiva la lectura en probabilidades.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+<p>La econometría se ordena al caso aplicado: primero entender la historia laboral y familiar, después evaluar si tratar <code>nwifeinc</code> como potencialmente endógena cambia de manera sustantiva la lectura en probabilidades.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>La participacion laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequenos pueden alterar de forma marcada esa decision.</p>
-<p>Para lectura profesional, importa distinguir entre un patron sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>La participación laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequeños pueden alterar de forma marcada esa decisión.</p>
+<p>Para lectura profesional, importa distinguir entre un patrón sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -183,31 +165,31 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Unidad de observacion: mujer/hogar</li>
 <li>Tamano de muestra: <code>N=753</code></li>
-<li>Contexto temporal: informacion de referencia para 1975</li>
+<li>Contexto temporal: información de referencia para 1975</li>
 <li>Variable de resultado: <code>inlf</code> (<code>1</code> participa, <code>0</code> no participa)</li>
 <li>Variables clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code></li>
-<li>Instrumentos para auditoria de endogeneidad: <code>huseduc</code> (principal), <code>motheduc</code>, <code>fatheduc</code></li>
+<li>Instrumentos para auditoría de endogeneidad: <code>huseduc</code> (principal), <code>motheduc</code>, <code>fatheduc</code></li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <ol type="1">
 <li>Estimar probit exogeno como lectura base y reportar APEs.</li>
-<li>Tratar <code>nwifeinc</code> como potencialmente endogena mediante enfoques IV/CF para comparar magnitudes.</li>
-<li>Mantener interpretacion en terminos de probabilidad, evitando lectura causal automatica.</li>
-<li>Usar diagnosticos solo como respaldo de decision aplicada.</li>
+<li>Tratar <code>nwifeinc</code> como potencialmente endógena mediante enfoques IV/CF para comparar magnitudes.</li>
+<li>Mantener interpretación en términos de probabilidad, evitando lectura causal automatica.</li>
+<li>Usar diagnósticos solo como respaldo de decisión aplicada.</li>
 </ol>
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La lectura sustantiva aparece con claridad:</p>
 <ul>
-<li><code>kidslt6</code> mantiene una asociacion negativa fuerte con la participacion laboral (APE alrededor de <code>-0.25</code>).</li>
+<li><code>kidslt6</code> mantiene una asociación negativa fuerte con la participación laboral (APE alrededor de <code>-0.25</code>).</li>
 <li><code>educ</code> y <code>exper</code> muestran asociaciones positivas y estables en los modelos comparados.</li>
-<li><code>nwifeinc</code> aparece con asociacion negativa con <code>inlf</code>.</li>
-<li>Al pasar de probit exogeno a CF/IV-probit, el efecto marginal asociado a <code>nwifeinc</code> se vuelve mas negativo: de aprox. <code>-0.0036</code> a un rango cercano a <code>-0.0108</code> / <code>-0.0105</code>.</li>
+<li><code>nwifeinc</code> aparece con asociación negativa con <code>inlf</code>.</li>
+<li>Al pasar de probit exogeno a CF/IV-probit, el efecto marginal asociado a <code>nwifeinc</code> se vuelve más negativo: de aprox. <code>-0.0036</code> a un rango cercano a <code>-0.0108</code> / <code>-0.0105</code>.</li>
 </ul>
-<p>En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como senal automatica de que un enfoque deba reemplazar al otro.</p>
+<p>En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro.</p>
 </section>
 <section id="sintesis-de-magnitudes-ape" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
@@ -231,47 +213,47 @@ ul.task-list li input[type="checkbox"] {
 <td><code>kidslt6</code></td>
 <td style="text-align: right;"><code>-0.261</code></td>
 <td style="text-align: right;"><code>-0.253</code> a <code>-0.247</code></td>
-<td>Menor participacion con hijos pequenos</td>
+<td>Menor participación con hijos pequeños</td>
 </tr>
 <tr class="even">
 <td><code>educ</code></td>
 <td style="text-align: right;"><code>+0.039</code></td>
 <td style="text-align: right;"><code>+0.049</code> a <code>+0.051</code></td>
-<td>Mayor educacion, mayor participacion</td>
+<td>Mayor educación, mayor participación</td>
 </tr>
 <tr class="odd">
 <td><code>exper</code></td>
 <td style="text-align: right;"><code>+0.037</code></td>
 <td style="text-align: right;"><code>+0.034</code> a <code>+0.035</code></td>
-<td>Mayor experiencia, mayor participacion</td>
+<td>Mayor experiencia, mayor participación</td>
 </tr>
 <tr class="even">
 <td><code>nwifeinc</code></td>
 <td style="text-align: right;"><code>-0.0036</code></td>
 <td style="text-align: right;"><code>-0.0108</code> a <code>-0.0105</code></td>
-<td>Asociacion negativa, mas intensa bajo IV/CF</td>
+<td>Asociacion negativa, más intensa bajo IV/CF</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Los diagnosticos se mantienen deliberadamente subordinados al caso aplicado:</p>
+<p>Los diagnósticos se mantienen deliberadamente subordinados al caso aplicado:</p>
 <ul>
 <li>Relevancia instrumental: evidencia fuerte en primera etapa (<code>F(3,743)=16.67</code>, <code>p&lt;0.001</code>).</li>
 <li>Validez conjunta (sobreidentificacion): sin senales claras de invalidez (<code>Score chi2(2)=0.489</code>, <code>p=0.783</code>).</li>
 <li>Exogeneidad de <code>nwifeinc</code>: no se rechaza de forma robusta (tests en torno a <code>p=0.17</code> a <code>p=0.22</code>).</li>
 </ul>
-<p>Por eso, la correccion IV/CF se lee como auditoria de sensibilidad y no como reemplazo automatico del modelo base.</p>
+<p>Por eso, la correccion IV/CF se lee como auditoría de sensibilidad y no como reemplazo automatico del modelo base.</p>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
-<p>El valor profesional del caso es mostrar criterio de modelado aplicado: sostener primero la historia empirica del fenomeno y, recien despues, verificar si la correccion por endogeneidad cambia materialmente la lectura.</p>
-<p>En T13, la historia sustantiva principal se mantiene (hijos pequenos, educacion y experiencia), mientras que la diferencia en <code>nwifeinc</code> abre una sensibilidad relevante de magnitud que conviene reportar con prudencia.</p>
+<p>El valor profesional del caso es mostrar criterio de modelado aplicado: sostener primero la historia empírica del fenomeno y, recien después, verificar si la correccion por endogeneidad cambia materialmente la lectura.</p>
+<p>En T13, la historia sustantiva principal se mantiene (hijos pequeños, educación y experiencia), mientras que la diferencia en <code>nwifeinc</code> abre una sensibilidad relevante de magnitud que conviene reportar con prudencia.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Esta pieza no busca “ganar” entre probit e IV-probit. Busca mostrar una decision econometrica profesional: cuando una posible endogeneidad amerita escalar complejidad y cuando conviene tratar esa complejidad como analisis de sensibilidad para no sobrerreaccionar en la interpretacion aplicada.</p>
+<p>Esta pieza no busca “ganar” entre probit e IV-probit. Busca mostrar una decisión econométrica profesional: cuando una posible endogeneidad amerita escalar complejidad y cuando conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada.</p>
 </section>
 
 </main>
@@ -681,5 +663,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t13_binaria_vi_continua_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

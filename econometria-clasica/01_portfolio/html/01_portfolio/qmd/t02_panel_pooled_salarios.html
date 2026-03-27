@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Pooled OLS en panel salarial: un benchmark util, pero no la estimacion final</title>
+<title>t02_panel_pooled_salarios</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,49 +38,31 @@ ul.task-list li input[type="checkbox"] {
 <link href="t02_panel_pooled_salarios_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t02_panel_pooled_salarios_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t02_panel_pooled_salarios_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t02_panel_pooled_salarios_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t02_panel_pooled_salarios_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#que-pasa-con-un-analisis-ingenuo" id="toc-que-pasa-con-un-analisis-ingenuo" class="nav-link" data-scroll-target="#que-pasa-con-un-analisis-ingenuo">Que pasa con un analisis ingenuo</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#diagnosticos-clave" id="toc-diagnosticos-clave" class="nav-link" data-scroll-target="#diagnosticos-clave">Diagnosticos clave</a></li>
-  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pooled OLS en panel salarial: un benchmark util, pero no la estimacion final</h1>
-<p class="subtitle lead">Inferencia en datos de panel con errores robustos, cluster por individuo y diagnosticos basicos</p>
+<h1 class="title">Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final</h1>
+<p class="subtitle lead">Inferencia en datos de panel con errores robustos, cluster por individuo y diagnósticos básicos</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -104,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
 <p>En panel salarial, la inferencia cambia cuando se respeta la estructura del error</p>
 </div>
 <div class="hero-sub">
-<p>El pooled OLS puede ser un benchmark util, pero la lectura econometrica mejora cuando la inferencia se corrige con varianzas robustas y clusterizadas por individuo.</p>
+<p>El pooled OLS puede ser un benchmark útil, pero la lectura econométrica mejora cuando la inferencia se corrige con varianzas robustas y clusterizadas por individuo.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -155,60 +137,60 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Este caso evalua que puede y que no puede decir un pooled OLS cuando los datos tienen estructura de panel. El mensaje central es practico: el modelo puede usarse como baseline, siempre que la inferencia se corrija para heterocedasticidad y dependencia serial dentro de individuo.</p>
-<p>La base sigue a trabajadores a lo largo de varios anos, observando su evolucion salarial junto con rasgos laborales y demograficos. En este entorno de panel laboral (1980-1987), un mismo individuo aparece repetidamente, por lo que los errores pueden estar correlacionados en el tiempo. Eso hace del caso un ejemplo aplicado util para decidir como reportar resultados salariales con inferencia estadisticamente creible.</p>
+<p>Este caso evalúa qué puede y qué no puede decir un pooled OLS cuando los datos tienen estructura de panel. El mensaje central es práctico: el modelo puede usarse como baseline, siempre que la inferencia se corrija para heterocedasticidad y dependencia serial dentro de individuo.</p>
+<p>La base sigue a trabajadores a lo largo de varios años, observando su evolucion salarial junto con rasgos laborales y demograficos. En este entorno de panel laboral (1980-1987), un mismo individuo aparece repetidamente, por lo que los errores pueden estar correlacionados en el tiempo. Eso hace del caso un ejemplo aplicado útil para decidir como reportar resultados salariales con inferencia estadisticamente creíble.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>Como cambia la validez de la inferencia estadistica en una ecuacion salarial de panel cuando pasamos de errores clasicos a errores robustos y clusterizados por individuo?</p>
-<p>En terminos aplicados: cuanto cambia la confianza que podemos tener en los resultados salariales cuando tratamos este panel como panel, y no como una muestra transversal comun.</p>
+<p>¿Cómo cambia la validez de la inferencia estadística en una ecuación salarial de panel cuando pasamos de errores clásicos a errores robustos y clusterizados por individuo?</p>
+<p>En términos aplicados: cuánto cambia la confianza que podemos tener en los resultados salariales cuando tratamos este panel como panel, y no como una muestra transversal común.</p>
 <div class="small-note">
-<p>Variable dependiente: <code>lwage</code>. Regresores centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code> y dummies de ano.</p>
+<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Regresores centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code> y dummies de año.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
 <p>En esta pieza se separan dos planos:<br>
-inferencia (errores estandar mal calibrados si ignoramos la estructura panel) y sesgo potencial en coeficientes por heterogeneidad inobservable fija (<code>c_i</code>) no tratada por pooled OLS.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+inferencia (errores estándar mal calibrados si ignoramos la estructura panel) y sesgo potencial en coeficientes por heterogeneidad inobservable fija (<code>c_i</code>) no tratada por pooled OLS.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>Tratar un panel como si fuera una seccion cruzada simple puede producir inferencia poco confiable: errores estandar subestimados y sobreconfianza en la significancia estadistica.</p>
-<p>Corregir la varianza con <code>vce(cluster nr)</code> mejora la validez inferencial frente a heterocedasticidad y autocorrelacion intraindividuo. Sin embargo, eso no elimina automaticamente el posible sesgo por heterogeneidad inobservable fija correlacionada con los regresores.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>Tratar un panel como si fuera una sección cruzada simple puede producir inferencia poco confiable: errores estándar subestimados y sobreconfianza en la significancia estadística.</p>
+<p>Corregir la varianza con <code>vce(cluster nr)</code> mejora la validez inferencial frente a heterocedasticidad y autocorrelación intraindividuo. Sin embargo, eso no elimina automáticamente el posible sesgo por heterogeneidad inobservable fija correlacionada con los regresores.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <p>Se trabaja con un panel balanceado de trabajadores (<code>N = 4360</code> observaciones, <code>545</code> individuos observados entre 1980 y 1987).</p>
 <ul>
-<li>Variable dependiente: <code>lwage</code></li>
+<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
 <li>Variables explicativas principales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code></li>
 <li>Controles de tiempo: <code>i.year</code></li>
 <li>Unidad de cluster: individuo (<code>nr</code>)</li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <p>La secuencia aplicada en el taller es:</p>
 <ol type="1">
-<li>Estimar pooled OLS con varianza clasica.</li>
+<li>Estimar pooled OLS con varianza clásica.</li>
 <li>Reestimar con varianza robusta tipo Huber-White.</li>
 <li>Reestimar con varianza clusterizada por individuo.</li>
-<li>Agregar dummies de ano para capturar shocks comunes en el tiempo.</li>
-<li>Ejecutar diagnosticos de dependencia serial (AR(1) en residuos) y heterocedasticidad (LM).</li>
-<li>Reportar FGLS como contraste secundario, no como especificacion principal.</li>
+<li>Agregar dummies de año para capturar shocks comunes en el tiempo.</li>
+<li>Ejecutar diagnósticos de dependencia serial (AR(1) en residuos) y heterocedasticidad (LM).</li>
+<li>Reportar FGLS como contraste secundario, no como especificación principal.</li>
 </ol>
 </section>
-<section id="que-pasa-con-un-analisis-ingenuo" class="level2">
-<h2 class="anchored" data-anchor-id="que-pasa-con-un-analisis-ingenuo">Que pasa con un analisis ingenuo</h2>
-<p>Si nos quedamos con inferencia clasica, podemos sobrestimar precision. En cambio, al clusterizar por individuo, los errores estandar aumentan de forma relevante en varias covariables, aunque los coeficientes mantienen signo y orden de magnitud.</p>
-<p>Esta estabilidad en magnitudes, junto con cambios en incertidumbre, muestra que el punto critico del caso no es “cambiar de historia economica”, sino calibrar correctamente la inferencia.</p>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Si nos quedamos con inferencia clásica, podemos sobrestimar precisión. En cambio, al clusterizar por individuo, los errores estándar aumentan de forma relevante en varias covariables, aunque los coeficientes mantienen signo y orden de magnitud.</p>
+<p>Esta estabilidad en magnitudes, junto con cambios en incertidumbre, muestra que el punto critico del caso no es “cambiar de historia económica”, sino calibrar correctamente la inferencia.</p>
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>El coeficiente de <code>educ</code> se mantiene alrededor de 0.09-0.10 en las especificaciones pooled. La diferencia econometricamente relevante aparece en los errores estandar cuando se usa <code>vce(cluster nr)</code>.</p>
+<p>El coeficiente de <code>educ</code> se mantiene alrededor de 0.09-0.10 en las especificaciones pooled. La diferencia econométricamente relevante aparece en los errores estándar cuando se usa <code>vce(cluster nr)</code>.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 15%">
@@ -221,14 +203,14 @@ inferencia (errores estandar mal calibrados si ignoramos la estructura panel) y 
 <tr class="header">
 <th>Modelo</th>
 <th style="text-align: right;">Coeficiente de <code>educ</code></th>
-<th style="text-align: right;">Error estandar</th>
+<th style="text-align: right;">Error estándar</th>
 <th style="text-align: right;">p-valor</th>
 <th style="text-align: right;">N</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Pooled OLS (clasico)</td>
+<td>Pooled OLS (clásico)</td>
 <td style="text-align: right;">0.0988</td>
 <td style="text-align: right;">0.0046</td>
 <td style="text-align: right;">0.000</td>
@@ -265,15 +247,15 @@ inferencia (errores estandar mal calibrados si ignoramos la estructura panel) y 
 </tbody>
 </table>
 </section>
-<p>En lectura sustantiva de este panel, los signos estimados son consistentes con asociaciones salariales conocidas en datos laborales: mayor <code>educ</code> se asocia con salarios mas altos, pertenecer a <code>union</code> se asocia con una prima salarial positiva y <code>married</code> aparece asociado con mayor salario promedio observado. Estas asociaciones son informativas para lectura aplicada del mercado laboral de la muestra, sin interpretarlas aqui como efectos causales estructurales.</p>
+<p>En lectura sustantiva de este panel, los signos estimados son consistentes con asociaciones salariales conocidas en datos laborales: mayor <code>educ</code> se asocia con salarios más altos, pertenecer a <code>union</code> se asocia con una prima salarial positiva y <code>married</code> aparece asociado con mayor salario promedio observado. Estas asociaciones son informativas para lectura aplicada del mercado laboral de la muestra, sin interpretarlas aquí como efectos causales estructurales.</p>
 <section id="diagnosticos-clave" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="diagnosticos-clave">Diagnosticos clave</h2>
-<p>La evidencia empirica es consistente con dos hechos:</p>
+<p>La evidencia empírica es consistente con dos hechos:</p>
 <ol type="1">
 <li>Dependencia serial dentro de individuo: en la regresion auxiliar, <code>uhat_L1</code> es altamente significativo (<code>coef. = 0.555</code>, <code>p &lt; 0.001</code>).</li>
 <li>Heterocedasticidad: prueba LM con <code>LM = 28.02</code>, <code>df = 15</code>, <code>p = 0.021</code>, por lo que se rechaza homocedasticidad al 5%.</li>
 </ol>
-<p>Por lo tanto, la inferencia clasica no es adecuada para este caso; la especificacion con <code>vce(cluster nr)</code> es la opcion mas defendible como baseline operativo.</p>
+<p>Por lo tanto, la inferencia clásica no es adecuada para este caso; la especificación con <code>vce(cluster nr)</code> es la opcion más defendible como baseline operativo.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -306,18 +288,18 @@ inferencia (errores estandar mal calibrados si ignoramos la estructura panel) y 
 </tbody>
 </table>
 </section>
-<p>Con esta evidencia, la decision aplicada no es “cambiar de historia economica”, sino cambiar el estandar de reporte: conservar pooled como benchmark y comunicar resultados con inferencia robusta a la estructura real del panel.</p>
+<p>Con esta evidencia, la decisión aplicada no es “cambiar de historia económica”, sino cambiar el estándar de reporte: conservar pooled como benchmark y comunicar resultados con inferencia robusta a la estructura real del panel.</p>
 <section id="lectura-profesional-del-caso" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
-<p>La conclusion aplicada es directa: pooled OLS en panel puede ser un benchmark util, siempre que la inferencia se ajuste a la estructura del error.</p>
-<p>Al mismo tiempo, hay un limite que no debe diluirse: clusterizar corrige inferencia, pero no resuelve por si solo la heterogeneidad inobservable fija (<code>c_i</code>) potencialmente correlacionada con <code>x_it</code>.</p>
-<p>Esa distincion permite una lectura madura del resultado: baseline defendible hoy, y paso natural hacia FE/RE para tratar el problema de heterogeneidad en la siguiente etapa del analisis.</p>
+<p>La conclusión aplicada es directa: pooled OLS en panel puede ser un benchmark útil, siempre que la inferencia se ajuste a la estructura del error.</p>
+<p>Al mismo tiempo, hay un límite que no debe diluirse: clusterizar corrige inferencia, pero no resuelve por sí solo la heterogeneidad inobservable fija (<code>c_i</code>) potencialmente correlacionada con <code>x_it</code>.</p>
+<p>Esa distinción permite una lectura madura del resultado: baseline defendible hoy, y paso natural hacia FE/RE para tratar el problema de heterogeneidad en la siguiente etapa del análisis.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Este caso muestra una practica clave de econometria aplicada en panel: antes de sofisticar el modelo estructural, hay que asegurar que la inferencia estadistica este bien calibrada.</p>
-<p>El pooled OLS corregido por cluster no es el destino final, pero si un punto de partida profesionalmente util cuando se comunica evidencia con criterio.</p>
-<p>Para un analista aplicado, la leccion practica es concreta: en panel salarial, no alcanza con “tener coeficientes”; hay que reportarlos con una estrategia de inferencia coherente con el tipo de datos para que la decision tecnica tambien sea una decision profesional defendible.</p>
+<p>Este caso muestra una práctica clave de econometría aplicada en panel: antes de sofisticar el modelo estructural, hay que asegurar que la inferencia estadística este bien calibrada.</p>
+<p>El pooled OLS corregido por cluster no es el destino final, pero si un punto de partida profesionalmente útil cuando se comunica evidencia con criterio.</p>
+<p>Para un analista aplicado, la leccion práctica es concreta: en panel salarial, no alcanza con “tener coeficientes”; hay que reportarlos con una estrategia de inferencia coherente con el tipo de datos para que la decisión técnica también sea una decisión profesional defendible.</p>
 </section>
 
 </main>
@@ -727,5 +709,4 @@ inferencia (errores estandar mal calibrados si ignoramos la estructura panel) y 
 
 
 
-<script src="t02_panel_pooled_salarios_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

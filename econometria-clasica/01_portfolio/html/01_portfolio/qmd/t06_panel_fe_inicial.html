@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera</title>
+<title>t06_panel_fe_inicial</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,49 +38,31 @@ ul.task-list li input[type="checkbox"] {
 <link href="t06_panel_fe_inicial_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t06_panel_fe_inicial_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t06_panel_fe_inicial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t06_panel_fe_inicial_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t06_panel_fe_inicial_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#que-pasa-con-un-analisis-ingenuo" id="toc-que-pasa-con-un-analisis-ingenuo" class="nav-link" data-scroll-target="#que-pasa-con-un-analisis-ingenuo">Que pasa con un analisis ingenuo</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#hallazgos-secundarios-y-especificacion" id="toc-hallazgos-secundarios-y-especificacion" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-especificacion">Hallazgos secundarios y especificacion</a></li>
-  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera</h1>
-<p class="subtitle lead">FE en salarios: control de heterogeneidad fija, absorcion de invariantes y lectura metodologica prudente frente a RE</p>
+<p class="subtitle lead">FE en salarios: control de heterogeneidad fija, absorcion de invariantes y lectura metodológica prudente frente a RE</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -101,10 +83,10 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>En este panel salarial, FE identifica con variacion within y deja fuera regresores invariantes en el tiempo</p>
+<p>En este panel salarial, FE identifica con variación within y deja fuera regresores invariantes en el tiempo</p>
 </div>
 <div class="hero-sub">
-<p>La especificacion <code>xtreg ..., fe</code> es coherente cuando preocupa la correlacion entre heterogeneidad individual fija no observada (<code>c_i</code>) y regresores, pero en este taller no se ejecuta Hausman y no corresponde declarar ganador entre FE y RE.</p>
+<p>La especificación <code>xtreg ..., fe</code> es coherente cuando preocupa la correlación entre heterogeneidad individual fija no observada (<code>c_i</code>) y regresores, pero en este taller no se ejecuta Hausman y no corresponde declarar ganador entre FE y RE.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -149,73 +131,73 @@ ul.task-list li input[type="checkbox"] {
 <p><code>R2 within = 0.178</code></p>
 </div>
 <div class="metric-note">
-<p>La lectura econometrica central es intraindividuo</p>
+<p>La lectura econométrica central es intraindividuo</p>
 </div>
 </div>
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Este caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construccion, los regresores invariantes en <code>t</code> quedan absorbidos y no se estiman en la ecuacion within.</p>
-<p>En terminos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulacion de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.</p>
+<p>Este caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construcción, los regresores invariantes en <code>t</code> quedan absorbidos y no se estiman en la ecuación within.</p>
+<p>En términos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulación de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.</p>
 <p>Ademas, el test <code>F test that all u_i=0</code> aporta evidencia central de que la heterogeneidad individual no observada es relevante, por lo que no conviene tratar estos datos como pooled simple.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>Como cambia la lectura de una ecuacion salarial cuando pasamos de una mirada agrupada a un estimador de efectos fijos que usa variacion within?</p>
+<p>¿Cómo cambia la lectura de una ecuación salarial cuando pasamos de una mirada agrupada a un estimador de efectos fijos que usa variación within?</p>
 <div class="small-note">
-<p>Variable dependiente: <code>lwage</code>. Regresores con variacion within en el modelo operativo: <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>. Panel: <code>nr</code> (1980-1987).</p>
+<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Regresores con variación within en el modelo operativo: <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>. Panel: <code>nr</code> (1980-1987).</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
 <p>FE mejora el problema de sesgo por heterogeneidad fija no observada cuando esa heterogeneidad puede correlacionarse con regresores.<br>
-Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticamente otras fuentes de endogeneidad en variables que cambian en el tiempo.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+Ese avance no vuelve causal por sí mismo el resultado ni resuelve automáticamente otras fuentes de endogeneidad en variables que cambian en el tiempo.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
 <p>En paneles salariales, pueden operar rasgos persistentes no observados o imperfectamente medidos del trabajador que distorsionen la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.</p>
-<p>El costo es metodologicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimacion, sino tambien el tipo de pregunta que efectivamente podemos contestar con los datos.</p>
+<p>El costo es metodológicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimación, sino también el tipo de pregunta que efectivamente podemos contestar con los datos.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <p>Se trabaja con el panel <code>wagepan</code> (<code>N = 4360</code> observaciones, <code>545</code> individuos, 8 periodos).</p>
 <ul>
-<li>Variable dependiente: <code>lwage</code></li>
-<li>Regresores en la especificacion de partida: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code></li>
+<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
+<li>Regresores en la especificación de partida: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code></li>
 <li>Regresores efectivamente estimables en FE base: <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code></li>
 <li>Regresores absorbidos en FE base: <code>educ</code>, <code>black</code></li>
 <li>Unidad de panel: individuo (<code>nr</code>)</li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <p>La secuencia aplicada en T6 es:</p>
 <ol type="1">
 <li>Estimar FE de primera referencia para fijar lectura within.</li>
 <li>Verificar explicitamente que las invariantes (<code>educ</code>, <code>black</code>) quedan omitidas por colinealidad en la transformacion FE.</li>
 <li>Usar <code>F test that all u_i=0</code> como evidencia central sobre la relevancia de la estructura panel.</li>
-<li>Incorporar dummies de ano y, luego, interacciones <code>educ#year</code> como chequeos secundarios de especificacion.</li>
-<li>Reportar el alcance metodologico: en este taller no hay contraste Hausman, por lo que no corresponde afirmar superioridad empirica de FE frente a RE.</li>
+<li>Incorporar dummies de año y, luego, interacciones <code>educ#year</code> como chequeos secundarios de especificación.</li>
+<li>Reportar el alcance metodologico: en este taller no hay contraste Hausman, por lo que no corresponde afirmar superioridad empírica de FE frente a RE.</li>
 </ol>
 </section>
-<section id="que-pasa-con-un-analisis-ingenuo" class="level2">
-<h2 class="anchored" data-anchor-id="que-pasa-con-un-analisis-ingenuo">Que pasa con un analisis ingenuo</h2>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
 <p>Una lectura ingenua puede cometer dos errores:</p>
 <ol type="1">
-<li>Tratar FE como una regresion “mas”, sin reconocer que identifica solo con variacion intraindividuo.</li>
-<li>Concluir que FE ya cierra toda la agenda de identificacion.</li>
+<li>Tratar FE como una regresion “más”, sin reconocer que identifica solo con variación intraindividuo.</li>
+<li>Concluir que FE ya cierra toda la agenda de identificación.</li>
 </ol>
-<p>El mensaje profesional de T6 es mas estricto: FE mejora un problema puntual de sesgo por heterogeneidad fija no observada, pero no elimina por si solo otras fuentes de endogeneidad en regresores variables en el tiempo.</p>
+<p>El mensaje profesional de T6 es más estricto: FE mejora un problema puntual de sesgo por heterogeneidad fija no observada, pero no elimina por sí solo otras fuentes de endogeneidad en regresores variables en el tiempo.</p>
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La evidencia principal del taller descansa en tres hechos:</p>
 <ol type="1">
 <li>El modelo FE se identifica por cambios within del individuo y entrega coeficientes precisos para <code>exper</code>, <code>expersq</code>, <code>union</code> y <code>married</code>.</li>
-<li><code>educ</code> y <code>black</code> se absorben en FE por falta de variacion temporal dentro de individuo.</li>
+<li><code>educ</code> y <code>black</code> se absorben en FE por falta de variación temporal dentro de individuo.</li>
 <li>El test <code>all u_i=0</code> rechaza con fuerza, reforzando que la estructura panel no es un detalle menor frente a pooled simple.</li>
 </ol>
 <table class="caption-top table">
@@ -235,7 +217,7 @@ Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticament
 <tr class="odd">
 <td>FE base (within)</td>
 <td style="text-align: right;"><code>R2 within = 0.1780</code>, <code>F(4,3811)=206.38</code></td>
-<td>Identificacion sobre variacion intraindividuo</td>
+<td>Identificacion sobre variación intraindividuo</td>
 </tr>
 <tr class="even">
 <td>Variables invariantes</td>
@@ -250,12 +232,12 @@ Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticament
 </tbody>
 </table>
 </section>
-<p>En lectura economica y siempre dentro de esta especificacion FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula <code>exper</code> en su propia trayectoria, su <code>lwage</code> tiende a aumentar a una tasa decreciente (<code>expersq &lt; 0</code>); cuando cambia su condicion de <code>union</code> de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia <code>married</code> de 0 a 1, tambien se observa una asociacion positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por si mismos.</p>
-<section id="hallazgos-secundarios-y-especificacion" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-especificacion">Hallazgos secundarios y especificacion</h2>
+<p>En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula <code>exper</code> en su propia trayectoria, su <code>lwage</code> tiende a aumentar a una tasa decreciente (<code>expersq &lt; 0</code>); cuando cambia su condición de <code>union</code> de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia <code>married</code> de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por sí mismos.</p>
+<section id="hallazgos-secundarios-y-especificación" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-especificación">Hallazgos secundarios y especificación</h2>
 <p>Los contrastes temporales se reportan como chequeos auxiliares, subordinados al mensaje principal del caso.</p>
-<p>En FE con dummies de ano (<code>d81-d87</code>), el test conjunto de exclusion no rechaza al 5% (<code>F(5,3805)=1.50</code>, <code>p=0.1863</code>).<br>
-En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia estadistica robusta en este taller.</p>
+<p>En FE con dummies de año (<code>d81-d87</code>), el test conjunto de exclusion no rechaza al 5% (<code>F(5,3805)=1.50</code>, <code>p=0.1863</code>).<br>
+En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia estadística robusta en este taller.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -271,14 +253,14 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 </thead>
 <tbody>
 <tr class="odd">
-<td>FE + dummies de ano</td>
+<td>FE + dummies de año</td>
 <td style="text-align: right;"><code>R2 within = 0.1806</code></td>
 <td>Cambio acotado frente al FE base</td>
 </tr>
 <tr class="even">
 <td>Test conjunto <code>d82</code>-<code>d87</code></td>
 <td style="text-align: right;"><code>p = 0.1863</code></td>
-<td>Sin evidencia fuerte para mantener bloque temporal en esta base</td>
+<td>Sin evidencia fuerte para mantener bloque temporal En esta base</td>
 </tr>
 <tr class="odd">
 <td>FE + <code>educ#year</code></td>
@@ -296,12 +278,12 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 <li>Esa coherencia no habilita, por si sola, una afirmacion causal.</li>
 <li>En esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.</li>
 </ul>
-<p>La conclusion metodologica es deliberadamente prudente: FE organiza mejor la identificacion frente a heterogeneidad fija no observada, pero no agota la evaluacion de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.</p>
+<p>La conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimacion. En este caso, esa diferencia mejora la lectura empirica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.</p>
-<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional util para analisis aplicado: mejora la interpretacion econometrica del ejemplo sin exagerar su alcance causal.</p>
+<p>Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.</p>
+<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance causal.</p>
 </section>
 
 </main>
@@ -711,5 +693,4 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 
 
 
-<script src="t06_panel_fe_inicial_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

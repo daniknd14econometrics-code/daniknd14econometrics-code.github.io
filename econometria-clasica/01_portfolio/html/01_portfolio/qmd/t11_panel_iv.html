@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Tarifas y demanda de pasajeros en rutas aéreas</title>
+<title>t11_panel_iv</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,33 +38,16 @@ ul.task-list li input[type="checkbox"] {
 <link href="t11_panel_iv_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t11_panel_iv_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t11_panel_iv_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t11_panel_iv_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t11_panel_iv_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
-  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -74,12 +57,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -100,10 +83,10 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>Como responde la demanda de pasajeros cuando cambian las tarifas en rutas aereas comparables a lo largo del tiempo?</p>
+<p>¿Cómo responde la demanda de pasajeros cuando cambian las tarifas en rutas aéreas comparables a lo largo del tiempo?</p>
 </div>
 <div class="hero-sub">
-<p>La estrategia econometrica ordena una decision practica: evaluar si tratar precio como potencialmente endogeno cambia materialmente la lectura del caso o si la referencia no instrumentada sigue siendo suficiente para una interpretacion profesional.</p>
+<p>La estrategia econométrica ordena una decisión práctica: evaluar si tratar precio como potencialmente endógeno cambia materialmente la lectura del caso o si la referencia no instrumentada sigue siendo suficiente para una interpretación profesional.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -123,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Contexto aplicado</p>
 </div>
 <div class="metric-value">
-<p>Rutas aereas (panel)</p>
+<p>Rutas aéreas (panel)</p>
 </div>
 <div class="metric-note">
 <p><code>N=4596</code>, <code>1149</code> rutas, <code>1997-2000</code> (panel balanceado)</p>
@@ -154,33 +137,33 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia demanda de pasajeros en rutas aereas usando panel por ruta y ano. La pregunta aplicada es si la lectura de la relacion entre tarifa y pasajeros cambia de forma material cuando precio se trata como potencialmente endogeno.</p>
+<p>Esta pieza estudia demanda de pasajeros en rutas aéreas usando panel por ruta y año. La pregunta aplicada es si la lectura de la relación entre tarifa y pasajeros cambia de forma material cuando precio se trata como potencialmente endógeno.</p>
 <p>El mensaje central es deliberadamente prudente: IV se mantiene como contraste relevante, pero la lectura de referencia permanece en modelos no instrumentados con inferencia robusta.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>En rutas aereas comparables, la asociacion entre tarifas y pasajeros cambia de forma sustantiva cuando precio se trata como potencialmente endogeno en panel?</p>
+<p>¿En rutas aéreas comparables, la asociación entre tarifas y pasajeros cambia de forma sustantiva cuando precio se trata como potencialmente endógeno en panel?</p>
 <div class="small-note">
-<p>Resultado: <code>lpassen</code>. Regresor clave: <code>lfare</code>. Controles: <code>ldist</code>, <code>ldistsq</code>, dummies de ano. Instrumento principal: <code>concen</code>.</p>
+<p>Resultado: <code>lpassen</code>. Regresor clave: <code>lfare</code>. Controles: <code>ldist</code>, <code>ldistsq</code>, dummies de año. Instrumento principal: <code>concen</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>La econometria no se presenta como fin en si mismo: se usa para decidir, con evidencia y prudencia, cuando una estrategia mas compleja mejora realmente la lectura aplicada del mercado aereo.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+<p>La econometría no se presenta como fin en sí mismo: se usa para decidir, con evidencia y prudencia, cuando una estrategia más compleja mejora realmente la lectura aplicada del mercado aéreo.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>En ecuaciones de demanda, precio puede reaccionar a factores no observados que tambien afectan cantidad. Si eso ocurre, una lectura no instrumentada puede mezclar variacion de demanda con ajuste de oferta o estructura competitiva.</p>
-<p>En este caso, el valor aplicado es distinguir si ese riesgo potencial amerita pasar a IV en panel como marco principal o si conviene mantener una referencia mas simple y transparente para la lectura de negocio.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En ecuaciones de demanda, precio puede reaccionar a factores no observados que también afectan cantidad. Si eso ocurre, una lectura no instrumentada puede mezclar variación de demanda con ajuste de oferta o estructura competitiva.</p>
+<p>En este caso, el valor aplicado es distinguir si ese riesgo potencial amerita pasar a IV en panel como marco principal o si conviene mantener una referencia más simple y transparente para la lectura de negocio.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <p>Se trabaja con <code>airfare.dta</code> en estructura panel.</p>
 <ul>
-<li>Unidad de observacion: ruta-ano (<code>id</code>, <code>year</code>)</li>
+<li>Unidad de observacion: ruta-año (<code>id</code>, <code>year</code>)</li>
 <li>Cobertura temporal: <code>1997-2000</code></li>
 <li>Muestra operativa: <code>N=4596</code>, <code>1149</code> rutas, panel balanceado (<code>4</code> periodos por ruta)</li>
 <li>Variable de resultado: <code>lpassen</code> (log de pasajeros promedio diarios)</li>
@@ -189,20 +172,20 @@ ul.task-list li input[type="checkbox"] {
 <li>Instrumentos explorados: <code>concen</code> y, en ejercicios de sobreidentificacion, <code>origin_id</code></li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <p>La secuencia se organiza para mantener primacia del caso aplicado:</p>
 <ol type="1">
 <li>Estimar panel no instrumentado (RE y FE con inferencia cluster) como referencia sustantiva.</li>
-<li>Estimar RE-IV y FE-IV para evaluar sensibilidad cuando <code>lfare</code> se trata como endogena.</li>
-<li>Usar chequeos de control function, relevancia y validez de instrumentos como respaldo de decision.</li>
-<li>Interpretar resultados en clave de criterio profesional: priorizar especificacion compleja solo si cambia de forma material la lectura aplicada.</li>
+<li>Estimar RE-IV y FE-IV para evaluar sensibilidad cuando <code>lfare</code> se trata como endógena.</li>
+<li>Usar chequeos de control function, relevancia y validez de instrumentos como respaldo de decisión.</li>
+<li>Interpretar resultados en clave de criterio profesional: priorizar especificación compleja solo si cambia de forma material la lectura aplicada.</li>
 </ol>
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La lectura de base del caso es estable en modelos no instrumentados: la relacion entre tarifa y pasajeros es negativa y de magnitud economica relevante en FE y RE con errores clusterizados.</p>
-<p>Al pasar a IV, la precision cae y los coeficientes de <code>lfare</code> dejan de ser estadisticamente precisos en las especificaciones robustas reportadas. En este contexto, la evidencia diagnostica robusta no muestra una necesidad clara de abandonar la lectura no instrumentada como referencia principal, aunque el problema potencial de endogeneidad siga siendo parte del analisis.</p>
+<p>La lectura de base del caso es estable en modelos no instrumentados: la relación entre tarifa y pasajeros es negativa y de magnitud económica relevante en FE y RE con errores clusterizados.</p>
+<p>Al pasar a IV, la precisión cae y los coeficientes de <code>lfare</code> dejan de ser estadisticamente precisos en las especificaciones robustas reportadas. En este contexto, la evidencia diagnostica robusta no muestra una necesidad clara de abandonar la lectura no instrumentada como referencia principal, aunque el problema potencial de endogeneidad siga siendo parte del análisis.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -225,24 +208,24 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>FE no IV (cluster)</td>
 <td style="text-align: right;"><code>lfare=-1.155</code>, <code>p&lt;0.001</code></td>
-<td>Patron sustantivo similar bajo comparacion within</td>
+<td>Patron sustantivo similar bajo comparación within</td>
 </tr>
 <tr class="odd">
 <td>RE-IV (cluster)</td>
 <td style="text-align: right;"><code>lfare=-0.508</code>, <code>p=0.308</code></td>
-<td>Magnitud menor y baja precision en IV</td>
+<td>Magnitud menor y baja precisión en IV</td>
 </tr>
 <tr class="even">
 <td>FE-IV (cluster)</td>
 <td style="text-align: right;"><code>lfare=-0.302</code>, <code>p=0.623</code></td>
-<td>Alta incertidumbre en especificacion IV</td>
+<td>Alta incertidumbre en especificación IV</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="diagnosticos-de-respaldo" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Estos diagnosticos se presentan de forma breve para respaldar la lectura del caso; no reemplazan la historia aplicada ni conducen la narrativa principal.</p>
+<p>Estos diagnósticos se presentan de forma breve para respaldar la lectura del caso; no reemplazan la historia aplicada ni conducen la narrativa principal.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -265,29 +248,29 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>Exogeneidad (control function, FE robusto)</td>
 <td style="text-align: right;"><code>chi2(1)=2.66</code>, <code>p=0.1026</code></td>
-<td>Resultado en misma direccion, con cautela</td>
+<td>Resultado en misma dirección, con cautela</td>
 </tr>
 <tr class="odd">
 <td>Relevancia IV (RE, 2 IV excluidos)</td>
 <td style="text-align: right;">KP rk Wald F <code>=33.05</code>; Hansen J <code>p=0.8361</code></td>
-<td>Instrumentos aceptables en ese entorno de especificacion</td>
+<td>Instrumentos aceptables en ese entorno de especificación</td>
 </tr>
 <tr class="even">
 <td>Relevancia IV (FE)</td>
 <td style="text-align: right;">KP rk Wald F <code>=11.66</code></td>
-<td>Fuerza mas justa; refuerza prudencia al interpretar FE-IV</td>
+<td>Fuerza más justa; refuerza prudencia al interpretar FE-IV</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
-<p>El aporte de T11 es mostrar criterio de decision econometrica aplicada. La pregunta no es “ganar” FE, RE o IV, sino evaluar si una estrategia mas compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.</p>
-<p>En esta aplicacion, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empirico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas.</p>
+<p>El aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es “ganar” FE, RE o IV, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.</p>
+<p>En esta aplicación, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empírico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>La pieza deja una practica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusion.</p>
+<p>La pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.</p>
 <p>Ese es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real.</p>
 </section>
 
@@ -698,5 +681,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t11_panel_iv_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

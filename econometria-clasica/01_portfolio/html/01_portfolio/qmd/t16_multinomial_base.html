@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Trayectorias de actividad en un panel laboral corto</title>
+<title>t16_multinomial_base</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,49 +38,31 @@ ul.task-list li input[type="checkbox"] {
 <link href="t16_multinomial_base_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t16_multinomial_base_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t16_multinomial_base_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t16_multinomial_base_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t16_multinomial_base_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#sintesis-comparativa-de-magnitudes-ape" id="toc-sintesis-comparativa-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-comparativa-de-magnitudes-ape">Sintesis comparativa de magnitudes (APE)</a></li>
-  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
-  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Trayectorias de actividad en un panel laboral corto</h1>
-<p class="subtitle lead">Como cambian las probabilidades de estudio, hogar y empleo segun educacion y experiencia</p>
+<p class="subtitle lead">Como cambian las probabilidades de estudio, hogar y empleo según educación y experiencia</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -101,10 +83,10 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>Como se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo segun educacion, experiencia y perfil demografico?</p>
+<p>¿Cómo se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo según educación, experiencia y perfil demográfico?</p>
 </div>
 <div class="hero-sub">
-<p>La pieza sigue trayectorias de actividad en el panel laboral <code>keane</code> y usa un logit multinomial, tratado como pooled con <code>cluster(id)</code>, para traducir una variable multiclase en probabilidades comparables y utiles para lectura profesional.</p>
+<p>La pieza sigue trayectorias de actividad en el panel laboral <code>keane</code> y usa un logit multinomial, tratado como pooled con <code>cluster(id)</code>, para traducir una variable multiclase en probabilidades comparables y útiles para lectura profesional.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -116,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Logit multinomial pooled con <code>cluster(id)</code></p>
 </div>
 <div class="metric-note">
-<p>Panel no balanceado tratado como pooled para priorizar interpretacion aplicada en probabilidades</p>
+<p>Panel no balanceado tratado como pooled para priorizar interpretación aplicada en probabilidades</p>
 </div>
 </div>
 <div class="metric-card">
@@ -138,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Educacion y experiencia reubican probabilidades</p>
 </div>
 <div class="metric-note">
-<p>Mas educacion mueve masa hacia escuela y white collar; mas experiencia desplaza desde escuela/hogar hacia empleo</p>
+<p>Mas educación mueve masa hacia escuela y white collar; más experiencia desplaza desde escuela/hogar hacia empleo</p>
 </div>
 </div>
 <div class="metric-card">
@@ -149,32 +131,32 @@ ul.task-list li input[type="checkbox"] {
 <p>Menor discriminacion en <code>services</code></p>
 </div>
 <div class="metric-note">
-<p>La categoria <code>services</code> se separa peor que escuela o blue collar bajo esta especificacion</p>
+<p>La categoria <code>services</code> se separa peor que escuela o blue collar bajo esta especificación</p>
 </div>
 </div>
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza analiza como se distribuyen estados de actividad (<code>choice</code>) en un panel laboral corto, con categorias nominales mutuamente excluyentes: escuela, hogar, white collar, blue collar y services. El foco no es metodologico en abstracto, sino sustantivo: leer como cambian probabilidades entre alternativas frente a educacion, experiencia y perfil demografico.</p>
-<p>La econometria se usa para ordenar una pregunta aplicada. El panel se trata como pooled con inferencia robusta <code>cluster(id)</code>, y la lectura principal se apoya en APEs y probabilidades predichas por categoria.</p>
+<p>Esta pieza analiza como se distribuyen estados de actividad (<code>choice</code>) en un panel laboral corto, con categorias nominales mutuamente excluyentes: escuela, hogar, white collar, blue collar y services. El foco no es metodologico en abstracto, sino sustantivo: leer como cambian probabilidades entre alternativas frente a educación, experiencia y perfil demográfico.</p>
+<p>La econometría se usa para ordenar una pregunta aplicada. El panel se trata como pooled con inferencia robusta <code>cluster(id)</code>, y la lectura principal se apoya en APEs y probabilidades predichas por categoria.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>Como se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo segun educacion, experiencia y perfil demografico?</p>
+<p>¿Cómo se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo según educación, experiencia y perfil demográfico?</p>
 <div class="small-note">
 <p>Resultado: <code>choice</code> (1 escuela, 2 hogar, 3 white collar, 4 blue collar, 5 services). Variables clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>black</code>, dummies anuales.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>El valor profesional de la pieza es transformar una variable multiclase en una lectura comparativa de probabilidades entre alternativas de actividad, explicita en sus alcances y limites de discriminacion.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+<p>El valor profesional de la pieza es transformar una variable multiclase en una lectura comparativa de probabilidades entre alternativas de actividad, explícita en sus alcances y limites de discriminacion.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>En decisiones de actividad laboral no alcanza con preguntar si una persona trabaja o no. En la practica, compiten varias alternativas: estudiar, permanecer en el hogar o insertarse en distintos segmentos ocupacionales. Si se simplifica forzando una variable binaria, se pierde parte central de la pregunta empirica.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En decisiones de actividad laboral no alcanza con preguntar si una persona trabaja o no. En la práctica, compiten varias alternativas: estudiar, permanecer en el hogar o insertarse en distintos segmentos ocupacionales. Si se simplifica forzando una variable binaria, se pierde parte central de la pregunta empírica.</p>
 <p>Para un lector profesional, lo relevante es entender que variables desplazan probabilidades entre alternativas y donde el modelo separa mejor o peor perfiles observables.</p>
 </section>
 <section id="datos-y-variables" class="level2">
@@ -186,11 +168,11 @@ ul.task-list li input[type="checkbox"] {
 <li>Muestra operativa: <code>N=12,665</code>, <code>1,881</code> personas (panel no balanceado)</li>
 <li>Resultado principal: <code>choice</code> con cinco categorias nominales</li>
 <li>Variables clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>i.black</code>, <code>y82-y87</code></li>
-<li>Nota de diseno: <code>wage/lwage</code> no se incluye como regresor porque no esta definido de forma comparable en todas las alternativas de <code>choice</code></li>
+<li>Nota de diseño: <code>wage/lwage</code> no se incluye como regresor porque no está definido de forma comparable en todas las alternativas de <code>choice</code></li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <p>La secuencia mantiene foco aplicado:</p>
 <ol type="1">
 <li>Estimar <code>mlogit choice educ exper expersq i.black y82-y87, baseoutcome(1) vce(cluster id)</code>.</li>
@@ -198,15 +180,15 @@ ul.task-list li input[type="checkbox"] {
 <li>Complementar con probabilidades predichas y clasificacion por maxima probabilidad como referencia descriptiva.</li>
 <li>Reportar un chequeo secundario con <code>status</code> (escuela/hogar/trabajo) para verificar estabilidad general de la historia sustantiva.</li>
 </ol>
-<p>En todo el analisis, el panel se trata como pooled con <code>cluster(id)</code>: esta pieza no busca modelar heterogeneidad no observada con una estructura multinomial de panel, sino ofrecer una lectura clara y util de reasignacion de probabilidades.</p>
+<p>En todo el análisis, el panel se trata como pooled con <code>cluster(id)</code>: Esta pieza no busca modelar heterogeneidad no observada con una estructura multinomial de panel, sino ofrecer una lectura clara y útil de reasignacion de probabilidades.</p>
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La lectura comparativa del caso deja tres mensajes sustantivos:</p>
 <ol type="1">
-<li><strong>Educacion:</strong> aumenta la probabilidad de escuela y white collar, y reduce hogar y blue collar; en services la variacion promedio es pequena.</li>
-<li><strong>Experiencia:</strong> reduce la probabilidad de escuela y hogar, y la desplaza hacia alternativas de empleo (white collar, blue collar y services), con patron no lineal por <code>expersq</code>.</li>
-<li><strong>Perfil demografico (<code>black</code>):</strong> se observan redistribuciones de probabilidad entre categorias, en particular mayor peso relativo en hogar y services bajo la especificacion estimada.</li>
+<li><strong>Educacion:</strong> aumenta la probabilidad de escuela y white collar, y reduce hogar y blue collar; en services la variación promedio es pequena.</li>
+<li><strong>Experiencia:</strong> reduce la probabilidad de escuela y hogar, y la desplaza hacia alternativas de empleo (white collar, blue collar y services), con patrón no lineal por <code>expersq</code>.</li>
+<li><strong>Perfil demográfico (<code>black</code>):</strong> se observan redistribuciones de probabilidad entre categorias, en particular mayor peso relativo en hogar y services bajo la especificación estimada.</li>
 </ol>
 </section>
 <section id="sintesis-comparativa-de-magnitudes-ape" class="level2 table-box">
@@ -240,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;"><code>+0.055</code></td>
 <td style="text-align: right;"><code>-0.036</code></td>
 <td style="text-align: right;"><code>-0.003</code></td>
-<td>Mas educacion desplaza probabilidad hacia estudio y empleo white collar</td>
+<td>Mas educación desplaza probabilidad hacia estudio y empleo white collar</td>
 </tr>
 <tr class="even">
 <td><code>exper</code></td>
@@ -258,30 +240,30 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;"><code>-0.035</code></td>
 <td style="text-align: right;"><code>-0.046</code></td>
 <td style="text-align: right;"><code>+0.044</code></td>
-<td>Cambios de composicion entre alternativas bajo el perfil demografico observado</td>
+<td>Cambios de composicion entre alternativas bajo el perfil demográfico observado</td>
 </tr>
 </tbody>
 </table>
 </section>
-<p>En terminos de separacion entre categorias, escuela y blue collar muestran mejor distincion relativa bajo esta especificacion, hogar queda en zona intermedia y white collar presenta mayor solapamiento. La categoria <code>services</code> muestra menor capacidad de discriminacion, sin cambiar el mensaje sustantivo principal sobre reasignacion de probabilidades por educacion y experiencia.</p>
+<p>En términos de separacion entre categorias, escuela y blue collar muestran mejor distinción relativa bajo esta especificación, hogar queda en zona intermedia y white collar presenta mayor solapamiento. La categoria <code>services</code> muestra menor capacidad de discriminacion, sin cambiar el mensaje sustantivo principal sobre reasignacion de probabilidades por educación y experiencia.</p>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Estos diagnosticos se reportan solo como respaldo de lectura aplicada:</p>
+<p>Estos diagnósticos se reportan solo como respaldo de lectura aplicada:</p>
 <ul>
-<li><strong>Calidad de clasificacion in-sample (choice, 5 categorias):</strong> <code>53.8%</code>, util como referencia descriptiva y no como evidencia de capacidad predictiva fuera de muestra.</li>
+<li><strong>Calidad de clasificacion in-sample (choice, 5 categorias):</strong> <code>53.8%</code>, útil como referencia descriptiva y no como evidencia de capacidad predictiva fuera de muestra.</li>
 <li><strong>Menor discriminacion en <code>services</code>:</strong> en clasificacion argmax no aparece como categoria modal predicha, lo que sugiere solapamiento con blue collar y hogar en este set de covariables.</li>
-<li><strong>Chequeo secundario con <code>status</code> (3 categorias):</strong> clasificacion in-sample <code>69.0%</code>, consistente con una agregacion donde la separacion entre estados amplios es mas nitida.</li>
+<li><strong>Chequeo secundario con <code>status</code> (3 categorias):</strong> clasificacion in-sample <code>69.0%</code>, consistente con una agregacion donde la separacion entre estados amplios es más nitida.</li>
 </ul>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
-<p>El aporte de T16 no es “mostrar multinomial” por si mismo. El aporte es traducir una decision multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva util para un lector externo.</p>
-<p>Tambien deja una practica profesional importante: explicitar limites. Con panel tratado como pooled y <code>cluster(id)</code>, la pieza ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es mas debil.</p>
+<p>El aporte de T16 no es “mostrar multinomial” por sí mismo. El aporte es traducir una decisión multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva útil para un lector externo.</p>
+<p>Tambien deja una práctica profesional importante: explicitar limites. Con panel tratado como pooled y <code>cluster(id)</code>, la pieza ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es más debil.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Esta pieza convierte un problema de eleccion nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.</p>
-<p>El valor de portfolio queda en una traduccion rigurosa y util para lectura profesional: panel pooled con <code>cluster(id)</code>, probabilidades interpretables y limites de discriminacion explicitados con prudencia.</p>
+<p>Esta pieza convierte un problema de elección nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.</p>
+<p>El valor de portfolio queda en una traduccion rigurosa y útil para lectura profesional: panel pooled con <code>cluster(id)</code>, probabilidades interpretables y limites de discriminacion explicitados con prudencia.</p>
 </section>
 
 </main>
@@ -691,5 +673,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t16_multinomial_base_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

@@ -1,8 +1,8 @@
----
+﻿---
 title: "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera"
-subtitle: "FE en salarios: control de heterogeneidad fija, absorcion de invariantes y lectura metodologica prudente frente a RE"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+subtitle: "FE en salarios: control de heterogeneidad fija, absorcion de invariantes y lectura metodológica prudente frente a RE"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t06_panel_fe_inicial"
@@ -24,11 +24,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-En este panel salarial, FE identifica con variacion within y deja fuera regresores invariantes en el tiempo
+En este panel salarial, FE identifica con variación within y deja fuera regresores invariantes en el tiempo
 :::
 
 ::: {.hero-sub}
-La especificacion `xtreg ..., fe` es coherente cuando preocupa la correlacion entre heterogeneidad individual fija no observada (`c_i`) y regresores, pero en este taller no se ejecuta Hausman y no corresponde declarar ganador entre FE y RE.
+La especificación `xtreg ..., fe` es coherente cuando preocupa la correlación entre heterogeneidad individual fija no observada (`c_i`) y regresores, pero en este taller no se ejecuta Hausman y no corresponde declarar ganador entre FE y RE.
 :::
 :::
 
@@ -86,7 +86,7 @@ Variacion explicada
 :::
 
 ::: {.metric-note}
-La lectura econometrica central es intraindividuo
+La lectura econométrica central es intraindividuo
 :::
 :::
 
@@ -94,9 +94,9 @@ La lectura econometrica central es intraindividuo
 
 ## Resumen
 
-Este caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construccion, los regresores invariantes en `t` quedan absorbidos y no se estiman en la ecuacion within.
+Este caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construcción, los regresores invariantes en `t` quedan absorbidos y no se estiman en la ecuación within.
 
-En terminos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulacion de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.
+En términos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulación de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.
 
 Ademas, el test `F test that all u_i=0` aporta evidencia central de que la heterogeneidad individual no observada es relevante, por lo que no conviene tratar estos datos como pooled simple.
 
@@ -105,10 +105,10 @@ Ademas, el test `F test that all u_i=0` aporta evidencia central de que la heter
 ::: {.section-box}
 ## Pregunta
 
-Como cambia la lectura de una ecuacion salarial cuando pasamos de una mirada agrupada a un estimador de efectos fijos que usa variacion within?
+¿Cómo cambia la lectura de una ecuación salarial cuando pasamos de una mirada agrupada a un estimador de efectos fijos que usa variación within?
 
 ::: {.small-note}
-Variable dependiente: `lwage`. Regresores con variacion within en el modelo operativo: `exper`, `expersq`, `union`, `married`. Panel: `nr` (1980-1987).
+Variable dependiente: `lwage` (log del salario por hora). Regresores con variación within en el modelo operativo: `exper`, `expersq`, `union`, `married`. Panel: `nr` (1980-1987).
 :::
 :::
 
@@ -116,47 +116,47 @@ Variable dependiente: `lwage`. Regresores con variacion within en el modelo oper
 ## Idea central
 
 FE mejora el problema de sesgo por heterogeneidad fija no observada cuando esa heterogeneidad puede correlacionarse con regresores.  
-Ese avance no vuelve causal por si mismo el resultado ni resuelve automaticamente otras fuentes de endogeneidad en variables que cambian en el tiempo.
+Ese avance no vuelve causal por sí mismo el resultado ni resuelve automáticamente otras fuentes de endogeneidad en variables que cambian en el tiempo.
 
-<span class="badge">Portfolio econometrico</span>
+<span class="badge">Portfolio econométrico</span>
 :::
 
 ::::
 
-## Por que este problema importa
+## Por qué este problema importa
 
 En paneles salariales, pueden operar rasgos persistentes no observados o imperfectamente medidos del trabajador que distorsionen la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.
 
-El costo es metodologicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimacion, sino tambien el tipo de pregunta que efectivamente podemos contestar con los datos.
+El costo es metodológicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimación, sino también el tipo de pregunta que efectivamente podemos contestar con los datos.
 
 ## Datos y variables
 
 Se trabaja con el panel `wagepan` (`N = 4360` observaciones, `545` individuos, 8 periodos).
 
-- Variable dependiente: `lwage`
-- Regresores en la especificacion de partida: `educ`, `exper`, `expersq`, `union`, `married`, `black`
+- Variable dependiente: `lwage` (log del salario por hora)
+- Regresores en la especificación de partida: `educ`, `exper`, `expersq`, `union`, `married`, `black`
 - Regresores efectivamente estimables en FE base: `exper`, `expersq`, `union`, `married`
 - Regresores absorbidos en FE base: `educ`, `black`
 - Unidad de panel: individuo (`nr`)
 
-## Estrategia empirica
+## Estrategia empírica
 
 La secuencia aplicada en T6 es:
 
 1. Estimar FE de primera referencia para fijar lectura within.
 2. Verificar explicitamente que las invariantes (`educ`, `black`) quedan omitidas por colinealidad en la transformacion FE.
 3. Usar `F test that all u_i=0` como evidencia central sobre la relevancia de la estructura panel.
-4. Incorporar dummies de ano y, luego, interacciones `educ#year` como chequeos secundarios de especificacion.
-5. Reportar el alcance metodologico: en este taller no hay contraste Hausman, por lo que no corresponde afirmar superioridad empirica de FE frente a RE.
+4. Incorporar dummies de año y, luego, interacciones `educ#year` como chequeos secundarios de especificación.
+5. Reportar el alcance metodologico: en este taller no hay contraste Hausman, por lo que no corresponde afirmar superioridad empírica de FE frente a RE.
 
-## Que pasa con un analisis ingenuo
+## Qué pasa con un análisis ingenuo
 
 Una lectura ingenua puede cometer dos errores:
 
-1. Tratar FE como una regresion "mas", sin reconocer que identifica solo con variacion intraindividuo.
-2. Concluir que FE ya cierra toda la agenda de identificacion.
+1. Tratar FE como una regresion "más", sin reconocer que identifica solo con variación intraindividuo.
+2. Concluir que FE ya cierra toda la agenda de identificación.
 
-El mensaje profesional de T6 es mas estricto: FE mejora un problema puntual de sesgo por heterogeneidad fija no observada, pero no elimina por si solo otras fuentes de endogeneidad en regresores variables en el tiempo.
+El mensaje profesional de T6 es más estricto: FE mejora un problema puntual de sesgo por heterogeneidad fija no observada, pero no elimina por sí solo otras fuentes de endogeneidad en regresores variables en el tiempo.
 
 ::: {.table-box}
 ## Resultados principales
@@ -164,30 +164,30 @@ El mensaje profesional de T6 es mas estricto: FE mejora un problema puntual de s
 La evidencia principal del taller descansa en tres hechos:
 
 1. El modelo FE se identifica por cambios within del individuo y entrega coeficientes precisos para `exper`, `expersq`, `union` y `married`.
-2. `educ` y `black` se absorben en FE por falta de variacion temporal dentro de individuo.
+2. `educ` y `black` se absorben en FE por falta de variación temporal dentro de individuo.
 3. El test `all u_i=0` rechaza con fuerza, reforzando que la estructura panel no es un detalle menor frente a pooled simple.
 
 | Resultado central | Evidencia | Lectura |
 |---|---:|---|
-| FE base (within) | `R2 within = 0.1780`, `F(4,3811)=206.38` | Identificacion sobre variacion intraindividuo |
+| FE base (within) | `R2 within = 0.1780`, `F(4,3811)=206.38` | Identificacion sobre variación intraindividuo |
 | Variables invariantes | `educ` y `black` omitidas | FE no estima efectos de covariables constantes en `t` |
 | Estructura panel | `F(544,3811)=9.71`, `p=0.0000` | Rechazo fuerte de `all u_i=0`; pooled simple es insuficiente |
 :::
 
-En lectura economica y siempre dentro de esta especificacion FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula `exper` en su propia trayectoria, su `lwage` tiende a aumentar a una tasa decreciente (`expersq < 0`); cuando cambia su condicion de `union` de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia `married` de 0 a 1, tambien se observa una asociacion positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por si mismos.
+En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula `exper` en su propia trayectoria, su `lwage` tiende a aumentar a una tasa decreciente (`expersq < 0`); cuando cambia su condición de `union` de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia `married` de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por sí mismos.
 
 ::: {.table-box}
-## Hallazgos secundarios y especificacion
+## Hallazgos secundarios y especificación
 
 Los contrastes temporales se reportan como chequeos auxiliares, subordinados al mensaje principal del caso.
 
-En FE con dummies de ano (`d81-d87`), el test conjunto de exclusion no rechaza al 5% (`F(5,3805)=1.50`, `p=0.1863`).  
-En FE con `c.educ##i.year`, las interacciones aparecen sin evidencia estadistica robusta en este taller.
+En FE con dummies de año (`d81-d87`), el test conjunto de exclusion no rechaza al 5% (`F(5,3805)=1.50`, `p=0.1863`).  
+En FE con `c.educ##i.year`, las interacciones aparecen sin evidencia estadística robusta en este taller.
 
 | Chequeo secundario | Resultado | Lectura |
 |---|---:|---|
-| FE + dummies de ano | `R2 within = 0.1806` | Cambio acotado frente al FE base |
-| Test conjunto `d82`-`d87` | `p = 0.1863` | Sin evidencia fuerte para mantener bloque temporal en esta base |
+| FE + dummies de año | `R2 within = 0.1806` | Cambio acotado frente al FE base |
+| Test conjunto `d82`-`d87` | `p = 0.1863` | Sin evidencia fuerte para mantener bloque temporal En esta base |
 | FE + `educ#year` | `R2 within = 0.1814` | Interacciones sin aporte robusto; contraste didactico |
 :::
 
@@ -199,10 +199,18 @@ T6 consolida una regla aplicada de panel:
 - Esa coherencia no habilita, por si sola, una afirmacion causal.
 - En esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.
 
-La conclusion metodologica es deliberadamente prudente: FE organiza mejor la identificacion frente a heterogeneidad fija no observada, pero no agota la evaluacion de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.
+La conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.
 
 ## Cierre
 
-Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimacion. En este caso, esa diferencia mejora la lectura empirica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
+Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
 
-Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional util para analisis aplicado: mejora la interpretacion econometrica del ejemplo sin exagerar su alcance causal.
+Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance causal.
+
+
+
+
+
+
+
+

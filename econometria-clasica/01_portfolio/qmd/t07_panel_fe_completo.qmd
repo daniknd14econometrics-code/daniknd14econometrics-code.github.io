@@ -1,8 +1,8 @@
----
-title: "Efectos fijos en panel de firmas: identificacion within e inferencia robusta"
-subtitle: "Subsidios de capacitacion (`grant`, `grant_1`) y desperdicio productivo (`lscrap`) en un panel corto de plantas"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+﻿---
+title: "Efectos fijos en panel de firmas: identificación within e inferencia robusta"
+subtitle: "Subsidios de capacitación (`grant`, `grant_1`) y desperdicio productivo (`lscrap`) en un panel corto de plantas"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t07_panel_fe_completo"
@@ -24,11 +24,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-En este panel corto de firmas, la pregunta aplicada es como cambia la lectura del vinculo entre subsidios de capacitacion y desperdicio productivo al seguir a las mismas plantas en el tiempo
+En este panel corto de firmas, la pregunta aplicada es como cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo al seguir a las mismas plantas en el tiempo
 :::
 
 ::: {.hero-sub}
-El modelo FE con inferencia clusterizada organiza una lectura mas creible de `lscrap`: controla heterogeneidad fija no observada de planta y evita sobrerreaccionar a significancia convencional.
+El modelo FE con inferencia clusterizada organiza una lectura más creíble de `lscrap`: controla heterogeneidad fija no observada de planta y evita sobrerreaccionar a significancia convencional.
 :::
 :::
 
@@ -64,7 +64,7 @@ Panel corto
 
 ::: {.metric-card}
 ::: {.metric-label}
-Evidencia conjunta subsidios
+Evidencia conjunta de subsidios
 :::
 
 ::: {.metric-value}
@@ -94,37 +94,37 @@ rho = 0.893
 
 ## Resumen
 
-Este taller analiza un panel corto de plantas para estudiar la relacion empirica entre subsidios de capacitacion (`grant`, `grant_1`) y desempeno productivo medido por `lscrap`. La motivacion aplicada es concreta: comparar firmas entre si puede mezclar diferencias estructurales persistentes con la asociacion de interes.
+Este taller analiza un panel corto de plantas para estudiar la relación empírica entre subsidios de capacitación (`grant`, `grant_1`) y desempeño productivo medido por `lscrap`. La motivacion aplicada es concreta: comparar firmas entre si puede mezclar diferencias estructurales persistentes con la asociación de interés.
 
-Por eso, la pieza usa FE como modelo operativo para concentrarse en variacion within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadistica.
+Por eso, la pieza usa FE como modelo operativo para concentrarse en variación within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadística.
 
 :::: {.quick-grid}
 
 ::: {.section-box}
 ## Pregunta
 
-Como cambia la lectura del vinculo entre subsidios de capacitacion y desperdicio productivo cuando seguimos a las mismas plantas en el tiempo y controlamos heterogeneidad fija no observada?
+¿Cómo cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo cuando seguimos a las mismas plantas en el tiempo y controlamos heterogeneidad fija no observada?
 
 ::: {.small-note}
-Resultado: `lscrap`. Regresores de interes: `grant`, `grant_1`. Controles de periodo: `d88`, `d89`. Unidad de panel: `fcode`.
+Resultado: `lscrap` (log del desperdicio/scrap rate). Regresores de interés: `grant`, `grant_1`. Controles de periodo: `d88`, `d89`. Unidad de panel: `fcode`.
 :::
 :::
 
 ::: {.section-box}
 ## Idea central
 
-En este caso, la econometria esta al servicio de la historia aplicada: FE se usa para tratar sesgo por heterogeneidad fija no observada entre plantas, mientras que cluster se usa para no sobredimensionar precision inferencial.
+En este caso, la econometría está al servicio de la historia aplicada: FE se usa para tratar sesgo por heterogeneidad fija no observada entre plantas, mientras que cluster se usa para no sobredimensionar precisión inferencial.
 
-<span class="badge">Portfolio econometrico</span>
+<span class="badge">Portfolio econométrico</span>
 :::
 
 ::::
 
-## Por que este problema importa
+## Por qué este problema importa
 
-El interes sustantivo del ejemplo es si plantas con subsidios de capacitacion muestran menor desperdicio productivo en el tiempo. Esa lectura puede distorsionarse si algunas firmas tienen rasgos persistentes no observados (gestion, tecnologia, cultura operativa) que afectan `lscrap` y tambien se asocian con la recepcion de subsidios.
+El interés sustantivo del ejemplo es si plantas con subsidios de capacitación muestran menor desperdicio productivo en el tiempo. Esa lectura puede distorsionarse si algunas firmas tienen rasgos persistentes no observados (gestión, tecnología, cultura operativa) que afectan `lscrap` y también se asocian con la recepción de subsidios.
 
-En ese contexto, pasar de pooled a FE es razonable: cambia la comparacion desde "entre plantas" hacia "dentro de la misma planta a lo largo del tiempo", que es la escala relevante para leer desempeno productivo en este caso.
+En ese contexto, pasar de pooled a FE es razonable: cambia la comparación desde "entre plantas" hacia "dentro de la misma planta a lo largo del tiempo", que es la escala relevante para leer desempeño productivo en este caso.
 
 ## Datos y variables
 
@@ -137,21 +137,21 @@ Se trabaja con `jtrain1`, un panel corto de plantas.
 - Controles temporales: `d88`, `d89`
 - Variable absorbida en FE por invarianza temporal: `union`
 
-## Estrategia empirica
+## Estrategia empírica
 
-La secuencia del taller prioriza decisiones metodologicas para responder mejor la pregunta aplicada:
+La secuencia del taller prioriza decisiones metodológicas para responder mejor la pregunta aplicada:
 
 1. Estimar FE (`xtreg ..., fe`) como modelo operativo frente al riesgo de heterogeneidad fija no observada.
 2. Reestimar FE con `vce(cluster fcode)` como inferencia principal.
 3. Evaluar evidencia conjunta de subsidios con tests robustos sobre `grant` y `grant_1`.
-4. Dejar equivalencia FE / within manual / LSDV como validacion tecnica secundaria.
-5. Tratar serial correlation como diagnostico de apoyo, no como mensaje central.
+4. Dejar equivalencia FE / within manual / LSDV como validación técnica secundaria.
+5. Tratar serial correlation como diagnóstico de apoyo, no como mensaje central.
 
-## Que pasa con un analisis ingenuo
+## Qué pasa con un análisis ingenuo
 
-Un analisis ingenuo puede mezclar dos planos distintos:
+Un análisis ingenuo puede mezclar dos planos distintos:
 
-1. Inferencia: usar solo errores clasicos puede sobreconfiar en significancia.
+1. Inferencia: usar solo errores clásicos puede sobreconfiar en significancia.
 2. Identificacion: aun con inferencia robusta, pooled no corrige sesgo por heterogeneidad fija no observada.
 
 La lectura profesional separa ambos temas: FE atiende el problema de sesgo por `c_i` fijo; cluster mejora la credibilidad inferencial.
@@ -159,40 +159,46 @@ La lectura profesional separa ambos temas: FE atiende el problema de sesgo por `
 ::: {.table-box}
 ## Resultados principales
 
-La lectura final no descansa en un coeficiente puntual, sino en la evidencia conjunta sobre los subsidios y en una interpretacion prudente de su magnitud economica.
+La lectura final no descansa en un coeficiente puntual, sino en la evidencia conjunta sobre los subsidios y en una interpretación prudente de su magnitud económica.
 
-En terminos aplicados, los signos estimados son compatibles con una reduccion de `lscrap` asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precision estadistica se debilita.
+En términos aplicados, los signos estimados son compatibles con una reduccion de `lscrap` asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precisión estadística se debilita.
 
-Por eso, la lectura profesional para desempeno productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion causal.
+Por eso, la lectura profesional para desempeño productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion causal.
 
 | Bloque | Evidencia | Lectura |
 |---|---:|---|
-| FE clasico | `grant=-0.252` (p=0.097), `grant_1=-0.422` (p=0.047) | Senal inicial en clasico, sujeta a supuestos fuertes FE.3 |
-| FE + cluster (operativo) | `grant=-0.252` (p=0.084), `grant_1=-0.422` (p=0.141) | Cambia la precision; la evidencia individual se debilita |
+| FE clásico | `grant=-0.252` (p=0.097), `grant_1=-0.422` (p=0.047) | Señal inicial en clásico, sujeta a supuestos fuertes de FE |
+| FE + cluster (operativo) | `grant=-0.252` (p=0.084), `grant_1=-0.422` (p=0.141) | Cambia la precisión; la evidencia individual se debilita |
 | Test conjunto robusto `grant=grant_1=0` | `F(2,53)=1.56`, `p=0.2198` | Sin evidencia conjunta robusta al 5% |
 | Restriccion `grant + grant_1 = 0` | `F(1,53)=2.63`, `p=0.1105` | No rechazo en inferencia robusta |
-| Estructura panel | `rho=0.893`, `F all u_i=0` p=0.0000 | La heterogeneidad fija de firma es econometricamente relevante |
+| Estructura panel | `rho=0.893`, `F all u_i=0` p=0.0000 | La heterogeneidad fija de firma es econométricamente relevante |
 :::
 
 ::: {.table-box}
-## Hallazgos secundarios y validacion
+## Hallazgos secundarios y validación
 
-Los contrastes siguientes son utiles para auditar consistencia del caso, pero quedan subordinados al modelo operativo FE+cluster:
+Los contrastes siguientes son útiles para auditar consistencia del caso, pero quedan subordinados al modelo operativo FE+cluster:
 
 | Chequeo secundario | Resultado | Lectura |
 |---|---:|---|
 | FE vs within manual | Coeficientes coinciden | FE no opera como caja negra; replica la transformacion within |
-| FE vs LSDV (`i.fcode`) | Misma logica de ajuste within | Validacion algebraica adicional del estimador |
+| FE vs LSDV (`i.fcode`) | Misma lógica de ajuste within | Validacion algebraica adicional del estimador |
 | Serial correlation en residuos FE | `u_fe_L1=-0.206`; test `= -0.5` rechaza (`p=0.0000`) | Patron compatible con dependencia serial adicional; refuerza uso de inferencia robusta |
 | FE-AR(1) (`xtregar`) | Resultados sensibles en panel corto | Se reporta solo como contraste metodologico auxiliar |
 :::
 
 ## Lectura profesional del caso
 
-T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitacion y desperdicio productivo, despues elegir una estrategia de identificacion coherente (FE within), y finalmente comunicar inferencia con estandar robusto (cluster y tests conjuntos).
+T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitación y desperdicio productivo, después elegir una estrategia de identificación coherente (FE within), y finalmente comunicar inferencia con estándar robusto (cluster y tests conjuntos).
 
-Esta secuencia evita dos excesos frecuentes: tratar la significancia convencional como veredicto final y presentar tecnicas de panel como un fin en si mismo.
+Esta secuencia evita dos excesos frecuentes: tratar la significancia convencional como veredicto final y presentar técnicas de panel como un fin en sí mismo.
 
 ## Cierre
 
-La contribucion de T7 no es establecer causalidad definitiva, sino ofrecer una lectura empirica mas creible del vinculo entre subsidios de capacitacion y desperdicio productivo: variacion within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.
+La contribución de T7 no es establecer causalidad definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.
+
+
+
+
+
+

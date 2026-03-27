@@ -1,8 +1,8 @@
----
+﻿---
 title: "Tarifas y demanda de pasajeros en rutas aéreas"
 subtitle: "Una lectura en panel sobre cuándo tratar el precio como endógeno"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t11_panel_iv"
@@ -24,11 +24,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-Como responde la demanda de pasajeros cuando cambian las tarifas en rutas aereas comparables a lo largo del tiempo?
+¿Cómo responde la demanda de pasajeros cuando cambian las tarifas en rutas aéreas comparables a lo largo del tiempo?
 :::
 
 ::: {.hero-sub}
-La estrategia econometrica ordena una decision practica: evaluar si tratar precio como potencialmente endogeno cambia materialmente la lectura del caso o si la referencia no instrumentada sigue siendo suficiente para una interpretacion profesional.
+La estrategia econométrica ordena una decisión práctica: evaluar si tratar precio como potencialmente endógeno cambia materialmente la lectura del caso o si la referencia no instrumentada sigue siendo suficiente para una interpretación profesional.
 :::
 :::
 
@@ -54,7 +54,7 @@ Contexto aplicado
 :::
 
 ::: {.metric-value}
-Rutas aereas (panel)
+Rutas aéreas (panel)
 :::
 
 ::: {.metric-note}
@@ -94,7 +94,7 @@ Control function: RE `p=0.1878`; FE robusto `p=0.1026`
 
 ## Resumen
 
-Esta pieza estudia demanda de pasajeros en rutas aereas usando panel por ruta y ano. La pregunta aplicada es si la lectura de la relacion entre tarifa y pasajeros cambia de forma material cuando precio se trata como potencialmente endogeno.
+Esta pieza estudia demanda de pasajeros en rutas aéreas usando panel por ruta y año. La pregunta aplicada es si la lectura de la relación entre tarifa y pasajeros cambia de forma material cuando precio se trata como potencialmente endógeno.
 
 El mensaje central es deliberadamente prudente: IV se mantiene como contraste relevante, pero la lectura de referencia permanece en modelos no instrumentados con inferencia robusta.
 
@@ -103,34 +103,34 @@ El mensaje central es deliberadamente prudente: IV se mantiene como contraste re
 ::: {.section-box}
 ## Pregunta
 
-En rutas aereas comparables, la asociacion entre tarifas y pasajeros cambia de forma sustantiva cuando precio se trata como potencialmente endogeno en panel?
+¿En rutas aéreas comparables, la asociación entre tarifas y pasajeros cambia de forma sustantiva cuando precio se trata como potencialmente endógeno en panel?
 
 ::: {.small-note}
-Resultado: `lpassen`. Regresor clave: `lfare`. Controles: `ldist`, `ldistsq`, dummies de ano. Instrumento principal: `concen`.
+Resultado: `lpassen`. Regresor clave: `lfare`. Controles: `ldist`, `ldistsq`, dummies de año. Instrumento principal: `concen`.
 :::
 :::
 
 ::: {.section-box}
 ## Idea central
 
-La econometria no se presenta como fin en si mismo: se usa para decidir, con evidencia y prudencia, cuando una estrategia mas compleja mejora realmente la lectura aplicada del mercado aereo.
+La econometría no se presenta como fin en sí mismo: se usa para decidir, con evidencia y prudencia, cuando una estrategia más compleja mejora realmente la lectura aplicada del mercado aéreo.
 
-<span class="badge">Portfolio econometrico</span>
+<span class="badge">Portfolio econométrico</span>
 :::
 
 ::::
 
-## Por que este problema importa
+## Por qué este problema importa
 
-En ecuaciones de demanda, precio puede reaccionar a factores no observados que tambien afectan cantidad. Si eso ocurre, una lectura no instrumentada puede mezclar variacion de demanda con ajuste de oferta o estructura competitiva.
+En ecuaciones de demanda, precio puede reaccionar a factores no observados que también afectan cantidad. Si eso ocurre, una lectura no instrumentada puede mezclar variación de demanda con ajuste de oferta o estructura competitiva.
 
-En este caso, el valor aplicado es distinguir si ese riesgo potencial amerita pasar a IV en panel como marco principal o si conviene mantener una referencia mas simple y transparente para la lectura de negocio.
+En este caso, el valor aplicado es distinguir si ese riesgo potencial amerita pasar a IV en panel como marco principal o si conviene mantener una referencia más simple y transparente para la lectura de negocio.
 
 ## Datos y variables
 
 Se trabaja con `airfare.dta` en estructura panel.
 
-- Unidad de observacion: ruta-ano (`id`, `year`)
+- Unidad de observacion: ruta-año (`id`, `year`)
 - Cobertura temporal: `1997-2000`
 - Muestra operativa: `N=4596`, `1149` rutas, panel balanceado (`4` periodos por ruta)
 - Variable de resultado: `lpassen` (log de pasajeros promedio diarios)
@@ -138,51 +138,57 @@ Se trabaja con `airfare.dta` en estructura panel.
 - Controles: `ldist`, `ldistsq`, `y98`, `y99`, `y00`
 - Instrumentos explorados: `concen` y, en ejercicios de sobreidentificacion, `origin_id`
 
-## Estrategia empirica
+## Estrategia empírica
 
 La secuencia se organiza para mantener primacia del caso aplicado:
 
 1. Estimar panel no instrumentado (RE y FE con inferencia cluster) como referencia sustantiva.
-2. Estimar RE-IV y FE-IV para evaluar sensibilidad cuando `lfare` se trata como endogena.
-3. Usar chequeos de control function, relevancia y validez de instrumentos como respaldo de decision.
-4. Interpretar resultados en clave de criterio profesional: priorizar especificacion compleja solo si cambia de forma material la lectura aplicada.
+2. Estimar RE-IV y FE-IV para evaluar sensibilidad cuando `lfare` se trata como endógena.
+3. Usar chequeos de control function, relevancia y validez de instrumentos como respaldo de decisión.
+4. Interpretar resultados en clave de criterio profesional: priorizar especificación compleja solo si cambia de forma material la lectura aplicada.
 
 ::: {.table-box}
 ## Resultados principales
 
-La lectura de base del caso es estable en modelos no instrumentados: la relacion entre tarifa y pasajeros es negativa y de magnitud economica relevante en FE y RE con errores clusterizados.
+La lectura de base del caso es estable en modelos no instrumentados: la relación entre tarifa y pasajeros es negativa y de magnitud económica relevante en FE y RE con errores clusterizados.
 
-Al pasar a IV, la precision cae y los coeficientes de `lfare` dejan de ser estadisticamente precisos en las especificaciones robustas reportadas. En este contexto, la evidencia diagnostica robusta no muestra una necesidad clara de abandonar la lectura no instrumentada como referencia principal, aunque el problema potencial de endogeneidad siga siendo parte del analisis.
+Al pasar a IV, la precisión cae y los coeficientes de `lfare` dejan de ser estadisticamente precisos en las especificaciones robustas reportadas. En este contexto, la evidencia diagnostica robusta no muestra una necesidad clara de abandonar la lectura no instrumentada como referencia principal, aunque el problema potencial de endogeneidad siga siendo parte del análisis.
 
 | Bloque | Evidencia | Lectura aplicada |
 |---|---:|---|
 | RE no IV (cluster) | `lfare=-1.102`, `p<0.001` | Relacion negativa clara entre tarifa y pasajeros |
-| FE no IV (cluster) | `lfare=-1.155`, `p<0.001` | Patron sustantivo similar bajo comparacion within |
-| RE-IV (cluster) | `lfare=-0.508`, `p=0.308` | Magnitud menor y baja precision en IV |
-| FE-IV (cluster) | `lfare=-0.302`, `p=0.623` | Alta incertidumbre en especificacion IV |
+| FE no IV (cluster) | `lfare=-1.155`, `p<0.001` | Patron sustantivo similar bajo comparación within |
+| RE-IV (cluster) | `lfare=-0.508`, `p=0.308` | Magnitud menor y baja precisión en IV |
+| FE-IV (cluster) | `lfare=-0.302`, `p=0.623` | Alta incertidumbre en especificación IV |
 :::
 
 ::: {.table-box}
 ## Diagnosticos de respaldo
 
-Estos diagnosticos se presentan de forma breve para respaldar la lectura del caso; no reemplazan la historia aplicada ni conducen la narrativa principal.
+Estos diagnósticos se presentan de forma breve para respaldar la lectura del caso; no reemplazan la historia aplicada ni conducen la narrativa principal.
 
 | Diagnostico | Resultado | Uso en la pieza |
 |---|---:|---|
 | Exogeneidad (control function, RE) | `chi2(1)=1.73`, `p=0.1878` | No aporta evidencia robusta fuerte para exigir IV como base |
-| Exogeneidad (control function, FE robusto) | `chi2(1)=2.66`, `p=0.1026` | Resultado en misma direccion, con cautela |
-| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F `=33.05`; Hansen J `p=0.8361` | Instrumentos aceptables en ese entorno de especificacion |
-| Relevancia IV (FE) | KP rk Wald F `=11.66` | Fuerza mas justa; refuerza prudencia al interpretar FE-IV |
+| Exogeneidad (control function, FE robusto) | `chi2(1)=2.66`, `p=0.1026` | Resultado en misma dirección, con cautela |
+| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F `=33.05`; Hansen J `p=0.8361` | Instrumentos aceptables en ese entorno de especificación |
+| Relevancia IV (FE) | KP rk Wald F `=11.66` | Fuerza más justa; refuerza prudencia al interpretar FE-IV |
 :::
 
 ## Lectura profesional
 
-El aporte de T11 es mostrar criterio de decision econometrica aplicada. La pregunta no es "ganar" FE, RE o IV, sino evaluar si una estrategia mas compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.
+El aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es "ganar" FE, RE o IV, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.
 
-En esta aplicacion, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empirico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas.
+En esta aplicación, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empírico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas.
 
 ## Cierre
 
-La pieza deja una practica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusion.
+La pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.
 
 Ese es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real.
+
+
+
+
+
+

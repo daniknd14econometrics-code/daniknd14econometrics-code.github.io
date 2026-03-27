@@ -1,8 +1,8 @@
----
+﻿---
 title: "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta"
-subtitle: "Relacion estimada entre q e inversion con pooled OLS, controles temporales y lectura econometrica prudente"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+subtitle: "Relacion estimada entre q e inversión con pooled OLS, controles temporales y lectura econométrica prudente"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t03_panel_qtobin_pooled"
@@ -24,11 +24,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-En este panel de firmas, q y la inversion se mueven en una relacion positiva pero decreciente
+En este panel de firmas, q y la inversión se mueven en una relación positiva pero decreciente
 :::
 
 ::: {.hero-sub}
-El pooled OLS con errores cluster por firma permite una inferencia mas creible para el benchmark, pero no elimina por si solo los riesgos de sesgo por heterogeneidad inobservable.
+El pooled OLS con errores cluster por firma permite una inferencia más creíble para el benchmark, pero no elimina por sí solo los riesgos de sesgo por heterogeneidad inobservable.
 :::
 :::
 
@@ -94,85 +94,85 @@ Se rechaza homocedasticidad en prueba LM
 
 ## Resumen
 
-Esta pieza evalua la relacion entre la tasa de inversion de la firma (`ikb`) y la q de Tobin en un panel. El mensaje econometrico central separa dos planos que no conviene mezclar: (i) inferencia estadistica mejor calibrada con errores cluster por firma y diagnosticos de error, y (ii) limitaciones de identificacion de pooled OLS frente a heterogeneidad inobservable.
+Esta pieza evalúa la relación entre la tasa de inversión de la firma (`ikb`) y la q de Tobin en un panel. El mensaje econométrico central separa dos planos que no conviene mezclar: (i) inferencia estadística mejor calibrada con errores cluster por firma y diagnósticos de error, y (ii) limitaciones de identificación de pooled OLS frente a heterogeneidad inobservable.
 
 :::: {.quick-grid}
 
 ::: {.section-box}
 ## Pregunta
 
-Que patron empirico aparece entre inversion y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?
+¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?
 
 ::: {.small-note}
-Variable dependiente: `ikb`. Regresores clave: `qb`, `qb_sq`. Controles de tiempo: `i.year`. Unidad de cluster: `cusip`.
+Variable dependiente: `ikb` (inversión/capital). Regresores clave: `qb`, `qb_sq`. Controles de tiempo: `i.year`. Unidad de cluster: `cusip`.
 :::
 :::
 
 ::: {.section-box}
 ## Idea central
 
-En este caso, la inferencia y la identificacion no son lo mismo.  
-Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por `c_i` no observado y no es una estrategia de identificacion causal.
+En este caso, la inferencia y la identificación no son lo mismo.  
+Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por `c_i` no observado y no es una estrategia de identificación causal.
 
-<span class="badge">Portfolio econometrico</span>
+<span class="badge">Portfolio econométrico</span>
 :::
 
 ::::
 
-## Por que este problema importa
+## Por qué este problema importa
 
-En decisiones de inversion, la q de Tobin suele leerse como senal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser util como benchmark, pero solo si la inferencia respeta la estructura del error.
+En decisiones de inversión, la q de Tobin suele leerse como señal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser útil como benchmark, pero solo si la inferencia respeta la estructura del error.
 
-La relacion economica que se explora es directa: si una firma enfrenta una q mas alta, tiende a observarse mayor inversion, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, ademas de preguntar si la asociacion existe, importa leer su forma y su magnitud economica.
+La relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.
 
-Al mismo tiempo, una inferencia mejor calibrada no equivale automaticamente a identificacion limpia. Esa distincion evita sobreinterpretar resultados estadisticamente significativos como evidencia causal.
+Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia causal.
 
 ## Datos y variables
 
 Se trabaja con un panel de firmas (`N = 2,068` observaciones; `188` firmas) para el periodo 1975-1985.
 
-Sustantivamente, este panel representa decisiones de inversion observadas repetidamente para las mismas firmas a lo largo de once anos. Ese seguimiento temporal permite evaluar si el patron entre q e inversion se sostiene al controlar shocks comunes por ano, en lugar de depender de una sola foto de corte transversal.
+Sustantivamente, este panel representa decisiones de inversión observadas repetidamente para las mismas firmas a lo largo de once años. Ese seguimiento temporal permite evaluar si el patrón entre q e inversión se sostiene al controlar shocks comunes por año, en lugar de depender de una sola foto de corte transversal.
 
-- Variable dependiente: `ikb` (tasa de inversion sobre capital)
-- Regresores de interes: `qb` y `qb_sq`
+- Variable dependiente: `ikb` (tasa de inversión sobre capital)
+- Regresores de interés: `qb` y `qb_sq`
 - Controles temporales: `i.year`
 - Inferencia principal: `vce(cluster cusip)`
 
-## Estrategia empirica
+## Estrategia empírica
 
 La secuencia aplicada en T3 fue:
 
-1. Estimar pooled OLS base (lineal) y su version robusta/cluster.
+1. Estimar pooled OLS base (lineal) y su versión robusta/cluster.
 2. Incorporar controles temporales (`i.year`).
-3. Ejecutar diagnosticos de dependencia serial y heterocedasticidad.
+3. Ejecutar diagnósticos de dependencia serial y heterocedasticidad.
 4. Comparar forma lineal vs cuadratica en `qb`.
-5. Mantener como modelo operativo una especificacion parsimoniosa y coherente con la lectura economica.
+5. Mantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.
 
-Modelos con rezagos y extensiones adicionales se usan como contraste tecnico, no como especificacion principal del portfolio.
+Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del portfolio.
 
-## Que pasa con un analisis ingenuo
+## Qué pasa con un análisis ingenuo
 
 Hay dos riesgos distintos:
 
-1. Riesgo de inferencia: errores estandar mal calibrados si se ignoran dependencia intra-firma y heterocedasticidad.
-2. Riesgo de sesgo/identificacion: pooled OLS puede seguir sesgado si la heterogeneidad inobservable de firma (`c_i`) esta correlacionada con los regresores.
+1. Riesgo de inferencia: errores estándar mal calibrados si se ignoran dependencia intra-firma y heterocedasticidad.
+2. Riesgo de sesgo/identificación: pooled OLS puede seguir sesgado si la heterogeneidad inobservable de firma (`c_i`) está correlacionada con los regresores.
 
-Separar ambos problemas es clave: corregir varianzas mejora inferencia, pero no resuelve por si mismo el problema de identificacion.
+Separar ambos problemas es clave: corregir varianzas mejora inferencia, pero no resuelve por sí mismo el problema de identificación.
 
 ::: {.table-box}
 ## Resultados principales
 
-El modelo operativo (`ikb` sobre `qb`, `qb_sq` e indicadores de ano, con cluster por firma) muestra una relacion estimada positiva pero decreciente entre q e inversion en casi toda la muestra.
+El modelo operativo (`ikb` sobre `qb`, `qb_sq` e indicadores de año, con cluster por firma) muestra una relación estimada positiva pero decreciente entre q e inversión en casi toda la muestra.
 
-El punto de giro implicito cae en una zona muy alta de la distribucion de `qb` (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decision.
+El punto de giro implicito cae en una zona muy alta de la distribucion de `qb` (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decisión.
 
-En terminos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de `qb`, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante mas chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la direccion general del vinculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.
+En términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de `qb`, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.
 
 | Modelo | Especificacion | Lectura | N |
 |---|---|---|---:|
 | Benchmark lineal | `ikb ~ qb + i.year`, cluster firma | Asociacion positiva promedio | 2068 |
 | Modelo operativo | `ikb ~ qb + qb_sq + i.year`, cluster firma | Relacion positiva y decreciente en casi toda la muestra | 2068 |
-| Contraste con lag | `ikb ~ qb_1 + i.year`, cluster firma | Sensible a especificacion y potencial omision de `qb_t` | 1880 |
+| Contraste con lag | `ikb ~ qb_1 + i.year`, cluster firma | Sensible a especificación y potencial omision de `qb_t` | 1880 |
 :::
 
 ::: {.table-box}
@@ -184,21 +184,28 @@ La evidencia del taller respalda inferencia robusta como minimo operativo:
 |---|---:|---|
 | AR(1) auxiliar con residuos | `uhat_L1` p < 0.001 | Evidencia compatible con dependencia serial intra-firma |
 | LM heterocedasticidad | p = 0.0005 | Evidencia compatible con heterocedasticidad |
-| Test conjunto dummies temporales | p = 0.0000 | Los efectos de ano son relevantes en el benchmark |
+| Test conjunto dummies temporales | p = 0.0000 | Los efectos de año son relevantes en el benchmark |
 :::
 
 ## Lectura profesional del caso
 
 La lectura aplicada es sobria:
 
-- Como benchmark, pooled con `i.year` y errores cluster por firma entrega una base de reporte defendible en terminos de inferencia.
-- Como identificacion, el resultado sigue siendo limitado: no elimina sesgo potencial por heterogeneidad inobservable.
+- Como benchmark, pooled con `i.year` y errores cluster por firma entrega una base de reporte defendible en términos de inferencia.
+- Como identificación, el resultado sigue siendo limitado: no elimina sesgo potencial por heterogeneidad inobservable.
 - En especificaciones dinamicas pooled (con rezago de dependiente), el riesgo de sesgo es aun mayor, por lo que no se toma como modelo operativo del caso.
 
-Esta separacion entre inferencia valida y limitaciones de identificacion es el aporte principal para una comunicacion profesional del resultado.
+Esta separacion entre inferencia valida y limitaciones de identificación es el aporte principal para una comunicacion profesional del resultado.
 
 ## Cierre
 
-T3 deja un mensaje claro para trabajo aplicado: la relacion entre q e inversion aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.
+T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.
 
-Para un analista aplicado, esta pieza si permite concluir que la asociacion promedio entre valorizacion e inversion no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empirico, no un cierre causal: el siguiente paso natural para una agenda de identificacion mas exigente es avanzar hacia estrategias de panel que traten de forma explicita la heterogeneidad no observada.
+Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no un cierre causal: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.
+
+
+
+
+
+
+

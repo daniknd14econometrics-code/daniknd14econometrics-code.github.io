@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Mendez">
+<meta name="author" content="Daniel Méndez">
 <meta name="dcterms.date" content="2026-03-26">
 
-<title>Participación laboral femenina y estructura del hogar</title>
+<title>t12_binaria_base</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,34 +38,16 @@ ul.task-list li input[type="checkbox"] {
 <link href="t12_binaria_base_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="t12_binaria_base_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="t12_binaria_base_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="t12_binaria_base_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<style>html{ scroll-behavior: smooth; }</style>
+<link href="t12_binaria_base_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="../assets/portfolio.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-que-este-problema-importa" id="toc-por-que-este-problema-importa" class="nav-link" data-scroll-target="#por-que-este-problema-importa">Por que este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empirica" id="toc-estrategia-empirica" class="nav-link" data-scroll-target="#estrategia-empirica">Estrategia empirica</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#sintesis-de-magnitudes-ape" id="toc-sintesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</a></li>
-  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
-  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -75,12 +57,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Daniel Mendez </p>
+             <p>Daniel Méndez </p>
           </div>
   </div>
     
@@ -101,10 +83,10 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>Que factores del hogar se asocian con mayor o menor participacion laboral femenina?</p>
+<p>¿Qué factores del hogar se asocian con mayor o menor participación laboral femenina?</p>
 </div>
 <div class="hero-sub">
-<p>La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretacion lineal donde la respuesta observada es 0/1.</p>
+<p>La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal donde la respuesta observada es 0/1.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -135,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Lectura sustantiva</p>
 </div>
 <div class="metric-value">
-<p>Senal fuerte en hijos pequenos</p>
+<p>Senal fuerte en hijos pequeños</p>
 </div>
 <div class="metric-note">
 <p><code>kidslt6</code>: APE aprox. <code>-0.26</code> puntos de probabilidad</p>
@@ -155,31 +137,31 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participacion laboral femenina (<code>inlf</code>) en un contexto de decisiones de hogar. La lectura principal se organiza por asociaciones sustantivas: presencia de hijos pequenos, educacion, experiencia e ingreso no laboral del hogar.</p>
-<p>El valor econometrico del caso no es competir entre tecnicas, sino mostrar criterio de especificacion para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en un contexto de decisiones de hogar. La lectura principal se organiza por asociaciones sustantivas: presencia de hijos pequeños, educación, experiencia e ingreso no laboral del hogar.</p>
+<p>El valor econométrico del caso no es competir entre técnicas, sino mostrar criterio de especificación para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>Como se asocia la participacion laboral con el ingreso del hogar, la educacion, la experiencia y la presencia de hijos pequenos?</p>
+<p>¿Cómo se asocia la participación laboral con el ingreso del hogar, la educación, la experiencia y la presencia de hijos pequeños?</p>
 <div class="small-note">
 <p>Resultado: <code>inlf</code> (0/1). Regresores clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>La pieza prioriza el problema sustantivo: entender patrones de participacion laboral femenina en funcion de condiciones familiares y de capital humano. La metodologia queda subordinada a esa lectura aplicada.</p>
-<p><span class="badge">Portfolio econometrico</span></p>
+<p>La pieza prioriza el problema sustantivo: entender patrones de participación laboral femenina en funcion de condiciones familiares y de capital humano. La metodología queda subordinada a esa lectura aplicada.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
-<section id="por-que-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-este-problema-importa">Por que este problema importa</h2>
-<p>La participacion laboral no depende solo de caracteristicas individuales: tambien refleja restricciones y decisiones del hogar. En especial, la presencia de hijos pequenos puede cambiar de forma marcada la disponibilidad para trabajar fuera del hogar.</p>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>La participación laboral no depende solo de características individuales: también refleja restricciones y decisiones del hogar. En especial, la presencia de hijos pequeños puede cambiar de forma marcada la disponibilidad para trabajar fuera del hogar.</p>
 <p>Una lectura profesional necesita reportar asociaciones con prudencia, sin lenguaje causal automatico y con una escala interpretable en probabilidad.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
-<p>Se trabaja con <code>mroz.dta</code>, un corte transversal clasico de economia laboral.</p>
+<p>Se trabaja con <code>mroz.dta</code>, un corte transversal clásico de economia laboral.</p>
 <ul>
 <li>Unidad de observacion: mujer/hogar</li>
 <li>Tamano de muestra: <code>N=753</code></li>
@@ -189,25 +171,25 @@ ul.task-list li input[type="checkbox"] {
 <li>Regresores clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code></li>
 </ul>
 </section>
-<section id="estrategia-empirica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empirica">Estrategia empirica</h2>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <ol type="1">
 <li>Usar MPL robusto como benchmark inicial.</li>
 <li>Estimar probit y logit para modelar respuesta binaria con rango probabilistico coherente.</li>
-<li>Reportar efectos parciales promedio (APE) como unidad principal de interpretacion.</li>
-<li>Mantener diagnosticos breves y funcionales al caso aplicado.</li>
+<li>Reportar efectos parciales promedio (APE) como unidad principal de interpretación.</li>
+<li>Mantener diagnósticos breves y funcionales al caso aplicado.</li>
 </ol>
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La lectura abre por contenido sustantivo:</p>
 <ul>
-<li><code>kidslt6</code> muestra una asociacion negativa fuerte con <code>inlf</code>: APE alrededor de <code>-0.26</code>, consistente en probit y logit.</li>
-<li><code>educ</code> y <code>exper</code> muestran asociaciones positivas y estables con la participacion laboral.</li>
-<li><code>nwifeinc</code> aparece con asociacion negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.</li>
-<li><code>kidsge6</code> no muestra una asociacion robusta de magnitud comparable.</li>
+<li><code>kidslt6</code> muestra una asociación negativa fuerte con <code>inlf</code>: APE alrededor de <code>-0.26</code>, consistente en probit y logit.</li>
+<li><code>educ</code> y <code>exper</code> muestran asociaciones positivas y estables con la participación laboral.</li>
+<li><code>nwifeinc</code> aparece con asociación negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.</li>
+<li><code>kidsge6</code> no muestra una asociación robusta de magnitud comparable.</li>
 </ul>
-<p>En segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma mas creible que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra.</p>
+<p>En segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma más creíble que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra.</p>
 </section>
 <section id="sintesis-de-magnitudes-ape" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
@@ -228,43 +210,43 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>kidslt6</code></td>
 <td style="text-align: right;">Probit <code>-0.261</code>, Logit <code>-0.258</code></td>
-<td>Asociacion negativa fuerte con participacion</td>
+<td>Asociacion negativa fuerte con participación</td>
 </tr>
 <tr class="even">
 <td><code>educ</code></td>
 <td style="text-align: right;">Probit <code>+0.039</code>, Logit <code>+0.040</code></td>
-<td>Mayor educacion se asocia con mayor participacion</td>
+<td>Mayor educación se asocia con mayor participación</td>
 </tr>
 <tr class="odd">
 <td><code>exper</code></td>
 <td style="text-align: right;">Probit <code>+0.037</code>, Logit <code>+0.037</code></td>
-<td>Mayor experiencia se asocia con mayor participacion</td>
+<td>Mayor experiencia se asocia con mayor participación</td>
 </tr>
 <tr class="even">
 <td><code>nwifeinc</code></td>
 <td style="text-align: right;">Probit <code>-0.0036</code>, Logit <code>-0.0038</code></td>
-<td>Ingreso no laboral mas alto se asocia con menor participacion</td>
+<td>Ingreso no laboral más alto se asocia con menor participación</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Los diagnosticos se usan solo como apoyo del caso:</p>
+<p>Los diagnósticos se usan solo como apoyo del caso:</p>
 <ul>
-<li>MPL genera <code>33</code> predicciones fuera de <code>[0,1]</code> (<code>4.38%</code>), lo que ilustra su limite para respuesta binaria.</li>
+<li>MPL genera <code>33</code> predicciones fuera de <code>[0,1]</code> (<code>4.38%</code>), lo que ilustra su límite para respuesta binaria.</li>
 <li>Ajuste global similar entre binarios: pseudo-<code>R2</code> aprox. <code>0.221</code> (probit) y <code>0.220</code> (logit).</li>
 </ul>
-<p>Estos elementos respaldan la eleccion de especificacion, pero no reemplazan la lectura sustantiva del fenomeno.</p>
+<p>Estos elementos respaldan la elección de especificación, pero no reemplazan la lectura sustantiva del fenomeno.</p>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
-<p>El aporte profesional de T12 no es “ganar” entre MPL, probit o logit. El aporte es mostrar criterio para elegir una especificacion coherente con una variable binaria y, despues, interpretar resultados en terminos de probabilidad con claridad y prudencia.</p>
+<p>El aporte profesional de T12 no es “ganar” entre MPL, probit o logit. El aporte es mostrar criterio para elegir una especificación coherente con una variable binaria y, después, interpretar resultados en términos de probabilidad con claridad y prudencia.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>En este caso de participacion laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decision y analisis: menor participacion con hijos pequenos, mayor participacion con educacion y experiencia, y menor participacion cuando crece el ingreso no laboral del hogar.</p>
-<p>El valor profesional de la pieza es ese criterio: elegir una especificacion coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.</p>
+<p>En este caso de participación laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decisión y análisis: menor participación con hijos pequeños, mayor participación con educación y experiencia, y menor participación cuando crece el ingreso no laboral del hogar.</p>
+<p>El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.</p>
 </section>
 
 </main>
@@ -674,5 +656,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="t12_binaria_base_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

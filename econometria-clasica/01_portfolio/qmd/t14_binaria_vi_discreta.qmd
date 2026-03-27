@@ -1,8 +1,8 @@
----
+﻿---
 title: "Fecundidad y participación laboral materna"
 subtitle: "Una lectura binaria sobre cómo cambia la asociación al admitir endogeneidad de morekids"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t14_binaria_vi_discreta"
@@ -181,3 +181,7 @@ El aporte de T14 es mostrar criterio de modelado aplicado en un problema real de
 El valor profesional de esta pieza no está en “mostrar técnica” por sí misma, sino en saber cuándo una formulación binaria con endogeneidad modifica de forma relevante la lectura aplicada de una variable clave.
 
 En T14, la historia sustantiva se mantiene (asociación negativa entre fecundidad y participación laboral materna), y la formulación endógena aporta una sensibilidad de magnitud que conviene reportar con claridad y prudencia.
+
+
+
+

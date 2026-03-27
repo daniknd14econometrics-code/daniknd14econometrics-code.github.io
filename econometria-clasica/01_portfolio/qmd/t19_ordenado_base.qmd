@@ -1,4 +1,4 @@
----
+﻿---
 title: "Asignación previsional con resultado ordinal: una lectura aplicada"
 subtitle: "Probabilidades por categoría y efectos marginales en carteras conservadoras, mixtas y más expuestas a acciones"
 author: "Daniel Méndez"
@@ -186,7 +186,7 @@ El respaldo técnico se mantiene acotado y funcional a la historia aplicada.
 
 | Diagnóstico | Evidencia | Uso en la pieza |
 |---|---:|---|
-| Relevancia conjunta del bloque explicativo | `Wald chi2(14)=25.32`, `p=0.0315` | Respalda que el modelo capta señal empírica en esta muestra |
+| Relevancia conjunta del bloque explicativo | `Wald chi2(14)=25.32`, `p=0.0315` | Respalda que el modelo capta señal empírica En esta muestra |
 | Sensibilidad de enlace | Patrón cualitativo similar en `ologit` y `oprobit` | Evita que la narrativa dependa de una elección de enlace puntual |
 | Clasificación in-sample (secundaria) | PCP aprox. `44.33%` | Se reporta solo como referencia descriptiva, no como objetivo predictivo |
 :::
@@ -204,3 +204,6 @@ Esta pieza traduce un problema financiero ordinal a un lenguaje profesional y na
 El valor de portfolio queda en esa combinación: jerarquía del resultado bien modelada, hallazgos comunicables para lectura externa y prudencia interpretativa en un contexto de corte transversal.
 
 Dado el tamaño muestral (`N=194`) y la naturaleza transversal del caso, la pieza se presenta como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra.
+
+
+

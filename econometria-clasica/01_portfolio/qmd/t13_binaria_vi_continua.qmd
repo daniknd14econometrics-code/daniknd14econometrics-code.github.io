@@ -1,8 +1,8 @@
----
+﻿---
 title: "Participación laboral femenina e ingreso no laboral del hogar"
 subtitle: "Una lectura binaria sobre cuándo tratar un regresor como potencialmente endógeno"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t13_binaria_vi_continua"
@@ -24,11 +24,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-Como se asocia la participacion laboral femenina con el ingreso no laboral del hogar y cuanto cambia esa lectura cuando se admite posible endogeneidad?
+¿Cómo se asocia la participación laboral femenina con el ingreso no laboral del hogar y cuánto cambia esa lectura cuando se admite posible endogeneidad?
 :::
 
 ::: {.hero-sub}
-La pieza organiza una lectura aplicada sobre decisiones laborales en el hogar y usa una estrategia de sensibilidad por endogeneidad, sin desplazar automaticamente el modelo base.
+La pieza organiza una lectura aplicada sobre decisiones laborales en el hogar y usa una estrategia de sensibilidad por endogeneidad, sin desplazar automáticamente el modelo base.
 :::
 :::
 
@@ -82,7 +82,7 @@ Auditoria de sensibilidad
 :::
 
 ::: {.metric-value}
-`nwifeinc` mas negativo en IV/CF
+`nwifeinc` más negativo en IV/CF
 :::
 
 ::: {.metric-note}
@@ -94,9 +94,9 @@ APE aprox. `-0.0036` (probit exogeno) vs `-0.0108` a `-0.0105` (IV/CF)
 
 ## Resumen
 
-Esta pieza estudia participacion laboral femenina (`inlf`) en relacion con ingreso no laboral del hogar, educacion, experiencia y composicion familiar. El foco principal es sustantivo: leer patrones empiricos relevantes para decisiones de hogar.
+Esta pieza estudia participación laboral femenina (`inlf`) en relación con ingreso no laboral del hogar, educación, experiencia y composicion familiar. El foco principal es sustantivo: leer patrones empiricos relevantes para decisiones de hogar.
 
-El componente metodologico se usa con prudencia. La correccion IV/CF no se presenta como fin en si mismo, sino como auditoria de sensibilidad para evaluar si la lectura aplicada cambia de forma material.
+El componente metodologico se usa con prudencia. La correccion IV/CF no se presenta como fin en sí mismo, sino como auditoría de sensibilidad para evaluar si la lectura aplicada cambia de forma material.
 
 :::: {.quick-grid}
 
@@ -113,18 +113,18 @@ Resultado: `inlf` (0/1). Variable clave: `nwifeinc`. Controles: `educ`, `exper`,
 ::: {.section-box}
 ## Idea central
 
-La econometria se ordena al caso aplicado: primero entender la historia laboral y familiar, despues evaluar si tratar `nwifeinc` como potencialmente endogena cambia de manera sustantiva la lectura en probabilidades.
+La econometría se ordena al caso aplicado: primero entender la historia laboral y familiar, después evaluar si tratar `nwifeinc` como potencialmente endógena cambia de manera sustantiva la lectura en probabilidades.
 
-<span class="badge">Portfolio econometrico</span>
+<span class="badge">Portfolio econométrico</span>
 :::
 
 ::::
 
-## Por que este problema importa
+## Por qué este problema importa
 
-La participacion laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequenos pueden alterar de forma marcada esa decision.
+La participación laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequeños pueden alterar de forma marcada esa decisión.
 
-Para lectura profesional, importa distinguir entre un patron sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados.
+Para lectura profesional, importa distinguir entre un patrón sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados.
 
 ## Datos y variables
 
@@ -132,56 +132,62 @@ Se usa `mroz.dta` en corte transversal.
 
 - Unidad de observacion: mujer/hogar
 - Tamano de muestra: `N=753`
-- Contexto temporal: informacion de referencia para 1975
+- Contexto temporal: información de referencia para 1975
 - Variable de resultado: `inlf` (`1` participa, `0` no participa)
 - Variables clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`
-- Instrumentos para auditoria de endogeneidad: `huseduc` (principal), `motheduc`, `fatheduc`
+- Instrumentos para auditoría de endogeneidad: `huseduc` (principal), `motheduc`, `fatheduc`
 
-## Estrategia empirica
+## Estrategia empírica
 
 1. Estimar probit exogeno como lectura base y reportar APEs.
-2. Tratar `nwifeinc` como potencialmente endogena mediante enfoques IV/CF para comparar magnitudes.
-3. Mantener interpretacion en terminos de probabilidad, evitando lectura causal automatica.
-4. Usar diagnosticos solo como respaldo de decision aplicada.
+2. Tratar `nwifeinc` como potencialmente endógena mediante enfoques IV/CF para comparar magnitudes.
+3. Mantener interpretación en términos de probabilidad, evitando lectura causal automatica.
+4. Usar diagnósticos solo como respaldo de decisión aplicada.
 
 ## Resultados principales
 
 La lectura sustantiva aparece con claridad:
 
-- `kidslt6` mantiene una asociacion negativa fuerte con la participacion laboral (APE alrededor de `-0.25`).
+- `kidslt6` mantiene una asociación negativa fuerte con la participación laboral (APE alrededor de `-0.25`).
 - `educ` y `exper` muestran asociaciones positivas y estables en los modelos comparados.
-- `nwifeinc` aparece con asociacion negativa con `inlf`.
-- Al pasar de probit exogeno a CF/IV-probit, el efecto marginal asociado a `nwifeinc` se vuelve mas negativo: de aprox. `-0.0036` a un rango cercano a `-0.0108` / `-0.0105`.
+- `nwifeinc` aparece con asociación negativa con `inlf`.
+- Al pasar de probit exogeno a CF/IV-probit, el efecto marginal asociado a `nwifeinc` se vuelve más negativo: de aprox. `-0.0036` a un rango cercano a `-0.0108` / `-0.0105`.
 
-En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como senal automatica de que un enfoque deba reemplazar al otro.
+En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro.
 
 ::: {.table-box}
 ## Sintesis de magnitudes (APE)
 
 | Variable | Probit exogeno | IV/CF (rango) | Lectura aplicada |
 |---|---:|---:|---|
-| `kidslt6` | `-0.261` | `-0.253` a `-0.247` | Menor participacion con hijos pequenos |
-| `educ` | `+0.039` | `+0.049` a `+0.051` | Mayor educacion, mayor participacion |
-| `exper` | `+0.037` | `+0.034` a `+0.035` | Mayor experiencia, mayor participacion |
-| `nwifeinc` | `-0.0036` | `-0.0108` a `-0.0105` | Asociacion negativa, mas intensa bajo IV/CF |
+| `kidslt6` | `-0.261` | `-0.253` a `-0.247` | Menor participación con hijos pequeños |
+| `educ` | `+0.039` | `+0.049` a `+0.051` | Mayor educación, mayor participación |
+| `exper` | `+0.037` | `+0.034` a `+0.035` | Mayor experiencia, mayor participación |
+| `nwifeinc` | `-0.0036` | `-0.0108` a `-0.0105` | Asociacion negativa, más intensa bajo IV/CF |
 :::
 
 ## Diagnosticos de respaldo
 
-Los diagnosticos se mantienen deliberadamente subordinados al caso aplicado:
+Los diagnósticos se mantienen deliberadamente subordinados al caso aplicado:
 
 - Relevancia instrumental: evidencia fuerte en primera etapa (`F(3,743)=16.67`, `p<0.001`).
 - Validez conjunta (sobreidentificacion): sin senales claras de invalidez (`Score chi2(2)=0.489`, `p=0.783`).
 - Exogeneidad de `nwifeinc`: no se rechaza de forma robusta (tests en torno a `p=0.17` a `p=0.22`).
 
-Por eso, la correccion IV/CF se lee como auditoria de sensibilidad y no como reemplazo automatico del modelo base.
+Por eso, la correccion IV/CF se lee como auditoría de sensibilidad y no como reemplazo automatico del modelo base.
 
 ## Lectura profesional
 
-El valor profesional del caso es mostrar criterio de modelado aplicado: sostener primero la historia empirica del fenomeno y, recien despues, verificar si la correccion por endogeneidad cambia materialmente la lectura.
+El valor profesional del caso es mostrar criterio de modelado aplicado: sostener primero la historia empírica del fenomeno y, recien después, verificar si la correccion por endogeneidad cambia materialmente la lectura.
 
-En T13, la historia sustantiva principal se mantiene (hijos pequenos, educacion y experiencia), mientras que la diferencia en `nwifeinc` abre una sensibilidad relevante de magnitud que conviene reportar con prudencia.
+En T13, la historia sustantiva principal se mantiene (hijos pequeños, educación y experiencia), mientras que la diferencia en `nwifeinc` abre una sensibilidad relevante de magnitud que conviene reportar con prudencia.
 
 ## Cierre
 
-Esta pieza no busca "ganar" entre probit e IV-probit. Busca mostrar una decision econometrica profesional: cuando una posible endogeneidad amerita escalar complejidad y cuando conviene tratar esa complejidad como analisis de sensibilidad para no sobrerreaccionar en la interpretacion aplicada.
+Esta pieza no busca "ganar" entre probit e IV-probit. Busca mostrar una decisión econométrica profesional: cuando una posible endogeneidad amerita escalar complejidad y cuando conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada.
+
+
+
+
+
+

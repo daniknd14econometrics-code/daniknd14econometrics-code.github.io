@@ -1,4 +1,4 @@
----
+﻿---
 title: "Cuando MCO no alcanza"
 subtitle: "Educación endógena y salario con variables instrumentales"
 author: "Daniel Méndez"
@@ -103,7 +103,7 @@ Este caso analiza cómo cambia la estimación del retorno de la educación sobre
 ¿Cómo cambia la estimación del retorno de la educación sobre el salario cuando tratamos a la educación como potencialmente endógena?
 
 ::: {.small-note}
-Variable dependiente: `lwage`. Variable endógena: `educ`. Controles: `exper`, `expersq`. Instrumentos: `meduc`, `feduc`.
+Variable dependiente: `lwage` (log del salario por hora). Variable endógena: `educ`. Controles: `exper`, `expersq`. Instrumentos: `meduc`, `feduc`.
 :::
 :::
 
@@ -130,7 +130,7 @@ La base corresponde a un ejercicio clásico de economía laboral con microdatos 
 Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados.
 En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.
 
-- Variable dependiente: `lwage`
+- Variable dependiente: `lwage` (log del salario por hora)
 - Variable endógena de interés: `educ`
 - Controles: `exper`, `expersq`
 - Instrumentos excluidos: `meduc`, `feduc`
@@ -209,4 +209,7 @@ En otras palabras, el valor del caso no está solo en la técnica, sino en el cr
 
 Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
 En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta causal que se quiere responder.
+
+
+
 
