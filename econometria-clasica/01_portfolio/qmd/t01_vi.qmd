@@ -119,7 +119,7 @@ Un MCO simple puede mezclar el efecto de la educación con habilidad u otros fac
 
 ## Por qué este problema importa
 
-En una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO deja de tener interpretación causal.
+En una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO queda sesgado por endogeneidad.
 
 Ese es el problema central del caso: distinguir entre una simple asociación y un efecto estimado con una estrategia más creíble de identificación.
 
@@ -147,7 +147,7 @@ La secuencia del análisis es la siguiente:
 
 ## Qué pasa con un análisis ingenuo
 
-Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno causal.
+Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno de la educación libre de sesgo.
 
 La lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.
 
@@ -158,7 +158,7 @@ En MCO, el coeficiente estimado de `educ` es aproximadamente 0.078. Cuando se in
 
 Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV.
 En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV.
-No es una prueba causal definitiva por sí sola, pero sí una señal fuerte de que tratar `educ` como exógena puede subestimar de manera relevante el efecto de interés.
+No es evidencia definitiva por sí sola, pero sí una señal fuerte de que tratar `educ` como exógena puede subestimar de manera relevante el efecto de interés.
 
 | Modelo | Coeficiente de `educ` | Error estándar | p-valor | N |
 |---|---:|---:|---:|---:|
@@ -208,7 +208,7 @@ En otras palabras, el valor del caso no está solo en la técnica, sino en el cr
 ## Cierre
 
 Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
-En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta causal que se quiere responder.
+En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.
 
 
 
