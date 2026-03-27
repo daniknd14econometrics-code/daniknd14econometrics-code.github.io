@@ -1,0 +1,32 @@
+﻿project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Portfolio de Econometría Aplicada — Daniel Méndez"
+  navbar:
+    left:
+      - text: "Inicio"
+        href: index.qmd
+      - text: "Econometría"
+        href: econometria/index.qmd
+      - text: "Causalidad"
+        href: causalidad.qmd
+      - text: "Machine Learning"
+        href: machine-learning.qmd
+      - text: "Sobre mí"
+        href: sobre-mi.qmd
+  page-footer:
+    left: "Sitio de portfolio profesional"
+    right: "Actualización periódica"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    smooth-scroll: true
+    link-external-newwindow: true
+
+lang: es
+

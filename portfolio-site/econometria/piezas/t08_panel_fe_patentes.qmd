@@ -1,0 +1,41 @@
+﻿---
+title: "T08 · Cuando rinde la I+D: evidencia de patentamiento en panel de firmas"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Innovación empresarial con efectos fijos y dinámica temporal
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T08
+:::
+::: {.meta-item}
+**Tema:** I+D y patentamiento
+:::
+::: {.meta-item}
+**Método:** Fixed Effects en panel
+:::
+::: {.meta-item}
+**Datos:** Panel de firmas
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t08_panel_fe_patentes.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

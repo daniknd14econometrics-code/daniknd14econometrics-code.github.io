@@ -1,0 +1,41 @@
+﻿---
+title: "T07 · Efectos fijos en panel de firmas: identificación within e inferencia robusta"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Subsidios de capacitación y desperdicio productivo
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T07
+:::
+::: {.meta-item}
+**Tema:** Productividad, subsidios y panel corto
+:::
+::: {.meta-item}
+**Método:** Fixed Effects + errores cluster
+:::
+::: {.meta-item}
+**Datos:** Panel de plantas/firms
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t07_panel_fe_completo.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

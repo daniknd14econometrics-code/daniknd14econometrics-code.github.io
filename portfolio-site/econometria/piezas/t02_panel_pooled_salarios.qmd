@@ -1,0 +1,41 @@
+﻿---
+title: "T02 · Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Inferencia en datos de panel con errores robustos y cluster por individuo
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T02
+:::
+::: {.meta-item}
+**Tema:** Salarios en panel y benchmark inicial
+:::
+::: {.meta-item}
+**Método:** Pooled OLS con VCE robusta/cluster
+:::
+::: {.meta-item}
+**Datos:** Panel corto (individuos)
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t02_panel_pooled_salarios.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

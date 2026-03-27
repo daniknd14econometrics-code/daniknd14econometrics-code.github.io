@@ -1,0 +1,41 @@
+﻿---
+title: "T19 · Asignación previsional con resultado ordinal: una lectura aplicada"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Probabilidades por categoría y efectos marginales
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T19
+:::
+::: {.meta-item}
+**Tema:** Decisión previsional ordinal
+:::
+::: {.meta-item}
+**Método:** Modelo logit/probit ordenado
+:::
+::: {.meta-item}
+**Datos:** Microdatos individuales
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t19_ordenado_base.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

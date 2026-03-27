@@ -1,0 +1,41 @@
+﻿---
+title: "T06 · Efectos fijos en panel salarial: qué identifica la variación within"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Control de heterogeneidad fija y lectura metodológica prudente
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T06
+:::
+::: {.meta-item}
+**Tema:** Identificación within en salarios
+:::
+::: {.meta-item}
+**Método:** Fixed Effects (Within)
+:::
+::: {.meta-item}
+**Datos:** Panel salarial
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t06_panel_fe_inicial.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

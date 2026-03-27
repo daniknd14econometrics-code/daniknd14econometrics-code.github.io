@@ -1,0 +1,41 @@
+﻿---
+title: "T11 · Tarifas y demanda de pasajeros en rutas aéreas"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Cuándo tratar el precio como endógeno en panel
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T11
+:::
+::: {.meta-item}
+**Tema:** Demanda y endogeneidad de precios
+:::
+::: {.meta-item}
+**Método:** IV en datos de panel
+:::
+::: {.meta-item}
+**Datos:** Panel de rutas aéreas
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t11_panel_iv.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

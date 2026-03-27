@@ -1,0 +1,41 @@
+﻿---
+title: "T14 · Fecundidad y participación laboral materna"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Asociación al admitir endogeneidad de variable discreta
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T14
+:::
+::: {.meta-item}
+**Tema:** Endogeneidad en variable binaria
+:::
+::: {.meta-item}
+**Método:** Modelo binario con VI discreta
+:::
+::: {.meta-item}
+**Datos:** Microdatos de hogares
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t14_binaria_vi_discreta.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

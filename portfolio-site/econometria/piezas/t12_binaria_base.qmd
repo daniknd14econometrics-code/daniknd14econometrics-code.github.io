@@ -1,0 +1,41 @@
+﻿---
+title: "T12 · Participación laboral femenina y estructura del hogar"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Modelos binarios sobre ingreso, experiencia e hijos
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T12
+:::
+::: {.meta-item}
+**Tema:** Oferta laboral femenina
+:::
+::: {.meta-item}
+**Método:** Logit/Probit binario
+:::
+::: {.meta-item}
+**Datos:** Microdatos de hogares
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t12_binaria_base.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

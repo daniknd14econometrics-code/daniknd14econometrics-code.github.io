@@ -1,0 +1,41 @@
+﻿---
+title: "T09 · Subsidios de capacitación y desperdicio productivo en plantas industriales"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Comparación FE, RE y CRE (Mundlak)
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T09
+:::
+::: {.meta-item}
+**Tema:** Heterogeneidad persistente y modelos de panel
+:::
+::: {.meta-item}
+**Método:** Comparación FE vs RE vs CRE
+:::
+::: {.meta-item}
+**Datos:** Panel corto de plantas
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t09_panel_re_fe_cre.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

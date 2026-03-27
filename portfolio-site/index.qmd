@@ -1,0 +1,17 @@
+﻿---
+title: "Inicio"
+---
+
+::: {.hero}
+# Portfolio de Econometría Aplicada — Daniel Méndez
+
+Economista especializado en análisis cuantitativo aplicado. Este sitio reúne trabajos en econometría, causalidad y machine learning, presentados en un formato ordenado y orientado a la exposición clara de preguntas, métodos y resultados.
+
+La estructura del sitio está organizada por áreas temáticas para facilitar una lectura secuencial de cada pieza y su referencia metodológica.
+
+<a class="cta-link" href="econometria/index.qmd">Ver sección de Econometría</a>
+:::
+
+## Propósito del sitio
+
+Reunir y ordenar trabajos aplicados en un formato de consulta clara, con foco en la descripción de preguntas empíricas, estrategia metodológica y resultados principales.

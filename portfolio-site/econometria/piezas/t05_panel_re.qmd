@@ -1,0 +1,41 @@
+﻿---
+title: "T05 · Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+RE en salarios con lectura prudente de supuestos
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T05
+:::
+::: {.meta-item}
+**Tema:** Comparación conceptual FE/RE en salarios
+:::
+::: {.meta-item}
+**Método:** Random Effects (RE-GLS)
+:::
+::: {.meta-item}
+**Datos:** Panel salarial
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t05_panel_re.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

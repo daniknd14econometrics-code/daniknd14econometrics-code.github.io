@@ -1,0 +1,41 @@
+﻿---
+title: "T16 · Trayectorias de actividad en un panel laboral corto"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Probabilidades de estudio, hogar y empleo
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T16
+:::
+::: {.meta-item}
+**Tema:** Elección ocupacional con múltiples estados
+:::
+::: {.meta-item}
+**Método:** Logit multinomial
+:::
+::: {.meta-item}
+**Datos:** Panel laboral corto
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t16_multinomial_base.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

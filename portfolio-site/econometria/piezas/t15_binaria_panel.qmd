@@ -1,0 +1,41 @@
+﻿---
+title: "T15 · Participación laboral femenina y estructura del hogar en un panel corto"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Qué cambia al modelar heterogeneidad no observada
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T15
+:::
+::: {.meta-item}
+**Tema:** Panel binario y heterogeneidad individual
+:::
+::: {.meta-item}
+**Método:** Pooled/RE/CRE en respuesta binaria
+:::
+::: {.meta-item}
+**Datos:** Panel corto de mujeres
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t15_binaria_panel.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

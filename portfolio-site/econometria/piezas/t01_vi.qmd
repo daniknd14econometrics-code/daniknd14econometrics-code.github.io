@@ -1,0 +1,41 @@
+﻿---
+title: "T01 · Cuando MCO no alcanza"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Educación endógena y salario con variables instrumentales
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T01
+:::
+::: {.meta-item}
+**Tema:** Retornos a la educación y endogeneidad
+:::
+::: {.meta-item}
+**Método:** IV / 2SLS
+:::
+::: {.meta-item}
+**Datos:** Corte transversal (microdatos laborales)
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t01_vi.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+

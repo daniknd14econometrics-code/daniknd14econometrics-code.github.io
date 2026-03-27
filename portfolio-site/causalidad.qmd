@@ -1,0 +1,7 @@
+﻿---
+title: "Causalidad"
+---
+
+::: {.placeholder-box}
+Contenido de inferencia causal en preparación. Próximamente se incorporarán estudios con estrategias de identificación y evaluación de robustez.
+:::

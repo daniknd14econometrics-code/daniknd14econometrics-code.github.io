@@ -1,0 +1,41 @@
+﻿---
+title: "T13 · Participación laboral femenina e ingreso no laboral del hogar"
+---
+
+[← Volver al índice de Econometría](../index.qmd)
+
+Modelo binario con regresor potencialmente endógeno
+
+::: {.piece-meta}
+::: {.meta-item}
+**Taller:** T13
+:::
+::: {.meta-item}
+**Tema:** Endogeneidad en variable continua
+:::
+::: {.meta-item}
+**Método:** Función de control en modelo binario
+:::
+::: {.meta-item}
+**Datos:** Microdatos de hogares
+:::
+::: {.meta-item}
+**Software:** Stata
+:::
+:::
+
+## Documento completo (HTML)
+
+Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+
+[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t13_binaria_vi_continua.html){target="_blank"}
+
+::: {.small-note}
+El enlace abre el documento en una pestaña nueva.
+:::
+
+---
+
+*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
+
