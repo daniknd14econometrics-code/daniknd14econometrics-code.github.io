@@ -178,7 +178,7 @@ Estos diagnósticos se reportan solo como respaldo de lectura aplicada:
 
 ## Lectura profesional
 
-El aporte de T16 no es "mostrar multinomial" por sí mismo. El aporte es traducir una decisión multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva útil para un lector externo.
+El aporte de T16 no es presentar un multinomial por sí mismo. El aporte es traducir una decisión multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva útil para un lector externo.
 
 Tambien deja una práctica profesional importante: explicitar limites. Con panel tratado como pooled y `cluster(id)`, la pieza ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es más debil.
 
@@ -186,8 +186,7 @@ Tambien deja una práctica profesional importante: explicitar limites. Con panel
 
 Esta pieza convierte un problema de elección nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.
 
-El valor de portfolio queda en una traduccion rigurosa y útil para lectura profesional: panel pooled con `cluster(id)`, probabilidades interpretables y limites de discriminacion explicitados con prudencia.
-
+El valor del caso queda en una traduccion rigurosa y útil para lectura profesional: panel pooled con `cluster(id)`, probabilidades interpretables y limites de discriminacion explicitados con prudencia.
 
 
 

@@ -168,7 +168,7 @@ El coeficiente de `educ` se mantiene alrededor de 0.09-0.10 en las especificacio
 | FGLS AR(1) hetero panel (contraste) | 0.0939 | 0.0048 | 0.000 | 4360 |
 :::
 
-En lectura sustantiva de este panel, los signos estimados son consistentes con asociaciones salariales conocidas en datos laborales: mayor `educ` se asocia con salarios más altos, pertenecer a `union` se asocia con una prima salarial positiva y `married` aparece asociado con mayor salario promedio observado. Estas asociaciones son informativas para lectura aplicada del mercado laboral de la muestra, sin interpretarlas aquí como efectos causales estructurales.
+En lectura sustantiva de este panel, los signos estimados son consistentes con asociaciones salariales conocidas en datos laborales: mayor `educ` se asocia con salarios más altos, pertenecer a `union` se asocia con una prima salarial positiva y `married` aparece asociado con mayor salario promedio observado. Estas asociaciones son informativas para lectura aplicada del mercado laboral de la muestra, sin leerlas automáticamente como libres de sesgo.
 
 ::: {.table-box}
 ## Diagnosticos clave
@@ -204,7 +204,6 @@ Este caso muestra una práctica clave de econometría aplicada en panel: antes d
 El pooled OLS corregido por cluster no es el destino final, pero si un punto de partida profesionalmente útil cuando se comunica evidencia con criterio.
 
 Para un analista aplicado, la leccion práctica es concreta: en panel salarial, no alcanza con "tener coeficientes"; hay que reportarlos con una estrategia de inferencia coherente con el tipo de datos para que la decisión técnica también sea una decisión profesional defendible.
-
 
 
 

@@ -193,14 +193,13 @@ T4 deja un criterio aplicado claro:
 - Ese benchmark no resuelve por sí mismo la identificación cuando hay riesgo de `c_i` correlacionado con regresores.
 - Las alternativas que eliminan `c_i` (como diferencias) pueden tener restricciones de capacidad empírica según la estructura de variación de la base.
 
-Por eso, el resultado debe comunicarse como evidencia de referencia econométrica, no como cierre causal.
+Por eso, el resultado debe comunicarse como evidencia de referencia econométrica, no como conclusión cerrada.
 
 ## Cierre
 
 Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.
 
 El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled.
-
 
 
 

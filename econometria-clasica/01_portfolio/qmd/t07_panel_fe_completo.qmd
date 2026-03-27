@@ -163,7 +163,7 @@ La lectura final no descansa en un coeficiente puntual, sino en la evidencia con
 
 En términos aplicados, los signos estimados son compatibles con una reduccion de `lscrap` asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precisión estadística se debilita.
 
-Por eso, la lectura profesional para desempeño productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion causal.
+Por eso, la lectura profesional para desempeño productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion concluyente.
 
 | Bloque | Evidencia | Lectura |
 |---|---:|---|
@@ -195,8 +195,7 @@ Esta secuencia evita dos excesos frecuentes: tratar la significancia convenciona
 
 ## Cierre
 
-La contribución de T7 no es establecer causalidad definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.
-
+La contribución de T7 no es establecer una conclusión definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.
 
 
 

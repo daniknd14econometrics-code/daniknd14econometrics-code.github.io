@@ -142,7 +142,7 @@ Se trabaja con `labsup.dta` en corte transversal.
 1. Estimar una referencia binaria exógena (probit) para lectura base en probabilidades.
 2. Incorporar una formulación binaria con endogeneidad para `morekids` (biprobit/eprobit).
 3. Mantener `MPL-IV` como benchmark auxiliar de contraste, sin rol protagónico.
-4. Interpretar resultados como sensibilidad sustantiva de magnitudes, evitando lenguaje causal automático.
+4. Interpretar resultados como sensibilidad sustantiva de magnitudes, evitando sobreinterpretaciones automáticas.
 
 ## Resultados principales
 
@@ -151,7 +151,7 @@ La lectura se ordena en cuatro pasos:
 1. Aparece una asociación negativa entre `morekids` y `worked`.
 2. Esa asociación se vuelve más negativa cuando se modela endogeneidad binaria.
 3. La diferencia debe leerse con prudencia porque cambian los supuestos y el encuadre econométrico.
-4. El foco de la pieza es sensibilidad sustantiva del caso aplicado, no seleccionar un “método ganador”.
+4. El foco de la pieza es sensibilidad sustantiva del caso aplicado, no seleccionar un método superior.
 
 ::: {.table-box}
 ## Síntesis de magnitudes (APE)
@@ -174,14 +174,13 @@ Este bloque se mantiene subordinado al caso aplicado:
 
 ## Lectura profesional
 
-El aporte de T14 es mostrar criterio de modelado aplicado en un problema real de trabajo y fecundidad. La pieza no busca exhibir complejidad técnica, sino evaluar si el tratamiento econométrico de `morekids` cambia materialmente la lectura de una variable central para el análisis de hogar.
+El aporte de T14 es mostrar criterio de modelado aplicado en un problema real de trabajo y fecundidad. La pieza prioriza evaluar si el tratamiento econométrico de `morekids` cambia materialmente la lectura de una variable central para el análisis de hogar.
 
 ## Cierre
 
-El valor profesional de esta pieza no está en “mostrar técnica” por sí misma, sino en saber cuándo una formulación binaria con endogeneidad modifica de forma relevante la lectura aplicada de una variable clave.
+El valor profesional de esta pieza está en saber cuándo una formulación binaria con endogeneidad modifica de forma relevante la lectura aplicada de una variable clave.
 
 En T14, la historia sustantiva se mantiene (asociación negativa entre fecundidad y participación laboral materna), y la formulación endógena aporta una sensibilidad de magnitud que conviene reportar con claridad y prudencia.
-
 
 
 

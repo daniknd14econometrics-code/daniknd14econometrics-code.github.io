@@ -96,7 +96,7 @@ Reasignan probabilidad entre cartera conservadora y cartera más expuesta a acci
 
 Esta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (`pctstck`) toma tres categorías ordenadas (`0`, `50`, `100`). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.
 
-El valor de portfolio está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin lenguaje causal.
+El valor del caso está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin sobreinterpretaciones.
 
 :::: {.quick-grid}
 
@@ -175,7 +175,7 @@ La lectura aplicada se organiza en cuatro mensajes:
 | `prftshr=1` (plan con profit sharing) vs `0` | `-0.152` | `-0.014` | `+0.166` | Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones |
 :::
 
-Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican interpretación causal.
+Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente.
 
 ## Diagnósticos de respaldo
 
@@ -195,15 +195,13 @@ El respaldo técnico se mantiene acotado y funcional a la historia aplicada.
 
 El aporte de T19 es mostrar criterio econométrico aplicado: cuando el resultado tiene jerarquía natural, conviene preservar ese orden y comunicar resultados como probabilidades y reasignaciones de probabilidad entre categorías.
 
-En esta aplicación previsional, la lectura útil para un tercero no está en "ganar" con una técnica, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación.
+En esta aplicación previsional, la lectura útil para un tercero no está en presentar una técnica como superior, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación.
 
 ## Cierre
 
-Esta pieza traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APEs comparables, con foco en decisión aplicada y sin sobreventa metodológica.
+Esta pieza traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APEs comparables, con foco en decisión aplicada y sin exagerar el alcance metodológico.
 
-El valor de portfolio queda en esa combinación: jerarquía del resultado bien modelada, hallazgos comunicables para lectura externa y prudencia interpretativa en un contexto de corte transversal.
+El valor del caso queda en esa combinación: jerarquía del resultado bien modelada, hallazgos comunicables para lectura externa y prudencia interpretativa en un contexto de corte transversal.
 
 Dado el tamaño muestral (`N=194`) y la naturaleza transversal del caso, la pieza se presenta como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra.
-
-
 

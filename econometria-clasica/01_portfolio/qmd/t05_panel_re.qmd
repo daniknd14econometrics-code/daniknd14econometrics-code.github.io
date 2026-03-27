@@ -101,7 +101,7 @@ Este caso presenta una especificación de efectos aleatorios para salarios en pa
 ::: {.section-box}
 ## Pregunta
 
-¿Cómo usar RE en un panel salarial para ganar eficiencia y mantener variables invariantes en el tiempo, sin sobreafirmar identificación cuando no se contrasta RE frente a FE?
+¿Cómo usar RE en un panel salarial para obtener eficiencia y mantener variables invariantes en el tiempo, sin sobreafirmar identificación cuando no se contrasta RE frente a FE?
 
 ::: {.small-note}
 Variable dependiente: `lwage` (log del salario por hora). Regresores centrales: `educ`, `exper`, `expersq`, `union`, `married`, `black`. Panel: `nr` (1980-1987).
@@ -163,7 +163,7 @@ La evidencia principal del caso se concentra en dos hechos:
 
 Como referencia de magnitudes, el coeficiente de `educ` en RE se ubica alrededor de 0.100 tanto en versión clásica como robusta, mientras cambian los errores estándar al robustecer la inferencia.
 
-En lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y `lwage` dentro de esta especificación RE; no debe leerse como un efecto causal cerrado ni extrapolarse fuera de este marco sin evidencia adicional.
+En lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y `lwage` dentro de esta especificación RE; no debe leerse automáticamente como una estimación libre de sesgo ni extrapolarse fuera de este marco sin evidencia adicional.
 
 | Modelo | Coef. `educ` | Error estándar | N |
 |---|---:|---:|---:|
@@ -192,7 +192,6 @@ Pero la validez econométrica de esa elección sigue siendo condicional al supue
 ## Cierre
 
 Esta pieza posiciona a RE como una especificación operativa bajo un supuesto fuerte, no como cierre definitivo de identificación. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como `educ` y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explícita el supuesto `corr(c_i, x_it)=0`, por ejemplo con una prueba tipo Hausman.
-
 
 
 

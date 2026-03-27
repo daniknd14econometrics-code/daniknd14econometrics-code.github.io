@@ -116,7 +116,7 @@ Variable dependiente: `lwage` (log del salario por hora). Regresores con variaci
 ## Idea central
 
 FE mejora el problema de sesgo por heterogeneidad fija no observada cuando esa heterogeneidad puede correlacionarse con regresores.  
-Ese avance no vuelve causal por sí mismo el resultado ni resuelve automáticamente otras fuentes de endogeneidad en variables que cambian en el tiempo.
+Ese avance no vuelve automáticamente insesgado el resultado ni resuelve otras fuentes de endogeneidad en variables que cambian en el tiempo.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -174,7 +174,7 @@ La evidencia principal del taller descansa en tres hechos:
 | Estructura panel | `F(544,3811)=9.71`, `p=0.0000` | Rechazo fuerte de `all u_i=0`; pooled simple es insuficiente |
 :::
 
-En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula `exper` en su propia trayectoria, su `lwage` tiende a aumentar a una tasa decreciente (`expersq < 0`); cuando cambia su condición de `union` de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia `married` de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por sí mismos.
+En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula `exper` en su propia trayectoria, su `lwage` tiende a aumentar a una tasa decreciente (`expersq < 0`); cuando cambia su condición de `union` de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia `married` de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse automáticamente como libres de sesgo.
 
 ::: {.table-box}
 ## Hallazgos secundarios y especificación
@@ -196,7 +196,7 @@ En FE con `c.educ##i.year`, las interacciones aparecen sin evidencia estadístic
 T6 consolida una regla aplicada de panel:
 
 - FE es una estrategia coherente cuando preocupa `c_i` correlacionado con regresores.
-- Esa coherencia no habilita, por si sola, una afirmacion causal.
+- Esa coherencia no habilita, por si sola, una afirmacion concluyente.
 - En esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.
 
 La conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.
@@ -205,8 +205,7 @@ La conclusión metodológica es deliberadamente prudente: FE organiza mejor la i
 
 Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
 
-Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance causal.
-
+Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.
 
 
 

@@ -124,7 +124,7 @@ La pieza prioriza el problema sustantivo: entender patrones de participación la
 
 La participación laboral no depende solo de características individuales: también refleja restricciones y decisiones del hogar. En especial, la presencia de hijos pequeños puede cambiar de forma marcada la disponibilidad para trabajar fuera del hogar.
 
-Una lectura profesional necesita reportar asociaciones con prudencia, sin lenguaje causal automatico y con una escala interpretable en probabilidad.
+Una lectura profesional necesita reportar asociaciones con prudencia, sin sobreinterpretaciones automáticas y con una escala interpretable en probabilidad.
 
 ## Datos y variables
 
@@ -177,14 +177,13 @@ Estos elementos respaldan la elección de especificación, pero no reemplazan la
 
 ## Lectura profesional
 
-El aporte profesional de T12 no es "ganar" entre MPL, probit o logit. El aporte es mostrar criterio para elegir una especificación coherente con una variable binaria y, después, interpretar resultados en términos de probabilidad con claridad y prudencia.
+El aporte profesional de T12 no es plantear una competencia entre MPL, probit y logit. El aporte es mostrar criterio para elegir una especificación coherente con una variable binaria y, después, interpretar resultados en términos de probabilidad con claridad y prudencia.
 
 ## Cierre
 
 En este caso de participación laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decisión y análisis: menor participación con hijos pequeños, mayor participación con educación y experiencia, y menor participación cuando crece el ingreso no laboral del hogar.
 
 El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.
-
 
 
 

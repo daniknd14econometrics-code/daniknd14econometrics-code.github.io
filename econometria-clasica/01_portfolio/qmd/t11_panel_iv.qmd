@@ -177,7 +177,7 @@ Estos diagnósticos se presentan de forma breve para respaldar la lectura del ca
 
 ## Lectura profesional
 
-El aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es "ganar" FE, RE o IV, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.
+El aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es plantear FE, RE e IV como una competencia, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.
 
 En esta aplicación, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empírico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas.
 
@@ -186,7 +186,6 @@ En esta aplicación, IV se mantiene como contraste relevante y bien justificado 
 La pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.
 
 Ese es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real.
-
 
 
 

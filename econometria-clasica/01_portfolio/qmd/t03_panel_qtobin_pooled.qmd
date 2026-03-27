@@ -112,7 +112,7 @@ Variable dependiente: `ikb` (I/K). Variables de interés: `qb` y `qb_sq` (q de T
 ## Idea central
 
 En este caso, la inferencia y la identificación no son lo mismo.  
-Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por `c_i` no observado y no es una estrategia de identificación causal.
+Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por `c_i` no observado y no resuelve por sí solo el problema de identificación.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -125,7 +125,7 @@ En decisiones de inversión, la q de Tobin suele leerse como señal de oportunid
 
 La relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.
 
-Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia causal.
+Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia concluyente.
 
 ## Datos y variables
 
@@ -148,7 +148,7 @@ La secuencia aplicada en T3 fue:
 4. Comparar forma lineal vs cuadratica en `qb`.
 5. Mantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.
 
-Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del portfolio.
+Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del ejercicio.
 
 ## Qué pasa con un análisis ingenuo
 
@@ -201,8 +201,7 @@ Esta separacion entre inferencia valida y limitaciones de identificación es el 
 
 T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.
 
-Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no un cierre causal: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.
-
+Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.
 
 
 

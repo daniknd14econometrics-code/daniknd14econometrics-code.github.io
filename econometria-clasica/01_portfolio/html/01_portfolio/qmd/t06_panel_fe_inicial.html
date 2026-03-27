@@ -170,7 +170,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
 <p>FE mejora el problema de sesgo por heterogeneidad fija no observada cuando esa heterogeneidad puede correlacionarse con regresores.<br>
-Ese avance no vuelve causal por sí mismo el resultado ni resuelve automáticamente otras fuentes de endogeneidad en variables que cambian en el tiempo.</p>
+Ese avance no vuelve automáticamente insesgado el resultado ni resuelve otras fuentes de endogeneidad en variables que cambian en el tiempo.</p>
 <p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
@@ -250,7 +250,7 @@ Ese avance no vuelve causal por sí mismo el resultado ni resuelve automáticame
 </tbody>
 </table>
 </section>
-<p>En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula <code>exper</code> en su propia trayectoria, su <code>lwage</code> tiende a aumentar a una tasa decreciente (<code>expersq &lt; 0</code>); cuando cambia su condición de <code>union</code> de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia <code>married</code> de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse como efectos causales por sí mismos.</p>
+<p>En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula <code>exper</code> en su propia trayectoria, su <code>lwage</code> tiende a aumentar a una tasa decreciente (<code>expersq &lt; 0</code>); cuando cambia su condición de <code>union</code> de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia <code>married</code> de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse automáticamente como libres de sesgo.</p>
 <section id="hallazgos-secundarios-y-especificación" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-especificación">Hallazgos secundarios y especificación</h2>
 <p>Los contrastes temporales se reportan como chequeos auxiliares, subordinados al mensaje principal del caso.</p>
@@ -293,7 +293,7 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 <p>T6 consolida una regla aplicada de panel:</p>
 <ul>
 <li>FE es una estrategia coherente cuando preocupa <code>c_i</code> correlacionado con regresores.</li>
-<li>Esa coherencia no habilita, por si sola, una afirmacion causal.</li>
+<li>Esa coherencia no habilita, por si sola, una afirmacion concluyente.</li>
 <li>En esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.</li>
 </ul>
 <p>La conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.</p>
@@ -301,7 +301,7 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.</p>
-<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance causal.</p>
+<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.</p>
 </section>
 
 </main>

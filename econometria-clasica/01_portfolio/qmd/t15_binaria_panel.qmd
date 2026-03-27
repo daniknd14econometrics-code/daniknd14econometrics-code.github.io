@@ -113,7 +113,7 @@ Resultado: `lfp` (1 participa, 0 no). Variables clave: `kids` (número de hijos 
 ::: {.section-box}
 ## Idea central
 
-La pieza no busca "ganar" entre pooled, RE y CRE. Busca mostrar criterio de modelado en panel binario: si la heterogeneidad persistente importa, la lectura aplicada en probabilidades puede cambiar de forma relevante en magnitud.
+La pieza no plantea una competencia entre pooled, RE y CRE. Plantea un criterio de modelado en panel binario: si la heterogeneidad persistente importa, la lectura aplicada en probabilidades puede cambiar de forma relevante en magnitud.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -177,14 +177,13 @@ Como nota técnica menor, incluir promedios individuales de variables con variac
 
 ## Lectura profesional
 
-El valor de T15 no está en exhibir complejidad metodológica, sino en mostrar criterio aplicado para interpretar probabilidades en panel binario. La comparación pooled, RE y CRE permite distinguir patrón sustantivo de posible sesgo por heterogeneidad persistente no observada.
+El valor de T15 está en interpretar probabilidades en panel binario con criterio aplicado. La comparación pooled, RE y CRE permite distinguir patrón sustantivo de posible sesgo por heterogeneidad persistente no observada.
 
-En términos de portfolio, la pieza muestra una decisión profesional concreta: cuando el panel ofrece información para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.
+En términos aplicados, la pieza muestra una decisión profesional concreta: cuando el panel ofrece información para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.
 
 ## Cierre
 
-Esta pieza no busca declarar un "método ganador" entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.
-
+Esta pieza no busca declarar un método superior entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.
 
 
 

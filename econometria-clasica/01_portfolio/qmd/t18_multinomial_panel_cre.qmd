@@ -96,7 +96,7 @@ Mundlak conjunto significativo
 
 Esta pieza estudia un resultado multinomial de actividad (`status`: escuela, hogar, trabajo) en un panel laboral corto. La pregunta aplicada no es metodológica en abstracto: es si la lectura de probabilidades cambia de forma relevante cuando se reconoce heterogeneidad persistente no observada.
 
-La comparación entre multinomial pooled y multinomial-CRE (Mundlak) muestra diferencias importantes en APEs por categoría. Por eso, el aporte de portfolio se concentra en criterio de especificación e interpretación profesional de probabilidades, sin sobreventa metodológica.
+La comparación entre multinomial pooled y multinomial-CRE (Mundlak) muestra diferencias importantes en APEs por categoría. Por eso, el aporte del caso se concentra en criterio de especificación e interpretación profesional de probabilidades, sin exagerar el alcance metodológico.
 
 :::: {.quick-grid}
 
@@ -177,7 +177,7 @@ La comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:
 | `black=1` vs `0` | `-0.0635` | `-0.0502` | `+0.1027` | `+0.0729` | `-0.0392` | `-0.0228` | Patrón estable, magnitud atenuada en CRE |
 :::
 
-Estas diferencias no implican una lectura causal, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.
+Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.
 
 ## Diagnósticos de respaldo
 
@@ -205,7 +205,4 @@ En este caso, la comparación pooled vs CRE cambia varias magnitudes y algunos s
 
 ## Cierre
 
-La pieza muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es su valor de portfolio: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados.
-
-
-
+La pieza muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es el valor del caso: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados.

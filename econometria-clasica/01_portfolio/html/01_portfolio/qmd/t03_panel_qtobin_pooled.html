@@ -168,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
 <p>En este caso, la inferencia y la identificación no son lo mismo.<br>
-Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por <code>c_i</code> no observado y no es una estrategia de identificación causal.</p>
+Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por <code>c_i</code> no observado y no resuelve por sí solo el problema de identificación.</p>
 <p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
@@ -176,7 +176,7 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
 <p>En decisiones de inversión, la q de Tobin suele leerse como señal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser útil como benchmark, pero solo si la inferencia respeta la estructura del error.</p>
 <p>La relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.</p>
-<p>Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia causal.</p>
+<p>Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia concluyente.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -199,7 +199,7 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <li>Comparar forma lineal vs cuadratica en <code>qb</code>.</li>
 <li>Mantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.</li>
 </ol>
-<p>Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del portfolio.</p>
+<p>Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del ejercicio.</p>
 </section>
 <section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
 <h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
@@ -300,7 +300,7 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.</p>
-<p>Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no un cierre causal: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.</p>
+<p>Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.</p>
 </section>
 
 </main>

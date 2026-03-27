@@ -193,12 +193,11 @@ Ese diagnóstico no decide por sí solo entre RE y FE/CRE. La elección entre es
 
 La conclusión se formula con prudencia aplicada: no rechazar RE no significa probar que RE sea verdadero; significa que En esta muestra no aparece evidencia fuerte contra esa formulación. Por eso, la interpretación final se apoya en la combinación de estabilidad sustantiva de coeficientes, contexto del caso y respaldo formal de contrastes.
 
-En términos de portfolio, T9 muestra una práctica profesional útil: cuando FE, RE y CRE cuentan una historia económica parecida, la decisión de modelo puede justificarse sin exagerar precisión ni convertir metodología en protagonista.
+En términos aplicados, T9 muestra una práctica profesional útil: cuando FE, RE y CRE cuentan una historia económica parecida, la decisión de modelo puede justificarse sin exagerar precisión ni convertir metodología en protagonista.
 
 ## Cierre
 
-En este panel corto de plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo mantiene un patrón similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente no causal y condicionada a los supuestos del marco.
-
+En este panel corto de plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo mantiene un patrón similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente condicionada a los supuestos del marco.
 
 
 

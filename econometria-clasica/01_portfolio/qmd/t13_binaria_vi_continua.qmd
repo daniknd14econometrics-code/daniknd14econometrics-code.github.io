@@ -141,7 +141,7 @@ Se usa `mroz.dta` en corte transversal.
 
 1. Estimar probit exogeno como lectura base y reportar APEs.
 2. Tratar `nwifeinc` como potencialmente endógena mediante enfoques IV/CF para comparar magnitudes.
-3. Mantener interpretación en términos de probabilidad, evitando lectura causal automatica.
+3. Mantener interpretación en términos de probabilidad, evitando sobreinterpretaciones automáticas.
 4. Usar diagnósticos solo como respaldo de decisión aplicada.
 
 ## Resultados principales
@@ -184,8 +184,7 @@ En T13, la historia sustantiva principal se mantiene (hijos pequeños, educació
 
 ## Cierre
 
-Esta pieza no busca "ganar" entre probit e IV-probit. Busca mostrar una decisión econométrica profesional: cuando una posible endogeneidad amerita escalar complejidad y cuando conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada.
-
+Esta pieza no plantea una competencia entre probit e IV-probit. Plantea una decisión econométrica profesional: cuándo una posible endogeneidad amerita escalar complejidad y cuándo conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada.
 
 
 
