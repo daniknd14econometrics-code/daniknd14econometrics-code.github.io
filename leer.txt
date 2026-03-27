@@ -1,3 +1,4 @@
-aspectos a mejorar: diseño visual; faltas de acento/tildes, incluido mi apellido.
-                    quizá, en algún caso, sumar un grafico
+aspectos a mejorar: -colores de fondo, ver; faltas de acento/tildes, incluido mi apellido.
+		    -revisar que se incluyan los resultados principales de esa historia, y que la o las covariables de interés, asi como la variable dependiente esten definidas o explicadas (que representan en dicha base).
+                    -quizá, en algún caso, sumar un grafico.
                    

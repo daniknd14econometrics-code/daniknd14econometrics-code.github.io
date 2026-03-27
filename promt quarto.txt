@@ -54,6 +54,8 @@ start ".\01_portfolio\html\01_portfolio\qmd\t16_multinomial_base.html"
 cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
 start ".\01_portfolio\html\01_portfolio\qmd\t18_multinomial_panel_cre.html"
  
+cd "C:\Users\Equipo\OneDrive\Documentos\REPOSITORIO APPS\APP repositorio github_quarto\econometria-clasica"
+start ".\01_portfolio\html\01_portfolio\qmd\t19_ordenado_base.html"
 
 
 nota t10
