@@ -1,10 +1,10 @@
 ﻿---
-title: "T04 · Heterogeneidad inobservable en panel salarial: por qué pooled OLS no alcanza"
+title: "T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado"
 ---
 
 [← Volver al índice de Econometría](../index.qmd)
 
-Benchmark pooled e identificación frente a c_i no observado
+Estimación agrupada y sesgo potencial por efectos no observados
 
 ::: {.piece-meta}
 ::: {.meta-item}
@@ -14,7 +14,7 @@ Benchmark pooled e identificación frente a c_i no observado
 **Tema:** Heterogeneidad no observada en salarios
 :::
 ::: {.meta-item}
-**Método:** Pooled OLS + discusión de sesgo por heterogeneidad
+**Método:** MCO agrupado (Pooled OLS) y sesgo por heterogeneidad
 :::
 ::: {.meta-item}
 **Datos:** Panel salarial
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

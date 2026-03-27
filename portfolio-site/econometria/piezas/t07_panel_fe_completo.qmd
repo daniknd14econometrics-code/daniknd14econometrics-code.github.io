@@ -1,5 +1,5 @@
 ﻿---
-title: "T07 · Efectos fijos en panel de firmas: identificación within e inferencia robusta"
+title: "T07 · Efectos fijos en panel de firmas: identificación intraunidad e inferencia robusta"
 ---
 
 [← Volver al índice de Econometría](../index.qmd)
@@ -14,10 +14,10 @@ Subsidios de capacitación y desperdicio productivo
 **Tema:** Productividad, subsidios y panel corto
 :::
 ::: {.meta-item}
-**Método:** Fixed Effects + errores cluster
+**Método:** Efectos fijos con errores agrupados
 :::
 ::: {.meta-item}
-**Datos:** Panel de plantas/firms
+**Datos:** Panel de plantas
 :::
 ::: {.meta-item}
 **Software:** Stata
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

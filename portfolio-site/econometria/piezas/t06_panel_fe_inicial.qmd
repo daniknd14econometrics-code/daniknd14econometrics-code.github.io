@@ -1,5 +1,5 @@
 ﻿---
-title: "T06 · Efectos fijos en panel salarial: qué identifica la variación within"
+title: "T06 · Efectos fijos en panel salarial: qué identifica la variación intraunidad"
 ---
 
 [← Volver al índice de Econometría](../index.qmd)
@@ -11,10 +11,10 @@ Control de heterogeneidad fija y lectura metodológica prudente
 **Taller:** T06
 :::
 ::: {.meta-item}
-**Tema:** Identificación within en salarios
+**Tema:** Identificación intraunidad en salarios
 :::
 ::: {.meta-item}
-**Método:** Fixed Effects (Within)
+**Método:** Efectos fijos (within)
 :::
 ::: {.meta-item}
 **Datos:** Panel salarial
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

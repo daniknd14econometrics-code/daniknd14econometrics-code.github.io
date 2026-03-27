@@ -30,14 +30,14 @@
   {
     "objectID": "econometria/piezas/t18_multinomial_panel_cre.html",
     "href": "econometria/piezas/t18_multinomial_panel_cre.html",
-    "title": "T18 · Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "title": "T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE",
     "section": "",
     "text": "← Volver al índice de Econometría\nHeterogeneidad persistente en escuela, hogar y trabajo"
   },
   {
     "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#documento-completo-html",
     "href": "econometria/piezas/t18_multinomial_panel_cre.html#documento-completo-html",
-    "title": "T18 · Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "title": "T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE",
     "section": "Documento completo (HTML)",
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },
@@ -46,7 +46,7 @@
     "href": "econometria/piezas/t15_binaria_panel.html",
     "title": "T15 · Participación laboral femenina y estructura del hogar en un panel corto",
     "section": "",
-    "text": "← Volver al índice de Econometría\nQué cambia al modelar heterogeneidad no observada"
+    "text": "← Volver al índice de Econometría\nCambios al modelar heterogeneidad no observada"
   },
   {
     "objectID": "econometria/piezas/t15_binaria_panel.html#documento-completo-html",
@@ -100,42 +100,42 @@
   {
     "objectID": "econometria/piezas/t06_panel_fe_inicial.html",
     "href": "econometria/piezas/t06_panel_fe_inicial.html",
-    "title": "T06 · Efectos fijos en panel salarial: qué identifica la variación within",
+    "title": "T06 · Efectos fijos en panel salarial: qué identifica la variación intraunidad",
     "section": "",
     "text": "← Volver al índice de Econometría\nControl de heterogeneidad fija y lectura metodológica prudente"
   },
   {
     "objectID": "econometria/piezas/t06_panel_fe_inicial.html#documento-completo-html",
     "href": "econometria/piezas/t06_panel_fe_inicial.html#documento-completo-html",
-    "title": "T06 · Efectos fijos en panel salarial: qué identifica la variación within",
+    "title": "T06 · Efectos fijos en panel salarial: qué identifica la variación intraunidad",
     "section": "Documento completo (HTML)",
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },
   {
     "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html",
     "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html",
-    "title": "T04 · Heterogeneidad inobservable en panel salarial: por qué pooled OLS no alcanza",
+    "title": "T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado",
     "section": "",
-    "text": "← Volver al índice de Econometría\nBenchmark pooled e identificación frente a c_i no observado"
+    "text": "← Volver al índice de Econometría\nEstimación agrupada y sesgo potencial por efectos no observados"
   },
   {
     "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#documento-completo-html",
     "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#documento-completo-html",
-    "title": "T04 · Heterogeneidad inobservable en panel salarial: por qué pooled OLS no alcanza",
+    "title": "T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado",
     "section": "Documento completo (HTML)",
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },
   {
     "objectID": "econometria/piezas/t02_panel_pooled_salarios.html",
     "href": "econometria/piezas/t02_panel_pooled_salarios.html",
-    "title": "T02 · Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "title": "T02 · MCO agrupado en panel salarial: una estimación de referencia",
     "section": "",
-    "text": "← Volver al índice de Econometría\nInferencia en datos de panel con errores robustos y cluster por individuo"
+    "text": "← Volver al índice de Econometría\nInferencia en panel salarial con errores robustos y agrupación por individuo"
   },
   {
     "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#documento-completo-html",
     "href": "econometria/piezas/t02_panel_pooled_salarios.html#documento-completo-html",
-    "title": "T02 · Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "title": "T02 · MCO agrupado en panel salarial: una estimación de referencia",
     "section": "Documento completo (HTML)",
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },
@@ -144,14 +144,14 @@
     "href": "econometria/index.html",
     "title": "Econometría",
     "section": "",
-    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en datos de panel con errores robustos y cluster por individuo\nMétodo principal: Pooled OLS con VCE robusta/cluster\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación estimada entre q e inversión con controles temporales\nMétodo principal: Pooled OLS en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nBenchmark pooled e identificación frente a c_i no observado\nMétodo principal: Pooled OLS + discusión de sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Random Effects (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Fixed Effects (Within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Fixed Effects + errores cluster\nTipo de datos: Panel de plantas/firms\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Fixed Effects en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE vs RE vs CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: IV en datos de panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nQué cambia al modelar heterogeneidad no observada\nMétodo principal: Pooled/RE/CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial pooled + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Modelo logit/probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
+    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
   },
   {
     "objectID": "econometria/index.html#índice-de-piezas-aplicadas",
     "href": "econometria/index.html#índice-de-piezas-aplicadas",
     "title": "Econometría",
     "section": "",
-    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en datos de panel con errores robustos y cluster por individuo\nMétodo principal: Pooled OLS con VCE robusta/cluster\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación estimada entre q e inversión con controles temporales\nMétodo principal: Pooled OLS en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nBenchmark pooled e identificación frente a c_i no observado\nMétodo principal: Pooled OLS + discusión de sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Random Effects (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Fixed Effects (Within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Fixed Effects + errores cluster\nTipo de datos: Panel de plantas/firms\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Fixed Effects en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE vs RE vs CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: IV en datos de panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nQué cambia al modelar heterogeneidad no observada\nMétodo principal: Pooled/RE/CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial pooled + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Modelo logit/probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
+    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
   },
   {
     "objectID": "causalidad.html",
@@ -177,14 +177,14 @@
   {
     "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html",
     "href": "econometria/piezas/t03_panel_qtobin_pooled.html",
-    "title": "T03 · Inversión y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "title": "T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta",
     "section": "",
-    "text": "← Volver al índice de Econometría\nRelación estimada entre q e inversión con controles temporales"
+    "text": "← Volver al índice de Econometría\nRelación entre q e inversión con controles temporales"
   },
   {
     "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#documento-completo-html",
     "href": "econometria/piezas/t03_panel_qtobin_pooled.html#documento-completo-html",
-    "title": "T03 · Inversión y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "title": "T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta",
     "section": "Documento completo (HTML)",
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },
@@ -205,14 +205,14 @@
   {
     "objectID": "econometria/piezas/t07_panel_fe_completo.html",
     "href": "econometria/piezas/t07_panel_fe_completo.html",
-    "title": "T07 · Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "title": "T07 · Efectos fijos en panel de firmas: identificación intraunidad e inferencia robusta",
     "section": "",
     "text": "← Volver al índice de Econometría\nSubsidios de capacitación y desperdicio productivo"
   },
   {
     "objectID": "econometria/piezas/t07_panel_fe_completo.html#documento-completo-html",
     "href": "econometria/piezas/t07_panel_fe_completo.html#documento-completo-html",
-    "title": "T07 · Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "title": "T07 · Efectos fijos en panel de firmas: identificación intraunidad e inferencia robusta",
     "section": "Documento completo (HTML)",
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },

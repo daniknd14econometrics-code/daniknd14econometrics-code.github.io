@@ -14,7 +14,7 @@ Comparación FE, RE y CRE (Mundlak)
 **Tema:** Heterogeneidad persistente y modelos de panel
 :::
 ::: {.meta-item}
-**Método:** Comparación FE vs RE vs CRE
+**Método:** Comparación FE, RE y CRE
 :::
 ::: {.meta-item}
 **Datos:** Panel corto de plantas
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

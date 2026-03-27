@@ -14,7 +14,7 @@ RE en salarios con lectura prudente de supuestos
 **Tema:** Comparación conceptual FE/RE en salarios
 :::
 ::: {.meta-item}
-**Método:** Random Effects (RE-GLS)
+**Método:** Efectos aleatorios (RE-GLS)
 :::
 ::: {.meta-item}
 **Datos:** Panel salarial
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

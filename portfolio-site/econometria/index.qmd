@@ -17,28 +17,28 @@ Educación endógena y salario con variables instrumentales
 :::
 
 ::: {.piece-card}
-### [T02 · Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final](piezas/t02_panel_pooled_salarios.qmd)
-Inferencia en datos de panel con errores robustos y cluster por individuo
+### [T02 · MCO agrupado en panel salarial: una estimación de referencia](piezas/t02_panel_pooled_salarios.qmd)
+Inferencia en panel salarial con errores robustos y agrupación por individuo
 
-**Método principal:** Pooled OLS con VCE robusta/cluster  
+**Método principal:** MCO agrupado (Pooled OLS) con VCE robusta agrupada  
 **Tipo de datos:** Panel corto (individuos)  
 [Ver ficha de la pieza](piezas/t02_panel_pooled_salarios.qmd)
 :::
 
 ::: {.piece-card}
-### [T03 · Inversión y q de Tobin en panel: un benchmark pooled con inferencia robusta](piezas/t03_panel_qtobin_pooled.qmd)
-Relación estimada entre q e inversión con controles temporales
+### [T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta](piezas/t03_panel_qtobin_pooled.qmd)
+Relación entre q e inversión con controles temporales
 
-**Método principal:** Pooled OLS en panel  
+**Método principal:** MCO agrupado (Pooled OLS) en panel  
 **Tipo de datos:** Panel de firmas  
 [Ver ficha de la pieza](piezas/t03_panel_qtobin_pooled.qmd)
 :::
 
 ::: {.piece-card}
-### [T04 · Heterogeneidad inobservable en panel salarial: por qué pooled OLS no alcanza](piezas/t04_panel_pooled_heterogeneidad.qmd)
-Benchmark pooled e identificación frente a c_i no observado
+### [T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado](piezas/t04_panel_pooled_heterogeneidad.qmd)
+Estimación agrupada y sesgo potencial por efectos no observados
 
-**Método principal:** Pooled OLS + discusión de sesgo por heterogeneidad  
+**Método principal:** MCO agrupado (Pooled OLS) y sesgo por heterogeneidad  
 **Tipo de datos:** Panel salarial  
 [Ver ficha de la pieza](piezas/t04_panel_pooled_heterogeneidad.qmd)
 :::
@@ -47,26 +47,26 @@ Benchmark pooled e identificación frente a c_i no observado
 ### [T05 · Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte](piezas/t05_panel_re.qmd)
 RE en salarios con lectura prudente de supuestos
 
-**Método principal:** Random Effects (RE-GLS)  
+**Método principal:** Efectos aleatorios (RE-GLS)  
 **Tipo de datos:** Panel salarial  
 [Ver ficha de la pieza](piezas/t05_panel_re.qmd)
 :::
 
 ::: {.piece-card}
-### [T06 · Efectos fijos en panel salarial: qué identifica la variación within](piezas/t06_panel_fe_inicial.qmd)
+### [T06 · Efectos fijos en panel salarial: qué identifica la variación intraunidad](piezas/t06_panel_fe_inicial.qmd)
 Control de heterogeneidad fija y lectura metodológica prudente
 
-**Método principal:** Fixed Effects (Within)  
+**Método principal:** Efectos fijos (within)  
 **Tipo de datos:** Panel salarial  
 [Ver ficha de la pieza](piezas/t06_panel_fe_inicial.qmd)
 :::
 
 ::: {.piece-card}
-### [T07 · Efectos fijos en panel de firmas: identificación within e inferencia robusta](piezas/t07_panel_fe_completo.qmd)
+### [T07 · Efectos fijos en panel de firmas: identificación intraunidad e inferencia robusta](piezas/t07_panel_fe_completo.qmd)
 Subsidios de capacitación y desperdicio productivo
 
-**Método principal:** Fixed Effects + errores cluster  
-**Tipo de datos:** Panel de plantas/firms  
+**Método principal:** Efectos fijos con errores agrupados  
+**Tipo de datos:** Panel de plantas  
 [Ver ficha de la pieza](piezas/t07_panel_fe_completo.qmd)
 :::
 
@@ -74,7 +74,7 @@ Subsidios de capacitación y desperdicio productivo
 ### [T08 · Cuando rinde la I+D: evidencia de patentamiento en panel de firmas](piezas/t08_panel_fe_patentes.qmd)
 Innovación empresarial con efectos fijos y dinámica temporal
 
-**Método principal:** Fixed Effects en panel  
+**Método principal:** Efectos fijos en panel  
 **Tipo de datos:** Panel de firmas  
 [Ver ficha de la pieza](piezas/t08_panel_fe_patentes.qmd)
 :::
@@ -83,7 +83,7 @@ Innovación empresarial con efectos fijos y dinámica temporal
 ### [T09 · Subsidios de capacitación y desperdicio productivo en plantas industriales](piezas/t09_panel_re_fe_cre.qmd)
 Comparación FE, RE y CRE (Mundlak)
 
-**Método principal:** Comparación FE vs RE vs CRE  
+**Método principal:** Comparación FE, RE y CRE  
 **Tipo de datos:** Panel corto de plantas  
 [Ver ficha de la pieza](piezas/t09_panel_re_fe_cre.qmd)
 :::
@@ -92,7 +92,7 @@ Comparación FE, RE y CRE (Mundlak)
 ### [T11 · Tarifas y demanda de pasajeros en rutas aéreas](piezas/t11_panel_iv.qmd)
 Cuándo tratar el precio como endógeno en panel
 
-**Método principal:** IV en datos de panel  
+**Método principal:** Variables instrumentales en panel  
 **Tipo de datos:** Panel de rutas aéreas  
 [Ver ficha de la pieza](piezas/t11_panel_iv.qmd)
 :::
@@ -126,9 +126,9 @@ Asociación al admitir endogeneidad de variable discreta
 
 ::: {.piece-card}
 ### [T15 · Participación laboral femenina y estructura del hogar en un panel corto](piezas/t15_binaria_panel.qmd)
-Qué cambia al modelar heterogeneidad no observada
+Cambios al modelar heterogeneidad no observada
 
-**Método principal:** Pooled/RE/CRE en respuesta binaria  
+**Método principal:** Pooled, RE y CRE en respuesta binaria  
 **Tipo de datos:** Panel corto de mujeres  
 [Ver ficha de la pieza](piezas/t15_binaria_panel.qmd)
 :::
@@ -143,10 +143,10 @@ Probabilidades de estudio, hogar y empleo
 :::
 
 ::: {.piece-card}
-### [T18 · Estados de actividad en panel: qué cambia entre multinomial pooled y CRE](piezas/t18_multinomial_panel_cre.qmd)
+### [T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE](piezas/t18_multinomial_panel_cre.qmd)
 Heterogeneidad persistente en escuela, hogar y trabajo
 
-**Método principal:** Multinomial pooled + CRE  
+**Método principal:** Multinomial agrupado + CRE  
 **Tipo de datos:** Panel laboral  
 [Ver ficha de la pieza](piezas/t18_multinomial_panel_cre.qmd)
 :::
@@ -155,11 +155,10 @@ Heterogeneidad persistente en escuela, hogar y trabajo
 ### [T19 · Asignación previsional con resultado ordinal: una lectura aplicada](piezas/t19_ordenado_base.qmd)
 Probabilidades por categoría y efectos marginales
 
-**Método principal:** Modelo logit/probit ordenado  
+**Método principal:** Logit/Probit ordenado  
 **Tipo de datos:** Microdatos individuales  
 [Ver ficha de la pieza](piezas/t19_ordenado_base.qmd)
 :::
 
 :::
-
 

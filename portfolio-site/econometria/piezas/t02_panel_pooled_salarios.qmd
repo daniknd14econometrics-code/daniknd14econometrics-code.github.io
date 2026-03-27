@@ -1,20 +1,20 @@
 ﻿---
-title: "T02 · Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final"
+title: "T02 · MCO agrupado en panel salarial: una estimación de referencia"
 ---
 
 [← Volver al índice de Econometría](../index.qmd)
 
-Inferencia en datos de panel con errores robustos y cluster por individuo
+Inferencia en panel salarial con errores robustos y agrupación por individuo
 
 ::: {.piece-meta}
 ::: {.meta-item}
 **Taller:** T02
 :::
 ::: {.meta-item}
-**Tema:** Salarios en panel y benchmark inicial
+**Tema:** Salarios en panel: estimación de referencia
 :::
 ::: {.meta-item}
-**Método:** Pooled OLS con VCE robusta/cluster
+**Método:** MCO agrupado (Pooled OLS) con VCE robusta agrupada
 :::
 ::: {.meta-item}
 **Datos:** Panel corto (individuos)
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

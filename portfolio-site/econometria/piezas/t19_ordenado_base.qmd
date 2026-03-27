@@ -14,7 +14,7 @@ Probabilidades por categoría y efectos marginales
 **Tema:** Decisión previsional ordinal
 :::
 ::: {.meta-item}
-**Método:** Modelo logit/probit ordenado
+**Método:** Logit/Probit ordenado
 :::
 ::: {.meta-item}
 **Datos:** Microdatos individuales
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

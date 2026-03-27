@@ -1,10 +1,10 @@
 ﻿---
-title: "T03 · Inversión y q de Tobin en panel: un benchmark pooled con inferencia robusta"
+title: "T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta"
 ---
 
 [← Volver al índice de Econometría](../index.qmd)
 
-Relación estimada entre q e inversión con controles temporales
+Relación entre q e inversión con controles temporales
 
 ::: {.piece-meta}
 ::: {.meta-item}
@@ -14,7 +14,7 @@ Relación estimada entre q e inversión con controles temporales
 **Tema:** Inversión empresarial y q de Tobin
 :::
 ::: {.meta-item}
-**Método:** Pooled OLS en panel
+**Método:** MCO agrupado (Pooled OLS) en panel
 :::
 ::: {.meta-item}
 **Datos:** Panel de firmas
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

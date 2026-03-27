@@ -4,7 +4,7 @@ title: "T15 · Participación laboral femenina y estructura del hogar en un pane
 
 [← Volver al índice de Econometría](../index.qmd)
 
-Qué cambia al modelar heterogeneidad no observada
+Cambios al modelar heterogeneidad no observada
 
 ::: {.piece-meta}
 ::: {.meta-item}
@@ -14,7 +14,7 @@ Qué cambia al modelar heterogeneidad no observada
 **Tema:** Panel binario y heterogeneidad individual
 :::
 ::: {.meta-item}
-**Método:** Pooled/RE/CRE en respuesta binaria
+**Método:** Pooled, RE y CRE en respuesta binaria
 :::
 ::: {.meta-item}
 **Datos:** Panel corto de mujeres
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

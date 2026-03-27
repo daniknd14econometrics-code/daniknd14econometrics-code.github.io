@@ -14,7 +14,7 @@ Cuándo tratar el precio como endógeno en panel
 **Tema:** Demanda y endogeneidad de precios
 :::
 ::: {.meta-item}
-**Método:** IV en datos de panel
+**Método:** Variables instrumentales en panel
 :::
 ::: {.meta-item}
 **Datos:** Panel de rutas aéreas
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

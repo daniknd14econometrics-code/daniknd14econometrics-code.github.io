@@ -14,7 +14,7 @@ Innovación empresarial con efectos fijos y dinámica temporal
 **Tema:** I+D y patentamiento
 :::
 ::: {.meta-item}
-**Método:** Fixed Effects en panel
+**Método:** Efectos fijos en panel
 :::
 ::: {.meta-item}
 **Datos:** Panel de firmas
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 

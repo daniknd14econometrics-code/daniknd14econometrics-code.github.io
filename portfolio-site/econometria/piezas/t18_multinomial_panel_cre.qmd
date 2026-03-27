@@ -1,5 +1,5 @@
 ﻿---
-title: "T18 · Estados de actividad en panel: qué cambia entre multinomial pooled y CRE"
+title: "T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE"
 ---
 
 [← Volver al índice de Econometría](../index.qmd)
@@ -14,7 +14,7 @@ Heterogeneidad persistente en escuela, hogar y trabajo
 **Tema:** Multinomial en panel con heterogeneidad
 :::
 ::: {.meta-item}
-**Método:** Multinomial pooled + CRE
+**Método:** Multinomial agrupado + CRE
 :::
 ::: {.meta-item}
 **Datos:** Panel laboral
@@ -37,5 +37,6 @@ El enlace abre el documento en una pestaña nueva.
 ---
 
 *Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+
 
 
