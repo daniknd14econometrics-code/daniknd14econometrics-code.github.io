@@ -1,0 +1,120 @@
+Ficha técnica-editorial privada — T5
+
+1. Identificación básica
+
+Taller 05. Tema central: efectos aleatorios en panel para una ecuación salarial. La pregunta no es simplemente “estimar salarios”, sino mostrar cuándo tiene sentido usar random effects y cómo cambia la lectura cuando se pasa de la matriz clásica a una versión robusta/cluster. La variable dependiente es lwage. Las variables clave son educ, exper, expersq, union, married y black. El brief ubica bien el foco: heterogeneidad inobservable tratada como parte del error compuesto, preservando regresores invariantes en el tiempo.
+
+2. Qué es realmente este taller
+
+Este taller es una comparación metodológica con anclaje aplicado. No es un taller sobre “el verdadero retorno causal” de la educación ni sobre coronar definitivamente RE frente a FE. El núcleo real es otro: explicar qué gana uno con RE, qué supuesto fuerte compra para hacerlo y por qué la eficiencia no puede separarse de corr(c_i, x_it)=0.
+
+La clasificación editorial correcta, entonces, es: comparación metodológica con valor aplicado.
+
+3. Núcleo empírico y métodos comparados
+
+En el log aparecen estos bloques principales:
+- xtreg, re clásico;
+- xtreg, re vce(robust) y vce(cluster nr), que en este contexto son equivalentes en la práctica;
+- prueba conjunta de dummies temporales d81-d87;
+- estimación manual de componentes de varianza y discusión de theta;
+- xtgls con heterocedasticidad entre paneles y AR(1);
+- comparación final entre RE clásico, RE cluster, FGLS, pooled OLS y pooled OLS cluster.
+
+Para la pieza pública, el corazón no debería ser todo eso al mismo nivel. El centro tiene que ser:
+- qué supone RE;
+- qué indica rho sobre la relevancia de la heterogeneidad individual;
+- por qué la versión operativa preferida dentro del bloque RE es la robusta/cluster;
+- y por qué eso no valida automáticamente el supuesto central de RE.
+
+4. Lectura ganadora dentro del taller
+
+Sí hay una lectura ganadora, pero debe formularse con precisión.
+
+La versión operativa preferida dentro del bloque RE es:
+xtreg lwage educ exper expersq union married black, re vce(cluster nr)
+
+La razón es clara:
+- mantiene la estructura RE;
+- conserva coeficientes y componentes de varianza del modelo RE;
+- pero no confía ciegamente en la matriz clásica de varianzas-covarianzas;
+- corrige la inferencia para heterocedasticidad y correlación serial intraindividuo.
+
+Eso no equivale a decir que “RE queda validado” en sentido fuerte. Solo significa que, si se trabaja dentro del universo RE, la versión robusta/cluster es la salida operativa más defendible.
+
+5. Evidencia clave del log
+
+La evidencia central del taller está en estos puntos:
+
+- En xtreg, re, rho ≈ 0.46. Eso indica que una fracción sustantiva de la varianza total se asocia al componente individual inobservable.
+- La versión robusta/cluster mantiene los coeficientes de RE pero modifica errores estándar e inferencia, lo cual es exactamente lo esperable.
+- La prueba conjunta de dummies de año arroja p ≈ 0.0831, por lo que al 5% no se rechaza su exclusión. Si la pieza decide no incluirlas en el cierre principal, eso puede sostenerse, pero debe explicarse con sobriedad.
+- El bloque FGLS AR(1)+heterocedasticidad muestra una alternativa paramétrica más agresiva, pero no debería ocupar el centro narrativo de la pieza pública.
+- La comparación con pooled OLS sirve para contextualizar, no para desplazar el foco metodológico del taller.
+
+6. Historia narrativa posible, sin forzarla
+
+La historia correcta no es: “RE encuentra tal efecto económico espectacular”.
+La historia correcta es:
+
+Cuando se trabaja con panel, random effects resulta atractivo porque permite conservar variables invariantes en el tiempo y explotar estructura de error compuesto. Pero esa ganancia en eficiencia depende de un supuesto fuerte de exogeneidad respecto del efecto individual. El taller muestra cómo estimar RE, cómo interpretar rho, por qué conviene robustecer la inferencia, y por qué una versión más eficiente no debe confundirse con una versión automáticamente más creíble.
+
+Esa historia es profesional, clara y fiel al contenido del taller.
+
+7. Objeto final de decisión
+
+El objeto final de decisión debería ser una tabla o bloque comparativo corto que deje tres ideas nítidas:
+
+- RE está motivado por la presencia de heterogeneidad individual relevante.
+- La versión operativa preferida dentro de RE es la robusta/cluster.
+- Nada de eso prueba por sí solo que corr(c_i, x_it)=0 sea una historia convincente.
+
+Si aparece FGLS o pooled OLS, deben quedar subordinados como contraste auxiliar, no como corazón del mensaje.
+
+8. Qué sí puede decir la pieza
+
+Sí puede decir:
+- que RE permite modelar heterogeneidad inobservable sin perder regresores invariantes en el tiempo;
+- que rho sugiere heterogeneidad individual relevante;
+- que, dentro de RE, la versión robusta/cluster es la implementación operativa preferible;
+- que la eficiencia de RE depende de un supuesto central que debe ser defendible, no simplemente asumido sin discusión.
+
+9. Qué no debe decir la pieza
+
+No debería decir:
+- que rho “valida” RE;
+- que la robustez de los errores estándar resuelve el problema de validez del supuesto corr(c_i, x_it)=0;
+- que RE domina a FE en sentido general;
+- que FGLS es automáticamente mejor por ser más sofisticado;
+- que las dummies de año “no sirven” en general; solo que en esta especificación no se rechaza su exclusión al 5%.
+
+10. Requisitos mínimos para el .qmd
+
+Para mí, la pieza pública debería dejar sí o sí:
+- una apertura clara sobre el trade-off de RE: eficiencia versus supuesto fuerte;
+- una comparación central RE clásico vs RE cluster;
+- una referencia breve y bien ubicada a rho y al componente individual;
+- una nota clara de que robustecer la inferencia no valida el supuesto central;
+- un cierre sobrio que deje a RE como modelo útil bajo una historia de exogeneidad defendible, no como ganador absoluto del panel.
+
+11. Riesgo editorial principal para la futura auditoría
+
+El riesgo no es la falta de contenido. El riesgo es la jerarquía.
+
+La auditoría de Codex debería verificar especialmente:
+- si la pieza confunde “RE robusto como cierre operativo del bloque” con “RE como modelo ya validado”;
+- si FGLS o bloques demasiado pedagógicos/manuales ocupan demasiado espacio visual;
+- si pooled OLS aparece demasiado protagonista para un taller cuyo centro real es RE;
+- y si el tono mantiene la cautela correcta sobre el supuesto corr(c_i, x_it)=0.
+
+12. Nota para la tarjeta del sitio
+
+Una formulación posible sería:
+“¿Cuándo tiene sentido usar efectos aleatorios en panel? Este taller muestra cómo RE gana eficiencia al tratar la heterogeneidad individual como parte del error compuesto, y por qué esa ganancia solo es defendible si el supuesto de exogeneidad respecto del efecto individual resulta creíble.”
+
+Método principal: random effects.
+Tipo de pieza: comparación metodológica.
+Estado de la evidencia: lectura clara dentro del bloque RE, con cautela sobre el supuesto central.
+
+13. Observación de metadatos
+
+En el brief figura familia_metodo: lineal_vi_panel, pero este taller no es de variables instrumentales. Conviene corregir ese metadato más adelante para no contaminar clasificación o navegación.

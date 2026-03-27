@@ -1,0 +1,59 @@
+Base usada para este diagnóstico: exclusivamente T6 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T6
+
+1. Identificación básica
+
+Taller 06. Tema central: primer contacto con efectos fijos (FE) en panel salarial. Los insumos disponibles lo presentan como una pieza introductoria sobre cómo leer correctamente la estimación within, qué información usa FE y qué variables quedan absorbidas por construcción. La variable dependiente es lwage. Las variables que efectivamente quedan en la especificación base FE son exper, expersq, union y married; educ y black se omiten por falta de variación temporal dentro del individuo. El brief también anticipa que el foco no debe estar en “correr FE” como rutina, sino en entender la fuente de variación que identifica el estimador.
+
+2. Clasificación editorial
+
+La clasificación editorial correcta es pieza principalmente técnica con valor aplicado. Hay una aplicación salarial concreta, pero el corazón del taller no es un hallazgo sustantivo sobre salarios sino la comprensión de FE como cambio de lógica de identificación respecto de una lectura agrupada. El eje es pedagógico-metodológico: qué entra, qué se absorbe, qué significan los coeficientes within y qué hacer con efectos temporales.
+
+3. Pregunta real del taller
+
+La pregunta pública bien formulada no debería ser “cuál es el retorno de X sobre el salario”, sino algo más cercano a esto: ¿qué cambia en una ecuación salarial cuando pasamos a un estimador de efectos fijos que solo explota variación dentro del individuo? Esa formulación respeta mejor el brief y el log. La pieza tiene que enseñar que FE no es una regresión más, sino una relectura del problema empírico.
+
+4. Núcleo empírico y métodos comparados
+
+El núcleo del taller está en cuatro bloques: (i) FE básico con variables invariantes absorbidas; (ii) confirmación de que el modelo relevante es el mismo al quitar educ y black, porque ya estaban omitidas; (iii) FE con dummies de año, seguido por test conjunto de exclusión; y (iv) versión didáctica con interacciones c.educ##i.year para mostrar cómo puede recuperarse heterogeneidad temporal en el efecto de una variable invariante, aunque en esta base esas interacciones no resultan informativas. El do/log incluyen además ejemplos sobre cambio de año base, pero eso es claramente material secundario y no debería dominar la pieza pública.
+
+5. Objeto de decisión final
+
+Acá no conviene forzar una “especificación ganadora” en el mismo sentido que en otros talleres. El objeto final de decisión debería ser una lectura metodológica clara: FE reorienta la estimación hacia variación within, elimina por construcción regresores invariantes en el tiempo y, para esta base, no hay evidencia suficiente para justificar mantener dummies temporales ni interacciones con educ como parte del cierre principal. En otras palabras, la decisión final no es “qué modelo gana” sino “cómo debe leerse correctamente FE en esta aplicación”.
+
+6. Especificación operativa del taller
+
+Si hubiese que dejar una versión operativa principal dentro de FE, sería la especificación básica con exper, expersq, union y married, sin educ ni black, y sin dummies temporales en el cierre final. La razón es doble. Primero, educ y black no tienen variación within y por eso no son identificables en FE con esta base. Segundo, el test conjunto sobre dummies de año arroja Prob > F = 0.1863, por lo que el propio log concluye que no deberían mantenerse para estos datos. Esto debe aparecer claro en la pieza, porque en el do se mantienen después por fines didácticos, no porque sean parte del cierre empírico recomendado.
+
+7. Evidencia clave del log
+
+La evidencia decisiva del taller está bien concentrada. En FE básico, educ y black aparecen omitidas por colinealidad, lo que en este contexto equivale a decir que no aportan variación temporal dentro de cada individuo. El modelo within reporta R2 within = 0.1780, corr(u_i, Xb) = -0.1139 y rho ≈ 0.565, con test F de exclusión de los u_i claramente rechazado. Luego, al agregar dummies de año, el R2 within sube apenas a 0.1806, pero el test conjunto de d82-d87 da p = 0.1863, de modo que el propio taller concluye que no deberían incluirse para estos datos. Más adelante, las interacciones year#c.educ resultan no significativas y se presentan otra vez como ejercicio didáctico más que como hallazgo empírico.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T6 es simple y honesta: cuando pasamos de una lectura agrupada a FE, dejamos de usar buena parte de la variación entre individuos y empezamos a identificar efectos a partir de cambios dentro de cada persona a lo largo del tiempo. Ese movimiento tiene costos y beneficios. El beneficio es controlar heterogeneidad fija no observada. El costo es perder regresores invariantes, como educ y black en esta base. Después, la pieza puede mostrar que los efectos temporales y las interacciones se pueden explorar, pero que aquí no cambian la lectura central. Esa es una historia metodológica sólida y suficiente; no hay que inventarle una gran narrativa sustantiva.
+
+9. Hallazgo principal
+
+La frase que el lector debería retener al salir es esta: en esta base, FE cambia la pregunta empírica porque la identificación pasa a venir solo de la variación dentro del individuo, y por eso variables como educ y black desaparecen de la estimación principal. Esa es la enseñanza más fuerte del taller.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que FE absorbe toda variable invariante en el tiempo. Sí puede decir que, en esta base, educ y black no pueden estimarse directamente en la ecuación within. Sí puede decir que la heterogeneidad individual es empíricamente relevante según el test F de exclusión de los u_i y el valor de rho. Sí puede decir que las dummies de año y las interacciones con educ se exploran por valor pedagógico, pero no quedan respaldadas como parte del cierre principal. También puede decir que entender FE exige leer los coeficientes como efectos within y no como relaciones entre individuos.
+
+11. Qué no debe decir la pieza
+
+No debería decir que FE “es mejor” en abstracto que pooled o RE, porque este taller no cierra esa comparación. No debería sugerir que educ deja de importar económicamente; lo que ocurre es que no puede identificarse en FE si no varía dentro del individuo. Tampoco debería presentar dummies temporales o interacciones como parte del modelo final cuando el propio taller las mantiene por fines didácticos pese a que el test conjunto no respalda su inclusión. Y no debería sobrejerarquizar los ejemplos de cambio de año base, que son accesorios.
+
+12. Requisitos mínimos para el .qmd
+
+Para mí, esta pieza debería tener sí o sí cinco elementos. Primero, una apertura que explique qué problema cambia cuando pasamos a FE. Segundo, un cuadro o bloque breve de “qué entra y qué se absorbe en FE”. Tercero, una tabla principal FE básico versus FE con tiempo, pero dejando claro que la segunda especificación cumple una función exploratoria y no necesariamente de cierre. Cuarto, una breve nota o cierre donde se diga que el test conjunto no justifica mantener dummies de año en esta base. Quinto, un cierre final que insista en la idea central: FE reordena la interpretación porque usa variación within.
+
+13. Nota para la tarjeta del sitio
+
+La tarjeta debería venderlo como pieza metodológica clara, no como gran hallazgo aplicado. Una formulación posible sería: “Primer contacto con efectos fijos en panel: qué información usa FE, qué variables absorbe y cómo cambia la interpretación cuando la identificación pasa a venir de variación dentro del individuo.” Método principal: FE. Tipo de pieza: pieza técnica con valor aplicado. Estado de la evidencia: enseñanza metodológica clara.
+
+14. Observación menor de metadatos
+
+En el txt aparece otra vez familia_metodo: lineal_vi_panel, y eso no coincide con el contenido real del taller. Acá el taller es claramente de efectos fijos en panel. Conviene corregir ese metadato para evitar arrastres en clasificación o navegación futura.

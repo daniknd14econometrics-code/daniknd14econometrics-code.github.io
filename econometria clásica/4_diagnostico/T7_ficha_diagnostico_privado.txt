@@ -1,0 +1,142 @@
+Base usada para este diagnóstico: exclusivamente T7 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T7
+
+1. Identificación básica
+
+Taller 07. Tema central: efectos fijos en panel de firmas con un tratamiento mucho más completo que en T6. La base es jtrain1 y la variable dependiente es lscrap, con foco en d88, d89, grant y grant_1. La pregunta del brief está bien orientada: cómo usar FE de forma completa en un panel corto, incorporando equivalencias del estimador, contrastes conjuntos e inferencia robusta.
+
+2. Qué es realmente este taller
+
+Este taller no es un “hallazgo sustantivo” en sentido fuerte. Tampoco es simplemente una continuación menor de T6. Es, más bien, una pieza principalmente técnica con anclaje aplicado. La historia económica existe —scrap, entrenamiento y subsidios en firmas—, pero el valor central del taller está en mostrar que FE no es una caja negra: puede reconstruirse, auditarse, contrastarse con LSDV, someterse a tests conjuntos y releerse cuando la inferencia clásica falla.
+
+Clasificación editorial propuesta: pieza principalmente técnica con valor aplicado.
+
+3. Núcleo empírico y métodos realmente relevantes
+
+El log contiene muchos bloques: FE con xtreg, transformación within manual, between, reconstrucción de componentes de varianza, ICC, correlación entre c_i y Xb, equivalencia FE = LSDV, estimación explícita de c_i, tests F, FE con vce(cluster), tests robustos, pruebas de correlación serial, xtregar con AR(1) y una réplica FEGLS manual al estilo Wooldridge.
+
+Para la pieza pública no conviene dar a todo eso el mismo peso. El núcleo editorial razonable debería ser este:
+
+- FE como estimador within para panel corto de firmas.
+- Equivalencia FE / within manual / LSDV como evidencia de que el método puede auditarse.
+- Cambio de inferencia al pasar de varianza clásica a vce(cluster fcode).
+- Uso de tests conjuntos, no solo lectura de coeficientes aislados.
+- Evidencia de correlación serial real y justificación de inferencia robusta.
+
+Todo lo demás debe quedar subordinado como bloque técnico o didáctico secundario.
+
+4. Objeto de decisión final
+
+Acá no hay una “especificación ganadora” en el mismo sentido que T1 o T3. El objeto final de decisión debería ser una lectura profesional del tipo:
+
+“En este panel corto, FE sigue siendo el marco de identificación principal, pero la lectura empírica debe apoyarse en inferencia robusta y en contrastes conjuntos; no alcanza con mirar un coeficiente clásico aislado.”
+
+Dicho de otro modo: el cierre no debería coronar FEGLS, ni between, ni la correlación c_i–Xb, ni una comparación grandilocuente con RE. El cierre operativo natural del taller, dentro de lo que efectivamente se ve en los resultados, es FE con errores cluster por firma como benchmark prudente de inferencia.
+
+5. ¿Hay especificación ganadora?
+
+Sí, pero solo en sentido operativo y acotado: FE con vce(cluster fcode) debe ser la lectura preferida dentro del taller. No porque “gane” teóricamente para siempre, sino porque:
+
+- los coeficientes FE no cambian al robustecer, pero los errores estándar sí;
+- grant_1 pasa de significativo al 5% bajo varianza clásica a no significativo con cluster;
+- el test conjunto robusto grant = grant_1 = 0 no rechaza;
+- la evidencia posterior sugiere correlación serial real más allá de la inducida por la transformación within.
+
+Eso vuelve riesgoso construir la narrativa pública con la salida clásica como si fuera suficiente.
+
+6. Evidencia clave del log
+
+La evidencia más importante del taller, para fines públicos, está en estos puntos:
+
+a) FE básico:
+d89 ≈ -0.247, grant ≈ -0.252 y grant_1 ≈ -0.422, con grant_1 apenas significativo bajo inferencia clásica.
+
+b) FE con cluster:
+los coeficientes quedan iguales, pero la significancia cambia. grant_1 deja de ser significativo y grant queda apenas en zona débil. Esto muestra que la inferencia es frágil a la estructura de varianza.
+
+c) Test conjunto robusto:
+H0: grant = 0 y grant_1 = 0 arroja p ≈ 0.22. Entonces el foco no debe ser “un coeficiente estrella”, sino la prudencia con la evidencia conjunta.
+
+d) Tests de correlación serial:
+el test simple 88–89 es compatible con FE.3, pero el test general con todos los rezagos rechaza la historia FE.3 y sugiere correlación serial adicional. Ese es el argumento más limpio para preferir inferencia robusta.
+
+e) Equivalencia FE = within manual = LSDV:
+sirve muchísimo como valor metodológico del taller, pero no debe transformarse en el centro narrativo más visible.
+
+7. Historia narrativa posible, sin forzarla
+
+La historia buena no es “los grants reducen el scrap” como si el taller cerrara esa pregunta de forma fuerte. La historia correcta es otra:
+
+Cuando se usa FE en un panel corto de firmas, el resultado relevante no es solo el signo de un coeficiente, sino la calidad completa de la lectura econométrica: qué variación identifica al modelo, cómo se verifica la equivalencia del estimador, qué pasa cuando se robustecen los errores estándar y qué dicen los contrastes conjuntos.
+
+Eso permite una narrativa seria:
+pregunta aplicada -> FE como solución a heterogeneidad fija -> auditoría del estimador -> revisión de inferencia -> cierre prudente.
+
+8. Hallazgo principal
+
+La frase de salida debería ir en una línea como esta:
+
+“En este panel corto de firmas, FE ofrece una identificación clara frente a la heterogeneidad fija, pero la evidencia empírica se vuelve bastante más cautelosa cuando la inferencia se hace robusta y se privilegian contrastes conjuntos.”
+
+Eso es mucho mejor que vender un efecto puntual de grant o grant_1.
+
+9. Qué sí puede decir la pieza
+
+Sí puede decir que FE elimina la heterogeneidad fija no observada bajo el enfoque within.
+Sí puede decir que el método puede reproducirse manualmente y compararse con LSDV.
+Sí puede decir que la inferencia clásica exagera algo la solidez de ciertos resultados.
+Sí puede decir que en esta base hay señales de correlación serial relevantes para la inferencia.
+Sí puede decir que un análisis profesional con FE no debería descansar solo en coeficientes individuales.
+
+10. Qué no debe decir la pieza
+
+No debería decir que FE “demuestra” un efecto robusto de grant o grant_1.
+No debería vender xtregar o FEGLS manual como nueva especificación ganadora.
+No debería presentar rho alto o la correlación entre c_i y Xb como prueba definitiva de que FE debe abandonarse o que RE queda validado.
+No debería basar una conclusión fuerte sobre RE vs FE en estos bloques, especialmente con T = 3 y con el propio problema de parámetros incidentales en c_i.
+No debería dejar que between, c_i explícitos, plug-in de varianzas o FEGLS manual dominen visualmente la pieza.
+
+11. Riesgos editoriales principales para la futura auditoría
+
+Acá veo cuatro riesgos reales que Codex debería auditar con mucho cuidado:
+
+1. Que la pieza quede demasiado larga o demasiado técnica y pierda el hilo principal.
+2. Que bloques secundarios —between, c_i, plug-in, FEGLS manual— reciban demasiado protagonismo.
+3. Que se sobreactúe la lectura sobre rho o corr(c_i, Xb) como si resolvieran la decisión FE vs RE.
+4. Que no quede bien marcado que el cambio importante está en la inferencia robusta y en los tests conjuntos, no en un coeficiente individual.
+
+12. Requisitos mínimos para el qmd
+
+Para mí, la pieza pública debería asegurar sí o sí:
+
+- una apertura clara sobre por qué FE importa en panel de firmas;
+- un bloque corto que explique FE como within;
+- una comparación visible entre FE clásico y FE cluster;
+- una mención clara a la equivalencia FE / within manual / LSDV;
+- un cierre donde la lectura principal sea prudente y conjunta;
+- y una fuerte subordinación de los bloques más teóricos o replicativos.
+
+13. Nota para la tarjeta del sitio
+
+Pregunta breve:
+¿Cómo cambia la lectura de un modelo FE cuando, además de estimarlo, auditamos su inferencia y sus contrastes?
+
+Método:
+FE en panel de firmas, con comparación entre inferencia clásica y cluster.
+
+Hallazgo:
+La identificación within se mantiene, pero la lectura empírica se vuelve más cautelosa cuando se robustecen los errores y se miran tests conjuntos.
+
+Estado de la evidencia:
+Pieza técnica sólida, con cierre prudente.
+
+14. Diagnóstico final de T7
+
+T7 tiene mucho valor, pero también mucho riesgo de exceso. A diferencia de T6, donde el foco era “entender FE”, acá el taller se abre a demasiadas ramificaciones. Eso no es malo en sí mismo, pero en versión portfolio obliga a jerarquizar.
+
+Mi lectura final es esta:
+- no conviene convertir T7 en una pieza de gran narrativa aplicada;
+- sí conviene convertirlo en una pieza metodológica madura sobre uso profesional de FE;
+- la lectura operativa preferida debe descansar en FE con inferencia cluster;
+- y casi todo el resto debe entrar como soporte, no como protagonista.

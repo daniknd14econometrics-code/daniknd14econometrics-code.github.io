@@ -70,7 +70,7 @@ Evidencia conjunta de subsidios
 :::
 
 ::: {.metric-value}
-Inferencia convencional
+Inferencia robusta/cluster
 :::
 
 ::: {.metric-note}
