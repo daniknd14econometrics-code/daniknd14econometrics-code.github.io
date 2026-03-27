@@ -106,7 +106,7 @@ La econometría se usa para mejorar lectura aplicada, no para forzar una compete
 ¿Cómo cambian las probabilidades de participación laboral asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres?
 
 ::: {.small-note}
-Resultado: `lfp` (0/1). Variables clave: `kids`, `lhinc`. Controles: `educ`, `black`, `age`, `agesq`, dummies de periodo.
+Resultado: `lfp` (1 participa, 0 no). Variables clave: `kids` (número de hijos <18) y `lhinc` (log del ingreso del esposo). Controles: `educ`, `black`, `age`, `agesq`, dummies de periodo.
 :::
 :::
 

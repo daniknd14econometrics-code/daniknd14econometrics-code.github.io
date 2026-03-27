@@ -106,7 +106,7 @@ La pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D.
 ¿Cuándo se traduce el esfuerzo en I+D en patentamiento observable dentro de las firmas: en el mismo año o como acumulación a lo largo de varios años?
 
 ::: {.small-note}
-Resultado: `lpat`. Regresores clave: `lrnd`, `lrnd_1`...`lrnd_5`. Controles: `lsales`, `return`, dummies de año. Unidad de panel: `cusip`.
+Resultado: `lpat` (log de 1+patents). Regresores clave: `lrnd` y rezagos `lrnd_1`-`lrnd_5`. Controles: `lsales`, `return`, dummies de año. Unidad de panel: `cusip`.
 :::
 :::
 

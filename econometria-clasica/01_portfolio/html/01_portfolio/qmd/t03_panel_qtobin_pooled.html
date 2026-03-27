@@ -162,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?</p>
 <div class="small-note">
-<p>Variable dependiente: <code>ikb</code> (inversión/capital). Regresores clave: <code>qb</code>, <code>qb_sq</code>. Controles de tiempo: <code>i.year</code>. Unidad de cluster: <code>cusip</code>.</p>
+<p>Variable dependiente: <code>ikb</code> (I/K). Variables de interés: <code>qb</code> y <code>qb_sq</code> (q de Tobin y su cuadrado); en especificaciones dinámicas también se usa <code>qb_1</code>. Controles de tiempo: <code>i.year</code>. Unidad de cluster: <code>cusip</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">

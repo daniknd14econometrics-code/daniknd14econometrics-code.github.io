@@ -104,7 +104,7 @@ Esta pieza evalúa la relación entre la tasa de inversión de la firma (`ikb`) 
 ¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?
 
 ::: {.small-note}
-Variable dependiente: `ikb` (inversión/capital). Regresores clave: `qb`, `qb_sq`. Controles de tiempo: `i.year`. Unidad de cluster: `cusip`.
+Variable dependiente: `ikb` (I/K). Variables de interés: `qb` y `qb_sq` (q de Tobin y su cuadrado); en especificaciones dinámicas también se usa `qb_1`. Controles de tiempo: `i.year`. Unidad de cluster: `cusip`.
 :::
 :::
 
