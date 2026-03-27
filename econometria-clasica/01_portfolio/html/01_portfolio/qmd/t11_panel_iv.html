@@ -271,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>Relevancia IV (RE, 2 IV excluidos)</td>
 <td style="text-align: right;">KP rk Wald F =33.05; Hansen J p=0.8361</td>
-<td>Instrumentos aceptables en ese entorno de especificación</td>
+<td>Instrumentos aceptables en ese entorno de especificación; con <code>origin_id</code>, el uso es principalmente didáctico de diagnóstico y no define el cierre aplicado</td>
 </tr>
 <tr class="even">
 <td>Relevancia IV (FE)</td>
@@ -289,6 +289,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>La pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.</p>
+<p>Dado que los tests robustos de exogeneidad no rechazan al 5% (RE <code>p=0.1878</code>; FE robusto <code>p=0.1026</code>), en este caso no conviene instrumentar <code>lfare</code> por rutina; la decisión aplicada final vuelve a RE vs FE sin IV, donde el Hausman no IV favorece FE (<code>chi2(1)=49.15</code>, <code>p=0.0000</code>).</p>
 <p>Ese es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real.</p>
 </section>
 

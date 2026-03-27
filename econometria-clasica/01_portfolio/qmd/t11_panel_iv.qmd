@@ -173,7 +173,7 @@ Estos diagnósticos se presentan de forma breve para respaldar la lectura del ca
 |---|---:|---|
 | Exogeneidad (control function, RE) | chi2(1)=1.73, p=0.1878 | No aporta evidencia robusta fuerte para exigir IV como base |
 | Exogeneidad (control function, FE robusto) | chi2(1)=2.66, p=0.1026 | Resultado en misma dirección, con cautela |
-| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F =33.05; Hansen J p=0.8361 | Instrumentos aceptables en ese entorno de especificación |
+| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F =33.05; Hansen J p=0.8361 | Instrumentos aceptables en ese entorno de especificación; con `origin_id`, el uso es principalmente didáctico de diagnóstico y no define el cierre aplicado |
 | Relevancia IV (FE) | KP rk Wald F =11.66 | Fuerza más justa; refuerza prudencia al interpretar FE-IV |
 :::
 
@@ -186,6 +186,8 @@ En esta aplicación, IV se mantiene como contraste relevante y bien justificado 
 ## Cierre
 
 La pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.
+
+Dado que los tests robustos de exogeneidad no rechazan al 5% (RE `p=0.1878`; FE robusto `p=0.1026`), en este caso no conviene instrumentar `lfare` por rutina; la decisión aplicada final vuelve a RE vs FE sin IV, donde el Hausman no IV favorece FE (`chi2(1)=49.15`, `p=0.0000`).
 
 Ese es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real.
 

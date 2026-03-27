@@ -1,0 +1,126 @@
+Base usada para este diagnóstico: exclusivamente T11 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T11
+
+1. Identificación básica
+
+Taller 11. Tema central: endogeneidad en panel dentro de una ecuación de demanda aérea, comparando RE, FE, RE-IV, FE-IV y versiones tipo Mundlak. La unidad de análisis son rutas/mercados aéreos identificados por id. La variable dependiente es lpassen. Las variables clave son lfare, ldist, ldistsq, concen, origin_id y dummies de año.
+
+2. Clasificación editorial
+
+Pieza metodológica fuerte con anclaje aplicado. No conviene venderla como un hallazgo sustantivo puro sobre demanda aérea, sino como una pieza sobre cómo decidir si realmente hace falta IV en panel y, si hace falta, bajo qué estructura de heterogeneidad conviene trabajar.
+
+3. Pregunta real del taller
+
+¿Cómo cambia la estrategia empírica en panel cuando una variable clave de demanda, como la tarifa, puede ser endógena, y cómo se decide entre RE, FE, RE-IV, FE-IV y Mundlak sin automatismos?
+
+4. Núcleo empírico
+
+El taller contiene dos capas que deben distinguirse con claridad:
+
+Capa A: decisión sobre endogeneidad de lfare.
+- RE-IV y FE-IV como marcos posibles.
+- Test de exogeneidad vía control function.
+- Revisión de relevancia y, cuando es posible, sobreidentificación.
+
+Capa B: una vez discutida la endogeneidad, decisión sobre estructura de heterogeneidad.
+- Si lfare no resulta claramente endógena, el problema real pasa a ser elegir entre RE y FE.
+- Si se forzara el caso IV por fines didácticos, aparece la comparación RE-IV vs FE-IV y el uso de Mundlak como alternativa robusta.
+
+5. Objeto de decisión
+
+El objeto final de decisión de la pieza no debe ser una tabla caótica con todas las corridas del log. Tiene que quedar visible una secuencia de decisión:
+
+1) ¿Hay evidencia suficiente de endogeneidad de lfare?
+2) Si no la hay, no conviene instrumentar “por las dudas”.
+3) En ese caso, la decisión práctica vuelve a ser RE vs FE sin IV.
+4) Si uno insiste en el entorno IV por fines pedagógicos, entonces Mundlak ayuda a comparar RE-IV y FE-IV.
+
+6. Lectura ganadora
+
+La lectura ganadora del taller, para una pieza pública bien armada, no debería ser “IV gana”. De hecho, el log empuja hacia otra conclusión más interesante: en este dataset, con inferencia robusta, no hay evidencia suficientemente fuerte para rechazar la exogeneidad de lfare, por lo que la estrategia IV no aparece como necesaria. Si IV no es necesaria, la decisión empírica final vuelve al problema RE vs FE sin instrumentación, y ahí el Hausman clásico favorece FE frente a RE en la especificación simple sin IV.
+
+Ahora bien, el brief pone mucho peso en la caja de herramientas IV panel. Entonces editorialmente hay que equilibrar dos cosas:
+- mostrar el arsenal metodológico IV porque ese es el valor del taller;
+- pero cerrar con honestidad: el aprendizaje principal es que primero se justifica la endogeneidad, y recién después se instrumenta.
+
+7. Evidencia clave del log
+
+Hay cinco piezas decisivas:
+
+a) RE-IV con un solo instrumento (concen) da un coeficiente negativo en lfare, pero con errores robustos/cluster se vuelve muy impreciso: lfare = -0.5079, EE = 0.4985, p = 0.308.
+
+b) FE-IV con concen también produce una estimación muy imprecisa con cluster: lfare = -0.3016, EE = 0.6129, p = 0.623.
+
+c) Test de exogeneidad por control function:
+- En RE, con cluster: p = 0.1878.
+- En FE, con cluster: p = 0.1026.
+En ambos casos no se rechaza exogeneidad de lfare al 5%.
+
+ d) Relevancia instrumental:
+- En RE con concen + origin_id, el KP Wald F robusto es 33.05 y Hansen J p = 0.8361.
+- En FE, una vez hecha la transformación within, origin_id cae por colinealidad; queda esencialmente solo concen y el KP Wald F robusto es 11.66.
+Eso sirve para discutir que el entorno FE-IV queda más restringido instrumentalmemente.
+
+e) Cuando se ignora IV porque no parece necesaria, el Hausman clásico entre RE y FE sin IV rechaza fuertemente: chi2(1)=49.15, p=0.0000. En ese contexto, la elección práctica sería FE y no RE.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena acá es mucho mejor que “corrimos IV en panel”. La historia correcta es:
+- En demanda, el precio puede ser endógeno y eso obliga a pensar en instrumentos.
+- Pero en panel no alcanza con decir “precio es endógeno por definición”; hay que testear y justificar.
+- Cuando se hace ese trabajo, en esta base no aparece evidencia robusta suficiente para rechazar la exogeneidad de lfare.
+- Entonces, el verdadero aprendizaje profesional del taller es que no conviene instrumentar por rutina.
+- Recién después, y solo si uno insiste en el entorno IV por fines didácticos, se explora RE-IV, FE-IV, relevancia, sobreidentificación y Mundlak.
+
+Esa narrativa es muy fuerte porque enseña diseño empírico y honestidad metodológica al mismo tiempo.
+
+9. Qué sí puede decir la pieza
+
+Sí puede decir:
+- que la tarifa puede ser endógena en una ecuación de demanda;
+- que el taller muestra cómo evaluar esa posibilidad en panel;
+- que la decisión IV debe basarse en evidencia, no en reflejo automático;
+- que RE-IV y FE-IV pueden reconstruirse y auditarse con first stage, control function y pruebas de instrumentos;
+- que en esta base la evidencia robusta no obliga a instrumentar;
+- que por eso, en una aplicación real, la decisión final volvería a RE vs FE sin IV.
+
+10. Qué no debe decir la pieza
+
+No debería decir:
+- que IV es automáticamente superior porque el problema “suena” a demanda;
+- que los tests de exogeneidad “prueban” exogeneidad en sentido definitivo;
+- que RE-IV o FE-IV son el cierre empírico final del caso real;
+- que origin_id es un gran instrumento sustantivo solo porque se usó para ilustrar sobreidentificación;
+- que el bloque IV didáctico representa la decisión aplicada final cuando el propio log sugiere lo contrario.
+
+11. Riesgos editoriales a vigilar en la auditoría
+
+a) Que la pieza confunda bloque didáctico con decisión aplicada real.
+b) Que se venda demasiado RE-IV o FE-IV cuando el test de exogeneidad no obliga a usar IV.
+c) Que el lector no vea la secuencia lógica “primero exogeneidad, después IV”.
+d) Que el cierre no deje claro que, en caso real, el problema final vuelve a RE vs FE sin IV.
+e) Que haya sobrecarga técnica con transformaciones quasi-demeaned, overid manual y comparaciones algebraicas, perdiendo la historia principal.
+
+12. Requisitos mínimos para el .qmd
+
+Para mí, la pieza pública debería contener sí o sí:
+- una pregunta aplicada clara sobre demanda y posible endogeneidad del precio;
+- una primera capa de decisión: ¿hay evidencia de endogeneidad?
+- una segunda capa breve: si hubiera que instrumentar, cómo se compara RE-IV vs FE-IV y qué aporta Mundlak;
+- una tabla comparativa muy disciplinada, no exhaustiva;
+- un cierre honesto diciendo que el mejor aprendizaje es no instrumentar por reflejo.
+
+13. Nota para la tarjeta del sitio
+
+Pregunta breve:
+¿Cómo decidir si una variable en panel realmente necesita IV, antes de lanzarse a instrumentar?
+
+Método:
+RE-IV, FE-IV, control function, first stage, sobreidentificación y Mundlak.
+
+Hallazgo:
+El valor del taller no está en “usar IV”, sino en mostrar que primero hay que justificar la endogeneidad y recién después elegir entre RE, FE o sus versiones IV.
+
+Estado de la evidencia:
+Pieza metodológica muy fuerte, con historia de decisión empírica clara si se la jerarquiza bien.
