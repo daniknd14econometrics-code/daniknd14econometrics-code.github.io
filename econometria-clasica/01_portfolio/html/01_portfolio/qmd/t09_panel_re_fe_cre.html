@@ -111,10 +111,10 @@ ul.task-list li input[type="checkbox"] {
 <div class="metric-grid">
 <div class="metric-card">
 <div class="metric-label">
-<p>Modelo operativo</p>
+<p>Referencia operativa</p>
 </div>
 <div class="metric-value">
-<p>RE + cluster</p>
+<p>RE + cluster (sujeto a contraste FE/CRE)</p>
 </div>
 <div class="metric-note">
 <p><code>xtreg lscrap grant grant_1 d88 d89, re vce(cluster fcode)</code></p>
@@ -244,11 +244,6 @@ ul.task-list li input[type="checkbox"] {
 <td>CRE + cluster (<code>grant</code>, <code>grant_1</code>)</td>
 <td style="text-align: right;">-0.252 (EE 0.144; IC [-0.535, 0.031]); -0.422 (EE 0.284; IC [-0.979, 0.136])</td>
 <td>Muy cercano a FE en variables clave</td>
-</tr>
-<tr class="even">
-<td>Evidencia robusta CRE/Mundlak</td>
-<td style="text-align: right;">Test conjunto medias temporales (cluster): chi2(2)=1.85, p=0.3965</td>
-<td>Compatible con usar RE como operativo En esta muestra</td>
 </tr>
 </tbody>
 </table>

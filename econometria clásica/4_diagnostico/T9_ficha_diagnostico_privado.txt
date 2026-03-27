@@ -1,0 +1,123 @@
+Base usada para este diagnóstico: exclusivamente T9 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T9
+
+1. Identificación básica
+
+Taller 09. Tema central: comparación entre random effects (RE), fixed effects (FE) y correlated random effects (CRE/Mundlak) en un panel corto de firmas. La unidad de análisis son firmas; la variable dependiente es lscrap. Las variables centrales son grant, grant_1, d88, d89 y, en la especificación Mundlak, los promedios temporales grant_bar y grant_1_bar.
+
+2. Clasificación editorial
+
+Pieza metodológica fuerte con anclaje aplicado. No conviene venderla como un resultado sustantivo sobre scrap, sino como una pieza sobre decisión de estimador en panel cuando el punto crítico es si c_i está o no correlacionado con los regresores.
+
+3. Pregunta real del taller
+
+¿Cómo decidir entre RE, FE y CRE cuando el supuesto central de RE puede ser dudoso, y por qué no alcanza con obedecer ciegamente un único test?
+
+4. Núcleo empírico
+
+El taller compara:
+- RE clásico.
+- FE clásico.
+- Hausman clásico FE vs RE.
+- RE y FE con inferencia cluster para el modelo que eventualmente se reportaría.
+- CRE/Mundlak clásico.
+- CRE/Mundlak robusto/cluster como versión de “Hausman robusto”.
+
+También muestra la transformación quasi-demeaning de RE y la equivalencia parcial de coeficientes entre FE y CRE. Eso es útil, pero no debería dominar la pieza pública.
+
+5. Objeto de decisión
+
+El objeto final de decisión debe ser una tabla o bloque comparativo RE vs FE vs CRE donde quede claro:
+- qué supuesto está en juego;
+- qué dicen Hausman clásico y Mundlak robusto;
+- qué tan parecidos son los coeficientes;
+- y por qué la decisión final razonable del taller es RE, pero sin automatismo ciego.
+
+6. Lectura ganadora
+
+La lectura ganadora no es “Hausman no rechaza, fin”. La lectura ganadora correcta es más rica:
+- Hausman clásico no rechaza (p = 0.2425).
+- El test Mundlak clásico tampoco rechaza (p = 0.3591).
+- El test Mundlak robusto/cluster tampoco rechaza (p = 0.3965).
+- Además, los coeficientes FE, RE y CRE son bastante similares para las variables clave.
+- En ese contexto, RE aparece como decisión razonable y eficiente, pero la pieza debe dejar claro que esa elección surge de combinar tests, magnitudes y criterio económico, no de un automatismo mecánico.
+
+7. Evidencia clave del log
+
+Hay cuatro piezas decisivas:
+
+a) Hausman clásico:
+chi2(2) = 2.83, p = 0.2425.
+No hay evidencia fuerte contra RE.
+
+b) Mundlak clásico:
+test grant_bar grant_1_bar
+chi2(2) = 2.05, p = 0.3591.
+Tampoco rechaza la nula de ausencia de correlación sistemática capturada por las medias temporales.
+
+c) Mundlak robusto/cluster:
+chi2(2) = 1.85, p = 0.3965.
+Refuerza la misma lectura con inferencia robusta.
+
+d) Los coeficientes compartidos entre FE, RE y CRE son parecidos, especialmente para grant y grant_1, lo que reduce la sensación de conflicto fuerte entre modelos.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena acá es:
+- en panel, la elección entre FE y RE depende de un supuesto sobre c_i y x_it;
+- Hausman ayuda, pero no basta aisladamente;
+- CRE/Mundlak permite volver visible y testear esa relación de una manera más flexible y además robusta;
+- cuando los tests no rechazan y las magnitudes son parecidas, RE puede ser una decisión razonable;
+- pero lo profesional es mostrar por qué, no simplemente apretar un botón y obedecer una salida.
+
+Esa narrativa es fuerte, clara y profesional.
+
+9. Qué sí puede decir la pieza
+
+Sí puede decir:
+- que RE es más eficiente si su supuesto central se sostiene;
+- que FE es más robusto si ese supuesto falla;
+- que CRE/Mundlak funciona como puente y chequeo útil;
+- que en esta base, Hausman y Mundlak no encuentran evidencia fuerte contra RE;
+- que la similitud de coeficientes entre FE, RE y CRE refuerza una lectura favorable a RE.
+
+10. Qué no debe decir la pieza
+
+No debería decir:
+- que Hausman “demuestra” que RE es correcto;
+- que un p-valor alto valida de forma definitiva la exogeneidad de c_i;
+- que corr(c_i, Xb) baja o theta alto son pruebas decisivas por sí solas;
+- que CRE reemplaza conceptualmente a FE y RE en todos los sentidos;
+- que la decisión está cerrada solo por una mecánica estadística.
+
+11. Riesgos editoriales a vigilar en la auditoría
+
+a) Que la pieza se vuelva demasiado pedagógica y dispersa con lambda, quasi-demeaning y detalles algebraicos secundarios.
+b) Que RE quede vendido como “ganador automático” solo por Hausman no significativo.
+c) Que no se vea con suficiente fuerza el rol del Mundlak robusto como complemento importante.
+d) Que corr(c_i, Xb) o theta aparezcan sobredimensionados como si fueran criterio de decisión principal.
+e) Que la tabla final no concentre con claridad la lógica RE vs FE vs CRE.
+
+12. Requisitos mínimos para el .qmd
+
+Para mí, la pieza pública debería contener sí o sí:
+- una pregunta clara sobre cómo decidir entre estimadores de panel;
+- una tabla comparativa RE vs FE vs CRE;
+- una explicación breve de Hausman clásico y de Mundlak robusto;
+- un bloque que diga expresamente que no alcanza con un solo test;
+- un cierre que justifique por qué, en este caso, trabajar con RE es razonable.
+
+13. Nota para la tarjeta del sitio
+
+Pregunta breve:
+¿Cómo decidir entre FE, RE y CRE sin reducir todo a un único test?
+
+Método:
+Comparación FE vs RE + Hausman clásico + CRE/Mundlak robusto.
+
+Hallazgo:
+En esta base, Hausman y Mundlak no rechazan a RE y los coeficientes son parecidos, pero la decisión correcta surge de combinar evidencia, no de automatizarla.
+
+Estado de la evidencia:
+Pieza metodológica sólida, con cierre prudente y comparativo.

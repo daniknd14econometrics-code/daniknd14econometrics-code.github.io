@@ -38,11 +38,11 @@ La comparación FE, RE y CRE se usa como contraste disciplinado para elegir espe
 
 ::: {.metric-card}
 ::: {.metric-label}
-Modelo operativo
+Referencia operativa
 :::
 
 ::: {.metric-value}
-RE + cluster
+RE + cluster (sujeto a contraste FE/CRE)
 :::
 
 ::: {.metric-note}
@@ -173,7 +173,6 @@ Con esa base, RE se usa como modelo operativo por parsimonia y por compatibilida
 | FE + cluster (`grant`, `grant_1`) | -0.252 (EE 0.143; IC [-0.540, 0.035]); -0.422 (EE 0.282; IC [-0.988, 0.145]) | Magnitudes negativas con incertidumbre amplia |
 | RE + cluster (`grant`, `grant_1`) | -0.214 (EE 0.131; IC [-0.471, 0.042]); -0.373 (EE 0.268; IC [-0.897, 0.152]) | Patrón sustantivo similar al FE |
 | CRE + cluster (`grant`, `grant_1`) | -0.252 (EE 0.144; IC [-0.535, 0.031]); -0.422 (EE 0.284; IC [-0.979, 0.136]) | Muy cercano a FE en variables clave |
-| Evidencia robusta CRE/Mundlak | Test conjunto medias temporales (cluster): chi2(2)=1.85, p=0.3965 | Compatible con usar RE como operativo En esta muestra |
 :::
 
 ::: {.table-box}
