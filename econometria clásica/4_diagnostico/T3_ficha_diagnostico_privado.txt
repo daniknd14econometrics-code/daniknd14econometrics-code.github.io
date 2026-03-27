@@ -1,0 +1,109 @@
+Ficha técnica-editorial privada — T3
+
+1. Identificación básica
+
+Taller 03. Tema central: relación entre inversión y q de Tobin en un panel de firmas, trabajada desde la lógica de pooled OLS con errores cluster por firma y controles temporales. La variable dependiente es `ikb` y las variables centrales son `qb`, `qb_1` y sus posibles términos cuadráticos, además de dummies de año. El brief define bien la pieza como una aplicación sobre inversión y q de Tobin en panel, con foco en magnitud económica, parsimonia y lectura aplicada. También sugiere, correctamente, que no alcanza con mostrar significancia: hay que mostrar tamaño del efecto y sentido económico.
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza técnica pura. Tampoco es solo una comparación metodológica como T1 o T2. Acá sí hay un hallazgo aplicado relativamente claro: la relación entre inversión y q de Tobin aparece como positiva pero cóncava, y la especificación final elegida deja de lado la dinámica rezagada para concentrarse en una relación contemporánea cuadrática más parsimoniosa y más interpretable. Por eso, yo clasificaría editorialmente T3 como “hallazgo sustantivo con cautela metodológica”. El resultado aplicado existe y es presentable, pero no debe venderse como una verdad definitiva porque sigue apoyado en pooled OLS.
+
+3. Núcleo empírico y métodos comparados
+
+El log recorre varias familias de modelos:
+- pooled OLS lineal con `qb_1`;
+- pooled OLS con `qb_1`, robusto y cluster por firma;
+- extensión con rezago de la dependiente `ikb_1`, que se discute pero no se acepta como modelo interpretable final;
+- pooled con `qb_1` e `i.year`;
+- pruebas auxiliares de autocorrelación AR(1) y heterocedasticidad;
+- alternativa FGLS con AR(1) y heterocedasticidad por panel;
+- comparaciones entre especificaciones con `qb_1`, con `qb` contemporáneo, con forma lineal y con forma cuadrática;
+- comparación del modelo contemporáneo cuadrático tanto en muestra completa como restringiendo a `if !missing(qb_1)` para hacer comparable la muestra con modelos rezagados.
+
+Para la pieza pública, el centro no debería ser toda esa secuencia completa. El núcleo que importa es mucho más simple: del rezago lineal se pasa a comparar contemporáneo vs rezago, luego lineal vs cuadrático, y el modelo final termina siendo pooled OLS con `qb`, `qb_sq`, `i.year` y `vce(cluster cusip)`.
+
+4. Objeto de decisión final
+
+Acá tiene que existir sí o sí un objeto final de decisión claro. No basta una tabla suelta con varios modelos. La pieza necesita dejar explícito que la lectura final es esta: la inversión se relaciona de forma positiva pero a tasa decreciente con q de Tobin contemporánea; el rezago pierde protagonismo cuando compite con la q contemporánea; y la forma cuadrática contemporánea es la especificación preferida por ajuste, parsimonia e interpretación económica. Ese objeto final puede ser una tabla comparativa corta o una caja de cierre, pero tiene que ordenar la lectura.
+
+5. Especificación ganadora
+
+Sí, hay una especificación ganadora clara: `regress ikb qb qb_sq i.year, vce(cluster cusip)`. Esa es la que el propio log marca como “MODELO FINAL”. La razón es bastante sólida:
+- el contemporáneo `qb` domina al rezago cuando ambos compiten;
+- la relación cuadrática mejora la lectura respecto de la lineal;
+- la muestra completa gana observaciones al no requerir `qb_1`;
+- y aun restringiendo a `if !missing(qb_1)`, el patrón cuadrático contemporáneo se mantiene.
+
+Esta última verificación es muy importante porque evita que la elección del modelo ganador quede contaminada solo por un cambio de muestra.
+
+6. Evidencia clave del log
+
+La evidencia decisiva está en cinco bloques.
+
+Primero, el modelo lineal con `qb_1` muestra una asociación positiva y significativa, pero todavía parcial.
+
+Segundo, cuando se estima `ikb` sobre `qb` y `qb_1` juntos, el contemporáneo `qb` queda fuerte y significativo, mientras que `qb_1` se vuelve pequeño e impreciso. Eso ya cambia la historia: el efecto que parecía pertenecer al rezago estaba capturando en parte el efecto contemporáneo omitido.
+
+Tercero, cuando se agregan términos cuadrados para ambas variables, la no linealidad fuerte aparece en `qb` contemporáneo, no en el rezago. Ahí se observa un patrón positivo en `qb` y negativo en `qb_sq`, consistente con una relación cóncava.
+
+Cuarto, el modelo contemporáneo cuadrático en muestra completa (`N = 2068`) queda muy bien definido y supera al lineal, con ambos coeficientes altamente significativos.
+
+Quinto, esa misma superioridad del modelo cuadrático contemporáneo persiste en la muestra restringida `if !missing(qb_1)` (`N = 1880`), lo que fortalece mucho la comparabilidad editorial.
+
+7. Historia narrativa posible, sin forzarla
+
+La mejor historia para T3 no es “corrimos muchos modelos”. La historia correcta es otra: en un panel de firmas, la inversión parece responder a la q de Tobin, pero la forma de esa relación importa. Una primera mirada con rezagos sugiere efecto positivo del pasado. Sin embargo, cuando se hace competir a la q contemporánea con su rezago, el contemporáneo se impone. Luego, al permitir no linealidad, aparece una relación económicamente más rica: mayor q se asocia con más inversión, pero con rendimientos decrecientes. Esa historia tiene pregunta, método, resultado y aprendizaje. Y no suena forzada.
+
+8. Hallazgo principal
+
+La frase que debería quedar en la cabeza del lector es esta: “En este panel de firmas, la inversión aumenta con la q de Tobin contemporánea, pero lo hace a tasa decreciente; el rezago pierde relevancia cuando el contemporáneo entra bien especificado, y la lectura final favorece una forma cuadrática parsimoniosa.”
+
+9. Magnitud económica e interpretación
+
+Este taller tiene algo valioso que no todos tienen: permite salir de la mera significancia estadística. El log calcula el punto de máximo de la parábola en torno a `qb ≈ 5.5`. Luego compara ese valor con la distribución de `qb` y muestra que dicho máximo cae cerca del percentil 99. Eso implica que, para casi toda la muestra, el efecto marginal de `qb` sobre `ikb` sigue siendo positivo, aunque decreciente. Además, el paso del percentil 25 al 75 en `qb` genera un cambio económicamente visible en `ikb` predicho. Esa es una fortaleza grande del taller: puede cerrar con magnitud económica y no solo con p-valores.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que, en esta base, la relación entre inversión y q de Tobin se ajusta mejor con una forma contemporánea cuadrática que con un rezago lineal simple.
+Sí puede decir que el efecto marginal de `qb` es positivo para casi toda la muestra, pero decreciente.
+Sí puede decir que el rezago pierde fuerza al competir con el contemporáneo.
+Sí puede decir que el resultado tiene lectura económica, no solo estadística.
+Y sí puede decir que la especificación final del taller es una versión parsimoniosa con `qb`, `qb_sq`, dummies de año y errores cluster por firma.
+
+11. Qué no debe decir la pieza
+
+No debería decir que se “demuestra” causalmente el efecto de q sobre inversión.
+No debería vender pooled OLS como solución definitiva al problema del panel.
+No debería ocultar que hubo comparación entre modelos con distinto tamaño muestral, aunque el propio log haya hecho la verificación correcta en muestra común.
+No debería sobreactuar la teoría diciendo más de lo que el ejercicio da. La fórmula correcta es algo así como “resultado consistente con una lectura económica plausible” o “patrón compatible con la teoría de la q de Tobin”, no más que eso.
+Tampoco conviene sobredramatizar los modelos dinámicos auxiliares: se usan para mostrar límites y criterio de especificación, no como núcleo de la pieza pública.
+
+12. Riesgo editorial principal a verificar en la futura auditoría
+
+El mayor riesgo de T3 no es la falta de historia. La historia está. El mayor riesgo es otro: que la pieza pública quede atrapada en una narrativa vieja de “pooled con rezago” y no muestre con suficiente claridad que el ganador final es el modelo contemporáneo cuadrático. El segundo riesgo es que la comparación entre modelos con 1880 y 2068 observaciones se cuente mal. Por suerte, el log ya trae la solución correcta: repetir el modelo contemporáneo cuadrático en `if !missing(qb_1)`. La auditoría futura tiene que verificar que la pieza actual esté aprovechando bien ese chequeo y no compare manzanas con naranjas.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza debería tener sí o sí:
+- una apertura con la pregunta aplicada: inversión y q de Tobin;
+- una breve explicación de por qué no basta una regresión lineal simple o un rezago aislado;
+- una tabla comparativa corta que muestre la secuencia decisiva: rezago lineal, contemporáneo lineal, contemporáneo cuadrático;
+- una lectura clara de por qué gana el contemporáneo cuadrático;
+- un cierre que traduzca la significancia en magnitud económica;
+- y una nota sobria de cautela metodológica sobre pooled OLS y heterogeneidad inobservable.
+
+14. Nota para la tarjeta del sitio
+
+La tarjeta debería decir algo del tipo:
+“¿Cómo cambia la lectura de la inversión cuando q de Tobin entra con forma no lineal? En un panel de firmas, la relación contemporánea entre inversión y q aparece positiva pero decreciente, y domina a una lectura rezagada más simple.”
+Método principal: pooled OLS con cluster por firma y controles temporales.
+Tipo de pieza: hallazgo sustantivo con cautela metodológica.
+Estado de la evidencia: resultado claro dentro de una especificación pooled.
+
+15. Observación de metadatos
+
+Igual que en T1 y T2, el brief trae `familia_metodo: lineal_vi_panel`, y eso no coincide con el contenido real del taller. Conviene corregir ese metadato más adelante para no contaminar clasificación o navegación.
+
+Diagnóstico final
+
+T3 tiene más sustancia aplicada que T2 y un cierre empírico más atractivo. No necesita forzar una gran narrativa: ya la tiene. La clave es que la pieza pública deje muy claro que el ganador no es el modelo con rezago, sino la especificación contemporánea cuadrática con dummies de año y cluster por firma, y que use bien la comparación en muestra común para que esa decisión no quede metodológicamente floja.
