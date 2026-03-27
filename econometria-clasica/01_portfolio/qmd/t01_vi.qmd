@@ -1,5 +1,5 @@
 ---
-title: "Cuando MCO no alcanza"
+title: "Retorno salarial de la educación: MCO frente a IV/2SLS"
 subtitle: "Educación endógena y salario con variables instrumentales"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
@@ -102,7 +102,7 @@ Este caso analiza cómo cambia la estimación del retorno de la educación sobre
 ::: {.section-box}
 ## Pregunta
 
-¿Cómo cambia la estimación del retorno de la educación sobre el salario cuando tratamos a la educación como potencialmente endógena?
+¿Cambia de forma sustantiva la estimación del retorno salarial asociado a la educación cuando `educ` se trata como endógena y se estima con IV/2SLS, instrumentando con `meduc` y `feduc`, en lugar de MCO?
 
 ::: {.small-note}
 Variable dependiente: `lwage` (log del salario por hora). Variable endógena: `educ`. Controles: `exper`, `expersq`. Instrumentos: `meduc`, `feduc`.
@@ -152,6 +152,8 @@ La secuencia del análisis es la siguiente:
 Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno de la educación libre de sesgo.
 
 La lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.
+
+**Hallazgo principal:** al instrumentar `educ` con `meduc` y `feduc`, el coeficiente estimado para la educación aumenta de forma importante respecto de MCO, en línea con la presencia de sesgo cuando `educ` se trata como exógena.
 
 ::: {.table-box}
 ## Resultados principales
@@ -211,3 +213,5 @@ En otras palabras, el valor del caso no está solo en la técnica, sino en el cr
 
 Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
 En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.
+
+**Conclusión:** en este ejercicio, la evidencia favorece IV/2SLS como estrategia para estimar el efecto de la educación sobre el salario.
