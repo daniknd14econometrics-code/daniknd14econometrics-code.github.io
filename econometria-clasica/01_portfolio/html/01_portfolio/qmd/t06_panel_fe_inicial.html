@@ -221,32 +221,42 @@ Ese avance no vuelve automáticamente insesgado el resultado ni resuelve otras f
 </ol>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Resultado central</th>
-<th style="text-align: right;">Evidencia</th>
-<th>Lectura</th>
+<th>Componente FE</th>
+<th style="text-align: right;">Resultado reportado</th>
+<th style="text-align: right;">Estadístico</th>
+<th style="text-align: right;">Prob &gt; F</th>
+<th>Interpretación econométrica</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>FE base (within)</td>
-<td style="text-align: right;"><code>R2 within = 0.1780</code>, <code>F(4,3811)=206.38</code></td>
+<td style="text-align: right;">R2 within = 0.1780</td>
+<td style="text-align: right;">F(4,3811)=206.38</td>
+<td style="text-align: right;">-</td>
 <td>Identificacion sobre variación intraindividuo</td>
 </tr>
 <tr class="even">
 <td>Variables invariantes</td>
-<td style="text-align: right;"><code>educ</code> y <code>black</code> omitidas</td>
-<td>FE no estima efectos de covariables constantes en <code>t</code></td>
+<td style="text-align: right;">educ y black omitidas</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td>FE no estima efectos de covariables constantes en t</td>
 </tr>
 <tr class="odd">
 <td>Estructura panel</td>
-<td style="text-align: right;"><code>F(544,3811)=9.71</code>, <code>p=0.0000</code></td>
-<td>Rechazo fuerte de <code>all u_i=0</code>; pooled simple es insuficiente</td>
+<td style="text-align: right;">F all u_i=0</td>
+<td style="text-align: right;">F(544,3811)=9.71</td>
+<td style="text-align: right;">0.0000</td>
+<td>Rechazo fuerte de all u_i=0; pooled simple es insuficiente</td>
 </tr>
 </tbody>
 </table>
@@ -259,31 +269,36 @@ Ese avance no vuelve automáticamente insesgado el resultado ni resuelve otras f
 En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia estadística robusta en este taller.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Chequeo secundario</th>
-<th style="text-align: right;">Resultado</th>
-<th>Lectura</th>
+<th>Contraste auxiliar</th>
+<th style="text-align: right;">Resultado reportado</th>
+<th style="text-align: right;">Prob &gt; F</th>
+<th>Interpretación econométrica</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>FE + dummies de año</td>
-<td style="text-align: right;"><code>R2 within = 0.1806</code></td>
+<td style="text-align: right;">R2 within = 0.1806</td>
+<td style="text-align: right;">-</td>
 <td>Cambio acotado frente al FE base</td>
 </tr>
 <tr class="even">
-<td>Test conjunto <code>d82</code>-<code>d87</code></td>
-<td style="text-align: right;"><code>p = 0.1863</code></td>
+<td>Test conjunto d82-d87</td>
+<td style="text-align: right;">F(5,3805)=1.50</td>
+<td style="text-align: right;">0.1863</td>
 <td>Sin evidencia fuerte para mantener bloque temporal En esta base</td>
 </tr>
 <tr class="odd">
-<td>FE + <code>educ#year</code></td>
-<td style="text-align: right;"><code>R2 within = 0.1814</code></td>
+<td>FE + educ#year</td>
+<td style="text-align: right;">R2 within = 0.1814</td>
+<td style="text-align: right;">-</td>
 <td>Interacciones sin aporte robusto; contraste didactico</td>
 </tr>
 </tbody>
