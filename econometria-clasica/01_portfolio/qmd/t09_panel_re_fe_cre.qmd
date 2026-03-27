@@ -15,7 +15,9 @@ format:
     theme: flatly
     smooth-scroll: true
     page-layout: full
-    css: ../assets/portfolio.css
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
 execute:
   echo: false
   warning: false
