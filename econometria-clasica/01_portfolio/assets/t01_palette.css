@@ -51,22 +51,41 @@ a:focus {
 
 #TOC a[data-scroll-target] {
   color: var(--t1-text) !important;
+  background: transparent !important;
+  border-left: 3px solid transparent;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 0 transparent;
+  box-shadow: none;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
-#TOC a[data-scroll-target]:hover,
-#TOC a[data-scroll-target]:focus {
+#TOC a[data-scroll-target]:not(.active):hover,
+#TOC a[data-scroll-target]:not(.active):focus,
+#TOC .nav-link:not(.active):hover,
+#TOC .nav-link:not(.active):focus {
   color: var(--t1-accent-2) !important;
+  background: rgba(15, 118, 110, 0.08) !important;
+  border-left-color: rgba(15, 118, 110, 0.45) !important;
 }
 
 #TOC a[data-scroll-target].active,
 #TOC a[data-scroll-target][aria-current="true"],
 #TOC .nav-link.active,
-#TOC li.active > a[data-scroll-target] {
+#TOC li.active > a[data-scroll-target],
+#TOC li.active > .nav-link {
   color: var(--t1-accent) !important;
-  background: rgba(29, 78, 216, 0.10) !important;
-  box-shadow: inset 3px 0 0 0 var(--t1-accent);
+  background: #EDF2FF !important;
+  border-left-color: var(--t1-accent) !important;
+  box-shadow: none !important;
+  font-weight: 600;
+}
+
+#TOC a[data-scroll-target].active:hover,
+#TOC a[data-scroll-target].active:focus,
+#TOC .nav-link.active:hover,
+#TOC .nav-link.active:focus {
+  color: var(--t1-accent) !important;
+  background: #EDF2FF !important;
+  border-left-color: var(--t1-accent) !important;
 }
 
 .hero-box {
