@@ -172,10 +172,10 @@ En el modelo operativo, los coeficientes de rezagos por separado son inestables 
 
 | Bloque | Evidencia | Lectura |
 |---|---:|---|
-| FE con rezagos (lectura individual) | Varios `lrnd_k` con baja precisión individual | No conviene interpretar cada rezago como efecto aislado |
-| FE con rezagos (lectura de bloque) | Test conjunto `lrnd_1=...=lrnd_5=0` se rechaza | La historia temporal de I+D agrega poder explicativo sobre patentamiento |
-| Test conjunto clásico | `F(5,884)=3.18`, `p=0.0075` | Evidencia conjunta de rezagos en inferencia convencional |
-| Test conjunto cluster | `F(5,225)=2.96`, `p=0.0131` | Evidencia conjunta persiste con inferencia robusta por firma |
+| FE con rezagos (lectura individual) | Varios lrnd_k con baja precisión individual | No conviene interpretar cada rezago como efecto aislado |
+| FE con rezagos (lectura de bloque) | Test conjunto lrnd_1=...=lrnd_5=0 se rechaza | La historia temporal de I+D agrega poder explicativo sobre patentamiento |
+| Test conjunto clásico | F(5,884)=3.18, p=0.0075 | Evidencia conjunta de rezagos en inferencia convencional |
+| Test conjunto cluster | F(5,225)=2.96, p=0.0131 | Evidencia conjunta persiste con inferencia robusta por firma |
 :::
 
 ::: {.table-box}
@@ -185,9 +185,9 @@ Los siguientes resultados se reportan como soporte del caso:
 
 | Chequeo secundario | Resultado | Lectura |
 |---|---:|---|
-| FE base sin bloque largo de rezagos | `N=2252`, `226` firmas | Referencia para comparar perdida de muestra y estabilidad |
-| FE con rezagos: estructura panel | `rho=0.964`, `F all u_i=0` p=0.0000 | La heterogeneidad fija de firma es empiricamente relevante |
-| Especificacion con `rndstck` | Coeficiente negativo y significativo en ese modelo | Contraste útil, subordinado al modelo operativo |
+| FE base sin bloque largo de rezagos | N=2252, 226 firmas | Referencia para comparar perdida de muestra y estabilidad |
+| FE con rezagos: estructura panel | rho=0.964, F all u_i=0 p=0.0000 | La heterogeneidad fija de firma es empiricamente relevante |
+| Especificacion con rndstck | Coeficiente negativo y significativo en ese modelo | Contraste útil, subordinado al modelo operativo |
 | FE-AR(1) | Sensibilidad de coeficientes individuales | Se usa como validación adicional, no como conclusión principal |
 :::
 

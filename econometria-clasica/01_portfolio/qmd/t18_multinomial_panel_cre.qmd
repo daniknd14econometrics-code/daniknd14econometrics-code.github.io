@@ -173,10 +173,10 @@ La comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:
 
 | Variable | Escuela pooled | Escuela CRE | Hogar pooled | Hogar CRE | Trabajo pooled | Trabajo CRE | Lectura aplicada |
 |---|---:|---:|---:|---:|---:|---:|---|
-| `educ` | `+0.0418` | `-0.1220` | `-0.0570` | `+0.0823` | `+0.0152` | `+0.0397` | Cambia signo en escuela y hogar al incorporar heterogeneidad persistente |
-| `exper` | `-0.1493` | `-0.0335` | `-0.0756` | `+0.0817` | `+0.2249` | `-0.0482` | La lectura pooled sobre trabajo no se sostiene en CRE |
-| `expersq` | `+0.0176` | `+0.0058` | `+0.0031` | `+0.0033` | `-0.0207` | `-0.0091` | Curvatura consistente, con menor intensidad en CRE |
-| `black=1` vs `0` | `-0.0635` | `-0.0502` | `+0.1027` | `+0.0729` | `-0.0392` | `-0.0228` | Patrón estable, magnitud atenuada en CRE |
+| educ | +0.0418 | -0.1220 | -0.0570 | +0.0823 | +0.0152 | +0.0397 | Cambia signo en escuela y hogar al incorporar heterogeneidad persistente |
+| exper | -0.1493 | -0.0335 | -0.0756 | +0.0817 | +0.2249 | -0.0482 | La lectura pooled sobre trabajo no se sostiene en CRE |
+| expersq | +0.0176 | +0.0058 | +0.0031 | +0.0033 | -0.0207 | -0.0091 | Curvatura consistente, con menor intensidad en CRE |
+| black=1 vs 0 | -0.0635 | -0.0502 | +0.1027 | +0.0729 | -0.0392 | -0.0228 | Patrón estable, magnitud atenuada en CRE |
 :::
 
 Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.
@@ -194,9 +194,9 @@ El respaldo formal y técnico se mantiene acotado y funcional a la narrativa apl
 
 | Diagnóstico | Evidencia | Lectura profesional |
 |---|---:|---|
-| Test conjunto Mundlak | `chi2(6)=1636.61`, `p=0.0000` | La heterogeneidad persistente correlacionada es relevante En esta aplicación |
-| Comparación APE pooled vs CRE | Cambios de magnitud y signo en `educ` y `exper` | La especificación afecta la interpretación aplicada de probabilidades |
-| Clasificación in-sample (secundaria) | `79.55%` en `status` | Se informa como referencia descriptiva, no como meta predictiva |
+| Test conjunto Mundlak | chi2(6)=1636.61, p=0.0000 | La heterogeneidad persistente correlacionada es relevante En esta aplicación |
+| Comparación APE pooled vs CRE | Cambios de magnitud y signo en educ y exper | La especificación afecta la interpretación aplicada de probabilidades |
+| Clasificación in-sample (secundaria) | 79.55% en status | Se informa como referencia descriptiva, no como meta predictiva |
 :::
 
 ## Lectura profesional

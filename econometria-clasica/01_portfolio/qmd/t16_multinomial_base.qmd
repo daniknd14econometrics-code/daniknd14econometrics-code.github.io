@@ -163,9 +163,9 @@ La lectura comparativa del caso deja tres mensajes sustantivos:
 
 | Variable | Escuela (1) | Hogar (2) | White collar (3) | Blue collar (4) | Services (5) | Lectura sustantiva |
 |---|---:|---:|---:|---:|---:|---|
-| `educ` | `+0.041` | `-0.056` | `+0.055` | `-0.036` | `-0.003` | Mas educación desplaza probabilidad hacia estudio y empleo white collar |
-| `exper` | `-0.150` | `-0.080` | `+0.080` | `+0.128` | `+0.022` | Mas experiencia desplaza desde inactividad hacia empleo, sobre todo blue collar |
-| `black=1` vs `0` | `-0.063` | `+0.099` | `-0.035` | `-0.046` | `+0.044` | Cambios de composicion entre alternativas bajo el perfil demográfico observado |
+| educ | +0.041 | -0.056 | +0.055 | -0.036 | -0.003 | Mas educación desplaza probabilidad hacia estudio y empleo white collar |
+| exper | -0.150 | -0.080 | +0.080 | +0.128 | +0.022 | Mas experiencia desplaza desde inactividad hacia empleo, sobre todo blue collar |
+| black=1 vs 0 | -0.063 | +0.099 | -0.035 | -0.046 | +0.044 | Cambios de composicion entre alternativas bajo el perfil demográfico observado |
 :::
 
 En términos de separacion entre categorias, escuela y blue collar muestran mejor distinción relativa bajo esta especificación, hogar queda en zona intermedia y white collar presenta mayor solapamiento. La categoria `services` muestra menor capacidad de discriminacion, sin cambiar el mensaje sustantivo principal sobre reasignacion de probabilidades por educación y experiencia.

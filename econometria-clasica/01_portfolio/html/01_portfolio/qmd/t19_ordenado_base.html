@@ -225,25 +225,25 @@ ul.task-list li input[type="checkbox"] {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Categoría de cartera (<code>pctstck</code>)</th>
+<th>Categoría de cartera (pctstck)</th>
 <th style="text-align: right;">Probabilidad promedio estimada</th>
 <th>Lectura aplicada</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>0</code> (más conservadora)</td>
-<td style="text-align: right;"><code>0.331</code></td>
+<td>0 (más conservadora)</td>
+<td style="text-align: right;">0.331</td>
 <td>Aproximadamente un tercio de la muestra se ubica en perfil conservador</td>
 </tr>
 <tr class="even">
-<td><code>50</code> (mixta)</td>
-<td style="text-align: right;"><code>0.370</code></td>
+<td>50 (mixta)</td>
+<td style="text-align: right;">0.370</td>
 <td>Es la categoría con mayor peso promedio</td>
 </tr>
 <tr class="odd">
-<td><code>100</code> (más expuesta a acciones)</td>
-<td style="text-align: right;"><code>0.298</code></td>
+<td>100 (más expuesta a acciones)</td>
+<td style="text-align: right;">0.298</td>
 <td>Cerca de tres de cada diez casos se ubican en el perfil más accionario</td>
 </tr>
 </tbody>
@@ -262,32 +262,32 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="header">
 <th>Variable</th>
-<th style="text-align: right;">dPr(<code>pctstck=0</code>)</th>
-<th style="text-align: right;">dPr(<code>pctstck=50</code>)</th>
-<th style="text-align: right;">dPr(<code>pctstck=100</code>)</th>
+<th style="text-align: right;">dPr(pctstck=0)</th>
+<th style="text-align: right;">dPr(pctstck=50)</th>
+<th style="text-align: right;">dPr(pctstck=100)</th>
 <th>Lectura profesional</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>choice=1</code> (puede elegir método de inversión) vs <code>0</code></td>
-<td style="text-align: right;"><code>-0.128</code></td>
-<td style="text-align: right;"><code>+0.010</code></td>
-<td style="text-align: right;"><code>+0.118</code></td>
+<td>choice=1 (puede elegir método de inversión) vs 0</td>
+<td style="text-align: right;">-0.128</td>
+<td style="text-align: right;">+0.010</td>
+<td style="text-align: right;">+0.118</td>
 <td>Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones</td>
 </tr>
 <tr class="even">
-<td><code>age</code> (+1 año)</td>
-<td style="text-align: right;"><code>+0.0169</code></td>
-<td style="text-align: right;"><code>-0.0007</code></td>
-<td style="text-align: right;"><code>-0.0162</code></td>
+<td>age (+1 año)</td>
+<td style="text-align: right;">+0.0169</td>
+<td style="text-align: right;">-0.0007</td>
+<td style="text-align: right;">-0.0162</td>
 <td>En promedio, la edad se asocia con mayor peso en la categoría conservadora</td>
 </tr>
 <tr class="odd">
-<td><code>prftshr=1</code> (plan con profit sharing) vs <code>0</code></td>
-<td style="text-align: right;"><code>-0.152</code></td>
-<td style="text-align: right;"><code>-0.014</code></td>
-<td style="text-align: right;"><code>+0.166</code></td>
+<td>prftshr=1 (plan con profit sharing) vs 0</td>
+<td style="text-align: right;">-0.152</td>
+<td style="text-align: right;">-0.014</td>
+<td style="text-align: right;">+0.166</td>
 <td>Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones</td>
 </tr>
 </tbody>
@@ -315,17 +315,17 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Relevancia conjunta del bloque explicativo</td>
-<td style="text-align: right;"><code>Wald chi2(14)=25.32</code>, <code>p=0.0315</code></td>
+<td style="text-align: right;">Wald chi2(14)=25.32, p=0.0315</td>
 <td>Respalda que el modelo capta señal empírica En esta muestra</td>
 </tr>
 <tr class="even">
 <td>Sensibilidad de enlace</td>
-<td style="text-align: right;">Patrón cualitativo similar en <code>ologit</code> y <code>oprobit</code></td>
+<td style="text-align: right;">Patrón cualitativo similar en ologit y oprobit</td>
 <td>Evita que la narrativa dependa de una elección de enlace puntual</td>
 </tr>
 <tr class="odd">
 <td>Clasificación in-sample (secundaria)</td>
-<td style="text-align: right;">PCP aprox. <code>44.33%</code></td>
+<td style="text-align: right;">PCP aprox. 44.33%</td>
 <td>Se reporta solo como referencia descriptiva, no como objetivo predictivo</td>
 </tr>
 </tbody>

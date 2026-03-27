@@ -170,10 +170,10 @@ Con esa base, RE se usa como modelo operativo por parsimonia y por compatibilida
 
 | Bloque | Evidencia | Lectura |
 |---|---:|---|
-| Similitud sustantiva FE/RE/CRE | `grant`: FE `-0.252`, RE `-0.214`, CRE `-0.252`; `grant_1`: FE `-0.422`, RE `-0.373`, CRE `-0.422` | Patron estable en variables clave |
+| Similitud sustantiva FE/RE/CRE | grant: FE -0.252, RE -0.214, CRE -0.252; grant_1: FE -0.422, RE -0.373, CRE -0.422 | Patron estable en variables clave |
 | Implicancia aplicada | Cambios de especificación no alteran de forma fuerte el mensaje de fondo | La lectura central del caso productivo se mantiene |
-| Evidencia robusta CRE/Mundlak | Test conjunto medias temporales (cluster): `chi2(2)=1.85`, `p=0.3965` | Compatible con usar RE como operativo En esta muestra |
-| Respaldo formal adicional | Hausman clásico: `chi2(2)=2.83`, `p=0.2425`; Mundlak clásico: `chi2(2)=2.05`, `p=0.3591` | No aparece evidencia fuerte contra RE |
+| Evidencia robusta CRE/Mundlak | Test conjunto medias temporales (cluster): chi2(2)=1.85, p=0.3965 | Compatible con usar RE como operativo En esta muestra |
+| Respaldo formal adicional | Hausman clásico: chi2(2)=2.83, p=0.2425; Mundlak clásico: chi2(2)=2.05, p=0.3591 | No aparece evidencia fuerte contra RE |
 :::
 
 ::: {.table-box}
@@ -185,10 +185,10 @@ Ese diagnóstico no decide por sí solo entre RE y FE/CRE. La elección entre es
 
 | Diagnostico | Resultado | Lectura correcta |
 |---|---:|---|
-| Relevancia panel vs pooling | `F(53,104)=24.66`, `p=0.0000` | Hay heterogeneidad no observada importante |
-| Hausman clásico (FE vs RE) | `chi2(2)=2.83`, `p=0.2425` | No hay evidencia fuerte contra RE |
-| Mundlak clásico | `chi2(2)=2.05`, `p=0.3591` | Coherente con lectura de Hausman |
-| Mundlak robusto (cluster) | `chi2(2)=1.85`, `p=0.3965` | Respaldo formal robusto a la misma conclusión |
+| Relevancia panel vs pooling | F(53,104)=24.66, p=0.0000 | Hay heterogeneidad no observada importante |
+| Hausman clásico (FE vs RE) | chi2(2)=2.83, p=0.2425 | No hay evidencia fuerte contra RE |
+| Mundlak clásico | chi2(2)=2.05, p=0.3591 | Coherente con lectura de Hausman |
+| Mundlak robusto (cluster) | chi2(2)=1.85, p=0.3965 | Respaldo formal robusto a la misma conclusión |
 :::
 
 ## Lectura profesional del caso

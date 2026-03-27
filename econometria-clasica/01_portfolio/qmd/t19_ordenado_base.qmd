@@ -160,21 +160,21 @@ La lectura aplicada se organiza en cuatro mensajes:
 ::: {.table-box}
 ## Probabilidades predichas por categoría
 
-| Categoría de cartera (`pctstck`) | Probabilidad promedio estimada | Lectura aplicada |
+| Categoría de cartera (pctstck) | Probabilidad promedio estimada | Lectura aplicada |
 |---|---:|---|
-| `0` (más conservadora) | `0.331` | Aproximadamente un tercio de la muestra se ubica en perfil conservador |
-| `50` (mixta) | `0.370` | Es la categoría con mayor peso promedio |
-| `100` (más expuesta a acciones) | `0.298` | Cerca de tres de cada diez casos se ubican en el perfil más accionario |
+| 0 (más conservadora) | 0.331 | Aproximadamente un tercio de la muestra se ubica en perfil conservador |
+| 50 (mixta) | 0.370 | Es la categoría con mayor peso promedio |
+| 100 (más expuesta a acciones) | 0.298 | Cerca de tres de cada diez casos se ubican en el perfil más accionario |
 :::
 
 ::: {.table-box}
 ## APEs narrables (ordered probit)
 
-| Variable | dPr(`pctstck=0`) | dPr(`pctstck=50`) | dPr(`pctstck=100`) | Lectura profesional |
+| Variable | dPr(pctstck=0) | dPr(pctstck=50) | dPr(pctstck=100) | Lectura profesional |
 |---|---:|---:|---:|---|
-| `choice=1` (puede elegir método de inversión) vs `0` | `-0.128` | `+0.010` | `+0.118` | Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones |
-| `age` (+1 año) | `+0.0169` | `-0.0007` | `-0.0162` | En promedio, la edad se asocia con mayor peso en la categoría conservadora |
-| `prftshr=1` (plan con profit sharing) vs `0` | `-0.152` | `-0.014` | `+0.166` | Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones |
+| choice=1 (puede elegir método de inversión) vs 0 | -0.128 | +0.010 | +0.118 | Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones |
+| age (+1 año) | +0.0169 | -0.0007 | -0.0162 | En promedio, la edad se asocia con mayor peso en la categoría conservadora |
+| prftshr=1 (plan con profit sharing) vs 0 | -0.152 | -0.014 | +0.166 | Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones |
 :::
 
 Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente.
@@ -188,9 +188,9 @@ El respaldo técnico se mantiene acotado y funcional a la historia aplicada.
 
 | Diagnóstico | Evidencia | Uso en la pieza |
 |---|---:|---|
-| Relevancia conjunta del bloque explicativo | `Wald chi2(14)=25.32`, `p=0.0315` | Respalda que el modelo capta señal empírica En esta muestra |
-| Sensibilidad de enlace | Patrón cualitativo similar en `ologit` y `oprobit` | Evita que la narrativa dependa de una elección de enlace puntual |
-| Clasificación in-sample (secundaria) | PCP aprox. `44.33%` | Se reporta solo como referencia descriptiva, no como objetivo predictivo |
+| Relevancia conjunta del bloque explicativo | Wald chi2(14)=25.32, p=0.0315 | Respalda que el modelo capta señal empírica En esta muestra |
+| Sensibilidad de enlace | Patrón cualitativo similar en ologit y oprobit | Evita que la narrativa dependa de una elección de enlace puntual |
+| Clasificación in-sample (secundaria) | PCP aprox. 44.33% | Se reporta solo como referencia descriptiva, no como objetivo predictivo |
 :::
 
 ## Lectura profesional

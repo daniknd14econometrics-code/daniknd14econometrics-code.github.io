@@ -163,8 +163,8 @@ Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas
 
 | Variable | Pooled probit | RE-probit | CRE-pooled | CRE-probit | Lectura aplicada |
 |---|---:|---:|---:|---:|---|
-| `kids` | `-0.066` | `-0.052` | `-0.039` | `-0.032` | Asociacion negativa robusta, con menor magnitud al modelar heterogeneidad |
-| `lhinc` | `-0.070` | `-0.019` | `-0.010` | `-0.008` | Asociacion negativa robusta, también atenuada en RE/CRE |
+| kids | -0.066 | -0.052 | -0.039 | -0.032 | Asociacion negativa robusta, con menor magnitud al modelar heterogeneidad |
+| lhinc | -0.070 | -0.019 | -0.010 | -0.008 | Asociacion negativa robusta, también atenuada en RE/CRE |
 ::: 
 
 ## Diagnosticos de respaldo

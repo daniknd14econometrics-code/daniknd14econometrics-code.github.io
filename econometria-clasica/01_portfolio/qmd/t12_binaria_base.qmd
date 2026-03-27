@@ -160,12 +160,12 @@ En segundo plano metodologico, probit y logit permiten leer estas relaciones en 
 ::: {.table-box}
 ## Sintesis de magnitudes (APE)
 
-| Variable | Evidencia numerica | Lectura aplicada |
-|---|---:|---|
-| `kidslt6` | Probit `-0.261`, Logit `-0.258` | Asociacion negativa fuerte con participación |
-| `educ` | Probit `+0.039`, Logit `+0.040` | Mayor educación se asocia con mayor participación |
-| `exper` | Probit `+0.037`, Logit `+0.037` | Mayor experiencia se asocia con mayor participación |
-| `nwifeinc` | Probit `-0.0036`, Logit `-0.0038` | Ingreso no laboral más alto se asocia con menor participación |
+| Variable | Probit | Logit | Lectura aplicada |
+|---|---:|---:|---|
+| kidslt6 | -0.261 | -0.258 | Asociacion negativa fuerte con participación |
+| educ | +0.039 | +0.040 | Mayor educación se asocia con mayor participación |
+| exper | +0.037 | +0.037 | Mayor experiencia se asocia con mayor participación |
+| nwifeinc | -0.0036 | -0.0038 | Ingreso no laboral más alto se asocia con menor participación |
 :::
 
 ## Diagnosticos de respaldo

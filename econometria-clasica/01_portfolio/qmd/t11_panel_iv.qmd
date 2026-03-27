@@ -158,10 +158,10 @@ Al pasar a IV, la precisión cae y los coeficientes de `lfare` dejan de ser esta
 
 | Bloque | Evidencia | Lectura aplicada |
 |---|---:|---|
-| RE no IV (cluster) | `lfare=-1.102`, `p<0.001` | Relacion negativa clara entre tarifa y pasajeros |
-| FE no IV (cluster) | `lfare=-1.155`, `p<0.001` | Patron sustantivo similar bajo comparación within |
-| RE-IV (cluster) | `lfare=-0.508`, `p=0.308` | Magnitud menor y baja precisión en IV |
-| FE-IV (cluster) | `lfare=-0.302`, `p=0.623` | Alta incertidumbre en especificación IV |
+| RE no IV (cluster) | lfare=-1.102, p<0.001 | Relacion negativa clara entre tarifa y pasajeros |
+| FE no IV (cluster) | lfare=-1.155, p<0.001 | Patron sustantivo similar bajo comparación within |
+| RE-IV (cluster) | lfare=-0.508, p=0.308 | Magnitud menor y baja precisión en IV |
+| FE-IV (cluster) | lfare=-0.302, p=0.623 | Alta incertidumbre en especificación IV |
 :::
 
 ::: {.table-box}
@@ -171,10 +171,10 @@ Estos diagnósticos se presentan de forma breve para respaldar la lectura del ca
 
 | Diagnostico | Resultado | Uso en la pieza |
 |---|---:|---|
-| Exogeneidad (control function, RE) | `chi2(1)=1.73`, `p=0.1878` | No aporta evidencia robusta fuerte para exigir IV como base |
-| Exogeneidad (control function, FE robusto) | `chi2(1)=2.66`, `p=0.1026` | Resultado en misma dirección, con cautela |
-| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F `=33.05`; Hansen J `p=0.8361` | Instrumentos aceptables en ese entorno de especificación |
-| Relevancia IV (FE) | KP rk Wald F `=11.66` | Fuerza más justa; refuerza prudencia al interpretar FE-IV |
+| Exogeneidad (control function, RE) | chi2(1)=1.73, p=0.1878 | No aporta evidencia robusta fuerte para exigir IV como base |
+| Exogeneidad (control function, FE robusto) | chi2(1)=2.66, p=0.1026 | Resultado en misma dirección, con cautela |
+| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F =33.05; Hansen J p=0.8361 | Instrumentos aceptables en ese entorno de especificación |
+| Relevancia IV (FE) | KP rk Wald F =11.66 | Fuerza más justa; refuerza prudencia al interpretar FE-IV |
 :::
 
 ## Lectura profesional

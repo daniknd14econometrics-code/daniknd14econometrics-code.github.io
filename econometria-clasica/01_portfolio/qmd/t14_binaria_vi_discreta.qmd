@@ -160,10 +160,10 @@ La lectura se ordena en cuatro pasos:
 
 | Variable / enfoque | Evidencia numérica | Lectura aplicada |
 |---|---:|---|
-| `morekids` (Probit exógeno) | `-0.1095` | Menor probabilidad de trabajar en la referencia base |
-| `morekids` (Biprobit con endogeneidad binaria) | `-0.2559` | Asociación más negativa al admitir endogeneidad |
-| `morekids` (Eprobit, contraste adicional) | `-0.2559` | Magnitud alineada con la lectura binaria endógena |
-| `morekids` (MPL-IV, benchmark auxiliar) | `-0.2008` | Contraste lineal instrumental, secundario en la narrativa |
+| morekids (Probit exógeno) | -0.1095 | Menor probabilidad de trabajar en la referencia base |
+| morekids (Biprobit con endogeneidad binaria) | -0.2559 | Asociación más negativa al admitir endogeneidad |
+| morekids (Eprobit, contraste adicional) | -0.2559 | Magnitud alineada con la lectura binaria endógena |
+| morekids (MPL-IV, benchmark auxiliar) | -0.2008 | Contraste lineal instrumental, secundario en la narrativa |
 :::
 
 ## Diagnósticos de respaldo

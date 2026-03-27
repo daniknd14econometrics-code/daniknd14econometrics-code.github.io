@@ -162,10 +162,10 @@ En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como 
 
 | Variable | Probit exogeno | IV/CF (rango) | Lectura aplicada |
 |---|---:|---:|---|
-| `kidslt6` | `-0.261` | `-0.253` a `-0.247` | Menor participación con hijos pequeños |
-| `educ` | `+0.039` | `+0.049` a `+0.051` | Mayor educación, mayor participación |
-| `exper` | `+0.037` | `+0.034` a `+0.035` | Mayor experiencia, mayor participación |
-| `nwifeinc` | `-0.0036` | `-0.0108` a `-0.0105` | Asociacion negativa, más intensa bajo IV/CF |
+| kidslt6 | -0.261 | -0.253 a -0.247 | Menor participación con hijos pequeños |
+| educ | +0.039 | +0.049 a +0.051 | Mayor educación, mayor participación |
+| exper | +0.037 | +0.034 a +0.035 | Mayor experiencia, mayor participación |
+| nwifeinc | -0.0036 | -0.0108 a -0.0105 | Asociacion negativa, más intensa bajo IV/CF |
 :::
 
 ## Diagnosticos de respaldo

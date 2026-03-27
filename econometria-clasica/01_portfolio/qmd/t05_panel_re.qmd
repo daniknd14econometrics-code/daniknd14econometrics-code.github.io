@@ -167,12 +167,12 @@ Como referencia de magnitudes, el coeficiente de `educ` en RE se ubica alrededor
 
 En lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y `lwage` dentro de esta especificación RE; no debe leerse automáticamente como una estimación libre de sesgo ni extrapolarse fuera de este marco sin evidencia adicional.
 
-| Modelo | Coef. `educ` | Error estándar | N |
+| Modelo | Coef. educ | Error estándar | N |
 |---|---:|---:|---:|
 | RE clásico | 0.1004 | 0.0087 | 4360 |
-| RE robusto/cluster `nr` | 0.1004 | 0.0086 | 4360 |
-| Componente individual (`rho`) | 0.4600 | - | 4360 |
-| Test `H0: var(c_i)=0` | `Z = 10.66` | Rechazo fuerte | 4360 |
+| RE robusto/cluster nr | 0.1004 | 0.0086 | 4360 |
+| Componente individual (rho) | 0.4600 | - | 4360 |
+| Test H0: var(c_i)=0 | Z = 10.66 | Rechazo fuerte | 4360 |
 :::
 
 ::: {.table-box}
@@ -182,7 +182,7 @@ El test conjunto de dummies de año en la especificación RE ampliada reporta `c
 
 | Chequeo secundario | Resultado | Lectura |
 |---|---:|---|
-| Test conjunto `d81`-`d87` | p = 0.0831 | Evidencia debil al 5%; contraste auxiliar de especificación |
+| Test conjunto d81-d87 | p = 0.0831 | Evidencia debil al 5%; contraste auxiliar de especificación |
 :::
 
 ## Lectura profesional del caso
