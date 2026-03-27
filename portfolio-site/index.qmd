@@ -9,7 +9,9 @@ Economista especializado en análisis cuantitativo aplicado. Este sitio reúne t
 
 La estructura del sitio está organizada por áreas temáticas para facilitar una lectura secuencial de cada pieza y su referencia metodológica.
 
-<a class="cta-link" href="econometria/index.qmd">Ver sección de Econometría</a>
+<a class="cta-link" href="econometria/index.qmd">Ver Econometría</a>
+<a class="cta-link" href="causalidad/index.qmd">Ver Causalidad</a>
+<a class="cta-link" href="machine-learning/index.qmd">Ver Machine Learning</a>
 :::
 
 ## Propósito del sitio

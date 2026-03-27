@@ -1,0 +1,28 @@
+---
+title: "C01 · Título breve de la pieza"
+---
+
+[← Volver al índice de la sección](../index.qmd)
+
+Resumen breve de la pieza (pregunta, enfoque y resultado principal en 2 o 3 líneas).
+
+::: {.piece-meta}
+::: {.meta-item}
+**Código:** C01 / ML01
+:::
+::: {.meta-item}
+**Pregunta:** Pregunta empírica principal
+:::
+::: {.meta-item}
+**Método:** Método principal utilizado
+:::
+::: {.meta-item}
+**Datos:** Fuente y tipo de datos
+:::
+::: {.meta-item}
+**Estado:** En revisión técnica y editorial
+:::
+::: {.meta-item}
+**Herramientas:** Stata / R / Python
+:::
+:::

@@ -11,9 +11,9 @@ website:
       - text: "Econometría"
         href: econometria/index.qmd
       - text: "Causalidad"
-        href: causalidad.qmd
+        href: causalidad/index.qmd
       - text: "Machine Learning"
-        href: machine-learning.qmd
+        href: machine-learning/index.qmd
       - text: "Sobre mí"
         href: sobre-mi.qmd
   page-footer:

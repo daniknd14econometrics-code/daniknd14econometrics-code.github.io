@@ -99,6 +99,15 @@ body {
   color: var(--muted);
 }
 
+.section-status {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  color: var(--muted);
+  margin: 1rem 0;
+}
+
 .small-note {
   color: var(--muted);
   font-size: 0.94rem;

@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Inicio",
     "section": "",
-    "text": "Economista especializado en análisis cuantitativo aplicado. Este sitio reúne trabajos en econometría, causalidad y machine learning, presentados en un formato ordenado y orientado a la exposición clara de preguntas, métodos y resultados.\nLa estructura del sitio está organizada por áreas temáticas para facilitar una lectura secuencial de cada pieza y su referencia metodológica.\nVer sección de Econometría"
+    "text": "Economista especializado en análisis cuantitativo aplicado. Este sitio reúne trabajos en econometría, causalidad y machine learning, presentados en un formato ordenado y orientado a la exposición clara de preguntas, métodos y resultados.\nLa estructura del sitio está organizada por áreas temáticas para facilitar una lectura secuencial de cada pieza y su referencia metodológica.\nVer Econometría Ver Causalidad Ver Machine Learning"
   },
   {
     "objectID": "index.html#propósito-del-sitio",
@@ -154,11 +154,18 @@
     "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
   },
   {
-    "objectID": "causalidad.html",
-    "href": "causalidad.html",
+    "objectID": "causalidad/index.html",
+    "href": "causalidad/index.html",
     "title": "Causalidad",
     "section": "",
-    "text": "Contenido de inferencia causal en preparación. Próximamente se incorporarán estudios con estrategias de identificación y evaluación de robustez."
+    "text": "Esta sección está estructurada para publicar estudios de identificación causal. Las piezas se incorporarán de forma progresiva, una vez cerrada su revisión técnica y editorial.\n\nActualmente no hay piezas publicadas en esta sección.\n\nConvención de nombres prevista para nuevas piezas: c01_slug-tema.qmd, c02_slug-tema.qmd."
+  },
+  {
+    "objectID": "causalidad/index.html#índice-de-piezas-aplicadas",
+    "href": "causalidad/index.html#índice-de-piezas-aplicadas",
+    "title": "Causalidad",
+    "section": "",
+    "text": "Esta sección está estructurada para publicar estudios de identificación causal. Las piezas se incorporarán de forma progresiva, una vez cerrada su revisión técnica y editorial.\n\nActualmente no hay piezas publicadas en esta sección.\n\nConvención de nombres prevista para nuevas piezas: c01_slug-tema.qmd, c02_slug-tema.qmd."
   },
   {
     "objectID": "econometria/piezas/t01_vi.html",
@@ -287,10 +294,17 @@
     "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
   },
   {
-    "objectID": "machine-learning.html",
-    "href": "machine-learning.html",
+    "objectID": "machine-learning/index.html",
+    "href": "machine-learning/index.html",
     "title": "Machine Learning",
     "section": "",
-    "text": "Sección en construcción. Próximamente se publicarán aplicaciones de machine learning con foco en interpretación y uso profesional de modelos predictivos."
+    "text": "Esta sección está preparada para documentar aplicaciones de machine learning orientadas a uso profesional. Las piezas se publicarán gradualmente tras su curación metodológica.\n\nActualmente no hay piezas publicadas en esta sección.\n\nConvención de nombres prevista para nuevas piezas: ml01_slug-tema.qmd, ml02_slug-tema.qmd."
+  },
+  {
+    "objectID": "machine-learning/index.html#índice-de-piezas-aplicadas",
+    "href": "machine-learning/index.html#índice-de-piezas-aplicadas",
+    "title": "Machine Learning",
+    "section": "",
+    "text": "Esta sección está preparada para documentar aplicaciones de machine learning orientadas a uso profesional. Las piezas se publicarán gradualmente tras su curación metodológica.\n\nActualmente no hay piezas publicadas en esta sección.\n\nConvención de nombres prevista para nuevas piezas: ml01_slug-tema.qmd, ml02_slug-tema.qmd."
   }
 ]

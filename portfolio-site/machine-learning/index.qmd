@@ -1,0 +1,13 @@
+---
+title: "Machine Learning"
+---
+
+## Índice de piezas aplicadas
+
+Esta sección está preparada para documentar aplicaciones de machine learning orientadas a uso profesional. Las piezas se publicarán gradualmente tras su curación metodológica.
+
+::: {.section-status}
+Actualmente no hay piezas publicadas en esta sección.
+:::
+
+Convención de nombres prevista para nuevas piezas: `ml01_slug-tema.qmd`, `ml02_slug-tema.qmd`.

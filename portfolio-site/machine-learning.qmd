@@ -1,7 +1,0 @@
-﻿---
-title: "Machine Learning"
----
-
-::: {.placeholder-box}
-Sección en construcción. Próximamente se publicarán aplicaciones de machine learning con foco en interpretación y uso profesional de modelos predictivos.
-:::

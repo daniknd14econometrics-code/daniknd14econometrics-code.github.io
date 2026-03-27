@@ -1,0 +1,13 @@
+---
+title: "Causalidad"
+---
+
+## Índice de piezas aplicadas
+
+Esta sección está estructurada para publicar estudios de identificación causal. Las piezas se incorporarán de forma progresiva, una vez cerrada su revisión técnica y editorial.
+
+::: {.section-status}
+Actualmente no hay piezas publicadas en esta sección.
+:::
+
+Convención de nombres prevista para nuevas piezas: `c01_slug-tema.qmd`, `c02_slug-tema.qmd`.
