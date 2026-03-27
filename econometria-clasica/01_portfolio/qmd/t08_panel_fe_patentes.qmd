@@ -170,6 +170,8 @@ Primero, la lectura sustantiva: la evidencia es más consistente con una relaci�
 
 En el modelo operativo, los coeficientes de rezagos por separado son inestables y con precisión desigual, algo esperable cuando la trayectoria de I+D anual está fuertemente correlacionada consigo misma. Aun así, el bloque temporal de I+D aporta información relevante en conjunto para explicar `lpat`.
 
+La comparación clave se sostiene en el mismo criterio inferencial: el test conjunto de rezagos rechaza tanto en FE clásico (`F(5,884)=3.18`, `p=0.0075`) como en FE con cluster por firma (`F(5,225)=2.96`, `p=0.0131`), por lo que la lectura central del bloque dinámico permanece bajo inferencia robusta.
+
 | Especificación | Coeficiente clave | Error estándar | IC 95% | Lectura |
 |---|---:|---:|---:|---|
 | FE base (`lrnd`) | -0.0864 | 0.0500 | [-0.1844, 0.0117] | Señal débil si se mira solo contemporáneo |

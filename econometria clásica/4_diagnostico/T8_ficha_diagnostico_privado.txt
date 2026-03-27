@@ -1,0 +1,108 @@
+Base usada para este diagnóstico: exclusivamente T8 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T8
+
+1. Identificación básica
+
+Taller 08. Tema central: efectos fijos sobre patentamiento de firmas con foco en I+D contemporánea, stock de I+D y rezagos distribuidos. La unidad de análisis son firmas; la variable dependiente es lpat = log(1 + patents). Las variables clave son lrnd, sus rezagos lrnd_1 a lrnd_5, lsales, return y dummies de año.
+
+2. Clasificación editorial
+
+Comparación metodológica con valor aplicado. No conviene vender esta pieza como un “gran hallazgo sustantivo” sobre innovación, sino como un caso donde FE permite estudiar dinámica de I+D bajo heterogeneidad fija y donde la enseñanza principal está en no sobreinterpretar coeficientes rezagados uno por uno.
+
+3. Pregunta real del taller
+
+¿Cómo se relaciona la I+D con el patentamiento cuando se controla por heterogeneidad fija de firma y se admite que el efecto pueda aparecer de forma distribuida en el tiempo?
+
+4. Núcleo empírico
+
+El taller corre cuatro bloques relevantes:
+- FE con I+D contemporánea (lrnd) + lsales + return + dummies de año.
+- FE con stock de I+D (rndstck) como alternativa.
+- FE con I+D contemporánea y cinco rezagos.
+- FE con esa misma especificación dinámica pero con inferencia cluster por firma.
+
+También aparece xtregar/AR(1), pero no debería dominar la pieza pública.
+
+5. Objeto de decisión
+
+El objeto final de decisión no debe ser un coeficiente puntual, sino una lectura conjunta: en esta base, la evidencia útil está en el bloque dinámico de I+D, no en cada rezago aisladamente. Por eso la pieza necesita una tabla o bloque final que haga visible:
+- especificación dinámica FE;
+- contraste conjunto de los rezagos;
+- versión robusta/cluster como cierre inferencial prudente.
+
+6. Lectura ganadora
+
+La lectura ganadora debería ser FE con rezagos de I+D y prueba conjunta de los rezagos, usando la versión cluster como referencia operativa final para inferencia. No porque todos los coeficientes individuales sean convincentes, sino precisamente porque no lo son: la conclusión correcta surge del bloque conjunto. Esto está alineado con el resultado central del brief y con el log.
+
+7. Evidencia clave del log
+
+Hay tres piezas especialmente importantes:
+
+a) En el modelo FE con cinco rezagos, muchos coeficientes individuales son imprecisos y aparece fuerte sospecha de multicolinealidad entre lrnd, lrnd_1, ..., lrnd_5.
+
+b) Sin embargo, el test conjunto de los rezagos rechaza con claridad:
+- FE clásico: F(5, 884) = 3.18, p = 0.0075.
+- FE cluster por firma: F(5, 225) = 2.96, p = 0.0131.
+
+c) Eso permite sostener una lectura más sólida: los rezagos de I+D aportan poder explicativo en bloque, aun cuando la lectura coeficiente por coeficiente sea frágil.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena acá no es “más I+D genera inmediatamente más patentes”, porque el propio log va en contra de esa lectura lineal e inmediata. La historia correcta es:
+
+- la innovación empresarial es un proceso dinámico;
+- la I+D corriente puede no capturar bien el timing del patentamiento;
+- al introducir rezagos aparece mucha colinealidad y los coeficientes individuales se vuelven ruidosos;
+- por eso la lectura profesional no debe descansar en un solo rezago, sino en la evidencia conjunta del bloque dinámico.
+
+Esa narrativa es honesta, económica y metodológicamente madura.
+
+9. Qué sí puede decir la pieza
+
+Sí puede decir:
+- que FE controla por heterogeneidad fija de firma;
+- que la I+D contemporánea por sí sola no ofrece una historia limpia;
+- que el bloque de rezagos tiene poder explicativo conjunto;
+- que la lectura más útil es dinámica y conjunta, no coeficiente a coeficiente;
+- que la inferencia cluster por firma preserva ese mensaje central.
+
+10. Qué no debe decir la pieza
+
+No debería decir:
+- que cada rezago mide un efecto limpio e interpretable por separado;
+- que el signo de cada beta rezagado refleja una historia económica precisa;
+- que xtregar entrega una nueva especificación “ganadora”;
+- que rndstck o la versión AR(1) reemplazan sin discusión al modelo dinámico base;
+- que la evidencia es causal en sentido fuerte.
+
+11. Riesgos editoriales a vigilar en la auditoría
+
+a) Que la pieza sobrerreaccione con los coeficientes individuales de los rezagos.
+b) Que el modelo con stock de I+D o xtregar compitan visualmente con la lectura central.
+c) Que no quede clara la prioridad de la prueba conjunta por sobre los t individuales.
+d) Que FE clásico y FE cluster no estén bien jerarquizados.
+e) Que el usuario lea “rezagos significativos” cuando en realidad la evidencia fuerte es conjunta, no uno a uno.
+
+12. Requisitos mínimos para el .qmd
+
+Para mí, la pieza pública debería contener sí o sí:
+- una pregunta económica clara sobre innovación y timing de la I+D;
+- una tabla central donde se vea el bloque dinámico;
+- una mención explícita al problema de multicolinealidad entre rezagos;
+- un bloque de resultado que destaque el test conjunto;
+- un cierre que diga, con claridad, que la evidencia más útil está en el efecto conjunto de la historia reciente de I+D.
+
+13. Nota para la tarjeta del sitio
+
+Pregunta breve:
+¿Cómo cambia la lectura del patentamiento cuando la I+D se trata como un proceso dinámico y no como un shock contemporáneo?
+
+Método:
+FE con rezagos distribuidos y test conjunto.
+
+Hallazgo:
+La evidencia relevante aparece en bloque: los rezagos de I+D importan conjuntamente, aunque los coeficientes individuales sean ruidosos.
+
+Estado de la evidencia:
+Resultado metodológicamente interesante y aplicado, con cierre prudente basado en inferencia conjunta.
