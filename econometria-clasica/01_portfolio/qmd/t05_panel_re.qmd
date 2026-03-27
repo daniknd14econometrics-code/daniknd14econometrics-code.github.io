@@ -158,21 +158,16 @@ Por eso, en este taller se presenta RE como especificación operativa condiciona
 ::: {.table-box}
 ## Resultados principales
 
-La evidencia principal del caso se concentra en dos hechos:
-
-1. `rho` cercano a 0.46, indicando que una fraccion relevante de la variación salarial observada parece estar asociada a diferencias persistentes entre trabajadores.
-2. Rechazo fuerte de `H0: var(c_i)=0` con `Z = 10.66`, consistente con la presencia de heterogeneidad individual persistente y con la importancia de tratar la estructura panel de forma explícita.
-
-Como referencia de magnitudes, el coeficiente de `educ` en RE se ubica alrededor de 0.100 tanto en versión clásica como robusta, mientras cambian los errores estándar al robustecer la inferencia.
+La evidencia principal del caso se concentra en comparar la magnitud de `educ` entre RE y especificaciones de referencia, manteniendo `rho` y `H0: var(c_i)=0` como respaldo metodológico secundario.
 
 En lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y `lwage` dentro de esta especificación RE; no debe leerse automáticamente como una estimación libre de sesgo ni extrapolarse fuera de este marco sin evidencia adicional.
 
-| Modelo | Coef. educ | Error estándar | N |
-|---|---:|---:|---:|
-| RE clásico | 0.1004 | 0.0087 | 4360 |
-| RE robusto/cluster nr | 0.1004 | 0.0086 | 4360 |
-| Componente individual (rho) | 0.4600 | - | 4360 |
-| Test H0: var(c_i)=0 | Z = 10.66 | Rechazo fuerte | 4360 |
+| Modelo | Coef. `educ` | Error estándar | IC 95% | Lectura |
+|---|---:|---:|---:|---|
+| RE clásico | 0.1004 | 0.0087 | [0.0833, 0.1175] | Magnitud base en RE |
+| RE robusto/cluster `nr` | 0.1004 | 0.0086 | [0.0835, 0.1172] | Modelo operativo para inferencia |
+| FGLS AR(1)+hetero (contraste) | 0.1044 | 0.0038 | [0.0969, 0.1119] | Contraste paramétrico más exigente |
+| Pooled OLS + cluster `nr` (referencia) | 0.0988 | 0.0089 | [0.0812, 0.1163] | Referencia previa sin estructura RE |
 :::
 
 ::: {.table-box}
@@ -182,6 +177,8 @@ El test conjunto de dummies de año en la especificación RE ampliada reporta `c
 
 | Chequeo secundario | Resultado | Lectura |
 |---|---:|---|
+| Componente individual (`rho`) | 0.4600 | Heterogeneidad persistente importante |
+| Test `H0: var(c_i)=0` | `Z=10.66`, `p<0.001` | Respalda tratar explícitamente la estructura panel |
 | Test conjunto d81-d87 | p = 0.0831 | Evidencia debil al 5%; contraste auxiliar de especificación |
 :::
 

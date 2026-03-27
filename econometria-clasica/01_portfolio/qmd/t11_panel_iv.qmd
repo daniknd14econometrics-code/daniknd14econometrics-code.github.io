@@ -158,10 +158,10 @@ Al pasar a IV, la precisión cae y los coeficientes de `lfare` dejan de ser esta
 
 | Bloque | Evidencia | Lectura aplicada |
 |---|---:|---|
-| RE no IV (cluster) | lfare=-1.102, p<0.001 | Relacion negativa clara entre tarifa y pasajeros |
-| FE no IV (cluster) | lfare=-1.155, p<0.001 | Patron sustantivo similar bajo comparación within |
-| RE-IV (cluster) | lfare=-0.508, p=0.308 | Magnitud menor y baja precisión en IV |
-| FE-IV (cluster) | lfare=-0.302, p=0.623 | Alta incertidumbre en especificación IV |
+| RE no IV (cluster) | `lfare=-1.102` (EE 0.102; IC 95% [-1.302, -0.903]) | Relación negativa clara entre tarifa y pasajeros |
+| FE no IV (cluster) | `lfare=-1.155` (EE 0.109; IC 95% [-1.368, -0.942]) | Patrón sustantivo similar bajo comparación within |
+| RE-IV (cluster) | `lfare=-0.508` (EE 0.498; IC 95% [-1.485, 0.469]) | Magnitud menor y baja precisión en IV |
+| FE-IV (cluster) | `lfare=-0.302` (EE 0.613; IC 95% [-1.503, 0.900]) | Alta incertidumbre en especificación IV |
 :::
 
 ::: {.table-box}

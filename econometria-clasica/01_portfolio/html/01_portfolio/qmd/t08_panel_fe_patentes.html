@@ -220,37 +220,56 @@ ul.task-list li input[type="checkbox"] {
 <p>En el modelo operativo, los coeficientes de rezagos por separado son inestables y con precisión desigual, algo esperable cuando la trayectoria de I+D anual está fuertemente correlacionada consigo misma. Aun así, el bloque temporal de I+D aporta información relevante en conjunto para explicar <code>lpat</code>.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Bloque</th>
-<th style="text-align: right;">Evidencia</th>
+<th>Especificación</th>
+<th style="text-align: right;">Coeficiente clave</th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
 <th>Lectura</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>FE con rezagos (lectura individual)</td>
-<td style="text-align: right;">Varios lrnd_k con baja precisión individual</td>
-<td>No conviene interpretar cada rezago como efecto aislado</td>
+<td>FE base (<code>lrnd</code>)</td>
+<td style="text-align: right;">-0.0864</td>
+<td style="text-align: right;">0.0500</td>
+<td style="text-align: right;">[-0.1844, 0.0117]</td>
+<td>Señal débil si se mira solo contemporáneo</td>
 </tr>
 <tr class="even">
-<td>FE con rezagos (lectura de bloque)</td>
-<td style="text-align: right;">Test conjunto lrnd_1=…=lrnd_5=0 se rechaza</td>
-<td>La historia temporal de I+D agrega poder explicativo sobre patentamiento</td>
+<td>FE rezagos + cluster (<code>lrnd</code>)</td>
+<td style="text-align: right;">-0.3562</td>
+<td style="text-align: right;">0.1318</td>
+<td style="text-align: right;">[-0.6159, -0.0965]</td>
+<td>Efecto contemporáneo más intenso en modelo operativo</td>
 </tr>
 <tr class="odd">
-<td>Test conjunto clásico</td>
-<td style="text-align: right;">F(5,884)=3.18, p=0.0075</td>
-<td>Evidencia conjunta de rezagos en inferencia convencional</td>
+<td>FE rezagos + cluster (<code>lrnd_1</code>)</td>
+<td style="text-align: right;">-0.0876</td>
+<td style="text-align: right;">0.0955</td>
+<td style="text-align: right;">[-0.2759, 0.1007]</td>
+<td>Rezago individual impreciso</td>
 </tr>
 <tr class="even">
-<td>Test conjunto cluster</td>
-<td style="text-align: right;">F(5,225)=2.96, p=0.0131</td>
-<td>Evidencia conjunta persiste con inferencia robusta por firma</td>
+<td>FE rezagos + cluster (<code>lrnd_5</code>)</td>
+<td style="text-align: right;">-0.2491</td>
+<td style="text-align: right;">0.1597</td>
+<td style="text-align: right;">[-0.5637, 0.0656]</td>
+<td>Rezago largo con alta incertidumbre</td>
+</tr>
+<tr class="odd">
+<td>Test conjunto <code>lrnd_1=...=lrnd_5=0</code></td>
+<td style="text-align: right;">F(5,225)=2.96</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">p=0.0131</td>
+<td>El bloque dinámico sí agrega poder explicativo</td>
 </tr>
 </tbody>
 </table>

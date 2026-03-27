@@ -161,10 +161,12 @@ Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas
 ::: {.table-box}
 ## Sintesis de magnitudes (APE)
 
-| Variable | Pooled probit | RE-probit | CRE-pooled | CRE-probit | Lectura aplicada |
-|---|---:|---:|---:|---:|---|
-| kids | -0.066 | -0.052 | -0.039 | -0.032 | Asociacion negativa robusta, con menor magnitud al modelar heterogeneidad |
-| lhinc | -0.070 | -0.019 | -0.010 | -0.008 | Asociacion negativa robusta, también atenuada en RE/CRE |
+| Modelo | `kids` APE (EE) | `lhinc` APE (EE) | Lectura aplicada |
+|---|---:|---:|---|
+| Pooled probit | -0.0660 (0.0049) | -0.0701 (0.0080) | Magnitudes iniciales más altas sin modelar heterogeneidad persistente |
+| RE-probit | -0.0516 (0.0050) | -0.0190 (0.0042) | Atenuación importante al introducir estructura RE |
+| CRE-pooled | -0.0389 (0.0089) | -0.0095 (0.0047) | Caída adicional al incorporar componente Mundlak |
+| CRE-probit | -0.0322 (0.0085) | -0.0081 (0.0043) | Lectura operativa final con heterogeneidad correlacionada |
 ::: 
 
 ## Diagnosticos de respaldo

@@ -215,39 +215,43 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 13%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 13%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th style="text-align: right;">Pooled probit</th>
-<th style="text-align: right;">RE-probit</th>
-<th style="text-align: right;">CRE-pooled</th>
-<th style="text-align: right;">CRE-probit</th>
+<th>Modelo</th>
+<th style="text-align: right;"><code>kids</code> APE (EE)</th>
+<th style="text-align: right;"><code>lhinc</code> APE (EE)</th>
 <th>Lectura aplicada</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>kids</td>
-<td style="text-align: right;">-0.066</td>
-<td style="text-align: right;">-0.052</td>
-<td style="text-align: right;">-0.039</td>
-<td style="text-align: right;">-0.032</td>
-<td>Asociacion negativa robusta, con menor magnitud al modelar heterogeneidad</td>
+<td>Pooled probit</td>
+<td style="text-align: right;">-0.0660 (0.0049)</td>
+<td style="text-align: right;">-0.0701 (0.0080)</td>
+<td>Magnitudes iniciales más altas sin modelar heterogeneidad persistente</td>
 </tr>
 <tr class="even">
-<td>lhinc</td>
-<td style="text-align: right;">-0.070</td>
-<td style="text-align: right;">-0.019</td>
-<td style="text-align: right;">-0.010</td>
-<td style="text-align: right;">-0.008</td>
-<td>Asociacion negativa robusta, también atenuada en RE/CRE</td>
+<td>RE-probit</td>
+<td style="text-align: right;">-0.0516 (0.0050)</td>
+<td style="text-align: right;">-0.0190 (0.0042)</td>
+<td>Atenuación importante al introducir estructura RE</td>
+</tr>
+<tr class="odd">
+<td>CRE-pooled</td>
+<td style="text-align: right;">-0.0389 (0.0089)</td>
+<td style="text-align: right;">-0.0095 (0.0047)</td>
+<td>Caída adicional al incorporar componente Mundlak</td>
+</tr>
+<tr class="even">
+<td>CRE-probit</td>
+<td style="text-align: right;">-0.0322 (0.0085)</td>
+<td style="text-align: right;">-0.0081 (0.0043)</td>
+<td>Lectura operativa final con heterogeneidad correlacionada</td>
 </tr>
 </tbody>
 </table>

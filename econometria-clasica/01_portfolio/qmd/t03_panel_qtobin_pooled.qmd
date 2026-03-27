@@ -170,11 +170,12 @@ El punto de giro implicito cae en una zona muy alta de la distribucion de `qb` (
 
 En términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de `qb`, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.
 
-| Modelo | Especificacion | Lectura | N |
-|---|---|---|---:|
-| Benchmark lineal | `ikb ~ qb + i.year`, cluster firma | Asociacion positiva promedio | 2068 |
-| Modelo operativo | `ikb ~ qb + qb_sq + i.year`, cluster firma | Relacion positiva y decreciente en casi toda la muestra | 2068 |
-| Contraste con lag | `ikb ~ qb_1 + i.year`, cluster firma | Sensible a especificación y potencial omision de `qb_t` | 1880 |
+| Modelo | Coeficiente clave | Error estándar | IC 95% | Lectura |
+|---|---:|---:|---:|---|
+| Benchmark lineal (`qb`) | 0.0156 | 0.0028 | [0.0102, 0.0210] | Asociación positiva promedio |
+| Modelo operativo cuadrático (`qb`) | 0.0280 | 0.0030 | [0.0221, 0.0340] | Efecto positivo en rangos habituales de q |
+| Modelo operativo cuadrático (`qb_sq`) | -0.0025 | 0.0004 | [-0.0033, -0.0018] | Curvatura decreciente estadísticamente clara |
+| Contraste con rezago (`qb_1`) | 0.0141 | 0.0027 | [0.0088, 0.0194] | Sensible a especificación y a omitir `qb_t` |
 :::
 
 ::: {.table-box}
@@ -204,7 +205,6 @@ Esta separacion entre inferencia valida y limitaciones de identificación es el 
 T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.
 
 Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.
-
 
 
 

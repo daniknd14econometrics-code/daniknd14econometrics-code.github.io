@@ -213,50 +213,46 @@ Ese avance no vuelve automáticamente insesgado el resultado ni resuelve otras f
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La evidencia principal del taller descansa en tres hechos:</p>
-<ol type="1">
-<li>El modelo FE se identifica por cambios within del individuo y entrega coeficientes precisos para <code>exper</code>, <code>expersq</code>, <code>union</code> y <code>married</code>.</li>
-<li><code>educ</code> y <code>black</code> se absorben en FE por falta de variación temporal dentro de individuo.</li>
-<li>El test <code>all u_i=0</code> rechaza con fuerza, reforzando que la estructura panel no es un detalle menor frente a pooled simple.</li>
-</ol>
+<p>La evidencia principal del taller se centra en los coeficientes within de variables con variación temporal. Los estadísticos globales y las omisiones estructurales quedan como respaldo metodológico.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Componente FE</th>
-<th style="text-align: right;">Resultado reportado</th>
-<th style="text-align: right;">Estadístico</th>
-<th style="text-align: right;">Prob &gt; F</th>
-<th>Interpretación econométrica</th>
+<th>Variable within</th>
+<th style="text-align: right;">FE base: coef. (EE)</th>
+<th style="text-align: right;">FE + dummies de año: coef. (EE)</th>
+<th>Lectura econométrica</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>FE base (within)</td>
-<td style="text-align: right;">R2 within = 0.1780</td>
-<td style="text-align: right;">F(4,3811)=206.38</td>
-<td style="text-align: right;">-</td>
-<td>Identificacion sobre variación intraindividuo</td>
+<td><code>exper</code></td>
+<td style="text-align: right;">0.1168 (0.0084)</td>
+<td style="text-align: right;">0.1321 (0.0098)</td>
+<td>Retorno within positivo</td>
 </tr>
 <tr class="even">
-<td>Variables invariantes</td>
-<td style="text-align: right;">educ y black omitidas</td>
-<td style="text-align: right;">-</td>
-<td style="text-align: right;">-</td>
-<td>FE no estima efectos de covariables constantes en t</td>
+<td><code>expersq</code></td>
+<td style="text-align: right;">-0.0043 (0.0006)</td>
+<td style="text-align: right;">-0.0052 (0.0007)</td>
+<td>Curvatura cóncava robusta</td>
 </tr>
 <tr class="odd">
-<td>Estructura panel</td>
-<td style="text-align: right;">F all u_i=0</td>
-<td style="text-align: right;">F(544,3811)=9.71</td>
-<td style="text-align: right;">0.0000</td>
-<td>Rechazo fuerte de all u_i=0; pooled simple es insuficiente</td>
+<td><code>union</code></td>
+<td style="text-align: right;">0.0821 (0.0193)</td>
+<td style="text-align: right;">0.0800 (0.0193)</td>
+<td>Prima within positiva</td>
+</tr>
+<tr class="even">
+<td><code>married</code></td>
+<td style="text-align: right;">0.0453 (0.0183)</td>
+<td style="text-align: right;">0.0467 (0.0183)</td>
+<td>Asociación within positiva</td>
 </tr>
 </tbody>
 </table>
@@ -283,6 +279,18 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td>Variables invariantes en FE</td>
+<td style="text-align: right;"><code>educ</code> y <code>black</code> omitidas</td>
+<td style="text-align: right;">-</td>
+<td>FE no identifica regresores constantes en el tiempo</td>
+</tr>
+<tr class="even">
+<td>Estructura panel</td>
+<td style="text-align: right;">F all u_i=0: F(544,3811)=9.71</td>
+<td style="text-align: right;">0.0000</td>
+<td>Pooled simple es insuficiente</td>
+</tr>
 <tr class="odd">
 <td>FE + dummies de año</td>
 <td style="text-align: right;">R2 within = 0.1806</td>

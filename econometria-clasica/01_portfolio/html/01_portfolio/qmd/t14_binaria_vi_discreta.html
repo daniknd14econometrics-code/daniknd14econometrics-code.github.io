@@ -213,37 +213,49 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="síntesis-de-magnitudes-ape">Síntesis de magnitudes (APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable / enfoque</th>
-<th style="text-align: right;">Evidencia numérica</th>
+<th>Enfoque</th>
+<th style="text-align: right;">APE <code>morekids</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
 <th>Lectura aplicada</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>morekids (Probit exógeno)</td>
+<td>Probit exógeno</td>
 <td style="text-align: right;">-0.1095</td>
+<td style="text-align: right;">0.0055</td>
+<td style="text-align: right;">[-0.1203, -0.0987]</td>
 <td>Menor probabilidad de trabajar en la referencia base</td>
 </tr>
 <tr class="even">
-<td>morekids (Biprobit con endogeneidad binaria)</td>
-<td style="text-align: right;">-0.2559</td>
-<td>Asociación más negativa al admitir endogeneidad</td>
+<td>MPL-IV</td>
+<td style="text-align: right;">-0.2008</td>
+<td style="text-align: right;">0.0965</td>
+<td style="text-align: right;">[-0.3899, -0.0117]</td>
+<td>Contraste lineal instrumental, con mucha incertidumbre</td>
 </tr>
 <tr class="odd">
-<td>morekids (Eprobit, contraste adicional)</td>
+<td>Biprobit con endogeneidad binaria</td>
 <td style="text-align: right;">-0.2559</td>
-<td>Magnitud alineada con la lectura binaria endógena</td>
+<td style="text-align: right;">0.0710</td>
+<td style="text-align: right;">[-0.3951, -0.1167]</td>
+<td>Asociación más negativa al admitir endogeneidad</td>
 </tr>
 <tr class="even">
-<td>morekids (MPL-IV, benchmark auxiliar)</td>
-<td style="text-align: right;">-0.2008</td>
-<td>Contraste lineal instrumental, secundario en la narrativa</td>
+<td>Eprobit (contraste adicional)</td>
+<td style="text-align: right;">-0.2559</td>
+<td style="text-align: right;">0.0519</td>
+<td style="text-align: right;">[-0.3576, -0.1542]</td>
+<td>Magnitud alineada con lectura binaria endógena</td>
 </tr>
 </tbody>
 </table>

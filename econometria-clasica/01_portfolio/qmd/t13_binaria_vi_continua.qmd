@@ -160,12 +160,12 @@ En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como 
 ::: {.table-box}
 ## Sintesis de magnitudes (APE)
 
-| Variable | Probit exogeno | IV/CF (rango) | Lectura aplicada |
-|---|---:|---:|---|
-| kidslt6 | -0.261 | -0.253 a -0.247 | Menor participación con hijos pequeños |
-| educ | +0.039 | +0.049 a +0.051 | Mayor educación, mayor participación |
-| exper | +0.037 | +0.034 a +0.035 | Mayor experiencia, mayor participación |
-| nwifeinc | -0.0036 | -0.0108 a -0.0105 | Asociacion negativa, más intensa bajo IV/CF |
+| Método | APE `nwifeinc` | Error estándar | IC 95% (`nwifeinc`) | APE `kidslt6` | Error estándar | Lectura aplicada |
+|---|---:|---:|---:|---:|---:|---|
+| Probit exógeno | -0.0036 | 0.0016 | [-0.0067, -0.0005] | -0.2612 | 0.0317 | Base parsimoniosa para lectura aplicada |
+| MPL-IV | -0.0116 | 0.0058 | [-0.0230, -0.0002] | -0.2530 | 0.0345 | Contraste lineal instrumental útil para magnitudes |
+| CF sobre-ID (score) | -0.0103 | 0.0048 | [-0.0197, -0.0009] | -0.2428 | 0.0380 | Ajuste IV/CF con señal similar a MPL-IV |
+| IVprobit MLE bivariado | -0.0108 | 0.0057 | [-0.0220, 0.0004] | -0.2533 | 0.0334 | Sensibilidad de magnitud con mayor incertidumbre |
 :::
 
 ## Diagnosticos de respaldo

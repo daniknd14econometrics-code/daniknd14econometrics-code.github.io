@@ -158,12 +158,12 @@ La lectura se ordena en cuatro pasos:
 ::: {.table-box}
 ## Síntesis de magnitudes (APE)
 
-| Variable / enfoque | Evidencia numérica | Lectura aplicada |
-|---|---:|---|
-| morekids (Probit exógeno) | -0.1095 | Menor probabilidad de trabajar en la referencia base |
-| morekids (Biprobit con endogeneidad binaria) | -0.2559 | Asociación más negativa al admitir endogeneidad |
-| morekids (Eprobit, contraste adicional) | -0.2559 | Magnitud alineada con la lectura binaria endógena |
-| morekids (MPL-IV, benchmark auxiliar) | -0.2008 | Contraste lineal instrumental, secundario en la narrativa |
+| Enfoque | APE `morekids` | Error estándar | IC 95% | Lectura aplicada |
+|---|---:|---:|---:|---|
+| Probit exógeno | -0.1095 | 0.0055 | [-0.1203, -0.0987] | Menor probabilidad de trabajar en la referencia base |
+| MPL-IV | -0.2008 | 0.0965 | [-0.3899, -0.0117] | Contraste lineal instrumental, con mucha incertidumbre |
+| Biprobit con endogeneidad binaria | -0.2559 | 0.0710 | [-0.3951, -0.1167] | Asociación más negativa al admitir endogeneidad |
+| Eprobit (contraste adicional) | -0.2559 | 0.0519 | [-0.3576, -0.1542] | Magnitud alineada con lectura binaria endógena |
 :::
 
 ## Diagnósticos de respaldo

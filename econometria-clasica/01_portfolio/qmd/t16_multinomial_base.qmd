@@ -152,31 +152,31 @@ En todo el análisis, el panel se trata como pooled con `cluster(id)`: Esta piez
 
 ## Resultados principales
 
-La lectura comparativa del caso deja tres mensajes sustantivos:
+La lectura comparativa del caso deja tres mensajes sustantivos en la versión enfocada de `status` (escuela/hogar/trabajo):
 
-1. **Educacion:** aumenta la probabilidad de escuela y white collar, y reduce hogar y blue collar; en services la variación promedio es pequena.
-2. **Experiencia:** reduce la probabilidad de escuela y hogar, y la desplaza hacia alternativas de empleo (white collar, blue collar y services), con patrón no lineal por `expersq`.
-3. **Perfil demográfico (`black`):** se observan redistribuciones de probabilidad entre categorias, en particular mayor peso relativo en hogar y services bajo la especificación estimada.
+1. **Educacion:** aumenta la probabilidad de escuela y trabajo, y reduce hogar.
+2. **Experiencia:** reduce la probabilidad de escuela y hogar, y desplaza con fuerza hacia trabajo.
+3. **Perfil demográfico (`black`):** reduce escuela y trabajo, y aumenta hogar.
 
 ::: {.table-box}
 ## Sintesis comparativa de magnitudes (APE)
 
-| Variable | Escuela (1) | Hogar (2) | White collar (3) | Blue collar (4) | Services (5) | Lectura sustantiva |
-|---|---:|---:|---:|---:|---:|---|
-| educ | +0.041 | -0.056 | +0.055 | -0.036 | -0.003 | Mas educación desplaza probabilidad hacia estudio y empleo white collar |
-| exper | -0.150 | -0.080 | +0.080 | +0.128 | +0.022 | Mas experiencia desplaza desde inactividad hacia empleo, sobre todo blue collar |
-| black=1 vs 0 | -0.063 | +0.099 | -0.035 | -0.046 | +0.044 | Cambios de composicion entre alternativas bajo el perfil demográfico observado |
+| Variable | Escuela (1) | Hogar (2) | Trabajo (3) | Lectura sustantiva |
+|---|---:|---:|---:|---|
+| `educ` | +0.0418 (0.0017) | -0.0570 (0.0020) | +0.0152 (0.0020) | Más educación desplaza probabilidad desde hogar hacia escuela y trabajo |
+| `exper` | -0.1493 (0.0062) | -0.0756 (0.0060) | +0.2249 (0.0050) | Más experiencia reubica con fuerza hacia trabajo |
+| `black=1` vs `0` | -0.0635 (0.0079) | +0.1027 (0.0098) | -0.0392 (0.0092) | Cambios de composición con mayor peso relativo en hogar |
 :::
 
-En términos de separacion entre categorias, escuela y blue collar muestran mejor distinción relativa bajo esta especificación, hogar queda en zona intermedia y white collar presenta mayor solapamiento. La categoria `services` muestra menor capacidad de discriminacion, sin cambiar el mensaje sustantivo principal sobre reasignacion de probabilidades por educación y experiencia.
+En esta versión curada, la tabla protagonista prioriza magnitudes interpretables en `escuela/hogar/trabajo`, y deja la desagregación fina de cinco categorías como contraste secundario.
 
 ## Diagnosticos de respaldo
 
 Estos diagnósticos se reportan solo como respaldo de lectura aplicada:
 
-- **Calidad de clasificacion in-sample (choice, 5 categorias):** `53.8%`, útil como referencia descriptiva y no como evidencia de capacidad predictiva fuera de muestra.
-- **Menor discriminacion en `services`:** en clasificacion argmax no aparece como categoria modal predicha, lo que sugiere solapamiento con blue collar y hogar en este set de covariables.
-- **Chequeo secundario con `status` (3 categorias):** clasificacion in-sample `69.0%`, consistente con una agregacion donde la separacion entre estados amplios es más nitida.
+- **Calidad de clasificación in-sample (`status`, 3 categorías):** `69.0%`, útil como referencia descriptiva y no como evidencia de predicción fuera de muestra.
+- **Chequeo secundario con `choice` (5 categorías):** clasificación in-sample `53.8%`, coherente con mayor dificultad de separación fina.
+- **Menor discriminación en `services` (solo en `choice`):** sugiere solapamiento con otras alternativas cuando se desagrega más.
 
 ## Lectura profesional
 

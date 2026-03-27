@@ -207,20 +207,23 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="resultados-principales" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La evidencia principal del caso se concentra en dos hechos:</p>
-<ol type="1">
-<li><code>rho</code> cercano a 0.46, indicando que una fraccion relevante de la variación salarial observada parece estar asociada a diferencias persistentes entre trabajadores.</li>
-<li>Rechazo fuerte de <code>H0: var(c_i)=0</code> con <code>Z = 10.66</code>, consistente con la presencia de heterogeneidad individual persistente y con la importancia de tratar la estructura panel de forma explícita.</li>
-</ol>
-<p>Como referencia de magnitudes, el coeficiente de <code>educ</code> en RE se ubica alrededor de 0.100 tanto en versión clásica como robusta, mientras cambian los errores estándar al robustecer la inferencia.</p>
+<p>La evidencia principal del caso se concentra en comparar la magnitud de <code>educ</code> entre RE y especificaciones de referencia, manteniendo <code>rho</code> y <code>H0: var(c_i)=0</code> como respaldo metodológico secundario.</p>
 <p>En lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y <code>lwage</code> dentro de esta especificación RE; no debe leerse automáticamente como una estimación libre de sesgo ni extrapolarse fuera de este marco sin evidencia adicional.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Modelo</th>
-<th style="text-align: right;">Coef. educ</th>
+<th style="text-align: right;">Coef. <code>educ</code></th>
 <th style="text-align: right;">Error estándar</th>
-<th style="text-align: right;">N</th>
+<th style="text-align: right;">IC 95%</th>
+<th>Lectura</th>
 </tr>
 </thead>
 <tbody>
@@ -228,25 +231,29 @@ ul.task-list li input[type="checkbox"] {
 <td>RE clásico</td>
 <td style="text-align: right;">0.1004</td>
 <td style="text-align: right;">0.0087</td>
-<td style="text-align: right;">4360</td>
+<td style="text-align: right;">[0.0833, 0.1175]</td>
+<td>Magnitud base en RE</td>
 </tr>
 <tr class="even">
-<td>RE robusto/cluster nr</td>
+<td>RE robusto/cluster <code>nr</code></td>
 <td style="text-align: right;">0.1004</td>
 <td style="text-align: right;">0.0086</td>
-<td style="text-align: right;">4360</td>
+<td style="text-align: right;">[0.0835, 0.1172]</td>
+<td>Modelo operativo para inferencia</td>
 </tr>
 <tr class="odd">
-<td>Componente individual (rho)</td>
-<td style="text-align: right;">0.4600</td>
-<td style="text-align: right;">-</td>
-<td style="text-align: right;">4360</td>
+<td>FGLS AR(1)+hetero (contraste)</td>
+<td style="text-align: right;">0.1044</td>
+<td style="text-align: right;">0.0038</td>
+<td style="text-align: right;">[0.0969, 0.1119]</td>
+<td>Contraste paramétrico más exigente</td>
 </tr>
 <tr class="even">
-<td>Test H0: var(c_i)=0</td>
-<td style="text-align: right;">Z = 10.66</td>
-<td style="text-align: right;">Rechazo fuerte</td>
-<td style="text-align: right;">4360</td>
+<td>Pooled OLS + cluster <code>nr</code> (referencia)</td>
+<td style="text-align: right;">0.0988</td>
+<td style="text-align: right;">0.0089</td>
+<td style="text-align: right;">[0.0812, 0.1163]</td>
+<td>Referencia previa sin estructura RE</td>
 </tr>
 </tbody>
 </table>
@@ -268,6 +275,16 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td>Componente individual (<code>rho</code>)</td>
+<td style="text-align: right;">0.4600</td>
+<td>Heterogeneidad persistente importante</td>
+</tr>
+<tr class="even">
+<td>Test <code>H0: var(c_i)=0</code></td>
+<td style="text-align: right;"><code>Z=10.66</code>, <code>p&lt;0.001</code></td>
+<td>Respalda tratar explícitamente la estructura panel</td>
+</tr>
 <tr class="odd">
 <td>Test conjunto d81-d87</td>
 <td style="text-align: right;">p = 0.0831</td>

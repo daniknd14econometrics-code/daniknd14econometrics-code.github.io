@@ -218,37 +218,49 @@ Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir inc
 <p>En términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de <code>qb</code>, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 23%">
-<col style="width: 23%">
-<col style="width: 30%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Modelo</th>
-<th>Especificacion</th>
+<th style="text-align: right;">Coeficiente clave</th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
 <th>Lectura</th>
-<th style="text-align: right;">N</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Benchmark lineal</td>
-<td><code>ikb ~ qb + i.year</code>, cluster firma</td>
-<td>Asociacion positiva promedio</td>
-<td style="text-align: right;">2068</td>
+<td>Benchmark lineal (<code>qb</code>)</td>
+<td style="text-align: right;">0.0156</td>
+<td style="text-align: right;">0.0028</td>
+<td style="text-align: right;">[0.0102, 0.0210]</td>
+<td>Asociación positiva promedio</td>
 </tr>
 <tr class="even">
-<td>Modelo operativo</td>
-<td><code>ikb ~ qb + qb_sq + i.year</code>, cluster firma</td>
-<td>Relacion positiva y decreciente en casi toda la muestra</td>
-<td style="text-align: right;">2068</td>
+<td>Modelo operativo cuadrático (<code>qb</code>)</td>
+<td style="text-align: right;">0.0280</td>
+<td style="text-align: right;">0.0030</td>
+<td style="text-align: right;">[0.0221, 0.0340]</td>
+<td>Efecto positivo en rangos habituales de q</td>
 </tr>
 <tr class="odd">
-<td>Contraste con lag</td>
-<td><code>ikb ~ qb_1 + i.year</code>, cluster firma</td>
-<td>Sensible a especificación y potencial omision de <code>qb_t</code></td>
-<td style="text-align: right;">1880</td>
+<td>Modelo operativo cuadrático (<code>qb_sq</code>)</td>
+<td style="text-align: right;">-0.0025</td>
+<td style="text-align: right;">0.0004</td>
+<td style="text-align: right;">[-0.0033, -0.0018]</td>
+<td>Curvatura decreciente estadísticamente clara</td>
+</tr>
+<tr class="even">
+<td>Contraste con rezago (<code>qb_1</code>)</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">0.0027</td>
+<td style="text-align: right;">[0.0088, 0.0194]</td>
+<td>Sensible a especificación y a omitir <code>qb_t</code></td>
 </tr>
 </tbody>
 </table>

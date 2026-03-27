@@ -162,12 +162,12 @@ Esto cambia de forma importante la lectura del problema: la estimación por MCO 
 En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV.
 No es evidencia definitiva por sí sola, pero sí una señal fuerte de que tratar `educ` como exógena puede subestimar de manera relevante el efecto de interés.
 
-| Modelo | Coeficiente de `educ` | Error estándar | p-valor | N |
+| Modelo | Coeficiente de `educ` | Error estándar | IC 95% | N |
 |---|---:|---:|---:|---:|
-| MCO estándar | 0.0780 | 0.0066 | 0.000 | 935 |
-| MCO robusto | 0.0780 | 0.0068 | 0.000 | 935 |
-| IV/2SLS | 0.1457 | 0.0196 | 0.000 | 722 |
-| IV/2SLS robusto | 0.1457 | 0.0183 | 0.000 | 722 |
+| MCO estándar | 0.0780 | 0.0066 | [0.0650, 0.0910] | 935 |
+| MCO robusto | 0.0780 | 0.0068 | [0.0646, 0.0913] | 935 |
+| IV/2SLS | 0.1457 | 0.0196 | [0.1072, 0.1842] | 722 |
+| IV/2SLS robusto | 0.1457 | 0.0183 | [0.1099, 0.1815] | 722 |
 
 La diferencia de muestra (`N = 935` en MCO frente a `N = 722` en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV.
 Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional.
@@ -211,4 +211,3 @@ En otras palabras, el valor del caso no está solo en la técnica, sino en el cr
 
 Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
 En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.
-

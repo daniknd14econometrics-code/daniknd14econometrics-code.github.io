@@ -214,43 +214,61 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th style="text-align: right;">Probit exogeno</th>
-<th style="text-align: right;">IV/CF (rango)</th>
+<th>Método</th>
+<th style="text-align: right;">APE <code>nwifeinc</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95% (<code>nwifeinc</code>)</th>
+<th style="text-align: right;">APE <code>kidslt6</code></th>
+<th style="text-align: right;">Error estándar</th>
 <th>Lectura aplicada</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>kidslt6</td>
-<td style="text-align: right;">-0.261</td>
-<td style="text-align: right;">-0.253 a -0.247</td>
-<td>Menor participación con hijos pequeños</td>
+<td>Probit exógeno</td>
+<td style="text-align: right;">-0.0036</td>
+<td style="text-align: right;">0.0016</td>
+<td style="text-align: right;">[-0.0067, -0.0005]</td>
+<td style="text-align: right;">-0.2612</td>
+<td style="text-align: right;">0.0317</td>
+<td>Base parsimoniosa para lectura aplicada</td>
 </tr>
 <tr class="even">
-<td>educ</td>
-<td style="text-align: right;">+0.039</td>
-<td style="text-align: right;">+0.049 a +0.051</td>
-<td>Mayor educación, mayor participación</td>
+<td>MPL-IV</td>
+<td style="text-align: right;">-0.0116</td>
+<td style="text-align: right;">0.0058</td>
+<td style="text-align: right;">[-0.0230, -0.0002]</td>
+<td style="text-align: right;">-0.2530</td>
+<td style="text-align: right;">0.0345</td>
+<td>Contraste lineal instrumental útil para magnitudes</td>
 </tr>
 <tr class="odd">
-<td>exper</td>
-<td style="text-align: right;">+0.037</td>
-<td style="text-align: right;">+0.034 a +0.035</td>
-<td>Mayor experiencia, mayor participación</td>
+<td>CF sobre-ID (score)</td>
+<td style="text-align: right;">-0.0103</td>
+<td style="text-align: right;">0.0048</td>
+<td style="text-align: right;">[-0.0197, -0.0009]</td>
+<td style="text-align: right;">-0.2428</td>
+<td style="text-align: right;">0.0380</td>
+<td>Ajuste IV/CF con señal similar a MPL-IV</td>
 </tr>
 <tr class="even">
-<td>nwifeinc</td>
-<td style="text-align: right;">-0.0036</td>
-<td style="text-align: right;">-0.0108 a -0.0105</td>
-<td>Asociacion negativa, más intensa bajo IV/CF</td>
+<td>IVprobit MLE bivariado</td>
+<td style="text-align: right;">-0.0108</td>
+<td style="text-align: right;">0.0057</td>
+<td style="text-align: right;">[-0.0220, 0.0004]</td>
+<td style="text-align: right;">-0.2533</td>
+<td style="text-align: right;">0.0334</td>
+<td>Sensibilidad de magnitud con mayor incertidumbre</td>
 </tr>
 </tbody>
 </table>

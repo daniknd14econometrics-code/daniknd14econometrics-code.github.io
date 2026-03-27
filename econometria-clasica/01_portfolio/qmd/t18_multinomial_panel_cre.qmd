@@ -173,13 +173,12 @@ La comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:
 
 | Variable | Escuela pooled | Escuela CRE | Hogar pooled | Hogar CRE | Trabajo pooled | Trabajo CRE | Lectura aplicada |
 |---|---:|---:|---:|---:|---:|---:|---|
-| educ | +0.0418 | -0.1220 | -0.0570 | +0.0823 | +0.0152 | +0.0397 | Cambia signo en escuela y hogar al incorporar heterogeneidad persistente |
-| exper | -0.1493 | -0.0335 | -0.0756 | +0.0817 | +0.2249 | -0.0482 | La lectura pooled sobre trabajo no se sostiene en CRE |
-| expersq | +0.0176 | +0.0058 | +0.0031 | +0.0033 | -0.0207 | -0.0091 | Curvatura consistente, con menor intensidad en CRE |
-| black=1 vs 0 | -0.0635 | -0.0502 | +0.1027 | +0.0729 | -0.0392 | -0.0228 | Patrón estable, magnitud atenuada en CRE |
+| `educ` | +0.0418 (0.0017) | -0.1220 (0.0055) | -0.0570 (0.0020) | +0.0823 (0.0076) | +0.0152 (0.0020) | +0.0397 (0.0090) | Cambia signo en escuela y hogar al incorporar heterogeneidad persistente |
+| `exper` | -0.1493 (0.0062) | -0.0335 (0.0069) | -0.0756 (0.0060) | +0.0817 (0.0095) | +0.2249 (0.0050) | -0.0482 (0.0101) | La lectura pooled sobre trabajo no se sostiene en CRE |
 :::
 
-Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.
+Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.  
+`expersq` y `black` se mantienen como evidencia complementaria en el respaldo técnico, sin desplazar las variables protagonistas.
 
 ## Diagnósticos de respaldo
 

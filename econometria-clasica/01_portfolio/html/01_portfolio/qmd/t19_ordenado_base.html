@@ -59,8 +59,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
   <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
   <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#probabilidades-predichas-por-categoría" id="toc-probabilidades-predichas-por-categoría" class="nav-link" data-scroll-target="#probabilidades-predichas-por-categoría">Probabilidades predichas por categoría</a></li>
   <li><a href="#apes-narrables-ordered-probit" id="toc-apes-narrables-ordered-probit" class="nav-link" data-scroll-target="#apes-narrables-ordered-probit">APEs narrables (ordered probit)</a></li>
+  <li><a href="#probabilidades-predichas-por-categoría-contexto-secundario" id="toc-probabilidades-predichas-por-categoría-contexto-secundario" class="nav-link" data-scroll-target="#probabilidades-predichas-por-categoría-contexto-secundario">Probabilidades predichas por categoría (contexto secundario)</a></li>
   <li><a href="#diagnósticos-de-respaldo" id="toc-diagnósticos-de-respaldo" class="nav-link" data-scroll-target="#diagnósticos-de-respaldo">Diagnósticos de respaldo</a>
   <ul class="collapse">
   <li><a href="#resumen-de-diagnósticos" id="toc-resumen-de-diagnósticos" class="nav-link" data-scroll-target="#resumen-de-diagnósticos">Resumen de diagnósticos</a></li>
@@ -215,8 +215,52 @@ ul.task-list li input[type="checkbox"] {
 <li><code>prftshr</code> muestra una reasignación en sentido opuesto (desde perfil conservador hacia perfil más expuesto a acciones), con precisión más acotada en parte de los outcomes.</li>
 </ol>
 </section>
-<section id="probabilidades-predichas-por-categoría" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="probabilidades-predichas-por-categoría">Probabilidades predichas por categoría</h2>
+<section id="apes-narrables-ordered-probit" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="apes-narrables-ordered-probit">APEs narrables (ordered probit)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: right;">dPr(pctstck=0)</th>
+<th style="text-align: right;">dPr(pctstck=50)</th>
+<th style="text-align: right;">dPr(pctstck=100)</th>
+<th>Lectura profesional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>choice=1</code> (puede elegir método) vs 0</td>
+<td style="text-align: right;">-0.1281 (0.0621)</td>
+<td style="text-align: right;">+0.0104 (0.0119)</td>
+<td style="text-align: right;">+0.1178 (0.0547)</td>
+<td>Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones</td>
+</tr>
+<tr class="even">
+<td><code>age</code> (+1 año)</td>
+<td style="text-align: right;">+0.0169 (0.0081)</td>
+<td style="text-align: right;">-0.0007 (0.0013)</td>
+<td style="text-align: right;">-0.0162 (0.0078)</td>
+<td>En promedio, la edad se asocia con mayor peso en la categoría conservadora</td>
+</tr>
+<tr class="odd">
+<td><code>prftshr=1</code> vs 0</td>
+<td style="text-align: right;">-0.1521 (0.0692)</td>
+<td style="text-align: right;">-0.0137 (0.0219)</td>
+<td style="text-align: right;">+0.1658 (0.0877)</td>
+<td>Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="probabilidades-predichas-por-categoría-contexto-secundario" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="probabilidades-predichas-por-categoría-contexto-secundario">Probabilidades predichas por categoría (contexto secundario)</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -245,50 +289,6 @@ ul.task-list li input[type="checkbox"] {
 <td>100 (más expuesta a acciones)</td>
 <td style="text-align: right;">0.298</td>
 <td>Cerca de tres de cada diez casos se ubican en el perfil más accionario</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="apes-narrables-ordered-probit" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="apes-narrables-ordered-probit">APEs narrables (ordered probit)</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th style="text-align: right;">dPr(pctstck=0)</th>
-<th style="text-align: right;">dPr(pctstck=50)</th>
-<th style="text-align: right;">dPr(pctstck=100)</th>
-<th>Lectura profesional</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>choice=1 (puede elegir método de inversión) vs 0</td>
-<td style="text-align: right;">-0.128</td>
-<td style="text-align: right;">+0.010</td>
-<td style="text-align: right;">+0.118</td>
-<td>Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones</td>
-</tr>
-<tr class="even">
-<td>age (+1 año)</td>
-<td style="text-align: right;">+0.0169</td>
-<td style="text-align: right;">-0.0007</td>
-<td style="text-align: right;">-0.0162</td>
-<td>En promedio, la edad se asocia con mayor peso en la categoría conservadora</td>
-</tr>
-<tr class="odd">
-<td>prftshr=1 (plan con profit sharing) vs 0</td>
-<td style="text-align: right;">-0.152</td>
-<td style="text-align: right;">-0.014</td>
-<td style="text-align: right;">+0.166</td>
-<td>Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones</td>
 </tr>
 </tbody>
 </table>

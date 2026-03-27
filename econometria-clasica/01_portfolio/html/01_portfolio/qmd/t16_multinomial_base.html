@@ -203,75 +203,65 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La lectura comparativa del caso deja tres mensajes sustantivos:</p>
+<p>La lectura comparativa del caso deja tres mensajes sustantivos en la versión enfocada de <code>status</code> (escuela/hogar/trabajo):</p>
 <ol type="1">
-<li><strong>Educacion:</strong> aumenta la probabilidad de escuela y white collar, y reduce hogar y blue collar; en services la variación promedio es pequena.</li>
-<li><strong>Experiencia:</strong> reduce la probabilidad de escuela y hogar, y la desplaza hacia alternativas de empleo (white collar, blue collar y services), con patrón no lineal por <code>expersq</code>.</li>
-<li><strong>Perfil demográfico (<code>black</code>):</strong> se observan redistribuciones de probabilidad entre categorias, en particular mayor peso relativo en hogar y services bajo la especificación estimada.</li>
+<li><strong>Educacion:</strong> aumenta la probabilidad de escuela y trabajo, y reduce hogar.</li>
+<li><strong>Experiencia:</strong> reduce la probabilidad de escuela y hogar, y desplaza con fuerza hacia trabajo.</li>
+<li><strong>Perfil demográfico (<code>black</code>):</strong> reduce escuela y trabajo, y aumenta hogar.</li>
 </ol>
 </section>
 <section id="sintesis-comparativa-de-magnitudes-ape" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="sintesis-comparativa-de-magnitudes-ape">Sintesis comparativa de magnitudes (APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
 <th style="text-align: right;">Escuela (1)</th>
 <th style="text-align: right;">Hogar (2)</th>
-<th style="text-align: right;">White collar (3)</th>
-<th style="text-align: right;">Blue collar (4)</th>
-<th style="text-align: right;">Services (5)</th>
+<th style="text-align: right;">Trabajo (3)</th>
 <th>Lectura sustantiva</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>educ</td>
-<td style="text-align: right;">+0.041</td>
-<td style="text-align: right;">-0.056</td>
-<td style="text-align: right;">+0.055</td>
-<td style="text-align: right;">-0.036</td>
-<td style="text-align: right;">-0.003</td>
-<td>Mas educación desplaza probabilidad hacia estudio y empleo white collar</td>
+<td><code>educ</code></td>
+<td style="text-align: right;">+0.0418 (0.0017)</td>
+<td style="text-align: right;">-0.0570 (0.0020)</td>
+<td style="text-align: right;">+0.0152 (0.0020)</td>
+<td>Más educación desplaza probabilidad desde hogar hacia escuela y trabajo</td>
 </tr>
 <tr class="even">
-<td>exper</td>
-<td style="text-align: right;">-0.150</td>
-<td style="text-align: right;">-0.080</td>
-<td style="text-align: right;">+0.080</td>
-<td style="text-align: right;">+0.128</td>
-<td style="text-align: right;">+0.022</td>
-<td>Mas experiencia desplaza desde inactividad hacia empleo, sobre todo blue collar</td>
+<td><code>exper</code></td>
+<td style="text-align: right;">-0.1493 (0.0062)</td>
+<td style="text-align: right;">-0.0756 (0.0060)</td>
+<td style="text-align: right;">+0.2249 (0.0050)</td>
+<td>Más experiencia reubica con fuerza hacia trabajo</td>
 </tr>
 <tr class="odd">
-<td>black=1 vs 0</td>
-<td style="text-align: right;">-0.063</td>
-<td style="text-align: right;">+0.099</td>
-<td style="text-align: right;">-0.035</td>
-<td style="text-align: right;">-0.046</td>
-<td style="text-align: right;">+0.044</td>
-<td>Cambios de composicion entre alternativas bajo el perfil demográfico observado</td>
+<td><code>black=1</code> vs <code>0</code></td>
+<td style="text-align: right;">-0.0635 (0.0079)</td>
+<td style="text-align: right;">+0.1027 (0.0098)</td>
+<td style="text-align: right;">-0.0392 (0.0092)</td>
+<td>Cambios de composición con mayor peso relativo en hogar</td>
 </tr>
 </tbody>
 </table>
 </section>
-<p>En términos de separacion entre categorias, escuela y blue collar muestran mejor distinción relativa bajo esta especificación, hogar queda en zona intermedia y white collar presenta mayor solapamiento. La categoria <code>services</code> muestra menor capacidad de discriminacion, sin cambiar el mensaje sustantivo principal sobre reasignacion de probabilidades por educación y experiencia.</p>
+<p>En esta versión curada, la tabla protagonista prioriza magnitudes interpretables en <code>escuela/hogar/trabajo</code>, y deja la desagregación fina de cinco categorías como contraste secundario.</p>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
 <p>Estos diagnósticos se reportan solo como respaldo de lectura aplicada:</p>
 <ul>
-<li><strong>Calidad de clasificacion in-sample (choice, 5 categorias):</strong> <code>53.8%</code>, útil como referencia descriptiva y no como evidencia de capacidad predictiva fuera de muestra.</li>
-<li><strong>Menor discriminacion en <code>services</code>:</strong> en clasificacion argmax no aparece como categoria modal predicha, lo que sugiere solapamiento con blue collar y hogar en este set de covariables.</li>
-<li><strong>Chequeo secundario con <code>status</code> (3 categorias):</strong> clasificacion in-sample <code>69.0%</code>, consistente con una agregacion donde la separacion entre estados amplios es más nitida.</li>
+<li><strong>Calidad de clasificación in-sample (<code>status</code>, 3 categorías):</strong> <code>69.0%</code>, útil como referencia descriptiva y no como evidencia de predicción fuera de muestra.</li>
+<li><strong>Chequeo secundario con <code>choice</code> (5 categorías):</strong> clasificación in-sample <code>53.8%</code>, coherente con mayor dificultad de separación fina.</li>
+<li><strong>Menor discriminación en <code>services</code> (solo en <code>choice</code>):</strong> sugiere solapamiento con otras alternativas cuando se desagrega más.</li>
 </ul>
 </section>
 <section id="lectura-profesional" class="level2">

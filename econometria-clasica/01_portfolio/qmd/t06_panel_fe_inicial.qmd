@@ -163,17 +163,14 @@ El mensaje profesional de T6 es más estricto: FE mejora un problema puntual de 
 ::: {.table-box}
 ## Resultados principales
 
-La evidencia principal del taller descansa en tres hechos:
+La evidencia principal del taller se centra en los coeficientes within de variables con variación temporal. Los estadísticos globales y las omisiones estructurales quedan como respaldo metodológico.
 
-1. El modelo FE se identifica por cambios within del individuo y entrega coeficientes precisos para `exper`, `expersq`, `union` y `married`.
-2. `educ` y `black` se absorben en FE por falta de variación temporal dentro de individuo.
-3. El test `all u_i=0` rechaza con fuerza, reforzando que la estructura panel no es un detalle menor frente a pooled simple.
-
-| Componente FE | Resultado reportado | Estadístico | Prob > F | Interpretación econométrica |
-|---|---:|---:|---:|---|
-| FE base (within) | R2 within = 0.1780 | F(4,3811)=206.38 | - | Identificacion sobre variación intraindividuo |
-| Variables invariantes | educ y black omitidas | - | - | FE no estima efectos de covariables constantes en t |
-| Estructura panel | F all u_i=0 | F(544,3811)=9.71 | 0.0000 | Rechazo fuerte de all u_i=0; pooled simple es insuficiente |
+| Variable within | FE base: coef. (EE) | FE + dummies de año: coef. (EE) | Lectura econométrica |
+|---|---:|---:|---|
+| `exper` | 0.1168 (0.0084) | 0.1321 (0.0098) | Retorno within positivo |
+| `expersq` | -0.0043 (0.0006) | -0.0052 (0.0007) | Curvatura cóncava robusta |
+| `union` | 0.0821 (0.0193) | 0.0800 (0.0193) | Prima within positiva |
+| `married` | 0.0453 (0.0183) | 0.0467 (0.0183) | Asociación within positiva |
 :::
 
 En lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula `exper` en su propia trayectoria, su `lwage` tiende a aumentar a una tasa decreciente (`expersq < 0`); cuando cambia su condición de `union` de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia `married` de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse automáticamente como libres de sesgo.
@@ -188,6 +185,8 @@ En FE con `c.educ##i.year`, las interacciones aparecen sin evidencia estadístic
 
 | Contraste auxiliar | Resultado reportado | Prob > F | Interpretación econométrica |
 |---|---:|---:|---|
+| Variables invariantes en FE | `educ` y `black` omitidas | - | FE no identifica regresores constantes en el tiempo |
+| Estructura panel | F all u_i=0: F(544,3811)=9.71 | 0.0000 | Pooled simple es insuficiente |
 | FE + dummies de año | R2 within = 0.1806 | - | Cambio acotado frente al FE base |
 | Test conjunto d82-d87 | F(5,3805)=1.50 | 0.1863 | Sin evidencia fuerte para mantener bloque temporal En esta base |
 | FE + educ#year | R2 within = 0.1814 | - | Interacciones sin aporte robusto; contraste didactico |
@@ -208,7 +207,6 @@ La conclusión metodológica es deliberadamente prudente: FE organiza mejor la i
 Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
 
 Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.
-
 
 
 

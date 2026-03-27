@@ -170,12 +170,13 @@ Primero, la lectura sustantiva: la evidencia es más consistente con una relaci�
 
 En el modelo operativo, los coeficientes de rezagos por separado son inestables y con precisión desigual, algo esperable cuando la trayectoria de I+D anual está fuertemente correlacionada consigo misma. Aun así, el bloque temporal de I+D aporta información relevante en conjunto para explicar `lpat`.
 
-| Bloque | Evidencia | Lectura |
-|---|---:|---|
-| FE con rezagos (lectura individual) | Varios lrnd_k con baja precisión individual | No conviene interpretar cada rezago como efecto aislado |
-| FE con rezagos (lectura de bloque) | Test conjunto lrnd_1=...=lrnd_5=0 se rechaza | La historia temporal de I+D agrega poder explicativo sobre patentamiento |
-| Test conjunto clásico | F(5,884)=3.18, p=0.0075 | Evidencia conjunta de rezagos en inferencia convencional |
-| Test conjunto cluster | F(5,225)=2.96, p=0.0131 | Evidencia conjunta persiste con inferencia robusta por firma |
+| Especificación | Coeficiente clave | Error estándar | IC 95% | Lectura |
+|---|---:|---:|---:|---|
+| FE base (`lrnd`) | -0.0864 | 0.0500 | [-0.1844, 0.0117] | Señal débil si se mira solo contemporáneo |
+| FE rezagos + cluster (`lrnd`) | -0.3562 | 0.1318 | [-0.6159, -0.0965] | Efecto contemporáneo más intenso en modelo operativo |
+| FE rezagos + cluster (`lrnd_1`) | -0.0876 | 0.0955 | [-0.2759, 0.1007] | Rezago individual impreciso |
+| FE rezagos + cluster (`lrnd_5`) | -0.2491 | 0.1597 | [-0.5637, 0.0656] | Rezago largo con alta incertidumbre |
+| Test conjunto `lrnd_1=...=lrnd_5=0` | F(5,225)=2.96 | - | p=0.0131 | El bloque dinámico sí agrega poder explicativo |
 :::
 
 ::: {.table-box}
