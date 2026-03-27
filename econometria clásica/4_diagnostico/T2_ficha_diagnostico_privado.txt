@@ -1,0 +1,57 @@
+Ficha técnica-editorial privada — T2
+
+1. Identificación básica
+
+Taller 02. Tema central: pooled OLS en datos de panel para una ecuación salarial. La base es wagepan, con 4.360 observaciones de 545 individuos seguidos entre 1980 y 1987. La variable dependiente es lwage y las variables centrales son educ, exper, expersq, union, married, black y dummies de año. El brief formula bien la pregunta: qué puede y qué no puede decir un pooled OLS en panel antes de pasar a FE o RE. También marca con claridad el problema econométrico: correlación intraindividuo, heterocedasticidad y dinámica en los residuos.
+
+2. Qué es realmente este taller
+
+Este taller no es un hallazgo sustantivo fuerte sobre salarios. Tampoco es una pieza “puramente técnica” en el sentido de que no se queda solo en notación o procedimiento. Yo lo clasificaría como comparación metodológica con valor pedagógico aplicado. La historia central no es descubrir un hecho nuevo del mercado laboral, sino mostrar que en panel el pooled OLS todavía puede ser útil como benchmark si la inferencia se corrige bien, pero que no debe confundirse con una solución al problema de heterogeneidad inobservable.
+
+3. Núcleo empírico y métodos comparados
+
+El log compara varias versiones del mismo modelo: MCO agrupado clásico, MCO agrupado con vce(robust), MCO agrupado con errores cluster por individuo, una versión con dummies temporales y cluster, pruebas auxiliares de autocorrelación AR(1), prueba LM de heterocedasticidad y un FGLS con estructura AR(1) y heterocedasticidad por panel. Ese menú es amplio, pero para la pieza pública no conviene mostrarlo todo al mismo nivel. El núcleo debería ser más acotado: pooled OLS como benchmark, cambio de inferencia al pasar de varianza clásica a robusta/cluster, valor de agregar efectos temporales, y por qué el modelo final del taller termina siendo pooled OLS con dummies de año y vce(cluster nr).
+
+4. Objeto de decisión final
+
+El “objeto de decisión” de esta pieza no debería ser una especificación “ganadora” en el sentido de “este modelo revela la verdad”. Debería ser una lectura más fina: dentro de la familia pooled, la especificación que manda es pooled OLS con dummies temporales y errores cluster por individuo; pero al mismo tiempo la pieza debe dejar claro que eso no resuelve la heterogeneidad inobservable fija. Entonces el objeto final es doble: una tabla comparativa corta entre clásico, robusto y cluster, y un cierre que diga explícitamente que pooled es un benchmark útil para inferencia y chequeos, no el destino final del análisis panel.
+
+5. Especificación ganadora
+
+Sí hay una especificación preferida dentro del propio taller: regress lwage educ exper expersq union married black i.year, vce(cluster nr). El propio log la llama “modelo final” y la justifica explícitamente como la opción coherente cuando se quiere robustez frente a heterocedasticidad y correlación serial dentro de individuo. El punto importante es cómo presentarlo: no como “el mejor modelo posible”, sino como la especificación final dentro del ejercicio pooled, sabiendo que el sesgo por heterogeneidad inobservable sigue abierto.
+
+6. Evidencia clave del log
+
+La evidencia importante está bastante ordenada. Primero, los coeficientes son estables entre clásico, robusto y cluster, pero los errores estándar cambian de manera visible, especialmente para educ, union, married y black. Segundo, al agregar dummies de año, el coeficiente de educ cae de 0.0988 a 0.0907, lo que sugiere que parte de la variación temporal agregada importaba en la especificación inicial. Tercero, la prueba AR(1) sobre el rezago de residuos muestra un coeficiente cercano a 0.555 y fuertemente significativo, lo que da evidencia clara de autocorrelación serial remanente. Cuarto, la prueba LM de heterocedasticidad arroja p = 0.0215, lo que también rechaza homocedasticidad. Quinto, el FGLS aparece como alternativa más eficiente bajo estructura paramétrica correcta, pero el propio taller decide no usarlo como modelo final por menor robustez. Todo esto sostiene una narrativa metodológica muy clara.
+
+7. Historia narrativa posible, sin forzarla
+
+La historia buena acá no es “la educación sube los salarios en exactamente tanto” porque esa lectura queda demasiado genérica y, además, el taller no está construido para eso. La historia correcta es: cuando se trabaja con panel, incluso antes de pasar a FE o RE, ya hay decisiones importantes de inferencia y especificación. Un pooled OLS ingenuo trata al panel casi como si fuera una sección cruzada ampliada; en cambio, al clusterizar por individuo, agregar efectos temporales y revisar residuos, aparece una imagen más honesta del modelo: sirve como benchmark, pero el panel ya está diciendo que la estructura del error importa y que más adelante habrá que tratar la heterogeneidad individual.
+
+8. Hallazgo principal
+
+La frase de salida debería ser algo en esta línea: “En esta base panel, pooled OLS sigue siendo un punto de partida útil, pero la inferencia cambia al respetar la estructura del panel y los chequeos muestran que no alcanza con una versión ingenua del modelo agrupado.” Esa es la idea fuerte del taller. Si querés una versión más concreta: “La especificación pooled con dummies de año y errores cluster por individuo funciona como benchmark defendible, pero los residuos muestran autocorrelación y heterocedasticidad, y el modelo no corrige heterogeneidad inobservable.”
+
+9. Qué sí puede decir la pieza
+
+Sí puede decir que el pooled OLS tiene valor como benchmark en panel. Sí puede decir que clusterizar por individuo importa para la inferencia. Sí puede decir que incorporar dummies temporales mejora la lectura al separar shocks comunes en el tiempo. Sí puede decir que los residuos exhiben señales de autocorrelación serial y que hay evidencia de heterocedasticidad. Sí puede decir que, por eso, el modelo final del taller dentro del universo pooled es la versión con i.year y vce(cluster nr). Y sí puede decir que esto prepara el terreno para FE/RE, porque muestra exactamente qué pooled no resuelve.
+
+10. Qué no debe decir la pieza
+
+No debería vender pooled OLS como “solución” del análisis panel. No debería decir que el uso de errores cluster corrige sesgo por heterogeneidad inobservable, porque no lo hace. No debería sobreactuar FGLS como mejora definitiva: el propio log es cuidadoso y lo presenta como potencialmente más eficiente si la estructura de Ω es correcta, pero menos robusto. Tampoco conviene que la pieza quede dominada por pruebas auxiliares; esas pruebas tienen que servir a la historia, no reemplazarla. Y no habría que presentar el ejercicio como si el foco sustantivo fuera estimar el retorno causal de la educación: el centro del taller es inferencia y especificación en panel agrupado.
+
+11. Requisitos mínimos para el .qmd
+
+Para mí, esta pieza debería tener sí o sí cinco elementos. Primero, una apertura que plantee la pregunta correcta: qué puede extraerse de pooled OLS en panel antes de pasar a FE/RE. Segundo, una tabla comparativa compacta entre clásico, robusto y cluster, idealmente manteniendo el foco en educ y algunas covariables clave, con coeficiente, error estándar e intervalo si ya se viene usando ese criterio. Tercero, un bloque breve que muestre por qué agregar dummies de año cambia la lectura del pooled. Cuarto, un recuadro o bloque de diagnóstico donde se diga que hay evidencia de autocorrelación serial y heterocedasticidad. Quinto, un cierre que sea muy claro: pooled OLS con cluster es el benchmark final del taller, pero no resuelve heterogeneidad inobservable y por eso no reemplaza a FE/RE.
+
+12. Nota para la tarjeta del sitio
+
+Yo dejaría algo de este estilo: “¿Qué se gana y qué se pierde al usar pooled OLS en un panel salarial? Comparo inferencia clásica, robusta y cluster, y muestro por qué el panel exige algo más que una regresión agrupada simple.” Método principal: pooled OLS con cluster. Tipo de pieza: comparación metodológica. Estado de la evidencia: benchmark útil, no solución final.
+
+13. Observaciones editoriales adicionales
+
+Hay dos observaciones que conviene dejar anotadas para la futura auditoría con Codex. La primera: en el brief aparece de nuevo familia_metodo: lineal_vi_panel, pero este taller no es de VI; es pooled OLS en panel. Ese metadato conviene corregir. La segunda: el taller tiene bastante material técnico sobre pruebas y FGLS; el riesgo editorial no es que falte contenido, sino que sobre material y se diluya el mensaje principal. Entonces, más que agregar, probablemente haya que verificar que la pieza pública jerarquice bien y no deje que el lector se pierda en detalles secundarios.
+
+Diagnóstico final
+
+T2 tiene una historia metodológica bastante natural y más clara de lo que parece a primera vista. No necesita ser “forzado” hacia una gran historia aplicada. Su valor está en otra parte: mostrar que pooled OLS en panel puede ser un benchmark respetable si la inferencia se adapta a la estructura temporal y si se reconocen con honestidad sus límites. La especificación final está bien definida dentro del log, el cierre conceptual del taller es sólido, y el principal desafío editorial para la pieza pública no será inventar hallazgo, sino jerarquizar bien: benchmark sí, destino final no.
