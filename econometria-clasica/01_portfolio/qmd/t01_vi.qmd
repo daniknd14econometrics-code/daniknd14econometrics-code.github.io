@@ -23,7 +23,7 @@ execute:
 ---
 ::: {.hero-box}
 ::: {.hero-title}
-La estimación cambia fuerte cuando trato a `educ` como endógena
+La estimación cambia de forma importante cuando `educ` se trata como endógena
 :::
 
 ::: {.hero-sub}
@@ -112,7 +112,7 @@ Variable dependiente: `lwage` (log del salario por hora). Variable endógena: `e
 
 Un MCO simple puede mezclar el efecto de la educación con habilidad u otros factores no observados. La estrategia IV usa la variación exógena inducida por la educación de los padres para identificar un parámetro más creíble.
 
-<span class="badge">Portfolio econométrico</span>
+<span class="badge">Ejercicio econométrico</span>
 :::
 
 ::::
@@ -197,7 +197,7 @@ Esa plausibilidad sigue siendo una hipótesis económica sustantiva: los tests e
 
 ## Lectura profesional del caso
 
-La enseñanza principal no es simplemente “correr 2SLS”. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:
+La conclusión principal no es simplemente estimar por 2SLS. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:
 
 - justificar por qué MCO puede estar sesgado;
 - demostrar que la primera etapa es suficientemente fuerte;
