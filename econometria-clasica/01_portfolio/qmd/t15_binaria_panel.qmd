@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Participación laboral femenina y estructura del hogar en un panel corto"
 subtitle: "Qué cambia al modelar heterogeneidad no observada en probabilidades de participación"
 author: "Daniel Méndez"

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte"
 subtitle: "Random effects en salarios: eficiencia, heterogeneidad inobservable y limites de identificación sin contraste RE vs FE"
 author: "Daniel Méndez"

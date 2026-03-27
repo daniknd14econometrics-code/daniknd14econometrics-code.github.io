@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Subsidios de capacitación y desperdicio productivo en plantas industriales"
 subtitle: "Comparacion aplicada entre FE, RE y CRE (Mundlak) para tratar heterogeneidad persistente en panel corto"
 author: "Daniel Méndez"

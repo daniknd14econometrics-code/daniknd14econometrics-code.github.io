@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final"
 subtitle: "Inferencia en datos de panel con errores robustos, cluster por individuo y diagnósticos básicos"
 author: "Daniel Méndez"

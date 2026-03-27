@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera"
 subtitle: "FE en salarios: control de heterogeneidad fija, absorcion de invariantes y lectura metodológica prudente frente a RE"
 author: "Daniel Méndez"

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE"
 subtitle: "Lectura aplicada sobre heterogeneidad persistente no observada en escuela, hogar y trabajo"
 author: "Daniel Méndez"

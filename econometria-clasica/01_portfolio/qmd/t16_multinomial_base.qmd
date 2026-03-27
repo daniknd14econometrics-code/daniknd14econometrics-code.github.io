@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Trayectorias de actividad en un panel laboral corto"
 subtitle: "Como cambian las probabilidades de estudio, hogar y empleo según educación y experiencia"
 author: "Daniel Méndez"

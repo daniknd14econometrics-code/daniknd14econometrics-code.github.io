@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Cuando MCO no alcanza"
 subtitle: "Educación endógena y salario con variables instrumentales"
 author: "Daniel Méndez"

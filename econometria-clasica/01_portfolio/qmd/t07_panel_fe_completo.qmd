@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Efectos fijos en panel de firmas: identificación within e inferencia robusta"
 subtitle: "Subsidios de capacitación (`grant`, `grant_1`) y desperdicio productivo (`lscrap`) en un panel corto de plantas"
 author: "Daniel Méndez"

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Tarifas y demanda de pasajeros en rutas aéreas"
 subtitle: "Una lectura en panel sobre cuándo tratar el precio como endógeno"
 author: "Daniel Méndez"

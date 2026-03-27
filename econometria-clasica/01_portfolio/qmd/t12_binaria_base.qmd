@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Participación laboral femenina y estructura del hogar"
 subtitle: "Una lectura con modelos binarios sobre ingreso, experiencia y presencia de hijos"
 author: "Daniel Méndez"

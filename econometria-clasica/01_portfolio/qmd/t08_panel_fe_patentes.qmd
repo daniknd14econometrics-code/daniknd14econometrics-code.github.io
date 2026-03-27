@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas"
 subtitle: "Una lectura de la innovación empresarial con efectos fijos y dinamica temporal del gasto en I+D"
 author: "Daniel Méndez"

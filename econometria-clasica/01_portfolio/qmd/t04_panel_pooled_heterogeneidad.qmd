@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Heterogeneidad inobservable en panel salarial: por qué pooled OLS no alcanza"
 subtitle: "Benchmark pooled con inferencia clusterizada y limites de identificación frente a c_i no observado"
 author: "Daniel Méndez"

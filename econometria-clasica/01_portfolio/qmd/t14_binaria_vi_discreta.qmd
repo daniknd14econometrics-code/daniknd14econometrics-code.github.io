@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Fecundidad y participación laboral materna"
 subtitle: "Una lectura binaria sobre cómo cambia la asociación al admitir endogeneidad de morekids"
 author: "Daniel Méndez"

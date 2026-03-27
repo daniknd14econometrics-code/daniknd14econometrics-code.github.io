@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Asignación previsional con resultado ordinal: una lectura aplicada"
 subtitle: "Probabilidades por categoría y efectos marginales en carteras conservadoras, mixtas y más expuestas a acciones"
 author: "Daniel Méndez"

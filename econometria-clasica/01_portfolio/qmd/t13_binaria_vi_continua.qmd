@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Participación laboral femenina e ingreso no laboral del hogar"
 subtitle: "Una lectura binaria sobre cuándo tratar un regresor como potencialmente endógeno"
 author: "Daniel Méndez"

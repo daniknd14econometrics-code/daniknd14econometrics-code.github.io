@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta"
 subtitle: "Relacion estimada entre q e inversión con pooled OLS, controles temporales y lectura econométrica prudente"
 author: "Daniel Méndez"
