@@ -15,7 +15,9 @@ format:
     theme: flatly
     smooth-scroll: true
     page-layout: full
-    css: ../assets/portfolio.css
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
 execute:
   echo: false
   warning: false
@@ -209,7 +211,4 @@ En otras palabras, el valor del caso no está solo en la técnica, sino en el cr
 
 Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
 En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.
-
-
-
 
