@@ -1,5 +1,5 @@
 ---
-title: "Heterogeneidad inobservable en panel salarial: por qué pooled OLS no alcanza"
+title: "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS"
 subtitle: "Benchmark pooled con inferencia clusterizada y limites de identificación frente a c_i no observado"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
@@ -176,8 +176,9 @@ En términos aplicados, los coeficientes de la ecuación salarial deben leerse c
 ## Hallazgos secundarios y contrastes
 
 Como chequeo de especificación, el test conjunto de dummies de año no rechaza al 5% (`F(7,544)=1.34`, `p=0.2296`) en este caso.
+Por eso, dentro del subbloque pooled, el cierre operativo queda en pooled OLS con `vce(cluster nr)` sin dummies de año; este cierre no resuelve por sí solo el problema general de identificación frente a `c_i`.
 
-En primeras diferencias, la estrategia tiene capacidad empírica limitada En esta base: al diferenciar, `D.educ` y `D.exper` quedan omitidas por colinealidad o falta de variación temporal útil, lo que reduce la identificación de parámetros clave del problema salarial.
+En primeras diferencias, la estrategia tiene capacidad empírica limitada En esta base: al diferenciar, `D.educ` queda omitida por falta de variación temporal útil y `D.exper` por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.
 
 | Bloque | Resultado | Lectura |
 |---|---:|---|
@@ -202,7 +203,7 @@ Por eso, el resultado debe comunicarse como evidencia de referencia econométric
 Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.
 
 El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled.
-
+La decisión final del taller es metodológica: cierre operativo en el subbloque pooled y reconocimiento explícito de que el problema general requiere tratar `c_i` con estrategias adicionales.
 
 
 

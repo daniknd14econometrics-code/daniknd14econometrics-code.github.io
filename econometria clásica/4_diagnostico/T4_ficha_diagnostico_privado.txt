@@ -1,0 +1,104 @@
+Ficha técnica-editorial privada — T4
+
+1. Identificación básica
+
+Taller 04. Tema central: heterogeneidad inobservable en panel y límites de pooled OLS cuando el componente fijo individual c_i puede estar correlacionado con los regresores. La base vuelve a ser wagepan; la variable dependiente es lwage y los regresores principales son educ, exper, expersq, union, married y black. El brief describe con precisión la intuición del problema: si c_i recoge rasgos persistentes como habilidad y estos se correlacionan con x_it, pooled OLS arrastra sesgo por omisión. Además propone una comparación con primeras diferencias para mostrar qué cambia cuando se elimina la heterogeneidad fija. 
+
+2. Qué es realmente este taller
+
+Este taller no debería clasificarse como “hallazgo sustantivo”. Tampoco, estrictamente, como una comparación metodológica con un ganador claro entre dos estimadores plenamente operativos. Su naturaleza es más bien la de un ejercicio metodológico-aplicado o una pieza principalmente técnica con anclaje empírico. La historia correcta no es “cuánto vale el retorno de la educación”, sino “qué le pasa a la lectura de pooled OLS cuando admitimos heterogeneidad inobservable correlacionada con los regresores, y qué revela la tentativa de pasar a primeras diferencias en esta base concreta”.
+
+3. Núcleo empírico y métodos comparados
+
+En el log hay tres bloques distintos. Primero, pooled OLS en niveles: versión clásica, luego versión con errores cluster por individuo y una variante con dummies de año. Segundo, una prueba conjunta sobre las dummies temporales que no rechaza su exclusión al 5%, lo que lleva al “modelo final” interno del bloque pooled: pooled OLS con vce(cluster nr) y sin dummies de año. Tercero, un bloque opcional muy importante conceptualmente: la estimación en primeras diferencias para eliminar c_i. Ahí aparece el rasgo decisivo del taller: en esta base D.educ se omite por falta de variación intraindividual y D.exper se omite por colinealidad con la constante, de modo que la estrategia FD no permite identificar dos de los regresores más importantes del problema.
+
+4. Clasificación editorial
+
+La clasificación editorial que mejor le calza es: pieza principalmente técnica, con aplicación salarial. Más concretamente, yo la etiquetaría como “ejercicio metodológico, no orientado a una especificación final única”. Esto importa mucho porque evita un error editorial frecuente: coronar el pooled cluster como si fuera “la mejor respuesta” del taller. No lo es. Es, en todo caso, la especificación final dentro del bloque pooled bajo una defensa fuerte de E(x_it,c_i)=0. Pero el propio taller está construido precisamente para poner en duda esa defensa.
+
+5. Objeto de decisión final
+
+El objeto de decisión final no debería ser una tabla del tipo “modelo ganador absoluto”. La lectura que el lector debe retener es más sutil: 
+(1) cluster corrige la inferencia, pero no el sesgo por heterogeneidad inobservable;
+(2) al introducir explícitamente c_i, pooled OLS pierde credibilidad si no puede sostenerse E(x_it,c_i)=0;
+(3) la alternativa en primeras diferencias es conceptualmente útil, pero en esta base concreta no identifica educ ni exper, por lo que el taller termina funcionando como puente hacia FE/RE más que como sustitución empírica exitosa de pooled.
+
+6. Especificación ganadora
+
+Acá no conviene hablar de una “especificación ganadora” en el mismo sentido que en T1 o T3. Si de todos modos hubiera que fijar una, solo podría hablarse de dos niveles diferentes:
+
+- Dentro del subbloque pooled, la especificación operativa final es pooled OLS con vce(cluster nr) y sin dummies de año, porque la prueba conjunta sobre d81–d87 no rechaza su exclusión.
+- A nivel conceptual del taller completo, no hay ganador único. El pooled cluster queda como benchmark con inferencia válida pero potencialmente sesgado; y primeras diferencias aparece como vía para eliminar c_i, aunque en esta base fracasa para identificar educ y exper.
+
+Por eso, la etiqueta correcta para la pieza pública no es “especificación ganadora”, sino “comparación sin ganador único” o mejor aún “ejercicio metodológico, no orientado a una especificación final única”.
+
+7. Evidencia clave del log
+
+La evidencia decisiva del taller está concentrada en cinco puntos.
+
+Primero, pooled OLS clásico y pooled OLS cluster entregan los mismos coeficientes, pero los errores estándar aumentan de forma visible al clusterizar; por ejemplo, el error estándar de educ pasa de 0.0046 a 0.0089. Eso sostiene la idea de que cluster corrige inferencia, no sesgo.
+
+Segundo, al agregar dummies de año, el coeficiente de educ baja de 0.0988 a 0.0907, pero la prueba conjunta F(7,544)=1.34 con p=0.2296 no rechaza la exclusión de los años. De ahí sale el “modelo final” restringido dentro del universo pooled.
+
+Tercero, el propio log deja dicho con claridad que, aun con inferencia válida por cluster, si E(x_it,c_i)=0 no puede sostenerse, los coeficientes siguen potencialmente sesgados.
+
+Cuarto, en primeras diferencias, la base revela una limitación empírica fuerte: D.educ es 0 para todo el panel y D.exper es 1 para todo el panel, por lo que ambas quedan omitidas. Esto es muchísimo más importante editorialmente que cualquier detalle menor de ajuste.
+
+Quinto, el bloque FD muestra que la gran enseñanza del taller no es que “FD gana”, sino que la eliminación de c_i tiene costos serios de identificabilidad y exige supuestos más fuertes, como exogeneidad estricta.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia correcta es esta: en el taller anterior pooled OLS servía como benchmark útil en panel; ahora damos un paso conceptual y preguntamos qué ocurre si admitimos que existe un componente individual fijo no observado, c_i, potencialmente correlacionado con los regresores. Eso cambia completamente la lectura: clusterizar ya no alcanza para validar el estimador, porque arregla la matriz de varianza-covarianza pero no el sesgo por omitidas. Entonces aparece la tentación natural de pasar a primeras diferencias para eliminar c_i. Sin embargo, al hacerlo en wagepan, se ve que la estrategia no identifica educ ni exper. El aprendizaje final es fuerte: el problema de heterogeneidad inobservable no se resuelve solo “cambiando la varianza”, pero tampoco cualquier transformación panel es viable empíricamente con cualquier base.
+
+9. Hallazgo principal
+
+La frase de salida debería ir en esta línea: “Cuando la heterogeneidad individual no observada puede correlacionarse con los regresores, pooled OLS deja de ser creíble como estimador estructural, aunque siga siendo útil para inferencia con cluster; y en esta base concreta, la alternativa en primeras diferencias tampoco permite identificar variables clave como educación y experiencia.”
+
+Ese es el verdadero hallazgo del taller. No un número puntual, sino una lección de diseño empírico.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que cluster por individuo mejora la inferencia respecto del pooled homocedástico. Sí puede decir que la exclusión conjunta de dummies de año no se rechaza y por eso, dentro del bloque pooled, la versión sin dummies queda como especificación final operativa. Sí puede decir que la credibilidad de pooled depende de una condición fuerte sobre c_i. Y sí puede decir que primeras diferencias elimina c_i, pero en wagepan no identifica educ ni exper.
+
+11. Qué no debe decir la pieza
+
+No debería decir “no alcanza pooled OLS”, porque eso suena coloquial y además es impreciso. Tampoco debería presentar primeras diferencias como “la solución” del taller, porque en esta base concreta falla para variables centrales. Tampoco conviene vender el pooled cluster como modelo ganador global: eso borraría la tesis central del capítulo. Y no debería sobrecargarse la pieza con demasiada pedagogía sobre modelos no lineales, IV-FE, VI-RE o variantes futuras; esas menciones en el log sirven como continuidad docente, pero no son el foco del portfolio.
+
+12. Riesgo editorial central a vigilar en la futura auditoría
+
+El mayor riesgo no es que falten resultados, sino que la pieza pública confunda niveles de conclusión. Hay tres niveles que deben quedar nítidos:
+
+- pooled cluster es el cierre del bloque pooled, no del problema general;
+- la heterogeneidad inobservable es el problema conceptual principal;
+- primeras diferencias es una respuesta teórica útil, pero empíricamente limitada en esta base.
+
+Si la pieza actual aplana esa jerarquía y termina diciendo algo como “modelo final: pooled cluster”, sin el matiz correcto, habría que corregirlo. Si en cambio eso ya está bien resuelto, conviene no tocar demasiado.
+
+13. Requisitos mínimos para el .qmd
+
+Para mí, este .qmd debería tener sí o sí estos elementos:
+
+- una apertura que explique el problema de c_i sin tono pedagógico-escolar excesivo;
+- una comparación muy breve entre pooled clásico y pooled cluster, enfocada en inferencia;
+- una aclaración explícita de que cluster no corrige sesgo por heterogeneidad fija;
+- una mención clara a que la prueba conjunta de años no justifica mantener i.year en el modelo final del subbloque pooled;
+- un bloque final muy visible sobre por qué primeras diferencias, aunque conceptualmente atractiva, no identifica educ ni exper en wagepan;
+- un cierre honesto que presente este taller como transición hacia FE/RE más que como cierre empírico definitivo.
+
+14. Nota para la tarjeta del sitio
+
+Yo la orientaría así:
+
+Pregunta breve: “¿Qué cambia cuando admitimos que pooled OLS omite un componente individual fijo en panel?”
+Método principal: pooled OLS con cluster + contraste conceptual con primeras diferencias.
+Tipo de pieza: ejercicio metodológico.
+Hallazgo en una línea: “La inferencia puede corregirse con cluster, pero el sesgo por heterogeneidad fija sigue abierto; y en esta base, primeras diferencias no identifica educación ni experiencia.”
+Estado de la evidencia: comparación sin ganador único.
+
+15. Observación menor de metadatos
+
+Otra vez aparece en el brief familia_metodo: lineal_vi_panel, y nuevamente no corresponde. Conviene corregirlo más adelante por limpieza del catálogo.
+
+Diagnóstico final
+
+T4 tiene una identidad muy clara y útil para el portfolio, pero hay que tratarlo con mucho cuidado editorial. No debe venderse como si el taller encontrara una “mejor especificación” simple. Su valor está en mostrar un límite fundamental del pooled OLS en panel y, al mismo tiempo, un límite empírico de la estrategia de primeras diferencias en esta base concreta. Bien resuelto, puede quedar como una pieza muy buena de criterio econométrico. Mal resuelto, puede quedar confuso entre benchmark pooled, supuesto sobre c_i y falsa coronación de FD o del propio pooled cluster.
