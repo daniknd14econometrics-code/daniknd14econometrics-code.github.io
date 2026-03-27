@@ -1,6 +1,4 @@
-aspectos a mejorar:  -faltas de acento/tildes, incluido mi apellido.
-		    - revisar que el texto no sobrepase tarjetas/cuadros
-		    -revisar que se incluyan los resultados principales de esa historia, y que la o las covariables de interés, asi como la variable dependiente esten definidas o explicadas (que representan en dicha base).
+
 
 		    -colores de fondo
                     -quizá, en algún caso, sumar un grafico.
