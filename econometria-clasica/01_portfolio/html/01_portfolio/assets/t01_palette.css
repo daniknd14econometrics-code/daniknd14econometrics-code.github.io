@@ -61,15 +61,16 @@ a:focus {
 }
 
 #TOC a[data-scroll-target].active,
+#TOC a[data-scroll-target][aria-current="true"],
 #TOC .nav-link.active,
 #TOC li.active > a[data-scroll-target] {
   color: var(--t1-accent) !important;
-  background: #EDF2FF !important;
+  background: rgba(29, 78, 216, 0.10) !important;
   box-shadow: inset 3px 0 0 0 var(--t1-accent);
 }
 
 .hero-box {
-  background: linear-gradient(135deg, #FAFAF8 0%, #EDF2FF 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, rgba(15, 118, 110, 0.08) 100%);
   border-color: var(--t1-line) !important;
 }
 
@@ -88,7 +89,11 @@ a:focus {
 }
 
 .metric-value {
-  color: var(--t1-accent) !important;
+  color: var(--t1-text) !important;
+}
+
+.metric-card {
+  border-top: 2px solid rgba(15, 118, 110, 0.45) !important;
 }
 
 .section-box h2,
@@ -99,15 +104,15 @@ a:focus {
 }
 
 .badge {
-  background: #EDF2FF !important;
-  color: var(--t1-accent) !important;
-  border: 1px solid var(--t1-line) !important;
+  background: rgba(15, 118, 110, 0.12) !important;
+  color: var(--t1-accent-2) !important;
+  border: 1px solid rgba(15, 118, 110, 0.35) !important;
 }
 
 :not(pre) > code {
-  color: var(--t1-accent) !important;
-  background: #EDF2FF !important;
-  border: 1px solid var(--t1-line) !important;
+  color: var(--t1-text) !important;
+  background: rgba(15, 118, 110, 0.10) !important;
+  border: 1px solid rgba(15, 118, 110, 0.35) !important;
 }
 
 pre code {
