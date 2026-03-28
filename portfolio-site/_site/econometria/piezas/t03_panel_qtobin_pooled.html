@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t03_panel_qtobin_pooled – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#diagnosticos-clave" id="toc-diagnosticos-clave" class="nav-link" data-scroll-target="#diagnosticos-clave">Diagnosticos clave</a></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta</h1>
+<h1 class="title">Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta</h1>
+<p class="subtitle lead">Relacion estimada entre q e inversión con pooled OLS, controles temporales y lectura econométrica prudente</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,221 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Relación entre q e inversión con controles temporales</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T03</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>En este panel de firmas, q y la inversión se mueven en una relación positiva pero decreciente</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Inversión empresarial y q de Tobin</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> MCO agrupado (Pooled OLS) en panel</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Panel de firmas</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>El pooled OLS con errores cluster por firma permite una inferencia más creíble para el benchmark, pero no elimina por sí solo los riesgos de sesgo por heterogeneidad inobservable.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t03_panel_qtobin_pooled.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Pooled + cluster</p>
+</div>
+<div class="metric-note">
+<p><code>reg ikb qb qb_sq i.year, vce(cluster cusip)</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Forma estimada</p>
+</div>
+<div class="metric-value">
+<p>q(+) y q^2(-)</p>
+</div>
+<div class="metric-note">
+<p>Pendiente positiva y decreciente en casi toda la muestra</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>AR(1) en residuos</p>
+</div>
+<div class="metric-value">
+<p>p &lt; 0.001</p>
+</div>
+<div class="metric-note">
+<p><code>uhat_L1</code> significativo en regresion auxiliar</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>LM heterocedasticidad</p>
+</div>
+<div class="metric-value">
+<p>p = 0.0005</p>
+</div>
+<div class="metric-note">
+<p>Se rechaza homocedasticidad en prueba LM</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza evalúa la relación entre la tasa de inversión de la firma (<code>ikb</code>) y la q de Tobin en un panel. El mensaje econométrico central separa dos planos que no conviene mezclar: (i) inferencia estadística mejor calibrada con errores cluster por firma y diagnósticos de error, y (ii) limitaciones de identificación de pooled OLS frente a heterogeneidad inobservable.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Variable dependiente: <code>ikb</code> (I/K). Variables de interés: <code>qb</code> y <code>qb_sq</code> (q de Tobin y su cuadrado); en especificaciones dinámicas también se usa <code>qb_1</code>. Controles de tiempo: <code>i.year</code>. Unidad de cluster: <code>cusip</code>.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>En este caso, la inferencia y la identificación no son lo mismo.<br>
+Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por <code>c_i</code> no observado y no resuelve por sí solo el problema de identificación.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En decisiones de inversión, la q de Tobin suele leerse como señal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser útil como benchmark, pero solo si la inferencia respeta la estructura del error.</p>
+<p>La relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.</p>
+<p>Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia concluyente.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con un panel de firmas (<code>N = 2,068</code> observaciones; <code>188</code> firmas) para el periodo 1975-1985.</p>
+<p>Sustantivamente, este panel representa decisiones de inversión observadas repetidamente para las mismas firmas a lo largo de once años. Ese seguimiento temporal permite evaluar si el patrón entre q e inversión se sostiene al controlar shocks comunes por año, en lugar de depender de una sola foto de corte transversal.</p>
+<ul>
+<li>Variable dependiente: <code>ikb</code> (tasa de inversión sobre capital)</li>
+<li>Regresores de interés: <code>qb</code> y <code>qb_sq</code></li>
+<li>Controles temporales: <code>i.year</code></li>
+<li>Inferencia principal: <code>vce(cluster cusip)</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia aplicada en T3 fue:</p>
+<ol type="1">
+<li>Estimar pooled OLS base (lineal) y su versión robusta/cluster.</li>
+<li>Incorporar controles temporales (<code>i.year</code>).</li>
+<li>Ejecutar diagnósticos de dependencia serial y heterocedasticidad.</li>
+<li>Comparar forma lineal vs cuadratica en <code>qb</code>.</li>
+<li>Mantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.</li>
+</ol>
+<p>Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del ejercicio. Como las especificaciones con <code>qb_1</code> usan una muestra menor (<code>N = 1,880</code>) que la muestra completa (<code>N = 2,068</code>), la comparación se interpreta con criterio de comparabilidad muestral.</p>
+</section>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Hay dos riesgos distintos:</p>
+<ol type="1">
+<li>Riesgo de inferencia: errores estándar mal calibrados si se ignoran dependencia intra-firma y heterocedasticidad.</li>
+<li>Riesgo de sesgo/identificación: pooled OLS puede seguir sesgado si la heterogeneidad inobservable de firma (<code>c_i</code>) está correlacionada con los regresores.</li>
+</ol>
+<p>Separar ambos problemas es clave: corregir varianzas mejora inferencia, pero no resuelve por sí mismo el problema de identificación.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>El modelo operativo (<code>ikb</code> sobre <code>qb</code>, <code>qb_sq</code> e indicadores de año, con cluster por firma) muestra una relación estimada positiva pero decreciente entre q e inversión en casi toda la muestra.</p>
+<p>El punto de giro implicito cae en una zona muy alta de la distribucion de <code>qb</code> (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decisión.</p>
+<p>En términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de <code>qb</code>, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Coeficiente clave</th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Benchmark lineal (<code>qb</code>)</td>
+<td style="text-align: right;">0.0156</td>
+<td style="text-align: right;">0.0028</td>
+<td style="text-align: right;">[0.0102, 0.0210]</td>
+<td>Asociación positiva promedio</td>
+</tr>
+<tr class="even">
+<td>Modelo operativo cuadrático (<code>qb</code>)</td>
+<td style="text-align: right;">0.0280</td>
+<td style="text-align: right;">0.0030</td>
+<td style="text-align: right;">[0.0221, 0.0340]</td>
+<td>Efecto positivo en rangos habituales de q</td>
+</tr>
+<tr class="odd">
+<td>Modelo operativo cuadrático (<code>qb_sq</code>)</td>
+<td style="text-align: right;">-0.0025</td>
+<td style="text-align: right;">0.0004</td>
+<td style="text-align: right;">[-0.0033, -0.0018]</td>
+<td>Curvatura decreciente estadísticamente clara</td>
+</tr>
+<tr class="even">
+<td>Contraste con rezago (<code>qb_1</code>)</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">0.0027</td>
+<td style="text-align: right;">[0.0088, 0.0194]</td>
+<td>Sensible a especificación y a omitir <code>qb_t</code></td>
+</tr>
+</tbody>
+</table>
+<p>Para sostener la decisión del modelo operativo, la especificación contemporánea cuadrática también se verifica en muestra común (<code>if !missing(qb_1)</code>), manteniendo la misma lectura sustantiva.</p>
+</section>
+<section id="diagnosticos-clave" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="diagnosticos-clave">Diagnosticos clave</h2>
+<p>La evidencia del taller respalda inferencia robusta como minimo operativo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnostico</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AR(1) auxiliar con residuos</td>
+<td style="text-align: right;"><code>uhat_L1</code> p &lt; 0.001</td>
+<td>Evidencia compatible con dependencia serial intra-firma</td>
+</tr>
+<tr class="even">
+<td>LM heterocedasticidad</td>
+<td style="text-align: right;">p = 0.0005</td>
+<td>Evidencia compatible con heterocedasticidad</td>
+</tr>
+<tr class="odd">
+<td>Test conjunto dummies temporales</td>
+<td style="text-align: right;">p = 0.0000</td>
+<td>Los efectos de año son relevantes en el benchmark</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>La lectura aplicada es sobria:</p>
+<ul>
+<li>Como benchmark, pooled con <code>i.year</code> y errores cluster por firma entrega una base de reporte defendible en términos de inferencia.</li>
+<li>Como identificación, el resultado sigue siendo limitado: no elimina sesgo potencial por heterogeneidad inobservable.</li>
+<li>En especificaciones dinamicas pooled (con rezago de dependiente), el riesgo de sesgo es aun mayor, por lo que no se toma como modelo operativo del caso.</li>
+</ul>
+<p>Esta separacion entre inferencia valida y limitaciones de identificación es el aporte principal para una comunicacion profesional del resultado.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.</p>
+<p>Para un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.</p>
 
 
 </section>

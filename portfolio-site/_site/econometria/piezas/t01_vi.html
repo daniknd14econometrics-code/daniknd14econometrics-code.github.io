@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t01_vi – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Retorno salarial de la educación: MCO frente a IV/2SLS – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,57 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#diagnósticos-clave" id="toc-diagnósticos-clave" class="nav-link" data-scroll-target="#diagnósticos-clave">Diagnósticos clave</a>
+  <ul class="collapse">
+  <li><a href="#endogeneidad" id="toc-endogeneidad" class="nav-link" data-scroll-target="#endogeneidad">1. Endogeneidad</a></li>
+  <li><a href="#relevancia-de-instrumentos" id="toc-relevancia-de-instrumentos" class="nav-link" data-scroll-target="#relevancia-de-instrumentos">2. Relevancia de instrumentos</a></li>
+  <li><a href="#sobreidentificación" id="toc-sobreidentificación" class="nav-link" data-scroll-target="#sobreidentificación">3. Sobreidentificación</a></li>
+  </ul></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T01 · Cuando MCO no alcanza</h1>
+<h1 class="title">Retorno salarial de la educación: MCO frente a IV/2SLS</h1>
+<p class="subtitle lead">Educación endógena y salario con variables instrumentales</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +184,217 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Educación endógena y salario con variables instrumentales</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T01</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>La estimación cambia de forma importante cuando <code>educ</code> se trata como endógena</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Retornos a la educación y endogeneidad</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> IV / 2SLS</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Corte transversal (microdatos laborales)</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>En este caso, pasar de MCO a IV/2SLS no es un detalle técnico: cambia la magnitud del retorno estimado de la educación y mejora la credibilidad de la interpretación.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t01_vi.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>MCO robusto</p>
+</div>
+<div class="metric-value">
+<p>0.078</p>
+</div>
+<div class="metric-note">
+<p>Coeficiente de <code>educ</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>IV/2SLS robusto</p>
+</div>
+<div class="metric-value">
+<p>0.146</p>
+</div>
+<div class="metric-note">
+<p>Coeficiente de <code>educ</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Test de endogeneidad</p>
+</div>
+<div class="metric-value">
+<p>p = 0.0000</p>
+</div>
+<div class="metric-note">
+<p>Se rechaza exogeneidad</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Primera etapa / Hansen</p>
+</div>
+<div class="metric-value">
+<p>70.1 / 0.877</p>
+</div>
+<div class="metric-note">
+<p>KP F fuerte, Hansen no rechaza</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Este caso analiza cómo cambia la estimación del retorno de la educación sobre el salario cuando la educación se trata como potencialmente endógena. La comparación entre MCO e IV/2SLS muestra que, cuando hay evidencia de endogeneidad, el análisis ingenuo puede subestimar o distorsionar la magnitud del efecto.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Cambia de forma sustantiva la estimación del retorno salarial asociado a la educación cuando <code>educ</code> se trata como endógena y se estima con IV/2SLS, instrumentando con <code>meduc</code> y <code>feduc</code>, en lugar de MCO?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Variable endógena: <code>educ</code>. Controles: <code>exper</code>, <code>expersq</code>. Instrumentos: <code>meduc</code>, <code>feduc</code>.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>Un MCO simple puede mezclar el efecto de la educación con habilidad u otros factores no observados. La estrategia IV usa la variación exógena inducida por la educación de los padres para identificar un parámetro más creíble.</p>
+<p><span class="badge">Ejercicio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO queda sesgado por endogeneidad.</p>
+<p>Ese es el problema central del caso: distinguir entre una simple asociación y un efecto estimado con una estrategia más creíble de identificación.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con datos de corte transversal a nivel de individuos. La base corresponde a un ejercicio clásico de economía laboral con microdatos de salarios y educación. Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados. En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.</p>
+<ul>
+<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
+<li>Variable endógena de interés: <code>educ</code></li>
+<li>Controles: <code>exper</code>, <code>expersq</code></li>
+<li>Instrumentos excluidos: <code>meduc</code>, <code>feduc</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia del análisis es la siguiente:</p>
+<ol type="1">
+<li>Estimar una ecuación salarial por MCO.</li>
+<li>Reestimar el modelo usando IV/2SLS, tratando a <code>educ</code> como endógena.</li>
+<li>Evaluar si la endogeneidad es empíricamente relevante.</li>
+<li>Revisar la fortaleza de la primera etapa.</li>
+<li>Verificar si los instrumentos superan los tests de sobreidentificación.</li>
+</ol>
+</section>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno de la educación libre de sesgo.</p>
+<p>La lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.</p>
+<p><strong>Hallazgo principal:</strong> al instrumentar <code>educ</code> con <code>meduc</code> y <code>feduc</code>, el coeficiente estimado para la educación aumenta de forma importante respecto de MCO, en línea con la presencia de sesgo cuando <code>educ</code> se trata como exógena.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>En MCO, el coeficiente estimado de <code>educ</code> es aproximadamente 0.078. Cuando se instrumenta la educación con la educación de la madre y del padre, el coeficiente IV/2SLS robusto sube a aproximadamente 0.146.</p>
+<p>Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV. En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV. No es evidencia definitiva por sí sola, pero sí una señal fuerte de que tratar <code>educ</code> como exógena puede subestimar de manera relevante el efecto de interés.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Coeficiente de <code>educ</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MCO estándar</td>
+<td style="text-align: right;">0.0780</td>
+<td style="text-align: right;">0.0066</td>
+<td style="text-align: right;">[0.0650, 0.0910]</td>
+<td style="text-align: right;">935</td>
+</tr>
+<tr class="even">
+<td>MCO robusto</td>
+<td style="text-align: right;">0.0780</td>
+<td style="text-align: right;">0.0068</td>
+<td style="text-align: right;">[0.0646, 0.0913]</td>
+<td style="text-align: right;">935</td>
+</tr>
+<tr class="odd">
+<td>IV/2SLS</td>
+<td style="text-align: right;">0.1457</td>
+<td style="text-align: right;">0.0196</td>
+<td style="text-align: right;">[0.1072, 0.1842]</td>
+<td style="text-align: right;">722</td>
+</tr>
+<tr class="even">
+<td>IV/2SLS robusto</td>
+<td style="text-align: right;">0.1457</td>
+<td style="text-align: right;">0.0183</td>
+<td style="text-align: right;">[0.1099, 0.1815]</td>
+<td style="text-align: right;">722</td>
+</tr>
+</tbody>
+</table>
+<p>La diferencia de muestra (<code>N = 935</code> en MCO frente a <code>N = 722</code> en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV. Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional.</p>
+</section>
+<section id="diagnósticos-clave" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="diagnósticos-clave">Diagnósticos clave</h2>
+<section id="endogeneidad" class="level3">
+<h3 class="anchored" data-anchor-id="endogeneidad">1. Endogeneidad</h3>
+<p>El test de endogeneidad rechaza la hipótesis nula de exogeneidad de <code>educ</code>. Por lo tanto, no hay una buena base empírica para quedarse con MCO como especificación principal.</p>
+</section>
+<section id="relevancia-de-instrumentos" class="level3">
+<h3 class="anchored" data-anchor-id="relevancia-de-instrumentos">2. Relevancia de instrumentos</h3>
+<p>La primera etapa muestra que <code>meduc</code> y <code>feduc</code> tienen poder explicativo sobre <code>educ</code>. Los estadísticos reportados para relevancia son altos, lo que reduce la preocupación por instrumentos débiles.</p>
+</section>
+<section id="sobreidentificación" class="level3">
+<h3 class="anchored" data-anchor-id="sobreidentificación">3. Sobreidentificación</h3>
+<p>Los tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta. En este contexto, <code>meduc</code> y <code>feduc</code> se usan como instrumentos plausibles porque están correlacionados con la escolaridad de la persona y aportan variación relevante en primera etapa. Esa plausibilidad sigue siendo una hipótesis económica sustantiva: los tests estadísticos ayudan a evaluarla, pero no reemplazan la discusión de mecanismo y contexto.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnóstico</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Test de endogeneidad</td>
+<td style="text-align: right;">chi2 = 17.2702, p = 0.0000</td>
+<td>Se rechaza exogeneidad de <code>educ</code></td>
+</tr>
+<tr class="even">
+<td>Primera etapa</td>
+<td style="text-align: right;">KP rk Wald F = 70.135</td>
+<td>Instrumentos fuertes</td>
+</tr>
+<tr class="odd">
+<td>Sobreidentificación (Hansen J)</td>
+<td style="text-align: right;">p = 0.8767</td>
+<td>No hay evidencia contra la validez conjunta</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>La conclusión principal no es simplemente estimar por 2SLS. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:</p>
+<ul>
+<li>justificar por qué MCO puede estar sesgado;</li>
+<li>demostrar que la primera etapa es suficientemente fuerte;</li>
+<li>no sobreinterpretar los tests de sobreidentificación.</li>
+</ul>
+<p>En otras palabras, el valor del caso no está solo en la técnica, sino en el criterio econométrico con el que se decide cuándo abandonar una estimación ingenua.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble. En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.</p>
+<p><strong>Conclusión:</strong> en este ejercicio, la evidencia favorece IV/2SLS como estrategia para estimar el efecto de la educación sobre el salario.</p>
 
 
 </section>

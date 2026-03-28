@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t19_ordenado_base – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Asignación previsional con resultado ordinal: una lectura aplicada – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,56 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#apes-narrables-ordered-probit" id="toc-apes-narrables-ordered-probit" class="nav-link" data-scroll-target="#apes-narrables-ordered-probit">APEs narrables (ordered probit)</a></li>
+  <li><a href="#probabilidades-predichas-por-categoría-contexto-secundario" id="toc-probabilidades-predichas-por-categoría-contexto-secundario" class="nav-link" data-scroll-target="#probabilidades-predichas-por-categoría-contexto-secundario">Probabilidades predichas por categoría (contexto secundario)</a></li>
+  <li><a href="#diagnósticos-de-respaldo" id="toc-diagnósticos-de-respaldo" class="nav-link" data-scroll-target="#diagnósticos-de-respaldo">Diagnósticos de respaldo</a>
+  <ul class="collapse">
+  <li><a href="#resumen-de-diagnósticos" id="toc-resumen-de-diagnósticos" class="nav-link" data-scroll-target="#resumen-de-diagnósticos">Resumen de diagnósticos</a></li>
+  </ul></li>
+  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T19 · Asignación previsional con resultado ordinal: una lectura aplicada</h1>
+<h1 class="title">Asignación previsional con resultado ordinal: una lectura aplicada</h1>
+<p class="subtitle lead">Probabilidades por categoría y efectos marginales en carteras conservadoras, mixtas y más expuestas a acciones</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +183,244 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Probabilidades por categoría y efectos marginales</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T19</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>¿Cómo cambia la lectura aplicada de una decisión previsional cuando el resultado tiene jerarquía natural?</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Decisión previsional ordinal</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Logit/Probit ordenado</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Microdatos individuales</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>Esta pieza estudia asignación de cartera previsional en tres niveles ordenados de exposición a acciones y prioriza una interpretación profesional en probabilidades: qué perfiles se asocian con carteras conservadoras, mixtas o más expuestas a acciones.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t19_ordenado_base.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Ordered probit con APEs</p>
+</div>
+<div class="metric-note">
+<p>Resultado ordinal explícito (<code>pctstck</code>: <code>0</code>, <code>50</code>, <code>100</code>)</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Asignación previsional de hogares</p>
+</div>
+<div class="metric-note">
+<p><code>N=194</code>, unidad familia/hogar (<code>id</code>), corte transversal</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Distribución estimada</p>
+</div>
+<div class="metric-value">
+<p>Probabilidades bien repartidas</p>
+</div>
+<div class="metric-note">
+<p><code>Pr(0)=0.331</code>, <code>Pr(50)=0.370</code>, <code>Pr(100)=0.298</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Señales narrables</p>
+</div>
+<div class="metric-value">
+<p><code>choice</code>, <code>age</code>, <code>prftshr</code></p>
+</div>
+<div class="metric-note">
+<p>Reasignan probabilidad entre cartera conservadora y cartera más expuesta a acciones</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (<code>pctstck</code>) toma tres categorías ordenadas (<code>0</code>, <code>50</code>, <code>100</code>). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.</p>
+<p>El valor del caso está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin sobreinterpretaciones.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>En esta muestra de hogares, ¿qué variables se asocian con mayor o menor probabilidad de ubicarse en carteras previsionales conservadoras, mixtas o más expuestas a acciones?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Resultado: <code>pctstck</code> (<code>0</code>, <code>50</code>, <code>100</code>). Variables clave: <code>choice</code> (puede elegir método de inversión), <code>age</code> (edad en años), <code>prftshr</code> (plan con profit sharing), con controles demográficos y de ingreso.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>Cuando el resultado tiene orden natural, la lectura aplicada mejora si la econometría modela explícitamente esa jerarquía y comunica resultados en probabilidades por categoría y APEs, no en coeficientes latentes aislados.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En decisiones previsionales, no solo importa invertir o no invertir en acciones: importa el grado de exposición. Esa escala ordenada contiene información práctica para lectura de riesgo y composición de cartera.</p>
+<p>Si se ignora esa jerarquía, la interpretación puede perder claridad. En cambio, una especificación ordinal permite organizar la evidencia como reasignación de probabilidades entre perfiles de cartera, en un lenguaje más útil para un lector profesional.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se utiliza <code>pension.dta</code> en corte transversal.</p>
+<ul>
+<li>Unidad de observación: familia/hogar (<code>id</code>)</li>
+<li>Tamaño muestral: <code>N=194</code></li>
+<li>Variable de resultado: <code>pctstck</code> (<code>0</code> mayormente bonos, <code>50</code> cartera mixta, <code>100</code> mayormente acciones)</li>
+<li>Distribución observada: <code>0</code> = <code>64</code> casos (<code>32.99%</code>), <code>50</code> = <code>72</code> (<code>37.11%</code>), <code>100</code> = <code>58</code> (<code>29.90%</code>)</li>
+<li>Regresores de mayor interés para la lectura: <code>choice</code> (<code>=1</code> si puede elegir método de inversión), <code>age</code> (edad en años), <code>prftshr</code> (<code>=1</code> si el plan incluye profit sharing)</li>
+<li>Controles: <code>educ</code>, <code>wealth89</code>, <code>female</code>, <code>married</code>, <code>black</code>, tramos de ingreso familiar (<code>finc*</code>)</li>
+<li>Alcance: al ser corte transversal, la lectura se mantiene en asociaciones probabilísticas contemporáneas</li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<ol type="1">
+<li>Estimar un modelo ordenado como referencia principal para respetar la jerarquía de <code>pctstck</code>.</li>
+<li>Traducir resultados a probabilidades por categoría (<code>0</code>, <code>50</code>, <code>100</code>) para lectura directa del caso.</li>
+<li>Reportar APEs por outcome en variables narrables (<code>choice</code>, <code>age</code>, <code>prftshr</code>).</li>
+<li>Mantener la comparación de enlace (<code>ologit</code>/<code>oprobit</code>) como respaldo breve, sin desplazar la historia aplicada.</li>
+<li>Dejar métricas de clasificación in-sample y bloques técnicos equivalentes en segundo plano.</li>
+</ol>
+</section>
+<section id="resultados-principales" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La lectura aplicada se organiza en cuatro mensajes:</p>
+<ol type="1">
+<li>La masa de probabilidad está distribuida entre los tres niveles de cartera, con mayor concentración en la categoría mixta.</li>
+<li><code>choice=1</code> se asocia con menor probabilidad de cartera conservadora y mayor probabilidad de cartera más expuesta a acciones.</li>
+<li><code>age</code> muestra una reasignación hacia el perfil conservador y una caída en la probabilidad del perfil más expuesto a acciones.</li>
+<li><code>prftshr</code> muestra una reasignación en sentido opuesto (desde perfil conservador hacia perfil más expuesto a acciones), con precisión más acotada en parte de los outcomes.</li>
+</ol>
+</section>
+<section id="apes-narrables-ordered-probit" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="apes-narrables-ordered-probit">APEs narrables (ordered probit)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: right;">dPr(pctstck=0)</th>
+<th style="text-align: right;">dPr(pctstck=50)</th>
+<th style="text-align: right;">dPr(pctstck=100)</th>
+<th>Lectura profesional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>choice=1</code> (puede elegir método) vs 0</td>
+<td style="text-align: right;">-0.1281 (0.0621)</td>
+<td style="text-align: right;">+0.0104 (0.0119)</td>
+<td style="text-align: right;">+0.1178 (0.0547)</td>
+<td>Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones</td>
+</tr>
+<tr class="even">
+<td><code>age</code> (+1 año)</td>
+<td style="text-align: right;">+0.0169 (0.0081)</td>
+<td style="text-align: right;">-0.0007 (0.0013)</td>
+<td style="text-align: right;">-0.0162 (0.0078)</td>
+<td>En promedio, la edad se asocia con mayor peso en la categoría conservadora</td>
+</tr>
+<tr class="odd">
+<td><code>prftshr=1</code> vs 0</td>
+<td style="text-align: right;">-0.1521 (0.0692)</td>
+<td style="text-align: right;">-0.0137 (0.0219)</td>
+<td style="text-align: right;">+0.1658 (0.0877)</td>
+<td>Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="probabilidades-predichas-por-categoría-contexto-secundario" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="probabilidades-predichas-por-categoría-contexto-secundario">Probabilidades predichas por categoría (contexto secundario)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Categoría de cartera (pctstck)</th>
+<th style="text-align: right;">Probabilidad promedio estimada</th>
+<th>Lectura aplicada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0 (más conservadora)</td>
+<td style="text-align: right;">0.331</td>
+<td>Aproximadamente un tercio de la muestra se ubica en perfil conservador</td>
+</tr>
+<tr class="even">
+<td>50 (mixta)</td>
+<td style="text-align: right;">0.370</td>
+<td>Es la categoría con mayor peso promedio</td>
+</tr>
+<tr class="odd">
+<td>100 (más expuesta a acciones)</td>
+<td style="text-align: right;">0.298</td>
+<td>Cerca de tres de cada diez casos se ubican en el perfil más accionario</td>
+</tr>
+</tbody>
+</table>
+</section>
+<p>Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente.</p>
+<section id="diagnósticos-de-respaldo" class="level2">
+<h2 class="anchored" data-anchor-id="diagnósticos-de-respaldo">Diagnósticos de respaldo</h2>
+<p>El respaldo técnico se mantiene acotado y funcional a la historia aplicada.</p>
+<section id="resumen-de-diagnósticos" class="level3 table-box">
+<h3 class="anchored" data-anchor-id="resumen-de-diagnósticos">Resumen de diagnósticos</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnóstico</th>
+<th style="text-align: right;">Evidencia</th>
+<th>Uso en la pieza</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Relevancia conjunta del bloque explicativo</td>
+<td style="text-align: right;">Wald chi2(14)=25.32, p=0.0315</td>
+<td>Respalda que el modelo capta señal empírica En esta muestra</td>
+</tr>
+<tr class="even">
+<td>Sensibilidad de enlace</td>
+<td style="text-align: right;">Patrón cualitativo similar en ologit y oprobit</td>
+<td>Evita que la narrativa dependa de una elección de enlace puntual</td>
+</tr>
+<tr class="odd">
+<td>Clasificación in-sample (secundaria)</td>
+<td style="text-align: right;">PCP aprox. 44.33%</td>
+<td>Se reporta solo como referencia descriptiva, no como objetivo predictivo</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="lectura-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
+<p>El aporte de T19 es mostrar criterio econométrico aplicado: cuando el resultado tiene jerarquía natural, conviene preservar ese orden y comunicar resultados como probabilidades y reasignaciones de probabilidad entre categorías.</p>
+<p>En esta aplicación previsional, la lectura útil para un tercero no está en presentar una técnica como superior, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Esta pieza traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APEs comparables, con foco en decisión aplicada y sin exagerar el alcance metodológico.</p>
+<p>El valor del caso queda en esa combinación: jerarquía del resultado bien modelada, hallazgos comunicables para lectura externa y prudencia interpretativa en un contexto de corte transversal.</p>
+<p>Dado el tamaño muestral (<code>N=194</code>) y la naturaleza transversal del caso, la pieza se presenta como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra.</p>
 
 
 </section>

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t05_panel_re – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#hallazgos-secundarios-y-especificación" id="toc-hallazgos-secundarios-y-especificación" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-especificación">Hallazgos secundarios y especificación</a></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T05 · Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte</h1>
+<h1 class="title">Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte</h1>
+<p class="subtitle lead">Random effects en salarios: eficiencia, heterogeneidad inobservable y limites de identificación sin contraste RE vs FE</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,207 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>RE en salarios con lectura prudente de supuestos</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T05</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>En este panel salarial, RE ofrece eficiencia y conserva regresores invariantes, pero depende de un supuesto exigente</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Comparación conceptual FE/RE en salarios</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Efectos aleatorios (RE-GLS)</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Panel salarial</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>La especificación de efectos aleatorios es útil para modelar heterogeneidad no observada y mantener variables como <code>educ</code>, siempre que sea defendible el supuesto <code>corr(c_i, x_it)=0</code>.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t05_panel_re.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>RE + cluster</p>
+</div>
+<div class="metric-note">
+<p><code>xtreg ..., re vce(cluster nr)</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Componente individual</p>
+</div>
+<div class="metric-value">
+<p>rho = 0.46</p>
+</div>
+<div class="metric-note">
+<p>Fraccion relevante de varianza atribuida a <code>c_i</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Test <code>H0: var(c_i)=0</code></p>
+</div>
+<div class="metric-value">
+<p>Z = 10.66</p>
+</div>
+<div class="metric-note">
+<p>Rechazo fuerte: la estructura panel importa</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Supuesto clave RE</p>
+</div>
+<div class="metric-value">
+<p><code>corr(c_i,x_it)=0</code></p>
+</div>
+<div class="metric-note">
+<p>Sin Hausman en T5, no hay validación empírica de este supuesto</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Este caso presenta una especificación de efectos aleatorios para salarios en panel. El mensaje central es doble: RE puede ser eficiente y, además, permite conservar regresores invariantes en el tiempo como <code>educ</code>, pero su interpretación depende de un supuesto estructural fuerte sobre la relación entre heterogeneidad inobservable y regresores.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Cómo usar RE en un panel salarial para obtener eficiencia y mantener variables invariantes en el tiempo, sin sobreafirmar identificación cuando no se contrasta RE frente a FE?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Regresores centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code>. Panel: <code>nr</code> (1980-1987).</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>RE no solo ofrece una vía eficiente para modelar heterogeneidad no observada bajo <code>corr(c_i, x_it)=0</code>, sino que también permite conservar regresores invariantes en el tiempo, como <code>educ</code>, que son relevantes En esta aplicación.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En paneles salariales, parte de la variación de <code>lwage</code> responde a rasgos persistentes del individuo que no observamos directamente. Ignorar ese componente puede degradar el modelado del error compuesto.</p>
+<p>En términos aplicados, esta especificación ayuda a estudiar diferencias salariales entre trabajadores cuando interesa separar lo que cambia en el tiempo (por ejemplo, experiencia o estado sindical) de rasgos relativamente estables de cada persona. Por eso el formato panel es natural en este ejemplo: permite seguir a los mismos trabajadores y distinguir mejor patrones persistentes de variaciones anuales.</p>
+<p>La propuesta RE captura esa heterogeneidad como parte de la estructura estocástica y, al mismo tiempo, evita perder covariables invariantes en el tiempo. Ese beneficio viene con una condición fuerte de exogeneidad entre <code>c_i</code> y los regresores.</p>
+<p>En este caso, preservar <code>educ</code> no es solo una conveniencia técnica frente a FE: es sustantivamente relevante porque la escolaridad es una variable central para describir diferencias salariales entre trabajadores y forma parte del nucleo interpretativo del ejercicio.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con el panel <code>wagepan</code> (<code>N = 4360</code> observaciones, <code>545</code> individuos, 8 periodos).</p>
+<ul>
+<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
+<li>Regresores: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code></li>
+<li>Unidad de panel: individuo (<code>nr</code>)</li>
+<li>Especificacion principal: <code>xtreg ..., re vce(cluster nr)</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia econométrica de T5 es:</p>
+<ol type="1">
+<li>Estimar RE clásico (<code>xtreg ..., re</code>) para obtener coeficientes y descomposicion de varianza.</li>
+<li>Reestimar RE con inferencia robusta/cluster por individuo.</li>
+<li>Evaluar la relevancia del componente individual con <code>rho</code>.</li>
+<li>Contrastar <code>H0: var(c_i)=0</code> con el estadistico <code>Z</code> reportado en el taller.</li>
+<li>Reportar chequeos secundarios de especificación (dummies de año) sin mover el mensaje principal.</li>
+</ol>
+</section>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Una lectura ingenua puede confundir eficiencia con identificación. RE puede estimar de forma eficiente bajo su estructura, pero eso no implica automáticamente que la condición <code>corr(c_i, x_it)=0</code> sea valida en los datos.</p>
+<p>Por eso, en este taller se presenta RE como especificación operativa condicional a un supuesto estructural, no como veredicto definitivo frente a FE.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La evidencia principal del caso se concentra en comparar la magnitud de <code>educ</code> entre RE y especificaciones de referencia, manteniendo <code>rho</code> y <code>H0: var(c_i)=0</code> como respaldo metodológico secundario.</p>
+<p>En lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y <code>lwage</code> dentro de esta especificación RE; no debe leerse automáticamente como una estimación libre de sesgo ni extrapolarse fuera de este marco sin evidencia adicional.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Coef. <code>educ</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RE clásico</td>
+<td style="text-align: right;">0.1004</td>
+<td style="text-align: right;">0.0087</td>
+<td style="text-align: right;">[0.0833, 0.1175]</td>
+<td>Magnitud base en RE</td>
+</tr>
+<tr class="even">
+<td>RE robusto/cluster <code>nr</code></td>
+<td style="text-align: right;">0.1004</td>
+<td style="text-align: right;">0.0086</td>
+<td style="text-align: right;">[0.0835, 0.1172]</td>
+<td>Modelo operativo para inferencia</td>
+</tr>
+<tr class="odd">
+<td>FGLS AR(1)+hetero (contraste)</td>
+<td style="text-align: right;">0.1044</td>
+<td style="text-align: right;">0.0038</td>
+<td style="text-align: right;">[0.0969, 0.1119]</td>
+<td>Contraste paramétrico más exigente</td>
+</tr>
+<tr class="even">
+<td>Pooled OLS + cluster <code>nr</code> (referencia)</td>
+<td style="text-align: right;">0.0988</td>
+<td style="text-align: right;">0.0089</td>
+<td style="text-align: right;">[0.0812, 0.1163]</td>
+<td>Referencia previa sin estructura RE</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hallazgos-secundarios-y-especificación" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-especificación">Hallazgos secundarios y especificación</h2>
+<p>El test conjunto de dummies de año en la especificación RE ampliada reporta <code>chi2(7)=12.58</code> con <code>p=0.0831</code>. Se registra como hallazgo secundario de especificación, no como mensaje central del taller.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chequeo secundario</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Componente individual (<code>rho</code>)</td>
+<td style="text-align: right;">0.4600</td>
+<td>Heterogeneidad persistente importante</td>
+</tr>
+<tr class="even">
+<td>Test <code>H0: var(c_i)=0</code></td>
+<td style="text-align: right;"><code>Z=10.66</code>, <code>p&lt;0.001</code></td>
+<td>Respalda tratar explícitamente la estructura panel</td>
+</tr>
+<tr class="odd">
+<td>Test conjunto d81-d87</td>
+<td style="text-align: right;">p = 0.0831</td>
+<td>Evidencia debil al 5%; contraste auxiliar de especificación</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>T5 aporta una regla de trabajo clara: RE puede ser una alternativa eficiente y practicamente útil cuando interesa preservar regresores invariantes como <code>educ</code>.</p>
+<p>Pero la validez econométrica de esa elección sigue siendo condicional al supuesto <code>corr(c_i, x_it)=0</code>. Sin una prueba tipo Hausman en este taller, no corresponde afirmar que RE sea preferible a FE ni que sea empiricamente insesgado.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Esta pieza posiciona a RE como una especificación operativa bajo un supuesto fuerte, no como cierre definitivo de identificación. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como <code>educ</code> y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explícita el supuesto <code>corr(c_i, x_it)=0</code>, por ejemplo con una prueba tipo Hausman.</p>
 
 
 </section>

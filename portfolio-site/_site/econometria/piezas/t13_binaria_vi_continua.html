@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t13_binaria_vi_continua – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Participación laboral femenina e ingreso no laboral del hogar – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#sintesis-de-magnitudes-ape" id="toc-sintesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</a></li>
+  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
+  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T13 · Participación laboral femenina e ingreso no laboral del hogar</h1>
+<h1 class="title">Participación laboral femenina e ingreso no laboral del hogar</h1>
+<p class="subtitle lead">Una lectura binaria sobre cuándo tratar un regresor como potencialmente endógeno</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,191 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Modelo binario con regresor potencialmente endógeno</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T13</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>¿Cómo se estima una respuesta binaria cuando una covariable continua central (<code>nwifeinc</code>) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Endogeneidad en variable continua</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Función de control en modelo binario</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Microdatos de hogares</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>La pieza organiza una comparación metodológica con anclaje aplicado: benchmark exógeno, eje CF y contraste paralelo con IV-probit, sin sobrerreaccionar en la lectura final.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t13_binaria_vi_continua.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Probit base + sensibilidad IV/CF</p>
+</div>
+<div class="metric-note">
+<p>APEs como unidad principal de lectura en probabilidad</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Mujeres y hogares</p>
+</div>
+<div class="metric-note">
+<p><code>N=753</code> observaciones, corte transversal (<code>mroz</code>)</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Lectura metodológica</p>
+</div>
+<div class="metric-value">
+<p>Exógeno vs endógeno</p>
+</div>
+<div class="metric-note">
+<p>CF como eje; IV-probit como contraste paralelo</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Auditoria de sensibilidad</p>
+</div>
+<div class="metric-value">
+<p><code>nwifeinc</code> más negativo en IV/CF</p>
+</div>
+<div class="metric-note">
+<p>APE aprox. <code>-0.0036</code> (probit exogeno) vs <code>-0.0108</code> a <code>-0.0105</code> (IV/CF)</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en relación con ingreso no laboral del hogar, educación, experiencia y composición familiar. El foco principal es metodológico: comparar estimación binaria exógena vs endógena con anclaje aplicado en decisiones de hogar.</p>
+<p>El orden de lectura es deliberado: probit exógeno como benchmark inicial, control function (CF) como eje metodológico principal, <code>ivprobit</code> como contraste de robustez e <code>MPL-IV</code> como benchmark lineal secundario.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Cómo se estima una respuesta binaria cuando una covariable continua central (<code>nwifeinc</code>) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Resultado: <code>inlf</code> (0/1). Variable clave: <code>nwifeinc</code>. Controles: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>La pieza se ordena como comparación metodológica: primero el problema de endogeneidad en binaria, luego el contraste de APEs entre modelos exógenos y endógenos.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>La participación laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequeños pueden alterar de forma marcada esa decisión.</p>
+<p>Para lectura profesional, importa distinguir entre un patrón sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se usa <code>mroz.dta</code> en corte transversal.</p>
+<ul>
+<li>Unidad de observacion: mujer/hogar</li>
+<li>Tamano de muestra: <code>N=753</code></li>
+<li>Contexto temporal: información de referencia para 1975</li>
+<li>Variable de resultado: <code>inlf</code> (<code>1</code> participa, <code>0</code> no participa)</li>
+<li>Variables clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code></li>
+<li>Instrumentos para auditoría de endogeneidad: <code>huseduc</code> (principal), <code>motheduc</code>, <code>fatheduc</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<ol type="1">
+<li>Estimar probit exogeno como lectura base y reportar APEs.</li>
+<li>Usar control function (CF) como eje para tratar <code>nwifeinc</code> como potencialmente endógena en el modelo binario.</li>
+<li>Contrastar con <code>ivprobit</code> como implementación paralela de robustez y mantener <code>MPL-IV</code> como benchmark lineal secundario.</li>
+<li>Usar diagnósticos solo como respaldo de decisión aplicada.</li>
+</ol>
+</section>
+<section id="resultados-principales" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La comparación metodológica deja una lectura clara:</p>
+<ul>
+<li>El benchmark probit exógeno reporta un APE de <code>-0.0036</code> para <code>nwifeinc</code>.</li>
+<li>Al pasar al bloque endógeno, los APEs no lineales quedan cercanos entre sí: <code>CF</code> alrededor de <code>-0.0103</code> e <code>IVprobit</code> alrededor de <code>-0.0108</code>.</li>
+<li><code>MPL-IV</code> queda como contraste lineal útil (<code>-0.0116</code>), sin desplazar el eje CF de la lectura.</li>
+<li>Los demás patrones aplicados (<code>kidslt6</code>, <code>educ</code>, <code>exper</code>) se mantienen estables y no alteran la decisión metodológica central.</li>
+</ul>
+<p>En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro.</p>
+</section>
+<section id="sintesis-de-magnitudes-ape" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Método</th>
+<th>Rol en la comparación</th>
+<th style="text-align: right;">APE <code>nwifeinc</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95% (<code>nwifeinc</code>)</th>
+<th>Lectura metodológica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Probit exógeno</td>
+<td>Benchmark inicial</td>
+<td style="text-align: right;">-0.0036</td>
+<td style="text-align: right;">0.0016</td>
+<td style="text-align: right;">[-0.0067, -0.0005]</td>
+<td>Punto de partida exógeno</td>
+</tr>
+<tr class="even">
+<td>CF sobre-ID (score)</td>
+<td>Eje metodológico principal</td>
+<td style="text-align: right;">-0.0103</td>
+<td style="text-align: right;">0.0048</td>
+<td style="text-align: right;">[-0.0197, -0.0009]</td>
+<td>Referencia central para bloque endógeno</td>
+</tr>
+<tr class="odd">
+<td>IVprobit MLE bivariado</td>
+<td>Contraste paralelo de robustez</td>
+<td style="text-align: right;">-0.0108</td>
+<td style="text-align: right;">0.0057</td>
+<td style="text-align: right;">[-0.0220, 0.0004]</td>
+<td>Magnitud cercana a CF con mayor incertidumbre</td>
+</tr>
+<tr class="even">
+<td>MPL-IV</td>
+<td>Benchmark lineal secundario</td>
+<td style="text-align: right;">-0.0116</td>
+<td style="text-align: right;">0.0058</td>
+<td style="text-align: right;">[-0.0230, -0.0002]</td>
+<td>Chequeo lineal complementario</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diagnosticos-de-respaldo" class="level2">
+<h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
+<p>Los diagnósticos se mantienen deliberadamente subordinados al caso aplicado:</p>
+<ul>
+<li>Relevancia instrumental: evidencia fuerte en primera etapa (<code>F(3,743)=16.67</code>, <code>p&lt;0.001</code>).</li>
+<li>Validez conjunta (sobreidentificacion): sin senales claras de invalidez (<code>Score chi2(2)=0.489</code>, <code>p=0.783</code>).</li>
+<li>Exogeneidad de <code>nwifeinc</code>: no se rechaza de forma robusta (tests en torno a <code>p=0.17</code> a <code>p=0.22</code>).</li>
+</ul>
+<p>Por eso, la correccion IV/CF se lee como auditoría de sensibilidad y no como reemplazo automatico del modelo base.</p>
+</section>
+<section id="lectura-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
+<p>El valor profesional del caso es mostrar criterio de modelado aplicado en binaria: partir del benchmark exógeno y decidir, con CF como eje, cuánto cambia la lectura al tratar <code>nwifeinc</code> como potencialmente endógena.</p>
+<p>En T13, <code>ivprobit</code> acompaña como verificación paralela y <code>MPL-IV</code> como control lineal secundario; la decisión se sostiene sobre la comparación metodológica y no sobre una sobreactuación de hallazgos sustantivos.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Esta pieza no plantea una competencia entre probit e IV-probit. Plantea una decisión econométrica profesional: cuándo una posible endogeneidad amerita escalar complejidad y cuándo conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada.</p>
 
 
 </section>

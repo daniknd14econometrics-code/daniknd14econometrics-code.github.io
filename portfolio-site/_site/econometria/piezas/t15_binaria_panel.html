@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t15_binaria_panel – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Participación laboral femenina y estructura del hogar en un panel corto – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#sintesis-de-magnitudes-ape" id="toc-sintesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</a></li>
+  <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
+  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T15 · Participación laboral femenina y estructura del hogar en un panel corto</h1>
+<h1 class="title">Participación laboral femenina y estructura del hogar en un panel corto</h1>
+<p class="subtitle lead">Qué cambia al modelar heterogeneidad no observada en probabilidades de participación</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,182 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Cambios al modelar heterogeneidad no observada</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T15</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>¿Cómo cambian las probabilidades de participación laboral femenina cuando se reconoce heterogeneidad persistente entre mujeres en un panel corto?</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Panel binario y heterogeneidad individual</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Pooled, RE y CRE en respuesta binaria</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Panel corto de mujeres</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>La pieza prioriza el caso aplicado de oferta laboral y estructura del hogar, y contrasta pooled, RE y CRE para verificar si la historia sustantiva cambia en magnitud.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t15_binaria_panel.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Panel binario con comparación pooled, RE y CRE</p>
+</div>
+<div class="metric-note">
+<p>Lectura principal en APEs y no en coeficientes latentes</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Mujeres y hogares</p>
+</div>
+<div class="metric-note">
+<p><code>N=28,315</code>, <code>5,663</code> mujeres, <code>5</code> periodos (panel balanceado)</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Senales sustantivas</p>
+</div>
+<div class="metric-value">
+<p><code>kids</code> y <code>lhinc</code> con asociación negativa</p>
+</div>
+<div class="metric-note">
+<p>Menor participación laboral asociada a más hijos y mayor ingreso del esposo</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Lectura de sensibilidad</p>
+</div>
+<div class="metric-value">
+<p>Magnitudes más bajas en RE y CRE</p>
+</div>
+<div class="metric-note">
+<p>Parte de la lectura pooled absorbia heterogeneidad persistente no modelada</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza estudia participación laboral femenina (<code>lfp</code>) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.</p>
+<p>La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Cómo cambia un modelo binario de panel al pasar de pooled probit a RE-probit y CRE-probit, y qué indica eso sobre heterogeneidad inobservable?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Resultado: <code>lfp</code> (1 participa, 0 no). Variables clave: <code>kids</code> (número de hijos &lt;18) y <code>lhinc</code> (log del ingreso del esposo). Controles: <code>educ</code>, <code>black</code>, <code>age</code>, <code>agesq</code>, dummies de periodo.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>La pieza no plantea una competencia entre pooled, RE y CRE. Plantea un criterio de modelado en panel binario: si la heterogeneidad persistente importa, la lectura aplicada en probabilidades puede cambiar de forma relevante en magnitud.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>La participación laboral femenina se decide dentro de hogares con diferencias persistentes de contexto, preferencias y restricciones no totalmente observables. Si esa heterogeneidad no se modela, una lectura pooled puede mezclar diferencias estructurales entre mujeres con asociaciones contemporaneas de interés.</p>
+<p>Para un lector profesional, lo importante es saber si el mensaje sustantivo se mantiene y cuánto cambia en magnitud cuando el panel permite capturar parte de esa persistencia.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se usa <code>lfp.dta</code> en panel corto balanceado.</p>
+<ul>
+<li>Unidad de observacion: mujer-periodo (<code>id</code>, <code>period</code>)</li>
+<li>Tamano muestral: <code>N=28,315</code></li>
+<li>Unidades de panel: <code>5,663</code> mujeres</li>
+<li>Rango temporal: <code>period=1..5</code> (5 periodos de 4 meses)</li>
+<li>Variable de resultado: <code>lfp</code> (<code>1</code> participa en fuerza laboral)</li>
+<li>Variables clave: <code>kids</code>, <code>lhinc</code></li>
+<li>Controles: <code>educ</code>, <code>i.black</code>, <code>age</code>, <code>agesq</code>, <code>per2</code>-<code>per5</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<ol type="1">
+<li>Estimar probit pooled con <code>vce(cluster id)</code> como referencia base.</li>
+<li>Estimar RE-probit para incorporar heterogeneidad no observada persistente.</li>
+<li>Estimar CRE (Mundlak) agregando promedios individuales (<code>kidsbar</code>, <code>lhincbar</code>) para permitir correlación entre heterogeneidad y regresores.</li>
+<li>Comparar APEs entre especificaciones y usar diagnósticos como respaldo, sin desplazar la historia aplicada.</li>
+</ol>
+</section>
+<section id="resultados-principales" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La lectura se organiza en cuatro pasos:</p>
+<ol type="1">
+<li>Se observa una asociación negativa entre <code>kids</code> y la probabilidad de participación laboral.</li>
+<li>Se observa una asociación negativa entre <code>lhinc</code> y la probabilidad de participación laboral.</li>
+<li>Ambas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.</li>
+<li>Esa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.</li>
+</ol>
+<p>En esta comparación, pooled funciona como benchmark inicial, RE como transición importante y CRE-probit como lectura metodológica preferida porque permite incorporar heterogeneidad correlacionada de forma parsimoniosa.</p>
+<p>Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas:</p>
+</section>
+<section id="sintesis-de-magnitudes-ape" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;"><code>kids</code> APE (EE)</th>
+<th style="text-align: right;"><code>lhinc</code> APE (EE)</th>
+<th>Lectura aplicada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pooled probit</td>
+<td style="text-align: right;">-0.0660 (0.0049)</td>
+<td style="text-align: right;">-0.0701 (0.0080)</td>
+<td>Magnitudes iniciales más altas sin modelar heterogeneidad persistente</td>
+</tr>
+<tr class="even">
+<td>RE-probit</td>
+<td style="text-align: right;">-0.0516 (0.0050)</td>
+<td style="text-align: right;">-0.0190 (0.0042)</td>
+<td>Atenuación importante al introducir estructura RE</td>
+</tr>
+<tr class="odd">
+<td>CRE-pooled</td>
+<td style="text-align: right;">-0.0389 (0.0089)</td>
+<td style="text-align: right;">-0.0095 (0.0047)</td>
+<td>Caída adicional al incorporar componente Mundlak</td>
+</tr>
+<tr class="even">
+<td>CRE-probit</td>
+<td style="text-align: right;">-0.0322 (0.0085)</td>
+<td style="text-align: right;">-0.0081 (0.0043)</td>
+<td>Lectura operativa final con heterogeneidad correlacionada</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diagnosticos-de-respaldo" class="level2">
+<h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
+<p>Como respaldo de la lectura aplicada, la evidencia de diagnóstico deja tres mensajes:</p>
+<ul>
+<li><strong>Evidencia Mundlak fuerte:</strong> test conjunto de <code>kidsbar</code> y <code>lhincbar</code> rechaza de forma contundente (<code>chi2(2)=57.50</code> en CRE-pooled y <code>chi2(2)=61.34</code> en CRE-probit; <code>p&lt;0.001</code>), consistente con heterogeneidad correlacionada.</li>
+<li><strong>Sensibilidad numerica en RE (nota breve):</strong> al aumentar <code>intpoints</code>, las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.</li>
+<li><strong>Leads como robustez secundaria:</strong> los test con adelantados se reportan como chequeo auxiliar de robustez (con señal concentrada en <code>F1_kids</code>) y no como eje principal de interpretación.</li>
+</ul>
+<p>Como nota técnica menor, incluir promedios individuales de variables con variación temporal limitada puede ampliar incertidumbre en algunos parámetros, sin alterar la dirección sustantiva principal.</p>
+</section>
+<section id="lectura-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
+<p>El valor de T15 está en interpretar probabilidades en panel binario con criterio aplicado. La comparación pooled, RE y CRE permite distinguir patrón sustantivo de posible sesgo por heterogeneidad persistente no observada.</p>
+<p>En términos aplicados, la pieza muestra una decisión profesional concreta: cuando el panel ofrece información para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Esta pieza no busca declarar un método superior entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.</p>
+<p>La lección metodológica es que en panel binario la heterogeneidad inobservable sigue importando aunque el modelo ya sea no lineal.</p>
 
 
 </section>

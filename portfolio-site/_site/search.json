@@ -30,128 +30,688 @@
   {
     "objectID": "econometria/piezas/t18_multinomial_panel_cre.html",
     "href": "econometria/piezas/t18_multinomial_panel_cre.html",
-    "title": "T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
     "section": "",
-    "text": "← Volver al índice de Econometría\nHeterogeneidad persistente en escuela, hogar y trabajo"
+    "text": "En un panel laboral corto, ¿cómo cambia la interpretación de escuela, hogar y trabajo cuando se pasa de multinomial pooled a multinomial-CRE?\n\n\nLa pieza compara pooled vs CRE (Mundlak) para ordenar mejor la lectura aplicada y la elección de especificación: el foco está en probabilidades comparables (APEs), no en coeficientes latentes.\nEstas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.\nexpersq y black se mantienen como evidencia complementaria en el respaldo técnico, sin desplazar las variables protagonistas."
   },
   {
-    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#documento-completo-html",
-    "href": "econometria/piezas/t18_multinomial_panel_cre.html#documento-completo-html",
-    "title": "T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#resumen",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#resumen",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia un resultado multinomial de actividad (status: escuela, hogar, trabajo) en un panel laboral corto. La pregunta aplicada no es metodológica en abstracto: es si la lectura de probabilidades cambia de forma relevante cuando se reconoce heterogeneidad persistente no observada.\nLa comparación entre multinomial pooled y multinomial-CRE (Mundlak) muestra diferencias importantes en APEs por categoría. Por eso, el aporte del caso se concentra en criterio de especificación e interpretación profesional de probabilidades, sin exagerar el alcance metodológico."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#pregunta",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#pregunta",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Pregunta",
+    "text": "Pregunta\nEn este panel laboral, ¿la asociación entre educación, experiencia y estado de actividad cambia de forma relevante al pasar de multinomial pooled a multinomial-CRE?\n\nResultado: status (1 escuela, 2 hogar, 3 trabajo). Variables clave: educ, exper, expersq, black, dummies anuales, y medias temporales en CRE."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#idea-central",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#idea-central",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Idea central",
+    "text": "Idea central\nEl valor de la pieza no está en “predecir más” ni en complejizar por complejizar. Está en mostrar cómo cambia la lectura aplicada cuando se controla heterogeneidad persistente correlacionada con regresores en un multinomial de panel.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#por-qué-este-problema-importa",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn decisiones de actividad individual, escuela, hogar y trabajo son alternativas mutuamente excluyentes. Una lectura pooled puede ser útil como punto de partida, pero puede mezclar diferencias estructurales entre personas con cambios dentro de persona a lo largo del tiempo.\nPara una lectura profesional, importa saber si ese cruce altera la interpretación de probabilidades. Si la altera, la decisión de especificación deja de ser un detalle técnico y pasa a ser parte del mensaje aplicado."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#datos-y-variables",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#datos-y-variables",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe usa keane.dta en formato panel.\n\nUnidad de observación: persona-año (id, year)\nPeríodo: 1981-1987\nMuestra operativa: N=12,665, 1,881 personas, panel no balanceado\nResultado: status (1 escuela, 2 hogar, 3 trabajo)\nRegresores clave: educ, exper, expersq, i.black, y82-y87\nEn CRE (Mundlak): educ_bar, exper_bar, expersq_bar\nNota de muestra: la base original contiene 12,723 observaciones; la estimación operativa usa 12,665 con status observado"
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#estrategia-empírica",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#estrategia-empírica",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia se diseña para mantener foco aplicado:\n\nEstimar multinomial pooled con errores cluster(id) como referencia inicial.\nEstimar multinomial-CRE agregando medias temporales por individuo.\nComparar APEs por categoría entre pooled y CRE, priorizando magnitudes interpretables.\nUsar test conjunto de medias temporales tipo Mundlak como respaldo sobre relevancia de heterogeneidad correlacionada.\nDejar indicadores de clasificación in-sample en segundo plano, como chequeo descriptivo no predictivo."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#qué-evita-una-lectura-automática",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#qué-evita-una-lectura-automática",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Qué evita una lectura automática",
+    "text": "Qué evita una lectura automática\nPara mantener una lectura profesional, conviene separar planos:\n\nPlano sustantivo: cómo se redistribuyen probabilidades entre escuela, hogar y trabajo.\nPlano de especificación: cuánto cambia esa lectura cuando se incorpora heterogeneidad persistente.\nPlano de diagnóstico: si las medias temporales tipo Mundlak respaldan que esa heterogeneidad correlacionada es relevante.\n\nEsa separación evita convertir un resultado técnico aislado en una conclusión general del caso."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#resultados-principales",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#resultados-principales",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:\n\nEducación (educ): en pooled aumenta la probabilidad de escuela (+0.0418) y reduce hogar (-0.0570); en CRE esa lectura se revierte para escuela (-0.1220) y hogar (+0.0823), con aumento de trabajo (+0.0397).\nExperiencia (exper): en pooled empuja con fuerza hacia trabajo (+0.2249), pero en CRE aparece reducción en trabajo (-0.0482) y aumento en hogar (+0.0817), con cambio de magnitud en escuela.\nPerfil demográfico (black): mantiene un patrón de mayor probabilidad relativa de hogar y menor de escuela/trabajo, pero con menor magnitud en CRE."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#síntesis-comparativa-de-magnitudes-ape",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#síntesis-comparativa-de-magnitudes-ape",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Síntesis comparativa de magnitudes (APE)",
+    "text": "Síntesis comparativa de magnitudes (APE)\n\n\n\n\n\n\n\n\n\n\n\n\n\nVariable\nEscuela pooled\nEscuela CRE\nHogar pooled\nHogar CRE\nTrabajo pooled\nTrabajo CRE\nLectura aplicada\n\n\n\n\neduc\n+0.0418 (0.0017)\n-0.1220 (0.0055)\n-0.0570 (0.0020)\n+0.0823 (0.0076)\n+0.0152 (0.0020)\n+0.0397 (0.0090)\nCambia signo en escuela y hogar al incorporar heterogeneidad persistente\n\n\nexper\n-0.1493 (0.0062)\n-0.0335 (0.0069)\n-0.0756 (0.0060)\n+0.0817 (0.0095)\n+0.2249 (0.0050)\n-0.0482 (0.0101)\nLa lectura pooled sobre trabajo no se sostiene en CRE"
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#diagnósticos-de-respaldo",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#diagnósticos-de-respaldo",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Diagnósticos de respaldo",
+    "text": "Diagnósticos de respaldo\nEl respaldo formal y técnico se mantiene acotado y funcional a la narrativa aplicada:\n\nTest Mundlak conjunto: chi2(6)=1636.61, p=0.0000 para educ_bar, exper_bar, expersq_bar.\nImplicancia: la heterogeneidad persistente correlacionada es empíricamente relevante en este caso.\nNota secundaria (clasificación): el ajuste in-sample del modelo CRE en status es 79.55%; se reporta solo como referencia descriptiva y no como criterio de valor principal.\n\n\nResumen de diagnósticos\n\n\n\n\n\n\n\n\nDiagnóstico\nEvidencia\nLectura profesional\n\n\n\n\nTest conjunto Mundlak\nchi2(6)=1636.61, p=0.0000\nLa heterogeneidad persistente correlacionada es relevante En esta aplicación\n\n\nComparación APE pooled vs CRE\nCambios de magnitud y signo en educ y exper\nLa especificación afecta la interpretación aplicada de probabilidades\n\n\nClasificación in-sample (secundaria)\n79.55% en status\nSe informa como referencia descriptiva, no como meta predictiva"
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#lectura-profesional",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#lectura-profesional",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nT18 aporta una práctica profesional concreta: antes de cerrar una historia sustantiva en multinomial de panel, conviene auditar cuánto depende esa historia del supuesto pooled sobre heterogeneidad no observada.\nEn este caso, la comparación pooled vs CRE cambia varias magnitudes y algunos signos en APEs. Por eso, para esta muestra, la lectura principal se ancla en CRE; no por superioridad abstracta del método, sino por consistencia entre pregunta aplicada, estructura de panel y evidencia de Mundlak."
+  },
+  {
+    "objectID": "econometria/piezas/t18_multinomial_panel_cre.html#cierre",
+    "href": "econometria/piezas/t18_multinomial_panel_cre.html#cierre",
+    "title": "Estados de actividad en panel: qué cambia entre multinomial pooled y CRE",
+    "section": "Cierre",
+    "text": "Cierre\nLa pieza muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es el valor del caso: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados."
   },
   {
     "objectID": "econometria/piezas/t15_binaria_panel.html",
     "href": "econometria/piezas/t15_binaria_panel.html",
-    "title": "T15 · Participación laboral femenina y estructura del hogar en un panel corto",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
     "section": "",
-    "text": "← Volver al índice de Econometría\nCambios al modelar heterogeneidad no observada"
+    "text": "¿Cómo cambian las probabilidades de participación laboral femenina cuando se reconoce heterogeneidad persistente entre mujeres en un panel corto?\n\n\nLa pieza prioriza el caso aplicado de oferta laboral y estructura del hogar, y contrasta pooled, RE y CRE para verificar si la historia sustantiva cambia en magnitud."
   },
   {
-    "objectID": "econometria/piezas/t15_binaria_panel.html#documento-completo-html",
-    "href": "econometria/piezas/t15_binaria_panel.html#documento-completo-html",
-    "title": "T15 · Participación laboral femenina y estructura del hogar en un panel corto",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t15_binaria_panel.html#resumen",
+    "href": "econometria/piezas/t15_binaria_panel.html#resumen",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia participación laboral femenina (lfp) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.\nLa econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica."
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#pregunta",
+    "href": "econometria/piezas/t15_binaria_panel.html#pregunta",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo cambia un modelo binario de panel al pasar de pooled probit a RE-probit y CRE-probit, y qué indica eso sobre heterogeneidad inobservable?\n\nResultado: lfp (1 participa, 0 no). Variables clave: kids (número de hijos &lt;18) y lhinc (log del ingreso del esposo). Controles: educ, black, age, agesq, dummies de periodo."
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#idea-central",
+    "href": "econometria/piezas/t15_binaria_panel.html#idea-central",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Idea central",
+    "text": "Idea central\nLa pieza no plantea una competencia entre pooled, RE y CRE. Plantea un criterio de modelado en panel binario: si la heterogeneidad persistente importa, la lectura aplicada en probabilidades puede cambiar de forma relevante en magnitud.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t15_binaria_panel.html#por-qué-este-problema-importa",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nLa participación laboral femenina se decide dentro de hogares con diferencias persistentes de contexto, preferencias y restricciones no totalmente observables. Si esa heterogeneidad no se modela, una lectura pooled puede mezclar diferencias estructurales entre mujeres con asociaciones contemporaneas de interés.\nPara un lector profesional, lo importante es saber si el mensaje sustantivo se mantiene y cuánto cambia en magnitud cuando el panel permite capturar parte de esa persistencia."
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#datos-y-variables",
+    "href": "econometria/piezas/t15_binaria_panel.html#datos-y-variables",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe usa lfp.dta en panel corto balanceado.\n\nUnidad de observacion: mujer-periodo (id, period)\nTamano muestral: N=28,315\nUnidades de panel: 5,663 mujeres\nRango temporal: period=1..5 (5 periodos de 4 meses)\nVariable de resultado: lfp (1 participa en fuerza laboral)\nVariables clave: kids, lhinc\nControles: educ, i.black, age, agesq, per2-per5"
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#estrategia-empírica",
+    "href": "econometria/piezas/t15_binaria_panel.html#estrategia-empírica",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\n\nEstimar probit pooled con vce(cluster id) como referencia base.\nEstimar RE-probit para incorporar heterogeneidad no observada persistente.\nEstimar CRE (Mundlak) agregando promedios individuales (kidsbar, lhincbar) para permitir correlación entre heterogeneidad y regresores.\nComparar APEs entre especificaciones y usar diagnósticos como respaldo, sin desplazar la historia aplicada."
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#resultados-principales",
+    "href": "econometria/piezas/t15_binaria_panel.html#resultados-principales",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura se organiza en cuatro pasos:\n\nSe observa una asociación negativa entre kids y la probabilidad de participación laboral.\nSe observa una asociación negativa entre lhinc y la probabilidad de participación laboral.\nAmbas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.\nEsa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.\n\nEn esta comparación, pooled funciona como benchmark inicial, RE como transición importante y CRE-probit como lectura metodológica preferida porque permite incorporar heterogeneidad correlacionada de forma parsimoniosa.\nRecién después de esa lectura sustantiva conviene mirar magnitudes aproximadas:"
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#sintesis-de-magnitudes-ape",
+    "href": "econometria/piezas/t15_binaria_panel.html#sintesis-de-magnitudes-ape",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Sintesis de magnitudes (APE)",
+    "text": "Sintesis de magnitudes (APE)\n\n\n\n\n\n\n\n\n\nModelo\nkids APE (EE)\nlhinc APE (EE)\nLectura aplicada\n\n\n\n\nPooled probit\n-0.0660 (0.0049)\n-0.0701 (0.0080)\nMagnitudes iniciales más altas sin modelar heterogeneidad persistente\n\n\nRE-probit\n-0.0516 (0.0050)\n-0.0190 (0.0042)\nAtenuación importante al introducir estructura RE\n\n\nCRE-pooled\n-0.0389 (0.0089)\n-0.0095 (0.0047)\nCaída adicional al incorporar componente Mundlak\n\n\nCRE-probit\n-0.0322 (0.0085)\n-0.0081 (0.0043)\nLectura operativa final con heterogeneidad correlacionada"
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#diagnosticos-de-respaldo",
+    "href": "econometria/piezas/t15_binaria_panel.html#diagnosticos-de-respaldo",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Diagnosticos de respaldo",
+    "text": "Diagnosticos de respaldo\nComo respaldo de la lectura aplicada, la evidencia de diagnóstico deja tres mensajes:\n\nEvidencia Mundlak fuerte: test conjunto de kidsbar y lhincbar rechaza de forma contundente (chi2(2)=57.50 en CRE-pooled y chi2(2)=61.34 en CRE-probit; p&lt;0.001), consistente con heterogeneidad correlacionada.\nSensibilidad numerica en RE (nota breve): al aumentar intpoints, las magnitudes centrales de APE se mantienen estables en la zona alta de cuadratura.\nLeads como robustez secundaria: los test con adelantados se reportan como chequeo auxiliar de robustez (con señal concentrada en F1_kids) y no como eje principal de interpretación.\n\nComo nota técnica menor, incluir promedios individuales de variables con variación temporal limitada puede ampliar incertidumbre en algunos parámetros, sin alterar la dirección sustantiva principal."
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#lectura-profesional",
+    "href": "econometria/piezas/t15_binaria_panel.html#lectura-profesional",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl valor de T15 está en interpretar probabilidades en panel binario con criterio aplicado. La comparación pooled, RE y CRE permite distinguir patrón sustantivo de posible sesgo por heterogeneidad persistente no observada.\nEn términos aplicados, la pieza muestra una decisión profesional concreta: cuando el panel ofrece información para modelar persistencia, conviene evitar lecturas mecanicas de resultados pooled aun si los signos se mantienen."
+  },
+  {
+    "objectID": "econometria/piezas/t15_binaria_panel.html#cierre",
+    "href": "econometria/piezas/t15_binaria_panel.html#cierre",
+    "title": "Participación laboral femenina y estructura del hogar en un panel corto",
+    "section": "Cierre",
+    "text": "Cierre\nEsta pieza no busca declarar un método superior entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.\nLa lección metodológica es que en panel binario la heterogeneidad inobservable sigue importando aunque el modelo ya sea no lineal."
   },
   {
     "objectID": "econometria/piezas/t13_binaria_vi_continua.html",
     "href": "econometria/piezas/t13_binaria_vi_continua.html",
-    "title": "T13 · Participación laboral femenina e ingreso no laboral del hogar",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
     "section": "",
-    "text": "← Volver al índice de Econometría\nModelo binario con regresor potencialmente endógeno"
+    "text": "¿Cómo se estima una respuesta binaria cuando una covariable continua central (nwifeinc) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?\n\n\nLa pieza organiza una comparación metodológica con anclaje aplicado: benchmark exógeno, eje CF y contraste paralelo con IV-probit, sin sobrerreaccionar en la lectura final."
   },
   {
-    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#documento-completo-html",
-    "href": "econometria/piezas/t13_binaria_vi_continua.html#documento-completo-html",
-    "title": "T13 · Participación laboral femenina e ingreso no laboral del hogar",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#resumen",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#resumen",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia participación laboral femenina (inlf) en relación con ingreso no laboral del hogar, educación, experiencia y composición familiar. El foco principal es metodológico: comparar estimación binaria exógena vs endógena con anclaje aplicado en decisiones de hogar.\nEl orden de lectura es deliberado: probit exógeno como benchmark inicial, control function (CF) como eje metodológico principal, ivprobit como contraste de robustez e MPL-IV como benchmark lineal secundario."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#pregunta",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#pregunta",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo se estima una respuesta binaria cuando una covariable continua central (nwifeinc) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?\n\nResultado: inlf (0/1). Variable clave: nwifeinc. Controles: educ, exper, expersq, age, kidslt6, kidsge6."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#idea-central",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#idea-central",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Idea central",
+    "text": "Idea central\nLa pieza se ordena como comparación metodológica: primero el problema de endogeneidad en binaria, luego el contraste de APEs entre modelos exógenos y endógenos.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#por-qué-este-problema-importa",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nLa participación laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequeños pueden alterar de forma marcada esa decisión.\nPara lectura profesional, importa distinguir entre un patrón sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#datos-y-variables",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#datos-y-variables",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe usa mroz.dta en corte transversal.\n\nUnidad de observacion: mujer/hogar\nTamano de muestra: N=753\nContexto temporal: información de referencia para 1975\nVariable de resultado: inlf (1 participa, 0 no participa)\nVariables clave: nwifeinc, educ, exper, expersq, age, kidslt6, kidsge6\nInstrumentos para auditoría de endogeneidad: huseduc (principal), motheduc, fatheduc"
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#estrategia-empírica",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#estrategia-empírica",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\n\nEstimar probit exogeno como lectura base y reportar APEs.\nUsar control function (CF) como eje para tratar nwifeinc como potencialmente endógena en el modelo binario.\nContrastar con ivprobit como implementación paralela de robustez y mantener MPL-IV como benchmark lineal secundario.\nUsar diagnósticos solo como respaldo de decisión aplicada."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#resultados-principales",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#resultados-principales",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa comparación metodológica deja una lectura clara:\n\nEl benchmark probit exógeno reporta un APE de -0.0036 para nwifeinc.\nAl pasar al bloque endógeno, los APEs no lineales quedan cercanos entre sí: CF alrededor de -0.0103 e IVprobit alrededor de -0.0108.\nMPL-IV queda como contraste lineal útil (-0.0116), sin desplazar el eje CF de la lectura.\nLos demás patrones aplicados (kidslt6, educ, exper) se mantienen estables y no alteran la decisión metodológica central.\n\nEn esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#sintesis-de-magnitudes-ape",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#sintesis-de-magnitudes-ape",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Sintesis de magnitudes (APE)",
+    "text": "Sintesis de magnitudes (APE)\n\n\n\n\n\n\n\n\n\n\n\nMétodo\nRol en la comparación\nAPE nwifeinc\nError estándar\nIC 95% (nwifeinc)\nLectura metodológica\n\n\n\n\nProbit exógeno\nBenchmark inicial\n-0.0036\n0.0016\n[-0.0067, -0.0005]\nPunto de partida exógeno\n\n\nCF sobre-ID (score)\nEje metodológico principal\n-0.0103\n0.0048\n[-0.0197, -0.0009]\nReferencia central para bloque endógeno\n\n\nIVprobit MLE bivariado\nContraste paralelo de robustez\n-0.0108\n0.0057\n[-0.0220, 0.0004]\nMagnitud cercana a CF con mayor incertidumbre\n\n\nMPL-IV\nBenchmark lineal secundario\n-0.0116\n0.0058\n[-0.0230, -0.0002]\nChequeo lineal complementario"
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#diagnosticos-de-respaldo",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#diagnosticos-de-respaldo",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Diagnosticos de respaldo",
+    "text": "Diagnosticos de respaldo\nLos diagnósticos se mantienen deliberadamente subordinados al caso aplicado:\n\nRelevancia instrumental: evidencia fuerte en primera etapa (F(3,743)=16.67, p&lt;0.001).\nValidez conjunta (sobreidentificacion): sin senales claras de invalidez (Score chi2(2)=0.489, p=0.783).\nExogeneidad de nwifeinc: no se rechaza de forma robusta (tests en torno a p=0.17 a p=0.22).\n\nPor eso, la correccion IV/CF se lee como auditoría de sensibilidad y no como reemplazo automatico del modelo base."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#lectura-profesional",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#lectura-profesional",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl valor profesional del caso es mostrar criterio de modelado aplicado en binaria: partir del benchmark exógeno y decidir, con CF como eje, cuánto cambia la lectura al tratar nwifeinc como potencialmente endógena.\nEn T13, ivprobit acompaña como verificación paralela y MPL-IV como control lineal secundario; la decisión se sostiene sobre la comparación metodológica y no sobre una sobreactuación de hallazgos sustantivos."
+  },
+  {
+    "objectID": "econometria/piezas/t13_binaria_vi_continua.html#cierre",
+    "href": "econometria/piezas/t13_binaria_vi_continua.html#cierre",
+    "title": "Participación laboral femenina e ingreso no laboral del hogar",
+    "section": "Cierre",
+    "text": "Cierre\nEsta pieza no plantea una competencia entre probit e IV-probit. Plantea una decisión econométrica profesional: cuándo una posible endogeneidad amerita escalar complejidad y cuándo conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada."
   },
   {
     "objectID": "econometria/piezas/t11_panel_iv.html",
     "href": "econometria/piezas/t11_panel_iv.html",
-    "title": "T11 · Tarifas y demanda de pasajeros en rutas aéreas",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
     "section": "",
-    "text": "← Volver al índice de Econometría\nCuándo tratar el precio como endógeno en panel"
+    "text": "¿Cómo responde la demanda de pasajeros cuando cambian las tarifas en rutas aéreas comparables a lo largo del tiempo?\n\n\nLa estrategia econométrica ordena una decisión práctica: evaluar si tratar precio como potencialmente endógeno cambia materialmente la lectura del caso o si la referencia no instrumentada sigue siendo suficiente para una interpretación profesional."
   },
   {
-    "objectID": "econometria/piezas/t11_panel_iv.html#documento-completo-html",
-    "href": "econometria/piezas/t11_panel_iv.html#documento-completo-html",
-    "title": "T11 · Tarifas y demanda de pasajeros en rutas aéreas",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t11_panel_iv.html#resumen",
+    "href": "econometria/piezas/t11_panel_iv.html#resumen",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia demanda de pasajeros en rutas aéreas usando panel por ruta y año. La pregunta aplicada es si la lectura de la relación entre tarifa y pasajeros cambia de forma material cuando precio se trata como potencialmente endógeno.\nEl mensaje central es deliberadamente prudente: IV se mantiene como contraste relevante, pero la lectura de referencia permanece en modelos no instrumentados con inferencia robusta."
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#pregunta",
+    "href": "econometria/piezas/t11_panel_iv.html#pregunta",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿En rutas aéreas comparables, la asociación entre tarifas y pasajeros cambia de forma sustantiva cuando precio se trata como potencialmente endógeno en panel?\n\nResultado: lpassen. Regresor clave: lfare. Controles: ldist, ldistsq, dummies de año. Instrumento principal: concen."
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#idea-central",
+    "href": "econometria/piezas/t11_panel_iv.html#idea-central",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Idea central",
+    "text": "Idea central\nLa econometría no se presenta como fin en sí mismo: se usa para decidir, con evidencia y prudencia, cuando una estrategia más compleja mejora realmente la lectura aplicada del mercado aéreo.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t11_panel_iv.html#por-qué-este-problema-importa",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn ecuaciones de demanda, precio puede reaccionar a factores no observados que también afectan cantidad. Si eso ocurre, una lectura no instrumentada puede mezclar variación de demanda con ajuste de oferta o estructura competitiva.\nEn este caso, el valor aplicado es distinguir si ese riesgo potencial amerita pasar a IV en panel como marco principal o si conviene mantener una referencia más simple y transparente para la lectura de negocio."
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#datos-y-variables",
+    "href": "econometria/piezas/t11_panel_iv.html#datos-y-variables",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con airfare.dta en estructura panel.\n\nUnidad de observacion: ruta-año (id, year)\nCobertura temporal: 1997-2000\nMuestra operativa: N=4596, 1149 rutas, panel balanceado (4 periodos por ruta)\nVariable de resultado: lpassen (log de pasajeros promedio diarios)\nVariable clave: lfare (log de tarifa promedio)\nControles: ldist, ldistsq, y98, y99, y00\nInstrumentos explorados: concen y, en ejercicios de sobreidentificacion, origin_id"
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#estrategia-empírica",
+    "href": "econometria/piezas/t11_panel_iv.html#estrategia-empírica",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia se organiza para mantener primacia del caso aplicado:\n\nEstimar panel no instrumentado (RE y FE con inferencia cluster) como referencia sustantiva.\nEstimar RE-IV y FE-IV para evaluar sensibilidad cuando lfare se trata como endógena.\nUsar chequeos de control function, relevancia y validez de instrumentos como respaldo de decisión.\nInterpretar resultados en clave de criterio profesional: priorizar especificación compleja solo si cambia de forma material la lectura aplicada."
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#resultados-principales",
+    "href": "econometria/piezas/t11_panel_iv.html#resultados-principales",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura de base del caso es estable en modelos no instrumentados: la relación entre tarifa y pasajeros es negativa y de magnitud económica relevante en FE y RE con errores clusterizados.\nAl pasar a IV, la precisión cae y los coeficientes de lfare dejan de ser estadisticamente precisos en las especificaciones robustas reportadas. En este contexto, la evidencia diagnostica robusta no muestra una necesidad clara de abandonar la lectura no instrumentada como referencia principal, aunque el problema potencial de endogeneidad siga siendo parte del análisis.\n\n\n\n\n\n\n\n\nBloque\nEvidencia\nLectura aplicada\n\n\n\n\nRE no IV (cluster)\nlfare=-1.102 (EE 0.102; IC 95% [-1.302, -0.903])\nRelación negativa clara entre tarifa y pasajeros\n\n\nFE no IV (cluster)\nlfare=-1.155 (EE 0.109; IC 95% [-1.368, -0.942])\nPatrón sustantivo similar bajo comparación within\n\n\nRE-IV (cluster)\nlfare=-0.508 (EE 0.498; IC 95% [-1.485, 0.469])\nMagnitud menor y baja precisión en IV\n\n\nFE-IV (cluster)\nlfare=-0.302 (EE 0.613; IC 95% [-1.503, 0.900])\nAlta incertidumbre en especificación IV"
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#diagnosticos-de-respaldo",
+    "href": "econometria/piezas/t11_panel_iv.html#diagnosticos-de-respaldo",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Diagnosticos de respaldo",
+    "text": "Diagnosticos de respaldo\nEstos diagnósticos se presentan de forma breve para respaldar la lectura del caso; no reemplazan la historia aplicada ni conducen la narrativa principal.\n\n\n\n\n\n\n\n\nDiagnostico\nResultado\nUso en la pieza\n\n\n\n\nExogeneidad (control function, RE)\nchi2(1)=1.73, p=0.1878\nNo aporta evidencia robusta fuerte para exigir IV como base\n\n\nExogeneidad (control function, FE robusto)\nchi2(1)=2.66, p=0.1026\nResultado en misma dirección, con cautela\n\n\nRelevancia IV (RE, 2 IV excluidos)\nKP rk Wald F =33.05; Hansen J p=0.8361\nInstrumentos aceptables en ese entorno de especificación; con origin_id, el uso es principalmente didáctico de diagnóstico y no define el cierre aplicado\n\n\nRelevancia IV (FE)\nKP rk Wald F =11.66\nFuerza más justa; refuerza prudencia al interpretar FE-IV"
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#lectura-profesional",
+    "href": "econometria/piezas/t11_panel_iv.html#lectura-profesional",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es plantear FE, RE e IV como una competencia, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.\nEn esta aplicación, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empírico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas."
+  },
+  {
+    "objectID": "econometria/piezas/t11_panel_iv.html#cierre",
+    "href": "econometria/piezas/t11_panel_iv.html#cierre",
+    "title": "Tarifas y demanda de pasajeros en rutas aéreas",
+    "section": "Cierre",
+    "text": "Cierre\nLa pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.\nDado que los tests robustos de exogeneidad no rechazan al 5% (RE p=0.1878; FE robusto p=0.1026), en este caso no conviene instrumentar lfare por rutina; la decisión aplicada final vuelve a RE vs FE sin IV, donde el Hausman no IV favorece FE (chi2(1)=49.15, p=0.0000).\nEse es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real."
   },
   {
     "objectID": "econometria/piezas/t08_panel_fe_patentes.html",
     "href": "econometria/piezas/t08_panel_fe_patentes.html",
-    "title": "T08 · Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
     "section": "",
-    "text": "← Volver al índice de Econometría\nInnovación empresarial con efectos fijos y dinámica temporal"
+    "text": "En este panel de firmas, la pregunta aplicada es cuando el esfuerzo en I+D se traduce en patentamiento observable dentro de la misma empresa\n\n\nLa estrategia combina efectos fijos con rezagos distribuidos de I+D para leer dinamica temporal sin confundir heterogeneidad fija entre firmas con cambios dentro de cada trayectoria."
   },
   {
-    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#documento-completo-html",
-    "href": "econometria/piezas/t08_panel_fe_patentes.html#documento-completo-html",
-    "title": "T08 · Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#resumen",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#resumen",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Resumen",
+    "text": "Resumen\nEste caso analiza innovación empresarial con una pregunta concreta: cuando rinde la I+D en términos de patentamiento dentro de las firmas. La variable de resultado es lpat (log de 1 + patents) y el foco está en la trayectoria temporal de lrnd y sus rezagos.\nLa pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociación acumulativa con el patentamiento."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#pregunta",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#pregunta",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cuándo se traduce el esfuerzo en I+D en patentamiento observable dentro de las firmas: en el mismo año o como acumulación a lo largo de varios años?\n\nResultado: lpat (log de 1+patents). Regresores clave: lrnd y rezagos lrnd_1-lrnd_5. Controles: lsales, return, dummies de año. Unidad de panel: cusip."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#idea-central",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#idea-central",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Idea central",
+    "text": "Idea central\nLa econometría se ordena al servicio del caso aplicado de innovación: distinguir dinamica temporal real de I+D frente a tres fuentes distintas de confusion empírica.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#por-qué-este-problema-importa",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nLas decisiones de I+D no siempre producen resultados observables en el mismo periodo. En la práctica, la innovación suele tener maduracion: investigacion, desarrollo, validación y finalmente patente.\nPor eso, para una lectura profesional del caso, importa separar si el patentamiento responde al flujo contemporaneo de I+D o a su historia acumulada reciente dentro de cada firma."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#datos-y-variables",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#datos-y-variables",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con patent.dta, un panel de firmas.\n\nUnidad de observacion: firma-año (cusip)\nRango temporal: 1972-1981\nDimension descriptiva de la base: 2,260 observaciones, 226 firmas\nModelo FE base (sin bloque largo de rezagos): N=2,252\nModelo operativo con 5 rezagos de I+D: N=1,122, 226 firmas\nVariable de resultado: lpat\nRegresores clave: lrnd, lrnd_1…lrnd_5\nControles: lsales, return, dummies de año\n\nLa inclusion de cinco rezagos reduce de forma importante la muestra efectiva y concentra la estimación en la parte final del panel; en este caso, esa restriccion no es un detalle técnico menor porque condiciona la ventana temporal sobre la que se construye la lectura aplicada."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#estrategia-empírica",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#estrategia-empírica",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia del taller prioriza consistencia entre pregunta aplicada y decisiones econometricas:\n\nEstimar FE para controlar heterogeneidad fija no observada de firma.\nModelar la dinamica temporal con rezagos distribuidos de I+D (lrnd_1…lrnd_5), manteniendo lrnd contemporanea.\nUsar inferencia cluster por firma como estándar operativo.\nEvaluar evidencia conjunta de rezagos para evitar sobreinterpretar coeficientes individuales inestables.\nMantener especificaciones secundarias (stock de I+D y FE-AR(1)) como contraste, no como mensaje principal."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nUn análisis ingenuo puede confundir tres planos diferentes:\n\nControl de heterogeneidad fija no observada: FE atiende este punto.\nInferencia con dependencia intra-firma: cluster mejora credibilidad de errores estándar y tests.\nPrecision de coeficientes con muchos rezagos correlacionados: la colinealidad puede volver ruidosos los rezagos individuales.\n\nLa lectura profesional separa estos planos en lugar de resumirlos como un solo “problema econométrico”."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#resultados-principales",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#resultados-principales",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nPrimero, la lectura sustantiva: la evidencia es más consistente con una relación acumulativa entre I+D y patentamiento que con una historia de efectos limpios por rezago individual.\nEn el modelo operativo, los coeficientes de rezagos por separado son inestables y con precisión desigual, algo esperable cuando la trayectoria de I+D anual está fuertemente correlacionada consigo misma. Aun así, el bloque temporal de I+D aporta información relevante en conjunto para explicar lpat.\nLa comparación clave se sostiene en el mismo criterio inferencial: el test conjunto de rezagos rechaza tanto en FE clásico (F(5,884)=3.18, p=0.0075) como en FE con cluster por firma (F(5,225)=2.96, p=0.0131), por lo que la lectura central del bloque dinámico permanece bajo inferencia robusta.\n\n\n\n\n\n\n\n\n\n\nEspecificación\nCoeficiente clave\nError estándar\nIC 95%\nLectura\n\n\n\n\nFE base (lrnd)\n-0.0864\n0.0500\n[-0.1844, 0.0117]\nSeñal débil si se mira solo contemporáneo\n\n\nFE rezagos + cluster (lrnd)\n-0.3562\n0.1318\n[-0.6159, -0.0965]\nEfecto contemporáneo más intenso en modelo operativo\n\n\nFE rezagos + cluster (lrnd_1)\n-0.0876\n0.0955\n[-0.2759, 0.1007]\nRezago individual impreciso\n\n\nFE rezagos + cluster (lrnd_5)\n-0.2491\n0.1597\n[-0.5637, 0.0656]\nRezago largo con alta incertidumbre\n\n\nTest conjunto lrnd_1=...=lrnd_5=0\nF(5,225)=2.96\n-\np=0.0131\nEl bloque dinámico sí agrega poder explicativo"
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#hallazgos-secundarios-y-validación",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#hallazgos-secundarios-y-validación",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Hallazgos secundarios y validación",
+    "text": "Hallazgos secundarios y validación\nLos siguientes resultados se reportan como soporte del caso:\n\n\n\n\n\n\n\n\nChequeo secundario\nResultado\nLectura\n\n\n\n\nFE base sin bloque largo de rezagos\nN=2252, 226 firmas\nReferencia para comparar perdida de muestra y estabilidad\n\n\nFE con rezagos: estructura panel\nrho=0.964, F all u_i=0 p=0.0000\nLa heterogeneidad fija de firma es empiricamente relevante\n\n\nEspecificacion con rndstck\nCoeficiente negativo y significativo en ese modelo\nContraste útil, subordinado al modelo operativo\n\n\nFE-AR(1)\nSensibilidad de coeficientes individuales\nSe usa como validación adicional, no como conclusión principal"
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#lectura-profesional-del-caso",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nEsta pieza muestra una forma aplicada de leer innovación en panel: fijar primero la pregunta de negocio empírica (cuando rinde la I+D), después elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).\nLa contribución de la pieza no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas."
+  },
+  {
+    "objectID": "econometria/piezas/t08_panel_fe_patentes.html#cierre",
+    "href": "econometria/piezas/t08_panel_fe_patentes.html#cierre",
+    "title": "Cuando rinde la I+D: evidencia de patentamiento en panel de firmas",
+    "section": "Cierre",
+    "text": "Cierre\nLa evidencia de T8 es consistente con una narrativa de innovación de maduracion temporal: el patentamiento observable no se explica de forma limpia por una sola variación anual de I+D, sino por el bloque de esfuerzo acumulado reciente.\nLa lectura final queda deliberadamente prudente, distinguiendo claramente control de heterogeneidad no observada (FE), inferencia (cluster) y precisión de coeficientes (colinealidad)."
   },
   {
     "objectID": "econometria/piezas/t06_panel_fe_inicial.html",
     "href": "econometria/piezas/t06_panel_fe_inicial.html",
-    "title": "T06 · Efectos fijos en panel salarial: qué identifica la variación intraunidad",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
     "section": "",
-    "text": "← Volver al índice de Econometría\nControl de heterogeneidad fija y lectura metodológica prudente"
+    "text": "En este panel salarial, FE identifica con variación within y deja fuera regresores invariantes en el tiempo\n\n\nLa especificación xtreg ..., fe es coherente cuando preocupa la correlación entre heterogeneidad individual fija no observada (c_i) y regresores, pero en este taller no se ejecuta Hausman y no corresponde declarar ganador entre FE y RE.\nEn lectura económica y siempre dentro de esta especificación FE, los resultados sugieren asociaciones within coherentes con la narrativa del caso: cuando un trabajador acumula exper en su propia trayectoria, su lwage tiende a aumentar a una tasa decreciente (expersq &lt; 0); cuando cambia su condición de union de 0 a 1, el log-salario aparece asociado positivamente; y cuando cambia married de 0 a 1, también se observa una asociación positiva dentro de la misma persona en el tiempo. Estas asociaciones no deben leerse automáticamente como libres de sesgo."
   },
   {
-    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#documento-completo-html",
-    "href": "econometria/piezas/t06_panel_fe_inicial.html#documento-completo-html",
-    "title": "T06 · Efectos fijos en panel salarial: qué identifica la variación intraunidad",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#resumen",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#resumen",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Resumen",
+    "text": "Resumen\nEste caso introduce FE en panel salarial con una regla de lectura clara: los coeficientes se identifican a partir de cambios dentro del mismo individuo en el tiempo. Por construcción, los regresores invariantes en t quedan absorbidos y no se estiman en la ecuación within.\nEn términos aplicados, este ejercicio ayuda a leer dimensiones laborales dinamicas del salario en una misma persona, como acumulación de experiencia o cambios de estado laboral y familiar. Seguir trabajadores en panel permite separar mejor esos movimientos en el tiempo que una lectura pooled simple, que mezcla diferencias entre personas con cambios dentro de cada trayectoria individual.\nAdemas, el test F test that all u_i=0 aporta evidencia central de que la heterogeneidad individual no observada es relevante, por lo que no conviene tratar estos datos como pooled simple."
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#pregunta",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#pregunta",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo cambia la lectura de una ecuación salarial cuando pasamos de una mirada agrupada a un estimador de efectos fijos que usa variación within?\n\nVariable dependiente: lwage (log del salario por hora). Regresores con variación within en el modelo operativo: exper, expersq, union, married. Panel: nr (1980-1987)."
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#idea-central",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#idea-central",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Idea central",
+    "text": "Idea central\nFE mejora el problema de sesgo por heterogeneidad fija no observada cuando esa heterogeneidad puede correlacionarse con regresores.\nEse avance no vuelve automáticamente insesgado el resultado ni resuelve otras fuentes de endogeneidad en variables que cambian en el tiempo.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#por-qué-este-problema-importa",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn paneles salariales, pueden operar rasgos persistentes no observados o imperfectamente medidos del trabajador que distorsionen la lectura de modelos agrupados. FE aborda ese riesgo eliminando el componente fijo individual en la transformacion within.\nEl costo es metodológicamente relevante: cualquier covariable constante en el tiempo para cada individuo queda absorbida. Por eso, FE cambia no solo la estimación, sino también el tipo de pregunta que efectivamente podemos contestar con los datos."
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#datos-y-variables",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#datos-y-variables",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con el panel wagepan (N = 4360 observaciones, 545 individuos, 8 periodos).\n\nVariable dependiente: lwage (log del salario por hora)\nRegresores en la especificación de partida: educ, exper, expersq, union, married, black\nRegresores efectivamente estimables en FE base: exper, expersq, union, married\nRegresores absorbidos en FE base: educ, black\nUnidad de panel: individuo (nr)"
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#estrategia-empírica",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#estrategia-empírica",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia aplicada en T6 es:\n\nEstimar FE de primera referencia para fijar lectura within.\nVerificar explicitamente que las invariantes (educ, black) quedan omitidas por colinealidad en la transformacion FE.\nUsar F test that all u_i=0 como evidencia central sobre la relevancia de la estructura panel.\nIncorporar dummies de año y, luego, interacciones educ#year como chequeos secundarios de especificación.\nReportar el alcance metodologico: en este taller no hay contraste Hausman, por lo que no corresponde afirmar superioridad empírica de FE frente a RE."
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nUna lectura ingenua puede cometer dos errores:\n\nTratar FE como una regresion “más”, sin reconocer que identifica solo con variación intraindividuo.\nConcluir que FE ya cierra toda la agenda de identificación.\n\nEl mensaje profesional de T6 es más estricto: FE mejora un problema puntual de sesgo por heterogeneidad fija no observada, pero no elimina por sí solo otras fuentes de endogeneidad en regresores variables en el tiempo."
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#resultados-principales",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#resultados-principales",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa evidencia principal del taller se centra en los coeficientes within de variables con variación temporal. Los estadísticos globales y las omisiones estructurales quedan como respaldo metodológico.\n\n\n\n\n\n\n\n\n\nVariable within\nFE base: coef. (EE)\nFE + dummies de año: coef. (EE)\nLectura econométrica\n\n\n\n\nexper\n0.1168 (0.0084)\n0.1321 (0.0098)\nRetorno within positivo\n\n\nexpersq\n-0.0043 (0.0006)\n-0.0052 (0.0007)\nCurvatura cóncava robusta\n\n\nunion\n0.0821 (0.0193)\n0.0800 (0.0193)\nPrima within positiva\n\n\nmarried\n0.0453 (0.0183)\n0.0467 (0.0183)\nAsociación within positiva"
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#hallazgos-secundarios-y-especificación",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#hallazgos-secundarios-y-especificación",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Hallazgos secundarios y especificación",
+    "text": "Hallazgos secundarios y especificación\nLos contrastes temporales se reportan como chequeos auxiliares, subordinados al mensaje principal del caso.\nEn FE con dummies de año (d81-d87), el test conjunto de exclusion no rechaza al 5% (F(5,3805)=1.50, p=0.1863).\nEn FE con c.educ##i.year, las interacciones aparecen sin evidencia estadística robusta en este taller.\n\n\n\n\n\n\n\n\n\nContraste auxiliar\nResultado reportado\nProb &gt; F\nInterpretación econométrica\n\n\n\n\nVariables invariantes en FE\neduc y black omitidas\n-\nFE no identifica regresores constantes en el tiempo\n\n\nEstructura panel\nF all u_i=0: F(544,3811)=9.71\n0.0000\nPooled simple es insuficiente\n\n\nFE + dummies de año\nR2 within = 0.1806\n-\nCambio acotado frente al FE base\n\n\nTest conjunto d82-d87\nF(5,3805)=1.50\n0.1863\nSin evidencia fuerte para mantener bloque temporal En esta base\n\n\nFE + educ#year\nR2 within = 0.1814\n-\nInteracciones sin aporte robusto; contraste didactico"
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#lectura-profesional-del-caso",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nT6 consolida una regla aplicada de panel:\n\nFE es una estrategia coherente cuando preocupa c_i correlacionado con regresores.\nEsa coherencia no habilita, por si sola, una afirmacion concluyente.\nEn esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.\n\nLa conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados."
+  },
+  {
+    "objectID": "econometria/piezas/t06_panel_fe_inicial.html#cierre",
+    "href": "econometria/piezas/t06_panel_fe_inicial.html#cierre",
+    "title": "Efectos fijos en panel salarial: qué identifica la variación within y qué queda fuera",
+    "section": "Cierre",
+    "text": "Cierre\nEste taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.\nCon evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial."
   },
   {
     "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html",
     "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html",
-    "title": "T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
     "section": "",
-    "text": "← Volver al índice de Econometría\nEstimación agrupada y sesgo potencial por efectos no observados"
+    "text": "En este panel salarial, cluster mejora la inferencia del pooled, pero no corrige el sesgo por heterogeneidad inobservable\n\n\nEl pooled OLS con vce(cluster nr) funciona como benchmark operativo para comparar y reportar, pero no es una solución final de identificación cuando c_i puede estar correlacionado con los regresores."
   },
   {
-    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#documento-completo-html",
-    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#documento-completo-html",
-    "title": "T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#resumen",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#resumen",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Resumen",
+    "text": "Resumen\nEste caso separa con claridad dos planos que no conviene mezclar en análisis de panel: (i) inferencia estadística y (ii) sesgo de identificación. La correccion de varianzas con cluster por individuo mejora la inferencia del pooled OLS, pero no resuelve el posible sesgo por heterogeneidad inobservable fija (c_i) correlacionada con los regresores."
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#pregunta",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#pregunta",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo cambia la lectura de una ecuación salarial en panel cuando reconocemos que la heterogeneidad individual no observada puede estar correlacionada con los regresores?\n\nVariable dependiente: lwage (log del salario por hora). Regresores centrales: educ, exper, expersq, union, married, black."
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#idea-central",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#idea-central",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Idea central",
+    "text": "Idea central\nEn T4, el pooled con vce(cluster nr) es un benchmark operativo de inferencia y comparación.\nNo es una solución final al problema de identificación cuando c_i no observado puede sesgar coeficientes.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#por-qué-este-problema-importa",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nUna ecuación salarial en panel resume como cambian los ingresos laborales cuando cambian características observables del trabajador a lo largo del tiempo. En esa lectura, el objetivo no es solo describir correlaciones, sino separar de forma razonable diferencias permanentes entre personas y cambios dentro de cada trayectoria laboral.\nEn este contexto, c_i representa rasgos persistentes no observados o imperfectamente medidos del trabajador. Si esos rasgos se relacionan con educ, union u otras covariables, el pooled OLS puede mezclar asociación estadística con sesgo por variable omitida.\nCorregir la matriz de varianzas con cluster es necesario para no sobreconfiar en la precisión inferencial, pero esa correccion no limpia por si sola el problema de identificación."
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#datos-y-variables",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#datos-y-variables",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con un panel balanceado de trabajadores (N = 4360, 545 individuos, 1980-1987).\n\nVariable dependiente: lwage (log del salario por hora)\nRegressors principales: educ, exper, expersq, union, married, black\nControles temporales evaluados: i.year\nUnidad de cluster para inferencia: individuo (nr)"
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#estrategia-empírica",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#estrategia-empírica",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia aplicada en T4 es:\n\nEstimar pooled OLS en niveles como benchmark.\nCorregir inferencia con vce(cluster nr) para heterocedasticidad y dependencia intraindividuo.\nEvaluar la contribución de controles de tiempo como chequeo de especificación.\nAnalizar primeras diferencias como estrategia alternativa para remover c_i, explicitando su capacidad empírica En esta base."
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nUn análisis ingenuo confunde dos mensajes distintos:\n\nInferencia: sin cluster, los errores estándar pueden estar mal calibrados.\nIdentificacion: aun con cluster, pooled puede estar sesgado si c_i se correlaciona con x_it.\n\nLa leccion profesional del caso es mantener esa distinción: mejorar inferencia no equivale a resolver sesgo por heterogeneidad inobservable.\nSi pooled OLS se reporta como resultado final sin esta salvedad, puede comunicarse una lectura salarial insuficientemente depurada por heterogeneidad persistente. El riesgo no es “técnico” en abstracto: puede sesgar la interpretación económica de retornos salariales y relaciones laborales relevantes para comparaciones aplicadas."
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#resultados-principales",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#resultados-principales",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nEl benchmark pooled con cluster mantiene magnitudes economicas similares a las versiones clásica/robusta, pero con errores estándar más exigentes para inferencia. Esa es una mejora de reporte, no una garantia de identificación.\nEn términos aplicados, los coeficientes de la ecuación salarial deben leerse como asociaciones condicionadas al modelo: cuando c_i no está bien tratado, parte de las diferencias persistentes entre trabajadores puede quedar absorbida en esos parámetros.\n\n\n\n\n\n\n\n\n\n\nModelo\nCoef. educ\nError estándar\nIC 95%\nN\n\n\n\n\nPooled OLS (clásico)\n0.0988\n0.0046\n[0.0897, 0.1078]\n4360\n\n\nPooled OLS + cluster nr\n0.0988\n0.0089\n[0.0812, 0.1163]\n4360\n\n\nPooled OLS + i.year + cluster nr\n0.0907\n0.0108\n[0.0694, 0.1120]\n4360"
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#hallazgos-secundarios-y-contrastes",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#hallazgos-secundarios-y-contrastes",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Hallazgos secundarios y contrastes",
+    "text": "Hallazgos secundarios y contrastes\nComo chequeo de especificación, el test conjunto de dummies de año no rechaza al 5% (F(7,544)=1.34, p=0.2296) en este caso. Por eso, dentro del subbloque pooled, el cierre operativo queda en pooled OLS con vce(cluster nr) sin dummies de año; este cierre no resuelve por sí solo el problema general de identificación frente a c_i.\nEn primeras diferencias, la estrategia tiene capacidad empírica limitada En esta base: al diferenciar, D.educ queda omitida por falta de variación temporal útil y D.exper por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.\n\n\n\n\n\n\n\n\nBloque\nResultado\nLectura\n\n\n\n\nTest conjunto d81-d87\np = 0.2296\nHallazgo secundario de especificación\n\n\nFD: D.educ\nOmitida\nSin variación temporal útil dentro de individuo\n\n\nFD: D.exper\nOmitida\nColinealidad en diferencias para esta base\n\n\nFD: D.expersq\ncoef. = -0.0058, p &lt; 0.001\nVariable con variación útil en FD"
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#lectura-profesional-del-caso",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nT4 deja un criterio aplicado claro:\n\npooled + cluster es un benchmark operativo valido para inferencia y comparación.\nEse benchmark no resuelve por sí mismo la identificación cuando hay riesgo de c_i correlacionado con regresores.\nLas alternativas que eliminan c_i (como diferencias) pueden tener restricciones de capacidad empírica según la estructura de variación de la base.\n\nPor eso, el resultado debe comunicarse como evidencia de referencia econométrica, no como conclusión cerrada."
+  },
+  {
+    "objectID": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#cierre",
+    "href": "econometria/piezas/t04_panel_pooled_heterogeneidad.html#cierre",
+    "title": "Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS",
+    "section": "Cierre",
+    "text": "Cierre\nEste taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.\nEl pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled. La decisión final del taller es metodológica: cierre operativo en el subbloque pooled y reconocimiento explícito de que el problema general requiere tratar c_i con estrategias adicionales."
   },
   {
     "objectID": "econometria/piezas/t02_panel_pooled_salarios.html",
     "href": "econometria/piezas/t02_panel_pooled_salarios.html",
-    "title": "T02 · MCO agrupado en panel salarial: una estimación de referencia",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
     "section": "",
-    "text": "← Volver al índice de Econometría\nInferencia en panel salarial con errores robustos y agrupación por individuo"
+    "text": "En panel salarial, la inferencia cambia cuando se respeta la estructura del error\n\n\nEl pooled OLS puede ser un benchmark útil, pero la lectura econométrica mejora cuando la inferencia se corrige con varianzas robustas y clusterizadas por individuo.\nEn lectura sustantiva de este panel, los signos estimados son consistentes con asociaciones salariales conocidas en datos laborales: mayor educ se asocia con salarios más altos, pertenecer a union se asocia con una prima salarial positiva y married aparece asociado con mayor salario promedio observado. Estas asociaciones son informativas para lectura aplicada del mercado laboral de la muestra, sin leerlas automáticamente como libres de sesgo.\nCon esta evidencia, la decisión aplicada no es “cambiar de historia económica”, sino cambiar el estándar de reporte: conservar pooled como benchmark y comunicar resultados con inferencia robusta a la estructura real del panel."
   },
   {
-    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#documento-completo-html",
-    "href": "econometria/piezas/t02_panel_pooled_salarios.html#documento-completo-html",
-    "title": "T02 · MCO agrupado en panel salarial: una estimación de referencia",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#resumen",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#resumen",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Resumen",
+    "text": "Resumen\nEste caso evalúa qué puede y qué no puede decir un pooled OLS cuando los datos tienen estructura de panel. El mensaje central es práctico: el modelo puede usarse como baseline, siempre que la inferencia se corrija para heterocedasticidad y dependencia serial dentro de individuo.\nLa base sigue a trabajadores a lo largo de varios años, observando su evolucion salarial junto con rasgos laborales y demograficos. En este entorno de panel laboral (1980-1987), un mismo individuo aparece repetidamente, por lo que los errores pueden estar correlacionados en el tiempo. Eso hace del caso un ejemplo aplicado útil para decidir como reportar resultados salariales con inferencia estadisticamente creíble."
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#pregunta",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#pregunta",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo cambia la validez de la inferencia estadística en una ecuación salarial de panel cuando pasamos de errores clásicos a errores robustos y clusterizados por individuo?\nEn términos aplicados: cuánto cambia la confianza que podemos tener en los resultados salariales cuando tratamos este panel como panel, y no como una muestra transversal común.\n\nVariable dependiente: lwage (log del salario por hora). Regresores centrales: educ, exper, expersq, union, married, black y dummies de año."
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#idea-central",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#idea-central",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Idea central",
+    "text": "Idea central\nEn esta pieza se separan dos planos:\ninferencia (errores estándar mal calibrados si ignoramos la estructura panel) y sesgo potencial en coeficientes por heterogeneidad inobservable fija (c_i) no tratada por pooled OLS.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#por-qué-este-problema-importa",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nTratar un panel como si fuera una sección cruzada simple puede producir inferencia poco confiable: errores estándar subestimados y sobreconfianza en la significancia estadística.\nCorregir la varianza con vce(cluster nr) mejora la validez inferencial frente a heterocedasticidad y autocorrelación intraindividuo. Sin embargo, eso no elimina automáticamente el posible sesgo por heterogeneidad inobservable fija correlacionada con los regresores."
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#datos-y-variables",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#datos-y-variables",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con un panel balanceado de trabajadores (N = 4360 observaciones, 545 individuos observados entre 1980 y 1987).\n\nVariable dependiente: lwage (log del salario por hora)\nVariables explicativas principales: educ, exper, expersq, union, married, black\nControles de tiempo: i.year\nUnidad de cluster: individuo (nr)"
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#estrategia-empírica",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#estrategia-empírica",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia aplicada en el taller es:\n\nEstimar pooled OLS con varianza clásica.\nReestimar con varianza robusta tipo Huber-White.\nReestimar con varianza clusterizada por individuo.\nAgregar dummies de año para capturar shocks comunes en el tiempo.\nEjecutar diagnósticos de dependencia serial (AR(1) en residuos) y heterocedasticidad (LM).\nReportar FGLS como contraste secundario, no como especificación principal."
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nSi nos quedamos con inferencia clásica, podemos sobrestimar precisión. En cambio, al clusterizar por individuo, los errores estándar aumentan de forma relevante en varias covariables, aunque los coeficientes mantienen signo y orden de magnitud.\nEsta estabilidad en magnitudes, junto con cambios en incertidumbre, muestra que el punto critico del caso no es “cambiar de historia económica”, sino calibrar correctamente la inferencia."
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#resultados-principales",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#resultados-principales",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nEl coeficiente de educ se mantiene alrededor de 0.09-0.10 en las especificaciones pooled. La diferencia econométricamente relevante aparece en los errores estándar cuando se usa vce(cluster nr).\n\n\n\n\n\n\n\n\n\n\nModelo\nCoeficiente de educ\nError estándar\nIC 95%\nN\n\n\n\n\nPooled OLS (clásico)\n0.0988\n0.0046\n[0.0897, 0.1078]\n4360\n\n\nPooled OLS robusto\n0.0988\n0.0045\n[0.0899, 0.1076]\n4360\n\n\nPooled OLS cluster nr\n0.0988\n0.0089\n[0.0812, 0.1163]\n4360\n\n\nPooled OLS + i.year + cluster nr\n0.0907\n0.0108\n[0.0694, 0.1120]\n4360\n\n\nFGLS AR(1) hetero panel (contraste)\n0.0939\n0.0048\n[0.0845, 0.1032]\n4360"
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#diagnosticos-clave",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#diagnosticos-clave",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Diagnosticos clave",
+    "text": "Diagnosticos clave\nLa evidencia empírica es consistente con dos hechos:\n\nDependencia serial dentro de individuo: en la regresion auxiliar, uhat_L1 es altamente significativo (coef. = 0.555, p &lt; 0.001).\nHeterocedasticidad: prueba LM con LM = 28.02, df = 15, p = 0.021, por lo que se rechaza homocedasticidad al 5%.\n\nPor lo tanto, la inferencia clásica no es adecuada para este caso; la especificación con vce(cluster nr) es la opcion más defendible como baseline operativo.\n\n\n\n\n\n\n\n\nDiagnostico\nResultado\nLectura\n\n\n\n\nAR(1) auxiliar con residuos\nuhat_L1 p &lt; 0.001\nEvidencia compatible con dependencia serial intraindividuo\n\n\nLM heterocedasticidad\np = 0.021\nEvidencia compatible con heterocedasticidad\n\n\nModelo operativo del caso\nPooled + i.year + cluster\nInferencia robusta para baseline de panel"
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#lectura-profesional-del-caso",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nLa conclusión aplicada es directa: pooled OLS en panel puede ser un benchmark útil, siempre que la inferencia se ajuste a la estructura del error.\nAl mismo tiempo, hay un límite que no debe diluirse: clusterizar corrige inferencia, pero no resuelve por sí solo la heterogeneidad inobservable fija (c_i) potencialmente correlacionada con x_it.\nEsa distinción permite una lectura madura del resultado: baseline defendible hoy, y paso natural hacia FE/RE para tratar el problema de heterogeneidad en la siguiente etapa del análisis."
+  },
+  {
+    "objectID": "econometria/piezas/t02_panel_pooled_salarios.html#cierre",
+    "href": "econometria/piezas/t02_panel_pooled_salarios.html#cierre",
+    "title": "Pooled OLS en panel salarial: un benchmark útil, pero no la estimación final",
+    "section": "Cierre",
+    "text": "Cierre\nEste caso muestra una práctica clave de econometría aplicada en panel: antes de sofisticar el modelo estructural, hay que asegurar que la inferencia estadística este bien calibrada.\nEl pooled OLS corregido por cluster no es el destino final, pero si un punto de partida profesionalmente útil cuando se comunica evidencia con criterio.\nPara un analista aplicado, la leccion práctica es concreta: en panel salarial, no alcanza con “tener coeficientes”; hay que reportarlos con una estrategia de inferencia coherente con el tipo de datos para que la decisión técnica también sea una decisión profesional defendible."
   },
   {
     "objectID": "econometria/index.html",
     "href": "econometria/index.html",
     "title": "Econometría",
     "section": "",
-    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
+    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales"
   },
   {
     "objectID": "econometria/index.html#índice-de-piezas-aplicadas",
     "href": "econometria/index.html#índice-de-piezas-aplicadas",
     "title": "Econometría",
     "section": "",
-    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\nVer ficha de la pieza\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\nVer ficha de la pieza\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\nVer ficha de la pieza\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\nVer ficha de la pieza\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\nVer ficha de la pieza\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\nVer ficha de la pieza\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\nVer ficha de la pieza\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\nVer ficha de la pieza\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\nVer ficha de la pieza\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\nVer ficha de la pieza\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\nVer ficha de la pieza\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales\nVer ficha de la pieza"
+    "text": "Esta sección reúne 17 piezas ordenadas por número de taller. Cada entrada resume tema, método y tipo de datos, con acceso a su ficha individual.\n\n\n\nEducación endógena y salario con variables instrumentales\nMétodo principal: IV / 2SLS\nTipo de datos: Corte transversal (microdatos laborales)\n\n\n\nInferencia en panel salarial con errores robustos y agrupación por individuo\nMétodo principal: MCO agrupado (Pooled OLS) con VCE robusta agrupada\nTipo de datos: Panel corto (individuos)\n\n\n\nRelación entre q e inversión con controles temporales\nMétodo principal: MCO agrupado (Pooled OLS) en panel\nTipo de datos: Panel de firmas\n\n\n\nEstimación agrupada y sesgo potencial por efectos no observados\nMétodo principal: MCO agrupado (Pooled OLS) y sesgo por heterogeneidad\nTipo de datos: Panel salarial\n\n\n\nRE en salarios con lectura prudente de supuestos\nMétodo principal: Efectos aleatorios (RE-GLS)\nTipo de datos: Panel salarial\n\n\n\nControl de heterogeneidad fija y lectura metodológica prudente\nMétodo principal: Efectos fijos (within)\nTipo de datos: Panel salarial\n\n\n\nSubsidios de capacitación y desperdicio productivo\nMétodo principal: Efectos fijos con errores agrupados\nTipo de datos: Panel de plantas\n\n\n\nInnovación empresarial con efectos fijos y dinámica temporal\nMétodo principal: Efectos fijos en panel\nTipo de datos: Panel de firmas\n\n\n\nComparación FE, RE y CRE (Mundlak)\nMétodo principal: Comparación FE, RE y CRE\nTipo de datos: Panel corto de plantas\n\n\n\nCuándo tratar el precio como endógeno en panel\nMétodo principal: Variables instrumentales en panel\nTipo de datos: Panel de rutas aéreas\n\n\n\nModelos binarios sobre ingreso, experiencia e hijos\nMétodo principal: Logit/Probit binario\nTipo de datos: Microdatos de hogares\n\n\n\nModelo binario con regresor potencialmente endógeno\nMétodo principal: Función de control en modelo binario\nTipo de datos: Microdatos de hogares\n\n\n\nAsociación al admitir endogeneidad de variable discreta\nMétodo principal: Modelo binario con VI discreta\nTipo de datos: Microdatos de hogares\n\n\n\nCambios al modelar heterogeneidad no observada\nMétodo principal: Pooled, RE y CRE en respuesta binaria\nTipo de datos: Panel corto de mujeres\n\n\n\nProbabilidades de estudio, hogar y empleo\nMétodo principal: Logit multinomial\nTipo de datos: Panel laboral corto\n\n\n\nHeterogeneidad persistente en escuela, hogar y trabajo\nMétodo principal: Multinomial agrupado + CRE\nTipo de datos: Panel laboral\n\n\n\nProbabilidades por categoría y efectos marginales\nMétodo principal: Logit/Probit ordenado\nTipo de datos: Microdatos individuales"
   },
   {
     "objectID": "causalidad/index.html",
@@ -170,128 +730,765 @@
   {
     "objectID": "econometria/piezas/t01_vi.html",
     "href": "econometria/piezas/t01_vi.html",
-    "title": "T01 · Cuando MCO no alcanza",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
     "section": "",
-    "text": "← Volver al índice de Econometría\nEducación endógena y salario con variables instrumentales"
+    "text": "La estimación cambia de forma importante cuando educ se trata como endógena\n\n\nEn este caso, pasar de MCO a IV/2SLS no es un detalle técnico: cambia la magnitud del retorno estimado de la educación y mejora la credibilidad de la interpretación."
   },
   {
-    "objectID": "econometria/piezas/t01_vi.html#documento-completo-html",
-    "href": "econometria/piezas/t01_vi.html#documento-completo-html",
-    "title": "T01 · Cuando MCO no alcanza",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t01_vi.html#resumen",
+    "href": "econometria/piezas/t01_vi.html#resumen",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Resumen",
+    "text": "Resumen\nEste caso analiza cómo cambia la estimación del retorno de la educación sobre el salario cuando la educación se trata como potencialmente endógena. La comparación entre MCO e IV/2SLS muestra que, cuando hay evidencia de endogeneidad, el análisis ingenuo puede subestimar o distorsionar la magnitud del efecto."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#pregunta",
+    "href": "econometria/piezas/t01_vi.html#pregunta",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cambia de forma sustantiva la estimación del retorno salarial asociado a la educación cuando educ se trata como endógena y se estima con IV/2SLS, instrumentando con meduc y feduc, en lugar de MCO?\n\nVariable dependiente: lwage (log del salario por hora). Variable endógena: educ. Controles: exper, expersq. Instrumentos: meduc, feduc."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#idea-central",
+    "href": "econometria/piezas/t01_vi.html#idea-central",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Idea central",
+    "text": "Idea central\nUn MCO simple puede mezclar el efecto de la educación con habilidad u otros factores no observados. La estrategia IV usa la variación exógena inducida por la educación de los padres para identificar un parámetro más creíble.\nEjercicio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t01_vi.html#por-qué-este-problema-importa",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO queda sesgado por endogeneidad.\nEse es el problema central del caso: distinguir entre una simple asociación y un efecto estimado con una estrategia más creíble de identificación."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#datos-y-variables",
+    "href": "econometria/piezas/t01_vi.html#datos-y-variables",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con datos de corte transversal a nivel de individuos. La base corresponde a un ejercicio clásico de economía laboral con microdatos de salarios y educación. Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados. En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.\n\nVariable dependiente: lwage (log del salario por hora)\nVariable endógena de interés: educ\nControles: exper, expersq\nInstrumentos excluidos: meduc, feduc"
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#estrategia-empírica",
+    "href": "econometria/piezas/t01_vi.html#estrategia-empírica",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia del análisis es la siguiente:\n\nEstimar una ecuación salarial por MCO.\nReestimar el modelo usando IV/2SLS, tratando a educ como endógena.\nEvaluar si la endogeneidad es empíricamente relevante.\nRevisar la fortaleza de la primera etapa.\nVerificar si los instrumentos superan los tests de sobreidentificación."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t01_vi.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nUn modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno de la educación libre de sesgo.\nLa lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.\nHallazgo principal: al instrumentar educ con meduc y feduc, el coeficiente estimado para la educación aumenta de forma importante respecto de MCO, en línea con la presencia de sesgo cuando educ se trata como exógena."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#resultados-principales",
+    "href": "econometria/piezas/t01_vi.html#resultados-principales",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nEn MCO, el coeficiente estimado de educ es aproximadamente 0.078. Cuando se instrumenta la educación con la educación de la madre y del padre, el coeficiente IV/2SLS robusto sube a aproximadamente 0.146.\nEsto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV. En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV. No es evidencia definitiva por sí sola, pero sí una señal fuerte de que tratar educ como exógena puede subestimar de manera relevante el efecto de interés.\n\n\n\nModelo\nCoeficiente de educ\nError estándar\nIC 95%\nN\n\n\n\n\nMCO estándar\n0.0780\n0.0066\n[0.0650, 0.0910]\n935\n\n\nMCO robusto\n0.0780\n0.0068\n[0.0646, 0.0913]\n935\n\n\nIV/2SLS\n0.1457\n0.0196\n[0.1072, 0.1842]\n722\n\n\nIV/2SLS robusto\n0.1457\n0.0183\n[0.1099, 0.1815]\n722\n\n\n\nLa diferencia de muestra (N = 935 en MCO frente a N = 722 en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV. Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#diagnósticos-clave",
+    "href": "econometria/piezas/t01_vi.html#diagnósticos-clave",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Diagnósticos clave",
+    "text": "Diagnósticos clave\n\n1. Endogeneidad\nEl test de endogeneidad rechaza la hipótesis nula de exogeneidad de educ. Por lo tanto, no hay una buena base empírica para quedarse con MCO como especificación principal.\n\n\n2. Relevancia de instrumentos\nLa primera etapa muestra que meduc y feduc tienen poder explicativo sobre educ. Los estadísticos reportados para relevancia son altos, lo que reduce la preocupación por instrumentos débiles.\n\n\n3. Sobreidentificación\nLos tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta. En este contexto, meduc y feduc se usan como instrumentos plausibles porque están correlacionados con la escolaridad de la persona y aportan variación relevante en primera etapa. Esa plausibilidad sigue siendo una hipótesis económica sustantiva: los tests estadísticos ayudan a evaluarla, pero no reemplazan la discusión de mecanismo y contexto.\n\n\n\n\n\n\n\n\nDiagnóstico\nResultado\nLectura\n\n\n\n\nTest de endogeneidad\nchi2 = 17.2702, p = 0.0000\nSe rechaza exogeneidad de educ\n\n\nPrimera etapa\nKP rk Wald F = 70.135\nInstrumentos fuertes\n\n\nSobreidentificación (Hansen J)\np = 0.8767\nNo hay evidencia contra la validez conjunta"
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t01_vi.html#lectura-profesional-del-caso",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nLa conclusión principal no es simplemente estimar por 2SLS. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:\n\njustificar por qué MCO puede estar sesgado;\ndemostrar que la primera etapa es suficientemente fuerte;\nno sobreinterpretar los tests de sobreidentificación.\n\nEn otras palabras, el valor del caso no está solo en la técnica, sino en el criterio econométrico con el que se decide cuándo abandonar una estimación ingenua."
+  },
+  {
+    "objectID": "econometria/piezas/t01_vi.html#cierre",
+    "href": "econometria/piezas/t01_vi.html#cierre",
+    "title": "Retorno salarial de la educación: MCO frente a IV/2SLS",
+    "section": "Cierre",
+    "text": "Cierre\nEste caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble. En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.\nConclusión: en este ejercicio, la evidencia favorece IV/2SLS como estrategia para estimar el efecto de la educación sobre el salario."
   },
   {
     "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html",
     "href": "econometria/piezas/t03_panel_qtobin_pooled.html",
-    "title": "T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
     "section": "",
-    "text": "← Volver al índice de Econometría\nRelación entre q e inversión con controles temporales"
+    "text": "En este panel de firmas, q y la inversión se mueven en una relación positiva pero decreciente\n\n\nEl pooled OLS con errores cluster por firma permite una inferencia más creíble para el benchmark, pero no elimina por sí solo los riesgos de sesgo por heterogeneidad inobservable."
   },
   {
-    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#documento-completo-html",
-    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#documento-completo-html",
-    "title": "T03 · Inversión y q de Tobin en panel: estimación agrupada con inferencia robusta",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#resumen",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#resumen",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza evalúa la relación entre la tasa de inversión de la firma (ikb) y la q de Tobin en un panel. El mensaje econométrico central separa dos planos que no conviene mezclar: (i) inferencia estadística mejor calibrada con errores cluster por firma y diagnósticos de error, y (ii) limitaciones de identificación de pooled OLS frente a heterogeneidad inobservable."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#pregunta",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#pregunta",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?\n\nVariable dependiente: ikb (I/K). Variables de interés: qb y qb_sq (q de Tobin y su cuadrado); en especificaciones dinámicas también se usa qb_1. Controles de tiempo: i.year. Unidad de cluster: cusip."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#idea-central",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#idea-central",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Idea central",
+    "text": "Idea central\nEn este caso, la inferencia y la identificación no son lo mismo.\nCluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por c_i no observado y no resuelve por sí solo el problema de identificación.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#por-qué-este-problema-importa",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn decisiones de inversión, la q de Tobin suele leerse como señal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser útil como benchmark, pero solo si la inferencia respeta la estructura del error.\nLa relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.\nAl mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia concluyente."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#datos-y-variables",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#datos-y-variables",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con un panel de firmas (N = 2,068 observaciones; 188 firmas) para el periodo 1975-1985.\nSustantivamente, este panel representa decisiones de inversión observadas repetidamente para las mismas firmas a lo largo de once años. Ese seguimiento temporal permite evaluar si el patrón entre q e inversión se sostiene al controlar shocks comunes por año, en lugar de depender de una sola foto de corte transversal.\n\nVariable dependiente: ikb (tasa de inversión sobre capital)\nRegresores de interés: qb y qb_sq\nControles temporales: i.year\nInferencia principal: vce(cluster cusip)"
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#estrategia-empírica",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#estrategia-empírica",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia aplicada en T3 fue:\n\nEstimar pooled OLS base (lineal) y su versión robusta/cluster.\nIncorporar controles temporales (i.year).\nEjecutar diagnósticos de dependencia serial y heterocedasticidad.\nComparar forma lineal vs cuadratica en qb.\nMantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.\n\nModelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del ejercicio. Como las especificaciones con qb_1 usan una muestra menor (N = 1,880) que la muestra completa (N = 2,068), la comparación se interpreta con criterio de comparabilidad muestral."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nHay dos riesgos distintos:\n\nRiesgo de inferencia: errores estándar mal calibrados si se ignoran dependencia intra-firma y heterocedasticidad.\nRiesgo de sesgo/identificación: pooled OLS puede seguir sesgado si la heterogeneidad inobservable de firma (c_i) está correlacionada con los regresores.\n\nSeparar ambos problemas es clave: corregir varianzas mejora inferencia, pero no resuelve por sí mismo el problema de identificación."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#resultados-principales",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#resultados-principales",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nEl modelo operativo (ikb sobre qb, qb_sq e indicadores de año, con cluster por firma) muestra una relación estimada positiva pero decreciente entre q e inversión en casi toda la muestra.\nEl punto de giro implicito cae en una zona muy alta de la distribucion de qb (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decisión.\nEn términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de qb, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.\n\n\n\n\n\n\n\n\n\n\nModelo\nCoeficiente clave\nError estándar\nIC 95%\nLectura\n\n\n\n\nBenchmark lineal (qb)\n0.0156\n0.0028\n[0.0102, 0.0210]\nAsociación positiva promedio\n\n\nModelo operativo cuadrático (qb)\n0.0280\n0.0030\n[0.0221, 0.0340]\nEfecto positivo en rangos habituales de q\n\n\nModelo operativo cuadrático (qb_sq)\n-0.0025\n0.0004\n[-0.0033, -0.0018]\nCurvatura decreciente estadísticamente clara\n\n\nContraste con rezago (qb_1)\n0.0141\n0.0027\n[0.0088, 0.0194]\nSensible a especificación y a omitir qb_t\n\n\n\nPara sostener la decisión del modelo operativo, la especificación contemporánea cuadrática también se verifica en muestra común (if !missing(qb_1)), manteniendo la misma lectura sustantiva."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#diagnosticos-clave",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#diagnosticos-clave",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Diagnosticos clave",
+    "text": "Diagnosticos clave\nLa evidencia del taller respalda inferencia robusta como minimo operativo:\n\n\n\n\n\n\n\n\nDiagnostico\nResultado\nLectura\n\n\n\n\nAR(1) auxiliar con residuos\nuhat_L1 p &lt; 0.001\nEvidencia compatible con dependencia serial intra-firma\n\n\nLM heterocedasticidad\np = 0.0005\nEvidencia compatible con heterocedasticidad\n\n\nTest conjunto dummies temporales\np = 0.0000\nLos efectos de año son relevantes en el benchmark"
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#lectura-profesional-del-caso",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nLa lectura aplicada es sobria:\n\nComo benchmark, pooled con i.year y errores cluster por firma entrega una base de reporte defendible en términos de inferencia.\nComo identificación, el resultado sigue siendo limitado: no elimina sesgo potencial por heterogeneidad inobservable.\nEn especificaciones dinamicas pooled (con rezago de dependiente), el riesgo de sesgo es aun mayor, por lo que no se toma como modelo operativo del caso.\n\nEsta separacion entre inferencia valida y limitaciones de identificación es el aporte principal para una comunicacion profesional del resultado."
+  },
+  {
+    "objectID": "econometria/piezas/t03_panel_qtobin_pooled.html#cierre",
+    "href": "econometria/piezas/t03_panel_qtobin_pooled.html#cierre",
+    "title": "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta",
+    "section": "Cierre",
+    "text": "Cierre\nT3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.\nPara un analista aplicado, Esta pieza si permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada."
   },
   {
     "objectID": "econometria/piezas/t05_panel_re.html",
     "href": "econometria/piezas/t05_panel_re.html",
-    "title": "T05 · Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
     "section": "",
-    "text": "← Volver al índice de Econometría\nRE en salarios con lectura prudente de supuestos"
+    "text": "En este panel salarial, RE ofrece eficiencia y conserva regresores invariantes, pero depende de un supuesto exigente\n\n\nLa especificación de efectos aleatorios es útil para modelar heterogeneidad no observada y mantener variables como educ, siempre que sea defendible el supuesto corr(c_i, x_it)=0."
   },
   {
-    "objectID": "econometria/piezas/t05_panel_re.html#documento-completo-html",
-    "href": "econometria/piezas/t05_panel_re.html#documento-completo-html",
-    "title": "T05 · Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t05_panel_re.html#resumen",
+    "href": "econometria/piezas/t05_panel_re.html#resumen",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Resumen",
+    "text": "Resumen\nEste caso presenta una especificación de efectos aleatorios para salarios en panel. El mensaje central es doble: RE puede ser eficiente y, además, permite conservar regresores invariantes en el tiempo como educ, pero su interpretación depende de un supuesto estructural fuerte sobre la relación entre heterogeneidad inobservable y regresores."
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#pregunta",
+    "href": "econometria/piezas/t05_panel_re.html#pregunta",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo usar RE en un panel salarial para obtener eficiencia y mantener variables invariantes en el tiempo, sin sobreafirmar identificación cuando no se contrasta RE frente a FE?\n\nVariable dependiente: lwage (log del salario por hora). Regresores centrales: educ, exper, expersq, union, married, black. Panel: nr (1980-1987)."
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#idea-central",
+    "href": "econometria/piezas/t05_panel_re.html#idea-central",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Idea central",
+    "text": "Idea central\nRE no solo ofrece una vía eficiente para modelar heterogeneidad no observada bajo corr(c_i, x_it)=0, sino que también permite conservar regresores invariantes en el tiempo, como educ, que son relevantes En esta aplicación.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t05_panel_re.html#por-qué-este-problema-importa",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn paneles salariales, parte de la variación de lwage responde a rasgos persistentes del individuo que no observamos directamente. Ignorar ese componente puede degradar el modelado del error compuesto.\nEn términos aplicados, esta especificación ayuda a estudiar diferencias salariales entre trabajadores cuando interesa separar lo que cambia en el tiempo (por ejemplo, experiencia o estado sindical) de rasgos relativamente estables de cada persona. Por eso el formato panel es natural en este ejemplo: permite seguir a los mismos trabajadores y distinguir mejor patrones persistentes de variaciones anuales.\nLa propuesta RE captura esa heterogeneidad como parte de la estructura estocástica y, al mismo tiempo, evita perder covariables invariantes en el tiempo. Ese beneficio viene con una condición fuerte de exogeneidad entre c_i y los regresores.\nEn este caso, preservar educ no es solo una conveniencia técnica frente a FE: es sustantivamente relevante porque la escolaridad es una variable central para describir diferencias salariales entre trabajadores y forma parte del nucleo interpretativo del ejercicio."
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#datos-y-variables",
+    "href": "econometria/piezas/t05_panel_re.html#datos-y-variables",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con el panel wagepan (N = 4360 observaciones, 545 individuos, 8 periodos).\n\nVariable dependiente: lwage (log del salario por hora)\nRegresores: educ, exper, expersq, union, married, black\nUnidad de panel: individuo (nr)\nEspecificacion principal: xtreg ..., re vce(cluster nr)"
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#estrategia-empírica",
+    "href": "econometria/piezas/t05_panel_re.html#estrategia-empírica",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia econométrica de T5 es:\n\nEstimar RE clásico (xtreg ..., re) para obtener coeficientes y descomposicion de varianza.\nReestimar RE con inferencia robusta/cluster por individuo.\nEvaluar la relevancia del componente individual con rho.\nContrastar H0: var(c_i)=0 con el estadistico Z reportado en el taller.\nReportar chequeos secundarios de especificación (dummies de año) sin mover el mensaje principal."
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t05_panel_re.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nUna lectura ingenua puede confundir eficiencia con identificación. RE puede estimar de forma eficiente bajo su estructura, pero eso no implica automáticamente que la condición corr(c_i, x_it)=0 sea valida en los datos.\nPor eso, en este taller se presenta RE como especificación operativa condicional a un supuesto estructural, no como veredicto definitivo frente a FE."
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#resultados-principales",
+    "href": "econometria/piezas/t05_panel_re.html#resultados-principales",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa evidencia principal del caso se concentra en comparar la magnitud de educ entre RE y especificaciones de referencia, manteniendo rho y H0: var(c_i)=0 como respaldo metodológico secundario.\nEn lectura aplicada, ese coeficiente resume una asociación salarial estimada positiva entre mayor escolaridad y lwage dentro de esta especificación RE; no debe leerse automáticamente como una estimación libre de sesgo ni extrapolarse fuera de este marco sin evidencia adicional.\n\n\n\n\n\n\n\n\n\n\nModelo\nCoef. educ\nError estándar\nIC 95%\nLectura\n\n\n\n\nRE clásico\n0.1004\n0.0087\n[0.0833, 0.1175]\nMagnitud base en RE\n\n\nRE robusto/cluster nr\n0.1004\n0.0086\n[0.0835, 0.1172]\nModelo operativo para inferencia\n\n\nFGLS AR(1)+hetero (contraste)\n0.1044\n0.0038\n[0.0969, 0.1119]\nContraste paramétrico más exigente\n\n\nPooled OLS + cluster nr (referencia)\n0.0988\n0.0089\n[0.0812, 0.1163]\nReferencia previa sin estructura RE"
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#hallazgos-secundarios-y-especificación",
+    "href": "econometria/piezas/t05_panel_re.html#hallazgos-secundarios-y-especificación",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Hallazgos secundarios y especificación",
+    "text": "Hallazgos secundarios y especificación\nEl test conjunto de dummies de año en la especificación RE ampliada reporta chi2(7)=12.58 con p=0.0831. Se registra como hallazgo secundario de especificación, no como mensaje central del taller.\n\n\n\n\n\n\n\n\nChequeo secundario\nResultado\nLectura\n\n\n\n\nComponente individual (rho)\n0.4600\nHeterogeneidad persistente importante\n\n\nTest H0: var(c_i)=0\nZ=10.66, p&lt;0.001\nRespalda tratar explícitamente la estructura panel\n\n\nTest conjunto d81-d87\np = 0.0831\nEvidencia debil al 5%; contraste auxiliar de especificación"
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t05_panel_re.html#lectura-profesional-del-caso",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nT5 aporta una regla de trabajo clara: RE puede ser una alternativa eficiente y practicamente útil cuando interesa preservar regresores invariantes como educ.\nPero la validez econométrica de esa elección sigue siendo condicional al supuesto corr(c_i, x_it)=0. Sin una prueba tipo Hausman en este taller, no corresponde afirmar que RE sea preferible a FE ni que sea empiricamente insesgado."
+  },
+  {
+    "objectID": "econometria/piezas/t05_panel_re.html#cierre",
+    "href": "econometria/piezas/t05_panel_re.html#cierre",
+    "title": "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte",
+    "section": "Cierre",
+    "text": "Cierre\nEsta pieza posiciona a RE como una especificación operativa bajo un supuesto fuerte, no como cierre definitivo de identificación. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como educ y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explícita el supuesto corr(c_i, x_it)=0, por ejemplo con una prueba tipo Hausman."
   },
   {
     "objectID": "econometria/piezas/t07_panel_fe_completo.html",
     "href": "econometria/piezas/t07_panel_fe_completo.html",
-    "title": "T07 · Efectos fijos en panel de firmas: identificación intraunidad e inferencia robusta",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
     "section": "",
-    "text": "← Volver al índice de Econometría\nSubsidios de capacitación y desperdicio productivo"
+    "text": "En este panel corto de firmas, la pregunta aplicada es como cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo al seguir a las mismas plantas en el tiempo\n\n\nEl modelo FE con inferencia clusterizada organiza una lectura más creíble de lscrap: controla heterogeneidad fija no observada de planta y evita sobrerreaccionar a significancia convencional."
   },
   {
-    "objectID": "econometria/piezas/t07_panel_fe_completo.html#documento-completo-html",
-    "href": "econometria/piezas/t07_panel_fe_completo.html#documento-completo-html",
-    "title": "T07 · Efectos fijos en panel de firmas: identificación intraunidad e inferencia robusta",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#resumen",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#resumen",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Resumen",
+    "text": "Resumen\nEste taller analiza un panel corto de plantas para estudiar la relación empírica entre subsidios de capacitación (grant, grant_1) y desempeño productivo medido por lscrap. La motivacion aplicada es concreta: comparar firmas entre si puede mezclar diferencias estructurales persistentes con la asociación de interés.\nPor eso, la pieza usa FE como modelo operativo para concentrarse en variación within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadística."
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#pregunta",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#pregunta",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo cuando seguimos a las mismas plantas en el tiempo y controlamos heterogeneidad fija no observada?\n\nResultado: lscrap (log del desperdicio/scrap rate). Regresores de interés: grant, grant_1. Controles de periodo: d88, d89. Unidad de panel: fcode."
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#idea-central",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#idea-central",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Idea central",
+    "text": "Idea central\nEn este caso, la econometría está al servicio de la historia aplicada: FE se usa para tratar sesgo por heterogeneidad fija no observada entre plantas, mientras que cluster se usa para no sobredimensionar precisión inferencial.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#por-qué-este-problema-importa",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEl interés sustantivo del ejemplo es si plantas con subsidios de capacitación muestran menor desperdicio productivo en el tiempo. Esa lectura puede distorsionarse si algunas firmas tienen rasgos persistentes no observados (gestión, tecnología, cultura operativa) que afectan lscrap y también se asocian con la recepción de subsidios.\nEn ese contexto, pasar de pooled a FE es razonable: cambia la comparación desde “entre plantas” hacia “dentro de la misma planta a lo largo del tiempo”, que es la escala relevante para leer desempeño productivo en este caso."
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#datos-y-variables",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#datos-y-variables",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con jtrain1, un panel corto de plantas.\n\nUnidad de observacion: planta/firma (fcode)\nEstructura: 54 firmas, 3 periodos (1987-1989), N=162 en FE\nVariable de resultado: lscrap (log del desperdicio/scrap rate)\nRegresores clave: grant (subsidio actual), grant_1 (subsidio rezagado)\nControles temporales: d88, d89\nVariable absorbida en FE por invarianza temporal: union"
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#estrategia-empírica",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#estrategia-empírica",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia del taller prioriza decisiones metodológicas para responder mejor la pregunta aplicada:\n\nEstimar FE (xtreg ..., fe) como modelo operativo frente al riesgo de heterogeneidad fija no observada.\nReestimar FE con vce(cluster fcode) como inferencia principal.\nEvaluar evidencia conjunta de subsidios con tests robustos sobre grant y grant_1.\nDejar equivalencia FE / within manual / LSDV como validación técnica secundaria.\nTratar serial correlation como diagnóstico de apoyo, no como mensaje central."
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#qué-pasa-con-un-análisis-ingenuo",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#qué-pasa-con-un-análisis-ingenuo",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Qué pasa con un análisis ingenuo",
+    "text": "Qué pasa con un análisis ingenuo\nUn análisis ingenuo puede mezclar dos planos distintos:\n\nInferencia: usar solo errores clásicos puede sobreconfiar en significancia.\nIdentificacion: aun con inferencia robusta, pooled no corrige sesgo por heterogeneidad fija no observada.\n\nLa lectura profesional separa ambos temas: FE atiende el problema de sesgo por c_i fijo; cluster mejora la credibilidad inferencial."
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#resultados-principales",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#resultados-principales",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura final no descansa en un coeficiente puntual, sino en la evidencia conjunta sobre los subsidios y en una interpretación prudente de su magnitud económica.\nEn términos aplicados, los signos estimados son compatibles con una reduccion de lscrap asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precisión estadística se debilita.\nPor eso, la lectura profesional para desempeño productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion concluyente.\n\n\n\n\n\n\n\n\nBloque\nEvidencia\nLectura\n\n\n\n\nFE clásico\ngrant=-0.252 (EE=0.151; IC95% [-0.551, 0.046]), grant_1=-0.422 (EE=0.210; IC95% [-0.838, -0.005])\nSeñal inicial en clásico, sujeta a supuestos fuertes de FE\n\n\nFE + cluster (operativo)\ngrant=-0.252 (EE=0.143; IC95% [-0.540, 0.035]), grant_1=-0.422 (EE=0.282; IC95% [-0.988, 0.145])\nCambia la precisión; la evidencia individual se debilita\n\n\nTest conjunto robusto grant=grant_1=0\nF(2,53)=1.56, p=0.2198\nSin evidencia conjunta robusta al 5%\n\n\nRestriccion grant + grant_1 = 0\nF(1,53)=2.63, p=0.1105\nNo rechazo en inferencia robusta\n\n\nEstructura panel\nrho=0.893, F all u_i=0 p=0.0000\nLa heterogeneidad fija de firma es econométricamente relevante"
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#hallazgos-secundarios-y-validación",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#hallazgos-secundarios-y-validación",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Hallazgos secundarios y validación",
+    "text": "Hallazgos secundarios y validación\nLos contrastes siguientes son útiles para auditar consistencia del caso, pero quedan subordinados al modelo operativo FE+cluster:\n\n\n\n\n\n\n\n\nChequeo secundario\nResultado\nLectura\n\n\n\n\nFE vs within manual\nCoeficientes coinciden\nFE no opera como caja negra; replica la transformacion within\n\n\nFE vs LSDV (i.fcode)\nMisma lógica de ajuste within\nValidacion algebraica adicional del estimador\n\n\nSerial correlation en residuos FE\nu_fe_L1=-0.206; test = -0.5 rechaza (p=0.0000)\nPatron compatible con dependencia serial adicional; refuerza uso de inferencia robusta\n\n\nFE-AR(1) (xtregar)\nResultados sensibles en panel corto\nSe reporta solo como contraste metodologico auxiliar"
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#lectura-profesional-del-caso",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nT7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitación y desperdicio productivo, después elegir una estrategia de identificación coherente (FE within), y finalmente comunicar inferencia con estándar robusto (cluster y tests conjuntos).\nEsta secuencia evita dos excesos frecuentes: tratar la significancia convencional como veredicto final y presentar técnicas de panel como un fin en sí mismo."
+  },
+  {
+    "objectID": "econometria/piezas/t07_panel_fe_completo.html#cierre",
+    "href": "econometria/piezas/t07_panel_fe_completo.html#cierre",
+    "title": "Efectos fijos en panel de firmas: identificación within e inferencia robusta",
+    "section": "Cierre",
+    "text": "Cierre\nLa contribución de T7 no es establecer una conclusión definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional."
   },
   {
     "objectID": "econometria/piezas/t09_panel_re_fe_cre.html",
     "href": "econometria/piezas/t09_panel_re_fe_cre.html",
-    "title": "T09 · Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
     "section": "",
-    "text": "← Volver al índice de Econometría\nComparación FE, RE y CRE (Mundlak)"
+    "text": "En este panel de plantas industriales, la pregunta aplicada es si la asociación entre subsidios de capacitación y scrap cambia de forma relevante al controlar heterogeneidad persistente entre firmas\n\n\nLa comparación FE, RE y CRE se usa como contraste disciplinado para elegir especificación sin sobreactuar sobre un solo test: la econometría está al servicio de una lectura empírica más creíble del caso productivo."
   },
   {
-    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#documento-completo-html",
-    "href": "econometria/piezas/t09_panel_re_fe_cre.html#documento-completo-html",
-    "title": "T09 · Subsidios de capacitación y desperdicio productivo en plantas industriales",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#resumen",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#resumen",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia la relación empírica entre subsidios de capacitación (grant, grant_1) y desperdicio productivo (lscrap) en plantas industriales. El punto central no es defender un test aislado, sino verificar si la lectura sustantiva del caso cambia al tratar la heterogeneidad no observada con FE, RE o CRE.\nLa evidencia muestra coeficientes de interés muy cercanos entre especificaciones, y los contrastes formales no aportan evidencia fuerte contra la formulación RE En esta muestra. Por eso, se toma RE como modelo operativo y FE/CRE como controles disciplinados de robustez conceptual."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#pregunta",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#pregunta",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿La relación entre subsidios de capacitación y scrap, cambia de forma relevante cuando se controla por heterogeneidad persistente entre plantas?\n\nResultado: lscrap (log del desperdicio/scrap rate). Regresores de interés: grant, grant_1. Controles temporales: d88, d89. Unidad de panel: fcode."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#idea-central",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#idea-central",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Idea central",
+    "text": "Idea central\nLa comparación FE, RE y CRE no se presenta como competencia técnica abstracta: se usa para auditar si la historia aplicada del caso productivo se mantiene al cambiar el supuesto sobre la correlación entre heterogeneidad no observada y regresores.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#por-qué-este-problema-importa",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEl caso analiza plantas que pueden diferir de manera persistente en gestión, tecnología o calidad operativa. Si esas diferencias inobservadas también se relacionan con el acceso a subsidios, una lectura ingenua podria confundir patrón estructural de cada planta con la asociación de interés en lscrap.\nEn términos aplicados, importa saber si el mensaje sobre subsidios y desperdicio es estable cuando se cambia el tratamiento de esa heterogeneidad. Esa estabilidad, o su ausencia, es la que sostiene una lectura profesional del ejemplo."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#datos-y-variables",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#datos-y-variables",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con jtrain1.dta, en formato panel de firmas.\n\nUnidad de observacion: planta-año (fcode)\nVentana temporal operativa: 1987-1989\nMuestra de estimación: N=162, 54 firmas, panel balanceado de 3 años\nVariable de resultado: lscrap (log del desperdicio/scrap rate)\nRegresores clave: grant, grant_1\nControles: d88, d89\nEn CRE/Mundlak: medias temporales grant_bar, grant_1_bar\n\nEl tamano operativo queda en 162 observaciones porque el modelo se estima sobre el panel balanceado efectivo de firmas con información completa para lscrap, subsidio actual, subsidio rezagado y controles temporales en los tres periodos."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#estrategia-empírica",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#estrategia-empírica",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia se organiza para mantener foco aplicado y disciplina de especificación:\n\nEstimar FE, RE y CRE/Mundlak con la misma estructura central de regresores.\nComparar primero signos y magnitudes de grant y grant_1 entre modelos.\nTomar RE+cluster como modelo operativo si la lectura sustantiva es estable y los contrastes formales no muestran evidencia fuerte en contra.\nUsar Hausman clásico y tests de Mundlak como respaldo formal de la decisión, no como unica base narrativa."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#qué-evita-una-lectura-automatica",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#qué-evita-una-lectura-automatica",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Qué evita una lectura automatica",
+    "text": "Qué evita una lectura automatica\nUna lectura automatica puede confundir planos distintos:\n\nRelevancia de usar panel frente a pooling.\nEleccion entre FE y RE/CRE según posible correlación Cov(c_i, x_it).\nPrecision inferencial bajo errores clusterizados.\n\nLa pieza separa esos planos para no convertir una salida de test en conclusión mecanica."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#resultados-principales",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#resultados-principales",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura principal abre por lo sustantivo: los coeficientes de grant y grant_1 son parecidos en FE, RE y CRE, con signos consistentes y orden de magnitud cercano. En este caso, la historia aplicada sobre subsidios y scrap no cambia de forma relevante al mover la especificación de heterogeneidad no observada.\nCon esa base, RE se usa como modelo operativo por parsimonia y por compatibilidad con la evidencia robusta tipo Mundlak; FE y CRE quedan como contrastes disciplinados que auditan el supuesto de correlación entre c_i y regresores.\n\n\n\n\n\n\n\n\nBloque\nEvidencia\nLectura\n\n\n\n\nFE + cluster (grant, grant_1)\n-0.252 (EE 0.143; IC [-0.540, 0.035]); -0.422 (EE 0.282; IC [-0.988, 0.145])\nMagnitudes negativas con incertidumbre amplia\n\n\nRE + cluster (grant, grant_1)\n-0.214 (EE 0.131; IC [-0.471, 0.042]); -0.373 (EE 0.268; IC [-0.897, 0.152])\nPatrón sustantivo similar al FE\n\n\nCRE + cluster (grant, grant_1)\n-0.252 (EE 0.144; IC [-0.535, 0.031]); -0.422 (EE 0.284; IC [-0.979, 0.136])\nMuy cercano a FE en variables clave"
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#diagnosticos-y-respaldo-formal",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#diagnosticos-y-respaldo-formal",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Diagnosticos y respaldo formal",
+    "text": "Diagnosticos y respaldo formal\nEl F test all u_i=0 en FE (F(53,104)=24.66, p=0.0000) indica que la estructura panel es relevante: pooling simple no alcanza para este caso.\nEse diagnóstico no decide por sí solo entre RE y FE/CRE. La elección entre esos marcos depende del punto clave Cov(c_i, x_it), evaluado con comparación de magnitudes y contrastes tipo Hausman/Mundlak.\n\n\n\n\n\n\n\n\nDiagnostico\nResultado\nLectura correcta\n\n\n\n\nRelevancia panel vs pooling\nF(53,104)=24.66, p=0.0000\nHay heterogeneidad no observada importante\n\n\nHausman clásico (FE vs RE)\nchi2(2)=2.83, p=0.2425\nNo hay evidencia fuerte contra RE\n\n\nMundlak clásico\nchi2(2)=2.05, p=0.3591\nCoherente con lectura de Hausman\n\n\nMundlak robusto (cluster)\nchi2(2)=1.85, p=0.3965\nRespaldo formal robusto a la misma conclusión"
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#lectura-profesional-del-caso",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#lectura-profesional-del-caso",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Lectura profesional del caso",
+    "text": "Lectura profesional del caso\nLa conclusión se formula con prudencia aplicada: no rechazar RE no significa probar que RE sea verdadero; significa que En esta muestra no aparece evidencia fuerte contra esa formulación. Por eso, la interpretación final se apoya en la combinación de estabilidad sustantiva de coeficientes, contexto del caso y respaldo formal de contrastes.\nEn términos aplicados, T9 muestra una práctica profesional útil: cuando FE, RE y CRE cuentan una historia económica parecida, la decisión de modelo puede justificarse sin exagerar precisión ni convertir metodología en protagonista."
+  },
+  {
+    "objectID": "econometria/piezas/t09_panel_re_fe_cre.html#cierre",
+    "href": "econometria/piezas/t09_panel_re_fe_cre.html#cierre",
+    "title": "Subsidios de capacitación y desperdicio productivo en plantas industriales",
+    "section": "Cierre",
+    "text": "Cierre\nEn este panel corto de plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo mantiene un patrón similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente condicionada a los supuestos del marco."
   },
   {
     "objectID": "econometria/piezas/t12_binaria_base.html",
     "href": "econometria/piezas/t12_binaria_base.html",
-    "title": "T12 · Participación laboral femenina y estructura del hogar",
+    "title": "Participación laboral femenina y estructura del hogar",
     "section": "",
-    "text": "← Volver al índice de Econometría\nModelos binarios sobre ingreso, experiencia e hijos"
+    "text": "¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?\n\n\nLa estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal donde la respuesta observada es 0/1."
   },
   {
-    "objectID": "econometria/piezas/t12_binaria_base.html#documento-completo-html",
-    "href": "econometria/piezas/t12_binaria_base.html#documento-completo-html",
-    "title": "T12 · Participación laboral femenina y estructura del hogar",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t12_binaria_base.html#resumen",
+    "href": "econometria/piezas/t12_binaria_base.html#resumen",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia participación laboral femenina (inlf) en un contexto de decisiones de hogar, con una comparación metodológica en variable binaria y anclaje aplicado.\nEl valor econométrico del caso no es competir entre técnicas, sino mostrar criterio de especificación para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#pregunta",
+    "href": "econometria/piezas/t12_binaria_base.html#pregunta",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?\n\nResultado: inlf (0/1). Regresores clave: nwifeinc, educ, exper, expersq, age, kidslt6, kidsge6."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#idea-central",
+    "href": "econometria/piezas/t12_binaria_base.html#idea-central",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Idea central",
+    "text": "Idea central\nLa pieza es una comparación metodológica en variable binaria: MPL como benchmark, probit con APE como eje y logit como contraste de robustez.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t12_binaria_base.html#por-qué-este-problema-importa",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nLa participación laboral no depende solo de características individuales: también refleja restricciones y decisiones del hogar. En especial, la presencia de hijos pequeños puede cambiar de forma marcada la disponibilidad para trabajar fuera del hogar.\nUna lectura profesional necesita reportar asociaciones con prudencia, sin sobreinterpretaciones automáticas y con una escala interpretable en probabilidad."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#datos-y-variables",
+    "href": "econometria/piezas/t12_binaria_base.html#datos-y-variables",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con mroz.dta, un corte transversal clásico de economia laboral.\n\nUnidad de observacion: mujer/hogar\nTamano de muestra: N=753\nVariable de resultado: inlf (1 participa, 0 no participa)\nProporcion en inlf=1: 56.84% (428 casos)\nProporcion en inlf=0: 43.16% (325 casos)\nRegresores clave: nwifeinc, educ, exper, expersq, age, kidslt6, kidsge6"
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#estrategia-empírica",
+    "href": "econometria/piezas/t12_binaria_base.html#estrategia-empírica",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\n\nUsar MPL robusto como benchmark inicial.\nEstimar probit y logit para modelar respuesta binaria con rango probabilistico coherente.\nReportar efectos parciales promedio (APE) como unidad principal de interpretación.\nMantener diagnósticos breves y funcionales al caso aplicado."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#resultados-principales",
+    "href": "econometria/piezas/t12_binaria_base.html#resultados-principales",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura combina anclaje aplicado con comparacion metodologica:\n\nkidslt6 muestra una asociación negativa fuerte con inlf: APE alrededor de -0.26, consistente en probit y logit.\neduc y exper muestran asociaciones positivas y estables con la participación laboral.\nnwifeinc aparece con asociación negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.\nkidsge6 no muestra una asociación robusta de magnitud comparable.\n\nEn segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma más creíble que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#sintesis-comparativa-mpl-robusto-vs-ape",
+    "href": "econometria/piezas/t12_binaria_base.html#sintesis-comparativa-mpl-robusto-vs-ape",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Sintesis comparativa (MPL robusto vs APE)",
+    "text": "Sintesis comparativa (MPL robusto vs APE)\n\n\n\n\n\n\n\n\n\n\nVariable\nMPL robusto\nAPE Probit\nAPE Logit\nLectura aplicada\n\n\n\n\nkidslt6\n-0.2618 (EE=0.0318)\n-0.261 (EE=0.032; IC95% [-0.324, -0.199])\n-0.258 (EE=0.032; IC95% [-0.320, -0.195])\nAsociacion negativa fuerte con participación\n\n\neduc\n+0.0380 (EE=0.0073)\n+0.039 (EE=0.007; IC95% [0.025, 0.054])\n+0.039 (EE=0.007; IC95% [0.025, 0.054])\nMayor educación se asocia con mayor participación\n\n\nexper\n+0.0395 (EE=0.0058)\n+0.037 (EE=0.005; IC95% [0.027, 0.047])\n+0.037 (EE=0.005; IC95% [0.027, 0.047])\nMayor experiencia se asocia con mayor participación\n\n\nnwifeinc\n-0.0034 (EE=0.0015)\n-0.0036 (EE=0.0014; IC95% [-0.0064, -0.0008])\n-0.0038 (EE=0.0015; IC95% [-0.0067, -0.0009])\nIngreso no laboral más alto se asocia con menor participación"
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#diagnosticos-de-respaldo",
+    "href": "econometria/piezas/t12_binaria_base.html#diagnosticos-de-respaldo",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Diagnosticos de respaldo",
+    "text": "Diagnosticos de respaldo\nLos diagnósticos se usan solo como apoyo del caso:\n\nMPL genera 33 predicciones fuera de [0,1] (4.38%), lo que ilustra su límite para respuesta binaria.\nAjuste global similar entre binarios: pseudo-R2 aprox. 0.221 (probit) y 0.220 (logit).\nMCP ponderado puede volverse sensible a pesos extremos; por eso se usa como diagnóstico secundario y no como lectura final.\n\nEstos elementos respaldan la elección de especificación, pero no reemplazan la lectura sustantiva del fenomeno."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#lectura-profesional",
+    "href": "econometria/piezas/t12_binaria_base.html#lectura-profesional",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl aporte profesional de T12 no es plantear una competencia entre MPL, probit y logit. El aporte es mostrar criterio para elegir una especificación coherente con una variable binaria y, después, interpretar resultados en términos de probabilidad con claridad y prudencia."
+  },
+  {
+    "objectID": "econometria/piezas/t12_binaria_base.html#cierre",
+    "href": "econometria/piezas/t12_binaria_base.html#cierre",
+    "title": "Participación laboral femenina y estructura del hogar",
+    "section": "Cierre",
+    "text": "Cierre\nLa diferencia relevante del taller no es probit vs logit, sino pasar de una lectura lineal a una lectura no lineal en probabilidades.\nEl valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente."
   },
   {
     "objectID": "econometria/piezas/t14_binaria_vi_discreta.html",
     "href": "econometria/piezas/t14_binaria_vi_discreta.html",
-    "title": "T14 · Fecundidad y participación laboral materna",
+    "title": "Fecundidad y participación laboral materna",
     "section": "",
-    "text": "← Volver al índice de Econometría\nAsociación al admitir endogeneidad de variable discreta"
+    "text": "¿Qué cambia cuando worked es binaria y morekids también es binaria y endógena, y qué modelo es correcto en esa estructura?\n\n\nAquí la diferencia relevante no es solo corregir endogeneidad, sino reconocer que cuando la variable endógena también es binaria cambia el modelo correcto."
   },
   {
-    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#documento-completo-html",
-    "href": "econometria/piezas/t14_binaria_vi_discreta.html#documento-completo-html",
-    "title": "T14 · Fecundidad y participación laboral materna",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#resumen",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#resumen",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza estudia participación laboral materna (worked) en relación con fecundidad (morekids) y características del hogar. El foco principal es metodológico con anclaje aplicado: identificar el modelo correcto para una estructura con dependiente binaria y regresor endógeno binario.\nA diferencia de T13, donde la covariable problemática era continua, aquí ya no corresponde trasladar mecánicamente cfprobit o ivprobit del caso continuo. En esta estructura, biprobit funciona como modelo principal y eprobit como contraste de robustez, mientras MPL, probit y MPL-IV quedan como benchmarks de referencia."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#pregunta",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#pregunta",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Qué cambia cuando worked es binaria y morekids también es binaria y endógena, y qué modelo es correcto en esa estructura?\n\nResultado: worked (0/1). Variable clave: morekids. Controles: nonmomi, educ, age, age2, black, hispan."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#idea-central",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#idea-central",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Idea central",
+    "text": "Idea central\nLa pieza mantiene el anclaje aplicado en trabajo y fecundidad, pero ordena la lectura con criterio metodológico: en esta estructura, biprobit es el eje principal, eprobit actúa como robustez y los modelos exógenos/lineales quedan como benchmarks.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#por-qué-este-problema-importa",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nLa participación laboral materna y la fecundidad forman parte de decisiones de hogar que pueden estar influidas por factores no observados compartidos. En ese contexto, una lectura puramente exógena puede subestimar o sobreestimar la asociación de interés.\nPara un lector profesional, importa saber si el mensaje sustantivo se mantiene y cuánto cambia en magnitud cuando el modelo reconoce de forma explícita la posible endogeneidad de la variable clave."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#datos-y-variables",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#datos-y-variables",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe trabaja con labsup.dta en corte transversal.\n\nUnidad de observación: madre/hogar\nTamaño de muestra: N=31,857\nVariable de resultado: worked (1 trabaja, 0 no trabaja)\nRegresor clave: morekids (1 tuvo más de dos hijos)\nControles: nonmomi, educ, age, age2, black, hispan\nInstrumento excluido para morekids: samesex (mismo sexo en los dos primeros hijos)"
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#estrategia-empírica",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#estrategia-empírica",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\n\nEstimar benchmarks de referencia (MPL y probit exógenos) para lectura base en probabilidades.\nEstimar biprobit como modelo principal en la estructura binaria-binaria y usar eprobit como contraste de robustez.\nMantener MPL-IV como benchmark lineal instrumentado auxiliar, sin rol protagónico.\nInterpretar resultados como criterio de modelo correcto según estructura del problema, no como competencia general entre métodos."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#resultados-principales",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#resultados-principales",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura se ordena en cuatro pasos:\n\nAparece una asociación negativa entre morekids y worked.\nEsa asociación se vuelve más negativa cuando se modela endogeneidad binaria.\nLa diferencia debe leerse con prudencia porque cambian los supuestos y el encuadre econométrico.\nEl foco de la pieza es distinguir modelo correcto vs modelo incorrecto según la estructura del problema, manteniendo anclaje aplicado."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#síntesis-de-magnitudes-ape",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#síntesis-de-magnitudes-ape",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Síntesis de magnitudes (APE)",
+    "text": "Síntesis de magnitudes (APE)\n\n\n\n\n\n\n\n\n\n\nEnfoque\nAPE morekids\nError estándar\nIC 95%\nLectura aplicada\n\n\n\n\nProbit exógeno\n-0.1095\n0.0055\n[-0.1203, -0.0987]\nMenor probabilidad de trabajar en la referencia base\n\n\nMPL-IV\n-0.2008\n0.0965\n[-0.3899, -0.0117]\nContraste lineal instrumental, con mucha incertidumbre\n\n\nBiprobit con endogeneidad binaria\n-0.2559\n0.0710\n[-0.3951, -0.1167]\nAsociación más negativa al admitir endogeneidad\n\n\nEprobit (contraste adicional)\n-0.2559\n0.0519\n[-0.3576, -0.1542]\nMagnitud alineada con lectura binaria endógena"
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#diagnósticos-de-respaldo",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#diagnósticos-de-respaldo",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Diagnósticos de respaldo",
+    "text": "Diagnósticos de respaldo\nEste bloque se mantiene subordinado al caso aplicado:\n\nInstrumento relevante: primera etapa con señal fuerte (F(1,31849)=103.81, p&lt;0.001).\nDependencia de errores (señal prudente): aparece una señal compatible con correlación en especificaciones endógenas (p alrededor de 0.056 y 0.045), a leer con cautela.\nInterpretación de efectos en biprobit: la interpretación relevante debe centrarse en Pr(worked=1) o en el contraste de tratamiento correspondiente, no en la probabilidad conjunta por defecto.\nUnidad de interpretación: los efectos reportados se leen como cambios en probabilidad de trabajar, no como parámetros latentes en abstracto."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#lectura-profesional",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#lectura-profesional",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl aporte de T14 es mostrar criterio de modelado aplicado en un problema real de trabajo y fecundidad. La pieza prioriza evaluar si el tratamiento econométrico de morekids cambia materialmente la lectura de una variable central para el análisis de hogar."
+  },
+  {
+    "objectID": "econometria/piezas/t14_binaria_vi_discreta.html#cierre",
+    "href": "econometria/piezas/t14_binaria_vi_discreta.html#cierre",
+    "title": "Fecundidad y participación laboral materna",
+    "section": "Cierre",
+    "text": "Cierre\nEl valor profesional de esta pieza está en saber cuándo una formulación binaria con endogeneidad modifica de forma relevante la lectura aplicada de una variable clave.\nEn T14, la historia sustantiva se mantiene (asociación negativa entre fecundidad y participación laboral materna), y la formulación endógena aporta una sensibilidad de magnitud que conviene reportar con claridad y prudencia.\nLa lección metodológica es que el modelo correcto depende de la estructura del problema."
   },
   {
     "objectID": "econometria/piezas/t16_multinomial_base.html",
     "href": "econometria/piezas/t16_multinomial_base.html",
-    "title": "T16 · Trayectorias de actividad en un panel laboral corto",
+    "title": "Trayectorias de actividad en un panel laboral corto",
     "section": "",
-    "text": "← Volver al índice de Econometría\nProbabilidades de estudio, hogar y empleo"
+    "text": "¿Cómo se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo según educación, experiencia y perfil demográfico?\n\n\nLa pieza sigue trayectorias de actividad en el panel laboral keane y usa un logit multinomial, tratado como pooled con cluster(id), para traducir una variable multiclase en probabilidades comparables y útiles para lectura profesional.\nLa tabla protagonista resume APEs de choice por categoria; status se usa solo como contraste secundario."
   },
   {
-    "objectID": "econometria/piezas/t16_multinomial_base.html#documento-completo-html",
-    "href": "econometria/piezas/t16_multinomial_base.html#documento-completo-html",
-    "title": "T16 · Trayectorias de actividad en un panel laboral corto",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t16_multinomial_base.html#resumen",
+    "href": "econometria/piezas/t16_multinomial_base.html#resumen",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza analiza como se distribuyen estados de actividad (choice) en un panel laboral corto, con categorias nominales mutuamente excluyentes: escuela, hogar, white collar, blue collar y services. El foco no es metodologico en abstracto, sino sustantivo: leer como cambian probabilidades entre alternativas frente a educación, experiencia y perfil demográfico.\nLa econometría se usa para ordenar una pregunta aplicada. El panel se trata como pooled con inferencia robusta cluster(id), y la lectura principal se apoya en APEs y probabilidades predichas por categoria."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#pregunta",
+    "href": "econometria/piezas/t16_multinomial_base.html#pregunta",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Cómo se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo según educación, experiencia y perfil demográfico?\n\nResultado: choice (1 escuela, 2 hogar, 3 white collar, 4 blue collar, 5 services). Variables clave: educ, exper, expersq, black, dummies anuales."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#idea-central",
+    "href": "econometria/piezas/t16_multinomial_base.html#idea-central",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Idea central",
+    "text": "Idea central\nEl valor profesional de la pieza es transformar una variable multiclase en una lectura comparativa de probabilidades entre alternativas de actividad, explícita en sus alcances y limites de discriminacion.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t16_multinomial_base.html#por-qué-este-problema-importa",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn decisiones de actividad laboral no alcanza con preguntar si una persona trabaja o no. En la práctica, compiten varias alternativas: estudiar, permanecer en el hogar o insertarse en distintos segmentos ocupacionales. Si se simplifica forzando una variable binaria, se pierde parte central de la pregunta empírica.\nPara un lector profesional, lo relevante es entender que variables desplazan probabilidades entre alternativas y donde el modelo separa mejor o peor perfiles observables."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#datos-y-variables",
+    "href": "econometria/piezas/t16_multinomial_base.html#datos-y-variables",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe usa keane.dta con estructura de panel corto.\n\nUnidad de observacion: persona-anio (id, year)\nCobertura temporal: 1981-1987\nMuestra operativa: N=12,665, 1,881 personas (panel no balanceado)\nResultado principal: choice con cinco categorias nominales\nVariables clave: educ, exper, expersq, i.black, y82-y87\nNota de diseño: wage/lwage no se incluye como regresor porque no está definido de forma comparable en todas las alternativas de choice"
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#estrategia-empírica",
+    "href": "econometria/piezas/t16_multinomial_base.html#estrategia-empírica",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\nLa secuencia mantiene foco aplicado:\n\nEstimar mlogit choice educ exper expersq i.black y82-y87, baseoutcome(1) vce(cluster id).\nTraducir resultados a probabilidades con efectos marginales promedio (APE), evitando lectura mecanica de coeficientes.\nComplementar con probabilidades predichas y clasificacion por maxima probabilidad como referencia descriptiva.\nReportar un chequeo secundario con status (escuela/hogar/trabajo) para verificar estabilidad general de la historia sustantiva.\n\nEn todo el análisis, el panel se trata como pooled con cluster(id): Esta pieza no busca modelar heterogeneidad no observada con una estructura multinomial de panel, sino ofrecer una lectura clara y útil de reasignacion de probabilidades."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#resultados-principales",
+    "href": "econometria/piezas/t16_multinomial_base.html#resultados-principales",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura comparativa del caso deja los mensajes sustantivos del modelo principal sobre choice (cinco categorias nominales):\n\nEducacion: aumenta la probabilidad de escuela y white collar, y reduce hogar, blue collar y services.\nExperiencia: reduce escuela y hogar, y desplaza probabilidad hacia white collar, blue collar y services.\nPerfil demográfico (black): reduce escuela, white collar y blue collar, y aumenta hogar y services."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#sintesis-comparativa-de-magnitudes-ape",
+    "href": "econometria/piezas/t16_multinomial_base.html#sintesis-comparativa-de-magnitudes-ape",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Sintesis comparativa de magnitudes (APE)",
+    "text": "Sintesis comparativa de magnitudes (APE)\n\n\n\n\n\n\n\n\n\n\n\n\nVariable\nEscuela (1)\nHogar (2)\nWhite collar (3)\nBlue collar (4)\nServices (5)\nLectura sustantiva\n\n\n\n\neduc\n+0.0408 (0.0017)\n-0.0562 (0.0020)\n+0.0551 (0.0028)\n-0.0364 (0.0028)\n-0.0034 (0.0016)\nMás educación desplaza probabilidad desde hogar hacia escuela y white collar\n\n\nexper\n-0.1503 (0.0061)\n-0.0798 (0.0060)\n+0.0802 (0.0054)\n+0.1277 (0.0059)\n+0.0222 (0.0039)\nMás experiencia reubica desde escuela/hogar hacia categorías de empleo\n\n\nblack=1 vs 0\n-0.0628 (0.0078)\n+0.0994 (0.0097)\n-0.0349 (0.0099)\n-0.0459 (0.0124)\n+0.0442 (0.0085)\nCambios de composición: mayor peso relativo en hogar y services"
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#diagnosticos-de-respaldo",
+    "href": "econometria/piezas/t16_multinomial_base.html#diagnosticos-de-respaldo",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Diagnosticos de respaldo",
+    "text": "Diagnosticos de respaldo\nEstos diagnósticos se reportan solo como respaldo de lectura aplicada. El PCP se reporta solo como diagnóstico auxiliar in-sample y no como núcleo de la pieza.\n\nChequeo con choice (5 categorías): clasificación in-sample 53.8%, coherente con mayor dificultad de separación fina.\nSimplificación secundaria con status (3 categorías): clasificación in-sample 69.0%, útil como contraste descriptivo y no como evidencia de predicción fuera de muestra.\nMenor discriminación en services (solo en choice): sugiere solapamiento con otras alternativas cuando se desagrega más."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#lectura-profesional",
+    "href": "econometria/piezas/t16_multinomial_base.html#lectura-profesional",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl aporte de T16 no es presentar un multinomial por sí mismo. El aporte es traducir una decisión multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva útil para un lector externo.\nTambien deja una práctica profesional importante: explicitar limites. Con panel tratado como pooled y cluster(id), la pieza ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es más debil."
+  },
+  {
+    "objectID": "econometria/piezas/t16_multinomial_base.html#cierre",
+    "href": "econometria/piezas/t16_multinomial_base.html#cierre",
+    "title": "Trayectorias de actividad en un panel laboral corto",
+    "section": "Cierre",
+    "text": "Cierre\nEsta pieza convierte un problema de elección nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.\nEl valor del caso queda en una traduccion rigurosa y útil para lectura profesional: panel pooled con cluster(id), probabilidades interpretables y limites de discriminacion explicitados con prudencia."
   },
   {
     "objectID": "econometria/piezas/t19_ordenado_base.html",
     "href": "econometria/piezas/t19_ordenado_base.html",
-    "title": "T19 · Asignación previsional con resultado ordinal: una lectura aplicada",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
     "section": "",
-    "text": "← Volver al índice de Econometría\nProbabilidades por categoría y efectos marginales"
+    "text": "¿Cómo cambia la lectura aplicada de una decisión previsional cuando el resultado tiene jerarquía natural?\n\n\nEsta pieza estudia asignación de cartera previsional en tres niveles ordenados de exposición a acciones y prioriza una interpretación profesional en probabilidades: qué perfiles se asocian con carteras conservadoras, mixtas o más expuestas a acciones.\nEstas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente."
   },
   {
-    "objectID": "econometria/piezas/t19_ordenado_base.html#documento-completo-html",
-    "href": "econometria/piezas/t19_ordenado_base.html#documento-completo-html",
-    "title": "T19 · Asignación previsional con resultado ordinal: una lectura aplicada",
-    "section": "Documento completo (HTML)",
-    "text": "Documento completo (HTML)\nEsta página incluye un enlace al documento completo en formato HTML correspondiente al taller.\nAbrir documento HTML del taller\n\nEl enlace abre el documento en una pestaña nueva.\n\n\nPieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original."
+    "objectID": "econometria/piezas/t19_ordenado_base.html#resumen",
+    "href": "econometria/piezas/t19_ordenado_base.html#resumen",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Resumen",
+    "text": "Resumen\nEsta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (pctstck) toma tres categorías ordenadas (0, 50, 100). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.\nEl valor del caso está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin sobreinterpretaciones."
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#pregunta",
+    "href": "econometria/piezas/t19_ordenado_base.html#pregunta",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Pregunta",
+    "text": "Pregunta\nEn esta muestra de hogares, ¿qué variables se asocian con mayor o menor probabilidad de ubicarse en carteras previsionales conservadoras, mixtas o más expuestas a acciones?\n\nResultado: pctstck (0, 50, 100). Variables clave: choice (puede elegir método de inversión), age (edad en años), prftshr (plan con profit sharing), con controles demográficos y de ingreso."
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#idea-central",
+    "href": "econometria/piezas/t19_ordenado_base.html#idea-central",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Idea central",
+    "text": "Idea central\nCuando el resultado tiene orden natural, la lectura aplicada mejora si la econometría modela explícitamente esa jerarquía y comunica resultados en probabilidades por categoría y APEs, no en coeficientes latentes aislados.\nPortfolio econométrico"
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#por-qué-este-problema-importa",
+    "href": "econometria/piezas/t19_ordenado_base.html#por-qué-este-problema-importa",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Por qué este problema importa",
+    "text": "Por qué este problema importa\nEn decisiones previsionales, no solo importa invertir o no invertir en acciones: importa el grado de exposición. Esa escala ordenada contiene información práctica para lectura de riesgo y composición de cartera.\nSi se ignora esa jerarquía, la interpretación puede perder claridad. En cambio, una especificación ordinal permite organizar la evidencia como reasignación de probabilidades entre perfiles de cartera, en un lenguaje más útil para un lector profesional."
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#datos-y-variables",
+    "href": "econometria/piezas/t19_ordenado_base.html#datos-y-variables",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nSe utiliza pension.dta en corte transversal.\n\nUnidad de observación: familia/hogar (id)\nTamaño muestral: N=194\nVariable de resultado: pctstck (0 mayormente bonos, 50 cartera mixta, 100 mayormente acciones)\nDistribución observada: 0 = 64 casos (32.99%), 50 = 72 (37.11%), 100 = 58 (29.90%)\nRegresores de mayor interés para la lectura: choice (=1 si puede elegir método de inversión), age (edad en años), prftshr (=1 si el plan incluye profit sharing)\nControles: educ, wealth89, female, married, black, tramos de ingreso familiar (finc*)\nAlcance: al ser corte transversal, la lectura se mantiene en asociaciones probabilísticas contemporáneas"
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#estrategia-empírica",
+    "href": "econometria/piezas/t19_ordenado_base.html#estrategia-empírica",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Estrategia empírica",
+    "text": "Estrategia empírica\n\nEstimar un modelo ordenado como referencia principal para respetar la jerarquía de pctstck.\nTraducir resultados a probabilidades por categoría (0, 50, 100) para lectura directa del caso.\nReportar APEs por outcome en variables narrables (choice, age, prftshr).\nMantener la comparación de enlace (ologit/oprobit) como respaldo breve, sin desplazar la historia aplicada.\nDejar métricas de clasificación in-sample y bloques técnicos equivalentes en segundo plano."
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#resultados-principales",
+    "href": "econometria/piezas/t19_ordenado_base.html#resultados-principales",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Resultados principales",
+    "text": "Resultados principales\nLa lectura aplicada se organiza en cuatro mensajes:\n\nLa masa de probabilidad está distribuida entre los tres niveles de cartera, con mayor concentración en la categoría mixta.\nchoice=1 se asocia con menor probabilidad de cartera conservadora y mayor probabilidad de cartera más expuesta a acciones.\nage muestra una reasignación hacia el perfil conservador y una caída en la probabilidad del perfil más expuesto a acciones.\nprftshr muestra una reasignación en sentido opuesto (desde perfil conservador hacia perfil más expuesto a acciones), con precisión más acotada en parte de los outcomes."
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#apes-narrables-ordered-probit",
+    "href": "econometria/piezas/t19_ordenado_base.html#apes-narrables-ordered-probit",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "APEs narrables (ordered probit)",
+    "text": "APEs narrables (ordered probit)\n\n\n\n\n\n\n\n\n\n\nVariable\ndPr(pctstck=0)\ndPr(pctstck=50)\ndPr(pctstck=100)\nLectura profesional\n\n\n\n\nchoice=1 (puede elegir método) vs 0\n-0.1281 (0.0621)\n+0.0104 (0.0119)\n+0.1178 (0.0547)\nReasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones\n\n\nage (+1 año)\n+0.0169 (0.0081)\n-0.0007 (0.0013)\n-0.0162 (0.0078)\nEn promedio, la edad se asocia con mayor peso en la categoría conservadora\n\n\nprftshr=1 vs 0\n-0.1521 (0.0692)\n-0.0137 (0.0219)\n+0.1658 (0.0877)\nSe asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones"
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#probabilidades-predichas-por-categoría-contexto-secundario",
+    "href": "econometria/piezas/t19_ordenado_base.html#probabilidades-predichas-por-categoría-contexto-secundario",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Probabilidades predichas por categoría (contexto secundario)",
+    "text": "Probabilidades predichas por categoría (contexto secundario)\n\n\n\n\n\n\n\n\nCategoría de cartera (pctstck)\nProbabilidad promedio estimada\nLectura aplicada\n\n\n\n\n0 (más conservadora)\n0.331\nAproximadamente un tercio de la muestra se ubica en perfil conservador\n\n\n50 (mixta)\n0.370\nEs la categoría con mayor peso promedio\n\n\n100 (más expuesta a acciones)\n0.298\nCerca de tres de cada diez casos se ubican en el perfil más accionario"
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#diagnósticos-de-respaldo",
+    "href": "econometria/piezas/t19_ordenado_base.html#diagnósticos-de-respaldo",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Diagnósticos de respaldo",
+    "text": "Diagnósticos de respaldo\nEl respaldo técnico se mantiene acotado y funcional a la historia aplicada.\n\nResumen de diagnósticos\n\n\n\n\n\n\n\n\nDiagnóstico\nEvidencia\nUso en la pieza\n\n\n\n\nRelevancia conjunta del bloque explicativo\nWald chi2(14)=25.32, p=0.0315\nRespalda que el modelo capta señal empírica En esta muestra\n\n\nSensibilidad de enlace\nPatrón cualitativo similar en ologit y oprobit\nEvita que la narrativa dependa de una elección de enlace puntual\n\n\nClasificación in-sample (secundaria)\nPCP aprox. 44.33%\nSe reporta solo como referencia descriptiva, no como objetivo predictivo"
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#lectura-profesional",
+    "href": "econometria/piezas/t19_ordenado_base.html#lectura-profesional",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Lectura profesional",
+    "text": "Lectura profesional\nEl aporte de T19 es mostrar criterio econométrico aplicado: cuando el resultado tiene jerarquía natural, conviene preservar ese orden y comunicar resultados como probabilidades y reasignaciones de probabilidad entre categorías.\nEn esta aplicación previsional, la lectura útil para un tercero no está en presentar una técnica como superior, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación."
+  },
+  {
+    "objectID": "econometria/piezas/t19_ordenado_base.html#cierre",
+    "href": "econometria/piezas/t19_ordenado_base.html#cierre",
+    "title": "Asignación previsional con resultado ordinal: una lectura aplicada",
+    "section": "Cierre",
+    "text": "Cierre\nEsta pieza traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APEs comparables, con foco en decisión aplicada y sin exagerar el alcance metodológico.\nEl valor del caso queda en esa combinación: jerarquía del resultado bien modelada, hallazgos comunicables para lectura externa y prudencia interpretativa en un contexto de corte transversal.\nDado el tamaño muestral (N=194) y la naturaleza transversal del caso, la pieza se presenta como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra."
   },
   {
     "objectID": "machine-learning/index.html",

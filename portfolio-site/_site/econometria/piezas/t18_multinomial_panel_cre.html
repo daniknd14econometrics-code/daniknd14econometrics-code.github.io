@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t18_multinomial_panel_cre – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Estados de actividad en panel: qué cambia entre multinomial pooled y CRE – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,56 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-evita-una-lectura-automática" id="toc-qué-evita-una-lectura-automática" class="nav-link" data-scroll-target="#qué-evita-una-lectura-automática">Qué evita una lectura automática</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#síntesis-comparativa-de-magnitudes-ape" id="toc-síntesis-comparativa-de-magnitudes-ape" class="nav-link" data-scroll-target="#síntesis-comparativa-de-magnitudes-ape">Síntesis comparativa de magnitudes (APE)</a></li>
+  <li><a href="#diagnósticos-de-respaldo" id="toc-diagnósticos-de-respaldo" class="nav-link" data-scroll-target="#diagnósticos-de-respaldo">Diagnósticos de respaldo</a>
+  <ul class="collapse">
+  <li><a href="#resumen-de-diagnósticos" id="toc-resumen-de-diagnósticos" class="nav-link" data-scroll-target="#resumen-de-diagnósticos">Resumen de diagnósticos</a></li>
+  </ul></li>
+  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T18 · Estados de actividad en panel: comparación entre multinomial agrupado y CRE</h1>
+<h1 class="title">Estados de actividad en panel: qué cambia entre multinomial pooled y CRE</h1>
+<p class="subtitle lead">Lectura aplicada sobre heterogeneidad persistente no observada en escuela, hogar y trabajo</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +183,229 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Heterogeneidad persistente en escuela, hogar y trabajo</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T18</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>En un panel laboral corto, ¿cómo cambia la interpretación de escuela, hogar y trabajo cuando se pasa de multinomial pooled a multinomial-CRE?</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Multinomial en panel con heterogeneidad</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Multinomial agrupado + CRE</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Panel laboral</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>La pieza compara pooled vs CRE (Mundlak) para ordenar mejor la lectura aplicada y la elección de especificación: el foco está en probabilidades comparables (APEs), no en coeficientes latentes.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t18_multinomial_panel_cre.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Multinomial-CRE con <code>cluster(id)</code></p>
+</div>
+<div class="metric-note">
+<p>Comparado contra multinomial pooled para auditar la sensibilidad de la lectura aplicada</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Estados de actividad en panel laboral</p>
+</div>
+<div class="metric-note">
+<p><code>N=12,665</code>, <code>1,881</code> personas, <code>1981-1987</code>, panel no balanceado</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Hallazgo central</p>
+</div>
+<div class="metric-value">
+<p>APEs cambian de forma material</p>
+</div>
+<div class="metric-note">
+<p>La lectura pooled mezcla diferencias persistentes entre personas con variación temporal</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Respaldo formal</p>
+</div>
+<div class="metric-value">
+<p>Mundlak conjunto significativo</p>
+</div>
+<div class="metric-note">
+<p><code>chi2(6)=1636.61</code>, <code>p=0.0000</code> para medias temporales</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza estudia un resultado multinomial de actividad (<code>status</code>: escuela, hogar, trabajo) en un panel laboral corto. La pregunta aplicada no es metodológica en abstracto: es si la lectura de probabilidades cambia de forma relevante cuando se reconoce heterogeneidad persistente no observada.</p>
+<p>La comparación entre multinomial pooled y multinomial-CRE (Mundlak) muestra diferencias importantes en APEs por categoría. Por eso, el aporte del caso se concentra en criterio de especificación e interpretación profesional de probabilidades, sin exagerar el alcance metodológico.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>En este panel laboral, ¿la asociación entre educación, experiencia y estado de actividad cambia de forma relevante al pasar de multinomial pooled a multinomial-CRE?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Resultado: <code>status</code> (<code>1</code> escuela, <code>2</code> hogar, <code>3</code> trabajo). Variables clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>black</code>, dummies anuales, y medias temporales en CRE.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>El valor de la pieza no está en “predecir más” ni en complejizar por complejizar. Está en mostrar cómo cambia la lectura aplicada cuando se controla heterogeneidad persistente correlacionada con regresores en un multinomial de panel.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En decisiones de actividad individual, escuela, hogar y trabajo son alternativas mutuamente excluyentes. Una lectura pooled puede ser útil como punto de partida, pero puede mezclar diferencias estructurales entre personas con cambios dentro de persona a lo largo del tiempo.</p>
+<p>Para una lectura profesional, importa saber si ese cruce altera la interpretación de probabilidades. Si la altera, la decisión de especificación deja de ser un detalle técnico y pasa a ser parte del mensaje aplicado.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se usa <code>keane.dta</code> en formato panel.</p>
+<ul>
+<li>Unidad de observación: persona-año (<code>id</code>, <code>year</code>)</li>
+<li>Período: <code>1981-1987</code></li>
+<li>Muestra operativa: <code>N=12,665</code>, <code>1,881</code> personas, panel no balanceado</li>
+<li>Resultado: <code>status</code> (<code>1</code> escuela, <code>2</code> hogar, <code>3</code> trabajo)</li>
+<li>Regresores clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>i.black</code>, <code>y82-y87</code></li>
+<li>En CRE (Mundlak): <code>educ_bar</code>, <code>exper_bar</code>, <code>expersq_bar</code></li>
+<li>Nota de muestra: la base original contiene <code>12,723</code> observaciones; la estimación operativa usa <code>12,665</code> con <code>status</code> observado</li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia se diseña para mantener foco aplicado:</p>
+<ol type="1">
+<li>Estimar multinomial pooled con errores <code>cluster(id)</code> como referencia inicial.</li>
+<li>Estimar multinomial-CRE agregando medias temporales por individuo.</li>
+<li>Comparar APEs por categoría entre pooled y CRE, priorizando magnitudes interpretables.</li>
+<li>Usar test conjunto de medias temporales tipo Mundlak como respaldo sobre relevancia de heterogeneidad correlacionada.</li>
+<li>Dejar indicadores de clasificación in-sample en segundo plano, como chequeo descriptivo no predictivo.</li>
+</ol>
+</section>
+<section id="qué-evita-una-lectura-automática" class="level2">
+<h2 class="anchored" data-anchor-id="qué-evita-una-lectura-automática">Qué evita una lectura automática</h2>
+<p>Para mantener una lectura profesional, conviene separar planos:</p>
+<ol type="1">
+<li><strong>Plano sustantivo:</strong> cómo se redistribuyen probabilidades entre escuela, hogar y trabajo.</li>
+<li><strong>Plano de especificación:</strong> cuánto cambia esa lectura cuando se incorpora heterogeneidad persistente.</li>
+<li><strong>Plano de diagnóstico:</strong> si las medias temporales tipo Mundlak respaldan que esa heterogeneidad correlacionada es relevante.</li>
+</ol>
+<p>Esa separación evita convertir un resultado técnico aislado en una conclusión general del caso.</p>
+</section>
+<section id="resultados-principales" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:</p>
+<ol type="1">
+<li><strong>Educación (<code>educ</code>):</strong> en pooled aumenta la probabilidad de escuela (<code>+0.0418</code>) y reduce hogar (<code>-0.0570</code>); en CRE esa lectura se revierte para escuela (<code>-0.1220</code>) y hogar (<code>+0.0823</code>), con aumento de trabajo (<code>+0.0397</code>).</li>
+<li><strong>Experiencia (<code>exper</code>):</strong> en pooled empuja con fuerza hacia trabajo (<code>+0.2249</code>), pero en CRE aparece reducción en trabajo (<code>-0.0482</code>) y aumento en hogar (<code>+0.0817</code>), con cambio de magnitud en escuela.</li>
+<li><strong>Perfil demográfico (<code>black</code>):</strong> mantiene un patrón de mayor probabilidad relativa de hogar y menor de escuela/trabajo, pero con menor magnitud en CRE.</li>
+</ol>
+</section>
+<section id="síntesis-comparativa-de-magnitudes-ape" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="síntesis-comparativa-de-magnitudes-ape">Síntesis comparativa de magnitudes (APE)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: right;">Escuela pooled</th>
+<th style="text-align: right;">Escuela CRE</th>
+<th style="text-align: right;">Hogar pooled</th>
+<th style="text-align: right;">Hogar CRE</th>
+<th style="text-align: right;">Trabajo pooled</th>
+<th style="text-align: right;">Trabajo CRE</th>
+<th>Lectura aplicada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>educ</code></td>
+<td style="text-align: right;">+0.0418 (0.0017)</td>
+<td style="text-align: right;">-0.1220 (0.0055)</td>
+<td style="text-align: right;">-0.0570 (0.0020)</td>
+<td style="text-align: right;">+0.0823 (0.0076)</td>
+<td style="text-align: right;">+0.0152 (0.0020)</td>
+<td style="text-align: right;">+0.0397 (0.0090)</td>
+<td>Cambia signo en escuela y hogar al incorporar heterogeneidad persistente</td>
+</tr>
+<tr class="even">
+<td><code>exper</code></td>
+<td style="text-align: right;">-0.1493 (0.0062)</td>
+<td style="text-align: right;">-0.0335 (0.0069)</td>
+<td style="text-align: right;">-0.0756 (0.0060)</td>
+<td style="text-align: right;">+0.0817 (0.0095)</td>
+<td style="text-align: right;">+0.2249 (0.0050)</td>
+<td style="text-align: right;">-0.0482 (0.0101)</td>
+<td>La lectura pooled sobre trabajo no se sostiene en CRE</td>
+</tr>
+</tbody>
+</table>
+</section>
+<p>Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.<br>
+<code>expersq</code> y <code>black</code> se mantienen como evidencia complementaria en el respaldo técnico, sin desplazar las variables protagonistas.</p>
+<section id="diagnósticos-de-respaldo" class="level2">
+<h2 class="anchored" data-anchor-id="diagnósticos-de-respaldo">Diagnósticos de respaldo</h2>
+<p>El respaldo formal y técnico se mantiene acotado y funcional a la narrativa aplicada:</p>
+<ul>
+<li><strong>Test Mundlak conjunto:</strong> <code>chi2(6)=1636.61</code>, <code>p=0.0000</code> para <code>educ_bar</code>, <code>exper_bar</code>, <code>expersq_bar</code>.</li>
+<li><strong>Implicancia:</strong> la heterogeneidad persistente correlacionada es empíricamente relevante en este caso.</li>
+<li><strong>Nota secundaria (clasificación):</strong> el ajuste in-sample del modelo CRE en <code>status</code> es <code>79.55%</code>; se reporta solo como referencia descriptiva y no como criterio de valor principal.</li>
+</ul>
+<section id="resumen-de-diagnósticos" class="level3 table-box">
+<h3 class="anchored" data-anchor-id="resumen-de-diagnósticos">Resumen de diagnósticos</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnóstico</th>
+<th style="text-align: right;">Evidencia</th>
+<th>Lectura profesional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Test conjunto Mundlak</td>
+<td style="text-align: right;">chi2(6)=1636.61, p=0.0000</td>
+<td>La heterogeneidad persistente correlacionada es relevante En esta aplicación</td>
+</tr>
+<tr class="even">
+<td>Comparación APE pooled vs CRE</td>
+<td style="text-align: right;">Cambios de magnitud y signo en educ y exper</td>
+<td>La especificación afecta la interpretación aplicada de probabilidades</td>
+</tr>
+<tr class="odd">
+<td>Clasificación in-sample (secundaria)</td>
+<td style="text-align: right;">79.55% en status</td>
+<td>Se informa como referencia descriptiva, no como meta predictiva</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="lectura-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
+<p>T18 aporta una práctica profesional concreta: antes de cerrar una historia sustantiva en multinomial de panel, conviene auditar cuánto depende esa historia del supuesto pooled sobre heterogeneidad no observada.</p>
+<p>En este caso, la comparación pooled vs CRE cambia varias magnitudes y algunos signos en APEs. Por eso, para esta muestra, la lectura principal se ancla en CRE; no por superioridad abstracta del método, sino por consistencia entre pregunta aplicada, estructura de panel y evidencia de Mundlak.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>La pieza muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es el valor del caso: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados.</p>
 
 
 </section>

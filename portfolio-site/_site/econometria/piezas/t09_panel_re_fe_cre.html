@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t09_panel_re_fe_cre – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Subsidios de capacitación y desperdicio productivo en plantas industriales – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-evita-una-lectura-automatica" id="toc-qué-evita-una-lectura-automatica" class="nav-link" data-scroll-target="#qué-evita-una-lectura-automatica">Qué evita una lectura automatica</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#diagnosticos-y-respaldo-formal" id="toc-diagnosticos-y-respaldo-formal" class="nav-link" data-scroll-target="#diagnosticos-y-respaldo-formal">Diagnosticos y respaldo formal</a></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T09 · Subsidios de capacitación y desperdicio productivo en plantas industriales</h1>
+<h1 class="title">Subsidios de capacitación y desperdicio productivo en plantas industriales</h1>
+<p class="subtitle lead">Comparacion aplicada entre FE, RE y CRE (Mundlak) para tratar heterogeneidad persistente en panel corto</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,203 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Comparación FE, RE y CRE (Mundlak)</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T09</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>En este panel de plantas industriales, la pregunta aplicada es si la asociación entre subsidios de capacitación y scrap cambia de forma relevante al controlar heterogeneidad persistente entre firmas</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Heterogeneidad persistente y modelos de panel</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Comparación FE, RE y CRE</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Panel corto de plantas</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>La comparación FE, RE y CRE se usa como contraste disciplinado para elegir especificación sin sobreactuar sobre un solo test: la econometría está al servicio de una lectura empírica más creíble del caso productivo.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t09_panel_re_fe_cre.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Referencia operativa</p>
+</div>
+<div class="metric-value">
+<p>RE + cluster (sujeto a contraste FE/CRE)</p>
+</div>
+<div class="metric-note">
+<p><code>xtreg lscrap grant grant_1 d88 d89, re vce(cluster fcode)</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Panel corto de plantas</p>
+</div>
+<div class="metric-note">
+<p><code>N=162</code>, <code>54</code> firmas, <code>1987-1989</code> (panel balanceado de 3 años)</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Lectura sustantiva</p>
+</div>
+<div class="metric-value">
+<p>Patron estable</p>
+</div>
+<div class="metric-note">
+<p><code>grant</code> y <code>grant_1</code> mantienen signo y magnitud parecida en FE, RE y CRE</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Respaldo formal</p>
+</div>
+<div class="metric-value">
+<p>Sin rechazo de RE</p>
+</div>
+<div class="metric-note">
+<p>Hausman <code>p=0.2425</code>; Mundlak clásico <code>p=0.3591</code>; Mundlak robusto <code>p=0.3965</code></p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza estudia la relación empírica entre subsidios de capacitación (<code>grant</code>, <code>grant_1</code>) y desperdicio productivo (<code>lscrap</code>) en plantas industriales. El punto central no es defender un test aislado, sino verificar si la lectura sustantiva del caso cambia al tratar la heterogeneidad no observada con FE, RE o CRE.</p>
+<p>La evidencia muestra coeficientes de interés muy cercanos entre especificaciones, y los contrastes formales no aportan evidencia fuerte contra la formulación RE En esta muestra. Por eso, se toma RE como modelo operativo y FE/CRE como controles disciplinados de robustez conceptual.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿La relación entre subsidios de capacitación y scrap, cambia de forma relevante cuando se controla por heterogeneidad persistente entre plantas?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Resultado: <code>lscrap</code> (log del desperdicio/scrap rate). Regresores de interés: <code>grant</code>, <code>grant_1</code>. Controles temporales: <code>d88</code>, <code>d89</code>. Unidad de panel: <code>fcode</code>.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>La comparación FE, RE y CRE no se presenta como competencia técnica abstracta: se usa para auditar si la historia aplicada del caso productivo se mantiene al cambiar el supuesto sobre la correlación entre heterogeneidad no observada y regresores.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>El caso analiza plantas que pueden diferir de manera persistente en gestión, tecnología o calidad operativa. Si esas diferencias inobservadas también se relacionan con el acceso a subsidios, una lectura ingenua podria confundir patrón estructural de cada planta con la asociación de interés en <code>lscrap</code>.</p>
+<p>En términos aplicados, importa saber si el mensaje sobre subsidios y desperdicio es estable cuando se cambia el tratamiento de esa heterogeneidad. Esa estabilidad, o su ausencia, es la que sostiene una lectura profesional del ejemplo.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con <code>jtrain1.dta</code>, en formato panel de firmas.</p>
+<ul>
+<li>Unidad de observacion: planta-año (<code>fcode</code>)</li>
+<li>Ventana temporal operativa: <code>1987-1989</code></li>
+<li>Muestra de estimación: <code>N=162</code>, <code>54</code> firmas, panel balanceado de 3 años</li>
+<li>Variable de resultado: <code>lscrap</code> (log del desperdicio/scrap rate)</li>
+<li>Regresores clave: <code>grant</code>, <code>grant_1</code></li>
+<li>Controles: <code>d88</code>, <code>d89</code></li>
+<li>En CRE/Mundlak: medias temporales <code>grant_bar</code>, <code>grant_1_bar</code></li>
+</ul>
+<p>El tamano operativo queda en <code>162</code> observaciones porque el modelo se estima sobre el panel balanceado efectivo de firmas con información completa para <code>lscrap</code>, subsidio actual, subsidio rezagado y controles temporales en los tres periodos.</p>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia se organiza para mantener foco aplicado y disciplina de especificación:</p>
+<ol type="1">
+<li>Estimar FE, RE y CRE/Mundlak con la misma estructura central de regresores.</li>
+<li>Comparar primero signos y magnitudes de <code>grant</code> y <code>grant_1</code> entre modelos.</li>
+<li>Tomar RE+cluster como modelo operativo si la lectura sustantiva es estable y los contrastes formales no muestran evidencia fuerte en contra.</li>
+<li>Usar Hausman clásico y tests de Mundlak como respaldo formal de la decisión, no como unica base narrativa.</li>
+</ol>
+</section>
+<section id="qué-evita-una-lectura-automatica" class="level2">
+<h2 class="anchored" data-anchor-id="qué-evita-una-lectura-automatica">Qué evita una lectura automatica</h2>
+<p>Una lectura automatica puede confundir planos distintos:</p>
+<ol type="1">
+<li>Relevancia de usar panel frente a pooling.</li>
+<li>Eleccion entre FE y RE/CRE según posible correlación <code>Cov(c_i, x_it)</code>.</li>
+<li>Precision inferencial bajo errores clusterizados.</li>
+</ol>
+<p>La pieza separa esos planos para no convertir una salida de test en conclusión mecanica.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La lectura principal abre por lo sustantivo: los coeficientes de <code>grant</code> y <code>grant_1</code> son parecidos en FE, RE y CRE, con signos consistentes y orden de magnitud cercano. En este caso, la historia aplicada sobre subsidios y scrap no cambia de forma relevante al mover la especificación de heterogeneidad no observada.</p>
+<p>Con esa base, RE se usa como modelo operativo por parsimonia y por compatibilidad con la evidencia robusta tipo Mundlak; FE y CRE quedan como contrastes disciplinados que auditan el supuesto de correlación entre <code>c_i</code> y regresores.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bloque</th>
+<th style="text-align: right;">Evidencia</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FE + cluster (<code>grant</code>, <code>grant_1</code>)</td>
+<td style="text-align: right;">-0.252 (EE 0.143; IC [-0.540, 0.035]); -0.422 (EE 0.282; IC [-0.988, 0.145])</td>
+<td>Magnitudes negativas con incertidumbre amplia</td>
+</tr>
+<tr class="even">
+<td>RE + cluster (<code>grant</code>, <code>grant_1</code>)</td>
+<td style="text-align: right;">-0.214 (EE 0.131; IC [-0.471, 0.042]); -0.373 (EE 0.268; IC [-0.897, 0.152])</td>
+<td>Patrón sustantivo similar al FE</td>
+</tr>
+<tr class="odd">
+<td>CRE + cluster (<code>grant</code>, <code>grant_1</code>)</td>
+<td style="text-align: right;">-0.252 (EE 0.144; IC [-0.535, 0.031]); -0.422 (EE 0.284; IC [-0.979, 0.136])</td>
+<td>Muy cercano a FE en variables clave</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diagnosticos-y-respaldo-formal" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="diagnosticos-y-respaldo-formal">Diagnosticos y respaldo formal</h2>
+<p>El <code>F test all u_i=0</code> en FE (<code>F(53,104)=24.66</code>, <code>p=0.0000</code>) indica que la estructura panel es relevante: pooling simple no alcanza para este caso.</p>
+<p>Ese diagnóstico no decide por sí solo entre RE y FE/CRE. La elección entre esos marcos depende del punto clave <code>Cov(c_i, x_it)</code>, evaluado con comparación de magnitudes y contrastes tipo Hausman/Mundlak.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnostico</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura correcta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Relevancia panel vs pooling</td>
+<td style="text-align: right;">F(53,104)=24.66, p=0.0000</td>
+<td>Hay heterogeneidad no observada importante</td>
+</tr>
+<tr class="even">
+<td>Hausman clásico (FE vs RE)</td>
+<td style="text-align: right;">chi2(2)=2.83, p=0.2425</td>
+<td>No hay evidencia fuerte contra RE</td>
+</tr>
+<tr class="odd">
+<td>Mundlak clásico</td>
+<td style="text-align: right;">chi2(2)=2.05, p=0.3591</td>
+<td>Coherente con lectura de Hausman</td>
+</tr>
+<tr class="even">
+<td>Mundlak robusto (cluster)</td>
+<td style="text-align: right;">chi2(2)=1.85, p=0.3965</td>
+<td>Respaldo formal robusto a la misma conclusión</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>La conclusión se formula con prudencia aplicada: no rechazar RE no significa probar que RE sea verdadero; significa que En esta muestra no aparece evidencia fuerte contra esa formulación. Por eso, la interpretación final se apoya en la combinación de estabilidad sustantiva de coeficientes, contexto del caso y respaldo formal de contrastes.</p>
+<p>En términos aplicados, T9 muestra una práctica profesional útil: cuando FE, RE y CRE cuentan una historia económica parecida, la decisión de modelo puede justificarse sin exagerar precisión ni convertir metodología en protagonista.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>En este panel corto de plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo mantiene un patrón similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente condicionada a los supuestos del marco.</p>
 
 
 </section>

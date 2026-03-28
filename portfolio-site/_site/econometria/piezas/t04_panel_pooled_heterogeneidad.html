@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t04_panel_pooled_heterogeneidad – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#hallazgos-secundarios-y-contrastes" id="toc-hallazgos-secundarios-y-contrastes" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-contrastes">Hallazgos secundarios y contrastes</a></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T04 · Heterogeneidad no observada en panel salarial: límites del MCO agrupado</h1>
+<h1 class="title">Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS</h1>
+<p class="subtitle lead">Benchmark pooled con inferencia clusterizada y limites de identificación frente a c_i no observado</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,216 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Estimación agrupada y sesgo potencial por efectos no observados</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T04</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>En este panel salarial, cluster mejora la inferencia del pooled, pero no corrige el sesgo por heterogeneidad inobservable</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Heterogeneidad no observada en salarios</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> MCO agrupado (Pooled OLS) y sesgo por heterogeneidad</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Panel salarial</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>El pooled OLS con <code>vce(cluster nr)</code> funciona como benchmark operativo para comparar y reportar, pero no es una solución final de identificación cuando <code>c_i</code> puede estar correlacionado con los regresores.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t04_panel_pooled_heterogeneidad.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Pooled + cluster</p>
+</div>
+<div class="metric-note">
+<p><code>reg lwage ... , vce(cluster nr)</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Coef. <code>educ</code> (benchmark)</p>
+</div>
+<div class="metric-value">
+<p>0.099</p>
+</div>
+<div class="metric-note">
+<p>EE cluster = 0.0089</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Problema central</p>
+</div>
+<div class="metric-value">
+<p>Sesgo por <code>c_i</code></p>
+</div>
+<div class="metric-note">
+<p>Si <code>E(x_it,c_i) != 0</code>, pooled no identifica limpio</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>FD En esta base</p>
+</div>
+<div class="metric-value">
+<p>Capacidad limitada</p>
+</div>
+<div class="metric-note">
+<p><code>D.educ</code> y <code>D.exper</code> se omiten por colinealidad</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Este caso separa con claridad dos planos que no conviene mezclar en análisis de panel: (i) inferencia estadística y (ii) sesgo de identificación. La correccion de varianzas con cluster por individuo mejora la inferencia del pooled OLS, pero no resuelve el posible sesgo por heterogeneidad inobservable fija (<code>c_i</code>) correlacionada con los regresores.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Cómo cambia la lectura de una ecuación salarial en panel cuando reconocemos que la heterogeneidad individual no observada puede estar correlacionada con los regresores?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Regresores centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code>.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>En T4, el pooled con <code>vce(cluster nr)</code> es un benchmark operativo de inferencia y comparación.<br>
+No es una solución final al problema de identificación cuando <code>c_i</code> no observado puede sesgar coeficientes.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>Una ecuación salarial en panel resume como cambian los ingresos laborales cuando cambian características observables del trabajador a lo largo del tiempo. En esa lectura, el objetivo no es solo describir correlaciones, sino separar de forma razonable diferencias permanentes entre personas y cambios dentro de cada trayectoria laboral.</p>
+<p>En este contexto, <code>c_i</code> representa rasgos persistentes no observados o imperfectamente medidos del trabajador. Si esos rasgos se relacionan con <code>educ</code>, <code>union</code> u otras covariables, el pooled OLS puede mezclar asociación estadística con sesgo por variable omitida.</p>
+<p>Corregir la matriz de varianzas con cluster es necesario para no sobreconfiar en la precisión inferencial, pero esa correccion no limpia por si sola el problema de identificación.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con un panel balanceado de trabajadores (<code>N = 4360</code>, <code>545</code> individuos, 1980-1987).</p>
+<ul>
+<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
+<li>Regressors principales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code></li>
+<li>Controles temporales evaluados: <code>i.year</code></li>
+<li>Unidad de cluster para inferencia: individuo (<code>nr</code>)</li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia aplicada en T4 es:</p>
+<ol type="1">
+<li>Estimar pooled OLS en niveles como benchmark.</li>
+<li>Corregir inferencia con <code>vce(cluster nr)</code> para heterocedasticidad y dependencia intraindividuo.</li>
+<li>Evaluar la contribución de controles de tiempo como chequeo de especificación.</li>
+<li>Analizar primeras diferencias como estrategia alternativa para remover <code>c_i</code>, explicitando su capacidad empírica En esta base.</li>
+</ol>
+</section>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Un análisis ingenuo confunde dos mensajes distintos:</p>
+<ol type="1">
+<li>Inferencia: sin cluster, los errores estándar pueden estar mal calibrados.</li>
+<li>Identificacion: aun con cluster, pooled puede estar sesgado si <code>c_i</code> se correlaciona con <code>x_it</code>.</li>
+</ol>
+<p>La leccion profesional del caso es mantener esa distinción: mejorar inferencia no equivale a resolver sesgo por heterogeneidad inobservable.</p>
+<p>Si pooled OLS se reporta como resultado final sin esta salvedad, puede comunicarse una lectura salarial insuficientemente depurada por heterogeneidad persistente. El riesgo no es “técnico” en abstracto: puede sesgar la interpretación económica de retornos salariales y relaciones laborales relevantes para comparaciones aplicadas.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>El benchmark pooled con cluster mantiene magnitudes economicas similares a las versiones clásica/robusta, pero con errores estándar más exigentes para inferencia. Esa es una mejora de reporte, no una garantia de identificación.</p>
+<p>En términos aplicados, los coeficientes de la ecuación salarial deben leerse como asociaciones condicionadas al modelo: cuando <code>c_i</code> no está bien tratado, parte de las diferencias persistentes entre trabajadores puede quedar absorbida en esos parámetros.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Coef. <code>educ</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pooled OLS (clásico)</td>
+<td style="text-align: right;">0.0988</td>
+<td style="text-align: right;">0.0046</td>
+<td style="text-align: right;">[0.0897, 0.1078]</td>
+<td style="text-align: right;">4360</td>
+</tr>
+<tr class="even">
+<td>Pooled OLS + cluster <code>nr</code></td>
+<td style="text-align: right;">0.0988</td>
+<td style="text-align: right;">0.0089</td>
+<td style="text-align: right;">[0.0812, 0.1163]</td>
+<td style="text-align: right;">4360</td>
+</tr>
+<tr class="odd">
+<td>Pooled OLS + <code>i.year</code> + cluster <code>nr</code></td>
+<td style="text-align: right;">0.0907</td>
+<td style="text-align: right;">0.0108</td>
+<td style="text-align: right;">[0.0694, 0.1120]</td>
+<td style="text-align: right;">4360</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hallazgos-secundarios-y-contrastes" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-contrastes">Hallazgos secundarios y contrastes</h2>
+<p>Como chequeo de especificación, el test conjunto de dummies de año no rechaza al 5% (<code>F(7,544)=1.34</code>, <code>p=0.2296</code>) en este caso. Por eso, dentro del subbloque pooled, el cierre operativo queda en pooled OLS con <code>vce(cluster nr)</code> sin dummies de año; este cierre no resuelve por sí solo el problema general de identificación frente a <code>c_i</code>.</p>
+<p>En primeras diferencias, la estrategia tiene capacidad empírica limitada En esta base: al diferenciar, <code>D.educ</code> queda omitida por falta de variación temporal útil y <code>D.exper</code> por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bloque</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Test conjunto <code>d81</code>-<code>d87</code></td>
+<td style="text-align: right;">p = 0.2296</td>
+<td>Hallazgo secundario de especificación</td>
+</tr>
+<tr class="even">
+<td>FD: <code>D.educ</code></td>
+<td style="text-align: right;">Omitida</td>
+<td>Sin variación temporal útil dentro de individuo</td>
+</tr>
+<tr class="odd">
+<td>FD: <code>D.exper</code></td>
+<td style="text-align: right;">Omitida</td>
+<td>Colinealidad en diferencias para esta base</td>
+</tr>
+<tr class="even">
+<td>FD: <code>D.expersq</code></td>
+<td style="text-align: right;">coef. = -0.0058, p &lt; 0.001</td>
+<td>Variable con variación útil en FD</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>T4 deja un criterio aplicado claro:</p>
+<ul>
+<li><code>pooled + cluster</code> es un benchmark operativo valido para inferencia y comparación.</li>
+<li>Ese benchmark no resuelve por sí mismo la identificación cuando hay riesgo de <code>c_i</code> correlacionado con regresores.</li>
+<li>Las alternativas que eliminan <code>c_i</code> (como diferencias) pueden tener restricciones de capacidad empírica según la estructura de variación de la base.</li>
+</ul>
+<p>Por eso, el resultado debe comunicarse como evidencia de referencia econométrica, no como conclusión cerrada.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.</p>
+<p>El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled. La decisión final del taller es metodológica: cierre operativo en el subbloque pooled y reconocimiento explícito de que el problema general requiere tratar <code>c_i</code> con estrategias adicionales.</p>
 
 
 </section>

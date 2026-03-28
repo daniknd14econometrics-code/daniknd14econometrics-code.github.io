@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Daniel Méndez">
 
-<title>t14_binaria_vi_discreta – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Fecundidad y participación laboral materna – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +75,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,23 +124,52 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#síntesis-de-magnitudes-ape" id="toc-síntesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#síntesis-de-magnitudes-ape">Síntesis de magnitudes (APE)</a></li>
+  <li><a href="#diagnósticos-de-respaldo" id="toc-diagnósticos-de-respaldo" class="nav-link" data-scroll-target="#diagnósticos-de-respaldo">Diagnósticos de respaldo</a></li>
+  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T14 · Fecundidad y participación laboral materna</h1>
+<h1 class="title">Fecundidad y participación laboral materna</h1>
+<p class="subtitle lead">Una lectura binaria sobre cómo cambia la asociación al admitir endogeneidad de morekids</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -147,34 +179,185 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../../econometria/index.html">← Volver al índice de Econometría</a></p>
-<p>Asociación al admitir endogeneidad de variable discreta</p>
-<div class="piece-meta">
-<div class="meta-item">
-<p><strong>Taller:</strong> T14</p>
+<div class="hero-box">
+<div class="hero-title">
+<p>¿Qué cambia cuando <code>worked</code> es binaria y <code>morekids</code> también es binaria y endógena, y qué modelo es correcto en esa estructura?</p>
 </div>
-<div class="meta-item">
-<p><strong>Tema:</strong> Endogeneidad en variable binaria</p>
-</div>
-<div class="meta-item">
-<p><strong>Método:</strong> Modelo binario con VI discreta</p>
-</div>
-<div class="meta-item">
-<p><strong>Datos:</strong> Microdatos de hogares</p>
-</div>
-<div class="meta-item">
-<p><strong>Software:</strong> Stata</p>
+<div class="hero-sub">
+<p>Aquí la diferencia relevante no es solo corregir endogeneidad, sino reconocer que cuando la variable endógena también es binaria cambia el modelo correcto.</p>
 </div>
 </div>
-<section id="documento-completo-html" class="level2">
-<h2 class="anchored" data-anchor-id="documento-completo-html">Documento completo (HTML)</h2>
-<p>Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.</p>
-<p><a href="../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t14_binaria_vi_discreta.html" target="_blank">Abrir documento HTML del taller</a></p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Binaria con endogeneidad</p>
+</div>
+<div class="metric-note">
+<p>Lectura principal en efectos sobre probabilidad de trabajar</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Madres y hogares</p>
+</div>
+<div class="metric-note">
+<p><code>N=31,857</code> observaciones, corte transversal (<code>labsup</code>)</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Señal sustantiva</p>
+</div>
+<div class="metric-value">
+<p>Asociación negativa de <code>morekids</code></p>
+</div>
+<div class="metric-note">
+<p>La participación laboral materna cae cuando <code>morekids=1</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Sensibilidad clave</p>
+</div>
+<div class="metric-value">
+<p>Mayor magnitud con endogeneidad</p>
+</div>
+<div class="metric-note">
+<p>APE aprox. <code>-0.109</code> (probit exógeno) vs <code>-0.256</code> (biprobit/eprobit)</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza estudia participación laboral materna (<code>worked</code>) en relación con fecundidad (<code>morekids</code>) y características del hogar. El foco principal es metodológico con anclaje aplicado: identificar el modelo correcto para una estructura con dependiente binaria y regresor endógeno binario.</p>
+<p>A diferencia de T13, donde la covariable problemática era continua, aquí ya no corresponde trasladar mecánicamente <code>cfprobit</code> o <code>ivprobit</code> del caso continuo. En esta estructura, <code>biprobit</code> funciona como modelo principal y <code>eprobit</code> como contraste de robustez, mientras <code>MPL</code>, probit y <code>MPL-IV</code> quedan como benchmarks de referencia.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Qué cambia cuando <code>worked</code> es binaria y <code>morekids</code> también es binaria y endógena, y qué modelo es correcto en esa estructura?</p>
 <div class="small-note">
-<p>El enlace abre el documento en una pestaña nueva.</p>
+<p>Resultado: <code>worked</code> (0/1). Variable clave: <code>morekids</code>. Controles: <code>nonmomi</code>, <code>educ</code>, <code>age</code>, <code>age2</code>, <code>black</code>, <code>hispan</code>.</p>
 </div>
-<hr>
-<p><em>Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.</em></p>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>La pieza mantiene el anclaje aplicado en trabajo y fecundidad, pero ordena la lectura con criterio metodológico: en esta estructura, <code>biprobit</code> es el eje principal, <code>eprobit</code> actúa como robustez y los modelos exógenos/lineales quedan como benchmarks.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>La participación laboral materna y la fecundidad forman parte de decisiones de hogar que pueden estar influidas por factores no observados compartidos. En ese contexto, una lectura puramente exógena puede subestimar o sobreestimar la asociación de interés.</p>
+<p>Para un lector profesional, importa saber si el mensaje sustantivo se mantiene y cuánto cambia en magnitud cuando el modelo reconoce de forma explícita la posible endogeneidad de la variable clave.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con <code>labsup.dta</code> en corte transversal.</p>
+<ul>
+<li>Unidad de observación: madre/hogar</li>
+<li>Tamaño de muestra: <code>N=31,857</code></li>
+<li>Variable de resultado: <code>worked</code> (<code>1</code> trabaja, <code>0</code> no trabaja)</li>
+<li>Regresor clave: <code>morekids</code> (<code>1</code> tuvo más de dos hijos)</li>
+<li>Controles: <code>nonmomi</code>, <code>educ</code>, <code>age</code>, <code>age2</code>, <code>black</code>, <code>hispan</code></li>
+<li>Instrumento excluido para <code>morekids</code>: <code>samesex</code> (mismo sexo en los dos primeros hijos)</li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<ol type="1">
+<li>Estimar benchmarks de referencia (<code>MPL</code> y probit exógenos) para lectura base en probabilidades.</li>
+<li>Estimar <code>biprobit</code> como modelo principal en la estructura binaria-binaria y usar <code>eprobit</code> como contraste de robustez.</li>
+<li>Mantener <code>MPL-IV</code> como benchmark lineal instrumentado auxiliar, sin rol protagónico.</li>
+<li>Interpretar resultados como criterio de modelo correcto según estructura del problema, no como competencia general entre métodos.</li>
+</ol>
+</section>
+<section id="resultados-principales" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La lectura se ordena en cuatro pasos:</p>
+<ol type="1">
+<li>Aparece una asociación negativa entre <code>morekids</code> y <code>worked</code>.</li>
+<li>Esa asociación se vuelve más negativa cuando se modela endogeneidad binaria.</li>
+<li>La diferencia debe leerse con prudencia porque cambian los supuestos y el encuadre econométrico.</li>
+<li>El foco de la pieza es distinguir modelo correcto vs modelo incorrecto según la estructura del problema, manteniendo anclaje aplicado.</li>
+</ol>
+</section>
+<section id="síntesis-de-magnitudes-ape" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="síntesis-de-magnitudes-ape">Síntesis de magnitudes (APE)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Enfoque</th>
+<th style="text-align: right;">APE <code>morekids</code></th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
+<th>Lectura aplicada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Probit exógeno</td>
+<td style="text-align: right;">-0.1095</td>
+<td style="text-align: right;">0.0055</td>
+<td style="text-align: right;">[-0.1203, -0.0987]</td>
+<td>Menor probabilidad de trabajar en la referencia base</td>
+</tr>
+<tr class="even">
+<td>MPL-IV</td>
+<td style="text-align: right;">-0.2008</td>
+<td style="text-align: right;">0.0965</td>
+<td style="text-align: right;">[-0.3899, -0.0117]</td>
+<td>Contraste lineal instrumental, con mucha incertidumbre</td>
+</tr>
+<tr class="odd">
+<td>Biprobit con endogeneidad binaria</td>
+<td style="text-align: right;">-0.2559</td>
+<td style="text-align: right;">0.0710</td>
+<td style="text-align: right;">[-0.3951, -0.1167]</td>
+<td>Asociación más negativa al admitir endogeneidad</td>
+</tr>
+<tr class="even">
+<td>Eprobit (contraste adicional)</td>
+<td style="text-align: right;">-0.2559</td>
+<td style="text-align: right;">0.0519</td>
+<td style="text-align: right;">[-0.3576, -0.1542]</td>
+<td>Magnitud alineada con lectura binaria endógena</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diagnósticos-de-respaldo" class="level2">
+<h2 class="anchored" data-anchor-id="diagnósticos-de-respaldo">Diagnósticos de respaldo</h2>
+<p>Este bloque se mantiene subordinado al caso aplicado:</p>
+<ul>
+<li><strong>Instrumento relevante:</strong> primera etapa con señal fuerte (<code>F(1,31849)=103.81</code>, <code>p&lt;0.001</code>).</li>
+<li><strong>Dependencia de errores (señal prudente):</strong> aparece una señal compatible con correlación en especificaciones endógenas (<code>p</code> alrededor de <code>0.056</code> y <code>0.045</code>), a leer con cautela.</li>
+<li><strong>Interpretación de efectos en <code>biprobit</code>:</strong> la interpretación relevante debe centrarse en <code>Pr(worked=1)</code> o en el contraste de tratamiento correspondiente, no en la probabilidad conjunta por defecto.</li>
+<li><strong>Unidad de interpretación:</strong> los efectos reportados se leen como cambios en probabilidad de trabajar, no como parámetros latentes en abstracto.</li>
+</ul>
+</section>
+<section id="lectura-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
+<p>El aporte de T14 es mostrar criterio de modelado aplicado en un problema real de trabajo y fecundidad. La pieza prioriza evaluar si el tratamiento econométrico de <code>morekids</code> cambia materialmente la lectura de una variable central para el análisis de hogar.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>El valor profesional de esta pieza está en saber cuándo una formulación binaria con endogeneidad modifica de forma relevante la lectura aplicada de una variable clave.</p>
+<p>En T14, la historia sustantiva se mantiene (asociación negativa entre fecundidad y participación laboral materna), y la formulación endógena aporta una sensibilidad de magnitud que conviene reportar con claridad y prudencia.</p>
+<p>La lección metodológica es que el modelo correcto depende de la estructura del problema.</p>
 
 
 </section>

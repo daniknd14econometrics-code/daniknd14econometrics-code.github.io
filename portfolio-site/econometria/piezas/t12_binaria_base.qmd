@@ -1,42 +1,190 @@
-﻿---
-title: "T12 · Participación laboral femenina y estructura del hogar"
+---
+title: "Participación laboral femenina y estructura del hogar"
+subtitle: "Una lectura con modelos binarios sobre ingreso, experiencia y presencia de hijos"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t12_binaria_base"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t12_binaria_base_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
-[← Volver al índice de Econometría](../index.qmd)
+::: {.hero-box}
+::: {.hero-title}
+¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?
+:::
 
-Modelos binarios sobre ingreso, experiencia e hijos
-
-::: {.piece-meta}
-::: {.meta-item}
-**Taller:** T12
-:::
-::: {.meta-item}
-**Tema:** Oferta laboral femenina
-:::
-::: {.meta-item}
-**Método:** Logit/Probit binario
-:::
-::: {.meta-item}
-**Datos:** Microdatos de hogares
-:::
-::: {.meta-item}
-**Software:** Stata
+::: {.hero-sub}
+La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal donde la respuesta observada es 0/1.
 :::
 :::
 
-## Documento completo (HTML)
+:::: {.metric-grid}
 
-Esta página incluye un enlace al documento completo en formato HTML correspondiente al taller.
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
 
-[Abrir documento HTML del taller](../../../econometria-clasica/01_portfolio/html/01_portfolio/qmd/t12_binaria_base.html){target="_blank"}
+::: {.metric-value}
+Probit y logit con APE
+:::
+
+::: {.metric-note}
+`margins, dydx(*)` para leer cambios promedio en probabilidad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Contexto aplicado
+:::
+
+::: {.metric-value}
+Mujeres y hogares
+:::
+
+::: {.metric-note}
+`N=753` observaciones; `inlf=1` en `56.84%` de la muestra
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Lectura sustantiva
+:::
+
+::: {.metric-value}
+Senal fuerte en hijos pequeños
+:::
+
+::: {.metric-note}
+`kidslt6`: APE aprox. `-0.26` puntos de probabilidad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Diagnostico clave
+:::
+
+::: {.metric-value}
+Limite del MPL
+:::
+
+::: {.metric-note}
+`33/753` predicciones fuera de `[0,1]` (`4.38%`)
+:::
+:::
+
+::::
+
+## Resumen
+
+Esta pieza estudia participación laboral femenina (`inlf`) en un contexto de decisiones de hogar, con una comparación metodológica en variable binaria y anclaje aplicado.
+
+El valor econométrico del caso no es competir entre técnicas, sino mostrar criterio de especificación para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?
 
 ::: {.small-note}
-El enlace abre el documento en una pestaña nueva.
+Resultado: `inlf` (0/1). Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
+:::
 :::
 
----
+::: {.section-box}
+## Idea central
 
-*Pieza elaborada a partir de un ejercicio aplicado y presentada aquí en una versión revisada y sintética del desarrollo original.*
+La pieza es una comparación metodológica en variable binaria: MPL como benchmark, probit con APE como eje y logit como contraste de robustez.
 
+<span class="badge">Portfolio econométrico</span>
+:::
 
+::::
+
+## Por qué este problema importa
+
+La participación laboral no depende solo de características individuales: también refleja restricciones y decisiones del hogar. En especial, la presencia de hijos pequeños puede cambiar de forma marcada la disponibilidad para trabajar fuera del hogar.
+
+Una lectura profesional necesita reportar asociaciones con prudencia, sin sobreinterpretaciones automáticas y con una escala interpretable en probabilidad.
+
+## Datos y variables
+
+Se trabaja con `mroz.dta`, un corte transversal clásico de economia laboral.
+
+- Unidad de observacion: mujer/hogar
+- Tamano de muestra: `N=753`
+- Variable de resultado: `inlf` (`1` participa, `0` no participa)
+- Proporcion en `inlf=1`: `56.84%` (`428` casos)
+- Proporcion en `inlf=0`: `43.16%` (`325` casos)
+- Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`
+
+## Estrategia empírica
+
+1. Usar MPL robusto como benchmark inicial.
+2. Estimar probit y logit para modelar respuesta binaria con rango probabilistico coherente.
+3. Reportar efectos parciales promedio (APE) como unidad principal de interpretación.
+4. Mantener diagnósticos breves y funcionales al caso aplicado.
+
+## Resultados principales
+
+La lectura combina anclaje aplicado con comparacion metodologica:
+
+- `kidslt6` muestra una asociación negativa fuerte con `inlf`: APE alrededor de `-0.26`, consistente en probit y logit.
+- `educ` y `exper` muestran asociaciones positivas y estables con la participación laboral.
+- `nwifeinc` aparece con asociación negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.
+- `kidsge6` no muestra una asociación robusta de magnitud comparable.
+
+En segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma más creíble que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra.
+
+::: {.table-box}
+## Sintesis comparativa (MPL robusto vs APE)
+
+| Variable | MPL robusto | APE Probit | APE Logit | Lectura aplicada |
+|---|---:|---:|---:|---|
+| kidslt6 | -0.2618 (EE=0.0318) | -0.261 (EE=0.032; IC95% [-0.324, -0.199]) | -0.258 (EE=0.032; IC95% [-0.320, -0.195]) | Asociacion negativa fuerte con participación |
+| educ | +0.0380 (EE=0.0073) | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | Mayor educación se asocia con mayor participación |
+| exper | +0.0395 (EE=0.0058) | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | Mayor experiencia se asocia con mayor participación |
+| nwifeinc | -0.0034 (EE=0.0015) | -0.0036 (EE=0.0014; IC95% [-0.0064, -0.0008]) | -0.0038 (EE=0.0015; IC95% [-0.0067, -0.0009]) | Ingreso no laboral más alto se asocia con menor participación |
+:::
+
+## Diagnosticos de respaldo
+
+Los diagnósticos se usan solo como apoyo del caso:
+
+- MPL genera `33` predicciones fuera de `[0,1]` (`4.38%`), lo que ilustra su límite para respuesta binaria.
+- Ajuste global similar entre binarios: pseudo-`R2` aprox. `0.221` (probit) y `0.220` (logit).
+- MCP ponderado puede volverse sensible a pesos extremos; por eso se usa como diagnóstico secundario y no como lectura final.
+
+Estos elementos respaldan la elección de especificación, pero no reemplazan la lectura sustantiva del fenomeno.
+
+## Lectura profesional
+
+El aporte profesional de T12 no es plantear una competencia entre MPL, probit y logit. El aporte es mostrar criterio para elegir una especificación coherente con una variable binaria y, después, interpretar resultados en términos de probabilidad con claridad y prudencia.
+
+## Cierre
+
+La diferencia relevante del taller no es probit vs logit, sino pasar de una lectura lineal a una lectura no lineal en probabilidades.
+
+El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.
 
