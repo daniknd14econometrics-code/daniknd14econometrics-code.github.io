@@ -1,0 +1,184 @@
+Base usada para este diagnóstico: exclusivamente T19 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T19
+
+1. Identificación básica
+
+Taller 19. Tema central: variable dependiente categórica ordenada, estimada con modelos ordered logit y ordered probit, con foco principal en ordered probit como especificación base para la lectura pública. La base es `pension.dta`, con 194 observaciones. La variable dependiente es `pctstck`, con tres categorías ordenadas: `0`, `50` y `100`, interpretables como distintos niveles de asignación/participación en acciones. Las covariables principales son `age`, `educ`, `wealth89`, `choice`, `female`, `married`, `black`, grupos de ingreso y `prftshr`. El brief lo define correctamente como una pieza sobre categorías ordenadas, con probabilidades por categoría, APEs y una adaptación conceptual a panel solo como nota secundaria. :contentReference[oaicite:2]{index=2} :contentReference[oaicite:3]{index=3}
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza de panel, aunque el do/log deja un bloque de “cómo sería” una adaptación a panel con dummies temporales, cluster por `id` y medias tipo Mundlak. Tampoco es una pieza de predicción. Y no debería venderse como hallazgo sustantivo fuerte sobre portafolios en sí mismos.
+
+Es, ante todo, una pieza metodológica/aplicada sobre cómo tratar correctamente una variable ordinal: cuándo no conviene usar OLS ni multinomial, por qué ordered probit/logit respetan la estructura del problema, y cómo leer probabilidades por categoría y APEs sin caer en interpretaciones erróneas de coeficientes brutos.
+
+Editorialmente, T19 debería leerse como:
+pieza metodológica/aplicada clara sobre resultado ordinal.
+
+3. Pregunta real del taller
+
+La pregunta pública correcta no debería ser “qué determina la inversión en acciones” en forma general, porque eso empuja a una narrativa sustantiva demasiado fuerte para la evidencia que realmente muestra el taller.
+
+La pregunta correcta es:
+¿Cómo modelar una variable categórica ordenada sin perder la información del orden natural?
+
+Si se quiere una versión un poco más aplicada:
+¿Cómo leer correctamente una decisión ordinal con tres niveles de asignación en stock usando probabilidades por categoría y APEs?
+
+4. Núcleo empírico y métodos comparados
+
+El núcleo del taller tiene cuatro bloques, pero no todos deben tener el mismo peso en la pieza pública.
+
+Primero, la comparación `ologit` vs `oprobit`.
+El log corre ambos modelos con la misma especificación y ambos dan resultados muy parecidos en señales y significancia global. Eso es útil como chequeo metodológico, pero no hace falta que ambos compitan narrativamente. El propio do/log luego se queda con `oprobit` como base para la interpretación posterior. Eso es lo correcto para la pieza pública: `ologit` como contraste breve y `oprobit` como modelo principal. :contentReference[oaicite:4]{index=4}
+
+Segundo, las probabilidades predichas por categoría.
+El log reporta márgenes promedio muy limpios:
+- `Pr(pctstck==0) ≈ 0.3314`
+- `Pr(pctstck==50) ≈ 0.3702`
+- `Pr(pctstck==100) ≈ 0.2984`
+
+Eso es excelente como primer objeto de lectura, porque organiza externamente el problema sin meterse todavía en coeficientes latentes. :contentReference[oaicite:5]{index=5}
+
+Tercero, los APEs del ordered probit.
+Acá está el corazón interpretativo real del taller. Los dos efectos más limpios del log son:
+- `age`: aumenta la probabilidad de estar en `pctstck=0` y reduce la de `pctstck=100`, con casi nada en la categoría intermedia;
+- `choice=1`: reduce la probabilidad de `pctstck=0` y aumenta la de `pctstck=100`, con casi nada en `50`;
+- `prftshr=1`: patrón parecido a `choice`, aunque algo más débil.
+
+Muchas otras covariables no resultan estadísticamente claras, y eso también es parte de la honestidad editorial del taller: no hay que forzar una historia enorme donde el propio ejercicio no la da. :contentReference[oaicite:6]{index=6}
+
+Cuarto, el PCP.
+El log calcula un porcentaje correctamente predicho in-sample de 44.33%. Eso es bajo o, al menos, modesto. Mejora algo respecto de azar puro, pero no es ni debería ser el centro del taller. Acá el valor del ejercicio no está en la clasificación, sino en la interpretación ordinal. El PCP puede quedar como diagnóstico muy secundario, o incluso omitirse de la pieza pública si entorpece la historia principal. :contentReference[oaicite:7]{index=7}
+
+5. Objeto de decisión final
+
+Este taller necesita un objeto final de decisión muy claro, y no debería ser la tabla larguísima de APEs para todas las covariables y todos los outcomes. Eso puede quedar en respaldo o apéndice interno del `.qmd`, pero no debería liderar la lectura.
+
+El objeto final correcto debería ser uno de estos dos:
+
+a) una tabla compacta de APEs para 2 o 3 covariables clave (`age`, `choice`, quizá `prftshr`) sobre las tres probabilidades `0`, `50`, `100`;
+
+o
+
+b) un bloque resumen que diga explícitamente:
+- qué mueve probabilidad hacia la categoría baja,
+- qué deja casi sin cambio la categoría intermedia,
+- qué desplaza masa hacia la categoría alta.
+
+Si el `.qmd` ya tiene una tabla protagonista clara y compacta con esta lógica, eso sería ideal.
+
+6. Especificación ganadora o lectura ganadora
+
+Acá no hay una “especificación ganadora” en el sentido de que ordered logit y ordered probit se destruyen entre sí. La pieza no debería contarse como una competencia feroz entre ambos links.
+
+La lectura ganadora es otra:
+ordered probit como base interpretativa principal, con ordered logit como contraste breve y tranquilizador.
+
+Y la enseñanza que gana claramente es:
+en modelos ordenados, lo importante no es memorizar el link ni leer coeficientes crudos, sino interpretar probabilidades por categoría y APEs.
+
+Si hubiera que poner una etiqueta editorial explícita, yo diría:
+“Ejercicio metodológico, no orientado a una especificación final única”,
+pero con preferencia operativa por `oprobit` como modelo de exposición pública.
+
+7. Evidencia clave del log
+
+La evidencia más importante del taller es bastante limpia.
+
+Primero, la variable dependiente `pctstck` tiene tres categorías ordenadas bien balanceadas:
+- 0: 32.99%
+- 50: 37.11%
+- 100: 29.90% :contentReference[oaicite:8]{index=8}
+
+Segundo, `oprobit` y `ologit` dan resultados globalmente similares, lo que apoya que la historia no dependa de una sensibilidad extrema al link. En `oprobit`, los coeficientes con señal más clara son:
+- `age < 0`
+- `choice > 0`
+- `prftshr > 0` marginalmente o al 5% según especificación
+mientras que muchas otras covariables no aparecen con evidencia fuerte. :contentReference[oaicite:9]{index=9}
+
+Tercero, las probabilidades predichas promedio por categoría son aproximadamente:
+- 33.1% para `0`
+- 37.0% para `50`
+- 29.8% para `100` :contentReference[oaicite:10]{index=10}
+
+Cuarto, los APEs más interpretables son:
+- `age`: +1.69 p.p. en `pctstck=0`, casi nulo en `50`, −1.62 p.p. en `100`;
+- `choice=1`: −12.8 p.p. en `0`, +1.0 p.p. en `50`, +11.8 p.p. en `100`;
+- `prftshr=1`: −15.2 p.p. en `0`, −1.4 p.p. en `50`, +16.6 p.p. en `100` (más tenue pero sugerente). :contentReference[oaicite:11]{index=11}
+
+Quinto, el PCP in-sample es 44.33%, lo que refuerza que el centro no debe ser predicción, sino interpretación ordinal. :contentReference[oaicite:12]{index=12}
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T19 no es “esta variable causa más acciones”. La historia correcta es mucho más limpia y pedagógicamente valiosa:
+
+Cuando la variable resultado tiene orden natural, no conviene tratarla como continua ni como nominal simple. Ordered probit/logit permiten repartir la probabilidad entre categorías ordenadas y entender cómo una covariable desplaza masa hacia resultados más bajos o más altos. En este caso, algunas variables como `choice` y `prftshr` reubican probabilidad desde la categoría baja hacia la alta, mientras que otras apenas mueven la masa intermedia.
+
+Eso da una pieza profesional, honesta y muy útil para un portfolio.
+
+9. Hallazgo principal
+
+La frase que el lector debería retener al salir es esta:
+
+En resultados ordinales, la unidad de lectura correcta son las probabilidades por categoría y sus APEs, no los coeficientes crudos del índice latente.
+
+Y una segunda frase posible:
+En este caso, `choice` y `prftshr` desplazan probabilidad desde la categoría más conservadora hacia la más intensiva en stock, mientras que la edad empuja en la dirección contraria.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que ordered probit es el modelo principal del taller. Sí puede decir que ordered logit funciona como contraste razonable. Sí puede decir que la interpretación central se hace vía probabilidades predichas y APEs por categoría. Sí puede destacar `age`, `choice` y `prftshr` como los efectos más legibles del ejercicio. Sí puede mencionar, de manera muy lateral, que el do/log deja una adaptación conceptual a panel, pero dejando clarísimo que esta base no es panel. Todo eso está alineado con brief y log. :contentReference[oaicite:13]{index=13} :contentReference[oaicite:14]{index=14}
+
+11. Qué no debe decir la pieza
+
+No debería venderse como pieza de panel. No debería dar a entender que se estimó una versión CRE real, porque eso en el log aparece solo como esquema hipotético. No conviene hacer del PCP un punto fuerte. No conviene sobrecargar con explicación larga de cutpoints y álgebra del ordered probit, salvo una nota breve muy limpia. Tampoco conviene publicar la duplicación `pctstck` vs `invest`, porque el propio log muestra que no cambia nada y eso es puramente pedagógico/interno.
+
+12. Riesgos editoriales a vigilar en la auditoría
+
+Veo varios riesgos claros.
+
+a) Que la pieza se presente como si fuera panel, cuando no lo es.
+b) Que el bloque de adaptación a panel CRE gane demasiado espacio.
+c) Que ordered logit y ordered probit queden compitiendo más de la cuenta.
+d) Que el PCP gane protagonismo indebido.
+e) Que la pieza se vuelva demasiado apunte de clase con demasiada explicación de cutpoints y derivadas.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza pública debería tener sí o sí cinco cosas.
+
+Primero, una apertura que diga que el problema es ordinal y que ese orden no debe perderse.
+
+Segundo, una frase breve sobre por qué ordered probit/logit mejoran respecto de OLS o multinomial simple.
+
+Tercero, un objeto final de decisión claro en forma de probabilidades predichas y/o tabla compacta de APEs.
+
+Cuarto, una lectura clara de 2 o 3 covariables relevantes, no de las 14.
+
+Quinto, un cierre honesto diciendo que interpretar probabilidades en resultados ordenados importa más que memorizar el link.
+
+14. Nota para la tarjeta del sitio
+
+Título:
+Cuando las categorías tienen orden: probit y logit ordenado bien interpretados
+
+Pregunta:
+¿Cómo modelar una variable categórica ordenada sin perder la información del orden natural?
+
+Método:
+Ordered probit / ordered logit
+
+Hallazgo:
+La lectura útil está en probabilidades por categoría y APEs, no en coeficientes crudos del índice latente.
+
+Estado de la evidencia:
+Pieza metodológica/aplicada clara.
+
+15. Observación adicional de metadatos
+
+El brief ya está bastante bien alineado. Lo único delicado es que menciona “adaptación conceptual a panel”, y eso está bien solo si en la pieza pública queda clarísimo que es una nota secundaria, no el corazón del taller.
+
+16. Diagnóstico final
+
+T19 tiene buen valor público si se mantiene muy enfocado. Su mejor versión no es una pieza sobre “panel ordenado”, ni una competencia larga entre ologit y oprobit, ni una pieza de predicción. Su mejor versión es una nota metodológica clara sobre cómo hablar profesionalmente de resultados ordinales, con `oprobit` como base principal, probabilidades por categoría, APEs para pocas covariables clave y una mención muy secundaria a cómo se adaptaría el enfoque a panel si la base lo permitiera.
