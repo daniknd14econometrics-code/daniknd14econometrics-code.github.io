@@ -4,6 +4,9 @@
 
 Este archivo regula la producción de piezas públicas de la sección `causalidad` dentro de `portfolio-sitecausalidad`.
 
+Seguir obligatoriamente `docs/qmd-curation-playbook.md` como protocolo maestro de construcción de piezas públicas `.qmd`.
+Si hay conflicto entre improvisación narrativa y el playbook, prevalece el playbook.
+
 Debe leerse junto con el `causalidadAGENTS.md` ubicado más arriba en el repo.
 Ese archivo define la jerarquía editorial general de la sección.
 Este archivo define cómo debe verse, estructurarse y redactarse una pieza pública `.qmd`.
