@@ -410,6 +410,25 @@ Si eso no puede responderse con claridad, la pieza no está cerrada.
 Los nombres de variables y fórmulas del do-file pueden aparecer, pero no deben dominar la interpretación visible.
 La pieza debe poder leerse por alguien externo sin conocer la nomenclatura interna del taller.
 
+30. **Revisión final de lenguaje público**
+Antes de cerrar una pieza, realizar revisión final de tildes, ortografía, microestilo, frases internas, expresiones coloquiales y anglicismos evitables.
+La cara pública debe quedar en español profesional limpio, salvo términos técnicos realmente necesarios.
+
+31. **Eliminar tono interno en la versión final**
+Traducir o eliminar formulaciones que suenen a conversación interna, auditoría o cocina del proyecto.
+La pieza final no debe leerse como nota entre colaboradores.
+
+32. **Interpretación sustantiva con entidad visual**
+Si existe un resultado central claramente interpretable, su interpretación debe tener visibilidad suficiente (caja, bloque o sección breve destacada con sobriedad).
+No debe quedar enterrada como párrafo suelto.
+
+33. **Legibilidad en bloques de datos y variables**
+Los bloques de “Datos y variables” deben priorizar lectura clara.
+Si el ancho es limitado, evitar texto corrido excesivo y ordenar la información con separación visible (una línea por categoría o lista breve).
+
+34. **Checklist de cierre visual-editorial**
+Antes de cerrar, verificar además de contenido y método: limpieza del español, ausencia de lenguaje interno, visibilidad de la interpretación sustantiva y legibilidad de cajas informativas.
+
 ---
 
 ## 15. Qué evitar siempre

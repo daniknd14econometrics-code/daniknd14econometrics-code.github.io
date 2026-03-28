@@ -114,6 +114,12 @@ Preferir
 - No confundir número con interpretación: la pieza debe atar número, estimando, población y significado sustantivo.
 - Antes de cerrar, debe poder responderse en una línea: qué efecto/relación se encontró, sobre qué variable, para quiénes y bajo qué diseño.
 - Los nombres de variables y fórmulas pueden aparecer, pero no deben dominar la lectura pública ni asumir conocimiento interno del taller.
+- Antes de cerrar, hacer revisión final de lenguaje público: tildes, ortografía, microestilo, frases internas, coloquialismos y anglicismos evitables.
+- La pieza pública final debe quedar en español profesional limpio, salvo términos técnicos necesarios.
+- Eliminar o traducir formulaciones que suenen a conversación interna, auditoría o cocina del proyecto.
+- Si hay un resultado central interpretable, su lectura sustantiva debe tener entidad visual suficiente (caja, bloque o sección breve destacada), con sobriedad.
+- En “Datos y variables”, priorizar legibilidad: evitar texto corrido excesivo y separar unidad de análisis, resultado, tratamiento y covariables en líneas o lista breve cuando convenga.
+- En el cierre visual-editorial, verificar explícitamente limpieza del español, ausencia de lenguaje interno, visibilidad de la interpretación sustantiva y legibilidad de cajas informativas.
 
 ## Regla sobre causalidad
 
