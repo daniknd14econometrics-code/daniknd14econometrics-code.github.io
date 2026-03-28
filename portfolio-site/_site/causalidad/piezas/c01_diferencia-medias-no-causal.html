@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Méndez">
 
-<title>T1: Por qué una diferencia de medias no es causal – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Por qué una diferencia de medias no equivale a efecto causal – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -127,19 +127,30 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#comparación-dominante" id="toc-comparación-dominante" class="nav-link" data-scroll-target="#comparación-dominante">Comparación dominante</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">T1: Por qué una diferencia de medias no es causal</h1>
+<h1 class="title">Por qué una diferencia de medias no equivale a efecto causal</h1>
 <p class="subtitle lead">Apertura conceptual de la sección Causalidad</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Autor/a</div>
@@ -166,16 +177,16 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="../../causalidad/index.html">&lt;- Volver al índice de Causalidad</a></p>
 <div class="hero-box">
 <div class="hero-title">
-<p>Una diferencia de medias no alcanza para identificar un efecto causal</p>
+<p>Una diferencia de medias describe una brecha, pero no identifica causalidad</p>
 </div>
 <div class="hero-sub">
-<p>¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal? En T1, el punto no es elegir “el número correcto”, sino mostrar que la magnitud estimada depende del contrafactual que se construye.</p>
+<p>¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal? Esta apertura muestra por qué la respuesta es negativa cuando el contrafactual no es creíble.</p>
 </div>
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza abre la sección <code>causalidad</code> con una idea básica: comparar promedios entre tratados y no tratados puede servir como diagnóstico inicial, pero no debe leerse como evidencia causal por sí sola.</p>
-<p>En la base de T1, los grupos difieren de forma marcada en observables relevantes (<code>edu</code> y <code>mont</code>). Por eso, la comparación bruta mezcla potencial efecto del tratamiento con sesgo de selección.</p>
+<p>Esta pieza abre la sección <code>causalidad</code> con una distinción central: una diferencia de medias puede ser un diagnóstico descriptivo útil, pero no constituye evidencia causal por sí sola.</p>
+<p>En T1, tratados y controles difieren de forma marcada en observables relevantes (<code>edu</code> y <code>mont</code>). En ese contexto, la comparación bruta combina efecto potencial del tratamiento con sesgo de selección.</p>
 </section>
 <section id="pregunta-central" class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
@@ -184,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="comparación-dominante" class="level2">
 <h2 class="anchored" data-anchor-id="comparación-dominante">Comparación dominante</h2>
 <div class="table-box">
-<p>La comparación central del taller es la variación de la magnitud estimada de <code>treat</code> cuando cambia el diseño:</p>
+<p>La comparación central evalúa cómo varía la magnitud estimada de <code>treat</code> cuando cambia el diseño de comparación:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -227,13 +238,13 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<p>La lectura que domina es directa: si el número cambia mucho cuando cambia el contrafactual, el foco no debe estar en “el coeficiente más alto”, sino en la credibilidad de la comparación usada.</p>
+<p>La lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en “el coeficiente más alto”, sino en la credibilidad del diseño.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>T1 no es una pieza aplicada fuerte ni una especificación ganadora. Es una apertura conceptual breve: muestra por qué una diferencia de medias no es causal y prepara el terreno para piezas posteriores con diseños más exigentes.</p>
-<p>En términos editoriales, este taller funciona como ejercicio metodológico, no orientado a una especificación final única.</p>
-<p>Además, el ejercicio usa una base de juguete y casi determinística (<code>corr(edu, salario) ~ 0.9998</code> y <code>R^2 ~ 1</code> con controles), por lo que no corresponde sobreactuar la conclusión causal.</p>
+<p>Esta pieza cumple una función de apertura conceptual y no de validación aplicada fuerte. Su aporte es metodológico: mostrar por qué una diferencia de medias no identifica, por sí sola, un efecto causal.</p>
+<p>En consecuencia, T1 se presenta como ejercicio metodológico, no orientado a una especificación final única.</p>
+<p>Además, el ejercicio utiliza una base sintética y casi determinística (<code>corr(edu, salario) ~ 0.9998</code> y <code>R^2 ~ 1</code> con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente.</p>
 
 
 </section>

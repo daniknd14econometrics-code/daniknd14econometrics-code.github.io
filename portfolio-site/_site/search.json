@@ -1507,36 +1507,36 @@
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html",
-    "title": "T1: Por qué una diferencia de medias no es causal",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "",
     "text": "&lt;- Volver al índice de Causalidad"
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#resumen",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#resumen",
-    "title": "T1: Por qué una diferencia de medias no es causal",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Resumen",
-    "text": "Resumen\nEsta pieza abre la sección causalidad con una idea básica: comparar promedios entre tratados y no tratados puede servir como diagnóstico inicial, pero no debe leerse como evidencia causal por sí sola.\nEn la base de T1, los grupos difieren de forma marcada en observables relevantes (edu y mont). Por eso, la comparación bruta mezcla potencial efecto del tratamiento con sesgo de selección."
+    "text": "Resumen\nEsta pieza abre la sección causalidad con una distinción central: una diferencia de medias puede ser un diagnóstico descriptivo útil, pero no constituye evidencia causal por sí sola.\nEn T1, tratados y controles difieren de forma marcada en observables relevantes (edu y mont). En ese contexto, la comparación bruta combina efecto potencial del tratamiento con sesgo de selección."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta-central",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta-central",
-    "title": "T1: Por qué una diferencia de medias no es causal",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Pregunta central",
     "text": "Pregunta central\n¿Qué cambia en la lectura cuando pasamos de una diferencia de medias a diseños que mejoran la construcción del contrafactual?"
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#comparación-dominante",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#comparación-dominante",
-    "title": "T1: Por qué una diferencia de medias no es causal",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Comparación dominante",
-    "text": "Comparación dominante\n\nLa comparación central del taller es la variación de la magnitud estimada de treat cuando cambia el diseño:\n\n\n\n\n\n\n\n\nDiseño de comparación\nEstimación asociada a treat sobre salario\nLectura breve\n\n\n\n\nDiferencia de medias (tratados - controles)\n7163.8\nBrecha observada sin identificación causal\n\n\nMCO simple robusto\n7163.8\nReexpresa la misma comparación bruta\n\n\nMCO con controles (mont, edu)\n100.1\nCambia de forma drástica al ajustar por observables\n\n\nPSM ATE (logit/probit)\n976.0 / 1012.0\nMagnitud sensible al diseño de emparejamiento\n\n\nPSM ATET (logit)\n3614.4\nEfecto sobre tratados, no equivalente al ATE\n\n\n\n\nLa lectura que domina es directa: si el número cambia mucho cuando cambia el contrafactual, el foco no debe estar en “el coeficiente más alto”, sino en la credibilidad de la comparación usada."
+    "text": "Comparación dominante\n\nLa comparación central evalúa cómo varía la magnitud estimada de treat cuando cambia el diseño de comparación:\n\n\n\n\n\n\n\n\nDiseño de comparación\nEstimación asociada a treat sobre salario\nLectura breve\n\n\n\n\nDiferencia de medias (tratados - controles)\n7163.8\nBrecha observada sin identificación causal\n\n\nMCO simple robusto\n7163.8\nReexpresa la misma comparación bruta\n\n\nMCO con controles (mont, edu)\n100.1\nCambia de forma drástica al ajustar por observables\n\n\nPSM ATE (logit/probit)\n976.0 / 1012.0\nMagnitud sensible al diseño de emparejamiento\n\n\nPSM ATET (logit)\n3614.4\nEfecto sobre tratados, no equivalente al ATE\n\n\n\n\nLa lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en “el coeficiente más alto”, sino en la credibilidad del diseño."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#cierre",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#cierre",
-    "title": "T1: Por qué una diferencia de medias no es causal",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Cierre",
-    "text": "Cierre\nT1 no es una pieza aplicada fuerte ni una especificación ganadora. Es una apertura conceptual breve: muestra por qué una diferencia de medias no es causal y prepara el terreno para piezas posteriores con diseños más exigentes.\nEn términos editoriales, este taller funciona como ejercicio metodológico, no orientado a una especificación final única.\nAdemás, el ejercicio usa una base de juguete y casi determinística (corr(edu, salario) ~ 0.9998 y R^2 ~ 1 con controles), por lo que no corresponde sobreactuar la conclusión causal."
+    "text": "Cierre\nEsta pieza cumple una función de apertura conceptual y no de validación aplicada fuerte. Su aporte es metodológico: mostrar por qué una diferencia de medias no identifica, por sí sola, un efecto causal.\nEn consecuencia, T1 se presenta como ejercicio metodológico, no orientado a una especificación final única.\nAdemás, el ejercicio utiliza una base sintética y casi determinística (corr(edu, salario) ~ 0.9998 y R^2 ~ 1 con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente."
   }
 ]
