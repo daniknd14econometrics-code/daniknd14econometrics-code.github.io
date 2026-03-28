@@ -1,5 +1,5 @@
 ---
-title: "T1: Por qué una diferencia de medias no es causal"
+title: "Por qué una diferencia de medias no equivale a efecto causal"
 subtitle: "Apertura conceptual de la sección Causalidad"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
@@ -9,7 +9,8 @@ id_taller: "c01_t1_diferencia_medias_no_causal"
 date: "2026-03-28"
 format:
   html:
-    toc: false
+    toc: true
+    toc-depth: 3
     theme: flatly
     smooth-scroll: true
     page-layout: full
@@ -26,19 +27,19 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-Una diferencia de medias no alcanza para identificar un efecto causal
+Una diferencia de medias describe una brecha, pero no identifica causalidad
 :::
 
 ::: {.hero-sub}
-¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal? En T1, el punto no es elegir "el número correcto", sino mostrar que la magnitud estimada depende del contrafactual que se construye.
+¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal? Esta apertura muestra por qué la respuesta es negativa cuando el contrafactual no es creíble.
 :::
 :::
 
 ## Resumen
 
-Esta pieza abre la sección `causalidad` con una idea básica: comparar promedios entre tratados y no tratados puede servir como diagnóstico inicial, pero no debe leerse como evidencia causal por sí sola.
+Esta pieza abre la sección `causalidad` con una distinción central: una diferencia de medias puede ser un diagnóstico descriptivo útil, pero no constituye evidencia causal por sí sola.
 
-En la base de T1, los grupos difieren de forma marcada en observables relevantes (`edu` y `mont`). Por eso, la comparación bruta mezcla potencial efecto del tratamiento con sesgo de selección.
+En T1, tratados y controles difieren de forma marcada en observables relevantes (`edu` y `mont`). En ese contexto, la comparación bruta combina efecto potencial del tratamiento con sesgo de selección.
 
 ## Pregunta central
 
@@ -47,7 +48,7 @@ En la base de T1, los grupos difieren de forma marcada en observables relevantes
 ## Comparación dominante
 
 ::: {.table-box}
-La comparación central del taller es la variación de la magnitud estimada de `treat` cuando cambia el diseño:
+La comparación central evalúa cómo varía la magnitud estimada de `treat` cuando cambia el diseño de comparación:
 
 | Diseño de comparación | Estimación asociada a `treat` sobre `salario` | Lectura breve |
 |---|---:|---|
@@ -58,12 +59,12 @@ La comparación central del taller es la variación de la magnitud estimada de `
 | PSM ATET (logit) | 3614.4 | Efecto sobre tratados, no equivalente al ATE |
 :::
 
-La lectura que domina es directa: si el número cambia mucho cuando cambia el contrafactual, el foco no debe estar en "el coeficiente más alto", sino en la credibilidad de la comparación usada.
+La lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en "el coeficiente más alto", sino en la credibilidad del diseño.
 
 ## Cierre
 
-T1 no es una pieza aplicada fuerte ni una especificación ganadora. Es una apertura conceptual breve: muestra por qué una diferencia de medias no es causal y prepara el terreno para piezas posteriores con diseños más exigentes.
+Esta pieza cumple una función de apertura conceptual y no de validación aplicada fuerte. Su aporte es metodológico: mostrar por qué una diferencia de medias no identifica, por sí sola, un efecto causal.
 
-En términos editoriales, este taller funciona como ejercicio metodológico, no orientado a una especificación final única.
+En consecuencia, T1 se presenta como ejercicio metodológico, no orientado a una especificación final única.
 
-Además, el ejercicio usa una base de juguete y casi determinística (`corr(edu, salario) ~ 0.9998` y `R^2 ~ 1` con controles), por lo que no corresponde sobreactuar la conclusión causal.
+Además, el ejercicio utiliza una base sintética y casi determinística (`corr(edu, salario) ~ 0.9998` y `R^2 ~ 1` con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente.

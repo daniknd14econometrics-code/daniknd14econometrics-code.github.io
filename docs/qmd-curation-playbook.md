@@ -285,6 +285,38 @@ Preferir:
 - cierres honestos
 - transición clara entre pregunta, método y lectura
 
+### Refuerzos explícitos validados (T1 + benchmark `econometria-clasica`)
+
+1. **TOC por defecto**
+Toda pieza pública debe incluir tabla de contenidos como opción base.
+Solo puede omitirse en notas extremadamente breves donde no aporte navegación real.
+
+2. **Registro de lenguaje público**
+La redacción debe sonar a lector externo y no a conversación interna del proyecto.
+No debe sonar a diagnóstico privado, nota de trabajo ni cocina metodológica.
+
+3. **Evitar meta-editorial visible**
+Las categorías internas pueden guiar la construcción, pero no deben contaminar el texto público.
+Evitar fórmulas como “pieza aplicada fuerte”, “en términos editoriales”, “apertura conceptual de la sección” o “respaldo metodológico” cuando no aportan a la lectura externa.
+
+4. **Títulos visibles con criterio de presentación**
+Evaluar críticamente si conviene mostrar prefijos internos como `T1`, `T2`, etc. en el título visible.
+Si el prefijo debilita la presentación profesional o refuerza una estética de taller, omitirlo en la cara pública.
+
+5. **Nivel de curaduría esperado**
+No alcanza con que el archivo compile ni con que el contenido sea técnicamente correcto.
+La pieza debe sentirse tan curada como las mejores piezas de `econometria-clasica`: pulido narrativo, sobriedad, jerarquía clara y sensación de pieza profesional terminada.
+
+6. **Pregunta al inicio, respuesta al cierre**
+Cuando exista una pregunta empírica, causal o metodológica reconocible, debe aparecer desde el inicio.
+La apertura no debe demorarse en metadiscusión.
+La estructura debe conducir a una respuesta clara, sobria y consistente hacia el cierre.
+
+7. **Historia narrativa cuando el material la permite**
+Si el taller habilita una historia narrativa clara, esa historia debe estar presente.
+No inventar storytelling donde no existe, pero tampoco perder una narrativa válida cuando sí existe.
+La técnica debe organizar y sostener esa historia, no reemplazarla.
+
 ---
 
 ## 15. Qué evitar siempre

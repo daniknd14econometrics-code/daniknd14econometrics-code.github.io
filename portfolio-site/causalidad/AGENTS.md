@@ -83,6 +83,16 @@ Preferir
 - lenguaje de evidencia y diseño
 - distinción entre resultado, identificación y límite interpretativo
 
+## Refuerzos de curaduría pública (obligatorios)
+
+- TOC por defecto en piezas públicas; omitir solo en notas extremadamente breves donde no aporte navegación.
+- Registro para lector externo; no redactar como conversación interna, diagnóstico privado ni nota de trabajo.
+- Evitar lenguaje meta-editorial en la cara pública (por ejemplo: “pieza aplicada fuerte”, “en términos editoriales”, “apertura conceptual de la sección”, “respaldo metodológico”).
+- Evaluar si conviene mostrar prefijos internos (`T1`, `T2`, etc.) en títulos visibles; si debilitan la presentación profesional, omitirlos.
+- No alcanza con compilar o estar “correcto”: la pieza debe sentirse tan curada como las mejores piezas de `econometria-clasica`.
+- Cuando haya pregunta empírica, causal o metodológica reconocible, debe abrir la pieza y encontrar respuesta clara y sobria al cierre.
+- Si el material permite una historia narrativa clara, conservarla; la técnica la sostiene, no la reemplaza.
+
 ## Regla sobre causalidad
 
 No sobreactuar causalidad.
