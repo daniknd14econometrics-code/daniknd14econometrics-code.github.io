@@ -1572,7 +1572,7 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "",
-    "text": "&lt;- Volver al índice de Causalidad\nBajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito se asocia con un nivel esperado del log del gasto total del hogar 0.1063 puntos mayor que el de su contrafactual construido con hogares no tratados comparables.\nEsta respuesta vale para los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), no para toda la población de hogares.\nEl contraste dominante es claro: un ATET mayor (CEM - regla FD) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente."
+    "text": "&lt;- Volver al índice de Causalidad\nEl contraste dominante es claro: un ATET mayor (CEM - regla FD) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente."
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#resumen",
@@ -1586,35 +1586,35 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#pregunta-central",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Pregunta central",
-    "text": "Pregunta central\nEn esta aplicación, ¿cuál es el efecto de dfmfd sobre el log del gasto total del hogar cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?"
+    "text": "Pregunta central\nEn esta aplicación, ¿cuál es el efecto de dfmfd sobre el log del gasto total del hogar cuando el contrafactual se construye con emparejamiento, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?"
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#datos-y-variables",
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#datos-y-variables",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Datos y variables",
-    "text": "Datos y variables\n\nUnidad de análisis: hogares (N = 1129). Resultado: log del gasto total del hogar (lexptot). Definición exacta: lexptot = ln(1 + exptot). Tratamiento: dfmfd (participación femenina en microcrédito). Covariables clave de comparabilidad: sexhead, vaccess, agehead, educhead, lnland, pcirr."
+    "text": "Datos y variables\n\n\nUnidad de análisis: hogares (N = 1129).\nResultado: log del gasto total del hogar (lexptot; definición exacta: ln(1 + exptot)).\nTratamiento: dfmfd (participación femenina en microcrédito).\nCovariables clave de comparabilidad: sexhead, vaccess, agehead, educhead, lnland y pcirr."
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#regla-de-decisión",
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#regla-de-decisión",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Regla de decisión",
-    "text": "Regla de decisión\nLa selección de diseño se hizo sin usar la variable de resultado para rankear candidatos. Primero se exigió balance (max|SMD| &lt;= 0.10 en covariables core) y luego se priorizó soporte (ESS y muestra retenida)."
+    "text": "Regla de decisión\nLa selección de diseño se hizo sin usar la variable de resultado para ordenar candidatos. Primero se exigió balance (max|SMD| &lt;= 0.10 en covariables clave) y luego se priorizó soporte (ESS y muestra retenida)."
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#por-qué-la-comparación-simple-no-alcanza",
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#por-qué-la-comparación-simple-no-alcanza",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Por qué la comparación simple no alcanza",
-    "text": "Por qué la comparación simple no alcanza\nComparar tratados y controles sin construir soporte común mezcla diferencias de composición con efecto potencial del tratamiento. En este caso, el matching cambia simultáneamente:\n\nqué hogares quedan en la muestra útil;\nqué tan parecidos son tratados y controles en covariables observadas;\ny qué estimando termina reportándose.\n\nPor eso, la lectura profesional no puede depender solo del tamaño del coeficiente."
+    "text": "Por qué la comparación simple no alcanza\nComparar tratados y controles sin construir soporte común mezcla diferencias de composición con efecto potencial del tratamiento. En este caso, el emparejamiento cambia simultáneamente:\n\nqué hogares quedan en la muestra útil;\nqué tan parecidos son tratados y controles en covariables observadas;\ny qué estimando termina reportándose.\n\nPor eso, la lectura profesional no puede depender solo del tamaño del coeficiente."
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#contraste-central-de-diseño",
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#contraste-central-de-diseño",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Contraste central de diseño",
-    "text": "Contraste central de diseño\nLa tabla resume el trade-off relevante para decidir entre estrategias de matching en esta base.\n\n\n\n\n\n\n\n\n\n\n\n\nEspecificación\nmax|SMD| (core)\nCumple regla base (max|SMD| &lt;= 0.10)\nESS controles\nSoporte retenido (N1 / N0)\nATET reportado\nLectura\n\n\n\n\nMatching exacto - especificación base (Exact / S1)\n0.0839\nPasa regla base\n164.3\n409 / 325\n0.1063 (SE boot 0.0397)\nPreferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo\n\n\nCEM - regla Scott (CEM / scott)\n0.0184\nPasa regla base\n63.6\n192 / 157\nReferencia comparativa\nBalance más estricto, con pérdida marcada de muestra efectiva\n\n\nMatching exacto - especificación ampliada (Exact / S2)\n0.1697\nNo pasa regla base\n269.0\n505 / 431\nReferencia de sensibilidad\nSe vuelve opción relevante si el umbral se relaja a 0.20\n\n\nCEM - regla FD (CEM / fd)\n0.2114\nNo pasa regla base\n86.1\n201 / 156\n0.2249 (SE boot 0.0643)\nReporta ATET más alto, pero no cumple la regla base de balance"
+    "text": "Contraste central de diseño\nLa tabla resume la compensación relevante para decidir entre estrategias de emparejamiento en esta base.\n\n\n\n\n\n\n\n\n\n\n\n\nEspecificación\nmax|SMD| (clave)\nCumple regla base (max|SMD| &lt;= 0.10)\nESS controles\nSoporte retenido (N1 / N0)\nATET reportado\nLectura\n\n\n\n\nMatching exacto - especificación base (Exact / S1)\n0.0839\nPasa regla base\n164.3\n409 / 325\n0.1063 (EE bootstrap 0.0397)\nPreferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo\n\n\nCEM - regla Scott (CEM / scott)\n0.0184\nPasa regla base\n63.6\n192 / 157\nReferencia comparativa\nBalance más estricto, con pérdida marcada de muestra efectiva\n\n\nMatching exacto - especificación ampliada (Exact / S2)\n0.1697\nNo pasa regla base\n269.0\n505 / 431\nReferencia de sensibilidad\nSe vuelve opción relevante si el umbral se relaja a 0.20\n\n\nCEM - regla FD (CEM / fd)\n0.2114\nNo pasa regla base\n86.1\n201 / 156\n0.2249 (EE bootstrap 0.0643)\nReporta ATET más alto, pero no cumple la regla base de balance"
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#decisión-metodológica-y-alcance",
@@ -1629,5 +1629,12 @@
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Cierre",
     "text": "Cierre\nEn términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: su nivel esperado del log del gasto total del hogar es mayor que el de su contrafactual no tratado comparable. Ese resultado se resume en un ATET de 0.1063 bajo la regla base (max|SMD| &lt;= 0.10).\nEsa respuesta vale para la subpoblación tratada en soporte común (N1/N0 = 409/325), no para toda la población de hogares.\nLa lectura debe seguir siendo cauta: el resultado está condicionado al diseño y a supuestos como selección en observables y overlap, no representa una verdad causal definitiva."
+  },
+  {
+    "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#lectura-sustantiva-del-efecto",
+    "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#lectura-sustantiva-del-efecto",
+    "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
+    "section": "Lectura sustantiva del efecto",
+    "text": "Lectura sustantiva del efecto\nBajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito se asocia con un nivel esperado del log del gasto total del hogar 0.1063 puntos mayor que el de su contrafactual construido con hogares no tratados comparables.\nEsta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares."
   }
 ]
