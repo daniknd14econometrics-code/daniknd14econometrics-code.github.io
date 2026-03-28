@@ -59,7 +59,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
   <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
   <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#sintesis-de-magnitudes-ape" id="toc-sintesis-de-magnitudes-ape" class="nav-link" data-scroll-target="#sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</a></li>
+  <li><a href="#sintesis-comparativa-mpl-robusto-vs-ape" id="toc-sintesis-comparativa-mpl-robusto-vs-ape" class="nav-link" data-scroll-target="#sintesis-comparativa-mpl-robusto-vs-ape">Sintesis comparativa (MPL robusto vs APE)</a></li>
   <li><a href="#diagnosticos-de-respaldo" id="toc-diagnosticos-de-respaldo" class="nav-link" data-scroll-target="#diagnosticos-de-respaldo">Diagnosticos de respaldo</a></li>
   <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
   <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
@@ -102,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>¿Qué factores del hogar se asocian con mayor o menor participación laboral femenina?</p>
+<p>¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?</p>
 </div>
 <div class="hero-sub">
 <p>La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal donde la respuesta observada es 0/1.</p>
@@ -156,20 +156,20 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en un contexto de decisiones de hogar. La lectura principal se organiza por asociaciones sustantivas: presencia de hijos pequeños, educación, experiencia e ingreso no laboral del hogar.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en un contexto de decisiones de hogar, con una comparación metodológica en variable binaria y anclaje aplicado.</p>
 <p>El valor econométrico del caso no es competir entre técnicas, sino mostrar criterio de especificación para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>¿Cómo se asocia la participación laboral con el ingreso del hogar, la educación, la experiencia y la presencia de hijos pequeños?</p>
+<p>¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?</p>
 <div class="small-note">
 <p>Resultado: <code>inlf</code> (0/1). Regresores clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>La pieza prioriza el problema sustantivo: entender patrones de participación laboral femenina en funcion de condiciones familiares y de capital humano. La metodología queda subordinada a esa lectura aplicada.</p>
+<p>La pieza es una comparación metodológica en variable binaria: MPL como benchmark, probit con APE como eje y logit como contraste de robustez.</p>
 <p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
@@ -201,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La lectura abre por contenido sustantivo:</p>
+<p>La lectura combina anclaje aplicado con comparacion metodologica:</p>
 <ul>
 <li><code>kidslt6</code> muestra una asociación negativa fuerte con <code>inlf</code>: APE alrededor de <code>-0.26</code>, consistente en probit y logit.</li>
 <li><code>educ</code> y <code>exper</code> muestran asociaciones positivas y estables con la participación laboral.</li>
@@ -210,44 +210,50 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>En segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma más creíble que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra.</p>
 </section>
-<section id="sintesis-de-magnitudes-ape" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
+<section id="sintesis-comparativa-mpl-robusto-vs-ape" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="sintesis-comparativa-mpl-robusto-vs-ape">Sintesis comparativa (MPL robusto vs APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
-<th style="text-align: right;">Probit</th>
-<th style="text-align: right;">Logit</th>
+<th style="text-align: right;">MPL robusto</th>
+<th style="text-align: right;">APE Probit</th>
+<th style="text-align: right;">APE Logit</th>
 <th>Lectura aplicada</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>kidslt6</td>
+<td style="text-align: right;">-0.2618 (EE=0.0318)</td>
 <td style="text-align: right;">-0.261 (EE=0.032; IC95% [-0.324, -0.199])</td>
 <td style="text-align: right;">-0.258 (EE=0.032; IC95% [-0.320, -0.195])</td>
 <td>Asociacion negativa fuerte con participación</td>
 </tr>
 <tr class="even">
 <td>educ</td>
+<td style="text-align: right;">+0.0380 (EE=0.0073)</td>
 <td style="text-align: right;">+0.039 (EE=0.007; IC95% [0.025, 0.054])</td>
 <td style="text-align: right;">+0.039 (EE=0.007; IC95% [0.025, 0.054])</td>
 <td>Mayor educación se asocia con mayor participación</td>
 </tr>
 <tr class="odd">
 <td>exper</td>
+<td style="text-align: right;">+0.0395 (EE=0.0058)</td>
 <td style="text-align: right;">+0.037 (EE=0.005; IC95% [0.027, 0.047])</td>
 <td style="text-align: right;">+0.037 (EE=0.005; IC95% [0.027, 0.047])</td>
 <td>Mayor experiencia se asocia con mayor participación</td>
 </tr>
 <tr class="even">
 <td>nwifeinc</td>
+<td style="text-align: right;">-0.0034 (EE=0.0015)</td>
 <td style="text-align: right;">-0.0036 (EE=0.0014; IC95% [-0.0064, -0.0008])</td>
 <td style="text-align: right;">-0.0038 (EE=0.0015; IC95% [-0.0067, -0.0009])</td>
 <td>Ingreso no laboral más alto se asocia con menor participación</td>
@@ -261,6 +267,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>MPL genera <code>33</code> predicciones fuera de <code>[0,1]</code> (<code>4.38%</code>), lo que ilustra su límite para respuesta binaria.</li>
 <li>Ajuste global similar entre binarios: pseudo-<code>R2</code> aprox. <code>0.221</code> (probit) y <code>0.220</code> (logit).</li>
+<li>MCP ponderado puede volverse sensible a pesos extremos; por eso se usa como diagnóstico secundario y no como lectura final.</li>
 </ul>
 <p>Estos elementos respaldan la elección de especificación, pero no reemplazan la lectura sustantiva del fenomeno.</p>
 </section>
@@ -270,7 +277,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>En este caso de participación laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decisión y análisis: menor participación con hijos pequeños, mayor participación con educación y experiencia, y menor participación cuando crece el ingreso no laboral del hogar.</p>
+<p>La diferencia relevante del taller no es probit vs logit, sino pasar de una lectura lineal a una lectura no lineal en probabilidades.</p>
 <p>El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.</p>
 </section>
 

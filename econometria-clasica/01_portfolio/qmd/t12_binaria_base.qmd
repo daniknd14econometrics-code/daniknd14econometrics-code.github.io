@@ -26,7 +26,7 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-¿Qué factores del hogar se asocian con mayor o menor participación laboral femenina?
+¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?
 :::
 
 ::: {.hero-sub}
@@ -96,7 +96,7 @@ Limite del MPL
 
 ## Resumen
 
-Esta pieza estudia participación laboral femenina (`inlf`) en un contexto de decisiones de hogar. La lectura principal se organiza por asociaciones sustantivas: presencia de hijos pequeños, educación, experiencia e ingreso no laboral del hogar.
+Esta pieza estudia participación laboral femenina (`inlf`) en un contexto de decisiones de hogar, con una comparación metodológica en variable binaria y anclaje aplicado.
 
 El valor econométrico del caso no es competir entre técnicas, sino mostrar criterio de especificación para variable binaria y traducir resultados a probabilidades interpretables para un lector profesional.
 
@@ -105,7 +105,7 @@ El valor econométrico del caso no es competir entre técnicas, sino mostrar cri
 ::: {.section-box}
 ## Pregunta
 
-¿Cómo se asocia la participación laboral con el ingreso del hogar, la educación, la experiencia y la presencia de hijos pequeños?
+¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?
 
 ::: {.small-note}
 Resultado: `inlf` (0/1). Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
@@ -115,7 +115,7 @@ Resultado: `inlf` (0/1). Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq
 ::: {.section-box}
 ## Idea central
 
-La pieza prioriza el problema sustantivo: entender patrones de participación laboral femenina en funcion de condiciones familiares y de capital humano. La metodología queda subordinada a esa lectura aplicada.
+La pieza es una comparación metodológica en variable binaria: MPL como benchmark, probit con APE como eje y logit como contraste de robustez.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -148,7 +148,7 @@ Se trabaja con `mroz.dta`, un corte transversal clásico de economia laboral.
 
 ## Resultados principales
 
-La lectura abre por contenido sustantivo:
+La lectura combina anclaje aplicado con comparacion metodologica:
 
 - `kidslt6` muestra una asociación negativa fuerte con `inlf`: APE alrededor de `-0.26`, consistente en probit y logit.
 - `educ` y `exper` muestran asociaciones positivas y estables con la participación laboral.
@@ -158,14 +158,14 @@ La lectura abre por contenido sustantivo:
 En segundo plano metodologico, probit y logit permiten leer estas relaciones en probabilidades de forma más creíble que un modelo lineal puro, sin forzar efectos marginales constantes para toda la muestra.
 
 ::: {.table-box}
-## Sintesis de magnitudes (APE)
+## Sintesis comparativa (MPL robusto vs APE)
 
-| Variable | Probit | Logit | Lectura aplicada |
-|---|---:|---:|---|
-| kidslt6 | -0.261 (EE=0.032; IC95% [-0.324, -0.199]) | -0.258 (EE=0.032; IC95% [-0.320, -0.195]) | Asociacion negativa fuerte con participación |
-| educ | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | Mayor educación se asocia con mayor participación |
-| exper | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | Mayor experiencia se asocia con mayor participación |
-| nwifeinc | -0.0036 (EE=0.0014; IC95% [-0.0064, -0.0008]) | -0.0038 (EE=0.0015; IC95% [-0.0067, -0.0009]) | Ingreso no laboral más alto se asocia con menor participación |
+| Variable | MPL robusto | APE Probit | APE Logit | Lectura aplicada |
+|---|---:|---:|---:|---|
+| kidslt6 | -0.2618 (EE=0.0318) | -0.261 (EE=0.032; IC95% [-0.324, -0.199]) | -0.258 (EE=0.032; IC95% [-0.320, -0.195]) | Asociacion negativa fuerte con participación |
+| educ | +0.0380 (EE=0.0073) | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | +0.039 (EE=0.007; IC95% [0.025, 0.054]) | Mayor educación se asocia con mayor participación |
+| exper | +0.0395 (EE=0.0058) | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | +0.037 (EE=0.005; IC95% [0.027, 0.047]) | Mayor experiencia se asocia con mayor participación |
+| nwifeinc | -0.0034 (EE=0.0015) | -0.0036 (EE=0.0014; IC95% [-0.0064, -0.0008]) | -0.0038 (EE=0.0015; IC95% [-0.0067, -0.0009]) | Ingreso no laboral más alto se asocia con menor participación |
 :::
 
 ## Diagnosticos de respaldo
@@ -174,6 +174,7 @@ Los diagnósticos se usan solo como apoyo del caso:
 
 - MPL genera `33` predicciones fuera de `[0,1]` (`4.38%`), lo que ilustra su límite para respuesta binaria.
 - Ajuste global similar entre binarios: pseudo-`R2` aprox. `0.221` (probit) y `0.220` (logit).
+- MCP ponderado puede volverse sensible a pesos extremos; por eso se usa como diagnóstico secundario y no como lectura final.
 
 Estos elementos respaldan la elección de especificación, pero no reemplazan la lectura sustantiva del fenomeno.
 
@@ -183,9 +184,7 @@ El aporte profesional de T12 no es plantear una competencia entre MPL, probit y 
 
 ## Cierre
 
-En este caso de participación laboral femenina, la historia aplicada se sostiene en asociaciones interpretables para decisión y análisis: menor participación con hijos pequeños, mayor participación con educación y experiencia, y menor participación cuando crece el ingreso no laboral del hogar.
+La diferencia relevante del taller no es probit vs logit, sino pasar de una lectura lineal a una lectura no lineal en probabilidades.
 
 El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.
-
-
 

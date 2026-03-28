@@ -1,0 +1,130 @@
+Base usada para este diagnóstico: exclusivamente T12 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T12
+
+1. Identificación básica
+
+Taller 12. Tema central: modelización de una variable dependiente binaria en corte transversal, comparando el modelo de probabilidad lineal (MPL), sus variantes ponderadas, y los modelos índice probit y logit. La variable dependiente es `inlf`, que indica participación laboral femenina. Las variables centrales del ejercicio son `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6` y `kidsge6`. El brief ya marca correctamente que el eje del taller no es solo “correr probit/logit”, sino mostrar cómo cambia la interpretación cuando dejamos atrás el modelo lineal y empezamos a hablar de probabilidades, APEs y efectos discretos.
+
+2. Qué es realmente este taller
+
+Este taller no es, en esencia, una pieza de hallazgo sustantivo puro. La aplicación existe —participación laboral femenina—, pero el corazón real del ejercicio es metodológico. Lo que el taller enseña es cómo debe modelarse una respuesta binaria, qué límites tiene el MPL, por qué probit y logit corrigen esos límites, y cómo debe leerse correctamente el efecto de las covariables cuando lo que interesa son probabilidades y no simplemente una recta ajustada. Yo lo clasificaría editorialmente como comparación metodológica con anclaje aplicado. No es una pieza “meramente técnica” porque hay una historia económica reconocible, pero tampoco conviene venderla como si el gran valor estuviera en descubrir un hecho nuevo sobre la oferta laboral femenina. El valor central es de criterio econométrico.
+
+3. Pregunta real del taller
+
+La pregunta pública bien formulada no debería ser “qué determina la participación laboral femenina” en abstracto, porque eso sobredimensiona la ambición del taller. La pregunta correcta es más cercana a esto: ¿cómo cambia la lectura empírica cuando una variable binaria deja de modelarse con una especificación lineal y pasa a modelarse con probit o logit? Si se quiere mantener anclaje aplicado, puede formularse así: en una ecuación de participación laboral femenina, ¿qué cambia cuando pasamos del MPL a modelos binarios no lineales y empezamos a leer los resultados en términos de probabilidades y APEs?
+
+4. Núcleo empírico y métodos comparados
+
+El núcleo del taller está bastante claro en el brief y en el log. Hay cinco bloques, pero no todos deberían entrar con el mismo peso en una pieza pública.
+
+Primero, el MPL robusto como benchmark inicial. Acá aparece el problema clásico: aunque el modelo es útil como referencia, produce predicciones fuera del intervalo `[0,1]`. El log cuantifica 33 casos fuera de rango sobre 753 observaciones, es decir, 4.38%, lo que ya instala bien el problema de interpretación probabilística. :contentReference[oaicite:3]{index=3}
+
+Segundo, la variante de mínimos cuadrados ponderados / MCP. El taller muestra que, bajo el supuesto lineal, puede intentarse una corrección usando pesos inversamente proporcionales a la varianza condicional estimada, pero también documenta que esta vía puede volverse muy sensible a pesos extremos. En el log, el MCP llega incluso a revertir el signo de `nwifeinc`, y luego el propio ejercicio muestra que al capar pesos extremos los coeficientes vuelven a acercarse a los del MPL. Eso vuelve al MCP un bloque interesante como diagnóstico, pero no como cierre editorial principal. :contentReference[oaicite:4]{index=4}
+
+Tercero, probit como modelo binario principal. El brief lo fija explícitamente como método conductor, y eso tiene sentido. El log muestra que el probit entrega una estructura de signos coherente y luego traduce esa estructura a APEs, que son la unidad de lectura realmente comparable con el MPL. Además, el mismo taller dedica mucho espacio a explicar continua versus binaria versus categórica, APE versus PEM, y probabilidades predichas. :contentReference[oaicite:5]{index=5} :contentReference[oaicite:6]{index=6}
+
+Cuarto, logit como contraste de robustez. El resultado importante no es que “logit gane” frente a probit, sino que los APEs de ambos modelos son muy parecidos entre sí y también bastante cercanos al MPL robusto. Esa coincidencia metodológica es una parte fuerte del aprendizaje del taller. El propio log lo resume de forma muy clara: salvo el MCP ponderado, el resto de los efectos parciales promedio son similares. :contentReference[oaicite:7]{index=7}
+
+Quinto, una larga batería de material técnico adicional: PCP, pseudo-\(R^2\), pruebas de Wald/LR/LM, prueba LM de heterocedasticidad en la variable latente, VAT, delta method manual y bootstrap. Todo eso tiene valor didáctico dentro del taller, pero no debería protagonizar la pieza pública. Sirve como respaldo técnico, no como narrativa central.
+
+5. Objeto de decisión final
+
+Acá el objeto de decisión final no debería ser una tabla gigante con todo lo corrido. Tampoco conviene cerrar con una batería de tests. El objeto final de decisión tiene que ser una comparación disciplinada y corta entre tres lecturas:
+
+- MPL robusto como benchmark lineal;
+- APE Probit como lectura principal;
+- APE Logit como contraste de robustez.
+
+Si se quiere, el MCP puede aparecer en una nota diagnóstica secundaria, pero no en el centro del cierre. La razón es simple: el lector de portfolio no necesita quedarse con toda la ingeniería del taller, sino con la enseñanza que organiza la pieza. Y acá esa enseñanza es que la diferencia importante no es “probit versus logit”, sino “modelo lineal versus modelo binario no lineal cuando lo que interesa es interpretar probabilidades”. Esa comparación final corta es el objeto que el lector debe retener.
+
+6. Especificación ganadora o lectura ganadora
+
+No conviene presentar este taller como si hubiera una “especificación ganadora” en el sentido estricto de T1. Acá no hace falta coronar a probit sobre logit ni a logit sobre probit. La etiqueta editorial correcta sería:
+
+“Ejercicio metodológico, no orientado a una especificación final única.”
+
+Dicho eso, sí hay una lectura ganadora. La lectura ganadora es esta: para una variable binaria, el lenguaje correcto de interpretación pasa por probabilidades predichas, APEs y cambios discretos; el MPL puede servir como benchmark útil, pero no debe quedarse con la voz principal del análisis; y el MCP ponderado no debe presentarse como alternativa superior universal porque en este ejercicio muestra sensibilidad marcada a pesos extremos. El hilo conductor entonces debería ser probit con APEs, dejando a logit como verificación y al MPL como referencia de arranque.
+
+7. Evidencia clave del log
+
+La evidencia decisiva del taller está bastante bien concentrada.
+
+Primero, el MPL robusto reporta coeficientes con signos intuitivos: `nwifeinc` negativo, `educ` y `exper` positivos, `expersq` y `age` negativos, `kidslt6` fuertemente negativo y `kidsge6` sin señal robusta. Pero el mismo bloque deja documentado que 33 probabilidades predichas caen fuera de `[0,1]`, equivalentes a 4.38% de la muestra. Ese dato es importante porque justifica empíricamente la transición a modelos binarios. :contentReference[oaicite:8]{index=8}
+
+Segundo, el MCP ponderado muestra inestabilidad. En la tabla comparativa, `nwifeinc` cambia de signo bajo la ponderación completa, mientras que al capar pesos al p99 o p95 vuelve a acercarse al MPL. El propio log interpreta correctamente que el problema fuerte no viene del trimming en sí, sino de la ponderación y de la dominancia de observaciones con pesos enormes. Esa es exactamente la clase de bloque que conviene mantener como evidencia técnica secundaria y no como cierre principal. :contentReference[oaicite:9]{index=9}
+
+Tercero, el probit genera APEs muy cercanos al MPL robusto: por ejemplo, `educ` ronda 0.039, `exper` cerca de 0.037, `age` alrededor de -0.016 y `kidslt6` alrededor de -0.261. Logit, a su vez, produce APEs prácticamente iguales: `educ` cerca de 0.0395, `exper` de 0.0368, `age` de -0.0157 y `kidslt6` de -0.258. Esto refuerza mucho la historia editorial correcta: la gran lección no es una guerra entre links, sino el paso a una lectura no lineal coherente. :contentReference[oaicite:10]{index=10}
+
+Cuarto, el bloque de diagnóstico predictivo del probit da un PCP global de 73.44%, con 63.08% para `y=0` y 81.31% para `y=1`, y un pseudo-\(R^2\) de McFadden de 0.2206. Son métricas útiles para una nota breve o cuadro de apoyo, pero no deberían ocupar el centro del portfolio. :contentReference[oaicite:11]{index=11}
+
+Quinto, el taller dedica muchas páginas a pruebas de hipótesis, LM, VAT, heterocedasticidad latente y bootstrap. Todo eso confirma que el ejercicio es didácticamente rico, pero justamente por eso exige poda editorial fuerte en la versión pública.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T12 es bastante clara y no necesita exageración. Podemos contarla así: cuando la variable resultado es binaria, una regresión lineal puede seguir siendo un punto de partida útil, pero rápidamente aparecen límites de interpretación. En este caso, el MPL ya deja observaciones con probabilidades predichas fuera del rango admisible. A partir de ahí, probit y logit reordenan la lectura: ya no se trata de pensar en una pendiente constante, sino en probabilidades, APEs y cambios discretos. Y, una vez hecho ese cambio de lenguaje, la conclusión más fuerte del taller es que los patrones centrales son bastante estables entre MPL, probit y logit, mientras que el MCP ponderado resulta mucho más sensible a los extremos. Esa historia es sobria, profesional y consistente con el brief. :contentReference[oaicite:12]{index=12} :contentReference[oaicite:13]{index=13} :contentReference[oaicite:14]{index=14}
+
+9. Hallazgo principal
+
+La frase que el lector debería retener al salir es esta: en una respuesta binaria, la diferencia importante no es elegir “un link elegante”, sino pasar a una interpretación correcta en términos de probabilidades y efectos marginales; en este ejercicio, probit y logit confirman una lectura muy parecida a la del MPL robusto, mientras que el MCP ponderado muestra que no toda corrección lineal mejora la lectura.
+
+Si se quiere una versión más aplicada: en esta base, tener hijos pequeños reduce de forma marcada la probabilidad de participación laboral, mientras que educación y experiencia la elevan; pero esos efectos deben leerse como APEs o cambios discretos, no como coeficientes crudos de probit o logit.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que `inlf` es una variable binaria y que eso obliga a cuidar el modelo. Sí puede decir que el MPL funciona como benchmark, pero tiene límites concretos de predicción probabilística. Sí puede decir que probit y logit permiten leer los efectos en la unidad correcta: probabilidades predichas, APEs y cambios discretos. Sí puede decir que, en esta base, `kidslt6` aparece con un efecto negativo importante sobre la participación, mientras que `educ` y `exper` muestran efectos positivos y `kidsge6` no aparece como un predictor robusto. Sí puede decir que el MCP ponderado es sensible a pesos extremos y por eso no conviene venderlo como solución universal. También puede decir que el taller enseña que un buen análisis binario no consiste solo en cambiar de comando, sino en cambiar de interpretación. Todo eso está alineado con el brief y el log. :contentReference[oaicite:15]{index=15} :contentReference[oaicite:16]{index=16} :contentReference[oaicite:17]{index=17}
+
+11. Qué no debe decir la pieza
+
+No debería decir que probit “gana” de forma contundente sobre logit, porque el propio taller los muestra muy similares en APEs. No debería decir que el MCP es más eficiente y por eso mejor, sin aclarar la sensibilidad a pesos extremos y la dependencia del supuesto lineal. Tampoco debería interpretarse un coeficiente crudo de probit o logit como si fuera un cambio directo en puntos porcentuales; justamente el taller insiste en que eso debe hacerse vía `margins`, APEs o efectos discretos. No conviene sobrecargar la pieza con PCP, pseudo-\(R^2\), Wald/LR/LM, heterocedasticidad latente, VAT, delta method manual o bootstrap manual en el cuerpo principal. Y no debería venderse T12 como si fuera un hallazgo fuerte de economía laboral aplicada, porque el verdadero valor del taller es metodológico.
+
+12. Riesgos editoriales a vigilar en la auditoría
+
+Veo cinco riesgos concretos.
+
+a) Que el `.qmd` actual quede demasiado parecido a un apunte de clase y no a una pieza de portfolio.
+b) Que el cuerpo principal le dé demasiado peso al MCP, cuando editorialmente debería ser un diagnóstico lateral.
+c) Que probit y logit aparezcan con coeficientes crudos sin una traducción clara a APEs o probabilidades.
+d) Que el cierre no deje explícita la enseñanza central: lineal versus no lineal cuando el resultado es binario.
+e) Que la pieza arrastre demasiado material técnico accesorio y pierda foco narrativo.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza pública debería contener sí o sí cinco cosas.
+
+Primero, una apertura breve con la pregunta correcta: qué cambia cuando modelamos una respuesta binaria de forma adecuada.
+
+Segundo, una explicación muy compacta de por qué el MPL no alcanza como lenguaje final, usando el hecho de que deja observaciones fuera de `[0,1]` como evidencia concreta.
+
+Tercero, una tabla comparativa final corta entre MPL robusto, APE Probit y APE Logit. Esa tabla tiene que ser el centro visual de la pieza.
+
+Cuarto, una nota breve y controlada sobre el MCP ponderado, solo para mostrar que las correcciones lineales también pueden volverse inestables.
+
+Quinto, un cierre editorial claro diciendo que el aprendizaje central del taller es interpretar bien probabilidades, APEs y cambios discretos, no solo cambiar de comando.
+
+14. Nota para la tarjeta del sitio
+
+La tarjeta debería venderlo como comparación metodológica clara con historia aplicada breve. Algo como esto:
+
+Título:
+Participación laboral femenina: del modelo lineal a probit y logit
+
+Pregunta:
+¿Cómo cambia la interpretación cuando una variable binaria deja de modelarse linealmente?
+
+Método:
+MPL, probit, logit y APEs
+
+Hallazgo:
+El valor del taller no está en “elegir un link”, sino en mostrar por qué la lectura correcta de una respuesta binaria pasa por probabilidades y efectos marginales.
+
+Estado de la evidencia:
+Comparación metodológica clara.
+
+15. Observación adicional de metadatos
+
+Acá no veo un problema grosero de clasificación como en otros talleres. El metadato `familia_metodo: binaria` es razonable y consistente con el contenido del brief. Lo que sí conviene vigilar es que el subtítulo, la pregunta y la bajada pública no se vayan demasiado al lado “tutorial” o “manual de clase”. El tono debería seguir siendo profesional-aplicado, como ya sugiere el brief, y no pedagógico-escolar. :contentReference[oaicite:18]{index=18}
+
+16. Diagnóstico final
+
+T12 tiene muy buen potencial como pieza pública porque enseña criterio econométrico real en un problema reconocible. La historia existe, los contrastes metodológicos están bien armados y el log deja evidencia suficiente para sostener una narrativa clara. Pero justamente por la riqueza didáctica del taller, el riesgo principal es de exceso: si se intenta publicar todo, la pieza se vuelve demasiado escolar y pierde contundencia. La mejor versión pública de T12 sería compacta, ordenada alrededor de MPL versus APE Probit versus APE Logit, con MCP relegado a diagnóstico secundario y con un cierre muy explícito: en variables binarias, la unidad correcta de lectura son probabilidades, APEs y cambios discretos.
