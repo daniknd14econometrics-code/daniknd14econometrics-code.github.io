@@ -1,0 +1,169 @@
+Base usada para este diagnóstico: exclusivamente T16 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T16
+
+1. Identificación básica
+
+Taller 16. Tema central: elección múltiple nominal, sin orden natural entre categorías, estimada con logit multinomial. El brief define como variable dependiente principal a `choice`, con cinco alternativas: escuela, casa, white collar, blue collar y servicios. Las covariables principales son `educ`, `exper`, `expersq`, `black` y dummies de año. También aparecen, dentro del mismo taller, una versión más agregada con `status` (escuela, casa, trabajo) y un ejemplo aparte de `asclogit` con otra base (`choice.dta`), ya no sobre el mismo problema empírico. :contentReference[oaicite:2]{index=2} :contentReference[oaicite:3]{index=3}
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza de causalidad, ni una pieza de panel multinomial avanzada, ni una pieza de machine learning. Es, ante todo, una introducción aplicada a cómo leer un logit multinomial cuando la variable resultado tiene varias categorías mutuamente excluyentes y sin orden natural. El valor público del taller está en mostrar cómo una covariable desplaza masa de probabilidad entre categorías, y por qué en este contexto la unidad natural de interpretación son las probabilidades predichas y los APEs.
+
+Editorialmente, T16 debería leerse como:
+comparación metodológica / pieza aplicada introductoria sobre multinomial nominal.
+
+3. Qué no debería hacer la pieza pública
+
+La pieza pública no debería intentar publicar los tres bloques del taller como si fueran un solo caso homogéneo. Eso le quitaría foco.
+
+- `choice` debe ser el bloque principal.
+- `status` puede aparecer, como mucho, como simplificación secundaria o nota de compresión del problema.
+- `asclogit` con la base `choice.dta` no debería ser co-protagonista de T16; como mucho podría quedar fuera o como mención muy lateral de “extensión hacia covariables específicas de alternativa”.
+
+Si el `.qmd` actual mezcla fuertemente `choice`, `status` y `asclogit`, eso sería un riesgo editorial claro.
+
+4. Pregunta real del taller
+
+La pregunta pública correcta no debería ser “qué determina si una persona estudia, se queda en casa o trabaja”, porque eso empuja demasiado hacia una historia sustantiva cerrada. Tampoco conviene poner el foco en predicción. La pregunta correcta es:
+
+¿Cómo modelar una decisión con varias categorías mutuamente excluyentes y sin orden natural, y cómo leer los cambios de probabilidad entre alternativas?
+
+Si se quiere una versión algo más aplicada:
+¿Cómo cambian las probabilidades relativas de escuela, casa o trabajo/ocupación cuando cambian educación, experiencia y otras covariables?
+
+5. Núcleo empírico y métodos comparados
+
+El núcleo real del taller tiene tres capas, pero una sola debería mandar en la pieza pública.
+
+Primera capa: `mlogit` para `choice` como ejemplo principal.
+El log estima `choice` con cinco categorías y base en escuela (`baseoutcome(1)`). La lectura útil no está en un coeficiente aislado, sino en los APEs por categoría. Por ejemplo, `educ` aumenta la probabilidad de escuela y white collar, y reduce casa, blue collar y servicios; `exper` reduce escuela y casa, y aumenta especialmente blue collar y white collar; `black` desplaza probabilidad desde escuela/white collar/blue collar hacia casa y servicios. Además, el PCP in-sample es 53.83%, y el modelo no predice nunca `services` como categoría dominante. Eso último es útil como advertencia sobre la información disponible, no como centro narrativo. :contentReference[oaicite:4]{index=4}
+
+Segunda capa: `mlogit` para `status` como agregación.
+La versión agregada con tres categorías (escuela, casa, trabajo) es más legible y tiene un PCP in-sample mayor, 69.02%. También produce APEs claros: `educ` aumenta escuela y trabajo y reduce casa; `exper` aumenta con fuerza trabajo y reduce escuela y casa. Esta versión es más simple, pero justamente por ser una agregación no debería desplazar a `choice` si el taller T16 se quiere mantener fiel a su brief original. Puede servir como chequeo secundario o nota de simplificación. :contentReference[oaicite:5]{index=5}
+
+Tercera capa: `asclogit`.
+El ejemplo con `asclogit` ya cambia de base y de estructura de datos: no es la misma pregunta empírica, sino una ilustración de elección discreta con covariables específicas de alternativa. Es didácticamente valioso, pero editorialmente no conviene que compita con el caso principal de T16.
+
+6. Objeto de decisión final
+
+Este taller necesita un objeto final de decisión muy claro. No conviene que sea la tabla de coeficientes crudos de `mlogit`, porque en multinomial esa tabla es difícil de leer y no organiza bien el aprendizaje.
+
+El objeto final más natural debería ser uno de estos dos:
+
+a) una tabla compacta de APEs por categoría para `choice`, concentrada en 3 o 4 covariables clave (`educ`, `exper`, `expersq`, `black`);
+o
+
+b) un bloque resumen que muestre cómo una covariable desplaza probabilidad entre categorías, por ejemplo:
+- educación: más escuela / más white collar / menos casa;
+- experiencia: menos escuela / menos casa / más trabajo;
+- black: menos escuela / más casa / más servicios.
+
+Si aparece PCP, debe quedar claramente como diagnóstico secundario, no como objeto de decisión final.
+
+7. Especificación ganadora o lectura ganadora
+
+Acá no hace falta hablar de “especificación ganadora” en el sentido de que un modelo derrota a otro. No es T15 ni T13. La lectura ganadora de T16 es otra:
+
+En multinomial, la unidad de interpretación natural son las probabilidades por categoría y los APEs, no los coeficientes crudos ni el PCP.
+
+Dicho de otro modo:
+- `mlogit` con `choice` es el eje principal;
+- `status` puede aparecer como simplificación útil;
+- `asclogit` no debería competir en la misma pieza;
+- la lectura correcta es desplazamiento de probabilidad entre alternativas.
+
+8. Evidencia clave del log
+
+Hay varios hechos del log que conviene retener.
+
+Para `choice`:
+- Muestra usada: 12.665 observaciones.
+- `mlogit choice` con base escuela.
+- PCP in-sample: 53.83%.
+- El modelo nunca asigna `services` como categoría con probabilidad máxima.
+- Los APEs muestran patrones claros:
+  - `educ`: +escuela, +white collar, −casa, −blue collar, −servicios.
+  - `exper`: −escuela, −casa, +white collar, +blue collar, +servicios.
+  - `black`: −escuela, +casa, −white collar, −blue collar, +servicios. :contentReference[oaicite:6]{index=6}
+
+Para `status`:
+- También 12.665 observaciones.
+- PCP in-sample: 69.02%.
+- El trabajo (`status=3`) se predice muy bien; casa bastante peor.
+- Los APEs vuelven a reforzar que el foco debe ponerse en probabilidades por categoría y no en coeficientes latentes. :contentReference[oaicite:7]{index=7}
+
+Un punto metodológico además importante:
+el log deja explícito que `wage` / `lwage` no pueden entrar como covariables en el `mlogit` principal porque están ausentes fuera de las alternativas laborales. Esa observación es buena y puede quedar como nota breve si ya aparece en el `.qmd`. :contentReference[oaicite:8]{index=8}
+
+9. Historia narrativa posible, sin forzarla
+
+La historia buena de T16 no es “descubrimos que X causa Y”. La historia correcta es más sencilla y más útil:
+
+Cuando la variable resultado tiene varias categorías sin orden natural, no alcanza con colapsar el problema a binaria ni con mirar un único coeficiente. Hay que seguir cómo cada covariable redistribuye probabilidad entre alternativas. En este caso, educación y experiencia no “suben o bajan una sola cosa”: reordenan la probabilidad relativa de estudiar, quedarse en casa o trabajar en distintos tipos de ocupación.
+
+Eso da una pieza muy clara, profesional y fácil de entender externamente.
+
+10. Hallazgo principal
+
+La frase que el lector debería retener al salir es esta:
+
+En un modelo multinomial, la lectura útil no está en un coeficiente aislado, sino en cómo una covariable desplaza la probabilidad entre categorías mutuamente excluyentes.
+
+Y una segunda frase posible:
+En esta base, educación y experiencia reordenan de forma sistemática la masa de probabilidad entre escuela, casa y distintos tipos de trabajo, mientras que el rendimiento predictivo in-sample sirve solo como diagnóstico secundario.
+
+11. Qué sí puede decir la pieza
+
+Sí puede decir que el multinomial es la herramienta natural cuando la decisión tiene varias categorías sin orden. Sí puede decir que la interpretación debe hacerse con APEs y probabilidades por categoría. Sí puede decir que el modelo con `choice` deja patrones claros para educación, experiencia y raza. Sí puede mencionar que `status` es una agregación más legible, pero sin convertirla en el centro del taller. Sí puede usar PCP como nota de respaldo con cautela, aclarando que es in-sample y no medida de desempeño fuera de muestra. Todo eso está alineado con el brief y el log. :contentReference[oaicite:9]{index=9} :contentReference[oaicite:10]{index=10}
+
+12. Qué no debe decir la pieza
+
+No debería presentarse como una pieza de causalidad. No debería venderse como una pieza de predicción o machine learning solo porque calcula PCP. No conviene sobrecargar con la tabla de coeficientes de `mlogit`, porque es poco transparente para un lector externo. No conviene mezclar `choice`, `status` y `asclogit` como si fueran un único bloque homogéneo. Tampoco conviene sobreactuar el problema de que `services` nunca sea la predicción dominante: es una advertencia interesante, no el hallazgo central.
+
+13. Riesgos editoriales a vigilar en la auditoría
+
+Veo varios riesgos claros.
+
+a) Que el `.qmd` intente publicar a la vez `choice`, `status` y `asclogit`.
+b) Que el foco quede demasiado puesto en coeficientes crudos de `mlogit`.
+c) Que PCP gane demasiado protagonismo.
+d) Que la pieza suene demasiado pedagógica o de apunte.
+e) Que se olvide explicitar que el panel está tratado de forma agrupada y que no estamos frente a un modelo multinomial panel con heterogeneidad no observada explícita.
+
+14. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza pública debería tener sí o sí cinco cosas.
+
+Primero, una apertura que diga claramente que el problema es de elección múltiple nominal.
+
+Segundo, una frase breve explicando que la unidad natural de lectura son las probabilidades por categoría.
+
+Tercero, un objeto final claro en forma de APEs por categoría o un bloque resumen equivalente.
+
+Cuarto, una nota secundaria y breve sobre PCP, si aparece, aclarando que es in-sample y que no es el centro de la pieza.
+
+Quinto, un cierre honesto diciendo que en multinomial lo importante es cómo una variable redistribuye probabilidad entre alternativas.
+
+15. Nota para la tarjeta del sitio
+
+La tarjeta debería venderlo como pieza introductoria fuerte de multinomial, algo así:
+
+Título:
+Elecciones múltiples sin orden: cómo leer un logit multinomial
+
+Pregunta:
+¿Cómo modelar una decisión con varias categorías mutuamente excluyentes y sin orden natural?
+
+Método:
+Logit multinomial + APEs + probabilidades predichas
+
+Hallazgo:
+La lectura útil no está en un coeficiente único, sino en cómo cada covariable redistribuye probabilidad entre categorías.
+
+Estado de la evidencia:
+Pieza metodológica/aplicada clara.
+
+16. Diagnóstico final
+
+T16 tiene buen valor público si se lo mantiene enfocado. Su mejor versión no es una pieza larga que mezcle varios modelos multinomiales distintos, sino una introducción limpia al caso multinomial nominal con `choice` como eje principal, `status` como apoyo opcional y `asclogit` fuera del foco principal. La clave editorial es simple: mostrar que el multinomial no se interpreta mirando una sola ecuación, sino siguiendo el desplazamiento de probabilidad entre alternativas.

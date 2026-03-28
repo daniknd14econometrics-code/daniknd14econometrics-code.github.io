@@ -203,64 +203,74 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La lectura comparativa del caso deja tres mensajes sustantivos en la versión enfocada de <code>status</code> (escuela/hogar/trabajo):</p>
+<p>La lectura comparativa del caso deja los mensajes sustantivos del modelo principal sobre <code>choice</code> (cinco categorias nominales):</p>
 <ol type="1">
-<li><strong>Educacion:</strong> aumenta la probabilidad de escuela y trabajo, y reduce hogar.</li>
-<li><strong>Experiencia:</strong> reduce la probabilidad de escuela y hogar, y desplaza con fuerza hacia trabajo.</li>
-<li><strong>Perfil demográfico (<code>black</code>):</strong> reduce escuela y trabajo, y aumenta hogar.</li>
+<li><strong>Educacion:</strong> aumenta la probabilidad de <code>escuela</code> y <code>white collar</code>, y reduce <code>hogar</code>, <code>blue collar</code> y <code>services</code>.</li>
+<li><strong>Experiencia:</strong> reduce <code>escuela</code> y <code>hogar</code>, y desplaza probabilidad hacia <code>white collar</code>, <code>blue collar</code> y <code>services</code>.</li>
+<li><strong>Perfil demográfico (<code>black</code>):</strong> reduce <code>escuela</code>, <code>white collar</code> y <code>blue collar</code>, y aumenta <code>hogar</code> y <code>services</code>.</li>
 </ol>
 </section>
 <section id="sintesis-comparativa-de-magnitudes-ape" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="sintesis-comparativa-de-magnitudes-ape">Sintesis comparativa de magnitudes (APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
 <th style="text-align: right;">Escuela (1)</th>
 <th style="text-align: right;">Hogar (2)</th>
-<th style="text-align: right;">Trabajo (3)</th>
+<th style="text-align: right;">White collar (3)</th>
+<th style="text-align: right;">Blue collar (4)</th>
+<th style="text-align: right;">Services (5)</th>
 <th>Lectura sustantiva</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>educ</code></td>
-<td style="text-align: right;">+0.0418 (0.0017)</td>
-<td style="text-align: right;">-0.0570 (0.0020)</td>
-<td style="text-align: right;">+0.0152 (0.0020)</td>
-<td>Más educación desplaza probabilidad desde hogar hacia escuela y trabajo</td>
+<td style="text-align: right;">+0.0408 (0.0017)</td>
+<td style="text-align: right;">-0.0562 (0.0020)</td>
+<td style="text-align: right;">+0.0551 (0.0028)</td>
+<td style="text-align: right;">-0.0364 (0.0028)</td>
+<td style="text-align: right;">-0.0034 (0.0016)</td>
+<td>Más educación desplaza probabilidad desde <code>hogar</code> hacia <code>escuela</code> y <code>white collar</code></td>
 </tr>
 <tr class="even">
 <td><code>exper</code></td>
-<td style="text-align: right;">-0.1493 (0.0062)</td>
-<td style="text-align: right;">-0.0756 (0.0060)</td>
-<td style="text-align: right;">+0.2249 (0.0050)</td>
-<td>Más experiencia reubica con fuerza hacia trabajo</td>
+<td style="text-align: right;">-0.1503 (0.0061)</td>
+<td style="text-align: right;">-0.0798 (0.0060)</td>
+<td style="text-align: right;">+0.0802 (0.0054)</td>
+<td style="text-align: right;">+0.1277 (0.0059)</td>
+<td style="text-align: right;">+0.0222 (0.0039)</td>
+<td>Más experiencia reubica desde <code>escuela/hogar</code> hacia categorías de empleo</td>
 </tr>
 <tr class="odd">
 <td><code>black=1</code> vs <code>0</code></td>
-<td style="text-align: right;">-0.0635 (0.0079)</td>
-<td style="text-align: right;">+0.1027 (0.0098)</td>
-<td style="text-align: right;">-0.0392 (0.0092)</td>
-<td>Cambios de composición con mayor peso relativo en hogar</td>
+<td style="text-align: right;">-0.0628 (0.0078)</td>
+<td style="text-align: right;">+0.0994 (0.0097)</td>
+<td style="text-align: right;">-0.0349 (0.0099)</td>
+<td style="text-align: right;">-0.0459 (0.0124)</td>
+<td style="text-align: right;">+0.0442 (0.0085)</td>
+<td>Cambios de composición: mayor peso relativo en <code>hogar</code> y <code>services</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<p>En esta versión curada, la tabla protagonista prioriza magnitudes interpretables en <code>escuela/hogar/trabajo</code>, y deja la desagregación fina de cinco categorías como contraste secundario.</p>
+<p>La tabla protagonista resume APEs de <code>choice</code> por categoria; <code>status</code> se usa solo como contraste secundario.</p>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
-<p>Estos diagnósticos se reportan solo como respaldo de lectura aplicada:</p>
+<p>Estos diagnósticos se reportan solo como respaldo de lectura aplicada. El PCP se reporta solo como diagnóstico auxiliar in-sample y no como núcleo de la pieza.</p>
 <ul>
-<li><strong>Calidad de clasificación in-sample (<code>status</code>, 3 categorías):</strong> <code>69.0%</code>, útil como referencia descriptiva y no como evidencia de predicción fuera de muestra.</li>
-<li><strong>Chequeo secundario con <code>choice</code> (5 categorías):</strong> clasificación in-sample <code>53.8%</code>, coherente con mayor dificultad de separación fina.</li>
+<li><strong>Chequeo con <code>choice</code> (5 categorías):</strong> clasificación in-sample <code>53.8%</code>, coherente con mayor dificultad de separación fina.</li>
+<li><strong>Simplificación secundaria con <code>status</code> (3 categorías):</strong> clasificación in-sample <code>69.0%</code>, útil como contraste descriptivo y no como evidencia de predicción fuera de muestra.</li>
 <li><strong>Menor discriminación en <code>services</code> (solo en <code>choice</code>):</strong> sugiere solapamiento con otras alternativas cuando se desagrega más.</li>
 </ul>
 </section>
