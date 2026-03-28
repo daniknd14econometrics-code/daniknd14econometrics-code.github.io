@@ -365,6 +365,27 @@ Deben priorizar redacción humana, externa y conceptualmente limpia.
 La tabla principal no debe usar nomenclatura interna cruda como rótulo dominante cuando debilita la lectura externa.
 Usar rótulos públicos claros y, solo si hace falta, dejar la nomenclatura interna en segundo plano.
 
+19. **Integridad técnica del `.qmd`**
+Toda pieza pública debe guardarse en UTF-8 sin BOM.
+Evitar BOM al inicio del archivo cuando pueda interferir con la lectura del front matter por Quarto.
+
+20. **Verificación obligatoria de metadata antes de render**
+Si la edición toca front matter, título, `format`, `toc`, `page-layout`, `css` o estructura base del `.qmd`, no renderizar directamente.
+Antes del render, correr una verificación tipo `quarto inspect` y confirmar que Quarto lee metadata no vacía, en especial los campos relevantes.
+
+21. **Render exitoso no equivale a pieza sana**
+Un `exit code 0` no prueba integridad editorial o estructural.
+Tras el render, verificar que el HTML conserve TOC, layout esperado, CSS de pieza y bloques visuales principales.
+Si eso falla, tratarlo como regresión estructural y no como detalle visual.
+
+22. **Orden correcto ante regresiones**
+Si se pierde TOC, layout, CSS o metadata aplicada, primero restaurar baseline técnica sana del `.qmd`.
+Recién después reaplicar ajustes editoriales.
+No mezclar reparación técnica y reescritura narrativa en una misma pasada.
+
+23. **Checklist mínimo de cierre técnico-editorial**
+Antes de cerrar una pieza pública, verificar explícitamente: codificación correcta, front matter leído por Quarto, TOC cuando corresponde, `page-layout` correcto, CSS esperado cargado y preservación de hero/bloques/tabla principal.
+
 ---
 
 ## 15. Qué evitar siempre

@@ -103,6 +103,11 @@ Preferir
 - Si la lección principal es metodológica, título y hero deben distinguir entre la lección general del método y el caso empírico donde se ilustra.
 - Título y hero deben evitar fórmulas que suenen a etiqueta de taller o dependan de nomenclatura interna no intuitiva.
 - En tablas públicas, usar rótulos comprensibles como etiqueta principal; reservar nomenclatura interna para segundo plano cuando sea necesaria.
+- Guardar cada `.qmd` público en UTF-8 sin BOM para evitar fallas silenciosas en lectura de front matter.
+- Si se toca front matter o estructura base (`format`, `toc`, `page-layout`, `css`, título), correr `quarto inspect` antes de render y confirmar metadata leída.
+- Un render con `exit code 0` no alcanza: verificar en HTML TOC, layout, CSS de pieza y bloques principales.
+- Si hay regresión de TOC/layout/CSS/metadata, restaurar primero la baseline técnica sana y recién después reaplicar ajustes editoriales.
+- Antes de cerrar pieza, chequear explícitamente: codificación, front matter leído, TOC (si corresponde), `page-layout`, CSS, hero, bloques y tabla principal.
 
 ## Regla sobre causalidad
 
