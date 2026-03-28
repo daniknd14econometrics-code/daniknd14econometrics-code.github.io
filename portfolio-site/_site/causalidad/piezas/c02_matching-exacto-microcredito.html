@@ -191,12 +191,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quick-grid">
 <section id="pregunta-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
-<p>En esta aplicación, ¿cuál es el efecto de <code>dfmfd</code> sobre <code>ln(1 + exptot)</code> cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?</p>
+<p>En esta aplicación, ¿cuál es el efecto de <code>dfmfd</code> sobre el log del gasto total del hogar cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?</p>
 </section>
 <section id="datos-y-variables" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
 <div class="small-note">
-<p>Unidad de análisis: hogares (<code>N = 1129</code>). Resultado: <code>lexptot = ln(1 + exptot)</code>. Tratamiento: <code>dfmfd</code> (participación femenina en microcrédito). Covariables clave de comparabilidad: <code>sexhead</code>, <code>vaccess</code>, <code>agehead</code>, <code>educhead</code>, <code>lnland</code>, <code>pcirr</code>.</p>
+<p>Unidad de análisis: hogares (<code>N = 1129</code>). Resultado: log del gasto total del hogar (<code>lexptot</code>). Definición exacta: <code>lexptot = ln(1 + exptot)</code>. Tratamiento: <code>dfmfd</code> (participación femenina en microcrédito). Covariables clave de comparabilidad: <code>sexhead</code>, <code>vaccess</code>, <code>agehead</code>, <code>educhead</code>, <code>lnland</code>, <code>pcirr</code>.</p>
 </div>
 </section>
 <section id="regla-de-decisión" class="level2 section-box">
@@ -278,7 +278,8 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<p>En esta pieza, el parámetro central reportado es el ATET. Cada ATET aplica a hogares tratados dentro del soporte común (muestra matched) de cada especificación (<code>N1</code> / <code>N0</code>), no a toda la población de hogares.</p>
+<p>Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito se asocia con un nivel esperado del log del gasto total del hogar 0.1063 puntos mayor que el de su contrafactual construido con hogares no tratados comparables.</p>
+<p>Esta respuesta vale para los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), no para toda la población de hogares.</p>
 <p>El contraste dominante es claro: un ATET mayor (<code>CEM - regla FD</code>) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.</p>
 <section id="decisión-metodológica-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="decisión-metodológica-y-alcance">Decisión metodológica y alcance</h2>
@@ -292,9 +293,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>La aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.</p>
-<p>Bajo la regla base (<code>max|SMD| &lt;= 0.10</code>), la especificación preferida <code>Matching exacto - especificación base (Exact / S1)</code> reporta un ATET de <code>0.1063</code> para hogares tratados comparables dentro de su soporte común (<code>N1/N0 = 409/325</code>).</p>
-<p>Esta lectura no debe extrapolarse a toda la población: el resultado está en logaritmos (<code>ln(1 + exptot)</code>) y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.</p>
+<p>En términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: su nivel esperado del log del gasto total del hogar es mayor que el de su contrafactual no tratado comparable. Ese resultado se resume en un ATET de 0.1063 bajo la regla base (max|SMD| &lt;= 0.10).</p>
+<p>Esa respuesta vale para la subpoblación tratada en soporte común (<code>N1/N0 = 409/325</code>), no para toda la población de hogares.</p>
+<p>La lectura debe seguir siendo cauta: el resultado está condicionado al diseño y a supuestos como selección en observables y <code>overlap</code>, no representa una verdad causal definitiva.</p>
 
 
 </section>
