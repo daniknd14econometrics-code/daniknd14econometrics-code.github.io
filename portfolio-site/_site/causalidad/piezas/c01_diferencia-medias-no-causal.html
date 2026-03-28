@@ -134,6 +134,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
   <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#por-qué-la-comparación-bruta-falla" id="toc-por-qué-la-comparación-bruta-falla" class="nav-link" data-scroll-target="#por-qué-la-comparación-bruta-falla">Por qué la comparación bruta falla</a></li>
   <li><a href="#comparación-dominante" id="toc-comparación-dominante" class="nav-link" data-scroll-target="#comparación-dominante">Comparación dominante</a></li>
   <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
   </ul>
@@ -185,12 +187,34 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza abre la sección <code>causalidad</code> con una distinción central: una diferencia de medias puede ser un diagnóstico descriptivo útil, pero no constituye evidencia causal por sí sola.</p>
-<p>En T1, tratados y controles difieren de forma marcada en observables relevantes (<code>edu</code> y <code>mont</code>). En ese contexto, la comparación bruta combina efecto potencial del tratamiento con sesgo de selección.</p>
+<p>Una diferencia de medias entre tratados y controles puede describir una brecha relevante en <code>salario</code>, pero no alcanza para identificar causalidad. Si los grupos no son comparables, la brecha observada combina efecto potencial del tratamiento con sesgo de selección.</p>
 </section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal?</p>
+</section>
+<section id="diseño-del-caso" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="diseño-del-caso">Diseño del caso</h2>
+<p>El ejercicio usa una base de corte transversal con propósito introductorio y sintético.</p>
+<div class="small-note">
+<p>Unidad de análisis: individuos. Resultado: <code>salario</code>. Tratamiento: <code>treat</code>. Observables clave: <code>edu</code> y <code>mont</code>. Carácter del ejercicio: apertura conceptual, no caso aplicado fuerte.</p>
+</div>
+</section>
+</div>
 <section id="pregunta-central" class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
-<p>¿Qué cambia en la lectura cuando pasamos de una diferencia de medias a diseños que mejoran la construcción del contrafactual?</p>
+<p>La pregunta se responde comparando cómo cambia la estimación de <code>treat</code> cuando se pasa de una comparación bruta a diseños que mejoran la construcción del contrafactual.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>La unidad de análisis es la persona. La variable de resultado es <code>salario</code>, usada como aproximación al ingreso laboral en la muestra. El tratamiento <code>treat</code> indica pertenencia al grupo tratado frente al grupo de control.</p>
+<p>Entre los observables relevantes, <code>edu</code> representa años de educación formal y <code>mont</code> identifica residencia en Montevideo (frente al resto del país). Estas covariables son sustantivas porque se asocian tanto con la probabilidad de tratamiento como con el nivel salarial observado.</p>
+</section>
+<section id="por-qué-la-comparación-bruta-falla" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-la-comparación-bruta-falla">Por qué la comparación bruta falla</h2>
+<p>En este caso, tratados y controles no parten de condiciones equivalentes en observables clave. Por eso, la diferencia de medias no compara grupos plenamente comparables.</p>
+<p>Cuando esa comparabilidad falla, la brecha bruta en <code>salario</code> no puede leerse como efecto causal limpio: mezcla el posible impacto del tratamiento con diferencias previas entre grupos.</p>
 </section>
 <section id="comparación-dominante" class="level2">
 <h2 class="anchored" data-anchor-id="comparación-dominante">Comparación dominante</h2>
@@ -242,8 +266,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Esta pieza cumple una función de apertura conceptual y no de validación aplicada fuerte. Su aporte es metodológico: mostrar por qué una diferencia de medias no identifica, por sí sola, un efecto causal.</p>
-<p>En consecuencia, T1 se presenta como ejercicio metodológico, no orientado a una especificación final única.</p>
+<p>La lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.</p>
+<p>Por ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.</p>
 <p>Además, el ejercicio utiliza una base sintética y casi determinística (<code>corr(edu, salario) ~ 0.9998</code> y <code>R^2 ~ 1</code> con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente.</p>
 
 

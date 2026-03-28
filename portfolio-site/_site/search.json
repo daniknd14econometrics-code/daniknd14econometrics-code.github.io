@@ -1516,14 +1516,14 @@
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#resumen",
     "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Resumen",
-    "text": "Resumen\nEsta pieza abre la sección causalidad con una distinción central: una diferencia de medias puede ser un diagnóstico descriptivo útil, pero no constituye evidencia causal por sí sola.\nEn T1, tratados y controles difieren de forma marcada en observables relevantes (edu y mont). En ese contexto, la comparación bruta combina efecto potencial del tratamiento con sesgo de selección."
+    "text": "Resumen\nUna diferencia de medias entre tratados y controles puede describir una brecha relevante en salario, pero no alcanza para identificar causalidad. Si los grupos no son comparables, la brecha observada combina efecto potencial del tratamiento con sesgo de selección."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta-central",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta-central",
     "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Pregunta central",
-    "text": "Pregunta central\n¿Qué cambia en la lectura cuando pasamos de una diferencia de medias a diseños que mejoran la construcción del contrafactual?"
+    "text": "Pregunta central\nLa pregunta se responde comparando cómo cambia la estimación de treat cuando se pasa de una comparación bruta a diseños que mejoran la construcción del contrafactual."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#comparación-dominante",
@@ -1537,6 +1537,34 @@
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#cierre",
     "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Cierre",
-    "text": "Cierre\nEsta pieza cumple una función de apertura conceptual y no de validación aplicada fuerte. Su aporte es metodológico: mostrar por qué una diferencia de medias no identifica, por sí sola, un efecto causal.\nEn consecuencia, T1 se presenta como ejercicio metodológico, no orientado a una especificación final única.\nAdemás, el ejercicio utiliza una base sintética y casi determinística (corr(edu, salario) ~ 0.9998 y R^2 ~ 1 con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente."
+    "text": "Cierre\nLa lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.\nPor ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.\nAdemás, el ejercicio utiliza una base sintética y casi determinística (corr(edu, salario) ~ 0.9998 y R^2 ~ 1 con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente."
+  },
+  {
+    "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta",
+    "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
+    "section": "Pregunta",
+    "text": "Pregunta\n¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal?"
+  },
+  {
+    "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#diseño-del-caso",
+    "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#diseño-del-caso",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
+    "section": "Diseño del caso",
+    "text": "Diseño del caso\nEl ejercicio usa una base de corte transversal con propósito introductorio y sintético.\n\nUnidad de análisis: individuos. Resultado: salario. Tratamiento: treat. Observables clave: edu y mont. Carácter del ejercicio: apertura conceptual, no caso aplicado fuerte."
+  },
+  {
+    "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#datos-y-variables",
+    "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#datos-y-variables",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
+    "section": "Datos y variables",
+    "text": "Datos y variables\nLa unidad de análisis es la persona. La variable de resultado es salario, usada como aproximación al ingreso laboral en la muestra. El tratamiento treat indica pertenencia al grupo tratado frente al grupo de control.\nEntre los observables relevantes, edu representa años de educación formal y mont identifica residencia en Montevideo (frente al resto del país). Estas covariables son sustantivas porque se asocian tanto con la probabilidad de tratamiento como con el nivel salarial observado."
+  },
+  {
+    "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#por-qué-la-comparación-bruta-falla",
+    "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#por-qué-la-comparación-bruta-falla",
+    "title": "Por qué una diferencia de medias no equivale a efecto causal",
+    "section": "Por qué la comparación bruta falla",
+    "text": "Por qué la comparación bruta falla\nEn este caso, tratados y controles no parten de condiciones equivalentes en observables clave. Por eso, la diferencia de medias no compara grupos plenamente comparables.\nCuando esa comparabilidad falla, la brecha bruta en salario no puede leerse como efecto causal limpio: mezcla el posible impacto del tratamiento con diferencias previas entre grupos."
   }
 ]
