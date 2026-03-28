@@ -1,0 +1,151 @@
+Base usada para este diagnóstico: exclusivamente T18 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T18
+
+1. Identificación básica
+
+Taller 18. Tema central: modelo multinomial para datos de panel tratado con una estrategia correlated random effects (CRE / Mundlak) para introducir heterogeneidad inobservable correlacionada de forma parsimoniosa. La variable dependiente es `status`, con tres categorías: escuela, casa y trabajo. Las covariables principales son `educ`, `exper`, `expersq`, `black`, dummies de año y los promedios temporales `educ_bar`, `exper_bar` y `expersq_bar`. El brief resume muy bien el espíritu del taller: “Multinomial en panel: una solución parsimoniosa vía correlated random effects”. :contentReference[oaicite:3]{index=3}
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza sustantiva sobre participación laboral en sí misma. Tampoco es solo “otro multinomial”. Es una pieza metodológica fuerte sobre cómo extender un logit multinomial a panel sin entrar en una maquinaria computacional demasiado pesada, usando la lógica Mundlak/CRE para absorber heterogeneidad inobservable correlacionada. La historia correcta no es “qué hace educación con escuela/casa/trabajo” en abstracto, sino “qué cambia cuando dejamos de tratar el panel como pooled y permitimos heterogeneidad correlacionada en un multinomial”.
+
+Editorialmente, T18 debería leerse como:
+comparación metodológica fuerte con anclaje aplicado.
+
+3. Pregunta real del taller
+
+La pregunta pública correcta no debería ser “qué determina escuela, casa o trabajo”. La pregunta correcta es:
+
+¿Cómo introducir heterogeneidad inobservable en una elección multinomial de panel sin entrar en una maquinaria computacional excesiva?
+
+Si se quiere una versión más aplicada:
+¿Cómo cambia la lectura de un multinomial de panel cuando pasamos de pooled a CRE/Mundlak?
+
+4. Núcleo empírico y métodos comparados
+
+El núcleo del taller está muy bien concentrado y no conviene abrir frentes laterales.
+
+Primero, el multinomial pooled (`mlogit status ... , vce(cluster id)`), que funciona como benchmark inicial. Sus APEs sugieren, por ejemplo, que más educación aumenta la probabilidad de escuela y trabajo y reduce casa; más experiencia reduce escuela y casa y aumenta trabajo; `black` reduce escuela y trabajo y aumenta casa. Esa es la lectura inicial, pero no la final. :contentReference[oaicite:4]{index=4}
+
+Segundo, el multinomial-CRE (`mlogit` con `educ_bar`, `exper_bar`, `expersq_bar`). Acá pasa lo importante del taller. Los APEs cambian bastante y, en algunos casos, cambian incluso de signo respecto del pooled: por ejemplo, para `educ`, el APE sobre escuela pasa de positivo en pooled a fuertemente negativo en CRE; para `exper`, el efecto sobre trabajo pasa de positivo en pooled a negativo en CRE. Eso es exactamente el tipo de cambio que convierte al taller en una pieza metodológica potente. :contentReference[oaicite:5]{index=5}
+
+Tercero, la prueba Mundlak. El test conjunto sobre los promedios temporales rechaza muy fuerte (`chi2(6)=1636.61`, `p=0.0000`), lo que organiza toda la lectura del taller: el pooled multinomial no parece una descripción cómoda de los datos si la heterogeneidad correlacionada importa, y el CRE queda mucho mejor justificado. :contentReference[oaicite:6]{index=6}
+
+Cuarto, el PCP del modelo CRE. Es útil como diagnóstico auxiliar: el PCP in-sample sube a 79.55%, por encima del 69.02% del multinomial pooled reportado en T16, pero no debe ser el centro del taller. Acá el valor no está en “predice mejor”, sino en cómo cambia la historia de probabilidades y APEs cuando incorporás heterogeneidad correlacionada. :contentReference[oaicite:7]{index=7} :contentReference[oaicite:8]{index=8}
+
+5. Objeto de decisión final
+
+Este taller necesita sí o sí un objeto final de decisión muy claro. Por suerte, el log ya lo trae: una tabla comparativa final de APEs entre `MLN` y `MLN-CRE`, para las tres probabilidades (`status==1`, `status==2`, `status==3`) y para las covariables principales. Esa tabla es exactamente el objeto de decisión correcto. No hace falta inventar nada mejor. :contentReference[oaicite:9]{index=9}
+
+6. Especificación ganadora o lectura ganadora
+
+Acá sí hay una lectura ganadora bastante nítida.
+
+No diría “ganador único” en el sentido de performance predictiva, pero sí:
+la lectura metodológica preferida es CRE/Mundlak.
+
+La razón es fuerte y clara:
+- el brief lo define como modelo principal;
+- el test Mundlak rechaza con mucha fuerza;
+- y los APEs muestran que pooled y CRE no cuentan la misma historia.
+
+Entonces la pieza debería dejar explícito algo así:
+pooled abre como benchmark, pero CRE es la especificación preferida porque captura heterogeneidad correlacionada de forma parsimoniosa y empíricamente justificada.
+
+7. Evidencia clave del log
+
+La evidencia central del taller es bastante limpia.
+
+Pooled multinomial:
+- `educ`: +escuela, −casa, +trabajo.
+- `exper`: −escuela, −casa, +trabajo.
+- `black`: −escuela, +casa, −trabajo. :contentReference[oaicite:10]{index=10}
+
+CRE multinomial:
+- `educ`: pasa a −escuela, +casa, +trabajo.
+- `exper`: pasa a −escuela, +casa, −trabajo.
+- `black`: mantiene el patrón general, pero con magnitudes distintas. :contentReference[oaicite:11]{index=11}
+
+Test Mundlak:
+- `chi2(6)=1636.61`
+- `p=0.0000`
+Esto es la pieza decisiva para justificar el CRE. :contentReference[oaicite:12]{index=12}
+
+Tabla final:
+- compara directamente `MLN` vs `MLN-CRE` en APEs por outcome.
+- muestra que los cambios no son cosméticos, sino sustantivos en términos de interpretación. :contentReference[oaicite:13]{index=13}
+
+PCP:
+- CRE: 79.55% in-sample.
+- útil como respaldo secundario, no como centro. :contentReference[oaicite:14]{index=14}
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T18 es muy clara: en un multinomial de panel, tratar la muestra como pooled puede mezclar el efecto de las covariables con diferencias persistentes entre personas. El enfoque CRE/Mundlak permite dejar entrar esa heterogeneidad de forma simple, y cuando se hace eso, la lectura de los APEs cambia de manera importante. Ese cambio es justamente la enseñanza del taller.
+
+9. Hallazgo principal
+
+La frase que el lector debería retener es esta:
+
+En multinomial de panel, introducir heterogeneidad correlacionada vía CRE puede cambiar de forma importante la lectura de las probabilidades y APEs respecto del multinomial pooled.
+
+Y una segunda frase aún más fuerte:
+El valor del taller no está en una mejora cosmética del ajuste, sino en mostrar que el pooled y el CRE cuentan historias distintas sobre las elecciones escuela/casa/trabajo.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que CRE/Mundlak es una vía parsimoniosa para hacer panel multinomial con criterio. Sí puede decir que el test sobre promedios temporales respalda fuertemente la relevancia de heterogeneidad correlacionada. Sí puede decir que la comparación pooled vs CRE cambia la historia de los APEs. Sí puede mencionar el PCP como diagnóstico auxiliar, con la aclaración in-sample. Todo eso está sólidamente respaldado por brief y log. :contentReference[oaicite:15]{index=15} :contentReference[oaicite:16]{index=16}
+
+11. Qué no debe decir la pieza
+
+No debería venderse como pieza de predicción. No conviene usar el PCP como eje principal. No debería quedarse solo en coeficientes crudos. No debería sonar como si CRE fuera simplemente “agregar medias” sin explicar por qué eso importa. Tampoco conviene sobreactuar la causalidad: esto es una pieza metodológica sobre heterogeneidad inobservable, no una identificación causal cerrada.
+
+12. Riesgos editoriales a vigilar en la auditoría
+
+Veo cinco riesgos concretos.
+
+a) Que pooled y CRE aparezcan como dos especificaciones más, sin que se note cuál lectura gana.
+b) Que el test Mundlak quede demasiado lateral, cuando en realidad organiza la decisión.
+c) Que el PCP gane demasiado protagonismo.
+d) Que el cierre no diga con claridad qué aprende el lector.
+e) Que la pieza suene demasiado técnica o demasiado de apunte.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza pública debería tener sí o sí cinco cosas.
+
+Primero, una apertura que diga claramente que el problema es multinomial en panel con heterogeneidad inobservable.
+
+Segundo, una frase breve de por qué CRE importa: permite absorber heterogeneidad correlacionada sin meterse en una solución inviable o demasiado pesada.
+
+Tercero, una tabla final protagonista de APEs `MLN` vs `MLN-CRE`.
+
+Cuarto, un bloque breve sobre el test Mundlak como criterio de decisión.
+
+Quinto, un cierre explícito diciendo que CRE cambia la historia y por eso es la lectura preferida.
+
+14. Nota para la tarjeta del sitio
+
+Título:
+Multinomial en panel: una solución parsimoniosa vía correlated random effects
+
+Pregunta:
+¿Cómo introducir heterogeneidad inobservable en una elección multinomial de panel sin entrar en una maquinaria computacional excesiva?
+
+Método:
+MLN pooled vs MLN-CRE (Mundlak)
+
+Hallazgo:
+Al introducir promedios temporales, la lectura de los APEs cambia de forma importante y el test Mundlak respalda que la heterogeneidad correlacionada importa.
+
+Estado de la evidencia:
+Comparación metodológica fuerte.
+
+15. Observación adicional de metadatos
+
+El metadato `familia_metodo: multinomial` es correcto, pero acá ya aparece claramente una subfamilia más precisa: multinomial en panel con CRE. No hace falta cambiarlo ahora, pero conviene recordarlo para la arquitectura general del portfolio.
+
+16. Diagnóstico final
+
+T18 tiene muy buen valor público y probablemente sea una de las piezas metodológicas más fuertes del bloque multinomial. Su historia está mucho más limpia que en T16: un solo outcome, una sola comparación central, una sola lección fuerte. La mejor versión pública de T18 debería abrir con el problema de heterogeneidad inobservable en panel multinomial, mostrar pooled vs CRE con una tabla compacta de APEs, usar el test Mundlak como criterio de decisión, y cerrar explícitamente que CRE es la lectura metodológica preferida.
