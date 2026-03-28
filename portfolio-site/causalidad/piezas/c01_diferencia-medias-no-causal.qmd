@@ -1,0 +1,67 @@
+---
+title: "T1: Por que una diferencia de medias no es causal"
+subtitle: "Apertura conceptual de la seccion Causalidad"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "c01_t1_diferencia_medias_no_causal"
+date: "2026-03-28"
+format:
+  html:
+    toc: false
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../../econometria/assets/portfolio.css
+      - ../../econometria/assets/t01_palette.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+[<- Volver al indice de Causalidad](../index.qmd)
+
+::: {.hero-box}
+::: {.hero-title}
+Una diferencia de medias no alcanza para identificar un efecto causal
+:::
+
+::: {.hero-sub}
+En T1, el punto no es elegir "el numero correcto", sino mostrar que la magnitud estimada depende del contrafactual que se construye.
+:::
+:::
+
+## Resumen
+
+Esta pieza abre la seccion `causalidad` con una idea basica: comparar promedios entre tratados y no tratados puede servir como diagnostico inicial, pero no debe leerse como evidencia causal por si sola.
+
+En la base de T1, los grupos difieren de forma marcada en observables relevantes (`edu` y `mont`). Por eso, la comparacion bruta mezcla potencial efecto del tratamiento con sesgo de seleccion.
+
+## Pregunta central
+
+Que cambia en la lectura cuando pasamos de una diferencia de medias a disenos que mejoran la construccion del contrafactual?
+
+## Comparacion dominante
+
+::: {.table-box}
+La comparacion central del taller es la variacion de la magnitud estimada de `treat` cuando cambia el diseno:
+
+| Diseno de comparacion | Estimacion asociada a `treat` sobre `salario` | Lectura breve |
+|---|---:|---|
+| Diferencia de medias (tratados - controles) | 7163.8 | Brecha observada sin identificacion causal |
+| MCO simple robusto | 7163.8 | Reexpresa la misma comparacion bruta |
+| MCO con controles (`mont`, `edu`) | 100.1 | Cambia de forma drastica al ajustar por observables |
+| PSM ATE (logit/probit) | 976.0 / 1012.0 | Magnitud sensible al diseno de emparejamiento |
+| PSM ATET (logit) | 3614.4 | Efecto sobre tratados, no equivalente al ATE |
+:::
+
+La lectura que domina es directa: si el numero cambia mucho cuando cambia el contrafactual, el foco no debe estar en "el coeficiente mas alto", sino en la credibilidad de la comparacion usada.
+
+## Cierre
+
+T1 no es una pieza aplicada fuerte ni una especificacion ganadora. Es una apertura conceptual breve: muestra por que una diferencia de medias no es causal y prepara el terreno para piezas posteriores con disenos mas exigentes.
+
+Ademas, el ejercicio usa una base de juguete y casi deterministica (`corr(edu, salario) ~ 0.9998` y `R^2 ~ 1` con controles), por lo que no corresponde sobreactuar la conclusion causal.
