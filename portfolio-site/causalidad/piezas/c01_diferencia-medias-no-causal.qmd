@@ -65,7 +65,7 @@ Carácter del ejercicio: apertura conceptual, no caso aplicado fuerte.
 
 ## Pregunta central
 
-¿Qué cambia en la lectura cuando pasamos de una diferencia de medias a diseños que mejoran la construcción del contrafactual?
+La pregunta se responde comparando cómo cambia la estimación de `treat` cuando se pasa de una comparación bruta a diseños que mejoran la construcción del contrafactual.
 
 ## Datos y variables
 
@@ -99,6 +99,6 @@ La lectura principal es directa: cuando la magnitud estimada cambia de forma sus
 
 La lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.
 
-En esta etapa no corresponde forzar una especificación ganadora; el ejercicio funciona como comparación metodológica breve, no orientada a una especificación final única.
+Por ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.
 
 Además, el ejercicio utiliza una base sintética y casi determinística (`corr(edu, salario) ~ 0.9998` y `R^2 ~ 1` con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente.
