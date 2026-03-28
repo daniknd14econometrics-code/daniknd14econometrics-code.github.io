@@ -1,0 +1,108 @@
+﻿---
+title: "Diseño de matching primero: soporte, balance y muestra efectiva"
+subtitle: "Aplicación en microcrédito con comparación entre matching exacto y CEM"
+author: "Daniel Mendez"
+profile: "Economista | Econometria aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "c02_t2_matching_exacto_microcredito"
+date: "2026-03-28"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../../econometria/assets/portfolio.css
+      - ../../econometria/assets/t01_palette.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+[<- Volver al índice de Causalidad](../index.qmd)
+
+::: {.hero-box}
+::: {.hero-title}
+En matching, la decisión se toma por diseño y no por coeficiente máximo
+:::
+
+::: {.hero-sub}
+La comparación aplicada muestra que soporte común, balance y muestra efectiva pesan más que el ATET más alto.
+:::
+:::
+
+## Resumen
+
+Esta pieza compara estrategias de matching exacto y CEM sobre hogares con participación femenina en microcrédito. La lectura central no es "qué método da el ATET más grande", sino qué diseño conserva comparabilidad sin perder demasiada muestra. Bajo la regla de diseño adoptada, la especificación preferida es `Matching exacto - especificación base (S1)`, como decisión condicionada y no como ganador absoluto.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta central
+
+En esta aplicación, ¿cómo cambia la lectura del efecto de `dfmfd` sobre gasto del hogar cuando exigimos comparabilidad de forma explícita?
+:::
+
+::: {.section-box}
+## Datos y variables
+
+::: {.small-note}
+Unidad de análisis: hogares (`N = 1129`).
+Resultado: `lexptot = ln(1 + exptot)`.
+Tratamiento: `dfmfd` (participación femenina en microcrédito).
+Covariables clave de comparabilidad: `sexhead`, `vaccess`, `agehead`, `educhead`, `lnland`, `pcirr`.
+:::
+:::
+
+::: {.section-box}
+## Regla de decisión
+
+La selección de diseño se hizo sin usar la variable de resultado para rankear candidatos. Primero se exigió balance (`max|SMD| <= 0.10` en covariables core) y luego se priorizó soporte (`ESS` y muestra retenida).
+:::
+
+::::
+
+## Por qué la comparación simple no alcanza
+
+Comparar tratados y controles sin construir soporte común mezcla diferencias de composición con efecto potencial del tratamiento. En este caso, el matching cambia simultáneamente:
+
+- qué hogares quedan en la muestra útil;
+- qué tan parecidos son tratados y controles en covariables observadas;
+- y qué estimando termina reportándose.
+
+Por eso, la lectura profesional no puede depender solo del tamaño del coeficiente.
+
+::: {.table-box}
+## Contraste central de diseño
+
+La tabla resume el trade-off relevante para decidir entre estrategias de matching en esta base.
+
+| Especificación | max\|SMD\| (core) | Cumple regla base (`max|SMD| <= 0.10`) | ESS controles | Soporte retenido (`N1` / `N0`) | ATET reportado | Lectura |
+|---|---:|---|---:|---:|---:|---|
+| Matching exacto - especificación base (S1) | 0.0839 | Pasa regla base | 164.3 | 409 / 325 | 0.1063 (SE boot 0.0397) | Preferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo |
+| CEM - regla Scott | 0.0184 | Pasa regla base | 63.6 | 192 / 157 | Referencia comparativa | Balance más estricto, con pérdida marcada de muestra efectiva |
+| Matching exacto - especificación ampliada (S2) | 0.1697 | No pasa regla base | 269.0 | 505 / 431 | Referencia de sensibilidad | Se vuelve opción relevante si el umbral se relaja a 0.20 |
+| CEM - regla FD | 0.2114 | No pasa regla base | 86.1 | 201 / 156 | 0.2249 (SE boot 0.0643) | Reporta ATET más alto, pero no cumple la regla base de balance |
+:::
+
+El contraste dominante es claro: un ATET mayor (`CEM - regla FD`) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.
+
+## Decisión metodológica y alcance
+
+Bajo la regla de diseño adoptada para esta comparación, la preferencia queda en `Matching exacto - especificación base (S1)`. Esa preferencia no es universal:
+
+1. Depende del umbral elegido para balance.
+2. Si se relaja a `max|SMD| <= 0.20`, el ranking cambia y `Matching exacto - especificación ampliada (S2)` pasa al tope.
+3. La frontera no dominada incluye alternativas con distintos compromisos entre balance y soporte.
+
+Entonces, la conclusión correcta no es "hay un ganador absoluto", sino "hay una decisión defendible bajo una regla explícita de diseño".
+
+## Cierre
+
+La aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.
+
+Con la regla adoptada, `Matching exacto - especificación base (S1)` es la opción preferida para esta aplicación. A la vez, la lectura debe seguir siendo cauta: el resultado está en logaritmos (`ln(1 + exptot)`), y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.

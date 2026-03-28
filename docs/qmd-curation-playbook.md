@@ -344,6 +344,27 @@ La brevedad no debe confundirse con falta de contexto.
 Evitar redacciones que asuman que el lector ya conoce el taller o su cocina interna.
 La pieza pública debe poder leerse con claridad por alguien que entra por primera vez.
 
+14. **Nombres internos vs. nombres públicos**
+Los nombres internos (`S1`, `S2`, `spec_1`, `modelo_a`, etc.) pueden usarse para trazabilidad en repo y diagnósticos privados.
+En la pieza pública no deben quedar como rótulos principales si no son intuitivos para lector externo.
+La cara pública debe priorizar nombres comprensibles y profesionales.
+
+15. **Traducción obligatoria de especificaciones opacas**
+Cuando una especificación tenga nombre interno opaco, traducirla a formulación pública clara (por ejemplo: “especificación base”, “especificación ampliada”, “partición alternativa”, “regla de coarsening Scott”, “regla Freedman–Diaconis”).
+Si se necesita trazabilidad, conservar la etiqueta interna en segundo plano (paréntesis o nota breve), no como etiqueta dominante.
+
+16. **Lección metodológica vs. aplicación empírica**
+Si la enseñanza principal es metodológica, no atribuirla de forma indebida a la aplicación específica.
+La aplicación puede funcionar como contexto, pero la formulación visible debe distinguir la lección general del método y el caso donde se ilustra.
+
+17. **Título y hero con formulación externa**
+Título y hero deben evitar formulaciones que dependan de nombres internos, suenen a etiqueta de taller o confundan método con caso puntual.
+Deben priorizar redacción humana, externa y conceptualmente limpia.
+
+18. **Tablas públicas con rótulos comprensibles**
+La tabla principal no debe usar nomenclatura interna cruda como rótulo dominante cuando debilita la lectura externa.
+Usar rótulos públicos claros y, solo si hace falta, dejar la nomenclatura interna en segundo plano.
+
 ---
 
 ## 15. Qué evitar siempre

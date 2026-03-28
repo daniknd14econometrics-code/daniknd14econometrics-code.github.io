@@ -98,6 +98,11 @@ Preferir
 - Elegir bloque visual según función: `metric-grid` para métricas headline; en piezas introductorias, preferir `quick-grid` o equivalente (pregunta, diseño del caso, variables clave).
 - La brevedad no habilita vacíos: incluso piezas introductorias deben tener densidad empírica o metodológica suficiente para lector externo.
 - Evitar redacción que asuma conocimiento previo del taller; la pieza debe ser legible para quien entra por primera vez.
+- Los nombres internos de especificación (`S1`, `S2`, `spec_1`, `modelo_a`, etc.) pueden quedar para trabajo interno, pero no como etiqueta principal en la pieza pública.
+- Traducir especificaciones opacas a rótulos públicos claros; si se requiere trazabilidad, dejar el nombre interno en segundo plano (paréntesis o nota breve).
+- Si la lección principal es metodológica, título y hero deben distinguir entre la lección general del método y el caso empírico donde se ilustra.
+- Título y hero deben evitar fórmulas que suenen a etiqueta de taller o dependan de nomenclatura interna no intuitiva.
+- En tablas públicas, usar rótulos comprensibles como etiqueta principal; reservar nomenclatura interna para segundo plano cuando sea necesaria.
 
 ## Regla sobre causalidad
 
