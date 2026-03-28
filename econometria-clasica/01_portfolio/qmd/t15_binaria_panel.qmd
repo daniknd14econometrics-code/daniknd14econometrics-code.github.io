@@ -96,7 +96,7 @@ Parte de la lectura pooled absorbia heterogeneidad persistente no modelada
 
 ## Resumen
 
-Esta pieza estudia participación laboral femenina (`lfp`) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es sustantivo: entender como cambian las probabilidades asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres.
+Esta pieza estudia participación laboral femenina (`lfp`) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.
 
 La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.
 
@@ -105,7 +105,7 @@ La econometría se usa para mejorar lectura aplicada, no para forzar una compete
 ::: {.section-box}
 ## Pregunta
 
-¿Cómo cambian las probabilidades de participación laboral asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres?
+¿Cómo cambia un modelo binario de panel al pasar de pooled probit a RE-probit y CRE-probit, y qué indica eso sobre heterogeneidad inobservable?
 
 ::: {.small-note}
 Resultado: `lfp` (1 participa, 0 no). Variables clave: `kids` (número de hijos <18) y `lhinc` (log del ingreso del esposo). Controles: `educ`, `black`, `age`, `agesq`, dummies de periodo.
@@ -156,6 +156,8 @@ La lectura se organiza en cuatro pasos:
 3. Ambas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.
 4. Esa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.
 
+En esta comparación, pooled funciona como benchmark inicial, RE como transición importante y CRE-probit como lectura metodológica preferida porque permite incorporar heterogeneidad correlacionada de forma parsimoniosa.
+
 Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas:
 
 ::: {.table-box}
@@ -188,6 +190,8 @@ En términos aplicados, la pieza muestra una decisión profesional concreta: cua
 ## Cierre
 
 Esta pieza no busca declarar un método superior entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.
+
+La lección metodológica es que en panel binario la heterogeneidad inobservable sigue importando aunque el modelo ya sea no lineal.
 
 
 

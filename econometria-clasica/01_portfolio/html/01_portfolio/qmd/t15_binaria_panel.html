@@ -156,13 +156,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participación laboral femenina (<code>lfp</code>) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es sustantivo: entender como cambian las probabilidades asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>lfp</code>) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.</p>
 <p>La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>¿Cómo cambian las probabilidades de participación laboral asociadas a hijos e ingreso del esposo cuando se reconoce heterogeneidad persistente entre mujeres?</p>
+<p>¿Cómo cambia un modelo binario de panel al pasar de pooled probit a RE-probit y CRE-probit, y qué indica eso sobre heterogeneidad inobservable?</p>
 <div class="small-note">
 <p>Resultado: <code>lfp</code> (1 participa, 0 no). Variables clave: <code>kids</code> (número de hijos &lt;18) y <code>lhinc</code> (log del ingreso del esposo). Controles: <code>educ</code>, <code>black</code>, <code>age</code>, <code>agesq</code>, dummies de periodo.</p>
 </div>
@@ -209,6 +209,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Ambas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.</li>
 <li>Esa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.</li>
 </ol>
+<p>En esta comparación, pooled funciona como benchmark inicial, RE como transición importante y CRE-probit como lectura metodológica preferida porque permite incorporar heterogeneidad correlacionada de forma parsimoniosa.</p>
 <p>Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas:</p>
 </section>
 <section id="sintesis-de-magnitudes-ape" class="level2 table-box">
@@ -274,6 +275,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>Esta pieza no busca declarar un método superior entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.</p>
+<p>La lección metodológica es que en panel binario la heterogeneidad inobservable sigue importando aunque el modelo ya sea no lineal.</p>
 </section>
 
 </main>

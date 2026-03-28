@@ -1,0 +1,180 @@
+Base usada para este diagnóstico: exclusivamente T15 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T15
+
+1. Identificación básica
+
+Taller 15. Tema central: modelos binarios para datos de panel con heterogeneidad inobservable. La base es `lfp.dta`, con panel fuertemente balanceado de 5.663 mujeres y 5 períodos. La variable dependiente es `lfp` (=1 si participa en la fuerza laboral). Las variables más importantes del ejercicio son `kids`, `lhinc`, `educ`, `black`, `age`, `agesq` y las dummies temporales, junto con los promedios individuales `kidsbar` y `lhincbar` en la especificación tipo Mundlak. El brief ya define correctamente el encuadre: pooled probit, RE-probit y CRE-probit, con comparación de APEs y pruebas de Mundlak, completitud dinámica y exogeneidad estricta. 
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza de hallazgo sustantivo puro sobre participación laboral. Tampoco conviene venderlo como si fuera simplemente “un panel con probit”. Es una pieza metodológica-aplicada sobre cómo cambia la lectura de un modelo binario cuando pasamos de ignorar la heterogeneidad inobservable a modelarla explícitamente, primero bajo RE y luego permitiendo correlación con los regresores vía CRE/Mundlak. La pregunta importante no es solo qué signo tiene `kids` o `lhinc`, sino qué parte de esos efectos era pooled “inflado” por heterogeneidad persistente y qué parte sobrevive cuando corregimos esa estructura.
+
+Editorialmente, para mí, T15 cae muy bien en la familia:
+comparación metodológica fuerte con anclaje aplicado.
+
+3. Pregunta real del taller
+
+La pregunta pública correcta no debería ser “qué determina la participación laboral femenina en panel”, porque eso deja la pieza demasiado sustantiva y genérica. La pregunta correcta es más bien esta:
+¿cómo cambia un modelo binario al pasar de pooled probit a RE-probit y CRE-probit en panel?
+
+Si se quiere una versión algo más aplicada:
+cuando estudiamos participación laboral en panel, ¿qué cambia en los APEs y en la interpretación cuando tratamos explícitamente la heterogeneidad inobservable?
+
+4. Núcleo empírico y métodos comparados
+
+El núcleo del taller está bien definido y no conviene sobrecargarlo con todos los apéndices técnicos del log. El centro real tiene cuatro bloques.
+
+Primero, el pooled probit con `vce(cluster id)`. Este bloque funciona como benchmark inicial. Sus APEs son relativamente grandes: `kids` cerca de `-0.066` y `lhinc` cerca de `-0.070`, con el resto de signos razonables. Es una buena referencia, pero no debe quedar como lectura final porque justamente ignora la heterogeneidad persistente. :contentReference[oaicite:2]{index=2}
+
+Segundo, el RE-probit (`xtprobit, re`). Acá el log muestra heterogeneidad individual muy fuerte: con la especificación estabilizada a `intpoints(40)`, `sigma_u ≈ 3.92`, `Var(c_i) ≈ 15.36` y `rho ≈ 0.939`. Los APEs se reducen respecto del pooled: `kids` pasa a alrededor de `-0.0516` y `lhinc` a `-0.0190`. Esto sugiere que una parte importante del efecto pooled estaba capturando diferencias persistentes entre mujeres. Además, el propio log documenta problemas numéricos cuando se usan pocos puntos de cuadratura, y resuelve la versión operativa con `intpoints(40)`. Esa advertencia es útil para respaldo técnico, pero no debe dominar la pieza pública. :contentReference[oaicite:3]{index=3}
+
+Tercero, el CRE-probit. Acá hay dos versiones en el log:
+- una versión “CRE agrupado” como pooled probit + `kidsbar` + `lhincbar`;
+- una versión RE-probit con promedios individuales, que conceptualmente es CRE-RE.
+
+Ambas son útiles, pero el brief pone como centro metodológico el CRE-probit como forma parsimoniosa de incorporar heterogeneidad correlacionada, y eso tiene sentido editorial. En el CRE agrupado, el test Mundlak rechaza con fuerza (`p=0.0000`) y los APEs se achican aún más: `kids ≈ -0.0389`, `lhinc ≈ -0.0095`. En la versión CRE-RE con `xtprobit, re` + promedios, los APEs son todavía un poco menores: `kids ≈ -0.0322`, `lhinc ≈ -0.0081`. La enseñanza fuerte es que, una vez que permitimos correlación entre heterogeneidad y regresores, los efectos contemporáneos se moderan bastante. :contentReference[oaicite:4]{index=4}
+
+Cuarto, están los diagnósticos. Hay tres especialmente importantes:
+- la prueba de Mundlak, que rechaza fuerte en ambas versiones (`kidsbar` y `lhincbar` no parecen cero);
+- la prueba de completitud dinámica, que rechaza de forma brutal en el pooled;
+- la prueba de exogeneidad estricta vía leads, que también rechaza, incluso en CRE, sobre todo empujada por `F1_kids`.
+
+Esto vuelve a T15 una pieza muy buena no solo por la comparación de modelos, sino porque además enseña que el pooled no es solo demasiado simple por heterogeneidad, sino también incómodo frente a persistencia y adelantados. :contentReference[oaicite:5]{index=5}
+
+5. Objeto de decisión final
+
+Acá sí tiene que existir un objeto de decisión final muy claro. El propio brief lo pide: tabla de APEs pooled vs RE vs CRE. Y el log ya la construye. De hecho, termina con una tabla comparativa de APEs para cuatro columnas:
+- Pool-Probit
+- RE-Probit
+- CRE-Pool-Probit
+- CRE-Probit
+
+Esa tabla es el objeto de decisión correcto para la pieza pública. No hace falta inventar otro. La tarea editorial sería simplemente darle el protagonismo adecuado. :contentReference[oaicite:6]{index=6}
+
+6. Especificación ganadora o lectura ganadora
+
+Acá hay que ser finos. No diría “ganador único” en el sentido fuerte de que todo lo demás queda descartado, pero sí hay una lectura ganadora bien clara.
+
+La lectura ganadora es:
+cuando el panel binario presenta heterogeneidad correlacionada, el pooled deja de ser un benchmark cómodo; RE incorpora heterogeneidad, pero si Mundlak rechaza, CRE es la especificación más alineada con la evidencia del taller.
+
+Dicho más corto:
+CRE es la pieza metodológica principal de T15.
+
+Eso está muy respaldado por dos cosas:
+- el brief ya lo presenta como modelo binario principal;
+- el test Mundlak rechaza fuerte, que es exactamente la señal que vuelve dudoso el supuesto clásico de RE con independencia entre \(c_i\) y \(x_{it}\). :contentReference[oaicite:7]{index=7} :contentReference[oaicite:8]{index=8}
+
+Entonces, si hay que elegir una especificación central para la pieza pública, yo elegiría:
+CRE-probit.
+
+El pooled queda como benchmark inicial.
+RE queda como transición metodológica importante.
+CRE queda como lectura preferida.
+
+7. Evidencia clave del log
+
+La evidencia más importante que conviene retener del log es bastante nítida.
+
+Pooled probit:
+- `kids`: APE ≈ `-0.0660`
+- `lhinc`: APE ≈ `-0.0701`
+- ambos altamente significativos. :contentReference[oaicite:9]{index=9}
+
+RE-probit estabilizado:
+- `kids`: APE ≈ `-0.0516`
+- `lhinc`: APE ≈ `-0.0190`
+- heterogeneidad muy fuerte: `sigma_u ≈ 3.9197`, `Var(c_i) ≈ 15.3637`, `rho ≈ 0.9389`. :contentReference[oaicite:10]{index=10}
+
+CRE-pool-probit:
+- `kids`: APE ≈ `-0.0389`
+- `lhinc`: APE ≈ `-0.0095`
+- test Mundlak: `p = 0.0000`. :contentReference[oaicite:11]{index=11}
+
+CRE-probit (RE + promedios):
+- `kids`: APE ≈ `-0.0322`
+- `lhinc`: APE ≈ `-0.0081`
+- nuevamente Mundlak rechaza: `p = 0.0000`. :contentReference[oaicite:12]{index=12}
+
+Diagnósticos:
+- completitud dinámica: rechazo fortísimo (`p = 0.0000`);
+- exogeneidad estricta vía leads: rechazo en pooled y también en CRE, con fuerte protagonismo de `F1_kids`. :contentReference[oaicite:13]{index=13}
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T15 es bastante elegante y no necesita inflarse. Se puede contar así:
+
+Un pooled probit en panel puede dar una primera lectura razonable, pero mezcla variación dentro de mujer y entre mujeres, y además puede atribuir a los regresores diferencias persistentes que en realidad pertenecen a la heterogeneidad individual no observada. Cuando pasamos a RE, los APEs se reducen bastante, señal de que la heterogeneidad importa. Y cuando permitimos explícitamente correlación entre \(c_i\) y \(x_{it}\) mediante CRE/Mundlak, los efectos se moderan aún más y el test Mundlak rechaza la hipótesis benigna de independencia. En esta base, entonces, la pregunta correcta no es solo “qué signo tienen kids y lhinc”, sino cuánto de su efecto pooled era realmente heterogeneidad persistente mal absorbida.
+
+Esa historia es fuerte, profesional y coherente con el brief.
+
+9. Hallazgo principal
+
+La frase que el lector debería retener al salir es esta:
+
+En panel binario, pasar de pooled a RE y luego a CRE no es un detalle técnico: cambia de forma importante la magnitud de los APEs y la interpretación sobre la heterogeneidad inobservable.
+
+Y una segunda frase, más precisa:
+Como el test Mundlak rechaza con fuerza, la lectura más razonable del taller se desplaza hacia CRE, dejando pooled como referencia inicial y RE como paso intermedio.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que pooled, RE y CRE entregan lecturas distintas de los APEs. Sí puede decir que al introducir heterogeneidad, los efectos de `kids` y `lhinc` se achican mucho. Sí puede decir que la evidencia empírica del taller no es compatible con la independencia fuerte entre heterogeneidad y regresores, porque Mundlak rechaza. Sí puede decir que los diagnósticos con rezagos y adelantados sugieren persistencia y dificultades con exogeneidad estricta. Sí puede decir que CRE es una forma parsimoniosa y profesional de ajustar el modelo. Todo eso está bien respaldado por los insumos. :contentReference[oaicite:14]{index=14} :contentReference[oaicite:15]{index=15}
+
+11. Qué no debe decir la pieza
+
+No debería vender pooled como modelo “suficiente”. No debería presentar RE como solución definitiva sin mencionar que Mundlak rechaza. No conviene hacer del FE-logit el eje de la pieza, porque en el brief ni en la tabla final ocupa ese rol central. Tampoco conviene meter en el cuerpo principal el intento fallido de bootstrap al final del log ni la discusión larga sobre `intpoints()` salvo quizá una nota breve de robustez numérica si el `.qmd` ya la trae. Y no debería exagerar el diagnóstico con leads como si probara causalidad o una forma única de endogeneidad; es un diagnóstico, no una sentencia absoluta.
+
+12. Riesgos editoriales a vigilar en la auditoría
+
+Veo varios riesgos concretos.
+
+a) Que la pieza quede demasiado “panel general” y no haga explícito que el corazón está en pooled vs RE vs CRE.
+b) Que CRE no quede suficientemente coronado como lectura preferida.
+c) Que el test Mundlak aparezca demasiado abajo o demasiado lateral, cuando en realidad organiza la decisión.
+d) Que los diagnósticos de completitud dinámica y leads se vuelvan demasiado protagonistas y opaquen la comparación principal.
+e) Que el `.qmd` cargue demasiado detalle técnico del problema numérico de RE o del bootstrap fallido.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza pública debería tener sí o sí cinco cosas.
+
+Primero, una apertura donde quede clara la transición:
+de pooled a RE y luego a CRE.
+
+Segundo, una frase muy clara sobre por qué importa: en panel binario, la pregunta no es solo el link, sino cómo entra la heterogeneidad individual.
+
+Tercero, una tabla final compacta con APEs comparables entre pooled, RE y CRE.
+
+Cuarto, un bloque muy corto de decisión metodológica:
+el test Mundlak rechaza, por lo que CRE gana peso como lectura principal.
+
+Quinto, un cierre honesto que diga que la heterogeneidad no observada sigue importando aunque el modelo ya sea no lineal.
+
+14. Nota para la tarjeta del sitio
+
+La tarjeta del sitio debería venderlo como pieza metodológica de panel binario. Algo así:
+
+Título:
+Binaria en panel: pooled probit, random effects y correlated random effects
+
+Pregunta:
+¿Cómo cambia un modelo binario de panel cuando tratamos explícitamente la heterogeneidad inobservable?
+
+Método:
+Pooled probit, RE-probit y CRE-probit
+
+Hallazgo:
+Al pasar de pooled a RE y luego a CRE, los APEs se moderan bastante y el test Mundlak sugiere que la heterogeneidad correlacionada importa.
+
+Estado de la evidencia:
+Comparación metodológica fuerte.
+
+15. Observación adicional de metadatos
+
+El metadato `familia_metodo: binaria` es correcto, pero acá ya aparece claramente una subfamilia más específica: binaria en panel. Otra vez, no hace falta cambiarlo ahora, pero conviene tenerlo en mente para organizar mejor el portfolio más adelante.
+
+16. Diagnóstico final
+
+T15 tiene mucho valor público y, de hecho, puede quedar como una de las piezas metodológicas más ricas del bloque. No porque tenga una “gran historia aplicada” aislada, sino porque muestra muy bien cómo se reordena una lectura binaria cuando aparecen heterogeneidad inobservable, correlación entre \(c_i\) y \(x_{it}\), y diagnósticos de persistencia. La mejor versión pública de T15 sería una pieza muy clara y profesional en la que pooled abre, RE muestra por qué la heterogeneidad importa, y CRE cierra como la especificación más coherente con la evidencia del taller.
