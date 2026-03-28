@@ -92,6 +92,12 @@ Preferir
 - No alcanza con compilar o estar “correcto”: la pieza debe sentirse tan curada como las mejores piezas de `econometria-clasica`.
 - Cuando haya pregunta empírica, causal o metodológica reconocible, debe abrir la pieza y encontrar respuesta clara y sobria al cierre.
 - Si el material permite una historia narrativa clara, conservarla; la técnica la sostiene, no la reemplaza.
+- Incluir orientación temprana para lector externo: unidad de análisis, resultado, variable principal/tratamiento y observables o controles clave cuando corresponda.
+- Si los nombres de variables no son autoexplicativos, incluir bloque breve de “Datos y variables” con traducción a lenguaje humano.
+- Cuando la pieza compare contra un análisis ingenuo, explicitar por qué esa comparación falla antes o alrededor del resultado principal.
+- Elegir bloque visual según función: `metric-grid` para métricas headline; en piezas introductorias, preferir `quick-grid` o equivalente (pregunta, diseño del caso, variables clave).
+- La brevedad no habilita vacíos: incluso piezas introductorias deben tener densidad empírica o metodológica suficiente para lector externo.
+- Evitar redacción que asuma conocimiento previo del taller; la pieza debe ser legible para quien entra por primera vez.
 
 ## Regla sobre causalidad
 

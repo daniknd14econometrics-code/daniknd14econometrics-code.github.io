@@ -37,13 +37,47 @@ Una diferencia de medias describe una brecha, pero no identifica causalidad
 
 ## Resumen
 
-Esta pieza abre la sección `causalidad` con una distinción central: una diferencia de medias puede ser un diagnóstico descriptivo útil, pero no constituye evidencia causal por sí sola.
+Una diferencia de medias entre tratados y controles puede describir una brecha relevante en `salario`, pero no alcanza para identificar causalidad. Si los grupos no son comparables, la brecha observada combina efecto potencial del tratamiento con sesgo de selección.
 
-En T1, tratados y controles difieren de forma marcada en observables relevantes (`edu` y `mont`). En ese contexto, la comparación bruta combina efecto potencial del tratamiento con sesgo de selección.
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal?
+:::
+
+::: {.section-box}
+## Diseño del caso
+
+El ejercicio usa una base de corte transversal con propósito introductorio y sintético.
+
+::: {.small-note}
+Unidad de análisis: individuos.
+Resultado: `salario`.
+Tratamiento: `treat`.
+Observables clave: `edu` y `mont`.
+Carácter del ejercicio: apertura conceptual, no caso aplicado fuerte.
+:::
+:::
+
+::::
 
 ## Pregunta central
 
 ¿Qué cambia en la lectura cuando pasamos de una diferencia de medias a diseños que mejoran la construcción del contrafactual?
+
+## Datos y variables
+
+La unidad de análisis es la persona. La variable de resultado es `salario`, usada como aproximación al ingreso laboral en la muestra. El tratamiento `treat` indica pertenencia al grupo tratado frente al grupo de control.
+
+Entre los observables relevantes, `edu` representa años de educación formal y `mont` identifica residencia en Montevideo (frente al resto del país). Estas covariables son sustantivas porque se asocian tanto con la probabilidad de tratamiento como con el nivel salarial observado.
+
+## Por qué la comparación bruta falla
+
+En este caso, tratados y controles no parten de condiciones equivalentes en observables clave. Por eso, la diferencia de medias no compara grupos plenamente comparables.
+
+Cuando esa comparabilidad falla, la brecha bruta en `salario` no puede leerse como efecto causal limpio: mezcla el posible impacto del tratamiento con diferencias previas entre grupos.
 
 ## Comparación dominante
 
@@ -63,8 +97,8 @@ La lectura principal es directa: cuando la magnitud estimada cambia de forma sus
 
 ## Cierre
 
-Esta pieza cumple una función de apertura conceptual y no de validación aplicada fuerte. Su aporte es metodológico: mostrar por qué una diferencia de medias no identifica, por sí sola, un efecto causal.
+La lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.
 
-En consecuencia, T1 se presenta como ejercicio metodológico, no orientado a una especificación final única.
+En esta etapa no corresponde forzar una especificación ganadora; el ejercicio funciona como comparación metodológica breve, no orientada a una especificación final única.
 
 Además, el ejercicio utiliza una base sintética y casi determinística (`corr(edu, salario) ~ 0.9998` y `R^2 ~ 1` con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente.

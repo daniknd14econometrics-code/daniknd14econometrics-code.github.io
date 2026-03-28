@@ -317,6 +317,33 @@ Si el taller habilita una historia narrativa clara, esa historia debe estar pres
 No inventar storytelling donde no existe, pero tampoco perder una narrativa válida cuando sí existe.
 La técnica debe organizar y sostener esa historia, no reemplazarla.
 
+8. **Orientación temprana para lector externo**
+Relativamente temprano en la pieza debe quedar claro: unidad de análisis, variable resultado, variable de interés principal o tratamiento, y observables/controles clave cuando corresponda.
+Esa orientación no debe quedar escondida en tablas ni aparecer recién a mitad de la lectura.
+
+9. **Bloque breve de datos y variables cuando haga falta**
+Si se usan nombres de variables o notación no autoexplicativa, incluir una sección breve de “Datos y variables” o equivalente.
+Las variables no deben quedar como código suelto: deben traducirse a lenguaje humano.
+
+10. **Mini-sección sobre por qué falla la comparación ingenua**
+Cuando la pieza demuestra que una comparación simple no alcanza, incorporar una mini-sección explícita (por ejemplo, “Por qué la comparación bruta falla”).
+Esa explicación debe aparecer antes o alrededor del resultado principal, no quedar solo implícita.
+
+11. **Elección de bloque visual según función narrativa**
+No usar siempre la misma solución visual.
+`metric-grid` debe reservarse para piezas con métricas headline o resultados principales que justifiquen ese tratamiento.
+En piezas introductorias o de orientación, preferir `quick-grid` o un bloque equivalente con pregunta, diseño del caso y variables clave.
+La forma visual debe responder a la función narrativa, no a una plantilla rígida.
+
+12. **Brevedad con densidad editorial suficiente**
+Una pieza breve no debe ser vacía.
+Aunque sea introductoria, debe ofrecer suficiente aterrizaje empírico o metodológico para lector externo.
+La brevedad no debe confundirse con falta de contexto.
+
+13. **Reducir lenguaje interno de taller**
+Evitar redacciones que asuman que el lector ya conoce el taller o su cocina interna.
+La pieza pública debe poder leerse con claridad por alguien que entra por primera vez.
+
 ---
 
 ## 15. Qué evitar siempre
