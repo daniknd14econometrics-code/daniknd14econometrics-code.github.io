@@ -386,6 +386,30 @@ No mezclar reparación técnica y reescritura narrativa en una misma pasada.
 23. **Checklist mínimo de cierre técnico-editorial**
 Antes de cerrar una pieza pública, verificar explícitamente: codificación correcta, front matter leído por Quarto, TOC cuando corresponde, `page-layout` correcto, CSS esperado cargado y preservación de hero/bloques/tabla principal.
 
+24. **Notación pública antes que sintaxis interna**
+La pieza pública no debe arrastrar sintaxis interna de implementación cuando no agrega valor interpretativo.
+Ejemplo: si internamente se usa `ln(1+exptot)`, la cara pública puede priorizar “log del gasto total del hogar” y dejar la forma exacta en segundo plano si hace falta.
+
+25. **Interpretación sustantiva obligatoria del parámetro**
+Todo estimando principal (ATE, ATET, coeficiente IV, etc.) debe acompañarse con una frase de interpretación sustantiva que explicite: qué cambia, sobre qué variable, para quiénes, respecto de qué comparación/contrafactual y con qué alcance.
+No alcanza con reportar solo el número.
+
+26. **Población objetivo explícita del estimando**
+La pieza debe declarar para qué población vale el parámetro interpretado (muestra completa, tratados, soporte común, muestra matched, cohorte específica, etc.).
+No debe quedar implícito ni enterrado.
+
+27. **Diferenciar número, estimando, población e interpretación**
+El resultado numérico no equivale por sí solo a interpretación, y el parámetro no equivale por sí solo a población objetivo.
+La pieza debe atar explícitamente número + estimando + población + significado sustantivo.
+
+28. **Checklist de cierre en una línea**
+Antes de cerrar una pieza, debe poder responderse en una línea: qué efecto/relación se encontró, sobre qué variable, para quiénes y bajo qué diseño.
+Si eso no puede responderse con claridad, la pieza no está cerrada.
+
+29. **No sobrecargar la cara pública con sintaxis de variables**
+Los nombres de variables y fórmulas del do-file pueden aparecer, pero no deben dominar la interpretación visible.
+La pieza debe poder leerse por alguien externo sin conocer la nomenclatura interna del taller.
+
 ---
 
 ## 15. Qué evitar siempre

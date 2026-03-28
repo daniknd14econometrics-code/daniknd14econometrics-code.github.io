@@ -108,6 +108,12 @@ Preferir
 - Un render con `exit code 0` no alcanza: verificar en HTML TOC, layout, CSS de pieza y bloques principales.
 - Si hay regresión de TOC/layout/CSS/metadata, restaurar primero la baseline técnica sana y recién después reaplicar ajustes editoriales.
 - Antes de cerrar pieza, chequear explícitamente: codificación, front matter leído, TOC (si corresponde), `page-layout`, CSS, hero, bloques y tabla principal.
+- Priorizar notación pública sobre sintaxis interna: si internamente se usa `ln(1+exptot)`, en cara pública preferir formulaciones como “log del gasto total del hogar” y dejar la sintaxis exacta en segundo plano si hace falta.
+- Todo estimando principal debe incluir interpretación sustantiva explícita: qué cambia, sobre qué variable, para quiénes, respecto de qué contrafactual/comparación y con qué alcance.
+- Declarar explícitamente la población objetivo del parámetro (muestra completa, tratados, soporte común, muestra matched, cohorte, etc.) cerca del resultado central o en el cierre.
+- No confundir número con interpretación: la pieza debe atar número, estimando, población y significado sustantivo.
+- Antes de cerrar, debe poder responderse en una línea: qué efecto/relación se encontró, sobre qué variable, para quiénes y bajo qué diseño.
+- Los nombres de variables y fórmulas pueden aparecer, pero no deben dominar la lectura pública ni asumir conocimiento interno del taller.
 
 ## Regla sobre causalidad
 
