@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Mendez">
 
-<title>Cuando el soporte común manda: matching exacto y CEM en microcrédito – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -145,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Cuando el soporte común manda: matching exacto y CEM en microcrédito</h1>
+<h1 class="title">Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito</h1>
 <p class="subtitle lead">Comparación metodológica con regla explícita de diseño</p>
 </div>
 
@@ -178,15 +178,15 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="../../causalidad/index.html">&lt;- Volver al índice de Causalidad</a></p>
 <div class="hero-box">
 <div class="hero-title">
-<p>En microcrédito, el punto clave no es elegir el coeficiente más alto</p>
+<p>La prioridad es diseñar bien el contrafactual antes de comparar efectos</p>
 </div>
 <div class="hero-sub">
-<p>La comparación entre matching exacto y CEM muestra que la decisión depende de soporte común, balance y muestra efectiva.</p>
+<p>En esta aplicación de microcrédito, la decisión entre estrategias de matching se ordena por soporte, balance y muestra efectiva, no por el ATET o ATE más alto.</p>
 </div>
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza compara estrategias de matching exacto y CEM sobre hogares con participación femenina en microcrédito. La lectura central no es “qué método da el ATET más grande”, sino qué diseño conserva comparabilidad sin perder demasiada muestra. Bajo la regla de diseño adoptada, la especificación preferida es <code>Exact / S1</code>, como decisión condicionada y no como ganador absoluto.</p>
+<p>Esta pieza compara estrategias de matching exacto y CEM sobre hogares con participación femenina en microcrédito. La lectura central no es “qué método da el ATET más grande”, sino qué diseño conserva comparabilidad sin perder demasiada muestra. Bajo la regla de diseño adoptada, la especificación preferida es <code>Matching exacto - especificación base (Exact / S1)</code>, como decisión condicionada y no como ganador absoluto.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta-central" class="level2 section-box">
@@ -240,7 +240,7 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Exact / S1</td>
+<td>Matching exacto - especificación base (Exact / S1)</td>
 <td style="text-align: right;">0.0839</td>
 <td>Pasa regla base</td>
 <td style="text-align: right;">164.3</td>
@@ -249,7 +249,7 @@ ul.task-list li input[type="checkbox"] {
 <td>Preferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo</td>
 </tr>
 <tr class="even">
-<td>CEM / scott</td>
+<td>CEM - regla Scott (CEM / scott)</td>
 <td style="text-align: right;">0.0184</td>
 <td>Pasa regla base</td>
 <td style="text-align: right;">63.6</td>
@@ -258,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
 <td>Balance más estricto, con pérdida marcada de muestra efectiva</td>
 </tr>
 <tr class="odd">
-<td>Exact / S2</td>
+<td>Matching exacto - especificación ampliada (Exact / S2)</td>
 <td style="text-align: right;">0.1697</td>
 <td>No pasa regla base</td>
 <td style="text-align: right;">269.0</td>
@@ -267,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
 <td>Se vuelve opción relevante si el umbral se relaja a 0.20</td>
 </tr>
 <tr class="even">
-<td>CEM / fd</td>
+<td>CEM - regla FD (CEM / fd)</td>
 <td style="text-align: right;">0.2114</td>
 <td>No pasa regla base</td>
 <td style="text-align: right;">86.1</td>
@@ -278,13 +278,13 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<p>El contraste dominante es claro: un ATET mayor (<code>CEM / fd</code>) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.</p>
+<p>El contraste dominante es claro: un ATET mayor (<code>CEM - regla FD</code>) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.</p>
 <section id="decisión-metodológica-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="decisión-metodológica-y-alcance">Decisión metodológica y alcance</h2>
-<p>Bajo la regla de diseño adoptada para esta comparación, la preferencia queda en <code>Exact / S1</code>. Esa preferencia no es universal:</p>
+<p>Bajo la regla de diseño adoptada para esta comparación, la preferencia queda en <code>Matching exacto - especificación base (Exact / S1)</code>. Esa preferencia no es universal:</p>
 <ol type="1">
 <li>Depende del umbral elegido para balance.</li>
-<li>Si se relaja a <code>max|SMD| &lt;= 0.20</code>, el ranking cambia y <code>Exact / S2</code> pasa al tope.</li>
+<li>Si se relaja a <code>max|SMD| &lt;= 0.20</code>, el ranking cambia y <code>Matching exacto - especificación ampliada (Exact / S2)</code> pasa al tope.</li>
 <li>La frontera no dominada incluye alternativas con distintos compromisos entre balance y soporte.</li>
 </ol>
 <p>Entonces, la conclusión correcta no es “hay un ganador absoluto”, sino “hay una decisión defendible bajo una regla explícita de diseño”.</p>
@@ -292,7 +292,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>La aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.</p>
-<p>Con la regla adoptada, <code>Exact / S1</code> es la opción preferida para esta aplicación. A la vez, la lectura debe seguir siendo cauta: el resultado está en logaritmos (<code>ln(1 + exptot)</code>), y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.</p>
+<p>Con la regla adoptada, <code>Matching exacto - especificación base (Exact / S1)</code> es la opción preferida para esta aplicación. A la vez, la lectura debe seguir siendo cauta: el resultado está en logaritmos (<code>ln(1 + exptot)</code>), y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.</p>
 
 
 </section>
