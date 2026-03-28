@@ -1,0 +1,131 @@
+Base usada para este diagnóstico: exclusivamente T14 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T14
+
+1. Identificación básica
+
+Taller 14. Tema central: respuesta binaria con regresor/tratamiento binario potencialmente endógeno dentro de otra ecuación binaria. La base es `labsup`. La variable dependiente principal es `worked` y la variable endógena principal es `morekids`, también binaria. El instrumento excluido central es `samesex`. Los controles incluidos son `nonmomi`, `educ`, `age`, `age2`, `black` e `hispan`. El brief lo resume con precisión: “Dos binarias, un problema de endogeneidad: por qué aquí importa biprobit”. :contentReference[oaicite:3]{index=3}
+
+2. Qué es realmente este taller
+
+Este taller no es, en esencia, una pieza de hallazgo sustantivo sobre oferta laboral. Tampoco es simplemente una continuación de T13. Es una pieza metodológica muy clara sobre un punto de criterio econométrico: cuando cambia la naturaleza de la variable endógena, cambia el modelo correcto. En T13 la covariable problemática era continua; en T14 pasa a ser binaria. Y justamente por eso dejan de ser adecuados los esquemas que descansaban en la estructura continua del caso anterior. El valor del taller está en enseñar que no toda “binaria con endogeneidad” se resuelve con el mismo instrumento no lineal. Acá el centro real es la forma correcta del problema. :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+
+3. Pregunta real del taller
+
+La pregunta pública correcta no debería ser “cuánto afecta tener más hijos a la probabilidad de trabajar”, porque eso empuja demasiado hacia una lectura aplicada cerrada. La pregunta correcta es esta: ¿qué cambia cuando la variable dependiente es binaria y el regresor endógeno principal también es binario? O, en versión más desarrollada: ¿qué modelo corresponde cuando un tratamiento binario endógeno entra en una ecuación de respuesta binaria, y cómo cambia la interpretación frente a usar referencias lineales o probit exógeno? Esa formulación respeta mucho mejor el brief y el log. :contentReference[oaicite:6]{index=6}
+
+4. Núcleo empírico y métodos comparados
+
+El taller tiene varios bloques, pero la pieza pública no debería intentar mostrarlos todos con el mismo peso.
+
+Primero, están los benchmarks exógenos: `MPL` y `probit`. Ambos entregan prácticamente la misma lectura marginal para `morekids`, cerca de `-0.109`, lo cual funciona muy bien como referencia de arranque. :contentReference[oaicite:7]{index=7}
+
+Segundo, aparece `MPL-IV` como referencia lineal instrumentada, con un efecto bastante más intenso, alrededor de `-0.2008`, y una primera etapa muy fuerte para `samesex` (`F(1,31849)=103.808`). Este bloque sirve como benchmark IV lineal, pero no debe ser el cierre metodológico porque el problema central acá ya no es lineal. :contentReference[oaicite:8]{index=8}
+
+Tercero, está el bloque principal: `biprobit` recursivo con instrumento. Ese es el modelo que el taller presenta como correcto para el caso en que `y1` y `y2` son binarias y potencialmente correlacionadas. Ahí el punto más importante no es solo el coeficiente latente de `morekids`, sino cómo se interpretan los efectos sobre probabilidades. El log muestra una advertencia esencial: el `margins` por defecto en `biprobit` entrega la probabilidad conjunta `Pr(worked=1, morekids=1)`, que no es la lectura que interesa para el efecto sobre `worked`. Para obtener la cantidad relevante hay que pedir `predict(pmarg1)` o construir explícitamente el contraste estructural. Recién ahí aparece el efecto alrededor de `-0.2559`, que es el valor que el propio log identifica como el correcto y alineado con Wooldridge. :contentReference[oaicite:9]{index=9}
+
+Cuarto, aparece `eprobit`, que en la práctica reproduce la misma lógica estructural y entrega un efecto muy parecido, también cerca de `-0.2559`. Eso es muy valioso editorialmente porque permite mostrar que la lectura correcta no depende de un único comando, sino de la estructura correcta del problema. `eprobit` puede servir como confirmación limpia de `biprobit`. :contentReference[oaicite:10]{index=10}
+
+Quinto, el log incluye también un `biprobit` “exógeno” sin exclusión instrumental, con un efecto todavía más grande, alrededor de `-0.349`. Ese bloque es útil como referencia técnica, pero probablemente no conviene darle protagonismo público porque puede meter ruido en la narrativa principal.
+
+5. Objeto de decisión final
+
+Este taller necesita un objeto final de decisión muy claro. No conviene que sea una tabla grande que mezcle demasiados comandos. Tampoco conviene cerrar solo con una explicación verbal. El objeto final debería ser una tabla compacta donde se vea claramente la progresión:
+
+- MPL exógeno
+- Probit exógeno
+- MPL-IV
+- Biprobit / Eprobit como modelo correcto
+
+Y el mensaje visual tiene que ser muy nítido: el salto importante no es entre `MPL` y `probit`, ni entre `probit` e `ivprobit`, sino entre “modelo exógeno o referencia lineal” y “modelo correcto para binaria con tratamiento binario endógeno”.
+
+6. Especificación ganadora o lectura ganadora
+
+Acá sí hay una lectura ganadora muy clara. Más que una “especificación ganadora” en el sentido de “este método gana por performance”, lo que gana es el criterio de especificación correcta. La etiqueta editorial ideal sería:
+
+“Modelo correcto por estructura del problema”.
+
+Si hubiera que elegir una implementación pública principal, el eje debería ser `biprobit`, porque es el método que el brief y el log presentan como la respuesta natural al caso binaria-binaria. `eprobit` puede quedar como confirmación o validación paralela. `MPL`, `probit` y `MPL-IV` deben quedar como referencias comparativas, no como centro. :contentReference[oaicite:11]{index=11} :contentReference[oaicite:12]{index=12}
+
+7. Evidencia clave del log
+
+La evidencia decisiva del taller está bastante bien concentrada.
+
+El `MPL` exógeno da para `morekids` un efecto de aproximadamente `-0.1091`, altamente significativo. El `probit` exógeno entrega un APE prácticamente idéntico, `-0.1095`. Eso es una excelente base de comparación inicial. :contentReference[oaicite:13]{index=13}
+
+`MPL-IV` mueve esa magnitud a `-0.2008`, con significancia al 5%, y el instrumento `samesex` resulta muy fuerte en primera etapa (`F=103.808`). Como solo hay un instrumento excluido, no hay bloque de sobreidentificación, y eso también conviene dejarlo claro para no prometer tests que este taller no tiene. :contentReference[oaicite:14]{index=14}
+
+El `biprobit` con `predict(pmarg1)` arroja un efecto sobre `Pr(worked=1)` de aproximadamente `-0.2559`, con error estándar alrededor de `0.071` y alta significancia. `eprobit` entrega prácticamente el mismo efecto, `-0.2559`, con error estándar incluso algo menor. Esa coincidencia es muy fuerte editorialmente. :contentReference[oaicite:15]{index=15}
+
+También aparece un dato importante de dependencia entre errores: en `biprobit`, el test de `rho=0` da `p≈0.0556`, o sea una señal sugestiva y casi marginal; en `eprobit`, la correlación estimada aparece significativa al 5% (`p≈0.045`). No conviene vender esto como prueba contundente e incontestable, pero sí como evidencia sugestiva de que la estructura conjunta importa. :contentReference[oaicite:16]{index=16}
+
+Y hay una sutileza central que no puede perderse: el primer `margins` de `biprobit` sin `predict(pmarg1)` da un efecto sobre la probabilidad conjunta `Pr(worked=1, morekids=1)`, no sobre `Pr(worked=1)`. Si el `.qmd` no controla bien eso, la pieza puede quedar conceptualmente mal incluso con buenos números. Ese es probablemente el punto más delicado de la auditoría.
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T14 no es “tener más hijos reduce la probabilidad de trabajo en X puntos”. Eso puede mencionarse, pero no debe ser el alma de la pieza. La historia correcta es más fuerte y más útil: cuando la variable endógena deja de ser continua y pasa a ser binaria, cambia la verosimilitud correcta del problema, y con eso cambia también el modelo adecuado. El taller enseña que no se puede trasladar mecánicamente la solución del caso continuo. Primero hay que identificar la estructura del problema. Después recién interpretar efectos sobre probabilidades o tratamientos. Esa es una historia metodológica muy clara y muy vendible para portfolio.
+
+9. Hallazgo principal
+
+La frase que el lector debería retener al salir es esta: en modelos binarios con tratamiento binario endógeno, el modelo correcto depende de la estructura del problema; acá la referencia adecuada es `biprobit`/`eprobit`, no la extrapolación automática de `ivprobit` o control function del caso continuo.
+
+Si se quiere una segunda frase más aplicada: bajo la estructura correcta, el efecto asociado a `morekids` sobre la probabilidad de `worked` es considerablemente más negativo que en los modelos exógenos de referencia, pero la enseñanza central del taller no es el número, sino por qué ese número requiere el modelo correcto.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que este es un caso de respuesta binaria con tratamiento binario potencialmente endógeno. Sí puede decir que `biprobit`/`eprobit` son el marco apropiado cuando ambas ecuaciones son binarias y correlacionadas. Sí puede decir que `MPL` y `probit` exógenos sirven como benchmark, y que `MPL-IV` sirve como referencia lineal instrumentada. Sí puede decir que el efecto estructural relevante bajo el modelo correcto ronda `-0.256`, bastante más intenso que el `-0.109` de los modelos exógenos simples. Sí puede decir que el instrumento `samesex` es fuerte. También puede decir que el taller ordena conceptualmente la interpretación en términos de probabilidades y efectos de tratamiento, no solo de coeficientes latentes. Todo eso está alineado con el brief y el log. :contentReference[oaicite:17]{index=17} :contentReference[oaicite:18]{index=18}
+
+11. Qué no debe decir la pieza
+
+No debería decir que cualquier modelo binario con endogeneidad se resuelve con `ivprobit`, porque justamente el taller enseña lo contrario. No debería presentar el primer `margins` por defecto de `biprobit` como si fuera el efecto sobre `worked`, porque ahí el objeto predicho es la probabilidad conjunta. No conviene hacer del taller una clase larga sobre log-verosimilitudes; esa parte debe quedar implícita o muy resumida. Tampoco debería sobreactuarse la significancia de `rho` como si fuera una prueba definitiva e incontestable: la evidencia es sugestiva, no avasallante. Y no conviene llenar la pieza con demasiados modelos secundarios que opaquen el mensaje principal.
+
+12. Riesgos editoriales a vigilar en la auditoría
+
+Veo cinco riesgos fuertes.
+
+a) Que la apertura quede demasiado aplicada y no metodológica.
+b) Que el `.qmd` no deje claro por qué `cfprobit` e `ivprobit` del caso continuo ya no son el marco correcto.
+c) Que se use o se resuma mal el `margins` de `biprobit`, confundiendo la probabilidad conjunta con la probabilidad marginal relevante de `worked`.
+d) Que la tabla final meta demasiadas columnas y pierda la señal principal.
+e) Que el cierre termine hablando más de fecundidad/trabajo que del criterio de especificación.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza debería tener sí o sí cinco elementos.
+
+Primero, una apertura que diga con claridad que ahora ambas variables centrales son binarias y eso cambia el modelo correcto.
+
+Segundo, un bloque muy corto que contraste T13 vs T14: endógena continua versus endógena binaria.
+
+Tercero, una tabla central compacta con benchmarks exógenos y el modelo correcto binario-binario.
+
+Cuarto, una nota metodológica muy breve sobre interpretación correcta de efectos en `biprobit`, dejando claro que hay que mirar `Pr(worked=1)` o el efecto de tratamiento pertinente, no la probabilidad conjunta por default.
+
+Quinto, un cierre explícito del tipo: “el modelo correcto depende de la estructura del problema”.
+
+14. Nota para la tarjeta del sitio
+
+La tarjeta debería venderlo como pieza de criterio metodológico nítido. Algo así:
+
+Título:
+Dos binarias, un problema de endogeneidad: por qué aquí importa biprobit
+
+Pregunta:
+¿Qué cambia cuando la dependiente y el regresor endógeno principal son ambos binarios?
+
+Método:
+Biprobit / Eprobit
+
+Hallazgo:
+No toda endogeneidad en binaria se resuelve con el mismo modelo: cuando cambia la naturaleza de la covariable endógena, cambia la especificación correcta.
+
+Estado de la evidencia:
+Pieza metodológica fuerte.
+
+15. Observación adicional de metadatos
+
+El metadato `familia_metodo: binaria` es correcto, pero otra vez queda algo corto como descriptor si más adelante querés navegar mejor el portfolio. Este taller es claramente “binaria + tratamiento binario endógeno”. No hace falta cambiarlo ahora, pero conviene registrarlo mentalmente.
+
+16. Diagnóstico final
+
+T14 tiene mucho valor público y probablemente uno de los mensajes metodológicos más limpios de toda la serie. No necesita una gran historia aplicada para sostenerse. Su fuerza está en mostrar que el modelo correcto no depende de modas ni de comandos favoritos, sino de la estructura del problema empírico. La mejor versión pública de T14 sería corta, firme y muy clara en una sola idea: cuando la endógena también es binaria, cambia la verosimilitud correcta y por eso importa `biprobit`/`eprobit`. El mayor riesgo no es falta de contenido, sino explicar demasiado o interpretar mal el efecto reportado por `margins`.
