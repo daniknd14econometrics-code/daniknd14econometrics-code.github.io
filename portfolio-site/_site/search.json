@@ -1530,14 +1530,14 @@
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#comparación-dominante",
     "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Comparación dominante",
-    "text": "Comparación dominante\n\nLa comparación central evalúa cómo varía la magnitud estimada de treat cuando cambia el diseño de comparación:\n\n\n\n\n\n\n\n\nDiseño de comparación\nEstimación asociada a treat sobre salario\nLectura breve\n\n\n\n\nDiferencia de medias (tratados - controles)\n7163.8\nBrecha observada sin identificación causal\n\n\nMCO simple robusto\n7163.8\nReexpresa la misma comparación bruta\n\n\nMCO con controles (mont, edu)\n100.1\nCambia de forma drástica al ajustar por observables\n\n\nPSM ATE (logit/probit)\n976.0 / 1012.0\nMagnitud sensible al diseño de emparejamiento\n\n\nPSM ATET (logit)\n3614.4\nEfecto sobre tratados, no equivalente al ATE\n\n\n\n\nLa lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en “el coeficiente más alto”, sino en la credibilidad del diseño."
+    "text": "Comparación dominante\n\nLa comparación central evalúa cómo varía la magnitud estimada de treat cuando cambia el diseño de comparación:\n\n\n\n\n\n\n\n\nDiseño de comparación\nEstimación asociada a treat sobre salario\nLectura breve\n\n\n\n\nDiferencia de medias (tratados - controles)\n7163.8\nBrecha observada sin identificación causal\n\n\nMCO simple robusto\n7163.8\nReexpresa la misma comparación bruta\n\n\nMCO con controles (mont, edu)\n100.1\nCambia de forma drástica al ajustar por observables\n\n\nPSM ATE (logit/probit)\n976.0 / 1012.0\nMagnitud sensible al diseño de emparejamiento\n\n\nPSM ATET (logit)\n3614.4\nEfecto sobre tratados, no equivalente al ATE\n\n\n\n\nNota de población objetivo: la diferencia de medias y las regresiones MCO se estiman sobre la muestra depurada completa (N = 999). El PSM-ATE apunta al efecto promedio poblacional bajo selección en observables y overlap; el PSM-ATET apunta al efecto sobre tratados bajo matching. Por construcción, ATE y ATET no responden para la misma población.\nLa lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en “el coeficiente más alto”, sino en la credibilidad del diseño."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#cierre",
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#cierre",
     "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Cierre",
-    "text": "Cierre\nLa lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.\nPor ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.\nAdemás, el ejercicio utiliza una base sintética y casi determinística (corr(edu, salario) ~ 0.9998 y R^2 ~ 1 con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente."
+    "text": "Cierre\nLa lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.\nPor ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.\nEn particular, los estimandos de matching (ATE/ATET) no deben leerse como “el efecto verdadero”: su validez depende de supuestos como selección en observables y soporte común (overlap).\nAdemás, el ejercicio utiliza una base sintética y casi determinística (corr(edu, salario) ~ 0.9998 y R^2 ~ 1 con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#pregunta",
@@ -1572,7 +1572,7 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "",
-    "text": "&lt;- Volver al índice de Causalidad\nEl contraste dominante es claro: un ATET mayor (CEM - regla FD) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente."
+    "text": "&lt;- Volver al índice de Causalidad\nEn esta pieza, el parámetro central reportado es el ATET. Cada ATET aplica a hogares tratados dentro del soporte común (muestra matched) de cada especificación (N1 / N0), no a toda la población de hogares.\nEl contraste dominante es claro: un ATET mayor (CEM - regla FD) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente."
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#resumen",
@@ -1586,7 +1586,7 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#pregunta-central",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Pregunta central",
-    "text": "Pregunta central\nEn esta aplicación, ¿cómo cambia la lectura del efecto de dfmfd sobre gasto del hogar cuando exigimos comparabilidad de forma explícita?"
+    "text": "Pregunta central\nEn esta aplicación, ¿cuál es el efecto de dfmfd sobre ln(1 + exptot) cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?"
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#datos-y-variables",
@@ -1628,6 +1628,6 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#cierre",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Cierre",
-    "text": "Cierre\nLa aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.\nCon la regla adoptada, Matching exacto - especificación base (Exact / S1) es la opción preferida para esta aplicación. A la vez, la lectura debe seguir siendo cauta: el resultado está en logaritmos (ln(1 + exptot)), y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva."
+    "text": "Cierre\nLa aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.\nBajo la regla base (max|SMD| &lt;= 0.10), la especificación preferida Matching exacto - especificación base (Exact / S1) reporta un ATET de 0.1063 para hogares tratados comparables dentro de su soporte común (N1/N0 = 409/325).\nEsta lectura no debe extrapolarse a toda la población: el resultado está en logaritmos (ln(1 + exptot)) y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva."
   }
 ]

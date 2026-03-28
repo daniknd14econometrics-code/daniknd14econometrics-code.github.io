@@ -191,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quick-grid">
 <section id="pregunta-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
-<p>En esta aplicación, ¿cómo cambia la lectura del efecto de <code>dfmfd</code> sobre gasto del hogar cuando exigimos comparabilidad de forma explícita?</p>
+<p>En esta aplicación, ¿cuál es el efecto de <code>dfmfd</code> sobre <code>ln(1 + exptot)</code> cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?</p>
 </section>
 <section id="datos-y-variables" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -278,6 +278,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
+<p>En esta pieza, el parámetro central reportado es el ATET. Cada ATET aplica a hogares tratados dentro del soporte común (muestra matched) de cada especificación (<code>N1</code> / <code>N0</code>), no a toda la población de hogares.</p>
 <p>El contraste dominante es claro: un ATET mayor (<code>CEM - regla FD</code>) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.</p>
 <section id="decisión-metodológica-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="decisión-metodológica-y-alcance">Decisión metodológica y alcance</h2>
@@ -292,7 +293,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>La aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.</p>
-<p>Con la regla adoptada, <code>Matching exacto - especificación base (Exact / S1)</code> es la opción preferida para esta aplicación. A la vez, la lectura debe seguir siendo cauta: el resultado está en logaritmos (<code>ln(1 + exptot)</code>), y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.</p>
+<p>Bajo la regla base (<code>max|SMD| &lt;= 0.10</code>), la especificación preferida <code>Matching exacto - especificación base (Exact / S1)</code> reporta un ATET de <code>0.1063</code> para hogares tratados comparables dentro de su soporte común (<code>N1/N0 = 409/325</code>).</p>
+<p>Esta lectura no debe extrapolarse a toda la población: el resultado está en logaritmos (<code>ln(1 + exptot)</code>) y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.</p>
 
 
 </section>
