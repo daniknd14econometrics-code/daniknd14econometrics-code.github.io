@@ -26,11 +26,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-¿Cómo se asocia tener más de dos hijos con la participación laboral materna y cuánto cambia esa lectura cuando se admite posible endogeneidad en la fecundidad?
+¿Qué cambia cuando `worked` es binaria y `morekids` también es binaria y endógena, y qué modelo es correcto en esa estructura?
 :::
 
 ::: {.hero-sub}
-La pieza organiza una lectura aplicada de oferta laboral materna y usa una formulación binaria con endogeneidad como auditoría de sensibilidad sustantiva.
+Aquí la diferencia relevante no es solo corregir endogeneidad, sino reconocer que cuando la variable endógena también es binaria cambia el modelo correcto.
 :::
 :::
 
@@ -96,16 +96,16 @@ APE aprox. `-0.109` (probit exógeno) vs `-0.256` (biprobit/eprobit)
 
 ## Resumen
 
-Esta pieza estudia participación laboral materna (`worked`) en relación con fecundidad (`morekids`) y características del hogar. El foco principal es sustantivo: entender cómo cambia la lectura aplicada cuando la variable clave puede estar afectada por endogeneidad.
+Esta pieza estudia participación laboral materna (`worked`) en relación con fecundidad (`morekids`) y características del hogar. El foco principal es metodológico con anclaje aplicado: identificar el modelo correcto para una estructura con dependiente binaria y regresor endógeno binario.
 
-La econometría se usa para auditar sensibilidad, no para desplazar la historia aplicada con una competencia entre métodos. El valor de la comparación es verificar si una formulación binaria con endogeneidad modifica de forma material la interpretación de la asociación central.
+A diferencia de T13, donde la covariable problemática era continua, aquí ya no corresponde trasladar mecánicamente `cfprobit` o `ivprobit` del caso continuo. En esta estructura, `biprobit` funciona como modelo principal y `eprobit` como contraste de robustez, mientras `MPL`, probit y `MPL-IV` quedan como benchmarks de referencia.
 
 :::: {.quick-grid}
 
 ::: {.section-box}
 ## Pregunta
 
-¿Cómo se asocia tener más de dos hijos con la participación laboral materna y cuánto cambia esa lectura cuando se admite posible endogeneidad en la fecundidad?
+¿Qué cambia cuando `worked` es binaria y `morekids` también es binaria y endógena, y qué modelo es correcto en esa estructura?
 
 ::: {.small-note}
 Resultado: `worked` (0/1). Variable clave: `morekids`. Controles: `nonmomi`, `educ`, `age`, `age2`, `black`, `hispan`.
@@ -115,7 +115,7 @@ Resultado: `worked` (0/1). Variable clave: `morekids`. Controles: `nonmomi`, `ed
 ::: {.section-box}
 ## Idea central
 
-La pieza prioriza el problema aplicado de trabajo y fecundidad. La estrategia econométrica se presenta como una auditoría de sensibilidad para evaluar si la lectura sustantiva de `morekids` cambia en magnitud cuando se modifica el encuadre del modelo.
+La pieza mantiene el anclaje aplicado en trabajo y fecundidad, pero ordena la lectura con criterio metodológico: en esta estructura, `biprobit` es el eje principal, `eprobit` actúa como robustez y los modelos exógenos/lineales quedan como benchmarks.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -141,10 +141,10 @@ Se trabaja con `labsup.dta` en corte transversal.
 
 ## Estrategia empírica
 
-1. Estimar una referencia binaria exógena (probit) para lectura base en probabilidades.
-2. Incorporar una formulación binaria con endogeneidad para `morekids` (biprobit/eprobit).
-3. Mantener `MPL-IV` como benchmark auxiliar de contraste, sin rol protagónico.
-4. Interpretar resultados como sensibilidad sustantiva de magnitudes, evitando sobreinterpretaciones automáticas.
+1. Estimar benchmarks de referencia (`MPL` y probit exógenos) para lectura base en probabilidades.
+2. Estimar `biprobit` como modelo principal en la estructura binaria-binaria y usar `eprobit` como contraste de robustez.
+3. Mantener `MPL-IV` como benchmark lineal instrumentado auxiliar, sin rol protagónico.
+4. Interpretar resultados como criterio de modelo correcto según estructura del problema, no como competencia general entre métodos.
 
 ## Resultados principales
 
@@ -153,7 +153,7 @@ La lectura se ordena en cuatro pasos:
 1. Aparece una asociación negativa entre `morekids` y `worked`.
 2. Esa asociación se vuelve más negativa cuando se modela endogeneidad binaria.
 3. La diferencia debe leerse con prudencia porque cambian los supuestos y el encuadre econométrico.
-4. El foco de la pieza es sensibilidad sustantiva del caso aplicado, no seleccionar un método superior.
+4. El foco de la pieza es distinguir modelo correcto vs modelo incorrecto según la estructura del problema, manteniendo anclaje aplicado.
 
 ::: {.table-box}
 ## Síntesis de magnitudes (APE)
@@ -172,6 +172,7 @@ Este bloque se mantiene subordinado al caso aplicado:
 
 - **Instrumento relevante:** primera etapa con señal fuerte (`F(1,31849)=103.81`, `p<0.001`).
 - **Dependencia de errores (señal prudente):** aparece una señal compatible con correlación en especificaciones endógenas (`p` alrededor de `0.056` y `0.045`), a leer con cautela.
+- **Interpretación de efectos en `biprobit`:** la interpretación relevante debe centrarse en `Pr(worked=1)` o en el contraste de tratamiento correspondiente, no en la probabilidad conjunta por defecto.
 - **Unidad de interpretación:** los efectos reportados se leen como cambios en probabilidad de trabajar, no como parámetros latentes en abstracto.
 
 ## Lectura profesional
@@ -183,6 +184,8 @@ El aporte de T14 es mostrar criterio de modelado aplicado en un problema real de
 El valor profesional de esta pieza está en saber cuándo una formulación binaria con endogeneidad modifica de forma relevante la lectura aplicada de una variable clave.
 
 En T14, la historia sustantiva se mantiene (asociación negativa entre fecundidad y participación laboral materna), y la formulación endógena aporta una sensibilidad de magnitud que conviene reportar con claridad y prudencia.
+
+La lección metodológica es que el modelo correcto depende de la estructura del problema.
 
 
 
