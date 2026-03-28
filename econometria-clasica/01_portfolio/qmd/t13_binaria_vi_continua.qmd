@@ -26,11 +26,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-¿Cómo se asocia la participación laboral femenina con el ingreso no laboral del hogar y cuánto cambia esa lectura cuando se admite posible endogeneidad?
+¿Cómo se estima una respuesta binaria cuando una covariable continua central (`nwifeinc`) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?
 :::
 
 ::: {.hero-sub}
-La pieza organiza una lectura aplicada sobre decisiones laborales en el hogar y usa una estrategia de sensibilidad por endogeneidad, sin desplazar automáticamente el modelo base.
+La pieza organiza una comparación metodológica con anclaje aplicado: benchmark exógeno, eje CF y contraste paralelo con IV-probit, sin sobrerreaccionar en la lectura final.
 :::
 :::
 
@@ -66,15 +66,15 @@ Mujeres y hogares
 
 ::: {.metric-card}
 ::: {.metric-label}
-Lectura sustantiva
+Lectura metodológica
 :::
 
 ::: {.metric-value}
-Patron familiar y de capital humano
+Exógeno vs endógeno
 :::
 
 ::: {.metric-note}
-`kidslt6` negativo fuerte; `educ` y `exper` positivos
+CF como eje; IV-probit como contraste paralelo
 :::
 :::
 
@@ -96,16 +96,16 @@ APE aprox. `-0.0036` (probit exogeno) vs `-0.0108` a `-0.0105` (IV/CF)
 
 ## Resumen
 
-Esta pieza estudia participación laboral femenina (`inlf`) en relación con ingreso no laboral del hogar, educación, experiencia y composicion familiar. El foco principal es sustantivo: leer patrones empiricos relevantes para decisiones de hogar.
+Esta pieza estudia participación laboral femenina (`inlf`) en relación con ingreso no laboral del hogar, educación, experiencia y composición familiar. El foco principal es metodológico: comparar estimación binaria exógena vs endógena con anclaje aplicado en decisiones de hogar.
 
-El componente metodologico se usa con prudencia. La correccion IV/CF no se presenta como fin en sí mismo, sino como auditoría de sensibilidad para evaluar si la lectura aplicada cambia de forma material.
+El orden de lectura es deliberado: probit exógeno como benchmark inicial, control function (CF) como eje metodológico principal, `ivprobit` como contraste de robustez e `MPL-IV` como benchmark lineal secundario.
 
 :::: {.quick-grid}
 
 ::: {.section-box}
 ## Pregunta
 
-¿Cómo se asocia la participación laboral femenina con el ingreso no laboral del hogar y cuánto cambia esa lectura cuando se admite posible endogeneidad?
+¿Cómo se estima una respuesta binaria cuando una covariable continua central (`nwifeinc`) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?
 
 ::: {.small-note}
 Resultado: `inlf` (0/1). Variable clave: `nwifeinc`. Controles: `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
@@ -115,7 +115,7 @@ Resultado: `inlf` (0/1). Variable clave: `nwifeinc`. Controles: `educ`, `exper`,
 ::: {.section-box}
 ## Idea central
 
-La econometría se ordena al caso aplicado: primero entender la historia laboral y familiar, después evaluar si tratar `nwifeinc` como potencialmente endógena cambia de manera sustantiva la lectura en probabilidades.
+La pieza se ordena como comparación metodológica: primero el problema de endogeneidad en binaria, luego el contraste de APEs entre modelos exógenos y endógenos.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -142,30 +142,30 @@ Se usa `mroz.dta` en corte transversal.
 ## Estrategia empírica
 
 1. Estimar probit exogeno como lectura base y reportar APEs.
-2. Tratar `nwifeinc` como potencialmente endógena mediante enfoques IV/CF para comparar magnitudes.
-3. Mantener interpretación en términos de probabilidad, evitando sobreinterpretaciones automáticas.
+2. Usar control function (CF) como eje para tratar `nwifeinc` como potencialmente endógena en el modelo binario.
+3. Contrastar con `ivprobit` como implementación paralela de robustez y mantener `MPL-IV` como benchmark lineal secundario.
 4. Usar diagnósticos solo como respaldo de decisión aplicada.
 
 ## Resultados principales
 
-La lectura sustantiva aparece con claridad:
+La comparación metodológica deja una lectura clara:
 
-- `kidslt6` mantiene una asociación negativa fuerte con la participación laboral (APE alrededor de `-0.25`).
-- `educ` y `exper` muestran asociaciones positivas y estables en los modelos comparados.
-- `nwifeinc` aparece con asociación negativa con `inlf`.
-- Al pasar de probit exogeno a CF/IV-probit, el efecto marginal asociado a `nwifeinc` se vuelve más negativo: de aprox. `-0.0036` a un rango cercano a `-0.0108` / `-0.0105`.
+- El benchmark probit exógeno reporta un APE de `-0.0036` para `nwifeinc`.
+- Al pasar al bloque endógeno, los APEs no lineales quedan cercanos entre sí: `CF` alrededor de `-0.0103` e `IVprobit` alrededor de `-0.0108`.
+- `MPL-IV` queda como contraste lineal útil (`-0.0116`), sin desplazar el eje CF de la lectura.
+- Los demás patrones aplicados (`kidslt6`, `educ`, `exper`) se mantienen estables y no alteran la decisión metodológica central.
 
 En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro.
 
 ::: {.table-box}
 ## Sintesis de magnitudes (APE)
 
-| Método | APE `nwifeinc` | Error estándar | IC 95% (`nwifeinc`) | APE `kidslt6` | Error estándar | Lectura aplicada |
-|---|---:|---:|---:|---:|---:|---|
-| Probit exógeno | -0.0036 | 0.0016 | [-0.0067, -0.0005] | -0.2612 | 0.0317 | Base parsimoniosa para lectura aplicada |
-| MPL-IV | -0.0116 | 0.0058 | [-0.0230, -0.0002] | -0.2530 | 0.0345 | Contraste lineal instrumental útil para magnitudes |
-| CF sobre-ID (score) | -0.0103 | 0.0048 | [-0.0197, -0.0009] | -0.2428 | 0.0380 | Ajuste IV/CF con señal similar a MPL-IV |
-| IVprobit MLE bivariado | -0.0108 | 0.0057 | [-0.0220, 0.0004] | -0.2533 | 0.0334 | Sensibilidad de magnitud con mayor incertidumbre |
+| Método | Rol en la comparación | APE `nwifeinc` | Error estándar | IC 95% (`nwifeinc`) | Lectura metodológica |
+|---|---|---:|---:|---:|---|
+| Probit exógeno | Benchmark inicial | -0.0036 | 0.0016 | [-0.0067, -0.0005] | Punto de partida exógeno |
+| CF sobre-ID (score) | Eje metodológico principal | -0.0103 | 0.0048 | [-0.0197, -0.0009] | Referencia central para bloque endógeno |
+| IVprobit MLE bivariado | Contraste paralelo de robustez | -0.0108 | 0.0057 | [-0.0220, 0.0004] | Magnitud cercana a CF con mayor incertidumbre |
+| MPL-IV | Benchmark lineal secundario | -0.0116 | 0.0058 | [-0.0230, -0.0002] | Chequeo lineal complementario |
 :::
 
 ## Diagnosticos de respaldo
@@ -180,9 +180,9 @@ Por eso, la correccion IV/CF se lee como auditoría de sensibilidad y no como re
 
 ## Lectura profesional
 
-El valor profesional del caso es mostrar criterio de modelado aplicado: sostener primero la historia empírica del fenomeno y, recien después, verificar si la correccion por endogeneidad cambia materialmente la lectura.
+El valor profesional del caso es mostrar criterio de modelado aplicado en binaria: partir del benchmark exógeno y decidir, con CF como eje, cuánto cambia la lectura al tratar `nwifeinc` como potencialmente endógena.
 
-En T13, la historia sustantiva principal se mantiene (hijos pequeños, educación y experiencia), mientras que la diferencia en `nwifeinc` abre una sensibilidad relevante de magnitud que conviene reportar con prudencia.
+En T13, `ivprobit` acompaña como verificación paralela y `MPL-IV` como control lineal secundario; la decisión se sostiene sobre la comparación metodológica y no sobre una sobreactuación de hallazgos sustantivos.
 
 ## Cierre
 

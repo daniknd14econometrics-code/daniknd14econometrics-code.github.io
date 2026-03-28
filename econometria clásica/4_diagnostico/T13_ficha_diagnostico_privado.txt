@@ -1,0 +1,141 @@
+Base usada para este diagnóstico: exclusivamente T13 do + log + brief/txt del taller actual, más criterios editoriales ya fijados.
+
+Ficha técnica-editorial privada — T13
+
+1. Identificación básica
+
+Taller 13. Tema central: respuesta binaria con regresor continuo potencialmente endógeno, usando como base `inlf` y tratando a `nwifeinc` como covariable continua endógena. La unidad de análisis vuelve a ser mujeres/hogares en corte transversal. Los controles incluidos son `educ`, `exper`, `expersq`, `age`, `kidslt6` y `kidsge6`. El instrumento principal es `huseduc`, y para el caso sobreidentificado se agregan `motheduc` y `fatheduc`. El brief lo resume bien: es una extensión de modelos binarios cuando una covariable continua es potencialmente endógena, y el método principal es control function comparado con `ivprobit` y LPM-IV. :contentReference[oaicite:3]{index=3}
+
+2. Qué es realmente este taller
+
+Este taller no es, en esencia, una pieza de hallazgo sustantivo puro. Tampoco conviene presentarlo como una pieza aplicada convencional sobre participación laboral femenina. Es una pieza metodológica fuerte, con anclaje aplicado, sobre cómo trasladar la lógica de IV a un modelo binario cuando la variable problemática no es binaria sino continua. El corazón del taller no está en el dato económico aislado, sino en mostrar la diferencia entre:
+- tratar `nwifeinc` como exógena en un probit estándar;
+- corregir la potencial endogeneidad con control function;
+- comparar esa corrección con `ivprobit` en sus variantes;
+- y leer los resultados con APEs, no con coeficientes crudos.
+
+La clasificación editorial correcta, para mí, es: comparación metodológica fuerte con valor técnico alto. Si se quiere afinar aún más: comparación metodológica con evidencia débil pero informativa sobre la necesidad efectiva de corregir endogeneidad.
+
+3. Pregunta real del taller
+
+La pregunta pública correcta no debería ser “qué efecto tiene `nwifeinc` sobre la participación laboral femenina”, porque eso deja al taller sonando como una aplicación cerrada. La pregunta correcta es más bien esta: ¿cómo se estima una respuesta binaria cuando una covariable continua central puede ser endógena, y cómo cambia la lectura al pasar de un probit exógeno a una estrategia control function / IV-probit? Esa formulación respeta el brief y el log, y organiza mejor la pieza. :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+
+4. Núcleo empírico y métodos comparados
+
+El taller tiene mucha riqueza técnica, pero para la pieza pública el núcleo no debería intentar mostrarlo todo. El centro real está en cuatro bloques.
+
+Primero, un benchmark de probit exógeno con APEs. Ese modelo da un APE para `nwifeinc` de aproximadamente `-0.0036`, significativo al 5%, y funciona como punto de referencia previo a cualquier corrección por endogeneidad. :contentReference[oaicite:6]{index=6}
+
+Segundo, un benchmark lineal IV (`mpl_iv` / 2SLS), donde el APE coincide con el coeficiente y el efecto de `nwifeinc` pasa a aproximadamente `-0.0116`, con primera etapa fuerte (`F(3,743)=16.67`) y sin rechazo en sobreidentificación (`p=0.7831`). Este bloque sirve como referencia lineal útil, pero no debería liderar la pieza porque el problema central acá ya es no lineal. :contentReference[oaicite:7]{index=7}
+
+Tercero, el bloque central de control function. Ahí el taller desarrolla el procedimiento manual tipo Rivers–Vuong, primero en caso justo identificado y luego sobreidentificado, calcula APEs por dos vías, y corrige inferencia con bootstrap. Lo importante editorialmente no es toda la ingeniería algebraica, sino dos mensajes: los APEs corregidos por endogeneidad quedan cerca de `-0.0103` / `-0.0108`, y la prueba de exogeneidad vía residuo no rechaza con fuerza (`p` alrededor de `0.18`–`0.22`). Además, el propio log advierte que la normalidad del residuo de primera etapa no queda bien. Eso es una advertencia metodológica real y no menor. :contentReference[oaicite:8]{index=8}
+
+Cuarto, la comparación con comandos integrados: `ivprobit, twostep`, `cfprobit` y `ivprobit, ml`. Ahí aparece una regularidad muy importante: los distintos enfoques no lineales endógenos dan APEs muy parecidos entre sí, todos alrededor de `-0.0105` a `-0.0108`, pero otra vez sin evidencia fuerte de endogeneidad según los tests de exogeneidad integrados. `cfprobit` robust y `ivprobit` mle robust quedan especialmente limpios para una eventual pieza pública porque combinan estimación directa y APEs por `margins`. :contentReference[oaicite:9]{index=9} :contentReference[oaicite:10]{index=10}
+
+5. Objeto de decisión final
+
+Este taller necesita sí o sí un objeto de decisión final, pero no debe ser la tabla inmensa de siete columnas del log. Esa tabla sirve para taller/apunte, no para portfolio. El objeto final debería condensar la secuencia de decisión.
+
+Mi propuesta editorial sería una tabla comparativa corta con tres o cuatro columnas, por ejemplo:
+- Probit exógeno
+- CFProbit / CF sobre-ID
+- IVProbit MLE
+- eventualmente MPL-IV como benchmark lineal secundario
+
+La lógica no sería “qué método gana”, sino “qué cambia cuando se corrige por endogeneidad y qué tan robusta es esa corrección entre métodos”. Lo importante es que el lector vea:
+- el probit exógeno como referencia;
+- una implementación CF como eje metodológico principal;
+- una implementación `ivprobit` como contraste de robustez;
+- y, si entra MPL-IV, que quede explícito como benchmark lineal, no como cierre principal.
+
+6. Especificación ganadora o lectura ganadora
+
+Acá no conviene forzar una “especificación ganadora” en sentido fuerte. El propio taller está armado como comparación de métodos, y además los distintos enfoques endógenos no lineales convergen bastante entre sí. Por eso, la etiqueta editorial correcta es:
+
+“Comparación sin ganador único”
+o, si querés una versión todavía más precisa:
+“Ejercicio metodológico, no orientado a una especificación final única.”
+
+Dicho eso, sí hay una lectura ganadora. La lectura ganadora es esta: cuando la dependiente es binaria y la covariable problemática es continua, la corrección de endogeneidad exige algo más fino que 2SLS; control function e IV-probit entregan APEs corregidos bastante alineados entre sí; pero esas correcciones no deben venderse automáticamente como necesarias porque las pruebas de exogeneidad no rechazan con fuerza en esta muestra. Esa es la enseñanza más valiosa del taller.
+
+Si hubiera que elegir una especificación operativa principal para una pieza pública, yo me inclinaría por `cfprobit` con `vce(robust)` como eje, porque:
+- está alineado con el brief, que privilegia control function;
+- evita exponer demasiada cocina manual del CF bootstrap en el cuerpo principal;
+- deja APEs estructurales por `margins`;
+- y se complementa muy bien con `ivprobit mle` como contraste. :contentReference[oaicite:11]{index=11} :contentReference[oaicite:12]{index=12} :contentReference[oaicite:13]{index=13}
+
+7. Evidencia clave del log
+
+La evidencia decisiva está bastante clara.
+
+El probit exógeno robusto da un APE de `nwifeinc` cercano a `-0.0036`, con significancia al 5%. Ese es el punto de partida del taller. :contentReference[oaicite:14]{index=14}
+
+El LPM-IV robusto da un efecto más intenso, cercano a `-0.0116`, con primera etapa robusta `F(3,743)=16.67` y sin rechazo de sobreidentificación (`p=0.7831`). Eso sugiere instrumentos relevantes y sin evidencia clara contra su validez conjunta, aunque obviamente no “prueba” exogeneidad de los IV. :contentReference[oaicite:15]{index=15}
+
+El control function manual sobreidentificado devuelve APEs corregidos cercanos a `-0.0103` / `-0.0106`, según la variante de cálculo, y la prueba bootstrap de exogeneidad del residuo queda alrededor de `p=0.2200`. Al mismo tiempo, el propio log documenta que el residuo de primera etapa no parece aproximarse bien a normalidad, lo cual conviene no olvidar porque justamente CF descansa en esa estructura. :contentReference[oaicite:16]{index=16}
+
+`cfprobit` robust da un APE en `nwifeinc` de aproximadamente `-0.0107`, con `p≈0.057`, y `estat endogenous` da `p=0.2081`. `ivprobit` mle robust da prácticamente lo mismo, con APE alrededor de `-0.0108` y test de exogeneidad `p=0.2061`. Es decir: los métodos endógenos no lineales se parecen bastante entre sí, pero no producen una señal fuerte de endogeneidad necesaria. :contentReference[oaicite:17]{index=17} :contentReference[oaicite:18]{index=18}
+
+La tabla comparativa final del log confirma justo esa regularidad: una columna de probit exógeno con APE de `-0.0036`, y una constelación de métodos IV/no lineales agrupándose alrededor de `-0.0103` a `-0.0108`. Esa es la comparación que importa; no hace falta mostrar las siete columnas completas en público. :contentReference[oaicite:19]{index=19}
+
+8. Historia narrativa posible, sin forzarla
+
+La historia buena de T13 no es “descubrimos que el ingreso no salarial reduce mucho más la participación cuando corregimos endogeneidad”. Eso sería forzar demasiado el costado aplicado. La historia correcta es otra: en un modelo binario, si sospechamos que una covariable continua es endógena, no alcanza con trasladar mecánicamente el razonamiento lineal. Hay que construir una estrategia no lineal consistente, revisar la primera etapa, mirar exogeneidad, revisar sobreidentificación cuando corresponda y comparar APEs estructurales. En este ejemplo, esa estrategia técnica existe, funciona y produce resultados bastante estables entre implementaciones; pero la muestra no da una señal contundente de que la endogeneidad de `nwifeinc` obligue a abandonar el probit exógeno. Esa tensión es justamente lo que hace interesante al taller.
+
+9. Hallazgo principal
+
+La frase que el lector debería retener al salir no debería ser “CF gana” o “IV-probit gana”. La frase buena sería algo como:
+
+“Cuando una covariable continua es potencialmente endógena dentro de un modelo binario, la comparación relevante pasa a ser probit exógeno versus estrategias control function / IV-probit bien diagnosticadas; en esta muestra, esas correcciones producen APEs parecidos entre sí, pero los tests de exogeneidad no muestran una necesidad contundente de corregir.”
+
+Esa frase mantiene honestidad metodológica y a la vez rescata el valor del taller.
+
+10. Qué sí puede decir la pieza
+
+Sí puede decir que `nwifeinc` es una candidata natural a endogeneidad en una ecuación binaria de participación. Sí puede decir que el taller muestra cómo trasladar la lógica IV a un contexto binario. Sí puede decir que los instrumentos aparecen relevantes y que la sobreidentificación no muestra señales claras de invalidez. Sí puede decir que control function, `cfprobit` e `ivprobit` arrojan APEs corregidos bastante similares entre sí y mayores en magnitud que el probit exógeno. Sí puede decir que el valor del taller está en la arquitectura metodológica y no en un único estimador mágico. También puede decir que no basta con “hacer 2SLS y listo” cuando la dependiente es binaria. Todo eso está alineado con brief y log. :contentReference[oaicite:20]{index=20} :contentReference[oaicite:21]{index=21}
+
+11. Qué no debe decir la pieza
+
+No debería decir que la endogeneidad de `nwifeinc` quedó demostrada, porque las pruebas de exogeneidad no la rechazan con fuerza. No debería vender CF/IV-probit como correcciones obligatorias en esta muestra. No conviene presentar el enorme bloque manual de bootstrap, escalamiento y APEs por dos vías como si fuera el corazón visible del portfolio. Tampoco conviene hacer de la tabla de siete columnas el centro de la pieza, porque eso la vuelve demasiado escolar y le quita claridad. Y no debería olvidarse la advertencia importante del propio log: el supuesto de normalidad del residuo de primera etapa no luce cómodo para el enfoque CF manual. :contentReference[oaicite:22]{index=22}
+
+12. Riesgos editoriales a vigilar en la auditoría
+
+Veo varios riesgos concretos.
+
+a) Que la pieza se vuelva demasiado apunte de clase por cargar demasiado algoritmo y demasiado bootstrap manual.
+b) Que se sobreactúe la corrección por endogeneidad, cuando el propio taller no encuentra una señal fuerte en los tests.
+c) Que el lector externo vea siete métodos y no entienda cuál comparación importa.
+d) Que la pieza se vuelva demasiado técnica y pierda la historia de decisión empírica.
+e) Que el cierre no diga con claridad cuál es la enseñanza metodológica final.
+
+13. Requisitos mínimos para el `.qmd`
+
+Para mí, esta pieza pública debería tener sí o sí cinco elementos.
+
+Primero, una apertura clara con la pregunta correcta: cómo se trata una covariable continua endógena dentro de una respuesta binaria.
+
+Segundo, un bloque breve de por qué el paso metodológico importa: en binaria no alcanza con 2SLS mecánico; hay que usar CF o IV-probit y leer APEs.
+
+Tercero, una comparación central disciplinada entre probit exógeno y una o dos correcciones no lineales bien elegidas, no todas las variantes del log.
+
+Cuarto, un bloque diagnóstico corto con tres mensajes: instrumentos relevantes, sin señales claras en sobreidentificación, pero exogeneidad no rechazada con fuerza.
+
+Quinto, un cierre honesto que diga explícitamente que el aprendizaje central es metodológico: cómo corregir bien, cómo comparar APEs y cómo no sobreactuar la necesidad de IV si los tests no empujan en esa dirección.
+
+14. Nota para la tarjeta del sitio
+
+La tarjeta debería venderlo como pieza técnica fuerte, no como gran historia aplicada. Algo del estilo:
+
+“¿Qué pasa cuando una covariable continua potencialmente endógena entra en un modelo binario? Comparo probit exógeno, control function e IV-probit y muestro cómo cambia la lectura de los APEs.”
+
+Método principal: control function / IV-probit.  
+Tipo de pieza: comparación metodológica fuerte.  
+Estado de la evidencia: aprendizaje técnico claro con diagnóstico cuidadoso.
+
+15. Observación adicional de metadatos
+
+El metadato `familia_metodo: binaria` es correcto, pero probablemente se queda corto descriptivamente si más adelante querés navegar mejor el portfolio. Este taller es claramente “binaria + endogeneidad + IV no lineal”. No hace falta cambiarlo ahora, pero conviene tenerlo en mente.
+
+16. Diagnóstico final
+
+T13 tiene mucho valor público, pero no como pieza de hallazgo aplicado, sino como pieza metodológica avanzada. Su mejor versión pública no sería una reproducción del taller completo, sino una versión muy curada donde la comparación relevante quede limpia: probit exógeno vs corrección no lineal por endogeneidad, con APEs comparables y un cierre honesto sobre lo que los tests sí y no permiten afirmar. El riesgo principal no es falta de contenido, sino exceso de contenido técnico. Si se poda bien, puede quedar como una de las piezas metodológicas más fuertes del bloque de binaria. 

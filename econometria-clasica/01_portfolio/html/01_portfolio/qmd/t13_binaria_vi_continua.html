@@ -102,10 +102,10 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>¿Cómo se asocia la participación laboral femenina con el ingreso no laboral del hogar y cuánto cambia esa lectura cuando se admite posible endogeneidad?</p>
+<p>¿Cómo se estima una respuesta binaria cuando una covariable continua central (<code>nwifeinc</code>) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?</p>
 </div>
 <div class="hero-sub">
-<p>La pieza organiza una lectura aplicada sobre decisiones laborales en el hogar y usa una estrategia de sensibilidad por endogeneidad, sin desplazar automáticamente el modelo base.</p>
+<p>La pieza organiza una comparación metodológica con anclaje aplicado: benchmark exógeno, eje CF y contraste paralelo con IV-probit, sin sobrerreaccionar en la lectura final.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -133,13 +133,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>Lectura sustantiva</p>
+<p>Lectura metodológica</p>
 </div>
 <div class="metric-value">
-<p>Patron familiar y de capital humano</p>
+<p>Exógeno vs endógeno</p>
 </div>
 <div class="metric-note">
-<p><code>kidslt6</code> negativo fuerte; <code>educ</code> y <code>exper</code> positivos</p>
+<p>CF como eje; IV-probit como contraste paralelo</p>
 </div>
 </div>
 <div class="metric-card">
@@ -156,20 +156,20 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en relación con ingreso no laboral del hogar, educación, experiencia y composicion familiar. El foco principal es sustantivo: leer patrones empiricos relevantes para decisiones de hogar.</p>
-<p>El componente metodologico se usa con prudencia. La correccion IV/CF no se presenta como fin en sí mismo, sino como auditoría de sensibilidad para evaluar si la lectura aplicada cambia de forma material.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>inlf</code>) en relación con ingreso no laboral del hogar, educación, experiencia y composición familiar. El foco principal es metodológico: comparar estimación binaria exógena vs endógena con anclaje aplicado en decisiones de hogar.</p>
+<p>El orden de lectura es deliberado: probit exógeno como benchmark inicial, control function (CF) como eje metodológico principal, <code>ivprobit</code> como contraste de robustez e <code>MPL-IV</code> como benchmark lineal secundario.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>¿Cómo se asocia la participación laboral femenina con el ingreso no laboral del hogar y cuánto cambia esa lectura cuando se admite posible endogeneidad?</p>
+<p>¿Cómo se estima una respuesta binaria cuando una covariable continua central (<code>nwifeinc</code>) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?</p>
 <div class="small-note">
 <p>Resultado: <code>inlf</code> (0/1). Variable clave: <code>nwifeinc</code>. Controles: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>La econometría se ordena al caso aplicado: primero entender la historia laboral y familiar, después evaluar si tratar <code>nwifeinc</code> como potencialmente endógena cambia de manera sustantiva la lectura en probabilidades.</p>
+<p>La pieza se ordena como comparación metodológica: primero el problema de endogeneidad en binaria, luego el contraste de APEs entre modelos exógenos y endógenos.</p>
 <p><span class="badge">Portfolio econométrico</span></p>
 </section>
 </div>
@@ -194,19 +194,19 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
 <ol type="1">
 <li>Estimar probit exogeno como lectura base y reportar APEs.</li>
-<li>Tratar <code>nwifeinc</code> como potencialmente endógena mediante enfoques IV/CF para comparar magnitudes.</li>
-<li>Mantener interpretación en términos de probabilidad, evitando sobreinterpretaciones automáticas.</li>
+<li>Usar control function (CF) como eje para tratar <code>nwifeinc</code> como potencialmente endógena en el modelo binario.</li>
+<li>Contrastar con <code>ivprobit</code> como implementación paralela de robustez y mantener <code>MPL-IV</code> como benchmark lineal secundario.</li>
 <li>Usar diagnósticos solo como respaldo de decisión aplicada.</li>
 </ol>
 </section>
 <section id="resultados-principales" class="level2">
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La lectura sustantiva aparece con claridad:</p>
+<p>La comparación metodológica deja una lectura clara:</p>
 <ul>
-<li><code>kidslt6</code> mantiene una asociación negativa fuerte con la participación laboral (APE alrededor de <code>-0.25</code>).</li>
-<li><code>educ</code> y <code>exper</code> muestran asociaciones positivas y estables en los modelos comparados.</li>
-<li><code>nwifeinc</code> aparece con asociación negativa con <code>inlf</code>.</li>
-<li>Al pasar de probit exogeno a CF/IV-probit, el efecto marginal asociado a <code>nwifeinc</code> se vuelve más negativo: de aprox. <code>-0.0036</code> a un rango cercano a <code>-0.0108</code> / <code>-0.0105</code>.</li>
+<li>El benchmark probit exógeno reporta un APE de <code>-0.0036</code> para <code>nwifeinc</code>.</li>
+<li>Al pasar al bloque endógeno, los APEs no lineales quedan cercanos entre sí: <code>CF</code> alrededor de <code>-0.0103</code> e <code>IVprobit</code> alrededor de <code>-0.0108</code>.</li>
+<li><code>MPL-IV</code> queda como contraste lineal útil (<code>-0.0116</code>), sin desplazar el eje CF de la lectura.</li>
+<li>Los demás patrones aplicados (<code>kidslt6</code>, <code>educ</code>, <code>exper</code>) se mantienen estables y no alteran la decisión metodológica central.</li>
 </ul>
 <p>En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro.</p>
 </section>
@@ -214,61 +214,55 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="sintesis-de-magnitudes-ape">Sintesis de magnitudes (APE)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Método</th>
+<th>Rol en la comparación</th>
 <th style="text-align: right;">APE <code>nwifeinc</code></th>
 <th style="text-align: right;">Error estándar</th>
 <th style="text-align: right;">IC 95% (<code>nwifeinc</code>)</th>
-<th style="text-align: right;">APE <code>kidslt6</code></th>
-<th style="text-align: right;">Error estándar</th>
-<th>Lectura aplicada</th>
+<th>Lectura metodológica</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Probit exógeno</td>
+<td>Benchmark inicial</td>
 <td style="text-align: right;">-0.0036</td>
 <td style="text-align: right;">0.0016</td>
 <td style="text-align: right;">[-0.0067, -0.0005]</td>
-<td style="text-align: right;">-0.2612</td>
-<td style="text-align: right;">0.0317</td>
-<td>Base parsimoniosa para lectura aplicada</td>
+<td>Punto de partida exógeno</td>
 </tr>
 <tr class="even">
-<td>MPL-IV</td>
-<td style="text-align: right;">-0.0116</td>
-<td style="text-align: right;">0.0058</td>
-<td style="text-align: right;">[-0.0230, -0.0002]</td>
-<td style="text-align: right;">-0.2530</td>
-<td style="text-align: right;">0.0345</td>
-<td>Contraste lineal instrumental útil para magnitudes</td>
-</tr>
-<tr class="odd">
 <td>CF sobre-ID (score)</td>
+<td>Eje metodológico principal</td>
 <td style="text-align: right;">-0.0103</td>
 <td style="text-align: right;">0.0048</td>
 <td style="text-align: right;">[-0.0197, -0.0009]</td>
-<td style="text-align: right;">-0.2428</td>
-<td style="text-align: right;">0.0380</td>
-<td>Ajuste IV/CF con señal similar a MPL-IV</td>
+<td>Referencia central para bloque endógeno</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>IVprobit MLE bivariado</td>
+<td>Contraste paralelo de robustez</td>
 <td style="text-align: right;">-0.0108</td>
 <td style="text-align: right;">0.0057</td>
 <td style="text-align: right;">[-0.0220, 0.0004]</td>
-<td style="text-align: right;">-0.2533</td>
-<td style="text-align: right;">0.0334</td>
-<td>Sensibilidad de magnitud con mayor incertidumbre</td>
+<td>Magnitud cercana a CF con mayor incertidumbre</td>
+</tr>
+<tr class="even">
+<td>MPL-IV</td>
+<td>Benchmark lineal secundario</td>
+<td style="text-align: right;">-0.0116</td>
+<td style="text-align: right;">0.0058</td>
+<td style="text-align: right;">[-0.0230, -0.0002]</td>
+<td>Chequeo lineal complementario</td>
 </tr>
 </tbody>
 </table>
@@ -285,8 +279,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
-<p>El valor profesional del caso es mostrar criterio de modelado aplicado: sostener primero la historia empírica del fenomeno y, recien después, verificar si la correccion por endogeneidad cambia materialmente la lectura.</p>
-<p>En T13, la historia sustantiva principal se mantiene (hijos pequeños, educación y experiencia), mientras que la diferencia en <code>nwifeinc</code> abre una sensibilidad relevante de magnitud que conviene reportar con prudencia.</p>
+<p>El valor profesional del caso es mostrar criterio de modelado aplicado en binaria: partir del benchmark exógeno y decidir, con CF como eje, cuánto cambia la lectura al tratar <code>nwifeinc</code> como potencialmente endógena.</p>
+<p>En T13, <code>ivprobit</code> acompaña como verificación paralela y <code>MPL-IV</code> como control lineal secundario; la decisión se sostiene sobre la comparación metodológica y no sobre una sobreactuación de hallazgos sustantivos.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
