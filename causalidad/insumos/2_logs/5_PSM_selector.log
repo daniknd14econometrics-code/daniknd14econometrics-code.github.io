@@ -1,0 +1,1383 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\5_PSM_selector.log
+  log type:  text
+ opened on:  28 Mar 2026, 09:40:34
+
+. do "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\TALLER 1 - ME-PSM\5_PSM_selector.do"
+
+. /*------------------------------------------------------------------------------
+> Taller adicional (PSM) — Selector automático (versión definitiva)
+> Autor: Daniel + ChatGPT
+> 
+> IDEA CENTRAL (alineada con tu selector de matching exacto):
+> - Separar "DISEÑO" (matching/weighting + diagnóstico) de "ANÁLISIS" (efecto).
+> - En DISEÑO NO se usa Y para rankear: NO se calcula ATE/ATET para cada candidato.
+> - Elegimos entre candidatos usando:
+>     (i) Balance: max|SMD| y mean|SMD| (y ratios de varianza estilo Rubin),
+>     (ii) Soporte/precisión-proxy: share de tratados retenidos (N1/TOT1) y ESS de controles.
+> - Recién después, para el método ganador, estimamos ATE y ATET + SE por defecto y bootstrap.
+> - Opcional: gráficos SOLO para el ganador.
+> 
+> Requisitos:
+> - psmatch2 (SSC):   ssc install psmatch2
+> - (opcional) kmatch (SSC): ssc install kmatch
+> - Stata 13+ (usa strings largos y postfile)
+> 
+> Notas metodológicas (para orientar umbrales):
+> - Balance: reglas comunes usan max|SMD| <= 0.10 (estricto) o <= 0.25 (Rubin 2001 / Stuart 2010).
+> - Var ratios: Rubin sugiere rangos [0.5, 2] (equivale a max(max(VR,1/VR)) <= 2).
+> - Caliper “típico”: 0.2 * SD del logit(PS); acá implementamos calipers como múltiplos de SD de logit(PS)
+>   y usamos psmatch2, odds (distancia en log-odds) para que los calipers tengan esa interpretación.
+> 
+> ------------------------------------------------------------------------------*/
+. 
+. 
+. 
+. version 16.0
+
+. 
+. global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+
+. 
+. local username = c(username)
+
+. display "`username'"
+Equipo
+
+. 
+. local username = c(username)
+
+. 
+. if "`username'" == "Equipo" {
+.      global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+. }
+
+. else if "`username'" == "dmendez" {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+. }
+
+. else {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+. }
+
+. 
+. *---------------------------
+. * 0) Directorio y datos
+. *---------------------------
+. 
+. use "$seteo\Directorio común bases\hh_98.dta", clear 
+
+. set more off
+
+. set trace off
+
+. set rmsg off
+
+. 
+. version 16.0
+
+. *========================
+. * 1) Variables del taller
+. *========================
+. 
+. describe 
+
+Contains data from C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\Directorio común bases\hh_9
+> 8.dta
+ Observations:         1,129                  
+    Variables:            24                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nh              long    %12.0g                HH ID
+year            byte    %8.0g                 Year of observation
+villid          byte    %8.0g                 Village ID
+thanaid         byte    %8.0g                 Thana ID
+agehead         byte    %8.0g                 Age of HH head: years
+sexhead         byte    %8.0g                 Gender of HH head: 1=M, 0=F
+educhead        byte    %8.0g                 Education of HH head: years
+famsize         byte    %8.0g                 HH size
+hhland          float   %9.0g                 HH land: decimals
+hhasset         double  %12.0g                HH total asset: Tk.
+expfd           float   %9.0g                 HH per capita food expenditure: Tk/year
+expnfd          float   %9.0g                 HH per capita nonfood expenditure: Tk/year
+exptot          float   %9.0g                 HH per capita total expenditure: Tk/year
+dmmfd           byte    %8.0g                 HH has male microcredit participant: 1=Y, 0=N
+dfmfd           byte    %8.0g                 HH has female microcredit participant: 1=Y, 0=N
+weight          float   %9.0g                 HH sampling weight
+vaccess         byte    %8.0g                 Village is accessible by road all year: 1=Y, 0=N
+pcirr           float   %9.0g                 Proportion of village land irrigated
+rice            float   %9.0g                 Village price of rice: Tk./kg
+wheat           float   %9.0g                 Village price of wheat: Tk./kg
+milk            float   %9.0g                 Village price of milk: Tk./liter
+potato          float   %9.0g                 Village price of potato: Tk./kg
+egg             float   %9.0g                 Village price of egg: Tk./4 counts
+oil             float   %9.0g                 Village price of edible oil: Tk./kg
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. gen lexptot = ln(1+exptot)
+
+. gen lnland  = ln(1+hhland/100)
+
+. 
+. global Y lexptot
+
+. global D dfmfd
+
+. 
+. * --- Covariables completas (modo Xbal) ---
+. global Xbal ///
+>     sexhead ///
+>     vaccess ///
+>     agehead ///
+>     educhead ///
+>     lnland ///
+>     pcirr ///
+>     rice ///
+>     wheat ///
+>     milk ///
+>     oil ///
+>     egg
+
+. 
+. 
+. global X   ///
+>     sexhead ///
+>     vaccess ///
+>     agehead ///
+>     educhead ///
+>     lnland ///
+>     pcirr 
+
+. *
+. * Si no definís Xbal, por defecto usamos X:
+. capture confirm global Xbal
+
+. if _rc {
+.     global Xbal "$X"
+. }
+
+. 
+. *========================================================
+. * 2) Tuning: grilla de candidatos + umbrales de selección
+. *========================================================
+. * Soporte: elegí UNA de estas, o probá ambas (se evalúan como candidatos separados).
+. * global SUPPORT_LIST "common"
+. * global SUPPORT_LIST "trim(10)"
+. global SUPPORT_LIST "common"
+
+. 
+. * Distancia: odds=match en log-odds(PS). Recomendado si querés caliper en SD del logit(PS).
+. global USE_ODDS 1
+
+. 
+. * Ties (psmatch2): teffects siempre usa ties; con psmatch2 es opción.
+. global USE_TIES 1
+
+. 
+. * Vecinos
+. global K_LIST "1 2 3 4 5"
+
+. 
+. * Caliper/Radius como múltiplos de SD(logit(PS))
+. * (valores “usuales”: 0.10–0.30; el “clásico” es 0.20)
+. global CAL_MULT "0.10 0.20 0.30 0.40"
+
+. 
+. * Kernel: tipos y banda (múltiplos de SD(logit(PS)))
+. global KERNEL_LIST "normal epan biweight uniform"
+
+. global H_MULT      "0.20 0.40 0.60 0.80 1.00"
+
+. 
+. * Umbrales de balance (ajustables)
+. global SMD_THR 0.10      // probá 0.10 para mas estricto, o 0.20 o 0.25 si te deja sin candidatos “pass”
+
+. global VR_THR  2         // implica VR en [0.5,2]
+
+. 
+. * Retención mínima de tratados (opcional)
+. global ENFORCE_TREAT_SHARE 1
+
+. global MIN_TREAT_SHARE     0.80
+
+. 
+. * (opcional) Rubin PS-diagnostics (B<25 y R en [0.5,2]) — por defecto NO se usa para pasar/fallar
+. global USE_RUBIN_PS 0
+
+. global RUBIN_B_THR  25
+
+. global RUBIN_R_THR  2
+
+. 
+. * Gráficos (solo ganador)
+. global DO_GRAPHS 1
+
+. 
+. * Bootstrap (solo ganador)
+. global BOOT_REPS 400
+
+. global BOOT_SEED 12345
+
+. 
+. *========================
+. * 3) Helpers
+. *========================
+. 
+. *--- 3.1 Util: ESS para controles con pesos (w) ---
+. capture program drop _ess_controls
+
+. program define _ess_controls, rclass
+  1.     syntax varname [if]
+  2.     quietly {
+  3.         tempname sw sw2
+  4.         tempvar w w2
+  5. 
+.         gen double `w' = `varlist' `if'
+  6.         replace `w' = 0 if missing(`w')
+  7.         summ `w' `if', meanonly
+  8.         scalar `sw' = r(sum)
+  9. 
+.         gen double `w2' = `w'^2 `if'
+ 10.         summ `w2' `if', meanonly
+ 11.         scalar `sw2' = r(sum)
+ 12. 
+.         if (`sw2'==0) {
+ 13.             return scalar ess0 = 0
+ 14.         }
+ 15.         else {
+ 16.             return scalar ess0 = (`sw'^2)/`sw2'
+ 17.         }
+ 18.     }
+ 19. end
+
+. 
+. *--- 3.2 Balance: max|SMD|, mean|SMD|, max var-ratio sym, mean |ln(VR)| + Rubin B/R del PS ---
+. capture program drop _eval_balance_psm
+
+. program define _eval_balance_psm, rclass
+  1.     * Requiere:
+.     *   - variable de tratamiento: $D (0/1)
+.     *   - variable w_att (peso usado para controles; para tratados = 1)
+.     *   - variable matched (1 si entra a comparación)
+.     *   - variable lps (logit(PS) con clamp)
+.     *
+.     syntax, WATT(varname) MATCHED(varname) LPS(varname)
+  2. 
+.     quietly {
+  3.         local xlist "$Xbal"
+  4.         tempname maxsmd meansmd maxvr meanlnvr Bps Rps
+  5.         scalar `maxsmd'  = 0
+  6.         scalar `meansmd' = 0
+  7.         scalar `maxvr'   = 1
+  8.         scalar `meanlnvr'= 0
+  9. 
+.         local vmaxsmd ""
+ 10.         local vmaxvr  ""
+ 11. 
+.         local count = 0
+ 12. 
+.         foreach x of varlist `xlist' {
+ 13.             * Tratados
+.             capture noisily summ `x' if `matched'==1 & $D==1
+ 14.             if _rc continue
+ 15.             local m1 = r(mean)
+ 16.             local s1 = r(sd)
+ 17. 
+.             * Controles (ponderados por matching)
+.             capture noisily summ `x' if `matched'==1 & $D==0 [aw=`watt']
+ 18.             if _rc continue
+ 19.             local m0 = r(mean)
+ 20.             local s0 = r(sd)
+ 21. 
+.             * pooled SD
+.             local sp = sqrt((`s1'^2 + `s0'^2)/2)
+ 22.             if (`sp'<=0 | missing(`sp')) continue
+ 23. 
+.             local smd = (`m1' - `m0')/`sp'
+ 24.             local asmd = abs(`smd')
+ 25. 
+.             scalar `meansmd' = `meansmd' + `asmd'
+ 26.             local ++count
+ 27. 
+.             if (`asmd' > `maxsmd') {
+ 28.                 scalar `maxsmd' = `asmd'
+ 29.                 local vmaxsmd "`x'"
+ 30.             }
+ 31. 
+.             * variance ratio (simetrizado)
+.             local vr = 1
+ 32.             if (`s0'>0 & `s1'>=0) {
+ 33.                 local vr = (`s1'^2)/(`s0'^2)
+ 34.                 if (`vr'<=0 | missing(`vr')) local vr = 1
+ 35.             }
+ 36.             local vrsym = max(`vr', 1/`vr')
+ 37.             scalar `meanlnvr' = `meanlnvr' + abs(ln(`vr'))
+ 38. 
+.             if (`vrsym' > `maxvr') {
+ 39.                 scalar `maxvr' = `vrsym'
+ 40.                 local vmaxvr "`x'"
+ 41.             }
+ 42.         }
+ 43. 
+.         if (`count'>0) {
+ 44.             scalar `meansmd'  = `meansmd'/`count'
+ 45.             scalar `meanlnvr' = `meanlnvr'/`count'
+ 46.         }
+ 47.         else {
+ 48.             scalar `meansmd'  = .
+ 49.             scalar `meanlnvr' = .
+ 50.         }
+ 51. 
+.         * Rubin's B y R (sobre el índice/linear predictor: lps = logit(PS))
+.         * B_ps en porcentaje de SD (como se reporta usualmente)
+.         capture noisily summ `lps' if `matched'==1 & $D==1
+ 52.         local m1p = r(mean)
+ 53.         local s1p = r(sd)
+ 54.         capture noisily summ `lps' if `matched'==1 & $D==0 [aw=`watt']
+ 55.         local m0p = r(mean)
+ 56.         local s0p = r(sd)
+ 57.         local spp = sqrt((`s1p'^2 + `s0p'^2)/2)
+ 58.         if (`spp'>0 & !missing(`spp')) {
+ 59.             scalar `Bps' = 100*abs(`m1p' - `m0p')/`spp'
+ 60.         }
+ 61.         else scalar `Bps' = .
+ 62. 
+.         if (`s0p'>0 & `s1p'>=0) {
+ 63.             local rp = (`s1p'^2)/(`s0p'^2)
+ 64.             scalar `Rps' = max(`rp', 1/`rp')
+ 65.         }
+ 66.         else scalar `Rps' = .
+ 67. 
+.         return scalar maxsmd   = `maxsmd'
+ 68.         return scalar meansmd  = `meansmd'
+ 69.         return scalar maxvr    = `maxvr'
+ 70.         return scalar meanlnvr = `meanlnvr'
+ 71.         return scalar B_ps     = `Bps'
+ 72.         return scalar R_ps     = `Rps'
+ 73.         return local var_maxsmd "`vmaxsmd'"
+ 74.         return local var_maxvr  "`vmaxvr'"
+ 75.     }
+ 76. end
+
+. 
+. *--- 3.3 Ejecuta un candidato (DISEÑO): psmatch2 sin outcome, y devuelve métricas ---
+. capture program drop _eval_candidate
+
+. program define _eval_candidate, rclass
+  1.     syntax, METHOD(string) SUPPORT(string) OPTS(string) ///
+>            [K(integer 0) CAL(real 0) BW(real 0) KERNEL(string)]
+  2. 
+.     quietly {
+  3.         * limpiar residuos de psmatch2 de corridas previas
+.         capture drop _pscore _weight _id _n1 _n2 _n3 _n4 _n5 _nn _support
+  4. 
+.         * psmatch2 SIN outcome: solo para generar _weight y _support
+.         capture confirm variable ps_hat
+  5.         if _rc {
+  6.             return scalar ok = 0
+  7.             exit
+  8.         }
+  9. 
+.         capture noisily psmatch2 $D, pscore(ps_hat) `opts'
+ 10.         if _rc {
+ 11.             return scalar ok = 0
+ 12.             exit
+ 13.         }
+ 14. 
+.         * si _support no existe, asumimos todo soporte
+.         capture confirm variable _support
+ 15.         if _rc gen byte _support = 1
+ 16. 
+.         * weights para balance: tratados peso 1; controles peso _weight
+.         tempvar w_att matched
+ 17.         gen double `w_att' = 0
+ 18.         replace `w_att' = 1       if $D==1 & _support==1
+ 19.         replace `w_att' = _weight if $D==0 & _support==1
+ 20.         replace `w_att' = 0 if missing(`w_att')
+ 21. 
+.         gen byte `matched' = 0
+ 22.         replace `matched' = 1 if $D==1 & _support==1
+ 23.         replace `matched' = 1 if $D==0 & _support==1 & `w_att'>0
+ 24. 
+.         * conteos
+.         count if `matched'==1 & $D==1
+ 25.         local N1 = r(N)
+ 26.         count if `matched'==1 & $D==0 & `w_att'>0
+ 27.         local N0 = r(N)
+ 28. 
+.         * ESS de controles
+.         _ess_controls `w_att' if `matched'==1 & $D==0
+ 29.         local ess0 = r(ess0)
+ 30. 
+.         * balance
+.         _eval_balance_psm, watt(`w_att') matched(`matched') lps(lps)
+ 31.         local maxsmd   = r(maxsmd)
+ 32.         local meansmd  = r(meansmd)
+ 33.         local maxvr    = r(maxvr)
+ 34.         local meanlnvr = r(meanlnvr)
+ 35.         local B_ps     = r(B_ps)
+ 36.         local R_ps     = r(R_ps)
+ 37.         local vmsmd    = r(var_maxsmd)
+ 38.         local vmvr     = r(var_maxvr)
+ 39. 
+.         return scalar ok       = 1
+ 40.         return scalar N1       = `N1'
+ 41.         return scalar N0       = `N0'
+ 42.         return scalar ess0     = `ess0'
+ 43.         return scalar maxsmd   = `maxsmd'
+ 44.         return scalar meansmd  = `meansmd'
+ 45.         return scalar maxvr    = `maxvr'
+ 46.         return scalar meanlnvr = `meanlnvr'
+ 47.         return scalar B_ps     = `B_ps'
+ 48.         return scalar R_ps     = `R_ps'
+ 49.         return local  var_maxsmd "`vmsmd'"
+ 50.         return local  var_maxvr  "`vmvr'"
+ 51.     }
+ 52. end
+
+. 
+. *========================
+. * 4) Preparación: definir muestra usable + estimar PS base (para SD del logit)
+. *========================
+. tempvar touse
+
+. gen byte `touse' = 1
+
+. foreach v of varlist $D $X {
+  2.     replace `touse' = 0 if missing(`v')
+  3. }
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. 
+. quietly count if `touse'==1 & $D==1
+
+. scalar TOT1 = r(N)
+
+. quietly count if `touse'==1 & $D==0
+
+. scalar TOT0 = r(N)
+
+. 
+. if (TOT1==0 | TOT0==0) {
+.     di as error "No hay observaciones suficientes en tratados o controles (en touse)."
+.     error 2000
+. }
+
+. 
+. * Estimación base del PS (logit) SOLO para construir lps y su SD
+. capture drop ps_hat ps_hat_c lps
+
+. quietly logit $D $X if `touse'==1
+
+. gen byte ps_sample = e(sample)
+
+. replace `touse' = (`touse'==1 & ps_sample==1)
+(0 real changes made)
+
+. quietly count if `touse'==1 & $D==1
+
+. scalar TOT1 = r(N)
+
+. quietly count if `touse'==1 & $D==0
+
+. scalar TOT0 = r(N)
+
+. if (TOT1==0 | TOT0==0) {
+.     di as error "No hay observaciones suficientes en tratados o controles en e(sample) del PS."
+.     error 2000
+. }
+
+. predict double lps if e(sample), xb
+
+. gen double ps_hat = invlogit(lps) if e(sample)
+
+. gen double ps_hat_c = min(max(ps_hat, 1e-6), 1-1e-6) if e(sample)
+
+. quietly summ lps if e(sample)
+
+. scalar SD_LPS = r(sd)
+
+. 
+. if (SD_LPS<=0 | missing(SD_LPS)) {
+.     quietly count if e(sample)
+.     di as error "SD_LPS no válida. Revisá la estimación del PS. N(e(sample))=" r(N)
+.     error 2000
+. }
+
+. 
+. *========================
+. * 5) DISEÑO: Evaluar candidatos y armar tabla de diagnóstico
+. *========================
+. tempfile base results
+
+. save `base', replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_1608_000001.tmp not found)
+file C:\Users\Equipo\AppData\Local\Temp\ST_1608_000001.tmp saved as .dta format
+
+. 
+. tempname posth
+
+. postfile `posth' ///
+>     str8   method ///
+>     str60  support ///
+>     str160 spec ///
+>     str200 opts ///
+>     double k cal bw ///
+>     str12  kernel ///
+>     double maxsmd meansmd maxvr meanlnvr ///
+>     double B_ps R_ps ///
+>     str32  var_maxsmd ///
+>     str32  var_maxvr ///
+>     double N1 N0 ess0 share1 ///
+>     using `results', replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_1608_000002.tmp not found)
+
+. 
+. *------------------------
+. * 5.1 Construir distancia y flags globales
+. *------------------------
+. local distopt ""
+
+. if ($USE_ODDS==1) local distopt "odds"
+
+. 
+. local tiesopt ""
+
+. if ($USE_TIES==1) local tiesopt "ties"
+
+. 
+. *------------------------
+. * 5.2 Loop por soporte
+. *------------------------
+. foreach supp in $SUPPORT_LIST {
+  2. 
+.     * 5.2.1 Nearest Neighbor: k=1..5 (sin caliper)
+.     foreach kk in $K_LIST {
+  3.         preserve
+  4.             use `base', clear
+  5.             keep if `touse'==1
+  6. 
+.             * psmatch2 usa la variable _pscore si estima PS internamente.
+.             * Acá forzamos usar nuestro PS (ps_hat) ya estimado, para mantener escala estable.
+.             local opts "`supp' `distopt' `tiesopt' neighbor(`kk')"
+  7. 
+.             quietly _eval_candidate, method("NN") support("`supp'") opts("`opts'") k(`kk')
+  8. 
+.             if (r(ok)==1) {
+  9.                 local share1 = r(N1)/TOT1
+ 10.                 post `posth' ///
+>                     ("NN") ("`supp'") ///
+>                     ("k=`kk' + `supp'") ///
+>                     ("`opts'") ///
+>                     (`kk') (.) (.) ("") ///
+>                     (r(maxsmd)) (r(meansmd)) (r(maxvr)) (r(meanlnvr)) ///
+>                     (r(B_ps)) (r(R_ps)) ///
+>                     ("`r(var_maxsmd)'") ("`r(var_maxvr)'") ///
+>                     (r(N1)) (r(N0)) (r(ess0)) (`share1')
+ 11.             }
+ 12.         restore
+ 13.     }
+ 14. 
+.     * 5.2.2 NN + Caliper (k=1): calipers como múltiplos de SD_LPS
+.     foreach cm in $CAL_MULT {
+ 15.         local cal = `cm'*SD_LPS
+ 16.         preserve
+ 17.             use `base', clear
+ 18.             keep if `touse'==1
+ 19.             local opts "`supp' `distopt' `tiesopt' neighbor(1) caliper(`cal')"
+ 20.             quietly _eval_candidate, method("CAL") support("`supp'") opts("`opts'") k(1) cal(`cal')
+ 21. 
+.             if (r(ok)==1) {
+ 22.                 local share1 = r(N1)/TOT1
+ 23.                 post `posth' ///
+>                     ("CAL") ("`supp'") ///
+>                     ("k=1 cal=`cm'*SD(LPS) + `supp'") ///
+>                     ("`opts'") ///
+>                     (1) (`cal') (.) ("") ///
+>                     (r(maxsmd)) (r(meansmd)) (r(maxvr)) (r(meanlnvr)) ///
+>                     (r(B_ps)) (r(R_ps)) ///
+>                     ("`r(var_maxsmd)'") ("`r(var_maxvr)'") ///
+>                     (r(N1)) (r(N0)) (r(ess0)) (`share1')
+ 24.             }
+ 25.         restore
+ 26.     }
+ 27. 
+.     * 5.2.3 Radius: calipers como múltiplos de SD_LPS
+.     foreach cm in $CAL_MULT {
+ 28.         local cal = `cm'*SD_LPS
+ 29.         preserve
+ 30.             use `base', clear
+ 31.             keep if `touse'==1
+ 32.             local opts "`supp' `distopt' `tiesopt' radius caliper(`cal')"
+ 33.             quietly _eval_candidate, method("RAD") support("`supp'") opts("`opts'") cal(`cal')
+ 34. 
+.             if (r(ok)==1) {
+ 35.                 local share1 = r(N1)/TOT1
+ 36.                 post `posth' ///
+>                     ("RAD") ("`supp'") ///
+>                     ("radius cal=`cm'*SD(LPS) + `supp'") ///
+>                     ("`opts'") ///
+>                     (.) (`cal') (.) ("") ///
+>                     (r(maxsmd)) (r(meansmd)) (r(maxvr)) (r(meanlnvr)) ///
+>                     (r(B_ps)) (r(R_ps)) ///
+>                     ("`r(var_maxsmd)'") ("`r(var_maxvr)'") ///
+>                     (r(N1)) (r(N0)) (r(ess0)) (`share1')
+ 37.             }
+ 38.         restore
+ 39.     }
+ 40. 
+.     * 5.2.4 Kernel: tipos x bandas
+.     foreach kt in $KERNEL_LIST {
+ 41.         foreach hm in $H_MULT {
+ 42.             local bw = `hm'*SD_LPS
+ 43.             preserve
+ 44.                 use `base', clear
+ 45.                 keep if `touse'==1
+ 46.                 local opts "`supp' `distopt' `tiesopt' kernel kerneltype(`kt') bwidth(`bw')"
+ 47.                 quietly _eval_candidate, method("KER") support("`supp'") opts("`opts'") bw(`bw') kernel("`kt'")
+ 48. 
+.                 if (r(ok)==1) {
+ 49.                     local share1 = r(N1)/TOT1
+ 50.                     post `posth' ///
+>                         ("KER") ("`supp'") ///
+>                         ("kernel=`kt' bw=`hm'*SD(LPS) + `supp'") ///
+>                         ("`opts'") ///
+>                         (.) (.) (`bw') ("`kt'") ///
+>                         (r(maxsmd)) (r(meansmd)) (r(maxvr)) (r(meanlnvr)) ///
+>                         (r(B_ps)) (r(R_ps)) ///
+>                         ("`r(var_maxsmd)'") ("`r(var_maxvr)'") ///
+>                         (r(N1)) (r(N0)) (r(ess0)) (`share1')
+ 51.                 }
+ 52.             restore
+ 53.         }
+ 54.     }
+ 55. }
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+
+. 
+. postclose `posth'
+
+. 
+. use `results', clear
+
+. order method support spec opts k cal bw kernel maxsmd meansmd maxvr meanlnvr B_ps R_ps var_maxsmd var_maxvr N1 N0 ess0 share1
+
+. sort maxsmd
+
+. 
+. *========================
+. * 6) Selección del ganador (DISEÑO)
+. *========================
+. 
+. gen byte pass = (maxsmd <= $SMD_THR) & (maxvr <= $VR_THR)
+
+. 
+. if ($ENFORCE_TREAT_SHARE==1) {
+.     replace pass = pass & (share1 >= $MIN_TREAT_SHARE)
+(0 real changes made)
+. }
+
+. 
+. if ($USE_RUBIN_PS==1) {
+.     replace pass = pass & (B_ps <= $RUBIN_B_THR) & (R_ps <= $RUBIN_R_THR)
+. }
+
+. 
+. quietly count if pass==1
+
+. local n_pass = r(N)
+
+. 
+. if (`n_pass'>0) {
+.     * Entre los que pasan: priorizar retención + ESS (varianza) y luego balance (sesgo)
+.     gsort -pass -share1 -ess0 maxsmd meansmd maxvr meanlnvr
+. }
+
+. else {
+.     * Si nadie pasa: mejor balance primero, y después retención/ESS
+.     gsort maxsmd maxvr meanlnvr -share1 -ess0 meansmd
+. }
+
+. 
+. di as text "------------------------------------------------------------"
+------------------------------------------------------------
+
+. di as text "TOP 15/(N=33) candidatos (ordenados por regla de selección):"
+TOP 15/(N=33) candidatos (ordenados por regla de selección):
+
+. local top = min(15, _N)
+
+. if (`top'>0) {
+.     list method support spec maxsmd meansmd maxvr B_ps R_ps N1 N0 ess0 share1 var_maxsmd var_maxvr in 1/`top', noobs abbrev(24)
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    KER |  common | kernel=biweight bw=0.40*SD(LPS) + common | .08101645 | .0586052 | 1.322202 | 10.772571 | 1.103525 | 594 | 534 | 451.1152 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    RAD |  common |         radius cal=0.20*SD(LPS) + common | .08751089 | .0518721 | 1.323462 | 8.2159577 | 1.117119 | 594 | 534 | 441.8813 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    KER |  common |  kernel=uniform bw=0.20*SD(LPS) + common | .08751089 | .0518721 | 1.323462 | 8.2159577 | 1.117119 | 594 | 534 | 441.8813 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    KER |  common |     kernel=epan bw=0.20*SD(LPS) + common | .08704061 | .0423287 | 1.318408 |  5.686237 | 1.099599 | 594 | 534 | 437.5837 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    KER |  common | kernel=biweight bw=0.20*SD(LPS) + common | .08109639 | .0379967 | 1.318886 | 4.6173156 | 1.086616 | 594 | 534 | 436.5019 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    RAD |  common |         radius cal=0.10*SD(LPS) + common | .06673031 |  .031238 | 1.328726 | 3.5229814 | 1.065678 | 594 | 533 | 435.9526 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |     NN |  common |                             k=5 + common | .01247594 | .0061585 | 1.435157 | .04207319 | 1.004779 | 594 | 510 | 341.5776 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    sexhead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |     NN |  common |                             k=4 + common | .02574989 |  .009298 | 1.409633 | .00741903 | 1.002318 | 594 | 493 | 324.5215 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    sexhead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |     NN |  common |                             k=3 + common | .02911813 | .0181783 | 1.400821 | .04396188 |  1.00047 | 594 | 465 | 295.9482 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                      pcirr                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |     NN |  common |                             k=2 + common | .03476608 | .0193949 |  1.41722 | .03087225 | 1.001152 | 594 | 404 | 254.5714 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    CAL |  common |            k=1 cal=0.30*SD(LPS) + common | .05473271 | .0325372 | 1.494403 | .05453072 | 1.002491 | 594 | 287 | 181.6869 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    CAL |  common |            k=1 cal=0.20*SD(LPS) + common | .05473271 | .0325372 | 1.494403 | .05453072 | 1.002491 | 594 | 287 | 181.6869 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    CAL |  common |            k=1 cal=0.40*SD(LPS) + common | .05473271 | .0325372 | 1.494403 | .05453072 | 1.002491 | 594 | 287 | 181.6869 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |    CAL |  common |            k=1 cal=0.10*SD(LPS) + common | .05473271 | .0325372 | 1.494403 | .05453072 | 1.002491 | 594 | 287 | 181.6869 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method | support |                                     spec |    maxsmd |  meansmd |    maxvr |      B_ps |     R_ps |  N1 |  N0 |     ess0 |   share1 |
+  |     NN |  common |                             k=1 + common | .05473271 | .0325372 | 1.494403 | .05453072 | 1.002491 | 594 | 287 | 181.6869 | .9983193 |
+  |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |                                 var_maxsmd                                 |                                 var_maxvr                                 |
+  |                                    agehead                                 |                                   agehead                                 |
+  +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+. }
+
+. else {
+.     di as error "No se pudo evaluar ningún candidato (lista vacía). Revisá errores previos (psmatch2)."
+. }
+
+. 
+. * Guardar ganador
+. local WIN_method  = method[1]
+
+. local WIN_support = support[1]
+
+. local WIN_spec    = spec[1]
+
+. local WIN_opts    = opts[1]
+
+. local WIN_k       = k[1]
+
+. local WIN_cal     = cal[1]
+
+. local WIN_bw      = bw[1]
+
+. local WIN_kernel  = kernel[1]
+
+. 
+. di as result "------------------------------------------------------------"
+------------------------------------------------------------
+
+. di as result "GANADOR (DISEÑO): `WIN_method' | `WIN_spec'"
+GANADOR (DISEÑO): KER | kernel=biweight bw=0.40*SD(LPS) + common
+
+. di as text   "Opciones: `WIN_opts'"
+Opciones: common odds ties kernel kerneltype(biweight) bwidth(.2357608814611616)
+
+. 
+. *========================
+. * 7) ANÁLISIS: estimar ATE y ATET SOLO para el ganador (+ SE default + bootstrap)
+. *========================
+. use `base', clear
+
+. keep if `touse'==1
+(0 observations deleted)
+
+. 
+. * Re-generar ps_hat / lps en la muestra final (consistencia)
+. capture drop ps_hat ps_hat_c lps
+
+. quietly logit $D $X
+
+. predict double lps if e(sample), xb
+
+. gen double ps_hat = invlogit(lps) if e(sample)
+
+. gen double ps_hat_c = min(max(ps_hat, 1e-6), 1-1e-6) if e(sample)
+
+. *------------------------
+. * 7.1 Funciones bootstrap
+. *------------------------
+. 
+. * --- 7.1a Bootstrap para psmatch2 (kernel/radius): devuelve tau ---
+. capture program drop _boot_psmatch2
+
+. program define _boot_psmatch2, rclass
+  1.     syntax, STAT(string) OPTS(string)
+  2. 
+.     quietly {
+  3.         * re-estimar PS en cada remuestreo
+.         capture drop ps_hat ps_hat_c
+  4.         capture noisily logit $D $X
+  5.         if _rc {
+  6.             return scalar tau = .
+  7.             exit
+  8.         }
+  9.         predict double ps_hat if e(sample), pr
+ 10.         gen double ps_hat_c = min(max(ps_hat, 1e-6), 1-1e-6)
+ 11. 
+.         local st = lower("`stat'")
+ 12.         if ("`st'"=="atet") {
+ 13.             capture noisily psmatch2 $D, out($Y) pscore(ps_hat) `opts'
+ 14.             if _rc {
+ 15.                 return scalar tau = .
+ 16.                 exit
+ 17.             }
+ 18.             return scalar tau = r(att)
+ 19.         }
+ 20.         else if ("`st'"=="ate") {
+ 21.             capture noisily psmatch2 $D, out($Y) pscore(ps_hat) `opts' ate
+ 22.             if _rc {
+ 23.                 return scalar tau = .
+ 24.                 exit
+ 25.             }
+ 26.             return scalar tau = r(ate)
+ 27.         }
+ 28.         else {
+ 29.             return scalar tau = .
+ 30.         }
+ 31.     }
+ 32. end
+
+. 
+. * --- 7.1b Bootstrap para teffects psmatch (NN/CAL): devuelve tau (1 coef) ---
+. capture program drop _boot_teffects_ps
+
+. program define _boot_teffects_ps, rclass
+  1.     syntax, STAT(string) [K(integer 1) CAL(real 0)]
+  2. 
+.     quietly {
+  3.         local st = lower("`stat'")
+  4.         local statopt ""
+  5.         if ("`st'"=="atet") local statopt "atet"
+  6.         if ("`st'"=="ate")  local statopt "ate"
+  7. 
+.         local calopt ""
+  8.         if (`cal'>0) local calopt "caliper(`cal')"
+  9. 
+.         * osample() evita que el comando falle por falta de matches dentro del caliper
+.         capture noisily teffects psmatch ($Y) ($D $X), `statopt' tmodel(logit) nneighbor(`k') `calopt' osample(_os)
+ 10.         if _rc {
+ 11.             return scalar tau = .
+ 12.             exit
+ 13.         }
+ 14.         matrix b = e(b)
+ 15.         return scalar tau = b[1,1]
+ 16.     }
+ 17. end
+
+. 
+. *------------------------
+. * 7.2 Estimación final (winner)
+. *------------------------
+. 
+. tempname ATE ATET SE_ATE_def SE_ATET_def SE_ATE_boot SE_ATET_boot
+
+. scalar `ATE' = .
+
+. scalar `ATET' = .
+
+. scalar `SE_ATE_def' = .
+
+. scalar `SE_ATET_def' = .
+
+. scalar `SE_ATE_boot' = .
+
+. scalar `SE_ATET_boot' = .
+
+. 
+. * 7.2a Si ganador es NN o CAL: usar teffects psmatch como estimador final (SE Abadie–Imbens)
+. if inlist("`WIN_method'","NN","CAL") {
+. 
+.     local calopt ""
+.     if ("`WIN_method'"=="CAL" & `WIN_cal'<.) local calopt "caliper(`WIN_cal')"
+. 
+. 
+.     * ATE (default)
+.     capture noisily teffects psmatch ($Y) ($D $X), ate tmodel(logit) nneighbor(`WIN_k') `calopt' osample(_os_ate)
+.     if _rc==0 {
+.         matrix b = e(b)
+.         matrix V = e(V)
+.         scalar `ATE' = b[1,1]
+.         scalar `SE_ATE_def' = sqrt(V[1,1])
+.     }
+. 
+.     * ATET (default)
+.     capture noisily teffects psmatch ($Y) ($D $X), atet tmodel(logit) nneighbor(`WIN_k') `calopt' osample(_os_atet)
+.     if _rc==0 {
+.         matrix b = e(b)
+.         matrix V = e(V)
+.         scalar `ATET' = b[1,1]
+.         scalar `SE_ATET_def' = sqrt(V[1,1])
+.     }
+. 
+.     * Bootstrap ATE
+.     set seed $BOOT_SEED
+.     quietly bootstrap tau=r(tau), reps($BOOT_REPS) reject(missing(r(tau))): ///
+>         _boot_teffects_ps, stat(ate) k(`WIN_k') cal(`WIN_cal')
+.     scalar `SE_ATE_boot' = _se[tau]
+. 
+.     * Bootstrap ATET
+.     set seed $BOOT_SEED
+.     quietly bootstrap tau=r(tau), reps($BOOT_REPS) reject(missing(r(tau))): ///
+>         _boot_teffects_ps, stat(atet) k(`WIN_k') cal(`WIN_cal')
+.     scalar `SE_ATET_boot' = _se[tau]
+. }
+
+. 
+. * 7.2b Si ganador es RAD o KER: usar psmatch2 (default SE “naive” + bootstrap)
+. if inlist("`WIN_method'","RAD","KER") {
+. 
+.     * ATET (psmatch2)
+.     capture noisily psmatch2 $D, out($Y) pscore(ps_hat) `WIN_opts'
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45317659    8.3432582    .10991839   .032370273     3.40
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         0        534 |       534 
+   Treated |         1        594 |       595 
+-----------+----------------------+----------
+     Total |         1      1,128 |     1,129 
+.     if _rc==0 {
+.                 scalar `ATET' = r(att)
+. 
+.         * SE default reportado por psmatch2 (naive: NO ajusta por estimación del PS)
+.         capture scalar `SE_ATET_def' = r(seatt)
+. 
+.         * Si por alguna razón no vino (muy raro), fallback: SE naive por var(Y1)/N1 + var_w(Y0)/ESS0
+.         if (missing(`SE_ATET_def')) {
+.         tempvar w_att matched
+.         capture confirm variable _support
+.         if _rc gen byte _support = 1
+.         gen double `w_att' = 0
+.         replace `w_att' = 1       if $D==1 & _support==1
+.         replace `w_att' = _weight if $D==0 & _support==1
+.         replace `w_att' = 0 if missing(`w_att')
+. 
+.         gen byte `matched' = 0
+.         replace `matched' = 1 if $D==1 & _support==1
+.         replace `matched' = 1 if $D==0 & _support==1 & `w_att'>0
+. 
+.         quietly count if `matched'==1 & $D==1
+.         local N1 = r(N)
+. 
+.         quietly summ $Y if `matched'==1 & $D==1
+.         local s1 = r(sd)
+. 
+.         quietly summ $Y if `matched'==1 & $D==0 [aw=`w_att']
+.         local s0 = r(sd)
+. 
+.         _ess_controls `w_att' if `matched'==1 & $D==0
+.         local ess0 = r(ess0)
+. 
+.         if (`N1'>0 & `ess0'>0) scalar `SE_ATET_def' = sqrt((`s1'^2)/`N1' + (`s0'^2)/`ess0')
+.         }
+.     }
+. 
+.     * ATE (psmatch2)
+.     capture noisily psmatch2 $D, out($Y) pscore(ps_hat) `WIN_opts' ate
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45317659   8.34293591   .110240683   .032211222     3.42
+                        ATU | 8.44049325   8.48083603   .040342781            .        .
+                        ATE |                           .077314601            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         5        529 |       534 
+   Treated |         1        594 |       595 
+-----------+----------------------+----------
+     Total |         6      1,123 |     1,129 
+.     if _rc==0 {
+.         scalar `ATE' = r(ate)
+.         capture scalar `SE_ATE_def' = r(seate)
+.         * Nota: psmatch2 suele NO reportar SE para ATE (queda missing).
+.     }
+. 
+.     * Bootstrap ATET
+.     set seed $BOOT_SEED
+.     quietly bootstrap tau=r(tau), reps($BOOT_REPS) reject(missing(r(tau))): ///
+>         _boot_psmatch2, stat(atet) opts("`WIN_opts'")
+.     scalar `SE_ATET_boot' = _se[tau]
+. 
+.     * Bootstrap ATE
+.     set seed $BOOT_SEED
+.     quietly bootstrap tau=r(tau), reps($BOOT_REPS) reject(missing(r(tau))): ///
+>         _boot_psmatch2, stat(ate) opts("`WIN_opts'")
+.     scalar `SE_ATE_boot' = _se[tau]
+. }
+
+. 
+. di as text "------------------------------------------------------------"
+------------------------------------------------------------
+
+. di as text "RESULTADO FINAL (ganador):"
+RESULTADO FINAL (ganador):
+
+. di as result "Metodo: `WIN_method' | `WIN_spec'"
+Metodo: KER | kernel=biweight bw=0.40*SD(LPS) + common
+
+. di as text   "ATE  = " %9.4f `ATE'  " | SE_def = " %9.4f `SE_ATE_def'  " | SE_boot = " %9.4f `SE_ATE_boot'
+ATE  =    0.0773 | SE_def =         . | SE_boot =    0.0275
+
+. di as text   "ATET = " %9.4f `ATET' " | SE_def = " %9.4f `SE_ATET_def' " | SE_boot = " %9.4f `SE_ATET_boot'
+ATET =    0.1099 | SE_def =    0.0324 | SE_boot =    0.0273
+
+. di as text "------------------------------------------------------------"
+------------------------------------------------------------
+
+. 
+. *========================
+. * 8) Gráficos (solo ganador, opcional)
+. *========================
+
+. if ($DO_GRAPHS==1) {
+.     * PS overlap (en logit scale)
+.     twoway (kdensity lps if $D==1, lpattern(solid)) ///
+>            (kdensity lps if $D==0, lpattern(dash)), ///
+>            legend(order(1 "Tratados" 2 "Controles")) ///
+>            title("Overlap: logit(PS)") name(overlap_ps, replace)
+. 
+.     * Love plot (pstest) — requiere psmatch2 y haber corrido psmatch2 para crear _weight
+.     capture noisily psmatch2 $D, pscore(ps_hat) `WIN_opts' 
+.     capture noisily pstest $Xbal, both graph name(loveplot, replace)
+
+----------------------------------------------------------------------------------------
+                Unmatched |       Mean               %reduct |     t-test    |  V(T)/
+Variable          Matched | Treated Control    %bias  |bias| |    t    p>|t| |  V(C)
+--------------------------+----------------------------------+---------------+----------
+sexhead                U  | .90084   .91573     -5.2         |  -0.86  0.388 |     .
+                       M  | .90084   .89748      1.2    77.4 |   0.19  0.847 |     .
+                          |                                  |               |
+vaccess                U  | .82185   .85019     -7.7         |  -1.28  0.200 |     .
+                       M  | .82185   .81176      2.7    64.4 |   0.45  0.653 |     .
+                          |                                  |               |
+agehead                U  | 46.096   45.919      1.4         |   0.23  0.816 |  0.75*
+                       M  | 46.096   45.393      5.5  -298.4 |   0.92  0.357 |  0.67*
+                          |                                  |               |
+educhead               U  | 1.7529   2.9457    -34.6         |  -5.84  0.000 |  0.62*
+                       M  | 1.7529   1.8891     -3.9    88.6 |  -0.77  0.439 |  0.98
+                          |                                  |               |
+lnland                 U  | .26885   .50068    -46.4         |  -7.89  0.000 |  0.35*
+                       M  | .26885   .26364      1.0    97.7 |   0.24  0.809 |  0.89
+                          |                                  |               |
+pcirr                  U  | .57655   .54234     10.3         |   1.73  0.084 |  1.03
+                       M  | .57655   .59293     -4.9    52.1 |  -0.87  0.387 |  1.11
+                          |                                  |               |
+----------------------------------------------------------------------------------------
+* if variance ratio outside [0.85; 1.17] for U and [0.85; 1.17] for M
+
+-----------------------------------------------------------------------------------
+ Sample    | Ps R2   LR chi2   p>chi2   MeanBias   MedBias      B      R     %Var
+-----------+-----------------------------------------------------------------------
+ Unmatched | 0.053     82.20    0.000     17.6       9.0      54.1*   0.47*    75
+ Matched   | 0.002      2.99    0.810      3.2       3.3      10.0    1.01     25
+-----------------------------------------------------------------------------------
+* if B>25%, R outside [0.5; 2]
+. }
+
+
+. 
+. * Fin
+. 
+. 
+. /*------------------------------------------------------------------------------
+> INTERPRETACIÓN DE LA TABLA DE DIAGNÓSTICO Y DEL RESULTADO FINAL (PSM selector)
+> -------------------------------------------------------------------------------
+> 
+> (1) ¿Qué es la tabla "TOP candidatos" y cómo se lee?
+> La tabla lista (en orden de prioridad) las especificaciones candidatas de PSM que
+> se evaluaron en la etapa de DISEÑO. Cada fila es un "candidato" (NN, Caliper,
+> Radius o Kernel) combinado con una regla de soporte (acá: common) y opciones
+> específicas (k, caliper, kerneltype, bandwidth, etc.).
+> 
+> Importante: en esta tabla NO estamos "eligiendo por outcome". La selección se
+> basa en calidad del emparejamiento/ponderación (balance y precisión-proxy), no
+> en el tamaño del efecto.
+> 
+> Columnas clave:
+> 
+> - method / spec:
+>     method indica la familia (NN, CAL, RAD, KER) y spec resume la configuración.
+>     Ejemplo ganador: "KER | kernel=biweight bw=0.40*SD(LPS) + common".
+> 
+> - maxsmd y meansmd:
+>     Balance de covariables (Standardized Mean Differences en valor absoluto).
+>     maxsmd = el peor desbalance entre todas las covariables evaluadas (la "más
+>     problemática"). meansmd = promedio del desbalance.
+> 
+>     Regla típica: max|SMD| <= 0.10 se considera balance "estricto/bueno".
+>     En este run, el candidato ganador tiene maxsmd ≈ 0.081, o sea cumple holgado.
+> 
+> - maxvr (y meanlnvr):
+>     Diagnóstico de ratios de varianza (Rubin style). maxvr reporta el peor ratio
+>     simetrizado (max(VR, 1/VR)) entre covariables; por ejemplo maxvr=1.32 implica
+>     que la peor relación de varianzas está a ~32% de 1.
+>     Umbral usual: VR dentro de [0.5, 2] (equivalente a maxvr <= 2).
+> 
+> - B_ps y R_ps:
+>     Diagnósticos de Rubin para el "índice" del PS (acá: lps = logit(PS)).
+>     B_ps mide la diferencia de medias del logit(PS) en % de la SD pooled.
+>     R_ps es el ratio de varianzas del logit(PS) (simetrizado).
+>     Umbrales clásicos: B<25 y R dentro de [0.5,2]. En este run, el ganador cumple
+>     (B≈10.8, R≈1.10), por lo que hay buen overlap en el PS.
+> 
+> - N1, N0, share1, ess0:
+>     Soporte y precisión-proxy.
+>     N1 = tratados retenidos (en soporte); share1 = N1 / TOT1 (proporción retenida).
+>     ess0 = Effective Sample Size de controles tras ponderar por weights de matching.
+>     A igualdad de balance, más share1 y más ess0 suele implicar menor varianza.
+> 
+> (2) ¿Quién ganó y por qué?
+> El algoritmo aplica primero umbrales mínimos (pass):
+> - maxsmd <= $SMD_THR (0.10)
+> - maxvr  <= $VR_THR  (2)
+> - share1 >= $MIN_TREAT_SHARE (0.80)  [porque ENFORCE_TREAT_SHARE=1]
+> (y opcionalmente Rubin B/R si USE_RUBIN_PS=1; acá está en 0).
+> 
+> Como hubo candidatos que "pasan", se prioriza:
+> (1) retención de tratados (share1 alto),
+> (2) ESS de controles (ess0 alto),
+> (3) balance (maxsmd, luego meansmd, etc.).
+> 
+> Con esos criterios, el ganador fue:
+> GANADOR (DISEÑO): KER | kernel=biweight bw=0.40*SD(LPS) + common
+> Opciones: common odds ties kernel kerneltype(biweight) bwidth(0.2357609)
+> 
+> Interpretación:
+> - Se usó soporte común (common support).
+> - Se ponderaron controles con kernel biweight usando bandwidth = 0.40 * SD(logit(PS)).
+> - El balance es bueno (maxsmd ~ 0.081) y además retiene prácticamente todos los
+>   tratados (share1 ~ 0.998) con ESS alto en controles (~451), lo cual es una buena
+>   combinación sesgo-varianza.
+> 
+> Nota práctica:
+> Vas a ver que algunos NN (por ejemplo k=5) tienen maxsmd extremadamente bajo.
+> Pero sacrifican ess0 frente a kernel/radius. El selector está deliberadamente
+> diseñado para que, entre métodos que ya "balancean bien", el desempate favorezca
+> precisión (share1/ess0) para no pagar varianza innecesaria.
+> 
+> (3) Resultado final (ANÁLISIS) usando SOLO el ganador
+> Una vez elegido el método por DISEÑO, recién ahí se estima el efecto (ANÁLISIS):
+> 
+> Método final: Kernel biweight (bw=0.40*SD(LPS)) con common support.
+> 
+> Efectos estimados:
+> - ATET = 0.1099
+> - ATE  = 0.0773
+> 
+> Errores estándar:
+> - Para ATET, psmatch2 reporta SE "naive" (no ajusta por estimación del PS), y además
+>   se computa SE por bootstrap:
+>     ATET SE_def  = 0.0324   (naive)
+>     ATET SE_boot = 0.0272   (bootstrap)
+> 
+> - Para ATE, psmatch2 típicamente NO reporta SE (queda missing), por eso el informe
+>   relevante es el bootstrap:
+>     ATE  SE_def  = .        (no disponible en psmatch2)
+>     ATE  SE_boot = 0.0271
+> 
+> Lectura sustantiva (en este ejemplo):
+> Con el método seleccionado, el efecto sobre el outcome (lexptot) es positivo,
+> y el ATET es mayor que el ATE. En términos de precisión, el bootstrap sugiere
+> errores estándar del orden de 0.027, y el ATET está claramente distinto de cero.
+> 
+> (4) ¿Qué haría como "siguiente paso" si esto fuera un trabajo aplicado?
+> Si este fuera el pipeline real de un paper, yo usaría el ganador como "estimador
+> principal", pero haría cuatro cosas adicionales, en este orden:
+> 
+> A. Fijar el DISEÑO como pre-regla
+> Dejar documentado (y sin tocar) el conjunto de covariables $X, la regla de soporte,
+> y el algoritmo de selección (umbrales + desempate). La idea es que el método no
+> se elija mirando Y. El selector ya hace esto, así que el paso es: "congelarlo".
+> 
+> B. Reporte de balance del ganador (en el paper)
+> - Tabla de SMD antes/después (o al menos max|SMD| y mean|SMD|) y variable "peor".
+> - Gráfico de overlap del PS (en logit scale) y un love plot (pstest, both graph).
+> En tu corrida ya se ve que el balance mejora mucho (MeanBias baja fuerte) y B/R
+> pasan a valores aceptables.
+> 
+> C. Inferencia principal (no depender del SE naive)
+> Para kernel/radius, usaría como principal el SE bootstrap (idealmente con 1,000+
+> reps en el paper, y semilla fija). En aplicaciones más serias: bootstrap cluster
+> si corresponde (por ejemplo, clusters por localidad, empresa, escuela, etc.).
+> 
+> D. Robustez mínima "razonable"
+> Sin hacer un festival de especificaciones, sino cosas estándar:
+> - Repetir el análisis con 1–2 candidatos cercanos del top (por ejemplo RAD cal=0.20,
+>   o KER uniform bw=0.20) para ver estabilidad del signo/magnitud.
+> - Comparar con IPW (teffects ipw / aipw) como chequeo.
+> - Sensibilidad a ocultos (Rosenbaum bounds) si aplica y si te interesa argumento.
+> 
+> En resumen: el ganador es un Kernel biweight con bandwidth intermedio y soporte
+> común; equilibra bien el trade-off sesgo-varianza (balance bueno, altísima retención
+> de tratados, ESS alto). El resultado final a reportar debería ser el efecto con
+> SE bootstrap (porque el SE "naive" de psmatch2 no ajusta por estimación del PS).
+> ------------------------------------------------------------------------------*/
+. 
+. 
+end of do-file
+
+
+
+. 
+end of do-file
+
+. graph export "C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\5_PSM_selector\5_overlap_ps.svg", as(svg) name("overlap_ps")
+file C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\5_PSM_selector\5_overlap_ps.svg saved as SVG format
+
+. graph export "C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\5_PSM_selector\5_loveplot.svg", as(svg) name("loveplot")
+file C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\5_PSM_selector\5_loveplot.svg saved as SVG format
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\5_PSM_selector.log
+  log type:  text
+ closed on:  28 Mar 2026, 09:47:33
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,1912 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\3_Matching_exacto_selector.log
+  log type:  text
+ opened on:  28 Mar 2026, 08:59:43
+
+. do "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\TALLER 1 - ME-PSM\3_Matching_exacto_sele
+> ctor.do"
+
+. /*------------------------------------------------------------------------------
+> Taller adicional 3 (versión definitiva): Selector automático para Matching Exacto / CEM
+> Autor: (Daniel + ChatGPT)
+> 
+> IDEA CENTRAL (alineada con guías de diseño):
+> - Separar "DISEÑO" (matching/weighting) de "ANÁLISIS" (estimación del efecto).
+> - En DISEÑO, NO usamos el outcome para rankear (ni ATET ni SE_boot).  → evita optimizar hacia resultados.
+> - Elegimos entre candidatos usando:
+>     (i) Balance (SMD + L1),
+>     (ii) Soporte/precisión-proxy (ESS de controles, N1 retenidos).
+> - Recién después, para el método ganador, estimamos ATET y su SE.
+> 
+> Notas:
+> - max|SMD| <= 0.10 es una regla común; puede ser exigente cuando tomás el máximo sobre muchas covariables.
+>   Si priorizás soporte (más N/ESS) podés relajar a 0.15 o 0.20, explicitando el trade-off.
+> - CEM: el efecto se estima usando cem_weights; si queda desbalance residual dentro de bins, podés hacer
+>   ajuste por modelo con esos pesos (opcional y transparente).
+> 
+> Requisitos:
+> - Dataset hh_98.dta en el working directory (o ajustar ruta).
+> - Paquete CEM instalado: ssc install cem
+> 
+> Sobre tus decisiones concretas:
+> 
+> 1) max|SMD| ≤ 0.10 como default está perfecto, con comentario de que 0.20 prioriza soporte. En el PDF está tal cual la interpretación: 0.10 puede ser exigente cuan
+> do tomás el "máximo" sobre muchas covariables, y relajar a 0.20 puede cambiar el ganador porque entra más soporte. 
+> 
+> 2) No linealidades (cuadráticos, interacciones): sí las recomiendo como diagnóstico de balance (no como "meterlas en el outcome sí o sí"). La motivación también es
+> tá en el PDF: podés balancear medias pero no balancear partes relevantes de la distribución; por eso mirar transformaciones ayuda. Yo te lo dejo como toggle ON/OFF
+> .
+> 
+> 3) L1: sí, la mantendría. Es un resumen multivariado natural en esquemas tipo CEM/estratos y te refleja composición por estratos. Yo la calculo tanto para CEM como
+>  para exact matching (en el espacio de estratos).
+> 
+> 4) "Core covariables" con umbral más estricto: conceptualmente es muy defendible (Stuart lo menciona: priorizar covariables pronósticas), pero exige que vos defina
+> s cuáles son "core". Para no romper tu idea de automatización, lo dejé implementado como toggle (USE_CORE) pero apagado por defecto.
+> 
+> CORRECCIÓN CLAVE (pedido por el usuario):
+> - Si USE_CORE==1, TODO el trabajo (DISEÑO + EVALUACIÓN de balance) se hace SOLO con Xcore.
+>   → En ese caso max|SMD| se calcula solo sobre Xcore (y, si ADD_SQ==1, solo sobre sus no-linealidades).
+>   → Por construcción, maxsmd == maxcore.
+> - Si USE_CORE==0, TODO el trabajo se hace con Xbal (y no-linealidades si ADD_SQ==1).
+> 
+> ----------------------------------------------------------------------*/
+. 
+. 
+. **# Directorio de trabajo comun
+. 
+. clear all
+
+. set more off
+
+. set trace off
+
+. set rmsg off
+
+. 
+. global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+
+. 
+. local username = c(username)
+
+. display "`username'"
+Equipo
+
+. 
+. local username = c(username)
+
+. 
+. if "`username'" == "Equipo" {
+.      global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+. }
+
+. else if "`username'" == "dmendez" {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+. }
+
+. else {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres"
+. }
+
+. 
+. 
+. *---------------------------
+. * 0) Directorio y datos
+. *---------------------------
+. 
+. use "$seteo\Directorio común bases\hh_98.dta", clear 
+
+. set more off
+
+. set trace off
+
+. set rmsg off
+
+. 
+. 
+. *========================
+. * 1) Variables del taller
+. *========================
+. 
+. describe 
+
+Contains data from C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\Directorio común bases\hh_9
+> 8.dta
+ Observations:         1,129                  
+    Variables:            24                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nh              long    %12.0g                HH ID
+year            byte    %8.0g                 Year of observation
+villid          byte    %8.0g                 Village ID
+thanaid         byte    %8.0g                 Thana ID
+agehead         byte    %8.0g                 Age of HH head: years
+sexhead         byte    %8.0g                 Gender of HH head: 1=M, 0=F
+educhead        byte    %8.0g                 Education of HH head: years
+famsize         byte    %8.0g                 HH size
+hhland          float   %9.0g                 HH land: decimals
+hhasset         double  %12.0g                HH total asset: Tk.
+expfd           float   %9.0g                 HH per capita food expenditure: Tk/year
+expnfd          float   %9.0g                 HH per capita nonfood expenditure: Tk/year
+exptot          float   %9.0g                 HH per capita total expenditure: Tk/year
+dmmfd           byte    %8.0g                 HH has male microcredit participant: 1=Y, 0=N
+dfmfd           byte    %8.0g                 HH has female microcredit participant: 1=Y, 0=N
+weight          float   %9.0g                 HH sampling weight
+vaccess         byte    %8.0g                 Village is accessible by road all year: 1=Y, 0=N
+pcirr           float   %9.0g                 Proportion of village land irrigated
+rice            float   %9.0g                 Village price of rice: Tk./kg
+wheat           float   %9.0g                 Village price of wheat: Tk./kg
+milk            float   %9.0g                 Village price of milk: Tk./liter
+potato          float   %9.0g                 Village price of potato: Tk./kg
+egg             float   %9.0g                 Village price of egg: Tk./4 counts
+oil             float   %9.0g                 Village price of edible oil: Tk./kg
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. gen lexptot = ln(1+exptot)
+
+. gen lnland  = ln(1+hhland/100)
+
+. 
+. global Y lexptot
+
+. global D dfmfd
+
+. 
+. * --- Covariables completas (modo Xbal) ---
+. global Xbal ///
+>     sexhead ///
+>     vaccess ///
+>     agehead ///
+>     educhead ///
+>     lnland ///
+>     pcirr ///
+>     rice ///
+>     wheat ///
+>     milk ///
+>     oil ///
+>     egg
+
+. 
+. summarize $Xbal
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     sexhead |      1,129    .9078831    .2893191          0          1
+     vaccess |      1,129    .8352524     .371117          0          1
+     agehead |      1,129     46.0124    12.67865         18         95
+    educhead |      1,129    2.317095     3.47617          0         16
+      lnland |      1,129    .3785037    .5058872    .001998   3.763059
+-------------+---------------------------------------------------------
+       pcirr |      1,129    .5603686    .3320238          0        .99
+        rice |      1,129    10.28298    1.566328   6.879596    15.4509
+       wheat |      1,129    7.466872    .8467278   5.413453   9.473542
+        milk |      1,129    10.89583    3.381805   6.766816   20.30045
+         oil |      1,129    39.40337    4.008882   23.00717   50.75112
+-------------+---------------------------------------------------------
+         egg |      1,129    1.953326    .3740207   1.353363   2.706726
+
+. 
+. * --- Core set ---
+. global Xcore sexhead vaccess agehead educhead lnland pcirr
+
+. 
+. * Toggle: si USE_CORE==1, TODO el trabajo usa Xcore (diseño + balance). Default: 0.
+. global USE_CORE 1
+
+. 
+. * Set base efectivo (según modo) para:
+. *   - Construir estratos/bins en DISEÑO (Exact y CEM)
+. *   - Evaluar balance en DISEÑO
+. global Xbase ""
+
+. if ($USE_CORE==1) global Xbase $Xcore
+
+. else             global Xbase $Xbal
+
+. 
+. * Variables efectivamente usadas para CEM/Exact en DISEÑO
+. global Xmatch $Xbase
+
+. 
+. * --- Variables extra (solo relevantes cuando USE_CORE==0 / modo Xbal) ---
+. global Xextra_match rice wheat milk oil egg
+
+. 
+. * --- Continuas: dependen del set elegido (sirven para cuadrados y para Exact bins) ---
+. global Xcont_core agehead educhead lnland pcirr
+
+. global Xcont_xbal  agehead educhead lnland pcirr rice wheat milk oil egg
+
+. global Xcont ""
+
+. if ($USE_CORE==1) global Xcont $Xcont_core
+
+. else             global Xcont $Xcont_xbal
+
+. 
+. * --- Binning de variables extra en EXACT (modo Xbal): un poco más grueso que las core ---
+. * S1: core (lnland/pcirr) usa 4 bins → extra usa 3
+. * S2: core (lnland/pcirr) usa 3 bins → extra usa 2
+. global EXTRA_NQ_S1 3
+
+. global EXTRA_NQ_S2 2
+
+. 
+. 
+. *========================
+. * 2) Parámetros del selector (DISEÑO)
+. *========================
+. * Umbral principal para max|SMD|
+. global SMD_THR 0.10
+
+. 
+. * Umbral alternativo (solo para mostrar sensibilidad, NO para seleccionar por defecto)
+. global SMD_THR_RELAX 0.20
+
+. 
+. * Si USE_CORE=1:
+. global SMD_THR_CORE  0.10
+
+. global SMD_THR_OTHER 0.20
+
+. 
+. 
+. * Transformaciones para balance (cuadráticos / interacciones): OFF por defecto
+. * global ADD_SQ 0 = medida desactivada.
+. global ADD_SQ 0
+
+. 
+. * --- Ajuste automático de umbrales cuando el set de balance incluye no-linealidades ---
+. * Regla práctica: con cuadrados/interacciones el max|SMD| como hard rule se vuelve más exigente.
+. if ($ADD_SQ==1) {
+.     global SMD_THR 0.20
+.     global SMD_THR_RELAX 0.30
+. }
+
+. 
+. * (Opcional) Love plot SMD del ganador: ON por defecto
+. global PLOT_WINNER 1
+
+. 
+. 
+. *========================
+. * 3) Muestra base (completa) para comparar candidatos de forma justa
+. *========================
+. * OJO: si dejás missings, el balance puede ser incomparable entre candidatos.
+. *      Acá usamos complete-case en Y, D y en el set efectivo (Xbase),
+. *      que coincide con el universo de DISEÑO + BALANCE del modo elegido.
+. 
+. foreach v of global Xbase {
+  2.     drop if missing(`v')
+  3. }
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+
+. drop if missing($Y, $D)
+(0 observations deleted)
+
+. 
+. * Guardar base limpia
+. tempfile base
+
+. save `base', replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_4820_000001.tmp not found)
+file C:\Users\Equipo\AppData\Local\Temp\ST_4820_000001.tmp saved as .dta format
+
+. 
+. 
+. *========================
+. * 4) (Opcional) Expandir set de balance con no-linealidades
+. *========================
+. use `base', clear
+
+. 
+. local Xextra ""
+
+. global Xsq ""
+
+. 
+. if ($ADD_SQ==1) {
+.     foreach v of global Xcont {
+  2.         capture drop `v'_sq
+  3.         gen double `v'_sq = `v'^2
+  4.         local Xextra "`Xextra' `v'_sq"
+  5.         global Xsq $Xsq `v'_sq
+  6.     }
+. }
+
+. 
+. * Set final de evaluación de balance (según modo):
+. * - Core mode: Xeval = Xcore (+ cuadrados si ADD_SQ==1)
+. * - Xbal mode: Xeval = Xbal  (+ cuadrados si ADD_SQ==1)
+. global Xeval $Xbase `Xextra'
+
+. global Xother ""
+
+. if ($USE_CORE==0) {
+.     * Variables no-core (solo informativo): Xeval \ Xcore
+.     local tmp : list global Xeval - global Xcore
+.     global Xother `tmp'
+. }
+
+. 
+. 
+. 
+. save `base', replace
+file C:\Users\Equipo\AppData\Local\Temp\ST_4820_000001.tmp saved as .dta format
+
+. 
+. 
+. *========================
+. * 5) Helpers: SMD, ESS, L1
+. *========================
+. capture program drop _smd_one
+
+. program define _smd_one, rclass
+  1.     * SMD con pesos ATT para controles; tratados peso=1.
+.     syntax varname, WVAR(name) IFCOND(string)
+  2. 
+.     tempname m1 s1 m0 s0 sp
+  3.     quietly summarize `varlist' if `ifcond' & $D==1
+  4.     scalar `m1' = r(mean)
+  5.     scalar `s1' = r(sd)
+  6.     if (missing(`s1')) scalar `s1' = 0
+  7. 
+.     quietly summarize `varlist' [aw=`wvar'] if `ifcond' & $D==0
+  8.     scalar `m0' = r(mean)
+  9.     scalar `s0' = r(sd)
+ 10.     if (missing(`s0')) scalar `s0' = 0
+ 11. 
+.     scalar `sp' = sqrt((`s1'^2 + `s0'^2)/2)
+ 12.     if (missing(`sp') | `sp'==0) return scalar smd = 0
+ 13.     else return scalar smd = (`m1' - `m0')/`sp'
+ 14. end
+
+. 
+. 
+. capture program drop _ess_controls
+
+. program define _ess_controls, rclass
+  1.     * ESS de controles con pesos w: (sum w)^2 / sum(w^2)
+.     syntax, WVAR(name) IFCOND(string)
+  2. 
+.     tempname sw sw2
+  3.     quietly summarize `wvar' if `ifcond' & $D==0, meanonly
+  4.     scalar `sw' = r(sum)
+  5. 
+.     tempvar w2
+  6.     gen double `w2' = (`wvar')^2 if `ifcond' & $D==0
+  7.     quietly summarize `w2' if `ifcond' & $D==0, meanonly
+  8.     scalar `sw2' = r(sum)
+  9.     drop `w2'
+ 10. 
+.     if (`sw2'==0) return scalar ess0 = .
+ 11.     else return scalar ess0 = (`sw'^2)/`sw2'
+ 12. end
+
+. 
+. 
+. capture program drop eval_balance
+
+. program define eval_balance, rclass
+  1.     * Calcula: max|SMD| y mean|SMD| sobre Xeval (Xcore si USE_CORE==1, Xbal si USE_CORE==0).
+.     * Además: max|SMD| sobre el subconjunto core y, si aplica, sobre el subconjunto no-core.
+.     * Nota: por pedido del usuario, NO calcula VR ni KS.
+.     syntax, MATCHED(name) WATT(name)
+  2. 
+.     local ifc "`matched'==1"
+  3. 
+.     tempname maxa meana maxcore maxother
+  4.     scalar `maxa'     = 0
+  5.     scalar `meana'    = 0
+  6.     scalar `maxcore'  = 0
+  7.     scalar `maxother' = .
+  8. 
+.     local var_maxa    ""
+  9.     local var_maxcore ""
+ 10.     local var_maxother ""
+ 11. 
+.     local k = 0
+ 12. 
+.     * --- Máximo y promedio absoluto en el set evaluado (Xeval) ---
+.     foreach x of global Xeval {
+ 13.         quietly _smd_one `x', wvar(`watt') ifcond("`ifc'")
+ 14.         scalar smd = r(smd)
+ 15.         scalar abs_smd = abs(smd)
+ 16. 
+.         scalar `meana' = `meana' + abs_smd
+ 17.         if (abs_smd > `maxa') {
+ 18.             scalar `maxa' = abs_smd
+ 19.             local var_maxa "`x'"
+ 20.         }
+ 21.         local ++k
+ 22.     }
+ 23.     if (`k'>0) scalar `meana' = `meana'/`k'
+ 24. 
+.     * --- Core set (siempre, para poder aplicar umbrales diferenciales) ---
+.     foreach x of global Xcore {
+ 25.         quietly _smd_one `x', wvar(`watt') ifcond("`ifc'")
+ 26.         scalar abs_smd = abs(r(smd))
+ 27.         if (abs_smd > `maxcore') {
+ 28.             scalar `maxcore' = abs_smd
+ 29.             local var_maxcore "`x'"
+ 30.         }
+ 31.     }
+ 32. 
+.     * --- No-core (solo si existe Xother) ---
+.     if ("$Xother"!="") {
+ 33.         scalar `maxother' = 0
+ 34.         foreach x of global Xother {
+ 35.             quietly _smd_one `x', wvar(`watt') ifcond("`ifc'")
+ 36.             scalar abs_smd = abs(r(smd))
+ 37.             if (abs_smd > `maxother') {
+ 38.                 scalar `maxother' = abs_smd
+ 39.                 local var_maxother "`x'"
+ 40.             }
+ 41.         }
+ 42.     }
+ 43. 
+.     return scalar maxsmd   = `maxa'
+ 44.     return scalar meansmd  = `meana'
+ 45.     return scalar maxcore  = `maxcore'
+ 46.     return scalar maxother = `maxother'
+ 47. 
+.     return local var_maxsmd   "`var_maxa'"
+ 48.     return local var_maxcore  "`var_maxcore'"
+ 49.     return local var_maxother "`var_maxother'"
+ 50. 
+.     quietly _ess_controls, wvar(`watt') ifcond("`ifc'")
+ 51.     return scalar ess0 = r(ess0)
+ 52. end
+
+. 
+. *========================
+. * 6) Métodos candidatos: Exact (S1/S2) y CEM (autocuts)
+. *========================
+. 
+. * --- Helper: construir estratos para Exact (S1/S2) respetando USE_CORE y ADD_SQ ---
+. capture program drop make_stratum_exact
+
+. program define make_stratum_exact
+  1.     syntax, SCHEME(string) STRATUM(name)
+  2. 
+.     tempvar agebin edubin landbin pcirrbin
+  3. 
+.     if ("`scheme'"=="S1") {
+  4.         recode agehead (min/25=1) (26/35=2) (36/45=3) (46/55=4) (56/65=5) (66/75=6) (76/max=7), gen(`agebin')
+  5.         recode educhead (0=0) (1/4=1) (5/8=2) (9/max=3), gen(`edubin')
+  6.         xtile `landbin'  = lnland, nq(4)
+  7.         xtile `pcirrbin' = pcirr,  nq(4)
+  8.     }
+  9.     else if ("`scheme'"=="S2") {
+ 10.         recode agehead (min/35=1) (36/50=2) (51/65=3) (66/max=4), gen(`agebin')
+ 11.         recode educhead (0/2=0) (3/6=1) (7/max=2), gen(`edubin')
+ 12.         xtile `landbin'  = lnland, nq(3)
+ 13.         xtile `pcirrbin' = pcirr,  nq(3)
+ 14.     }
+ 15.     else {
+ 16.         di as error "scheme inválido. Usá S1 o S2."
+ 17.         exit 198
+ 18.     }
+ 19. 
+.     * Base del grupo (core siempre presente)
+.     local groupvars "sexhead vaccess `agebin' `edubin' `landbin' `pcirrbin'"
+ 20. 
+.     * Extra vars solo si USE_CORE==0 (modo Xbal): discretización un poco más gruesa
+.     if ($USE_CORE==0) {
+ 21.         foreach v of global Xextra_match {
+ 22.             tempvar b_`v'
+ 23.             if ("`scheme'"=="S1") xtile `b_`v'' = `v', nq($EXTRA_NQ_S1)
+ 24.             else                     xtile `b_`v'' = `v', nq($EXTRA_NQ_S2)
+ 25.             local groupvars "`groupvars' `b_`v''"
+ 26.         }
+ 27.     }
+ 28. 
+.     * Cuadráticos (bins de cuadrados) si ADD_SQ==1
+.     if ($ADD_SQ==1) {
+ 29.         * Asegurar que existan los cuadrados para Xcont
+.         foreach v of global Xcont {
+ 30.             capture confirm variable `v'_sq
+ 31.             if (_rc) gen double `v'_sq = `v'^2
+ 32.         }
+ 33. 
+.         tempvar age2bin edu2bin land2bin pcirr2bin
+ 34.         if ("`scheme'"=="S1") {
+ 35.             xtile `age2bin'   = agehead_sq,   nq(7)
+ 36.             xtile `edu2bin'   = educhead_sq,  nq(4)
+ 37.             xtile `land2bin'  = lnland_sq,    nq(4)
+ 38.             xtile `pcirr2bin' = pcirr_sq,     nq(4)
+ 39.         }
+ 40.         else {
+ 41.             xtile `age2bin'   = agehead_sq,   nq(4)
+ 42.             xtile `edu2bin'   = educhead_sq,  nq(3)
+ 43.             xtile `land2bin'  = lnland_sq,    nq(3)
+ 44.             xtile `pcirr2bin' = pcirr_sq,     nq(3)
+ 45.         }
+ 46.         local groupvars "`groupvars' `age2bin' `edu2bin' `land2bin' `pcirr2bin'"
+ 47. 
+.         if ($USE_CORE==0) {
+ 48.             foreach v of global Xextra_match {
+ 49.                 tempvar b2_`v'
+ 50.                 if ("`scheme'"=="S1") xtile `b2_`v'' = `v'_sq, nq($EXTRA_NQ_S1)
+ 51.                 else                     xtile `b2_`v'' = `v'_sq, nq($EXTRA_NQ_S2)
+ 52.                 local groupvars "`groupvars' `b2_`v''"
+ 53.             }
+ 54.         }
+ 55.     }
+ 56. 
+.     egen `stratum' = group(`groupvars'), label
+ 57. end
+
+. 
+. 
+. capture program drop exact_atet
+
+. program define exact_atet, rclass
+  1.     * ATET por Exact Matching (estratos), respetando USE_CORE y ADD_SQ.
+.     syntax, SCHEME(string)
+  2. 
+.     tempvar stratum N1 N0 support y1_tmp y0_tmp
+  3. 
+.     quietly make_stratum_exact, scheme(`scheme') stratum(`stratum')
+  4. 
+.     bys `stratum': egen `N1' = total($D==1)
+  5.     bys `stratum': egen `N0' = total($D==0)
+  6.     gen byte `support' = (`N1'>0 & `N0'>0)
+  7. 
+.     preserve
+  8.         keep if `support'==1
+  9. 
+.         gen double `y1_tmp' = $Y if $D==1
+ 10.         gen double `y0_tmp' = $Y if $D==0
+ 11. 
+.         collapse ///
+>             (sum)  N1cell = $D ///
+>             (mean) y1 = `y1_tmp' ///
+>             (mean) y0 = `y0_tmp' ///
+>             , by(`stratum')
+ 12. 
+.         gen diff = y1 - y0
+ 13. 
+.         quietly summarize N1cell, meanonly
+ 14.         scalar N1tot = r(sum)
+ 15. 
+.         gen double w_atet = N1cell/N1tot
+ 16.         gen double c_atet = w_atet*diff
+ 17.         quietly summarize c_atet, meanonly
+ 18.         return scalar atet = r(sum)
+ 19.     restore
+ 20. end
+
+. 
+. 
+. capture program drop exact_atet_boot
+
+. program define exact_atet_boot, rclass
+  1.     syntax, SCHEME(string)
+  2.     quietly exact_atet, scheme(`scheme')
+  3.     return scalar atet = r(atet)
+  4. end
+
+. 
+. 
+. * >>>>> ATE (en el soporte común / estratos con ambos grupos) <<<<<
+. capture program drop exact_ate
+
+. program define exact_ate, rclass
+  1.     * ATE por Exact Matching (estratos), respetando USE_CORE y ADD_SQ.
+.     syntax, SCHEME(string)
+  2. 
+.     tempvar stratum N1 N0 support y1_tmp y0_tmp
+  3. 
+.     quietly make_stratum_exact, scheme(`scheme') stratum(`stratum')
+  4. 
+.     bys `stratum': egen `N1' = total($D==1)
+  5.     bys `stratum': egen `N0' = total($D==0)
+  6.     gen byte `support' = (`N1'>0 & `N0'>0)
+  7. 
+.     preserve
+  8.         keep if `support'==1
+  9. 
+.         gen double `y1_tmp' = $Y if $D==1
+ 10.         gen double `y0_tmp' = $Y if $D==0
+ 11. 
+.         collapse ///
+>             (sum)   N1cell = $D ///
+>             (count) Ncell  = $D ///
+>             (mean)  y1 = `y1_tmp' ///
+>             (mean)  y0 = `y0_tmp' ///
+>             , by(`stratum')
+ 12. 
+.         gen double diff = y1 - y0
+ 13. 
+.         quietly summarize Ncell, meanonly
+ 14.         scalar Ntot = r(sum)
+ 15. 
+.         gen double w_ate = Ncell/Ntot
+ 16.         gen double c_ate = w_ate*diff
+ 17.         quietly summarize c_ate, meanonly
+ 18.         return scalar ate = r(sum)
+ 19.     restore
+ 20. end
+
+. 
+. 
+. capture program drop exact_ate_boot
+
+. program define exact_ate_boot, rclass
+  1.     syntax, SCHEME(string)
+  2.     quietly exact_ate, scheme(`scheme')
+  3.     return scalar ate = r(ate)
+  4. end
+
+. 
+. 
+. * --- CEM: requiere paquete ---
+. capture which cem
+
+. if (_rc) {
+.     di as error "No encuentro el comando cem. Instalalo con: ssc install cem"
+.     exit 499
+. }
+
+. 
+. 
+. *========================
+. * 7) Evaluación de candidatos (DISEÑO): balance + soporte
+. *========================
+. use `base', clear
+
+. 
+. tempfile results
+
+. tempname ph
+
+. 
+. postfile `ph' str8 method str12 spec ///
+>     double maxsmd double meansmd double maxcore double maxother ///
+>     str20 var_maxsmd str20 var_maxcore str20 var_maxother ///
+>     double L1 double L1_cem double ess0 int N1 int N0 using "`results'", replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_4820_000002.tmp not found)
+
+. 
+. 
+. *-------- 7.1 Exact candidates --------
+. foreach sc in S1 S2 {
+  2. 
+.     * Recargar base limpia en cada candidato (evita preserve anidado y arrastres).
+.     use `base', clear
+  3. 
+.     * Construir estratos y pesos ATT (controles ponderados por N1cell/N0cell dentro de estrato)
+.     tempvar stratum N1cell N0cell matched w_att
+  4. 
+.     quietly make_stratum_exact, scheme(`sc') stratum(`stratum')
+  5. 
+.     bys `stratum': egen `N1cell' = total($D==1)
+  6.     bys `stratum': egen `N0cell' = total($D==0)
+  7.     gen byte `matched' = (`N1cell'>0 & `N0cell'>0)
+  8. 
+.     * Pesos ATT: tratados peso=1, controles peso=N1cell/N0cell dentro de estrato
+.     gen double `w_att' = 1
+  9.     replace `w_att' = `N1cell'/`N0cell' if $D==0 & `matched'==1
+ 10. 
+.     quietly count if `matched'==1 & $D==1
+ 11.     scalar N1 = r(N)
+ 12.     quietly count if `matched'==1 & $D==0
+ 13.     scalar N0 = r(N)
+ 14. 
+.     * Si no hay soporte común, posteamos missings y seguimos
+.     if (N1==0 | N0==0) {
+ 15.         scalar maxsmd  = .
+ 16.         scalar meansmd = .
+ 17.         scalar maxcore = .
+ 18.         scalar maxother = .
+ 19.         scalar ess0    = .
+ 20.         scalar L1      = .
+ 21.         local vmaxsmd   ""
+ 22.         local vmaxcore  ""
+ 23.         local vmaxother ""
+ 24.         post `ph' ("Exact") ("`sc'") (maxsmd) (meansmd) (maxcore) (maxother) ("`vmaxsmd'") ("`vmaxcore'") ("`vmaxother'") (L1) (.) (ess0) (N1) (N0)
+ 25.         continue
+ 26.     }
+ 27. 
+.     quietly eval_balance, matched(`matched') watt(`w_att')
+ 28.     scalar maxsmd  = r(maxsmd)
+ 29.     scalar meansmd = r(meansmd)
+ 30.     scalar maxcore = r(maxcore)
+ 31.     scalar ess0    = r(ess0)
+ 32.     scalar maxother = r(maxother)
+ 33.     local vmaxsmd   "`r(var_maxsmd)'"
+ 34.     local vmaxcore  "`r(var_maxcore)'"
+ 35.     local vmaxother "`r(var_maxother)'"
+ 36. 
+.     * L1 (manual) entre distribuciones de estratos en tratados vs controles (en soporte)
+.     keep if `matched'==1
+ 37.     tempvar n1 n0 p1 p0 abs
+ 38.     bys `stratum': egen `n1' = total($D==1)
+ 39.     bys `stratum': egen `n0' = total($D==0)
+ 40.     bys `stratum': keep if _n==1
+ 41. 
+.     quietly summarize `n1', meanonly
+ 42.     scalar N1t = r(sum)
+ 43.     quietly summarize `n0', meanonly
+ 44.     scalar N0t = r(sum)
+ 45. 
+.     if (N1t==0 | N0t==0 | missing(N1t) | missing(N0t)) {
+ 46.         scalar L1 = .
+ 47.     }
+ 48.     else {
+ 49.         gen double `p1'  = `n1'/N1t
+ 50.         gen double `p0'  = `n0'/N0t
+ 51.         gen double `abs' = abs(`p1' - `p0')
+ 52.         quietly summarize `abs', meanonly
+ 53.         scalar L1 = 0.5*r(sum)
+ 54.     }
+ 55. 
+.     post `ph' ("Exact") ("`sc'") (maxsmd) (meansmd) (maxcore) (maxother) ("`vmaxsmd'") ("`vmaxcore'") ("`vmaxother'") (L1) (.) (ess0) (N1) (N0)
+ 56. }
+(260 real changes made)
+(395 observations deleted)
+(584 observations deleted)
+(390 real changes made)
+(193 observations deleted)
+(830 observations deleted)
+
+. 
+. 
+. *-------- 7.2 CEM candidates --------
+. foreach ac in sturges fd scott ss {
+  2. 
+.     use `base', clear
+  3. 
+.     capture drop cem_matched cem_weights cem_strata
+  4. 
+.     local cemvars "$Xmatch"
+  5.     if ($ADD_SQ==1) local cemvars "`cemvars' $Xsq"
+  6. 
+.     cem `cemvars', tr($D) autocuts(`ac')
+  7. 
+.     * Capturar L1 del comando CEM inmediatamente
+.     scalar L1_cem = .
+  8.     capture scalar L1_cem = r(L1)
+  9.     if _rc capture scalar L1_cem = r(l1)
+ 10. 
+.     gen byte   matched = (cem_matched==1)
+ 11.     gen double w_att   = cem_weights
+ 12. 
+.     quietly count if matched==1 & $D==1
+ 13.     scalar N1 = r(N)
+ 14.     quietly count if matched==1 & $D==0
+ 15.     scalar N0 = r(N)
+ 16. 
+.     * Si no hay soporte común, posteamos missings y seguimos
+.     if (N1==0 | N0==0) {
+ 17.         scalar maxsmd  = .
+ 18.         scalar meansmd = .
+ 19.         scalar maxcore = .
+ 20.         scalar ess0    = .
+ 21.         scalar L1      = .
+ 22.         scalar maxother = .
+ 23.         local vmaxsmd   ""
+ 24.         local vmaxcore  ""
+ 25.         local vmaxother ""
+ 26.         post `ph' ("CEM") ("`ac'") (maxsmd) (meansmd) (maxcore) (maxother) ("`vmaxsmd'") ("`vmaxcore'") ("`vmaxother'") (L1) (L1_cem) (ess0) (N1) (N0)
+ 27.         continue
+ 28.     }
+ 29. 
+.     quietly eval_balance, matched(matched) watt(w_att)
+ 30.     scalar maxsmd   = r(maxsmd)
+ 31.     scalar meansmd  = r(meansmd)
+ 32.     scalar maxcore  = r(maxcore)
+ 33.     scalar ess0     = r(ess0)
+ 34.     scalar maxother = r(maxother)
+ 35.     local vmaxsmd   "`r(var_maxsmd)'"
+ 36.     local vmaxcore  "`r(var_maxcore)'"
+ 37.     local vmaxother "`r(var_maxother)'"
+ 38. 
+.     * L1 manual en el espacio de estratos de CEM (por composición de strata)
+.     keep if matched==1
+ 39.     tempvar n1 n0 p1 p0 abs
+ 40.     bys cem_strata: egen `n1' = total($D==1)
+ 41.     bys cem_strata: egen `n0' = total($D==0)
+ 42.     bys cem_strata: keep if _n==1
+ 43. 
+.     quietly summarize `n1', meanonly
+ 44.     scalar N1t = r(sum)
+ 45.     quietly summarize `n0', meanonly
+ 46.     scalar N0t = r(sum)
+ 47. 
+.     if (N1t==0 | N0t==0 | missing(N1t) | missing(N0t)) {
+ 48.         scalar L1 = .
+ 49.     }
+ 50.     else {
+ 51.         gen double `p1'  = `n1'/N1t
+ 52.         gen double `p0'  = `n0'/N0t
+ 53.         gen double `abs' = abs(`p1' - `p0')
+ 54.         quietly summarize `abs', meanonly
+ 55.         scalar L1 = 0.5*r(sum)
+ 56.     }
+ 57. 
+.     post `ph' ("CEM") ("`ac'") (maxsmd) (meansmd) (maxcore) (maxother) ("`vmaxsmd'") ("`vmaxcore'") ("`vmaxother'") (L1) (L1_cem) (ess0) (N1) (N0)
+ 58. }
+
+Matching Summary:
+-----------------
+Number of strata: 656
+Number of matched strata: 96
+
+             0    1
+      All  534  595
+  Matched  195  279
+Unmatched  339  316
+
+
+Multivariate L1 distance: .56365809
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead   7.1e-17  -1.1e-16         0         0         0         0         0
+ vaccess   1.4e-16  -2.2e-16         0         0         0         0         0
+ agehead    .07022    .03573         7         0         0         0         0
+educhead    .01464    .00687         0         0         0         0         0
+  lnland    .11451   -.01949   -.00795         0   -.01869   -.05763    .14561
+   pcirr    .00358    .00237         0         0         0         0         0
+(655 observations deleted)
+(378 observations deleted)
+  0
+  0
+
+Matching Summary:
+-----------------
+Number of strata: 775
+Number of matched strata: 80
+
+             0    1
+      All  534  595
+  Matched  156  201
+Unmatched  378  394
+
+
+Multivariate L1 distance: .47951907
+
+Univariate imbalance:
+
+               L1     mean      min      25%      50%      75%      max
+ sexhead   .02715  -.02715        0        0        0        0        0
+ vaccess   .07062  -.07062        0        0        0        0        0
+ agehead   .03648  -.11681        0        0        0       -2        0
+educhead  3.4e-16  5.6e-17        0        0        0        0        0
+  lnland   .08596   .00229  -.00795        0        0   .01392   .08351
+   pcirr   .04793   .00386        0        0  -.02355        0        0
+(772 observations deleted)
+(277 observations deleted)
+
+Matching Summary:
+-----------------
+Number of strata: 764
+Number of matched strata: 80
+
+             0    1
+      All  534  595
+  Matched  157  192
+Unmatched  377  403
+
+
+Multivariate L1 distance: .47690972
+
+Univariate imbalance:
+
+               L1     mean      min      25%      50%      75%      max
+ sexhead  2.9e-16  5.6e-16        0        0        0        0        0
+ vaccess  2.9e-16  5.6e-16        0        0        0        0        0
+ agehead   .10677  -.03142        0       -1       -2       -2        0
+educhead   .00911   .00911        0        0        0        0        0
+  lnland   .06927  -.00089        0  -.00976        0  -.00445  -.07608
+   pcirr   .02483    .0055        0        0        0        0        0
+(780 observations deleted)
+(269 observations deleted)
+  832
+  -15288
+  -27733.33333
+  -39260
+  -50419.2
+  -61394.66667
+  -72265.14286
+  -83070
+  -93831.11111
+  -104561.6
+  -115269.8182
+  -125961.3333
+  -136640
+  -147308.5714
+  -157969.0667
+  -168623
+  -179271.5294
+  -189915.5556
+  -200555.7895
+  -211192.8
+  -221827.0476
+  -232458.9091
+  -243088.6957
+  -253716.6667
+  -264343.04
+  -274968
+  -285591.7037
+  -296214.2857
+  -306835.8621
+  -317456.5333
+  -328076.3871
+  -338695.5
+  -349313.9394
+  -359931.7647
+  -370549.0286
+  -381165.7778
+  -391782.0541
+  -402397.8947
+  -413013.3333
+  -423628.4
+  -434243.122
+  -444857.5238
+  -455471.6279
+  -466085.4545
+  -476699.0222
+  -487312.3478
+  -497925.4468
+  -508538.3333
+  -519151.0204
+  -529763.52
+  -540375.8431
+  -550988
+  -561600
+  -572211.8519
+  -582823.5636
+  -593435.1429
+  -604046.5965
+  -614657.931
+  -625269.1525
+  -635880.2667
+  -646491.2787
+  -657102.1935
+  -667713.0159
+  -678323.75
+  -688934.4
+  -699544.9697
+  -710155.4627
+  -720765.8824
+  -731376.2319
+  -741986.5143
+  -752596.7324
+  -763206.8889
+  -773816.9863
+  -784427.027
+  -795037.0133
+  -805646.9474
+  -816256.8312
+  -826866.6667
+  -837476.4557
+  -848086.2
+  -858695.9012
+  -869305.561
+  -879915.1807
+  -890524.7619
+  -901134.3059
+  -911743.814
+  -922353.2874
+  -932962.7273
+  -943572.1348
+  -954181.5111
+  -964790.8571
+  -975400.1739
+  -986009.4624
+  -996618.7234
+  -1007227.958
+  -1017837.167
+  -1028446.351
+  -1039055.51
+  -1049664.646
+  1488
+  -50220
+  -90272
+  -127410
+  -163382.4
+  -198772
+  -233828.5714
+  -268677
+  -303386.6667
+  -337999.2
+  -372541.0909
+  -407030
+  -441478.1538
+  -475894.2857
+  -510284.8
+  -544654.5
+  -579007.0588
+  -613345.3333
+  -647671.5789
+  -681987.6
+  -716294.8571
+  -750594.5455
+  -784887.6522
+  -819175
+  -853457.28
+  -887735.0769
+  -922008.8889
+  -956279.1429
+  -990546.2069
+  -1024810.4
+  -1059072
+  -1093331.25
+  -1127588.364
+  -1161843.529
+  -1196096.914
+  -1230348.667
+  -1264598.919
+  -1298847.789
+  -1333095.385
+  -1367341.8
+  -1401587.122
+  -1435831.429
+  -1470074.791
+  -1504317.273
+  -1538558.933
+  -1572799.826
+  -1607040
+  -1641279.5
+  -1675518.367
+  -1709756.64
+  -1743994.353
+  -1778231.538
+  -1812468.226
+  -1846704.444
+  -1880940.218
+  -1915175.571
+  -1949410.526
+  -1983645.103
+  -2017879.322
+  -2052113.2
+  -2086346.754
+  -2120580
+  -2154812.952
+  -2189045.625
+  -2223278.031
+  -2257510.182
+  -2291742.09
+  -2325973.765
+  -2360205.217
+  -2394436.457
+  -2428667.493
+  -2462898.333
+  -2497128.986
+  -2531359.459
+  -2565589.76
+  -2599819.895
+  -2634049.87
+  -2668279.692
+  -2702509.367
+  -2736738.9
+  -2770968.296
+  -2805197.561
+  -2839426.699
+  -2873655.714
+  -2907884.612
+  -2942113.395
+  -2976342.069
+  -3010570.636
+  -3044799.101
+  -3079027.467
+  -3113255.736
+  -3147483.913
+  -3181712
+  -3215940
+  -3250167.916
+  -3284395.75
+  -3318623.505
+  -3352851.184
+  -3387078.788
+  1.522010457
+  -107.8249283
+  -95.8772137
+  -135.960533
+  -175.3813459
+  -160.3966942
+  -176.9048021
+  -176.2263451
+  -168.3240569
+  -181.380334
+  -183.2922308
+  -176.487772
+  -167.1281446
+  -199.5622003
+  -165.1327374
+  -174.9230899
+  -177.920927
+  -168.8774948
+  -188.2667708
+  -188.4651712
+  -185.1683011
+  -187.9406001
+  -217.7805481
+  -193.2534997
+  -192.5569911
+  -182.7538176
+  -194.3854126
+  -214.4461364
+  -199.9303249
+  -185.1320627
+  -229.8051241
+  -244.5612245
+  -209.2215459
+  -211.3257865
+  -235.7196347
+  -216.6165177
+  -216.7215838
+  -220.9682648
+  -202.4552071
+  -229.6940462
+  -247.0357935
+  -245.4780618
+  -240.3800319
+  -230.7220289
+  -251.6435599
+  -307.9251872
+  -237.5631641
+  -266.6859504
+  -292.5867665
+  -295.4301231
+  -303.0458861
+  -293.00349
+  -284.4375424
+  -295.3762111
+  -315.9265858
+  -300.5894032
+  -305.8367169
+  -306.2889945
+  -338.9097541
+  -348.6537359
+  -313.5895197
+  -289.5863198
+  -377.9510236
+  -371.9301316
+  -317.4339946
+  -324.5389227
+  -325.5091116
+  -366.9754249
+  -348.2521431
+  -358.3033998
+  -332.3405842
+  -339.8048013
+  -361.5900115
+  -346.438714
+  -350.4383201
+  -354.5768968
+  -362.0472649
+  -369.5166911
+  -376.9852111
+  -384.4528588
+  -391.9196667
+  -399.3856653
+  -406.8508841
+  -414.3153507
+  -421.7790918
+  -429.2421327
+  -436.7044975
+  -444.1662092
+  -451.62729
+  -459.0877607
+  -466.5476416
+  -474.0069518
+  -481.4657098
+  -488.9239332
+  -496.3816389
+  -503.838843
+  -511.295561
+  -518.751808
+  -526.207598
+  35.25
+  -4055.4375
+  -7667.15625
+  -7288.007812
+  -10067.95313
+  -11258.46094
+  -13256.89286
+  -12951.98438
+  -15090.75521
+  -16988.21094
+  -18854.42045
+  -21097.375
+  -22775.30769
+  -24720.01674
+  -26567
+  -25239.08984
+  -27053.23897
+  -28865.35417
+  -30675.75658
+  -32484.70313
+  -34292.40179
+  -36099.02273
+  -37904.70652
+  -39709.57031
+  -41513.7125
+  -43317.21635
+  -45120.15278
+  -46922.58259
+  -48724.55819
+  -50526.125
+  -52327.32258
+  -54128.18555
+  -55928.74432
+  -57729.02574
+  -59529.05357
+  -61328.84896
+  -63128.43074
+  -64927.81579
+  -66727.01923
+  -68526.05469
+  -70324.93445
+  -72123.66964
+  -73922.27035
+  -75720.74574
+  -77519.10417
+  -79317.35326
+  -81115.5
+  -82913.55078
+  -84711.51148
+  -86509.3875
+  -88307.18382
+  -90104.90505
+  -91902.55542
+  -93700.13889
+  -95497.65909
+  -97295.11942
+  -99092.52303
+  -100889.8728
+  -102687.1716
+  -104484.4219
+  -106281.626
+  -108078.7863
+  -109875.9048
+  -111672.9834
+  -113470.024
+  -115267.0284
+  -117063.9981
+  -118860.9347
+  -120657.8397
+  -122454.7143
+  -124251.5599
+  -126048.3776
+  -127845.1687
+  -129641.9341
+  -131438.675
+  -133235.3923
+  -135032.0869
+  -136828.7596
+  -138625.4114
+  -140422.043
+  -142218.6551
+  -144015.2485
+  -145811.8238
+  -147608.3817
+  -149404.9228
+  -151201.4477
+  -152997.9569
+  -154794.451
+  -156590.9305
+  -158387.3958
+  -160183.8475
+  -161980.286
+  -163776.7117
+  -165573.125
+  -167369.5263
+  -169165.916
+  -170962.2945
+  -172758.662
+  -174555.0189
+  637.9378284
+  -124806.7675
+  -189782.5451
+  -228367.4625
+  -262331.5722
+  -297542.0077
+  -324905.2263
+  -341208.5128
+  -362866.257
+  -382409.5125
+  -405086.8193
+  -423494.9991
+  -438006.1597
+  -452123.8932
+  -461276.556
+  -473715.1418
+  -492571.7878
+  -497429.948
+  -523399.8299
+  -540992.4865
+  -542188.5392
+  -556230.5915
+  -577935.8217
+  -585175.7608
+  -599856.5596
+  -600269.479
+  -622117.1337
+  -615347.1055
+  -633363.0349
+  -624011.3572
+  -643752.9725
+  -641919.956
+  -654961.8431
+  -639684.7055
+  -655195.3555
+  -670511.7747
+  -671583.2711
+  -689649.5921
+  -702412.8787
+  -718718.4026
+  -656898.8917
+  -664417.5806
+  -679706.7236
+  -691387.1008
+  -680299.5206
+  -695699.2272
+  -705396.3605
+  -712654.9534
+  -725671.7368
+  -739133.3463
+  -708314.5202
+  -713058.5206
+  -727170.9508
+  -735618.9165
+  -738420.4399
+  -751815.4267
+  -764485.7686
+  -733094.3039
+  -735104.2947
+  -746450.742
+  -758644.9591
+  -770974.8204
+  -773830.4354
+  -785352.3484
+  -795458.2906
+  -806275.0354
+  -746222.0856
+  -744961.1808
+  -755568.0044
+  -762175.2914
+  -772535.8759
+  -780299.9513
+  -785959.1407
+  -792804.9514
+  -802256.3612
+  -812233.3032
+  -822130.0922
+  -828773.3146
+  -839721.3892
+  -848440.9816
+  -729939.414
+  -729957.0807
+  -739673.8467
+  -742896.113
+  -751359.5714
+  -760861.2234
+  -767979.0911
+  -768064.382
+  -777615.2634
+  -773087.7097
+  -781255.6068
+  -790446.0577
+  -795921.7597
+  -798652.3518
+  -804675.3457
+  -812726.6077
+  -820972.78
+  -828286.8735
+  -837879.0844
+  9133.761685
+  -193619.5249
+  -221161.1017
+  -529850.2602
+  -374834.3974
+  -478711.8569
+  -439050.2342
+  -669578.7291
+  -428969.8247
+  -464905.7149
+  -585206.322
+  -749754.8575
+  -589550.8194
+  -578712.438
+  -555345.7703
+  -871578.4573
+  -558252.0284
+  -613912.004
+  -712253.8379
+  -801840.6641
+  -758736.5575
+  -864403.4765
+  -930564.1215
+  -1077603.668
+  -968985.8399
+  -953247.4917
+  -1035030.873
+  -1086472.824
+  -1003974.945
+  -1295974.569
+  -1303720.53
+  -1487038.061
+  -1745649.297
+  -1524948.355
+  -1613481.275
+  -1714306.245
+  -1974570.235
+  -1791369.724
+  -1745084.063
+  -1907854.289
+  -2059757.028
+  -1965090.623
+  -1946079.883
+  -2156746.139
+  -2244639.755
+  -2248646.479
+  -2214124.699
+  -2288050.856
+  -2353791.425
+  -2598289.941
+  -2460035.603
+  -2524269.865
+  -2605790.272
+  -2604454.994
+  -2927001.01
+  -2930607.043
+  -2995808.533
+  -3018651.54
+  -3067401.226
+  -2933946.837
+  -3035354.581
+  -3102032.139
+  -3033545.401
+  -3101577.346
+  -3187242.622
+  -3592539.421
+  -3617413.079
+  -3650146.808
+  -3710714.452
+  -3749215.329
+  -3824676.397
+  -3733702.399
+  -3798640.323
+  -3874170.584
+  -3957620.248
+  -4036568.385
+  -4344960.741
+  -4400089.663
+  -4391921.69
+  -4186529.878
+  -4053950.124
+  -4151223.725
+  -4132186.186
+  -4203400.264
+  -4297926.011
+  -4282889.383
+  -4366565.185
+  -4768684.191
+  -4863051.257
+  -4662738.644
+  -4647815.843
+  -4692057.075
+  -4804141.157
+  -4869157.472
+  -4882453.533
+  -4946925.059
+  -4992595.61
+  -5129192.851
+  -5269493.117
+
+Matching Summary:
+-----------------
+Number of strata: 1078
+Number of matched strata: 19
+
+             0    1
+      All  534  595
+  Matched   20   22
+Unmatched  514  573
+
+
+Multivariate L1 distance: 7.980e-17
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead   5.9e-17   1.1e-16         0         0         0         0         0
+ vaccess         0         0         0         0         0         0         0
+ agehead   8.3e-17  -1.4e-14         0         0         0         0         0
+educhead   5.9e-17  -2.8e-17         0         0         0         0         0
+  lnland   6.9e-17    .00652         0    .00985    .00976    .00957         0
+   pcirr   7.3e-17         0         0         0         0         0         0
+(1,087 observations deleted)
+(23 observations deleted)
+
+. 
+. 
+. *========================
+. * 7.3) Cerrar postfile y cargar tabla de resultados
+. *========================
+. postclose `ph'
+
+. 
+. * (Muy recomendado) borrar scalars homónimos para evitar confusiones
+. capture scalar drop maxsmd meansmd maxcore maxother L1 L1_cem ess0 N1 N0
+
+. 
+. use "`results'", clear
+
+. describe
+
+Contains data from C:\Users\Equipo\AppData\Local\Temp\ST_4820_000002.tmp
+ Observations:             6                  
+    Variables:            14                  28 Mar 2026 08:59
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+method          str8    %9s                   
+spec            str12   %12s                  
+maxsmd          double  %10.0g                
+meansmd         double  %10.0g                
+maxcore         double  %10.0g                
+maxother        double  %10.0g                
+var_maxsmd      str20   %20s                  
+var_maxcore     str20   %20s                  
+var_maxother    str20   %20s                  
+L1              double  %10.0g                
+L1_cem          double  %10.0g                
+ess0            double  %10.0g                
+N1              int     %8.0g                 
+N0              int     %8.0g                 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. list, sep(0)
+
+     +--------------------------------------------------------------------------------------------------------------------------------------------------+
+     | method      spec      maxsmd     meansmd     maxcore   maxother   var_ma~d   var_ma~e   var_ma~r          L1      L1_cem        ess0    N1    N0 |
+     |--------------------------------------------------------------------------------------------------------------------------------------------------|
+  1. |  Exact        S1   .08391462   .03187498   .08391462          .     lnland     lnland              .31459846           .   164.25557   409   325 |
+  2. |  Exact        S2   .16972525   .05741453   .16972525          .     lnland     lnland              .29151639           .   268.99452   505   431 |
+  3. |    CEM   sturges   .10243258   .01952221   .10243258          .     lnland     lnland              .28001103   .56365809   124.69766   279   195 |
+  4. |    CEM        fd   .21136248    .0567123   .21136248          .    vaccess    vaccess              .30836204   .47951907   86.146064   201   156 |
+  5. |    CEM     scott   .01843776   .00566012   .01843776          .      pcirr      pcirr              .29558121   .47690972   63.592427   192   157 |
+  6. |    CEM        ss    .1872963   .03121605    .1872963          .     lnland     lnland              .12272727   7.980e-17        17.6    22    20 |
+     +--------------------------------------------------------------------------------------------------------------------------------------------------+
+
+. 
+. 
+. *=================================
+. * 8) Selección automática (DISEÑO)
+. *=================================
+. 
+. gen byte pass_smd = (maxsmd <= $SMD_THR)
+
+. 
+. gen byte pass_core = 1
+
+. if ($USE_CORE==1) {
+.     * En core mode, como maxsmd==maxcore por construcción, esto termina siendo:
+.     * pass_core = (maxsmd <= SMD_THR_CORE)
+.     replace pass_core = (maxcore <= $SMD_THR_CORE) & (maxsmd <= $SMD_THR_OTHER)
+(4 real changes made)
+. }
+
+. 
+. gen byte pass = pass_smd & pass_core
+
+. 
+. quietly count if pass==1
+
+. if (r(N)>0) {
+.     gsort -pass -ess0 -N1 maxsmd meansmd L1
+. }
+
+. else {
+.     di as text "Nota: ningún candidato pasó los umbrales hard (SMD/core)."
+.     di as text "Se rankea por menor max|SMD| y luego mayor ESS0/N1."
+.     gsort maxsmd -ess0 -N1 meansmd L1
+. }
+
+. 
+. di as text "==============================="
+===============================
+
+. di as text "Ranking (mejor arriba):"
+Ranking (mejor arriba):
+
+. local top = min(_N, 10)
+
+. if (`top'==0) {
+.     di as error "No hay candidatos en la tabla de resultados (revisá que el loop haya corrido)."
+.     exit 498
+. }
+
+. else {
+.     list method spec pass maxsmd var_maxsmd maxcore var_maxcore maxother var_maxother meansmd L1 L1_cem ess0 N1 N0 in 1/`top', noobs
+
+  +---------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method      spec   pass      maxsmd   var_ma~d     maxcore   var_ma~e   maxother   var_ma~r     meansmd          L1      L1_cem        ess0    N1    N0 |
+  |---------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |  Exact        S1      1   .08391462     lnland   .08391462     lnland          .              .03187498   .31459846           .   164.25557   409   325 |
+  |    CEM     scott      1   .01843776      pcirr   .01843776      pcirr          .              .00566012   .29558121   .47690972   63.592427   192   157 |
+  |  Exact        S2      0   .16972525     lnland   .16972525     lnland          .              .05741453   .29151639           .   268.99452   505   431 |
+  |    CEM   sturges      0   .10243258     lnland   .10243258     lnland          .              .01952221   .28001103   .56365809   124.69766   279   195 |
+  |    CEM        fd      0   .21136248    vaccess   .21136248    vaccess          .               .0567123   .30836204   .47951907   86.146064   201   156 |
+  |---------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |    CEM        ss      0    .1872963     lnland    .1872963     lnland          .              .03121605   .12272727   7.980e-17        17.6    22    20 |
+  +---------------------------------------------------------------------------------------------------------------------------------------------------------+
+. }
+
+. di as text "==============================="
+===============================
+
+. 
+. * --- Sensibilidad rápida (informativa): umbral relajado SMD ---
+. gen byte pass_relax = (maxsmd <= $SMD_THR_RELAX)
+
+. preserve
+
+.     gsort -pass_relax -ess0 -N1 maxsmd
+
+.     di as text "Si usaras max|SMD| <= $SMD_THR_RELAX, el top sería:"
+Si usaras max|SMD| <= 0.20, el top sería:
+
+.     list method spec pass_relax maxsmd var_maxsmd maxcore var_maxcore maxother var_maxother meansmd L1 L1_cem ess0 N1 N0 in 1/1, noobs
+
+  +-------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method   spec   pass_r~x      maxsmd   var_ma~d     maxcore   var_ma~e   maxother   var_ma~r     meansmd          L1   L1_cem        ess0    N1    N0 |
+  |-------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |  Exact     S2          1   .16972525     lnland   .16972525     lnland          .              .05741453   .29151639        .   268.99452   505   431 |
+  +-------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+. restore
+
+. 
+. * --- Frontera no-dominada (min maxsmd, max ess0) ---
+. gen byte dominated = 0
+
+. forvalues i=1/`=_N' {
+  2.     quietly count if (maxsmd <= maxsmd[`i'] & ess0 >= ess0[`i']) ///
+>         & (maxsmd < maxsmd[`i'] | ess0 > ess0[`i'])
+  3.     if (r(N)>0) replace dominated = 1 in `i'
+  4. }
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+. di as text "Frontera no-dominada (dominated==0):"
+Frontera no-dominada (dominated==0):
+
+. list method spec pass maxsmd var_maxsmd maxcore var_maxcore maxother var_maxother meansmd L1 L1_cem ess0 N1 N0 if dominated==0, noobs
+
+  +-------------------------------------------------------------------------------------------------------------------------------------------------------+
+  | method    spec   pass      maxsmd   var_ma~d     maxcore   var_ma~e   maxother   var_ma~r     meansmd          L1      L1_cem        ess0    N1    N0 |
+  |-------------------------------------------------------------------------------------------------------------------------------------------------------|
+  |  Exact      S1      1   .08391462     lnland   .08391462     lnland          .              .03187498   .31459846           .   164.25557   409   325 |
+  |    CEM   scott      1   .01843776      pcirr   .01843776      pcirr          .              .00566012   .29558121   .47690972   63.592427   192   157 |
+  |  Exact      S2      0   .16972525     lnland   .16972525     lnland          .              .05741453   .29151639           .   268.99452   505   431 |
+  +-------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+. 
+. * Guardar ganador
+. local WIN_METHOD = method[1]
+
+. local WIN_SPEC   = spec[1]
+
+. 
+. di as result "==============================="
+===============================
+
+. di as result "GANADOR (DISEÑO): `WIN_METHOD' / `WIN_SPEC'"
+GANADOR (DISEÑO): Exact / S1
+
+. di as result "Balance: max|SMD|=" %6.4f maxsmd[1] " (en " var_maxsmd[1] ")  " ///
+>     "max|SMD|_core=" %6.4f maxcore[1] " (en " var_maxcore[1] ")  " ///
+>     "max|SMD|_no-core=" %6.4f maxother[1] " (en " var_maxother[1] ")  " ///
+>     "mean|SMD|=" %6.4f meansmd[1] "  L1=" %6.4f L1[1]
+Balance: max|SMD|=0.0839 (en lnland)  max|SMD|_core=0.0839 (en lnland)  max|SMD|_no-core=     . (en )  mean|SMD|=0.0319  L1=0.3146
+
+. di as result "Soporte: ESS0=" %8.2f ess0[1] "  N1=" N1[1] "  N0=" N0[1]
+Soporte: ESS0=  164.26  N1=409  N0=325
+
+. di as result "==============================="
+===============================
+
+. 
+. 
+. *========================
+. * 9) ANÁLISIS (outcome): estimar ATET y SE solo para el ganador
+. *========================
+. use `base', clear
+
+. 
+. if ("`WIN_METHOD'"=="Exact") {
+. 
+.     di as text "ANÁLISIS: Estimando ATET y ATE (solo para NO-CEM) para Exact / `WIN_SPEC' ..."
+ANÁLISIS: Estimando ATET y ATE (solo para NO-CEM) para Exact / S1 ...
+. 
+.     * --- ATET ---
+.     quietly exact_atet, scheme(`WIN_SPEC')
+.     scalar ATET = r(atet)
+. 
+.     local REPS_FINAL = 700
+.     local SEED_FINAL = 20260
+. 
+.     * --- ATE (en soporte común) ---
+.     quietly exact_ate, scheme(`WIN_SPEC')
+.     scalar ATE = r(ate)
+. 
+.     * ====== Un solo bootstrap para (ATET, ATE) ======
+.     capture program drop exact_both_boot
+.     program define exact_both_boot, rclass
+  1.         syntax, SCHEME(string)
+  2. 
+.         quietly exact_atet, scheme(`scheme')
+  3.         return scalar atet = r(atet)
+  4. 
+.         quietly exact_ate, scheme(`scheme')
+  5.         return scalar ate  = r(ate)
+  6.     end
+. 
+.     bootstrap r(atet) r(ate), reps(`REPS_FINAL') seed(`SEED_FINAL'): ///
+>         exact_both_boot, scheme(`WIN_SPEC')
+(running exact_both_boot on estimation sample)
+
+warning: exact_both_boot does not set e(sample), so no observations will be excluded from the resampling because of missing values or other reasons. To exclude
+         observations, press Break, save the data, drop any observations that are to be excluded, and rerun bootstrap.
+
+Bootstrap replications (700): .........10.........20.........30.........40.........50.........60.........70.........80.........90.........100.........110.........120
+> .........130.........140.........150.........160.........170.........180.........190.........200.........210.........220.........230.........240.........250.......
+> ..260.........270.........280.........290.........300.........310.........320.........330.........340.........350.........360.........370.........380.........390..
+> .......400.........410.........420.........430.........440.........450.........460.........470.........480.........490.........500.........510.........520.........
+> 530.........540.........550.........560.........570.........580.........590.........600.........610.........620.........630.........640.........650.........660....
+> .....670.........680.........690.........700 done
+
+Bootstrap results                                        Number of obs = 1,129
+                                                         Replications  =   700
+
+      Command: exact_both_boot, scheme(S1)
+        _bs_1: r(atet)
+        _bs_2: r(ate)
+
+------------------------------------------------------------------------------
+             |   Observed   Bootstrap                         Normal-based
+             | coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       _bs_1 |    .106274     .03968     2.68   0.007     .0285027    .1840453
+       _bs_2 |   .0952796   .0353781     2.69   0.007     .0259398    .1646194
+------------------------------------------------------------------------------
+. 
+.     matrix V = e(V)
+.     scalar SE_ATET = sqrt(V[1,1])
+.     scalar SE_ATE  = sqrt(V[2,2])
+.     * ===============================================
+. 
+.     di as result "RESULTADO FINAL (Exact / `WIN_SPEC'): " ///
+>         "ATET=" %9.4f ATET "  SE_boot(ATET)=" %9.4f SE_ATET ///
+>         "   |   ATE=" %9.4f ATE "  SE_boot(ATE)=" %9.4f SE_ATE
+RESULTADO FINAL (Exact / S1): ATET=   0.1063  SE_boot(ATET)=   0.0397   |   ATE=   0.0953  SE_boot(ATE)=   0.0354
+. }
+
+. 
+. else if ("`WIN_METHOD'"=="CEM") {
+. 
+.     di as text "ANÁLISIS: Estimando ATET para CEM / `WIN_SPEC' (con cem_weights) ..."
+. 
+.     capture drop cem_matched cem_weights cem_strata
+. 
+.     local cemvars "$Xmatch"
+.     if ($ADD_SQ==1) local cemvars "`cemvars' $Xsq"
+. 
+.     cem `cemvars', tr($D) autocuts(`WIN_SPEC')
+. 
+.     reg $Y $D [aw=cem_weights] if cem_matched==1, vce(robust)
+.     scalar ATET = _b[$D]
+.     scalar SE_ATET = _se[$D]
+. 
+.     di as result "RESULTADO FINAL (CEM / `WIN_SPEC'): ATET=" %9.4f ATET "  SE_robust=" %9.4f SE_ATET
+. 
+. }
+
+. else {
+.     di as error "Método ganador no reconocido: `WIN_METHOD'"
+.     exit 498
+. }
+
+. 
+. 
+. *========================
+. * 10) (Opcional) Love plot de SMD para el ganador
+. *========================
+. if ($PLOT_WINNER==1) {
+. 
+.     di as text "Generando Love plot básico (SMD por covariable) para el ganador..."
+Generando Love plot básico (SMD por covariable) para el ganador...
+. 
+.     preserve
+.         * Volver a la base original (la tabla 'results' no tiene las covariables).
+.         use `base', clear
+. 
+.         tempfile smdout
+.         tempname ph2
+.         postfile `ph2' str20 var double smd using "`smdout'", replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_4820_000005.tmp not found)
+. 
+.         if ("`WIN_METHOD'"=="Exact") {
+. 
+.             * Construir estratos exactamente como en DISEÑO (respeta USE_CORE y ADD_SQ)
+.             tempvar stratum N1cell N0cell matched w_att
+.             quietly make_stratum_exact, scheme(`WIN_SPEC') stratum(`stratum')
+. 
+.             bys `stratum': egen `N1cell' = total($D==1)
+.             bys `stratum': egen `N0cell' = total($D==0)
+.             gen byte `matched' = (`N1cell'>0 & `N0cell'>0)
+. 
+.             gen double `w_att' = 1
+.             replace `w_att' = `N1cell'/`N0cell' if $D==0 & `matched'==1
+(260 real changes made)
+. 
+.             foreach x of global Xeval {
+  2.                 quietly _smd_one `x', wvar(`w_att') ifcond("`matched'==1")
+  3.                 post `ph2' ("`x'") (r(smd))
+  4.             }
+.         }
+. 
+.         if ("`WIN_METHOD'"=="CEM") {
+.             capture drop cem_matched cem_weights cem_strata
+. 
+.             local cemvars "$Xmatch"
+.             if ($ADD_SQ==1) local cemvars "`cemvars' $Xsq"
+. 
+.             cem `cemvars', tr($D) autocuts(`WIN_SPEC')
+.             gen byte matched = (cem_matched==1)
+.             gen double w_att = cem_weights
+. 
+.             foreach x of global Xeval {
+  2.                 quietly _smd_one `x', wvar(w_att) ifcond("matched==1")
+  3.                 post `ph2' ("`x'") (r(smd))
+  4.             }
+.         }
+. 
+.         postclose `ph2'
+.         use "`smdout'", clear
+.         gen abs_smd = abs(smd)
+.         gsort -abs_smd
+. 
+.         gen ord = _n
+. 
+.         twoway ///
+>             (scatter abs_smd ord, mlabel(var) mlabsize(small)) ///
+>             , yline($SMD_THR) ///
+>               ytitle("|SMD|") ///
+>               xtitle("Covariables (ordenadas por |SMD|)") ///
+>               title("Love plot (ganador): |SMD| por covariable") ///
+>               legend(off)
+.     restore
+. }
+
+. 
+. * Mas adelante agregar esta métrica: Variance ratio (VR) para continuas (ideal cerca de 1; regla práctica 0.5–2)."
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\3_Matching_exacto_selector.log
+  log type:  text
+ closed on:  28 Mar 2026, 09:01:00
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,145 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T2 (MATCHING EXACTO)
+
+Base usada para este diagnóstico: principalmente el log del taller actual, complementado por la evidencia del selector automático del taller 03 para la capa de decisión, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 02. Tema central: matching exacto en corte transversal aplicado a una base de hogares vinculada a microcrédito (`hh_98.dta`). La unidad de análisis son hogares. El tratamiento es `dfmfd`, indicador de participación femenina en microcrédito dentro del hogar. La variable de resultado es `lexptot = ln(1+exptot)`, es decir, el logaritmo del gasto per cápita total. El taller trabaja con 1.129 observaciones y un conjunto de covariables pre-tratamiento que combina características del hogar y del entorno local.
+
+2. Qué es realmente este taller
+
+Este taller no debe presentarse como una pieza de “hallazgo sustantivo puro” sobre microcrédito. Su núcleo real es metodológico. Más precisamente, es una comparación metodológica con anclaje aplicado: muestra cómo construir soporte común con matching exacto, cómo cambia la muestra cuando discretizás covariables, cómo se calculan ATE y ATET por estratos, por qué conviene bootstrap para los errores estándar, y qué agrega CEM como versión más sistemática de coarsened exact matching.
+
+Clasificación editorial sugerida:
+Comparación metodológica.
+
+3. Núcleo empírico del taller
+
+El taller tiene dos bloques empíricos principales.
+
+Primero, matching exacto manual con discretización didáctica. Se construyen estratos exactos combinando sexo del jefe de hogar, acceso vial, bins de edad, bins de educación, cuartiles de tierra y cuartiles de riego. Con esa discretización, el soporte común queda definido por celdas con tratados y controles. El soporte retenido es relativamente grande: 734 observaciones, con 409 tratadas y 325 controles.
+
+Sobre ese soporte, el taller estima:
+- ATE exacto = 0.095280
+- ATET exacto = 0.106274
+
+Además, calcula errores estándar analíticos por estratos y luego bootstrap del procedimiento completo. Los SE bootstrap son mayores que los analíticos, lo que refuerza la idea de que la incertidumbre real no se agota en tratar estratos y soporte como fijos.
+
+Segundo, el taller pasa a CEM como alternativa más “lista”. Allí usa las covariables continuas originales y deja que el método defina el coarsening con distintas reglas automáticas. Compara varias opciones (`sturges`, `fd`, `scott`, `ss`) y originalmente terminaba destacando `fd` como compromiso razonable entre balance y pérdida de soporte dentro de esa familia de especificaciones. En esa corrida, la muestra matched queda en 357 observaciones, con 201 tratadas y 156 controles, y el estimando reportado es:
+
+- ATET CEM = 0.224886
+
+El taller además usa bootstrap para este ATET, con un SE de 0.064257.
+
+4. Lectura que gana
+
+La lectura correcta no es “qué método da el número más lindo” ni “cuál coeficiente es el verdadero efecto causal final” en un sentido ingenuo. La lectura que gana es otra: cuando imponés comparabilidad de forma más exigente, cambia simultáneamente el soporte, la composición de la muestra y el estimando que estás calculando.
+
+En este taller, el punto fuerte no es una carrera de coeficientes entre 0.095, 0.106 y 0.225. El punto fuerte es mostrar que:
+- el soporte común importa;
+- la discretización importa;
+- los pesos importan;
+- y el estimando final depende de cómo resolvés ese trade-off.
+
+Dicho más simple: no hay “matching exacto” en abstracto; hay decisiones concretas de coarsening, soporte y agregación que alteran lo que efectivamente estimás.
+
+5. ¿Hay especificación ganadora?
+
+Sí, pero de forma condicionada.
+
+Tomado aisladamente, este taller puede leerse como una comparación metodológica abierta entre matching exacto manual y CEM. Sin embargo, a la luz del taller 03, esta comparación ya no debería quedar presentada como completamente “sin decisión”. Si se adopta la regla de diseño explícita del selector automático —esto es, separar diseño de análisis, elegir candidatos con criterios de balance y soporte, y trabajar con el umbral base `max|SMD| <= 0.10` sobre el set core de covariables—, la especificación preferida pasa a ser:
+
+Exact / S1.
+
+La razón no es que entregue el coeficiente más grande ni el más llamativo. La razón es que, bajo esa regla, logra un balance aceptable preservando bastante más soporte y ESS que alternativas como CEM/scott, que balancea mejor pero a costa de una pérdida mayor de muestra efectiva.
+
+Por tanto, la formulación editorial correcta para este taller ya no es:
+“comparación sin ganador único”.
+
+La formulación correcta pasa a ser:
+“comparación metodológica con especificación preferida bajo la regla de diseño adoptada”.
+
+Esa especificación preferida es Exact / S1.
+
+Ahora bien, esta preferencia no debe venderse como absoluta. El propio selector del taller 03 muestra que:
+- si se relaja el umbral a `max|SMD| <= 0.20`, el top pasa a ser Exact / S2;
+- la frontera no dominada incluye Exact / S1, CEM / scott y Exact / S2.
+
+Entonces, la decisión existe, pero es una decisión condicionada a una regla explícita de diseño. Eso mejora mucho la lectura del taller, porque deja claro que la elección no nace del tamaño del efecto, sino de un criterio de comparabilidad previamente definido.
+
+6. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+- una vez que se fuerza comparabilidad por estratos, el efecto estimado del tratamiento se vuelve positivo y estadísticamente distinto de cero;
+- la magnitud estimada depende fuertemente de cómo se construye el soporte común;
+- CEM permite comprar más balance a costa de perder muestra;
+- el taller enseña que el problema no es solo emparejar, sino decidir cuánto balance querés comprar y cuánta muestra efectiva estás dispuesto a perder;
+- bajo la regla de diseño adoptada en el selector automático, la especificación preferida es Exact / S1.
+
+También puede decir que el contraste entre matching exacto manual y CEM ilustra muy bien la tensión sesgo-varianza: coarsening más estricto puede mejorar balance, pero reduce soporte y vuelve la inferencia más dependiente de una submuestra más chica.
+
+7. Qué no debe decir una pieza pública
+
+No debería decir que:
+- el microcrédito femenino aumenta “exactamente” el gasto per cápita en 22.5%;
+- CEM es automáticamente “mejor” en todo sentido que el matching exacto manual;
+- el L1 más bajo implica por sí solo una superioridad sustantiva total;
+- puede compararse cualquier L1 entre cualquier corrida aunque cambie el coarsening o cambien las X;
+- con `cem_weights` se está estimando naturalmente el ATE;
+- Exact / S1 es un ganador absoluto e incontestable.
+
+Tampoco conviene traducir de forma apresurada los coeficientes en log-puntos a porcentajes como si fueran efectos lineales exactos sin aclaraciones. El outcome es `ln(1+exptot)`, así que la interpretación debe ser cuidadosa.
+
+8. Objeto de decisión final recomendado para una futura pieza pública
+
+El objeto de decisión final debería ser una tabla comparativa corta y clara. Mi recomendación sería no poner demasiadas filas técnicas. Para público externo, alcanzaría con:
+- Exact matching manual (SE bootstrap)
+- CEM (ATET, SE bootstrap)
+- una fila o caja breve de soporte retenido
+- una nota final sobre la especificación preferida bajo la regla de diseño
+
+Y las columnas deberían ser:
+método, soporte retenido, estimando reportado, error estándar, y una columna final de lectura.
+
+La caja de lectura debajo de la tabla debería decir algo equivalente a esto:
+
+“En matching, el resultado no depende solo del estimador. Depende también de cómo se define el soporte común, cuánto balance se exige y cuánta muestra efectiva se está dispuesto a perder. En esta aplicación, la regla de diseño adoptada favorece Exact / S1 como compromiso entre balance y soporte, aunque la preferencia no es absoluta y cambia si se relajan los umbrales.”
+
+9. Recomendación editorial concreta
+
+Este sigue siendo un muy buen candidato a ficha pública dentro de la sección de causalidad. De hecho, gana fuerza si se lo presenta no solo como comparación entre matching exacto y CEM, sino como una comparación metodológica con regla de selección explícita.
+
+La pieza pública principal debería seguir siendo T2.
+El taller 03 no necesita competir con él como ficha separada; su mejor función es respaldar técnicamente la decisión de diseño adoptada en T2.
+
+Así, la narrativa pública de T2 podría decir:
+- se compararon varias estrategias de matching;
+- la especificación preferida, bajo la regla de diseño adoptada, es Exact / S1;
+- esa preferencia surge de un compromiso explícito entre balance y soporte, no del tamaño del coeficiente.
+
+Eso vuelve mucho más profesional la pieza, porque ya no parece una comparación abierta entre métodos, sino una comparación con una capa de decisión empírica explícita y defendible.
+
+Un título humano posible sería:
+“Cuando el soporte común manda: cómo elegir un diseño de matching en una aplicación de microcrédito”.
+
+10. Riesgo editorial principal
+
+El riesgo editorial principal es mezclar cuatro cosas distintas como si fueran una sola:
+- diferencia de estimando,
+- diferencia de soporte,
+- diferencia de algoritmo de coarsening/ponderación,
+- y diferencia de regla de decisión.
+
+Si eso no se explica bien, el lector puede creer que el salto desde 0.106 a 0.225 se debe simplemente a que “CEM corrige mejor” o que ese número mayor es automáticamente el más verdadero. Esa lectura sería demasiado fuerte. Lo correcto es explicar que cada número está asociado a una construcción distinta del contrafactual y a una muestra efectiva distinta, y que la elección final depende del criterio de diseño que se adopte.
+
+11. Veredicto final
+
+Diagnóstico final:
+taller sólido, publicable y valioso para abrir la parte fuerte de causalidad. No como pieza de hallazgo sustantivo puro, sino como comparación metodológica aplicada con decisión de diseño explícita.
+
+Etiqueta editorial sugerida:
+Comparación metodológica.
+
+Subetiqueta útil:
+Especificación preferida bajo la regla de diseño adoptada: Exact / S1.
+Con sensibilidad relevante al umbral de balance y sin pretensión de ganador absoluto.

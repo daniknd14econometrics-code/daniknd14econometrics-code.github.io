@@ -1,0 +1,765 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\1_causalidad_intro.log
+  log type:  text
+ opened on:  28 Mar 2026, 08:56:34
+
+. do "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\TALLER 1 - ME-PSM\1_Causalidad.do"
+
+. /*------------------------------------------------------------------------------ 
+>                                                 Causalidad (intro) en Stata 
+> 
+>                                                   Taller 1 Microeconometría 
+> ------------------------------------------------------------------------------*/
+. 
+. **# Directorio de trabajo comun
+. clear all      
+
+. set more off
+
+. global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+
+. 
+. local username = c(username)
+
+. display "`username'"
+Equipo
+
+. 
+. local username = c(username)
+
+. 
+. if "`username'" == "Equipo" {
+.      global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. else if "`username'" == "dmendez" {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. else {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. 
+. 
+. **# Base 1
+. 
+. use "$seteo\Directorio común bases\base1.dta", clear 
+
+. set more off
+
+. 
+. 
+. **# Exploro la base
+. 
+. 
+. describe
+
+Contains data from C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\\Directorio común bases\bas
+> e1.dta
+ Observations:         1,000                  
+    Variables:             5                  27 Jun 2019 17:17
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+id              float   %9.0g                 Identificador
+treat           float   %9.0g                 Tratamiento
+dpto            float   %9.0g                 Departamento
+edu             float   %9.0g                 Años de educación
+salario         float   %9.0g                 Salario
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. ** no se trata de un panel. pero tengo un tratamiento. 
+. 
+. 
+. 
+. summarize
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+          id |      1,000       500.5    288.8194          1       1000
+       treat |      1,000         .25    .4332294          0          1
+        dpto |      1,000         .25    .4332294          0          1
+         edu |      1,000       10.48     2.86807         -6         25
+     salario |      1,000     42079.9    11500.71  -23392.09   100108.9
+
+. 
+. * ¿Qué sucede con las variables? ¿Presentan algún problema?
+. 
+. ** claramente esta base es un "ejemplo de juguete".
+. ** la variable tratamiento tiene la misma media  y desvio estandar que la variable dpto, pero ojo, no tienen porque ser identicas.*
+. ** Ver comparacion para verlo. Seguramente fue generado asi a proposito.
+. compare treat dpto
+
+                                        ---------- Difference ----------
+                            Count       Minimum      Average     Maximum
+------------------------------------------------------------------------
+treat<dpto                    125            -1           -1          -1
+treat=dpto                    750
+treat>dpto                    125             1            1           1
+                       ----------
+Jointly defined              1000            -1            0           1
+                       ----------
+Total                        1000
+
+. ** no son iguales.
+. 
+. ** Por otro lado, ademas, dpto, en alusion a departamentos de uruguay, no tiene 19 niveles, tiene solo 1, que corresponde a montevideo.
+. 
+. rename dpto mont
+
+. label var mont "Montevideo"
+
+. 
+. ** ademas edu (eduacion en años) tiene al menos un valor negativo. no puede ser. podriamos pensar que en lugar de -6, correspondia un 6.
+. ** o podemos eliminar esa fila.
+. 
+. 
+. * reemplazar por 6 (solo si estamos seguros que correspondia a un 6)
+. tab edu 
+
+    Años de |
+  educación |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         -6 |          1        0.10        0.10
+          1 |          1        0.10        0.20
+          2 |          1        0.10        0.30
+          4 |          9        0.90        1.20
+          5 |         15        1.50        2.70
+          6 |         25        2.50        5.20
+          7 |         61        6.10       11.30
+          8 |         90        9.00       20.30
+          9 |        159       15.90       36.20
+         10 |        186       18.60       54.80
+         11 |        155       15.50       70.30
+         12 |        117       11.70       82.00
+         13 |         74        7.40       89.40
+         14 |         37        3.70       93.10
+         15 |         19        1.90       95.00
+         16 |         10        1.00       96.00
+         17 |          7        0.70       96.70
+         18 |         16        1.60       98.30
+         19 |          6        0.60       98.90
+         20 |          7        0.70       99.60
+         21 |          2        0.20       99.80
+         22 |          1        0.10       99.90
+         25 |          1        0.10      100.00
+------------+-----------------------------------
+      Total |      1,000      100.00
+
+. preserve
+
+. replace edu = 6 if edu==-6
+(1 real change made)
+
+. tab edu
+
+    Años de |
+  educación |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.10        0.10
+          2 |          1        0.10        0.20
+          4 |          9        0.90        1.10
+          5 |         15        1.50        2.60
+          6 |         26        2.60        5.20
+          7 |         61        6.10       11.30
+          8 |         90        9.00       20.30
+          9 |        159       15.90       36.20
+         10 |        186       18.60       54.80
+         11 |        155       15.50       70.30
+         12 |        117       11.70       82.00
+         13 |         74        7.40       89.40
+         14 |         37        3.70       93.10
+         15 |         19        1.90       95.00
+         16 |         10        1.00       96.00
+         17 |          7        0.70       96.70
+         18 |         16        1.60       98.30
+         19 |          6        0.60       98.90
+         20 |          7        0.70       99.60
+         21 |          2        0.20       99.80
+         22 |          1        0.10       99.90
+         25 |          1        0.10      100.00
+------------+-----------------------------------
+      Total |      1,000      100.00
+
+. restore
+
+. 
+. * o, para ser mas conservador, eliminamos esa fila:
+. tab edu 
+
+    Años de |
+  educación |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         -6 |          1        0.10        0.10
+          1 |          1        0.10        0.20
+          2 |          1        0.10        0.30
+          4 |          9        0.90        1.20
+          5 |         15        1.50        2.70
+          6 |         25        2.50        5.20
+          7 |         61        6.10       11.30
+          8 |         90        9.00       20.30
+          9 |        159       15.90       36.20
+         10 |        186       18.60       54.80
+         11 |        155       15.50       70.30
+         12 |        117       11.70       82.00
+         13 |         74        7.40       89.40
+         14 |         37        3.70       93.10
+         15 |         19        1.90       95.00
+         16 |         10        1.00       96.00
+         17 |          7        0.70       96.70
+         18 |         16        1.60       98.30
+         19 |          6        0.60       98.90
+         20 |          7        0.70       99.60
+         21 |          2        0.20       99.80
+         22 |          1        0.10       99.90
+         25 |          1        0.10      100.00
+------------+-----------------------------------
+      Total |      1,000      100.00
+
+. sort edu
+
+. browse id edu
+
+. drop if id==830 
+(1 observation deleted)
+
+. 
+. 
+. * salario también presenta un valor negativo.
+. sum salario, detail
+
+                           Salario
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     16611.76       4606.871
+ 5%     24610.64       8609.203
+10%     28510.08          16009       Obs                 999
+25%     36009.16       16109.98       Sum of wgt.         999
+
+50%     40109.96                      Mean           42145.44
+                        Largest       Std. dev.       11318.1
+75%     48009.96       84608.99
+90%     56009.59       84609.55       Variance       1.28e+08
+95%     64011.19       88109.96       Skewness        .856629
+99%     80111.45       100108.9       Kurtosis       5.260749
+
+. sum salario
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     salario |        999    42145.44     11318.1   4606.871   100108.9
+
+. *Era la misma observacion (id==830) la que tenia un valor negativo en salario.
+. 
+. 
+. * Observar que ahora tenemos 999 observaciones (individuos) en la muestra.
+.         
+. * Observar correlaciones
+. pwcorr treat mont edu salario
+
+             |    treat     mont      edu  salario
+-------------+------------------------------------
+       treat |   1.0000 
+        mont |   0.3313   1.0000 
+         edu |   0.2645   0.0815   1.0000 
+     salario |   0.2739   0.1017   0.9998   1.0000 
+
+. corr treat mont edu salario
+(obs=999)
+
+             |    treat     mont      edu  salario
+-------------+------------------------------------
+       treat |   1.0000
+        mont |   0.3313   1.0000
+         edu |   0.2645   0.0815   1.0000
+     salario |   0.2739   0.1017   0.9998   1.0000
+
+
+. 
+. *Por un lado, las covariables (mont y edu) están correlacionadas positivamente
+. *con el tratamiento (Treat), por otro lado, las covariables estan correlacionadas 
+. *positivamente con la variable dependiente (salario).
+. ** en particular, eduacion y salario estan tremendamente correlacionadas, casi 1!
+. ** esto es porque se genero asi la base de juguete, evidentemente a cada nivel de educacion le corresponde un nivel determinado de salario, y van aumentando juntas
+>  a la par.
+. 
+. 
+. *-------------------------------------------------------------------------------
+. 
+. **# Diferencia de medias
+. 
+. * Parte A: 
+. * Diferencia de medias entre tratados y controles para las variables salario, educación y departamento
+. * (Realizar un test de medias entre tratados y controles para las variables salario, educación y departamento).
+. 
+. ** Primero veamos una simple y poderosa tabla
+. tabstat mont edu salario, by(treat) stats(mean)
+
+Summary statistics: Mean
+Group variable: treat (Tratamiento)
+
+   treat |      mont       edu   salario
+---------+------------------------------
+       0 |  .1666667  10.06667  40359.86
+       1 |   .497992  11.79116  47523.68
+---------+------------------------------
+   Total |  .2492492   10.4965  42145.44
+----------------------------------------
+
+. 
+. * El salario medio de los tratados es de 47523, mayor al salario medio de los controles 40359.
+. * El nivel de educación de los tratados es mayor al de los controles. (11.8 a 10.0 respectivamente).
+. * Montevideanos tratados son un 49% de los tratados, mientras que montevideanos no tratados son un 16% de los no tratados.
+.  
+. * pero, ¿es significativa la diferencia?: 
+. * NO PERDER DE VISTA QUE QUEREMOS TENER UN BUEN CONTRAFACTUAL. Para ello, necesitamos que ambos grupos, tratados y controles, tengan caracteristicas similares.
+. * Lo anterior implica que me gustaria que la diferencia de medias entre tradados y controles sea NO significativa en las caracteristicas observables.
+. 
+. ** Test de medias
+. ttest salario, by(treat)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |     750    40359.86    284.9855     7804.65     39800.4    40919.33
+       1 |     249    47523.68    1084.478    17112.77    45387.72    49659.64
+---------+--------------------------------------------------------------------
+Combined |     999    42145.44    358.0888     11318.1    41442.75    42848.13
+---------+--------------------------------------------------------------------
+    diff |           -7163.819    796.5344               -8726.896   -5600.743
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =  -8.9937
+H0: diff = 0                                     Degrees of freedom =      997
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 1.0000
+
+.         * el error estandar (std err) hace referencia al error estandar asociado a la media estimada. 
+.         * Es decir, es lo que se usa para construir el intervalo de confianza del nivel medio estimado, en este caso, al 95%, basicamente +-(1.96)*(std err) y reco
+> nstruis los IC al 95%.
+.         * por su parte, la desviacion estandar, hacer referencia al desvio estandar muestral que tiene esta variable en la muestra. Lo confirmamos si hacemos:
+. tabstat salario, by(treat) stats(mean sd)
+
+Summary for variables: salario
+Group variable: treat (Tratamiento)
+
+   treat |      Mean        SD
+---------+--------------------
+       0 |  40359.86   7804.65
+       1 |  47523.68  17112.77
+---------+--------------------
+   Total |  42145.44   11318.1
+------------------------------
+
+. 
+. ** ahora, regramos al test de medias:
+. ttest salario, by(treat)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |     750    40359.86    284.9855     7804.65     39800.4    40919.33
+       1 |     249    47523.68    1084.478    17112.77    45387.72    49659.64
+---------+--------------------------------------------------------------------
+Combined |     999    42145.44    358.0888     11318.1    41442.75    42848.13
+---------+--------------------------------------------------------------------
+    diff |           -7163.819    796.5344               -8726.896   -5600.743
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =  -8.9937
+H0: diff = 0                                     Degrees of freedom =      997
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 1.0000
+
+.         * diff = mean(0) - mean(1)
+.         * diff = 40359-47523 = -7163.819  ---> entonces la hipot. alternativa sería que la diferencia sea negativa. Prueba de una cola.
+.         * Ha: diff < 0 entonces Pr(T < t) = 0.0000 
+.         * t = -8.9937   (el estadístico observado nos da -8,99, hay que compararlo con valor critico)
+.         * El valor critico de la t-student para alpha de 0.05 es un valor que queda a la derecha de -8,99. 
+.         * -----(-8.99obs)---------------------(t_vc=-1.645 (creo))---------------(0)---------------
+.         *Entonces, cae fuera de la zona de aceptación de la hipotesis nula. 
+.         *Se rechaza que H0: diff = mean(0) - mean(1) = 0.
+.         *Ergo, no se rechaza que la diferencia en media en salarios sea significativa estadisticamente. (no es producto del azar tal diferencia)
+.         
+. ttest edu, by(treat)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |     750    10.06667    .0713362    1.953623    9.926624    10.20671
+       1 |     249    11.79116    .2708808    4.274427    11.25764    12.32468
+---------+--------------------------------------------------------------------
+Combined |     999     10.4965    .0892728    2.821642    10.32131    10.67168
+---------+--------------------------------------------------------------------
+    diff |           -1.724498     .199123               -2.115246    -1.33375
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =  -8.6605
+H0: diff = 0                                     Degrees of freedom =      997
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 1.0000
+
+.         * diff = mean(0) - mean(1)
+.         * diff = -1.724498
+.         * Ha: diff < 0 entonces Pr(T < t) = 0.0000
+.         * t =  -8.6605
+.         * El valor critico de la t-student cae a la derecha del valor del estadistico observado. Es decir, esta fuera de la zona de aceptacion
+.         * de la hipotesis nula. Por tanto, se rechaza que H0: diff = mean(0) - mean(1) = 0.
+.         *Ergo, no se rechaza la hipotesis alternativa, Ha: diff < 0, para los años de eduacion. 
+. 
+. ttest mont, by(treat)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |     750    .1666667    .0136174    .3729267    .1399339    .1933994
+       1 |     249     .497992    .0317498     .501003    .4354584    .5605256
+---------+--------------------------------------------------------------------
+Combined |     999    .2492492     .013693    .4327951    .2223788    .2761197
+---------+--------------------------------------------------------------------
+    diff |           -.3313253    .0298815               -.3899631   -.2726875
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t = -11.0880
+H0: diff = 0                                     Degrees of freedom =      997
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 1.0000
+
+.         * diff = mean(0) - mean(1)
+.         * diff = -0.3313253
+.         * Ha: diff < 0 entonces Pr(T < t) = 0.0000
+.         * t = -11.0880
+.         * No se rechaza la hipotesis alternativa.
+. 
+. *En suma, hemos visto que las diferencias en medias en observables, para tratados y controles, son significativas, 
+. * es decir, no atribuibles al azar, sino que son diferencias estadisticamente significativas.
+. 
+. *Por tanto, nuestros tratados y nuestros controles son personas con caracteristicas diferentes. Esto es malo.
+. *Si usaramos estos controles como contrafactuales de estos tratados: error de concepto!. Todo mal.
+. 
+.         
+. *-------------------------------------------------------------------------------
+. 
+. **# Regresion 
+. 
+. 
+. * Parte B: 
+. * Regresion MCO: E(Y/D) donde D es el tratamiento.
+. 
+. 
+. ** recordemos el test de diferencia de medias.
+. ttest salario, by(treat)
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+---------+--------------------------------------------------------------------
+       0 |     750    40359.86    284.9855     7804.65     39800.4    40919.33
+       1 |     249    47523.68    1084.478    17112.77    45387.72    49659.64
+---------+--------------------------------------------------------------------
+Combined |     999    42145.44    358.0888     11318.1    41442.75    42848.13
+---------+--------------------------------------------------------------------
+    diff |           -7163.819    796.5344               -8726.896   -5600.743
+------------------------------------------------------------------------------
+    diff = mean(0) - mean(1)                                      t =  -8.9937
+H0: diff = 0                                     Degrees of freedom =      997
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.0000         Pr(|T| > |t|) = 0.0000          Pr(T > t) = 1.0000
+
+. ** la diferencia en promedio entre controles y tratados es de -7163.819. 
+. ** veamos una regresion de salario contra el tratamiento:
+. reg salario treat
+
+      Source |       SS           df       MS      Number of obs   =       999
+-------------+----------------------------------   F(1, 997)       =     80.89
+       Model |  9.5937e+09         1  9.5937e+09   Prob > F        =    0.0000
+    Residual |  1.1825e+11       997   118605341   R-squared       =    0.0750
+-------------+----------------------------------   Adj R-squared   =    0.0741
+       Total |  1.2784e+11       998   128099385   Root MSE        =     10891
+
+------------------------------------------------------------------------------
+     salario | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       treat |   7163.819   796.5344     8.99   0.000     5600.743    8726.896
+       _cons |   40359.86   397.6688   101.49   0.000      39579.5    41140.23
+------------------------------------------------------------------------------
+
+. ** Nos da el mismo valor para el coeficiente: el coeficiente asociado a Treat(tratamiento) es igual a la diferencia de medias. (solo que ahora mean(1) - mean (0)),
+>  por ello el signo opuesto.
+. * Observar tambien que la constante es la media del salario de los no tratados (controles). (40359)
+. 
+. ** incluso, como no usamos errores robustos a heterocedasticidad (ni controles, X), nos da el mismo error estandar asociado a este coeficiente.
+. ** y de hecho, el valor del estadistico t es el mismo.
+. 
+. ** pero en el contexto de regresion, podemos solicitar errores estandar robustos:
+. reg salario treat, vce(robust)
+
+Linear regression                               Number of obs     =        999
+                                                F(1, 997)         =      40.89
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0750
+                                                Root MSE          =      10891
+
+------------------------------------------------------------------------------
+             |               Robust
+     salario | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       treat |   7163.819   1120.263     6.39   0.000     4965.475    9362.163
+       _cons |   40359.86    285.081   141.57   0.000     39800.44    40919.29
+------------------------------------------------------------------------------
+
+. display _b[treat]
+7163.8192
+
+. 
+. 
+. * ¿Es esto el efecto del tratamiento? ¿Por qué?
+. 
+.         *NO, porque existe sesgo de selección, entonces esta diferencia tiene, ademas del ATET, el sesgo de selección, y
+.         * este ultimo puede ser muy grande y jodernos por completo nuestro ATET. En particular, estamos usando a toda la muestra
+.         * con tratados y controles que recién vimos que no cumplen con el balance en observables,
+.         * por lo tanto, no es creible que cumplan el balance en INobservables, es decir, no es 
+.         * creible uncounfedness.
+. 
+. * Incorporar controles
+. * Regresion MCO: E(Y/D,X) donde D es el tratamiento y X son controles.
+. 
+. reg salario treat mont edu, robust
+
+Linear regression                               Number of obs     =        999
+                                                F(3, 995)         >   99999.00
+                                                Prob > F          =     0.0000
+                                                R-squared         =     1.0000
+                                                Root MSE          =     1.9723
+
+------------------------------------------------------------------------------
+             |               Robust
+     salario | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       treat |   100.0774   .1620295   617.65   0.000     99.75943    100.3953
+        mont |   500.1987   .1587491  3150.88   0.000     499.8872    500.5103
+         edu |   4000.012   .0242125  1.7e+05   0.000     3999.965     4000.06
+       _cons |   9.706523   .2552319    38.03   0.000     9.205669    10.20738
+------------------------------------------------------------------------------
+
+. display _b[treat] = 100.0774
+100.07739100.0774
+
+.         * El programa de empleo aumenta en 100 pesos el salario de los tratados.  (¿será así?)
+.         * Notar que seguimos usando los mismos tratados y controles, que no tienen similares caracteristicas.
+.         * (y este es un ejemplo de juguete, basta con mirar el R2 de 1, un modelo totalmente irreal, deterministico)
+.         
+. * ¿Se puede realizar una interpretación causal? --> SIC
+.         * recordemos que SIC es el supuesto de independencia entre D, tratamiento, y X, los controeles.
+.         * Para realizar una interp. causal necesitamos que el supuesto de independencia condicional (SIC) sea creíble. El SIC nos dice que
+.         * los resultados potenciales deben ser ortogonales (independientes) del tratamiento condicional en las covariables.
+.         * Dado que nuestros test de hipotesis de diferencias en medias entre tratados y controles nos dieron que existen diferencias significativas
+.         * para todas las variables entre tratados y controles, parece dificil creer o convencer a alguien de que se cumple el supuesto de SIC.
+.         * en suma, no podemos interpretarlo como efecto causal dado que usamos gente como controles que son bastante diferentes de
+.         * la gente tratada, aun controlando por covariables, tengo inobservables que me joden la estimación.
+.         * veamos que pasa con Matching.
+.         
+. *-------------------------------------------------------------------------------
+. 
+. **# Propensity Score Matching: vecino mas cercano
+. 
+. * Parte C:
+. * Propensity-score matching con el metodo del vecino mas cercano
+. 
+. help teffects psmatch
+
+. 
+. **Stat
+. ** ate  estimate average        treatment       effect  in      population;     the     default
+. ** atet estimate average        treatment       effect  on      the treated
+. 
+. ** AI= errores estándar de Abadie-Imbens 
+. 
+. 
+. teffects psmatch (salario) (treat mont edu, probit), ate vce(robust, nn(3))
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: probit                                       max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       treat |
+   (1 vs 0)  |   1012.047   196.1837     5.16   0.000     627.5344     1396.56
+------------------------------------------------------------------------------
+
+. teffects psmatch (salario) (treat mont edu, probit), ate vce(robust)
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: probit                                       max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       treat |
+   (1 vs 0)  |   1012.047   189.3131     5.35   0.000     641.0005    1383.094
+------------------------------------------------------------------------------
+
+. teffects psmatch (salario) (treat mont edu, probit), ate 
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: probit                                       max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       treat |
+   (1 vs 0)  |   1012.047   189.3131     5.35   0.000     641.0005    1383.094
+------------------------------------------------------------------------------
+
+. teffects psmatch (salario) (treat mont edu, logit), ate 
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: logit                                        max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       treat |
+   (1 vs 0)  |   976.0137   174.3316     5.60   0.000     634.3301    1317.697
+------------------------------------------------------------------------------
+
+. 
+.         * ATE = 976
+. * ¿Interpretación? 976 es el efecto promedio del tratamiento en la POBLACION: pedimos el ate.
+.         * los tratados son, en promedio, $976 más ricos que los controles por haber sido tratados. 
+.         
+. ** lo mismo pero con probit:    
+. teffects psmatch (salario) (treat mont edu, probit), ate 
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: probit                                       max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       treat |
+   (1 vs 0)  |   1012.047   189.3131     5.35   0.000     641.0005    1383.094
+------------------------------------------------------------------------------
+
+. ** en este caso, con un modelo probit, el ATE (POBLACION) nos dice que los tratados son, en promedio, $1012 pesos mas ricos que los controles por haber sido tratad
+> os.
+. 
+. 
+. ** Si queremos conocer el efecto promedio del tratamiento sobre los tratados, por haber sido tratados, esto es de $3614 pesos:
+. teffects psmatch (salario) (treat mont edu, logit), atet
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: logit                                        max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATET         |
+       treat |
+   (1 vs 0)  |    3614.44   658.7442     5.49   0.000     2323.325    4905.554
+------------------------------------------------------------------------------
+
+. 
+. 
+. 
+. 
+. describe
+
+Contains data from C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\\Directorio común bases\bas
+> e1.dta
+ Observations:           999                  
+    Variables:             5                  27 Jun 2019 17:17
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+id              float   %9.0g                 Identificador
+treat           float   %9.0g                 Tratamiento
+mont            float   %9.0g                 Montevideo
+edu             float   %9.0g                 Años de educación
+salario         float   %9.0g                 Salario
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: edu
+     Note: Dataset has changed since last saved.
+
+. 
+. /*
+> 
+> _treated is a variable that equals 0 for control observations and 1 for treatment observations.
+> _support is an indicator variable with equals 1 if the observation is on the common support and 0 if the observatio is off the support.
+> _pscore is the estimated propensity score or a copy of the one provided by pscore().
+> _outcome_variable for every treatment observation stores the value of the matched outcome.
+> _weight. For nearest neighbor matching, it holds the frequency with which the observation is used as a match; 
+>                 with option ties and k-nearest neighbors matching it holds the normalized weight; 
+>                 for kernel matching, and llr matching with a weight other than stata's tricube, it stores the overall weight given to the matched observation. 
+>                 When estimating att only _weight = 1 for the treated.
+> _id In the case of one-to-one and nearest-neighbors matching, a new identifier created for all observations.
+> _nk In the case of one-to-one and nearest-neighbors matching, for every treatment observation, it stores the observation number of the k-th matched control observa
+> tion. Do not forget to sort by _id if you want to use the observation number (id) of for example the 1st nearest neighbor as in
+> . sort _id
+> . g x_of_match = x[_n1]
+> _nn In the case of nearest-neighbors matching, for every treatment observation, it stores the number of matched control observations.
+> 
+> */
+. * Crear una variable que indique el match correspondiente a cada observacion
+. teffects psmatch (salario) (treat mont edu), gen(match)
+
+Treatment-effects estimation                   Number of obs      =        999
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: logit                                        max =        134
+------------------------------------------------------------------------------
+             |              AI robust
+     salario | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       treat |
+   (1 vs 0)  |   976.0137   174.3316     5.60   0.000     634.3301    1317.697
+------------------------------------------------------------------------------
+
+.         * Ver por ej. el match (7, 28)
+. sort id
+
+. browse
+
+. 
+. * Conservar solo las variables del inicio
+. keep id treat mont edu salario
+
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\1_causalidad_intro.log
+  log type:  text
+ closed on:  28 Mar 2026, 08:57:30
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

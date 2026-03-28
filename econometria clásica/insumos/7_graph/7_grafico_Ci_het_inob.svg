@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This is a Stata 19.5 generated SVG file (http://www.stata.com) -->
+
+<svg version="1.1" width="5.500in" height="4.000in" viewBox="0 0 3960 2880" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>Stata Graph - Graph</desc>
+	<rect x="0" y="0" width="3960" height="2880" style="fill:#F0F0F0;stroke:none"/>
+	<rect x="0.00" y="0.00" width="3959.88" height="2880.00" style="fill:#F0F0F0"/>
+	<rect x="2.88" y="2.88" width="3954.12" height="2874.24" style="fill:none;stroke:#F0F0F0;stroke-width:5.76"/>
+	<rect x="390.80" y="275.35" width="3468.22" height="2099.36" style="fill:#FFFFFF"/>
+	<rect x="393.68" y="278.23" width="3462.46" height="2093.60" style="fill:none;stroke:#FFFFFF;stroke-width:5.76"/>
+	<line x1="390.80" y1="2311.35" x2="3859.02" y2="2311.35" style="stroke:#E8E8E8;stroke-width:8.64"/>
+	<line x1="390.80" y1="1653.72" x2="3859.02" y2="1653.72" style="stroke:#E8E8E8;stroke-width:8.64"/>
+	<line x1="390.80" y1="996.22" x2="3859.02" y2="996.22" style="stroke:#E8E8E8;stroke-width:8.64"/>
+	<line x1="390.80" y1="338.71" x2="3859.02" y2="338.71" style="stroke:#E8E8E8;stroke-width:8.64"/>
+	<path d=" M719.11 2125.35 L780.00 2090.95 L841.01 2066.94 L901.89 2053.20 L962.78 2049.86 L1023.66 2048.50 L1084.55 2044.17 L1145.43 2053.70 L1206.44 2057.90 L1267.32 2051.96 L1328.21 2066.69 L1389.09 2080.67 L1449.98 2039.34 L1510.99 1938.98 L1571.87 1823.27 L1632.76 1671.30 L1693.64 1509.30 L1754.53 1375.90 L1815.41 1227.89 L1876.42 1086.93 L1937.31 947.83 L1998.19 793.14 L2059.08 631.27 L2119.96 481.03 L2180.97 371.39 L2241.86 347.25 L2302.74 405.79 L2363.63 499.84 L2424.51 578.05 L2485.52 605.16 L2546.40 578.05 L2607.29 623.47 L2668.17 690.67 L2729.06 764.43 L2789.94 885.09 L2850.95 1007.48 L2911.84 1110.20 L2972.72 1215.76 L3033.61 1320.33 L3094.49 1378.25 L3155.50 1458.19 L3216.39 1594.07 L3277.27 1743.20 L3338.16 1850.12 L3399.04 1889.23 L3460.05 1914.22 L3520.94 1956.67 L3581.82 1976.97 L3642.71 2004.94 L3703.59 2046.77" stroke-linejoin="round" style="fill:none;stroke:#000000;stroke-width:8.64"/>
+	<line x1="390.80" y1="2374.71" x2="390.80" y2="275.35" style="stroke:#000000;stroke-width:5.76"/>
+	<line x1="390.80" y1="2311.35" x2="350.83" y2="2311.35" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="2311.35" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,2311.35)" text-anchor="middle">0</text>
+	<line x1="390.80" y1="1653.72" x2="350.83" y2="1653.72" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="1653.72" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,1653.72)" text-anchor="middle">.1</text>
+	<line x1="390.80" y1="996.22" x2="350.83" y2="996.22" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="996.22" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,996.22)" text-anchor="middle">.2</text>
+	<line x1="390.80" y1="338.71" x2="350.83" y2="338.71" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="338.71" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,338.71)" text-anchor="middle">.3</text>
+	<text x="190.71" y="1325.03" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 190.71,1325.03)" text-anchor="middle">Density</text>
+	<line x1="390.80" y1="2374.71" x2="3859.02" y2="2374.71" style="stroke:#000000;stroke-width:5.76"/>
+	<line x1="454.16" y1="2374.71" x2="454.16" y2="2414.69" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="454.16" y="2504.54" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">-4</text>
+	<line x1="1289.47" y1="2374.71" x2="1289.47" y2="2414.69" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="1289.47" y="2504.54" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">-2</text>
+	<line x1="2124.91" y1="2374.71" x2="2124.91" y2="2414.69" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="2124.91" y="2504.54" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">0</text>
+	<line x1="2960.35" y1="2374.71" x2="2960.35" y2="2414.69" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="2960.35" y="2504.54" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">2</text>
+	<line x1="3795.66" y1="2374.71" x2="3795.66" y2="2414.69" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="3795.66" y="2504.54" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">4</text>
+	<text x="2124.91" y="2614.56" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">c_i</text>
+	<text x="408.00" y="2737.89" style="font-family:'Helvetica';font-size:79.94px;fill:#000000">kernel = epanechnikov, bandwidth = 0.4652</text>
+	<text x="2124.91" y="215.98" style="font-family:'Helvetica';font-size:139.96px;fill:#000000" text-anchor="middle">Kernel density estimate</text>
+</svg>

@@ -1,0 +1,226 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T4 (PSM SIN SELECTOR)
+
+Base usada para este diagnóstico: do + log + gráficos del taller actual, leídos a la luz de la decisión de diseño ya fijada en el selector automático del taller 05, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 04. Tema central: Propensity Score Matching (PSM) en corte transversal aplicado a la base `hh_98.dta`, nuevamente en el contexto de microcrédito. La unidad de análisis son hogares. El tratamiento es `dfmfd`, indicador de participación femenina en microcrédito dentro del hogar. La variable de resultado es `lexptot = ln(1+exptot)`, es decir, logaritmo del gasto per cápita total.
+
+El taller trabaja con 1.129 observaciones y un set amplio de covariables pre-tratamiento:
+`sexhead`, `agehead`, `educhead`, `lnland`, `vaccess`, `pcirr`, `rice`, `wheat`, `milk`, `oil`, `egg`.
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza de hallazgo sustantivo puro sobre microcrédito. Su función real es metodológica y comparativa. Muestra la lógica completa de PSM:
+
+* estimación del propensity score;
+* inspección de overlap;
+* imposición de soporte común;
+* chequeo de balance;
+* comparación de algoritmos;
+* bootstrap del procedimiento completo;
+* contraste con `teffects psmatch`.
+
+Clasificación editorial sugerida:
+Comparación metodológica.
+
+3. Núcleo empírico del taller
+
+El taller tiene cuatro bloques centrales.
+
+Primero, estima el propensity score con probit y logit. Ambos modelos entregan una señal muy parecida: la propensión al tratamiento parece caer con educación del jefe y con tierra, y subir algo con `oil` y `pcirr`. Más importante que la interpretación puntual de esos coeficientes es que el gráfico de overlap en probit muestra superposición razonable entre tratados y controles, aunque los tratados aparecen algo más concentrados hacia valores relativamente altos del score.
+
+Segundo, compara dos reglas de soporte:
+
+* `common`
+* `trim(10)`
+
+En `common`, la pérdida de soporte es mínima: quedan 591 tratados y 530 controles en soporte, es decir, solo 8 observaciones fuera.
+En `trim(10)`, la poda es bastante mayor: quedan 536 tratados y 481 controles, con 112 observaciones fuera.
+
+Tercero, evalúa balance en observables. Acá aparece una conclusión importante:
+
+* con `common`, el balance global mejora bastante;
+* con `trim(10)`, algunos indicadores globales mejoran levemente, pero persisten o empeoran problemas puntuales en ciertas covariables.
+
+Cuarto, compara varios algoritmos de emparejamiento:
+
+* vecino más cercano: NN(1), NN(2), NN(8)
+* radius: caliper 0.002 y 0.01
+* kernel: epan, normal y uniform, con bandwidth 0.03 y 0.06
+* además, dos ejemplos con bootstrap
+* y una comparación final con `teffects psmatch`.
+
+4. Qué muestran los gráficos
+
+Los gráficos del taller ayudan bastante y sí agregan valor.
+
+El gráfico de overlap del propensity score muestra superposición clara, aunque no perfecta, entre tratados y controles. No sugiere una falla catastrófica de soporte, pero sí una distribución algo desplazada entre grupos.
+
+Los gráficos de soporte asociados a `common` y `trim(10)` son útiles porque muestran visualmente algo que después se confirma en los conteos:
+
+* `common` recorta muy poco;
+* `trim(10)` recorta bastante más, sobre todo en zonas de menor densidad relativa.
+
+El balance plot final también es valioso: antes del matching, las densidades de propensity score difieren más; después del matching, la alineación mejora claramente. Eso refuerza la lectura de que PSM sí está mejorando la comparabilidad, aunque no resuelve todo automáticamente.
+
+5. Balance: lectura principal
+
+Acá está una de las partes más importantes del taller.
+
+Para `common` con NN(1), el bloque `pstest, both` muestra:
+
+* MeanBias baja de 12.1 a 4.7
+* MedBias baja de 7.7 a 2.9
+* Ps R2 cae de 0.057 a 0.007
+* el test global post-matching deja de rechazar (`p = 0.364`)
+* B baja a 20.2
+* R queda en 0.93
+
+Eso, globalmente, es una mejora clara.
+
+Pero no todo queda perfecto:
+
+* `sexhead` empeora y queda con sesgo estandarizado cercano a 14.1
+* `egg` queda en torno a 10.1
+* algunas razones de varianza siguen marcadas como problemáticas
+
+Para `trim(10)`, el panorama es mixto:
+
+* algunos indicadores globales siguen bien
+* incluso mejora la mediana del sesgo y baja `%Var`
+* pero `sexhead` queda peor (15.5)
+* `egg` también queda peor (14.7)
+* `milk` queda relativamente elevado
+
+La conclusión correcta es:
+`trim(10)` no domina claramente a `common`; de hecho, podando más muestra no arregla el principal problema residual y en algunas covariables lo empeora.
+
+6. Lectura que gana
+
+La lectura que gana no es “el mejor algoritmo es el que da el ATET más alto”. La lectura correcta es otra:
+
+en PSM, la decisión importante no es solo el algoritmo de matching; también importa la regla de soporte y el desempeño en balance.
+
+Y, dentro de este taller, sí aparece una preferencia clara en una primera capa:
+la regla `common` luce más defendible que `trim(10)`.
+
+¿Por qué?
+Porque:
+
+* conserva mucho más soporte;
+* el balance global post-matching ya mejora bastante;
+* y `trim(10)` no entrega una mejora suficientemente convincente en balance como para justificar la pérdida adicional de muestra.
+
+Eso sí: tomado aisladamente, este taller no contiene por sí solo la regla formal de selección entre algoritmos. Esa capa de decisión la aporta el taller 05. Entonces, la lectura correcta hoy ya no es “quedarse esperando el selector”, sino usar T4 como comparación amplia y T5 como respaldo metodológico de la elección final.
+
+7. ¿Hay especificación ganadora?
+
+Mi respuesta ahora es:
+
+Sí, pero de forma condicionada a la regla de diseño adoptada en T5.
+
+Tomado aisladamente, T4 sigue siendo una comparación metodológica amplia entre reglas de soporte y algoritmos. Pero, leído junto con T5, ya no corresponde dejar este bloque formulado como “preferencia provisional”. La decisión quedó cerrada del siguiente modo:
+
+* `common` queda preferido frente a `trim(10)` como regla de soporte;
+* y, dentro de `common`, la especificación preferida bajo la regla de diseño explicitada en T5 es:
+
+`kernel biweight bw = 0.40*SD(LPS) + common`.
+
+La razón no es que entregue el ATET más alto. La razón es que, bajo la regla de diseño del selector —balance aceptable, varianzas en rango y prioridad a retención/ESS entre candidatas viables—, esa especificación compra un compromiso más defendible entre balance y precisión que sus rivales.
+
+Entonces, la formulación editorial correcta para T4 ya no es:
+
+“comparación metodológica con preferencia provisional”.
+
+La formulación correcta pasa a ser:
+
+“comparación metodológica con especificación preferida bajo la regla de diseño adoptada en T5”.
+
+8. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+
+* el soporte común existe y no parece extremadamente frágil en esta aplicación;
+* PSM mejora de forma sustantiva el balance global en observables;
+* la elección entre `common` y `trim(10)` no es trivial;
+* recortar más soporte no necesariamente mejora los problemas residuales importantes;
+* varios algoritmos razonables bajo `common` entregan ATET bastante parecidos, en torno a 0.10–0.11;
+* bajo la regla de diseño adoptada en T5, la especificación preferida es `kernel biweight bw = 0.40*SD(LPS) + common`;
+* el taller enseña que en PSM hay que mirar conjuntamente overlap, balance, soporte e inferencia.
+
+9. Qué no debe decir una pieza pública
+
+No debería decir que:
+
+* el efecto causal verdadero del microcrédito femenino ya quedó fijado en un número único;
+* `trim(10)` es automáticamente más serio por recortar más;
+* el algoritmo con mayor ATET es el mejor;
+* el balance quedó perfecto;
+* `psmatch2` ya da inferencia definitiva con los SE que aparecen por defecto en pantalla;
+* la especificación preferida surge del taller 04 por sí solo, sin la capa de decisión explícita que aporta T5.
+
+Tampoco debería presentar T5 como si fuera una nueva aplicación sustantiva separada. Su función correcta es respaldar la decisión metodológica que ordena la lectura pública de T4.
+
+10. Riesgo editorial principal
+
+El principal riesgo editorial ahora ya no es “coronar demasiado pronto” un ganador, porque esa capa quedó resuelta en T5. El riesgo correcto es otro:
+
+* atribuirle a T4 una decisión que, en rigor, queda justificada por la regla de diseño de T5;
+* o, en el extremo opuesto, seguir narrando el bloque como si la decisión siguiera abierta.
+
+La salida profesional es intermedia y más precisa:
+
+* T4 aporta la comparación amplia y la intuición aplicada;
+* T5 cierra la decisión de diseño;
+* y la pieza pública principal del bloque debe seguir siendo T4, no el selector.
+
+11. Observación técnica importante
+
+Hay al menos dos detalles de la corrida archivada en el log que conviene dejar marcados para no contaminar una futura pieza pública o una tabla final.
+
+Primero, en la tabla final de esa corrida aparece duplicado `NN(1)` bajo `common`, porque se postea una vez en el bloque inicial y otra en el bloque comparativo posterior. Eso es un tema de limpieza, no de contenido, y ya conviene dejarlo resuelto en el do-file antes de reutilizar la tabla.
+
+Segundo, en el bloque de `teffects psmatch`, el valor almacenado de `SE_ATET_te` en esa corrida parece arrastrar la matriz `V` de la estimación anterior en vez de usar correctamente `_V`. En el output visible, el SE del ATET es 0.0361865, pero en la tabla final queda 0.033350, igual al del ATE. Eso sugiere una inconsistencia de almacenamiento en la versión archivada de la tabla y obliga a tomar con cautela ese output si se lo leyera aislado.
+
+12. Objeto de decisión final recomendado para una futura pieza pública
+
+Si este taller se transforma en ficha pública principal del bloque PSM, el objeto de decisión final debería ser una tabla corta y limpia con pocas filas, no la tabla entera del log.
+
+Mi sugerencia sería algo así:
+
+* especificación preferida: PSM + `common` + kernel biweight `bw = 0.40*SD(LPS)` + respaldo de T5
+* contraste de soporte: PSM + `trim(10)` + NN(8) + bootstrap
+* referencia de estabilidad: `teffects psmatch` ATET
+
+Y una caja de lectura debajo que diga algo equivalente a esto:
+
+“En esta aplicación, el resultado del PSM es bastante estable bajo especificaciones razonables con soporte amplio, con ATET alrededor de 0.11. La decisión final de diseño no se tomó por el tamaño del efecto, sino por una regla explícita de balance, soporte y precisión que favorece kernel biweight con soporte común.”
+
+13. Recomendación editorial concreta
+
+Este taller sí debe seguir siendo la ficha pública principal del bloque PSM.
+
+Mi recomendación editorial concreta es:
+
+* usar T4 como pieza pública principal;
+* usar T5 como respaldo metodológico o subsección técnica de cómo se eligió la especificación preferida;
+* dejar explícito que la decisión ya no es provisional.
+
+En otras palabras:
+T4 aporta la comparación amplia y la historia empírica legible;
+T5 aporta la regla de selección que cierra la decisión.
+
+Entonces, editorialmente, T4 hoy debe leerse como:
+comparación metodológica principal del bloque PSM, con especificación preferida respaldada por T5.
+
+14. Veredicto final
+
+Diagnóstico final:
+taller sólido y valioso, con buena densidad metodológica, buenos gráficos y una enseñanza clara sobre PSM. Sigue siendo la pieza pública principal del bloque, pero ya no debe leerse como diagnóstico abierto: bajo la regla de diseño explicitada en T5, la especificación preferida es `kernel biweight bw = 0.40*SD(LPS) + common`, mientras que T5 funciona como respaldo metodológico de esa decisión.
+
+Etiqueta editorial sugerida:
+Comparación metodológica.
+
+Subetiqueta útil:
+especificación preferida bajo la regla de diseño de T5: kernel biweight, `bw = 0.40*SD(LPS)`, `common`.

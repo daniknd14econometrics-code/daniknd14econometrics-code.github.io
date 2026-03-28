@@ -1,0 +1,2617 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\6_IPWRA.log
+  log type:  text
+ opened on:  28 Mar 2026, 11:05:02
+
+. do "C:\Users\Equipo\AppData\Local\Temp\STD41b8_000005.tmp"
+
+. /*------------------------------------------------------------------------------
+> ATET_IPWRA_ganador_IGNORE_S1_directo.do
+> Autor: Daniel + ChatGPT
+> Fecha: 2026-02-22
+> 
+> OBJETIVO
+> - Correr DIRECTAMENTE el ganador: MODO = IGNORE_ORG y SPEC = S1.
+> - Sin selector, sin loops de specs, sin programas.
+> - Respetar el diseño: misma muestra + mismas reglas de soporte/overlap y tratamiento de pesos.
+> - Estimar ATET con teffects ipwra (multivaluado: 1vs0, 2vs0, 3vs0), y luego graficar:
+>   (i) overlap (densidades de p_t), (ii) soporte (osample), (iii) histogramas de pesos,
+>   (iv) loveplot (|SMD| raw vs weighted).
+> 
+> NOTA CLAVE (CAP vs DROP)
+> - Si tu diseño usa DROP (recorte de muestra por pesos extremos), eso SÍ se replica en teffects ipwra
+>   porque es un recorte de la muestra ANTES de estimar.
+> - Si tu diseño usa CAP (winsorizar pesos), NO se puede imponer dentro de teffects ipwra:
+>   teffects usa pesos internos (derivados del mlogit) sin “capear”.
+>   En ese caso, CAP solo se usa para DIAGNÓSTICOS/GRÁFICOS (para ver qué pasa si capearas).
+> ------------------------------------------------------------------------------*/
+. 
+. version 19.0
+
+. clear all
+
+. set more off
+
+. 
+. *==============================================================================
+. * 0) RUTAS (editá estas 2 líneas y listo)
+. *==============================================================================
+. clear all
+
+. set more off
+
+. 
+. *-------------------------------
+. * 0) Rutas (tu esquema)
+. *-------------------------------
+. global seteo "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\"
+
+. local username = c(username)
+
+. if "`username'" == "Equipo" {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\"
+. }
+
+. else if "`username'" == "dmendez" {
+.     global seteo "C:\Users\dmendez\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\"
+. }
+
+. else {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\"
+. }
+
+. 
+. use "$seteo\3. Estrategia empirica\3. Modelos\panel_innovacion_ipi_8.dta", clear
+
+. 
+. 
+. 
+. 
+. * crear carpetas (mkdir NO crea carpetas intermedias)
+. cap mkdir "$seteo\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambiente\output\winner_only\contemporaneo"
+
+. local outdir "$seteo\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambiente\output\winner_only\contemporaneo"
+
+. cap mkdir "`outdir'"
+
+. 
+. 
+. * Opcional: log
+. *cap log close _all
+. *log using "`outdir'\ATET_IGNORE_S1.log", replace
+. 
+. 
+. * chequeo explícito (didáctico): si falla, cortamos acá con un mensaje claro
+. *if _rc {
+. *    di as error "No pude crear la carpeta de salida: `outdir'"
+. *    exit 603
+. *}
+. 
+. * Opcional: log
+. *cap log close _all
+. *log using "`outdir'\ATET_IGNORE_S1.log", replace
+. 
+. *==============================================================================
+. * 1) CARGA + ESTRUCTURA DE PANEL (igual que tu pipeline)
+. *==============================================================================
+. 
+. * Si tu base no es panel o no tiene delta(3), podés comentar xtset.
+. isid correlativo anio
+
+. xtset correlativo anio, delta(3)
+
+Panel variable: correlativo (unbalanced)
+ Time variable: anio, 2000 to 2021, but with gaps
+         Delta: 3 units
+
+. 
+. *==============================================================================
+. * 2) MUESTRA CENTRAL + OUTCOME (entre innovadores con outcome observado)
+. *    (igual que tu lógica: NO definimos Y para no innovadores)
+. *==============================================================================
+. keep if b1_9==1
+(9,481 observations deleted)
+
+. 
+. cap drop Y_cond
+
+. gen byte Y_cond = inlist(resul_mejora_ambiente,1,2) if !missing(resul_mejora_ambiente)
+(1 missing value generated)
+
+. drop if missing(Y_cond)
+(1 observation deleted)
+
+. 
+. label var Y_cond "Y (cond): mejora amb media/alta entre innovadores"
+
+. 
+. *==============================================================================
+. * 3) TRATAMIENTO GANADOR: IGNORE_ORG (estado prod/proc)
+. *==============================================================================
+. cap drop D_pp_ignore
+
+. gen byte D_pp_ignore = .
+(5,485 missing values generated)
+
+. replace D_pp_ignore = 0 if innova_producto==0 & innova_proceso==0
+(713 real changes made)
+
+. replace D_pp_ignore = 1 if innova_producto==1 & innova_proceso==0
+(927 real changes made)
+
+. replace D_pp_ignore = 2 if innova_producto==0 & innova_proceso==1
+(1,857 real changes made)
+
+. replace D_pp_ignore = 3 if innova_producto==1 & innova_proceso==1
+(1,988 real changes made)
+
+. 
+. label define Dpp 0 "No prod/proc" 1 "Solo producto" 2 "Solo proceso" 3 "Ambas", replace
+
+. label values D_pp_ignore Dpp
+
+. label var D_pp_ignore "D: prod/proc/ambas (IGNORE_ORG)"
+
+. 
+. keep if inlist(D_pp_ignore,0,1,2,3)
+(0 observations deleted)
+
+. 
+. *==============================================================================
+. * 4) ORG CONTROLS (los usabas en IGNORE_ORG) + transformaciones usadas en diseño
+. *==============================================================================
+. cap drop org1 org_miss
+
+. gen byte org1 = (innova_organiz_comerc==1) if !missing(innova_organiz_comerc)
+(1,438 missing values generated)
+
+. replace org1 = 0 if missing(org1)
+(1,438 real changes made)
+
+. gen byte org_miss = missing(innova_organiz_comerc)
+
+. 
+. label var org1     "Org/comerc=1 (missing->0)"
+
+. label var org_miss "Org/comerc missing"
+
+. 
+. * Cuadráticos e interacciones (se crean explícitos; inclusión depende de la ecuación)
+. capture confirm numeric variable ln_tpo_mean
+
+. if !_rc {
+.     cap drop ln_tpo_sq
+.     gen double ln_tpo_sq = ln_tpo_mean^2
+(421 missing values generated)
+. }
+
+. capture confirm numeric variable edad
+
+. if !_rc {
+.     cap drop edad_sq
+.     gen double edad_sq = edad^2
+(9 missing values generated)
+. }
+
+. 
+. capture confirm numeric variable indice_redes
+
+. if !_rc {
+.     capture confirm numeric variable exp_dummy
+.     if !_rc {
+.         cap drop redesXexp
+.         gen double redesXexp = indice_redes*exp_dummy
+(818 missing values generated)
+.     }
+.     capture confirm numeric variable ln_tpo_mean
+.     if !_rc {
+.         cap drop redesXsize
+.         gen double redesXsize = indice_redes*ln_tpo_mean
+(818 missing values generated)
+.     }
+. }
+
+. 
+. 
+. * --- Dummies por ola (anio) ---
+. global FE_WAVE_VARS ""
+
+. capture confirm numeric variable anio
+
+. if !_rc {
+.     capture drop wave_*
+.     quietly tab anio, gen(wave_)
+.     quietly ds wave_*, has(type numeric)
+.     global FE_WAVE_VARS `r(varlist)'
+. }
+
+. 
+. 
+. 
+. * --- Dummies macro-sector (macro_sector) ---
+. gen byte macro_sector = 3   // 1=Manufacturing, 2=Services, 3=Other/missing
+
+. 
+. * TU definición:
+. replace macro_sector = 1 if inlist(industry_id, 6)
+(3,307 real changes made)
+
+. replace macro_sector = 2 if inlist(industry_id, 2,3,4,5,7,8,11)
+(2,086 real changes made)
+
+. replace macro_sector = 3 if missing(industry_id) | inlist(industry_id, 1,9,10)
+(0 real changes made)
+
+. 
+. label define macro_sector 1 "Manufacturing" 2 "Services" 3 "Other/missing", replace
+
+. label values macro_sector macro_sector
+
+. 
+. drop if macro_sector==3
+(92 observations deleted)
+
+. 
+. tab anio macro_sector if b1_9==1
+
+           |     macro_sector
+      anio | Manufactu   Services |     Total
+-----------+----------------------+----------
+      2000 |       421          0 |       421 
+      2003 |       397          0 |       397 
+      2006 |       743          0 |       743 
+      2009 |       409        394 |       803 
+      2012 |       320        316 |       636 
+      2015 |       433        564 |       997 
+      2018 |       335        472 |       807 
+      2021 |       249        340 |       589 
+-----------+----------------------+----------
+     Total |     3,307      2,086 |     5,393 
+
+. 
+. capture confirm numeric variable macro_sector
+
+. if _rc {
+.     di as error "Falta macro_sector en tu base. Crealo como en tu pipeline, o ajustá la FE."
+.     exit 459
+. }
+
+. 
+. *==============================================================================
+. * 5) COVARIABLES DEL GANADOR (IGNORE + S1)
+. *    Tratamiento (mlogit) = BASEVARS_CORE + interacciones + FE sector 
+. *    Outcome (logit)      = BASEVARS_CORE + cuadrados + interacciones + FE sector + org controls
+. *
+. * NOTA: Para alinear muestra con teffects, dropeamos missings de la UNIÓN de variables
+. *       de ambas ecuaciones (tratamiento y outcome).
+. *==============================================================================
+. drop if missing(edad, capital_extranjero, share_prof_tecn, exp_dummy, ln_tpo_mean, indice_redes, ///
+>                redesXexp, redesXsize, org1, org_miss, macro_sector, ln_tpo_sq, edad_sq)
+(830 observations deleted)
+
+. 
+. *==============================================================================
+. * 6) PARÁMETROS DE DISEÑO (mismos defaults del do-file original)
+. *==============================================================================
+. scalar P0_FLOOR        = 1e-8
+
+. scalar P0_TREAT_FLOOR  = 1e-8
+
+. scalar W_CEIL          = 1e6
+
+. scalar PS_TRIM_ON      = 1        // 1=on, 0=off
+
+. scalar PS0_LOW         = 0.05
+
+. scalar PS0_HIGH        = 0.95
+
+. local  W_TRIM_STYLE    "OFF"      // "CAP" o "DROP" o "OFF"
+
+. scalar W_CAP_Q         = .      // cuantil para CAP/DROP (solo controles) o poner CAP "." para desactivar
+
+. 
+. 
+. 
+. 
+. *==============================================================================
+. * 7) (A) RECORTE DE MUESTRA ALINEADO AL DISEÑO + ESTIMACIÓN IPWRA
+. *==============================================================================
+. quietly mlogit D_pp_ignore ///
+>     edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>     redesXexp redesXsize ///
+>     i.macro_sector, ///
+>     baseoutcome(0) nolog
+
+. 
+. cap drop p0 p1 p2 p3
+
+. predict double p0, outcome(0)
+(option pr assumed; predicted probability)
+
+. predict double p1, outcome(1)
+(option pr assumed; predicted probability)
+
+. predict double p2, outcome(2)
+(option pr assumed; predicted probability)
+
+. predict double p3, outcome(3)
+(option pr assumed; predicted probability)
+
+. 
+. tempvar use_final w1 w2 w3
+
+. gen byte `use_final' = 1
+
+. 
+. * (i) floors sobre p0 (control y tratados)
+. replace `use_final' = 0 if missing(p0)
+(0 real changes made)
+
+. replace `use_final' = 0 if (D_pp_ignore==0  & p0<=P0_FLOOR)
+(0 real changes made)
+
+. replace `use_final' = 0 if (inlist(D_pp_ignore,1,2,3) & p0<=P0_TREAT_FLOOR)
+(0 real changes made)
+
+. 
+. * (ii) PS trimming sobre p0 (si está activo)
+. if (PS_TRIM_ON==1) {
+.     replace `use_final' = 0 if (p0<PS0_LOW | p0>PS0_HIGH)
+(170 real changes made)
+. }
+
+. 
+. * (iii) wceil sobre controles, exigiendo pesos razonables para CADA t (1..3)
+. gen double `w1' = .
+(4,563 missing values generated)
+
+. gen double `w2' = .
+(4,563 missing values generated)
+
+. gen double `w3' = .
+(4,563 missing values generated)
+
+. replace `w1' = (p1/p0) if D_pp_ignore==0 & `use_final'==1
+(594 real changes made)
+
+. replace `w2' = (p2/p0) if D_pp_ignore==0 & `use_final'==1
+(594 real changes made)
+
+. replace `w3' = (p3/p0) if D_pp_ignore==0 & `use_final'==1
+(594 real changes made)
+
+. 
+. replace `use_final' = 0 if D_pp_ignore==0 & `use_final'==1 & (missing(`w1') | `w1'<=0 | `w1'>W_CEIL)
+(0 real changes made)
+
+. replace `use_final' = 0 if D_pp_ignore==0 & `use_final'==1 & (missing(`w2') | `w2'<=0 | `w2'>W_CEIL)
+(0 real changes made)
+
+. replace `use_final' = 0 if D_pp_ignore==0 & `use_final'==1 & (missing(`w3') | `w3'<=0 | `w3'>W_CEIL)
+(0 real changes made)
+
+. 
+. * (iv) trimming por cuantil (solo si W_TRIM_STYLE=="DROP") -> replicable en teffects
+. if (upper("`W_TRIM_STYLE'")=="DROP") {
+. 
+.     local pct = 100*W_CAP_Q
+. 
+.     * calculamos wcap_t en controles (sobre la muestra ya "usable")
+.     quietly count if D_pp_ignore==0 & `use_final'==1
+.     if (r(N)>0) {
+. 
+.         quietly centile `w1' if D_pp_ignore==0 & `use_final'==1, centile(`pct')
+.         local wcap1 = r(c_1)
+.         quietly centile `w2' if D_pp_ignore==0 & `use_final'==1, centile(`pct')
+.         local wcap2 = r(c_1)
+.         quietly centile `w3' if D_pp_ignore==0 & `use_final'==1, centile(`pct')
+.         local wcap3 = r(c_1)
+. 
+.         if (`wcap1'<. & `wcap1'>0) replace `use_final' = 0 if D_pp_ignore==0 & `use_final'==1 & `w1' > `wcap1'
+.         if (`wcap2'<. & `wcap2'>0) replace `use_final' = 0 if D_pp_ignore==0 & `use_final'==1 & `w2' > `wcap2'
+.         if (`wcap3'<. & `wcap3'>0) replace `use_final' = 0 if D_pp_ignore==0 & `use_final'==1 & `w3' > `wcap3'
+.     }
+. }
+
+. 
+. keep if `use_final'==1
+(170 observations deleted)
+
+. drop `use_final' `w1' `w2' `w3'
+
+. 
+. * ---- Estimación IPWRA (ganador IGNORE+S1): ATET "diagonales" ----
+. *   Para tratamiento multivaluado, queremos:
+. *     ATET_1 = E[Y(1)-Y(0) | D=1], ATET_2 = E[Y(2)-Y(0) | D=2], ATET_3 = E[Y(3)-Y(0) | D=3]
+. *   Para forzar eso sin ambigüedades, corremos 3 veces con tlevel(t) y extraemos SOLO el contraste t vs 0.
+. 
+. tempname __b __V
+
+. capture drop os_t1 os_t2 os_t3
+
+. 
+. forvalues t = 1/3 {
+  2. 
+.     local __osname = "os_t`t'"
+  3. 
+.     teffects ipwra ///
+>         (Y_cond ///
+>             edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>             ln_tpo_sq edad_sq redesXexp redesXsize ///
+>             org1 org_miss ///
+>             i.macro_sector, ///
+>             logit) ///
+>         (D_pp_ignore ///
+>             edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>             redesXexp redesXsize ///
+>             i.macro_sector, ///
+>             mlogit), ///
+>         atet control(0) tlevel(`t') vce(cluster correlativo) osample(`__osname') pstolerance(`=P0_FLOOR')
+  4. 
+.     estimates store ATET_IGNORE_S1_t`t'
+  5.         tebalance summarize
+  6.     matrix `__b' = e(b)
+  7.     matrix `__V' = e(V)
+  8. 
+.     local __cn : colfullnames `__b'
+  9.     local __target ""
+ 10. 
+.     * Stata suele nombrar el contraste como ATET:r#vs0 (multi) o ATET:#vs0 (algunas salidas)
+.     foreach __nm of local __cn {
+ 11.         if (strpos("`__nm'","ATET:r`t'vs0")>0) local __target "`__nm'"
+ 12.     }
+ 13.     if ("`__target'"=="") {
+ 14.         foreach __nm of local __cn {
+ 15.             if (strpos("`__nm'","ATET:`t'vs0")>0) local __target "`__nm'"
+ 16.         }
+ 17.     }
+ 18.     if ("`__target'"=="") {
+ 19.         di as error "No encontre el ATET relevante (t=`t' vs 0) en e(b). Colnames: `__cn'"
+ 20.         exit 459
+ 21.     }
+ 22. 
+.     scalar ATET`t' = el(`__b', 1, colnumb(`__b', "`__target'"))
+ 23.     scalar SE`t'   = sqrt(el(`__V', colnumb(`__V', "`__target'"), colnumb(`__V', "`__target'")))
+ 24. 
+.     local ATET_STR`t' : display %9.5f ATET`t'
+ 25.     local SE_STR`t'   : display %9.5f SE`t'
+ 26. }
+
+Iteration 0:  EE criterion = 3.628e-18  
+Iteration 1:  EE criterion = 3.985e-33  
+
+Treatment-effects estimation                    Number of obs     =      4,393
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+                                            (Std. err. adjusted for 2,662 clusters in correlativo)
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1179641   .0334361     3.53   0.000     .0524306    .1834977
+ (Solo proceso vs No prod/proc)  |   .1933102   .0312982     6.18   0.000     .1319668    .2546536
+        (Ambas vs No prod/proc)  |   .2538983    .031226     8.13   0.000     .1926964    .3151001
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |     .18376   .0284887     6.45   0.000     .1279231    .2395969
+--------------------------------------------------------------------------------------------------
+
+Covariate balance summary
+
+                           Observations  
+Treatment                Raw     Weighted
+-----------------------------------------
+No prod/proc  =          594      1,101.9
+Solo producto =          812      1,098.2
+Solo proceso  =        1,616      1,094.9
+Ambas         =        1,371      1,098.0
+Total         =        4,393      4,393.0
+-----------------------------------------
+
+-----------------------------------------------------------------
+                |Standardized differences          Variance ratio
+                |        Raw    Weighted           Raw   Weighted
+----------------+------------------------------------------------
+Solo producto   |
+           edad |   .1553144   -.0123322      1.149794   .9131132
+capital_extra~o |   .0743647    .0273607      1.144779   1.048704
+share_prof_tecn |   .3002929   -.0167814      1.355024   .9536995
+      exp_dummy |   .3079762    .0105253      1.290676   1.005259
+    ln_tpo_mean |  -.0433103    .0376506      .9438823   .9561728
+   indice_redes |   .1441037     .015572      1.222506   1.068531
+      redesXexp |   .1705549    .0134197      1.593496   .9632999
+     redesXsize |   .1460999    .0279914      1.253199   1.118198
+                |
+   macro_sector |
+      Services  |   .0109975    .0132995      .9997227   1.000246
+----------------+------------------------------------------------
+Solo proceso    |
+                |
+           edad |   .1941323   -.0104867      1.178867   .9230435
+capital_extra~o |   .0066877    .0365269      1.012049   1.064929
+share_prof_tecn |    .010937   -.0266588      .9435188   .9518337
+      exp_dummy |   .1420229   -.0072935      1.155976   .9962416
+    ln_tpo_mean |   .1215479    .0423982      1.080408   1.002787
+   indice_redes |   .0221484    .0097625      1.077809   1.056239
+      redesXexp |   .0208735     .001637      1.086626   .9514523
+     redesXsize |   .0695053    .0215385      1.274457   1.105268
+                |
+   macro_sector |
+      Services  |  -.0224184    .0135155      .9978288   1.000249
+----------------+------------------------------------------------
+Ambas           |
+                |
+           edad |   .1704093    -.005409      1.195413    1.00766
+capital_extra~o |   .0798324    .0293207      1.154754   1.052177
+share_prof_tecn |    .236346   -.0194473      1.105478   .8486321
+      exp_dummy |   .3852382    .0061265      1.330273   1.003088
+    ln_tpo_mean |   .1236669    .0464315      .9730903   .9685437
+   indice_redes |   .4460398    .0062578      1.531227   1.124244
+      redesXexp |   .3636118    .0100952      2.400227   .9857694
+     redesXsize |   .4627471    .0221112      1.724725   1.174084
+                |
+   macro_sector |
+      Services  |  -.2145376    .0095602      .9484683   1.000213
+-----------------------------------------------------------------
+
+Iteration 0:  EE criterion = 3.907e-18  
+Iteration 1:  EE criterion = 6.525e-33  
+
+Treatment-effects estimation                    Number of obs     =      4,393
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+                                            (Std. err. adjusted for 2,662 clusters in correlativo)
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1057525   .0358799     2.95   0.003     .0354292    .1760758
+ (Solo proceso vs No prod/proc)  |   .1804301   .0331157     5.45   0.000     .1155246    .2453357
+        (Ambas vs No prod/proc)  |   .2570286   .0339009     7.58   0.000      .190584    .3234732
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |   .2069461   .0309257     6.69   0.000     .1463329    .2675593
+--------------------------------------------------------------------------------------------------
+
+Covariate balance summary
+
+                           Observations  
+Treatment                Raw     Weighted
+-----------------------------------------
+No prod/proc  =          594      1,095.3
+Solo producto =          812      1,107.0
+Solo proceso  =        1,616      1,096.4
+Ambas         =        1,371      1,094.4
+Total         =        4,393      4,393.0
+-----------------------------------------
+
+-----------------------------------------------------------------
+                |Standardized differences          Variance ratio
+                |        Raw    Weighted           Raw   Weighted
+----------------+------------------------------------------------
+Solo producto   |
+           edad |   .1553144    .0092527      1.149794   .9447059
+capital_extra~o |   .0743647    .0384141      1.144779   1.079074
+share_prof_tecn |   .3002929   -.0521547      1.355024   .8539549
+      exp_dummy |   .3079762    .0011385      1.290676    1.00103
+    ln_tpo_mean |  -.0433103    .0476024      .9438823   1.065154
+   indice_redes |   .1441037    .0122382      1.222506    1.09359
+      redesXexp |   .1705549    .0206286      1.593496   1.066766
+     redesXsize |   .1460999    .0180222      1.253199   1.121499
+                |
+   macro_sector |
+      Services  |   .0109975    .0089096      .9997227   1.000306
+----------------+------------------------------------------------
+Solo proceso    |
+                |
+           edad |   .1941323    .0034025      1.178867    .920707
+capital_extra~o |   .0066877    .0303681      1.012049   1.062527
+share_prof_tecn |    .010937   -.0132555      .9435188     .94018
+      exp_dummy |   .1420229    .0253162      1.155976    1.02262
+    ln_tpo_mean |   .1215479    .0177357      1.080408   1.045575
+   indice_redes |   .0221484     .008064      1.077809   1.073448
+      redesXexp |   .0208735      .03468      1.086626   1.139134
+     redesXsize |   .0695053     .010448      1.274457   1.088204
+                |
+   macro_sector |
+      Services  |  -.0224184   -.0137212      .9978288    .999202
+----------------+------------------------------------------------
+Ambas           |
+                |
+           edad |   .1704093     .011733      1.195413    1.03328
+capital_extra~o |   .0798324     .046191      1.154754   1.095077
+share_prof_tecn |    .236346    .0107401      1.105478   .8351843
+      exp_dummy |   .3852382    .0294895      1.330273   1.026249
+    ln_tpo_mean |   .1236669    .0215813      .9730903   1.023517
+   indice_redes |   .4460398   -.0072601      1.531227   1.118049
+      redesXexp |   .3636118    .0367235      2.400227   1.142189
+     redesXsize |   .4627471   -.0050576      1.724725   1.118801
+                |
+   macro_sector |
+      Services  |  -.2145376   -.0262305      .9484683   .9981494
+-----------------------------------------------------------------
+
+Iteration 0:  EE criterion = 3.628e-18  
+Iteration 1:  EE criterion = 4.708e-33  
+
+Treatment-effects estimation                    Number of obs     =      4,393
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+                                            (Std. err. adjusted for 2,662 clusters in correlativo)
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1046496   .0347926     3.01   0.003     .0364575    .1728418
+ (Solo proceso vs No prod/proc)  |   .2076088   .0325092     6.39   0.000      .143892    .2713256
+        (Ambas vs No prod/proc)  |   .2705091   .0315486     8.57   0.000     .2086749    .3323433
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |   .2123501   .0290739     7.30   0.000     .1553664    .2693339
+--------------------------------------------------------------------------------------------------
+
+Covariate balance summary
+
+                           Observations  
+Treatment                Raw     Weighted
+-----------------------------------------
+No prod/proc  =          594      1,090.7
+Solo producto =          812      1,100.9
+Solo proceso  =        1,616      1,100.6
+Ambas         =        1,371      1,100.8
+Total         =        4,393      4,393.0
+-----------------------------------------
+
+-----------------------------------------------------------------
+                |Standardized differences          Variance ratio
+                |        Raw    Weighted           Raw   Weighted
+----------------+------------------------------------------------
+Solo producto   |
+           edad |   .1553144     .025589      1.149794   1.004803
+capital_extra~o |   .0743647    .0769334      1.144779    1.14563
+share_prof_tecn |   .3002929   -.0472254      1.355024   .9100124
+      exp_dummy |   .3079762    .0275169      1.290676   1.010165
+    ln_tpo_mean |  -.0433103    .0468115      .9438823   .9790445
+   indice_redes |   .1441037    .0390448      1.222506   1.099847
+      redesXexp |   .1705549    .0141395      1.593496   .9365204
+     redesXsize |   .1460999    .0510197      1.253199   1.148669
+                |
+   macro_sector |
+      Services  |   .0109975    .0055204      .9997227   1.002563
+----------------+------------------------------------------------
+Solo proceso    |
+                |
+           edad |   .1941323    .0043127      1.178867     .99617
+capital_extra~o |   .0066877    .0801549      1.012049   1.151654
+share_prof_tecn |    .010937   -.0439758      .9435188   .9137252
+      exp_dummy |   .1420229    .0250238      1.155976   1.009304
+    ln_tpo_mean |   .1215479    .0588359      1.080408   1.028307
+   indice_redes |   .0221484    .0357451      1.077809   1.065991
+      redesXexp |   .0208735    .0269963      1.086626   .9788705
+     redesXsize |   .0695053    .0505091      1.274457   1.121504
+                |
+   macro_sector |
+      Services  |  -.0224184   -.0132783      .9978288   .9935709
+----------------+------------------------------------------------
+Ambas           |
+                |
+           edad |   .1704093    .0085437      1.195413   1.050872
+capital_extra~o |   .0798324    .0654718      1.154754   1.124135
+share_prof_tecn |    .236346   -.0368413      1.105478   .8334478
+      exp_dummy |   .3852382    .0321835      1.330273   1.011744
+    ln_tpo_mean |   .1236669    .0454234      .9730903   .9759809
+   indice_redes |   .4460398    .0326209      1.531227   1.099076
+      redesXexp |   .3636118    .0253612      2.400227   .9765145
+     redesXsize |   .4627471    .0471096      1.724725   1.162096
+                |
+   macro_sector |
+      Services  |  -.2145376    .0038798      .9484683   1.001805
+-----------------------------------------------------------------
+
+. 
+. * Mantener el "estimation set" principal como t=1, para no cambiar tu flujo aguas abajo.
+. *estimates restore ATET_IGNORE_S1_t1
+. *estimates store ATET_IGNORE_S1
+. *tebalance summarize
+. 
+. di as text "--------------------------------------------"
+--------------------------------------------
+
+. di as text "Soporte por tlevel (os_t#): 1 = fuera de soporte/overlap"
+Soporte por tlevel (os_t#): 1 = fuera de soporte/overlap
+
+. forvalues t=1/3 {
+  2.     di as text "t=`t' (os_t`t'):"
+  3.     tab os_t`t' if inlist(D_pp_ignore,0,`t'), missing
+  4. }
+t=1 (os_t1):
+
+    overlap |
+  violation |
+  indicator |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      1,406      100.00      100.00
+------------+-----------------------------------
+      Total |      1,406      100.00
+t=2 (os_t2):
+
+    overlap |
+  violation |
+  indicator |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      2,210      100.00      100.00
+------------+-----------------------------------
+      Total |      2,210      100.00
+t=3 (os_t3):
+
+    overlap |
+  violation |
+  indicator |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      1,965      100.00      100.00
+------------+-----------------------------------
+      Total |      1,965      100.00
+
+. di as text "--------------------------------------------"
+--------------------------------------------
+
+. 
+. di as text "ATET relevantes (diagonales, control=0):"
+ATET relevantes (diagonales, control=0):
+
+. di as text "  ATET_1 = E[Y(1)-Y(0) | D=1] = `ATET_STR1'   (SE=`SE_STR1')"
+  ATET_1 = E[Y(1)-Y(0) | D=1] =   0.11796   (SE=  0.03344)
+
+. di as text "  ATET_2 = E[Y(2)-Y(0) | D=2] = `ATET_STR2'   (SE=`SE_STR2')"
+  ATET_2 = E[Y(2)-Y(0) | D=2] =   0.18043   (SE=  0.03312)
+
+. di as text "  ATET_3 = E[Y(3)-Y(0) | D=3] = `ATET_STR3'   (SE=`SE_STR3')"
+  ATET_3 = E[Y(3)-Y(0) | D=3] =   0.27051   (SE=  0.03155)
+
+. 
+. 
+. 
+. *=============================================================================
+. *  tablas resumen- estadisticas descriptivas
+. *============================================================================
+. 
+. * recordemos que tenemos activo ya los siguientes filtros:
+. * keep if b1_9==1  (solo firmas que hicieron actividades de innovacion)
+. * drop if macro_sector==3    (solo firmas de manufactura o de servicios)
+. * keep if `use_final'==1    (reglas de soporte sobre p0 aplicadas)
+. 
+. describe  Y_cond D_pp_ignore edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>                                     ln_tpo_sq edad_sq redesXexp redesXsize ///
+>                                                 macro_sector ///
+>                                        org1 org_miss 
+
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Y_cond          byte    %8.0g                 Y (cond): mejora amb media/alta entre innovadores
+D_pp_ignore     byte    %13.0g     Dpp        D: prod/proc/ambas (IGNORE_ORG)
+edad            float   %9.0g                 Edad de la empresa
+capital_extra~o float   %9.0g                 Empresa tiene capital extranjero
+share_prof_tecn float   %9.0g                 profesionales y tecnicos respecto del total de ocupados, anio ref
+exp_dummy       float   %9.0g                 =1 si exporta, 0 en otro caso
+ln_tpo_mean     float   %9.0g                 (ln) Total Personal Ocupado: promedio 3 años desde 2012; antes: año de referenci
+indice_redes    float   %9.0g                 Índice PCA (PC1) - Redes
+ln_tpo_sq       double  %10.0g                
+edad_sq         double  %10.0g                
+redesXexp       double  %10.0g                
+redesXsize      double  %10.0g                
+macro_sector    byte    %13.0g     macro_sector
+                                              
+org1            byte    %8.0g                 Org/comerc=1 (missing->0)
+org_miss        byte    %8.0g                 Org/comerc missing
+
+.                                            
+. mdesc Y_cond D_pp_ignore edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>                                     ln_tpo_sq edad_sq redesXexp redesXsize ///
+>                                                 macro_sector ///
+>                                            org1 org_miss 
+
+    Variable    |     Missing          Total     Percent Missing
+----------------+-----------------------------------------------
+         Y_cond |           0          4,393           0.00
+    D_pp_ignore |           0          4,393           0.00
+           edad |           0          4,393           0.00
+   capital_ex~o |           0          4,393           0.00
+   share_prof~n |           0          4,393           0.00
+      exp_dummy |           0          4,393           0.00
+    ln_tpo_mean |           0          4,393           0.00
+   indice_redes |           0          4,393           0.00
+      ln_tpo_sq |           0          4,393           0.00
+        edad_sq |           0          4,393           0.00
+      redesXexp |           0          4,393           0.00
+     redesXsize |           0          4,393           0.00
+   macro_sector |           0          4,393           0.00
+           org1 |           0          4,393           0.00
+       org_miss |           0          4,393           0.00
+----------------+-----------------------------------------------
+
+.                                            
+. summarize  Y_cond i.D_pp_ignore edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>                                     ln_tpo_sq edad_sq redesXexp redesXsize ///
+>                                                 i.macro_sector ///
+>                                   org1 org_miss 
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      Y_cond |      4,393    .3801502    .4854788          0          1
+             |
+ D_pp_ignore |
+No prod/p..  |      4,393    .1352151    .3419921          0          1
+Solo prod..  |      4,393    .1848395    .3882115          0          1
+Solo proc..  |      4,393     .367858    .4822773          0          1
+      Ambas  |      4,393    .3120874     .463398          0          1
+-------------+---------------------------------------------------------
+             |
+        edad |      4,393    27.40109    20.22175          0        149
+capital_ex~o |      4,393    .1650353    .3712546          0          1
+share_prof~n |      4,393    22.65721    25.74923          0        100
+   exp_dummy |      4,393    .3455497    .4756013          0          1
+ ln_tpo_mean |      4,393    4.128793    1.279778   .6931472   9.207737
+-------------+---------------------------------------------------------
+indice_redes |      4,393    .8846943    1.513056   -.891318   6.111538
+   ln_tpo_sq |      4,393    18.68439    11.52898    .480453   84.78242
+     edad_sq |      4,393    1159.646    1753.958          0      22201
+   redesXexp |      4,393    .3727708    1.053519   -.891318   6.111538
+  redesXsize |      4,393    3.764214    6.633086  -8.123255   34.12817
+-------------+---------------------------------------------------------
+             |
+macro_sector |
+Manufactu~g  |      4,393    .5429092    .4982121          0          1
+   Services  |      4,393    .4570908    .4982121          0          1
+             |
+        org1 |      4,393    .3592078    .4798229          0          1
+    org_miss |      4,393    .3032097    .4596974          0          1
+
+.         
+.                                   
+. *==============================================================================
+. * 8) DIAGNÓSTICOS CON PESOS (OVERLAP / HIST / LOVELOT)
+. *==============================================================================
+. 
+. /*------------------------------------------------------------------------------
+> NOTA SOBRE ALINEACIÓN DE DIAGNÓSTICOS (SMD/LOVE PLOT/OVERLAP) EN ESTA SECCIÓN 8
+> 
+> En esta sección construimos diagnósticos (overlap, histogramas de pesos y loveplot) usando
+> predicciones p0..pt y pesos "manuales" w_raw = p_t/p0 (para controles), junto con filtros
+> de soporte/overlap (pisos sobre p0 + PS trimming).
+> 
+>    - NO se excluyen las observaciones que "teffects ipwra" marca como fuera de soporte.
+>    - En ese caso, los SMD/loveplot tienden a replicar mejor las métricas del do-file anterior del
+>      selector automático (etapa de diseño), porque ese pipeline de diseño calcula balance
+>      sobre la muestra recortada por reglas de diseño, pero no necesariamente sobre la
+>      "muestra efectiva" final usada por "teffects ipwra" (que puede excluir observaciones adicionales).
+>          
+>         - en particular, en "teffects ipwra" se excluyen las observaciones con os_t#==1 para cada contraste t vs 0. 
+>     - Es decir, el comando "teffects ipwra" puede hacer modificaciones extras en terminos de MUESTRA EFECTIVA (soporte/overlap) utilizada para estimar el ATET.
+>     - por otro lado, cuando usamos "teffects ipwra" los pesos pueden NO coincidir exactamente con los del diseño manual impuesto por mi:
+>     - Aunque guardamos una muestra previa usando trimming sobre p0 + pisos, "teffects ipwra" vuelve a
+>      estimar internamente su modelo de tratamiento y construye SUS propios pesos IPW internos.
+>    - Por eso, los SMD calculados "a mano" con w_raw = p_t/p0 (a partir de nuestro mlogit) pueden diferir levemente de los SMD internos de teffects.
+> 
+> Regla segura si se quiere replicar EXACTAMENTE el balance reportado por "teffects ipwra":
+>    - Usar el comando "tebalance summarize" inmediatamente después de cada "teffects ipwra", 
+>      y basar los SMD/diagnósticos en esos resultados, ya que reflejan la misma muestra efectiva
+>          y los mismos pesos internos que utiliza "teffects".
+> 
+> En resumen:
+> - sin teffects ipwra, y bajo nuestra muestra con nuestras reglas de diseño -> smd que replican las métricas del selector (diseño).
+> - con teffects ipwra y tebalance summarize, y bajo nuestra muestra con nuestra reglas de diseño -> smd que replican lo que hace internamente teffects ipwra
+> ------------------------------------------------------------------------------*/
+. 
+. set scheme s2mono
+
+. 
+. *--------------------------------------------
+. * Construir pesos de controles para comparar t vs 0
+. *--------------------------------------------
+. forvalues t=1/3 {
+  2. 
+.     tempvar use_t w_raw w_cap w_norm w_plot w_plot_d w_raw_nf w_norm_nf w_plot_nf
+  3.     gen byte   `use_t' = inlist(D_pp_ignore,0,`t')
+  4. 
+.     gen double `w_raw' = .
+  5.     replace `w_raw' = (p`t'/p0) if D_pp_ignore==0 & `use_t'==1
+  6. 
+.     * Filtros de diagnóstico (overlap + PS trim + soporte)
+.     replace `use_t' = 0 if missing(p0)
+  7.     replace `use_t' = 0 if (D_pp_ignore==0   & p0<=P0_FLOOR)
+  8.     replace `use_t' = 0 if (D_pp_ignore==`t' & p0<=P0_TREAT_FLOOR)
+  9. 
+.     if (PS_TRIM_ON==1) {
+ 10.         replace `use_t' = 0 if (`use_t'==1) & (p0<PS0_LOW | p0>PS0_HIGH)
+ 11.     }
+ 12. 
+.     * wceil (solo controles) + sanity checks
+.     replace `use_t' = 0 if D_pp_ignore==0 & (`w_raw'<=0 | `w_raw'>W_CEIL | missing(`w_raw'))
+ 13. 
+.     *-----------------------------------------------------------
+.     * (0) Definir peso "de diseño" para gráficos: w_cap
+.     *     (igual a w_raw; y si hay CAP/DROP por cuantiles, aplicarlo acá)
+.     *-----------------------------------------------------------
+.     gen double `w_cap' = `w_raw'
+ 14. 
+.     quietly count if D_pp_ignore==0 & `use_t'==1
+ 15.     if (r(N)>0 & W_CAP_Q<.) {
+ 16.         local pct = 100*W_CAP_Q
+ 17.         quietly centile `w_cap' if D_pp_ignore==0 & `use_t'==1, centile(`pct')
+ 18.         local wcap = r(c_1)
+ 19. 
+.         if (`wcap'<. & `wcap'>0) {
+ 20.             if (upper("`W_TRIM_STYLE'")=="CAP") {
+ 21.                 replace `w_cap' = `wcap' if D_pp_ignore==0 & `use_t'==1 & `w_cap' > `wcap'
+ 22.             }
+ 23.             else if (upper("`W_TRIM_STYLE'")=="DROP") {
+ 24.                 replace `use_t' = 0 if D_pp_ignore==0 & `use_t'==1 & `w_cap' > `wcap'
+ 25.                 replace `w_cap' = . if D_pp_ignore==0 & `use_t'==0
+ 26.             }
+ 27.         }
+ 28.     }
+ 29. 
+.     *-----------------------------------------------------------
+.     * (1) Normalizar pesos PARA GRÁFICOS: mean(w_cap|D=0,usados)=1
+.     *-----------------------------------------------------------
+.     quietly summarize `w_cap' if D_pp_ignore==0 & `use_t'==1, meanonly
+ 30.     gen double `w_norm' = .
+ 31.     if (r(N)>0 & r(mean)>0 & r(mean)<.) {
+ 32.         replace `w_norm' = `w_cap'/r(mean) if D_pp_ignore==0 & `use_t'==1
+ 33.     }
+ 34.     else {
+ 35.         * fallback seguro (evita dividir por missing)
+.         replace `w_norm' = `w_cap' if D_pp_ignore==0 & `use_t'==1
+ 36.     }
+ 37. 
+.     gen double `w_plot' = .
+ 38.     replace `w_plot' = `w_norm' if D_pp_ignore==0 & `use_t'==1
+ 39. 
+.     *--------------------------------------------
+.     * (A) OVERLAP SIN PESOS (densidades de p_t)
+.     *--------------------------------------------
+.     twoway ///
+>         (kdensity p`t' if D_pp_ignore==0   & `use_t'==1, lpattern(solid)) ///
+>         (kdensity p`t' if D_pp_ignore==`t' & `use_t'==1, lpattern(dash)), ///
+>         legend(order(1 "Controles (0)" 2 "Tratados (`t')")) ///
+>         title("Overlap: Pr(D=`t')") ///
+>         xtitle("Probabilidad predicha") ytitle("Densidad")
+ 40.     graph export "`outdir'\overlap_manual_t`t'.png", replace
+ 41. 
+.     *--------------------------------------------
+.     * (B) OVERLAP "EFECTIVO" (controles ponderados)  [escala invariante]
+.     *--------------------------------------------
+.     twoway ///
+>         (kdensity p`t' [aw=`w_plot'] if D_pp_ignore==0   & `use_t'==1, lpattern(solid)) ///
+>         (kdensity p`t'              if D_pp_ignore==`t' & `use_t'==1, lpattern(dash)), ///
+>         legend(order(1 "Controles ponderados" 2 "Tratados (`t')")) ///
+>         title("Overlap ponderado: Pr(D=`t')") ///
+>         xtitle("Probabilidad predicha") ytitle("Densidad")
+ 42.     graph export "`outdir'\overlap_weighted_manual_t`t'.png", replace
+ 43. 
+.     *--------------------------------------------
+.     * (C) HISTOGRAMA DE PESOS (NORMALIZADOS) en muestra de diseño
+.     *--------------------------------------------
+.     histogram `w_plot' if D_pp_ignore==0 & `use_t'==1, percent ///
+>         title("Pesos IPW (controles) | t=`t'") ///
+>         subtitle("Normalizados: mean=1 en controles usados") ///
+>         xtitle("w_norm") ytitle("%")
+ 44.     graph export "`outdir'\weights_norm_design_manual_t`t'.png", replace
+ 45. 
+.     *--------------------------------------------
+.     * (C2) Pesos (NORMALIZADOS) sin reglas de diseño (solo p0 válido)
+.     *   (si no lo querés realmente "sin reglas", borrá este bloque y listo)
+.     *--------------------------------------------
+.     gen double `w_raw_nf' = (p`t'/p0) if D_pp_ignore==0 & !missing(p0) & p0>0
+ 46.     quietly summarize `w_raw_nf' if D_pp_ignore==0 & !missing(`w_raw_nf'), meanonly
+ 47.     gen double `w_norm_nf' = .
+ 48.     if (r(N)>0 & r(mean)>0 & r(mean)<.) {
+ 49.         replace `w_norm_nf' = `w_raw_nf'/r(mean) if D_pp_ignore==0 & !missing(`w_raw_nf')
+ 50.     }
+ 51.     gen double `w_plot_nf' = `w_norm_nf'
+ 52.     histogram `w_plot_nf' if D_pp_ignore==0 & !missing(`w_plot_nf'), percent ///
+>         title("Pesos IPW (controles) | t=`t'") ///
+>         subtitle("Sin reglas de diseño (solo p0 válido); normalizados a mean=1") ///
+>         xtitle("w_norm") ytitle("%")
+ 53.     graph export "`outdir'\weights_norm_nofilters_manual_t`t'.png", replace
+ 54. 
+.     *--------------------------------------------
+.     * (D) Histograma adicional "de diseño" con info de CAP/DROP (sin pisar w_plot)
+.     *--------------------------------------------
+.     quietly count if D_pp_ignore==0 & `use_t'==1
+ 55.     if (r(N)>0 & W_CAP_Q<.) {
+ 56.         gen double `w_plot_d' = `w_cap' if D_pp_ignore==0 & `use_t'==1
+ 57.         histogram `w_plot_d' if D_pp_ignore==0 & `use_t'==1, percent ///
+>             title("Pesos de diseño | t=`t'") ///
+>             subtitle("trim=`W_TRIM_STYLE' q=`W_CAP_Q' (y normalización aplicada en (C))") ///
+>             xtitle("w_cap (pre-norm)") ytitle("%")
+ 58.         graph export "`outdir'\weights_design_wcapdrop_manual_t`t'.png", replace
+ 59.     }
+ 60.         
+.         
+.     *--------------------------------------------
+.     * (E) LOVE PLOT: |SMD| raw vs weighted (t vs 0)
+.     *     (balance sobre covariables del mlogit del tratamiento)
+.     *--------------------------------------------
+.     tempfile smd_t`t'
+ 61.     tempname h
+ 62.     postfile `h' str40 varname double smd_raw double smd_w using `smd_t`t'', replace
+ 63. 
+.     * Dummies para macro_sector (para el balance): manufactura = 1, comparamos con dummy(s) de las otras categorías
+.     cap drop ms1 ms2 
+ 64.     gen byte ms1 = (macro_sector==1) if !missing(macro_sector)
+ 65.         gen byte ms2 = (macro_sector==2) if !missing(macro_sector)
+ 66. 
+.     foreach x in edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes redesXexp redesXsize ms2 {
+ 67. 
+.         * Saltar variables completamente missing (o no creadas)
+.         capture confirm variable `x'
+ 68.         if (_rc) continue
+ 69. 
+.         * Medias/varianzas RAW
+.         quietly summarize `x' if D_pp_ignore==`t' & `use_t'==1
+ 70.         local mt = r(mean)
+ 71.         local vt = r(Var)
+ 72. 
+.         quietly summarize `x' if D_pp_ignore==0 & `use_t'==1
+ 73.         local m0 = r(mean)
+ 74.         local v0 = r(Var)
+ 75. 
+.         local den = sqrt((`vt' + `v0')/2)
+ 76.         local smd_raw = .
+ 77.         if (`den'>0 & `den'<.) local smd_raw = (`mt' - `m0')/`den'
+ 78. 
+.         * Medias/varianzas ponderadas (controles con w_raw)
+.         quietly summarize `x' if D_pp_ignore==`t' & `use_t'==1
+ 79.         local mtw = r(mean)
+ 80.         local vtw = r(Var)
+ 81. 
+.         quietly summarize `x' [aw=`w_raw'] if D_pp_ignore==0 & `use_t'==1
+ 82.         local m0w = r(mean)
+ 83.         local v0w = r(Var)
+ 84. 
+.         local denw = sqrt((`vtw' + `v0w')/2)
+ 85.         local smd_w = .
+ 86.         if (`denw'>0 & `denw'<.) local smd_w = (`mtw' - `m0w')/`denw'
+ 87. 
+.         post `h' ("`x'") (`smd_raw') (`smd_w')
+ 88.     }
+ 89. 
+.     postclose `h'
+ 90. 
+.     preserve
+ 91.         use `smd_t`t'', clear
+ 92.         gen abs_raw = abs(smd_raw)
+ 93.         gen abs_w   = abs(smd_w)
+ 94. 
+.         * Nos quedamos con los que existan (si macro_sector tiene solo 2 categorías, ms3..ms5 quedarán missing)
+.         drop if missing(abs_raw) & missing(abs_w)
+ 95. 
+.         gsort -abs_w
+ 96.         gen rank = _n
+ 97. 
+.         * Loveplot estilo "puntos en línea" (raw vs weighted)
+.         * IMPORTANTE: graph display NO acepta ylab()/ylabel(). Para mostrar nombres en el eje Y,
+.         *             asignamos un value label a rank y luego usamos ylabel(, valuelabel) en twoway.
+.         cap label drop varlbl_rank
+ 98.         local N = _N
+ 99.         label define varlbl_rank 1 "`=varname[1]'", replace
+100.         if (`N'>1) {
+101.             forvalues i=2/`N' {
+102.                 local nm = varname[`i']
+103.                 label define varlbl_rank `i' "`nm'", add
+104.             }
+105.         }
+106.         label values rank varlbl_rank
+107. 
+.         twoway ///
+>             (scatter rank abs_raw, msymbol(Oh)) ///
+>             (scatter rank abs_w,   msymbol(Sh)), ///
+>             yscale(reverse) ///
+>             ylabel(1(1)`N', valuelabel angle(0) nogrid) ///
+>             ytitle("") ///
+>             legend(order(1 "|SMD| raw" 2 "|SMD| weighted")) ///
+>             xline(0.10, lpattern(dash)) ///
+>             xtitle("|SMD|") ///
+>             title("Loveplot (t=`t' vs 0)")
+108.                 
+.                  twoway ///
+>             (scatter rank abs_w,   msymbol(Sh)), ///
+>             yscale(reverse) ///
+>             ylabel(1(1)`N', valuelabel angle(0) nogrid) ///
+>             ytitle("") ///
+>             legend(order(1 "|SMD| weighted")) ///
+>             xline(0.10, lpattern(dash))  xline(0.20, lpattern(dash)) ///
+>                         xscale(range(0 0.30)) xlabel(0(0.05)0.30) ///
+>             xtitle("|SMD|") ///
+>             title("Loveplot (t=`t' vs 0)")
+109.                         
+.         graph export "`outdir'\loveplot_t`t'.png", replace
+110. 
+.                 export excel using "`outdir'\smd_table_t`t'.xlsx", replace firstrow(variables)
+111.     restore
+112. 
+.             * Limpieza mínima
+.     drop `use_t' `w_raw'
+113. }
+(4,393 missing values generated)
+(594 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(3,799 missing values generated)
+(4,393 missing values generated)
+(594 real changes made)
+(4,393 missing values generated)
+(594 real changes made)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\overlap_manual_t1.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\overlap_weighted_manual_t1.png saved as PNG format
+(bin=24, start=.3198842, width=.12644665)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\weights_norm_design_manual_t1.png saved as PNG format
+(3,799 missing values generated)
+(4,393 missing values generated)
+(594 real changes made)
+(3,799 missing values generated)
+(bin=24, start=.3198842, width=.12644665)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\weights_norm_nofilters_manual_t1.png saved as PNG format
+(file C:\Users\Equipo\AppData\Local\Temp\ST_41b8_000001.tmp not found)
+(0 observations deleted)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\loveplot_t1.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambient
+> e\output\winner_only\contemporaneo\smd_table_t1.xlsx saved
+(4,393 missing values generated)
+(594 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(3,799 missing values generated)
+(4,393 missing values generated)
+(594 real changes made)
+(4,393 missing values generated)
+(594 real changes made)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\overlap_manual_t2.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\overlap_weighted_manual_t2.png saved as PNG format
+(bin=24, start=.41873061, width=.07773085)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\weights_norm_design_manual_t2.png saved as PNG format
+(3,799 missing values generated)
+(4,393 missing values generated)
+(594 real changes made)
+(3,799 missing values generated)
+(bin=24, start=.41873061, width=.07773085)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\weights_norm_nofilters_manual_t2.png saved as PNG format
+(file C:\Users\Equipo\AppData\Local\Temp\ST_41b8_000003.tmp not found)
+(0 observations deleted)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\loveplot_t2.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambient
+> e\output\winner_only\contemporaneo\smd_table_t2.xlsx saved
+(4,393 missing values generated)
+(594 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(3,799 missing values generated)
+(4,393 missing values generated)
+(594 real changes made)
+(4,393 missing values generated)
+(594 real changes made)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\overlap_manual_t3.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\overlap_weighted_manual_t3.png saved as PNG format
+(bin=24, start=.22065802, width=.18926401)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\weights_norm_design_manual_t3.png saved as PNG format
+(3,799 missing values generated)
+(4,393 missing values generated)
+(594 real changes made)
+(3,799 missing values generated)
+(bin=24, start=.22065802, width=.18926401)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\weights_norm_nofilters_manual_t3.png saved as PNG format
+(file C:\Users\Equipo\AppData\Local\Temp\ST_41b8_000005.tmp not found)
+(0 observations deleted)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\loveplot_t3.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambient
+> e\output\winner_only\contemporaneo\smd_table_t3.xlsx saved
+
+. 
+. *log close _all
+. *di as result "Listo. Outputs en: `outdir'"
+. 
+. 
+. 
+. 
+. 
+. ***************************************************************
+. *==============================================================================
+. * 8B) DIAGNÓSTICOS ALINEADOS A TEEFFECTS (para paper)
+. *     - SMD de teffects: se obtienen de tebalance summarize (r(table))
+. *     - Loveplot: se arma desde esos SMD (1 fila por variable, por t)
+. *     - Densidades: restringidas a (0 vs t) para que NO aparezcan 4 tratamientos
+. *==============================================================================
+. 
+. local DO_TEF_DIAG 1
+
+. if (`DO_TEF_DIAG'==1) {
+. 
+.     * Asegurar dummies si las querés en BALVARS
+.     cap drop ms1 ms2
+.     gen byte ms1 = (macro_sector==1) if !missing(macro_sector)
+.     gen byte ms2 = (macro_sector==2) if !missing(macro_sector)
+. 
+.     * Lista de covariables para balance (las que querés reportar/graficar)
+.     local BALVARS edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes redesXexp redesXsize ms2
+. 
+.     forvalues t=1/3 {
+  2. 
+.         quietly estimates restore ATET_IGNORE_S1_t`t'
+  3. 
+.         *============================================================
+.         * (1) SMD/Vr desde tebalance summarize -> Excel plano + Loveplot
+.         *============================================================
+.         quietly tebalance summarize `BALVARS'
+  4.         matrix TB = r(table)
+  5. 
+.         preserve
+  6.             clear
+  7.             svmat double TB, names(tb)
+  8. 
+.             * TB viene apilada en 3 bloques (t=1,2,3) uno debajo del otro
+.             local nvars : word count `BALVARS'
+  9.             gen int comp = ceil(_n/`nvars')                 // 1..3
+ 10.             gen int pos  = mod(_n-1,`nvars') + 1            // 1..nvars
+ 11.             gen str40 varname = ""
+ 12.             forvalues j=1/`nvars' {
+ 13.                 local vv : word `j' of `BALVARS'
+ 14.                 replace varname = "`vv'" if pos==`j'
+ 15.             }
+ 16. 
+.             keep if comp==`t'
+ 17.             drop comp pos
+ 18. 
+.             * Orden típico: sd_raw, sd_w, vr_raw, vr_w
+.             rename tb1 sd_raw
+ 19.             rename tb2 sd_w
+ 20.             capture rename tb3 vr_raw
+ 21.             capture rename tb4 vr_w
+ 22. 
+.             gen abs_sd_w = abs(sd_w)
+ 23.             gsort -abs_sd_w
+ 24.             gen rank = _n
+ 25. 
+.             * Loveplot (teffects) |SMD| weighted
+.             cap label drop varlbl_rank_tef
+ 26.             local N = _N
+ 27.             label define varlbl_rank_tef 1 "`=varname[1]'", replace
+ 28.             if (`N'>1) {
+ 29.                 forvalues k=2/`N' {
+ 30.                     local nm = varname[`k']
+ 31.                     label define varlbl_rank_tef `k' "`nm'", add
+ 32.                 }
+ 33.             }
+ 34.             label values rank varlbl_rank_tef
+ 35. 
+.             twoway ///
+>                 (scatter rank abs_sd_w, msymbol(Sh)), ///
+>                 yscale(reverse) ///
+>                 ylabel(1(1)`N', valuelabel angle(0) nogrid) ///
+>                 ytitle("") ///
+>                 legend(order(1 "|SMD| weighted (teffects)")) ///
+>                 xline(0.10, lpattern(dash)) xline(0.20, lpattern(dash)) ///
+>                 xscale(range(0 0.30)) xlabel(0(0.05)0.30) ///
+>                 xtitle("|SMD|") ///
+>                 title("Loveplot teffects (t=`t' vs 0)")
+ 36. 
+.             graph export "`outdir'\loveplot_teffects_t`t'.png", replace
+ 37.             export excel using "`outdir'\smd_teffects_t`t'.xlsx", replace firstrow(variables)
+ 38.         restore
+ 39. 
+.         *============================================================
+.         * (2) Densidades (teffects) SOLO para (0 vs t)
+.         *     Recomendación: usar variables continuas (no dummies).
+.         *============================================================
+.         /*
+>                 foreach x in ln_tpo_mean indice_redes share_prof_tecn edad redesXsize {
+> 
+>             capture confirm variable `x'
+>             if _rc continue
+> 
+>             preserve
+>                 keep if inlist(D_pp_ignore,0,`t')
+>                 quietly estimates restore ATET_IGNORE_S1_t`t'
+>                 tebalance density `x', bwidth(*1.3) ///
+>                     title("Balance plot: `x' (t=`t' vs 0)")
+>                 graph export "`outdir'\density_teffects_`x'_t`t'.png", replace
+>             restore
+>         }
+>                 */
+.                                 * --- Soporte teffects (0 vs t) ---
+.                 preserve
+ 40.                 keep if inlist(D_pp_ignore,0,`t')
+ 41.                 gen byte out_support = (os_t`t'==1)
+ 42.                 tab out_support D_pp_ignore, row
+ 43.                 graph bar (mean) out_support, over(D_pp_ignore) ///
+>                         title("Fuera de soporte (teffects): t=`t' vs 0") ///
+>                         ytitle("Proporción")
+ 44.                 graph export "`outdir'\support_teffects_t`t'.png", replace
+ 45.                 restore
+ 46. 
+.     }
+number of observations will be reset to 27
+Press any key to continue, or Break to abort
+Number of observations (_N) was 0, now 27.
+(27 missing values generated)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(18 observations deleted)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\loveplot_teffects_t1.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambient
+> e\output\winner_only\contemporaneo\smd_teffects_t1.xlsx saved
+(2,987 observations deleted)
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+           |  D: prod/proc/ambas
+out_suppor |     (IGNORE_ORG)
+         t | No prod/p  Solo prod |     Total
+-----------+----------------------+----------
+         0 |       594        812 |     1,406 
+           |     42.25      57.75 |    100.00 
+-----------+----------------------+----------
+     Total |       594        812 |     1,406 
+           |     42.25      57.75 |    100.00 
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\support_teffects_t1.png saved as PNG format
+number of observations will be reset to 27
+Press any key to continue, or Break to abort
+Number of observations (_N) was 0, now 27.
+(27 missing values generated)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(18 observations deleted)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\loveplot_teffects_t2.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambient
+> e\output\winner_only\contemporaneo\smd_teffects_t2.xlsx saved
+(2,183 observations deleted)
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+           |  D: prod/proc/ambas
+out_suppor |     (IGNORE_ORG)
+         t | No prod/p  Solo proc |     Total
+-----------+----------------------+----------
+         0 |       594      1,616 |     2,210 
+           |     26.88      73.12 |    100.00 
+-----------+----------------------+----------
+     Total |       594      1,616 |     2,210 
+           |     26.88      73.12 |    100.00 
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\support_teffects_t2.png saved as PNG format
+number of observations will be reset to 27
+Press any key to continue, or Break to abort
+Number of observations (_N) was 0, now 27.
+(27 missing values generated)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(3 real changes made)
+(18 observations deleted)
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\loveplot_teffects_t3.png saved as PNG format
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio Ambient
+> e\output\winner_only\contemporaneo\smd_teffects_t3.xlsx saved
+(2,428 observations deleted)
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+           |  D: prod/proc/ambas
+out_suppor |     (IGNORE_ORG)
+         t | No prod/p      Ambas |     Total
+-----------+----------------------+----------
+         0 |       594      1,371 |     1,965 
+           |     30.23      69.77 |    100.00 
+-----------+----------------------+----------
+     Total |       594      1,371 |     1,965 
+           |     30.23      69.77 |    100.00 
+file C:\Users\Equipo\OneDrive\Desktop\proyecto\4Medio ambiente- innovacion\\3. Estrategia empirica\3. Modelos\5Resultado-innovacion - estrategia causal\Medio
+    Ambiente\output\winner_only\contemporaneo\support_teffects_t3.png saved as PNG format
+. }
+
+. 
+. 
+. 
+. ****************************************************************************
+. 
+. **# SECTORES
+. 
+. 
+.                                            
+.                                   
+. *============================================================
+. * IPWRA por macro_sector y diferencias (DIAGONALES) - point estimates
+. *============================================================
+. 
+. local D   D_pp_ignore
+
+. local Y   Y_cond
+
+. 
+. local XTR0 "edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean  indice_redes                   redesXexp redesXsize"
+
+. local XY0  "edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean  indice_redes ln_tpo_sq edad_sq redesXexp redesXsize org1 org_miss"
+
+. 
+. local P0_FLOOR        = 1e-8
+
+. local P0_TREAT_FLOOR  = 1e-8
+
+. local W_CEIL          = 1e6
+
+. local PS_TRIM_ON = 1
+
+. local PS0_LOW    = 0.05
+
+. local PS0_HIGH   = 0.95
+
+. local WTRIM      "OFF" // o DROP
+
+. local W_CAP_Q    = . // o 0.99 por ejemplo.
+
+. 
+. tempname a1m a2m a3m a1s a2s a3s
+
+. scalar `a1m' = .
+
+. scalar `a2m' = .
+
+. scalar `a3m' = .
+
+. scalar `a1s' = .
+
+. scalar `a2s' = .
+
+. scalar `a3s' = .
+
+. 
+. foreach s in 1 2 {
+  2. 
+.     preserve
+  3.         keep if macro_sector==`s'
+  4.         keep if inlist(`D',0,1,2,3)
+  5.         drop if missing(`Y')
+  6. 
+.         * dropear missings en unión de covariables  (NO en una sola línea con llaves)
+.         foreach x of local XTR0 {
+  7.             drop if missing(`x')
+  8.         }
+  9.         foreach x of local XY0 {
+ 10.             drop if missing(`x')
+ 11.         }
+ 12. 
+.         quietly mlogit `D' `XTR0', baseoutcome(0) nolog
+ 13.         cap drop p0 p1 p2 p3
+ 14.         predict double p0, outcome(0)
+ 15.         predict double p1, outcome(1)
+ 16.         predict double p2, outcome(2)
+ 17.         predict double p3, outcome(3)
+ 18. 
+.         tempvar use_final w1 w2 w3
+ 19.         gen byte `use_final' = 1
+ 20. 
+.         replace `use_final' = 0 if missing(p0)
+ 21.         replace `use_final' = 0 if (`D'==0            & p0<=`P0_FLOOR')
+ 22.         replace `use_final' = 0 if (inlist(`D',1,2,3) & p0<=`P0_TREAT_FLOOR')
+ 23. 
+.         if (`PS_TRIM_ON'==1) {
+ 24.             replace `use_final' = 0 if (p0<`PS0_LOW' | p0>`PS0_HIGH')
+ 25.         }
+ 26. 
+.         gen double `w1' = .
+ 27.         gen double `w2' = .
+ 28.         gen double `w3' = .
+ 29.         replace `w1' = (p1/p0) if `D'==0 & `use_final'==1
+ 30.         replace `w2' = (p2/p0) if `D'==0 & `use_final'==1
+ 31.         replace `w3' = (p3/p0) if `D'==0 & `use_final'==1
+ 32. 
+.         replace `use_final' = 0 if `D'==0 & `use_final'==1 & (missing(`w1') | `w1'<=0 | `w1'>`W_CEIL')
+ 33.         replace `use_final' = 0 if `D'==0 & `use_final'==1 & (missing(`w2') | `w2'<=0 | `w2'>`W_CEIL')
+ 34.         replace `use_final' = 0 if `D'==0 & `use_final'==1 & (missing(`w3') | `w3'<=0 | `w3'>`W_CEIL')
+ 35. 
+.         if (upper("`WTRIM'")=="DROP") {
+ 36.             local pct = 100*`W_CAP_Q'
+ 37.             quietly count if `D'==0 & `use_final'==1
+ 38.             if (r(N)>0) {
+ 39.                 quietly centile `w1' if `D'==0 & `use_final'==1, centile(`pct')
+ 40.                 local wcap1 = r(c_1)
+ 41.                 quietly centile `w2' if `D'==0 & `use_final'==1, centile(`pct')
+ 42.                 local wcap2 = r(c_1)
+ 43.                 quietly centile `w3' if `D'==0 & `use_final'==1, centile(`pct')
+ 44.                 local wcap3 = r(c_1)
+ 45. 
+.                 if (`wcap1'<. & `wcap1'>0) replace `use_final' = 0 if `D'==0 & `use_final'==1 & `w1' > `wcap1'
+ 46.                 if (`wcap2'<. & `wcap2'>0) replace `use_final' = 0 if `D'==0 & `use_final'==1 & `w2' > `wcap2'
+ 47.                 if (`wcap3'<. & `wcap3'>0) replace `use_final' = 0 if `D'==0 & `use_final'==1 & `w3' > `wcap3'
+ 48.             }
+ 49.         }
+ 50. 
+.         keep if `use_final'==1
+ 51.                 
+.                         * tablas descriptivas en misma muestra que las estimaciones por sectores
+.                 summarize  Y_cond i.D_pp_ignore edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>                                                                                                 ln_tpo_sq edad_sq redesXexp redesXsize ///
+>                                                                                   org1 org_miss if `s'==1
+ 52.                 summarize  Y_cond i.D_pp_ignore edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ///
+>                                                                                                 ln_tpo_sq edad_sq redesXexp redesXsize ///
+>                                                                                   org1 org_miss if `s'==2
+ 53.         drop `use_final' `w1' `w2' `w3'
+ 54. 
+.         tempname b V
+ 55.         forvalues t=1/3 {
+ 56. 
+.             quietly count if `D'==`t'
+ 57.             local Nt = r(N)
+ 58.             quietly count if `D'==0
+ 59.             local N0 = r(N)
+ 60.             if (`Nt'==0 | `N0'==0) continue
+ 61.                 
+.         *osample(`__osname') pstolerance(`=P0_FLOOR') vce(cluster correlativo)
+.         teffects ipwra ///
+>                 (`Y' `XY0', logit) ///
+>                 (`D' `XTR0', mlogit), ///
+>                 atet control(0) tlevel(`t') 
+ 62. 
+.             if (_rc==0 & e(converged)==1) {
+ 63.                 matrix `b' = e(b)
+ 64.                 matrix `V' = e(V)
+ 65.                                 local cn : colfullnames `b'
+ 66. 
+.                                 * Lista de columnas ATET (en orden k=1,2,3)
+.                                 local atetcols ""
+ 67.                                 foreach nm of local cn {
+ 68.                                         if (substr("`nm'",1,5)=="ATET:") local atetcols "`atetcols' `nm'"
+ 69.                                 }
+ 70.                                 * Columna diagonal: k=t  (t-ésimo ATET)
+.                                 local diagcol : word `t' of `atetcols'
+ 71. 
+.                                 scalar __atet = el(`b', 1, colnumb(`b', "`diagcol'"))
+ 72. 
+.                 if (`s'==1 & `t'==1) scalar `a1m' = __atet
+ 73.                 if (`s'==1 & `t'==2) scalar `a2m' = __atet
+ 74.                 if (`s'==1 & `t'==3) scalar `a3m' = __atet
+ 75.                 if (`s'==2 & `t'==1) scalar `a1s' = __atet
+ 76.                 if (`s'==2 & `t'==2) scalar `a2s' = __atet
+ 77.                 if (`s'==2 & `t'==3) scalar `a3s' = __atet
+ 78.             }
+ 79.         }
+ 80. 
+.     restore
+ 81. }
+(2,008 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(option pr assumed; predicted probability)
+(option pr assumed; predicted probability)
+(option pr assumed; predicted probability)
+(option pr assumed; predicted probability)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(36 real changes made)
+(2,385 missing values generated)
+(2,385 missing values generated)
+(2,385 missing values generated)
+(301 real changes made)
+(301 real changes made)
+(301 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(36 observations deleted)
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      Y_cond |      2,349    .4401873    .4965152          0          1
+             |
+ D_pp_ignore |
+No prod/p..  |      2,349    .1281396    .3343164          0          1
+Solo prod..  |      2,349    .1707109    .3763363          0          1
+Solo proc..  |      2,349    .3503619    .4771848          0          1
+      Ambas  |      2,349    .3507876    .4773182          0          1
+-------------+---------------------------------------------------------
+             |
+        edad |      2,349    29.77011    19.99103          0        140
+capital_ex~o |      2,349    .1766709    .3814712          0          1
+share_prof~n |      2,349    16.15237    18.97949          0        100
+   exp_dummy |      2,349    .4342273    .4957606          0          1
+ ln_tpo_mean |      2,349    4.054731    1.175656   .6931472   8.764834
+-------------+---------------------------------------------------------
+indice_redes |      2,349    .9380815    1.497783   -.891318   6.111538
+   ln_tpo_sq |      2,349    17.82242     10.1432    .480453   76.82232
+     edad_sq |      2,349    1285.731    1587.524          0      19600
+   redesXexp |      2,349    .4753635    1.139375   -.891318   6.111538
+  redesXsize |      2,349    3.898878    6.329201  -6.977626   28.57447
+-------------+---------------------------------------------------------
+        org1 |      2,349    .3673904    .4821967          0          1
+    org_miss |      2,349    .2303108    .4211214          0          1
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      Y_cond |          0
+             |
+ D_pp_ignore |
+No prod/p..  |          0
+        edad |          0
+capital_ex~o |          0
+share_prof~n |          0
+-------------+---------------------------------------------------------
+   exp_dummy |          0
+ ln_tpo_mean |          0
+indice_redes |          0
+   ln_tpo_sq |          0
+     edad_sq |          0
+-------------+---------------------------------------------------------
+   redesXexp |          0
+  redesXsize |          0
+        org1 |          0
+    org_miss |          0
+
+Iteration 0:  EE criterion = 4.203e-17  
+Iteration 1:  EE criterion = 3.925e-29  
+
+Treatment-effects estimation                    Number of obs     =      2,349
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1110953   .0512425     2.17   0.030     .0106618    .2115288
+ (Solo proceso vs No prod/proc)  |    .213284   .0489987     4.35   0.000     .1172484    .3093197
+        (Ambas vs No prod/proc)  |   .3112748   .0488993     6.37   0.000      .215434    .4071156
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |   .2255631   .0452626     4.98   0.000       .13685    .3142762
+--------------------------------------------------------------------------------------------------
+
+Iteration 0:  EE criterion = 5.806e-18  
+Iteration 1:  EE criterion = 8.224e-33  
+
+Treatment-effects estimation                    Number of obs     =      2,349
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .0679817   .0505976     1.34   0.179    -.0311878    .1671511
+ (Solo proceso vs No prod/proc)  |   .1869492   .0474062     3.94   0.000     .0940348    .2798636
+        (Ambas vs No prod/proc)  |   .2931781   .0479557     6.11   0.000     .1991867    .3871695
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |   .2565502   .0441572     5.81   0.000     .1700036    .3430968
+--------------------------------------------------------------------------------------------------
+
+Iteration 0:  EE criterion = 1.777e-15  
+Iteration 1:  EE criterion = 3.118e-25  
+
+Treatment-effects estimation                    Number of obs     =      2,349
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1043174   .0439998     2.37   0.018     .0180794    .1905554
+ (Solo proceso vs No prod/proc)  |   .2313475   .0398227     5.81   0.000     .1532965    .3093985
+        (Ambas vs No prod/proc)  |   .3210606   .0387006     8.30   0.000     .2452089    .3969123
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |   .2323375   .0349261     6.65   0.000     .1638835    .3007914
+--------------------------------------------------------------------------------------------------
+(2,385 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(option pr assumed; predicted probability)
+(option pr assumed; predicted probability)
+(option pr assumed; predicted probability)
+(option pr assumed; predicted probability)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(19 real changes made)
+(2,008 missing values generated)
+(2,008 missing values generated)
+(2,008 missing values generated)
+(293 real changes made)
+(293 real changes made)
+(293 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(19 observations deleted)
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      Y_cond |          0
+             |
+ D_pp_ignore |
+No prod/p..  |          0
+        edad |          0
+capital_ex~o |          0
+share_prof~n |          0
+-------------+---------------------------------------------------------
+   exp_dummy |          0
+ ln_tpo_mean |          0
+indice_redes |          0
+   ln_tpo_sq |          0
+     edad_sq |          0
+-------------+---------------------------------------------------------
+   redesXexp |          0
+  redesXsize |          0
+        org1 |          0
+    org_miss |          0
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      Y_cond |      1,989    .3066868    .4612342          0          1
+             |
+ D_pp_ignore |
+No prod/p..  |      1,989    .1473102     .354504          0          1
+Solo prod..  |      1,989    .2001006     .400176          0          1
+Solo proc..  |      1,989    .3911513    .4881309          0          1
+      Ambas  |      1,989    .2614379    .4395284          0          1
+-------------+---------------------------------------------------------
+             |
+        edad |      1,989    23.97587    18.97254          0        126
+capital_ex~o |      1,989     .147813    .3550037          0          1
+share_prof~n |      1,989    29.85258    29.87573          0        100
+   exp_dummy |      1,989    .2267471     .418833          0          1
+ ln_tpo_mean |      1,989    4.184856    1.378841   .6931472   9.207737
+-------------+---------------------------------------------------------
+indice_redes |      1,989    .7586419    1.474171   -.891318   6.111538
+   ln_tpo_sq |      1,989    19.41327      12.777    .480453   84.78242
+     edad_sq |      1,989    934.6184    1696.897          0      15876
+   redesXexp |      1,989    .1881734    .7943788   -.891318   6.111538
+  redesXsize |      1,989    3.254963    6.576132  -8.123255   34.12817
+-------------+---------------------------------------------------------
+        org1 |      1,989    .3499246    .4770658          0          1
+    org_miss |      1,989    .3871292    .4872161          0          1
+
+Iteration 0:  EE criterion = 1.112e-18  
+Iteration 1:  EE criterion = 1.409e-33  
+
+Treatment-effects estimation                    Number of obs     =      1,989
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1135406   .0438975     2.59   0.010     .0275031    .1995781
+ (Solo proceso vs No prod/proc)  |   .1635582   .0421801     3.88   0.000     .0808868    .2462296
+        (Ambas vs No prod/proc)  |   .1952133   .0441819     4.42   0.000     .1086183    .2818082
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |   .1477659   .0382037     3.87   0.000     .0728881    .2226438
+--------------------------------------------------------------------------------------------------
+
+Iteration 0:  EE criterion = 1.267e-18  
+Iteration 1:  EE criterion = 3.683e-33  
+
+Treatment-effects estimation                    Number of obs     =      1,989
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .1412302   .0465796     3.03   0.002     .0499358    .2325246
+ (Solo proceso vs No prod/proc)  |   .1786662   .0424698     4.21   0.000      .095427    .2619054
+        (Ambas vs No prod/proc)  |   .2238788   .0469149     4.77   0.000     .1319273    .3158303
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |    .147812   .0390814     3.78   0.000     .0712139      .22441
+--------------------------------------------------------------------------------------------------
+
+Iteration 0:  EE criterion = 4.170e-17  
+Iteration 1:  EE criterion = 3.783e-30  
+
+Treatment-effects estimation                    Number of obs     =      1,989
+Estimator      : IPW regression adjustment
+Outcome model  : logit
+Treatment model: (multinomial) logit
+--------------------------------------------------------------------------------------------------
+                                 |               Robust
+                          Y_cond | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------------+----------------------------------------------------------------
+ATET                             |
+                     D_pp_ignore |
+(Solo producto vs No prod/proc)  |   .0986326   .0435953     2.26   0.024     .0131874    .1840778
+ (Solo proceso vs No prod/proc)  |   .1773272   .0420095     4.22   0.000       .09499    .2596644
+        (Ambas vs No prod/proc)  |   .2036919   .0418821     4.86   0.000     .1216045    .2857792
+---------------------------------+----------------------------------------------------------------
+POmean                           |
+                     D_pp_ignore |
+                   No prod/proc  |    .167462   .0362396     4.62   0.000     .0964336    .2384904
+--------------------------------------------------------------------------------------------------
+
+. 
+. di as text "ATET1 diff (M-S) = " %9.5f (`a1m' - `a1s')
+ATET1 diff (M-S) =  -0.00245
+
+. di as text "ATET2 diff (M-S) = " %9.5f (`a2m' - `a2s')
+ATET2 diff (M-S) =   0.00828
+
+. di as text "ATET3 diff (M-S) = " %9.5f (`a3m' - `a3s')
+ATET3 diff (M-S) =   0.11737
+
+. 
+. di as text "ATET1 Manuf = " %9.5f `a1m' " | Serv = " %9.5f `a1s' " | Diff(M-S) = " %9.5f (`a1m'-`a1s')
+ATET1 Manuf =   0.11110 | Serv =   0.11354 | Diff(M-S) =  -0.00245
+
+. di as text "ATET2 Manuf = " %9.5f `a2m' " | Serv = " %9.5f `a2s' " | Diff(M-S) = " %9.5f (`a2m'-`a2s')
+ATET2 Manuf =   0.18695 | Serv =   0.17867 | Diff(M-S) =   0.00828
+
+. di as text "ATET3 Manuf = " %9.5f `a3m' " | Serv = " %9.5f `a3s' " | Diff(M-S) = " %9.5f (`a3m'-`a3s')
+ATET3 Manuf =   0.32106 | Serv =   0.20369 | Diff(M-S) =   0.11737
+
+. 
+. 
+. 
+. 
+. *********************************************************************************
+. *====================================================================
+. * (A) DISEÑO FIJO (UNA SOLA VEZ): construir y guardar base recortada
+. *====================================================================
+. 
+. * Requiere que ya existan:
+. *   - macro_sector (1=manuf, 2=serv)
+. *   - D_pp_ignore (0/1/2/3)
+. *   - Y_cond
+. *   - covariables en XTR0 y XY0 (incluye ln_tpo_sq, edad_sq, redesXexp, redesXsize, etc.)
+. 
+. local D   D_pp_ignore
+
+. local Y   Y_cond
+
+. 
+. * Listas (las tuyas)
+. local XTR0 "edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes                   redesXexp redesXsize"
+
+. local XY0  "edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes ln_tpo_sq edad_sq redesXexp redesXsize org1 org_miss"
+
+. 
+. * Umbrales (los tuyos)
+. local P0_FLOOR        = 1e-8
+
+. local P0_TREAT_FLOOR  = 1e-8
+
+. local W_CEIL          = 1e6
+
+. local PS_TRIM_ON = 1
+
+. local PS0_LOW    = 0.05
+
+. local PS0_HIGH   = 0.95
+
+. local WTRIM      "OFF" // o DROP
+
+. local W_CAP_Q    = . // o 0.99 por ejemplo.
+
+. 
+. * ID de observación para "marcar" qué filas entran en la muestra fija
+. gen long __obsid = _n
+
+. gen byte __keep_design = 0
+
+. 
+. tempfile __keepids
+
+. 
+. foreach s in 1 2 {
+  2. 
+.     preserve
+  3.         keep if macro_sector==`s'
+  4.         keep if inlist(`D',0,1,2,3)
+  5.         drop if missing(`Y')
+  6. 
+.         * Drop missings en unión de covariables
+.         foreach x of local XTR0 {
+  7.             drop if missing(`x')
+  8.         }
+  9.         foreach x of local XY0 {
+ 10.             drop if missing(`x')
+ 11.         }
+ 12. 
+.         * mlogit para p0..p3 (solo para definir muestra)
+.         quietly mlogit `D' `XTR0', baseoutcome(0) nolog
+ 13. 
+.         capture drop p0 p1 p2 p3
+ 14.         quietly predict double p0, outcome(0)
+ 15.         quietly predict double p1, outcome(1)
+ 16.         quietly predict double p2, outcome(2)
+ 17.         quietly predict double p3, outcome(3)
+ 18. 
+.         tempvar use_final w1 w2 w3
+ 19.         gen byte `use_final' = 1
+ 20. 
+.         * Floors sobre p0
+.         replace `use_final' = 0 if missing(p0)
+ 21.         replace `use_final' = 0 if (`D'==0            & p0<=`P0_FLOOR')
+ 22.         replace `use_final' = 0 if (inlist(`D',1,2,3) & p0<=`P0_TREAT_FLOOR')
+ 23. 
+.         * PS-trim sobre p0
+.         if (`PS_TRIM_ON'==1) {
+ 24.             replace `use_final' = 0 if (p0<`PS0_LOW' | p0>`PS0_HIGH')
+ 25.         }
+ 26. 
+.         * wceil en controles para cada t
+.         gen double `w1' = .
+ 27.         gen double `w2' = .
+ 28.         gen double `w3' = .
+ 29.         replace `w1' = (p1/p0) if `D'==0 & `use_final'==1
+ 30.         replace `w2' = (p2/p0) if `D'==0 & `use_final'==1
+ 31.         replace `w3' = (p3/p0) if `D'==0 & `use_final'==1
+ 32. 
+.         replace `use_final' = 0 if `D'==0 & `use_final'==1 & (missing(`w1') | `w1'<=0 | `w1'>`W_CEIL')
+ 33.         replace `use_final' = 0 if `D'==0 & `use_final'==1 & (missing(`w2') | `w2'<=0 | `w2'>`W_CEIL')
+ 34.         replace `use_final' = 0 if `D'==0 & `use_final'==1 & (missing(`w3') | `w3'<=0 | `w3'>`W_CEIL')
+ 35. 
+.         * DROP por cuantil (solo controles) si corresponde
+.         if (upper("`WTRIM'")=="DROP") {
+ 36.             local pct = 100*`W_CAP_Q'
+ 37.             quietly count if `D'==0 & `use_final'==1
+ 38.             if (r(N)>0) {
+ 39.                 quietly centile `w1' if `D'==0 & `use_final'==1, centile(`pct')
+ 40.                 local wcap1 = r(c_1)
+ 41.                 quietly centile `w2' if `D'==0 & `use_final'==1, centile(`pct')
+ 42.                 local wcap2 = r(c_1)
+ 43.                 quietly centile `w3' if `D'==0 & `use_final'==1, centile(`pct')
+ 44.                 local wcap3 = r(c_1)
+ 45. 
+.                 if (`wcap1'<. & `wcap1'>0) replace `use_final' = 0 if `D'==0 & `use_final'==1 & `w1' > `wcap1'
+ 46.                 if (`wcap2'<. & `wcap2'>0) replace `use_final' = 0 if `D'==0 & `use_final'==1 & `w2' > `wcap2'
+ 47.                 if (`wcap3'<. & `wcap3'>0) replace `use_final' = 0 if `D'==0 & `use_final'==1 & `w3' > `wcap3'
+ 48.             }
+ 49.         }
+ 50. 
+.         keep if `use_final'==1
+ 51.         keep __obsid
+ 52.         save `__keepids', replace
+ 53.     restore
+ 54. 
+.     * Marcar en la base completa
+.         merge 1:1 __obsid using `__keepids', keep(master match)
+ 55.         replace __keep_design = 1 if _merge==3
+ 56.         drop _merge
+ 57. }
+(2,008 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(36 real changes made)
+(2,385 missing values generated)
+(2,385 missing values generated)
+(2,385 missing values generated)
+(301 real changes made)
+(301 real changes made)
+(301 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(36 observations deleted)
+(file C:\Users\Equipo\AppData\Local\Temp\ST_41b8_00000f.tmp not found)
+file C:\Users\Equipo\AppData\Local\Temp\ST_41b8_00000f.tmp saved as .dta format
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                         2,044
+        from master                     2,044  (_merge==1)
+        from using                          0  (_merge==2)
+
+    Matched                             2,349  (_merge==3)
+    -----------------------------------------
+(2,349 real changes made)
+(2,385 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(19 real changes made)
+(2,008 missing values generated)
+(2,008 missing values generated)
+(2,008 missing values generated)
+(293 real changes made)
+(293 real changes made)
+(293 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(19 observations deleted)
+file C:\Users\Equipo\AppData\Local\Temp\ST_41b8_00000f.tmp saved as .dta format
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                         2,404
+        from master                     2,404  (_merge==1)
+        from using                          0  (_merge==2)
+
+    Matched                             1,989  (_merge==3)
+    -----------------------------------------
+(1,989 real changes made)
+
+. 
+. * Quedarse SOLO con la muestra fija
+. keep if __keep_design==1
+(55 observations deleted)
+
+. drop __keep_design __obsid
+
+. 
+. * Guardar base fija para bootstrap (tempfile o a disco)
+. *tempfile BOOTBASE_FIXED
+. *save `BOOTBASE_FIXED', replace
+. * Si querés guardarla en disco:
+. save "BOOTBASE_FIXED.dta", replace
+file BOOTBASE_FIXED.dta saved
+
+. 
+. 
+. 
+. 
+. *====================================================================
+. * (B) PROGRAMA LIMPIO: SOLO teffects (sectores 1/2) + diagonales + diffs
+. *     (asume que la base YA está recortada por el diseño fijo)
+. *====================================================================
+. 
+. 
+. cap program drop ipwra_diff_manu_serv
+
+. program define ipwra_diff_manu_serv, rclass
+  1.     version 19.0
+  2.     syntax , DVAR(name) YVAR(name) XTR(string asis) XY(string asis) SECTOR(name) ///
+>         [VCETYPE(string) CLUSTERVAR(name) MINCELL(integer 30) MAXITER(integer 55)]
+  3. 
+.     * Defaults
+.     if ("`vcetype'"=="")    local vcetype "robust"
+  4.     if ("`clustervar'"=="") local clustervar "correlativo"
+  5.     if ("`mincell'"=="")    local mincell = 30
+  6.     if ("`maxiter'"=="")    local maxiter = 55
+  7. 
+.     * Normalizar strings + retokenize
+.     local xtr : subinstr local xtr `"""' "", all
+  8.     local xy  : subinstr local xy  `"""' "", all
+  9.     local xtr : list retokenize xtr
+ 10.     local xy  : list retokenize xy
+ 11. 
+.     * Remover i.macro_sector si viniera
+.     local xtr0 : subinstr local xtr "i.macro_sector" "", all
+ 12.     local xy0  : subinstr local xy  "i.macro_sector" "", all
+ 13.     local xtr0 : list retokenize xtr0
+ 14.     local xy0  : list retokenize xy0
+ 15. 
+.     * VCE option
+.     local vceopt "vce(`vcetype')"
+ 16.     if (lower("`vcetype'")=="cluster") local vceopt "vce(cluster `clustervar')"
+ 17. 
+.     * Salidas
+.     tempname a1m a2m a3m a1s a2s a3s b
+ 18.     scalar `a1m' = .
+ 19.     scalar `a2m' = .
+ 20.     scalar `a3m' = .
+ 21.     scalar `a1s' = .
+ 22.     scalar `a2s' = .
+ 23.     scalar `a3s' = .
+ 24. 
+.     foreach s in 1 2 {
+ 25. 
+.         preserve
+ 26.             keep if `sector'==`s'
+ 27.             keep if inlist(`dvar',0,1,2,3)
+ 28.             drop if missing(`yvar')
+ 29. 
+.             forvalues t=1/3 {
+ 30. 
+.                 quietly count if `dvar'==`t'
+ 31.                 local Nt = r(N)
+ 32.                 quietly count if `dvar'==0
+ 33.                 local N0 = r(N)
+ 34. 
+.                 * Fail fast
+.                 if (`Nt' < `mincell' | `N0' < `mincell') continue
+ 35. 
+.                 quietly capture teffects ipwra ///
+>                     (`yvar' `xy0', logit) ///
+>                     (`dvar' `xtr0', mlogit), ///
+>                     atet control(0) tlevel(`t') `vceopt' iterate(`maxiter')
+ 36. 
+.                 if (_rc==0 & e(converged)==1) {
+ 37. 
+.                     matrix `b' = e(b)
+ 38.                     local cn : colfullnames `b'
+ 39. 
+.                     * ======= TU LÓGICA ORIGINAL (sin inventar) =======
+.                     local atetcols ""
+ 40.                     foreach nm of local cn {
+ 41.                         if (substr("`nm'",1,5)=="ATET:") local atetcols "`atetcols' `nm'"
+ 42.                     }
+ 43. 
+.                     local diagcol : word `t' of `atetcols'
+ 44. 
+.                     * Airbag: si por algún motivo no existe la palabra t, caer al 1ro
+.                     if ("`diagcol'"=="") local diagcol : word 1 of `atetcols'
+ 45.                     if ("`diagcol'"=="") continue
+ 46. 
+.                     local j = colnumb(`b', "`diagcol'")
+ 47.                     if (`j'<=0) continue
+ 48. 
+.                     scalar __atet = el(`b', 1, `j')
+ 49.                     * ================================================
+. 
+.                     if (`s'==1 & `t'==1) scalar `a1m' = __atet
+ 50.                     if (`s'==1 & `t'==2) scalar `a2m' = __atet
+ 51.                     if (`s'==1 & `t'==3) scalar `a3m' = __atet
+ 52.                     if (`s'==2 & `t'==1) scalar `a1s' = __atet
+ 53.                     if (`s'==2 & `t'==2) scalar `a2s' = __atet
+ 54.                     if (`s'==2 & `t'==3) scalar `a3s' = __atet
+ 55.                 }
+ 56.             }
+ 57.         restore
+ 58.     }
+ 59. 
+.     local ok = 1
+ 60.     if (missing(`a1m') | missing(`a2m') | missing(`a3m') | ///
+>         missing(`a1s') | missing(`a2s') | missing(`a3s')) local ok = 0
+ 61. 
+.     return scalar ok    = `ok'
+ 62.     return scalar a1m   = `a1m'
+ 63.     return scalar a2m   = `a2m'
+ 64.     return scalar a3m   = `a3m'
+ 65.     return scalar a1s   = `a1s'
+ 66.     return scalar a2s   = `a2s'
+ 67.     return scalar a3s   = `a3s'
+ 68.     return scalar diff1 = (`a1m' - `a1s')
+ 69.     return scalar diff2 = (`a2m' - `a2s')
+ 70.     return scalar diff3 = (`a3m' - `a3s')
+ 71. end
+
+. 
+. 
+. 
+. 
+. 
+. ***************************
+. 
+. *log using "`outdir'\ATET_IGNORE_S1_SECTORDIFF_BOOT.log", replace
+. 
+. 
+. ereturn list
+
+scalars:
+               e(rank) =  27
+                  e(N) =  2008
+                 e(ic) =  4
+                  e(k) =  27
+               e(k_dv) =  1
+          e(converged) =  1
+                 e(rc) =  0
+                 e(ll) =  -2569.664064353242
+               e(ll_0) =  -2656.274042836801
+               e(df_m) =  24
+               e(chi2) =  173.2199569671184
+                  e(p) =  1.43229960187e-24
+               e(N_cd) =  0
+           e(ibaseout) =  1
+            e(baseout) =  0
+               e(k_eq) =  4
+         e(k_eq_model) =  4
+          e(k_eq_base) =  1
+               e(r2_p) =  .0326058144178012
+              e(k_out) =  4
+
+macros:
+            e(cmdline) : "mlogit D_pp_ignore edad capital_extranjero share_prof_tecn exp_dummy ln_tpo_mean indice_redes                   redesXexp redesXsize, b.."
+                e(cmd) : "mlogit"
+     e(marginsdefault) : "predict(pr outcome(0)) predict(pr outcome(1)) predict(pr outcome(2)) predict(pr outcome(3))"
+       e(marginsnotok) : "stdp stddp SCores"
+            e(predict) : "mlogit_p"
+              e(title) : "Multinomial logistic regression"
+            e(eqnames) : "No_prod_proc Solo_producto Solo_proceso Ambas"
+            e(baselab) : "No prod/proc"
+           e(chi2type) : "LR"
+  e(deriv_useminbound) : "off"
+                e(opt) : "moptimize"
+                e(vce) : "oim"
+               e(user) : "mopt__mlogit_d2()"
+          e(ml_method) : "d2"
+          e(technique) : "nr"
+              e(which) : "max"
+             e(depvar) : "D_pp_ignore"
+         e(properties) : "b V"
+
+matrices:
+                  e(b) :  1 x 36
+                  e(V) :  36 x 36
+           e(gradient) :  1 x 36
+                e(out) :  1 x 4
+               e(ilog) :  1 x 20
+
+functions:
+             e(sample)   
+
+. 
+. ereturn clear
+
+. estimates clear
+
+. 
+. * una vez
+. use "BOOTBASE_FIXED.dta", clear
+
+. ipwra_diff_manu_serv, dvar(D_pp_ignore) yvar(Y_cond) sector(macro_sector) ///
+>     xtr("`XTR0'") xy("`XY0'") ///
+>     vcetype(robust)
+(1,989 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+(2,349 observations deleted)
+(0 observations deleted)
+(0 observations deleted)
+
+. 
+. return list
+
+scalars:
+              r(diff3) =  .1173687272767969
+              r(diff2) =  .0082829967058639
+              r(diff1) =  -.0024453446718873
+                r(a3s) =  .2036918626241321
+                r(a2s) =  .1786661826205798
+                r(a1s) =  .1135405998975551
+                r(a3m) =  .3210605899009289
+                r(a2m) =  .1869491793264436
+                r(a1m) =  .1110952552256678
+                 r(ok) =  1
+
+. * chequeo rápido
+. di as txt "ok = " %9.0g r(ok) " | diff1=" %9.4f r(diff1) " diff2=" %9.4f r(diff2) " diff3=" %9.4f r(diff3)
+ok =         1 | diff1=  -0.0024 diff2=   0.0083 diff3=   0.1174
+
+. 
+. /*
+> * bootstrap: una prueba rapida de 4 reps
+> use "BOOTBASE_FIXED.dta", clear
+> set seed 12345
+> xtset, clear
+> 
+> bootstrap r(diff1) r(diff2) r(diff3), reps(4)  cluster(correlativo)  strata(macro_sector) : ///
+>     ipwra_diff_manu_serv, dvar(D_pp_ignore) yvar(Y_cond) sector(macro_sector) ///
+>         xtr("`XTR0'") xy("`XY0'") vcetype(robust)
+> 
+> * opcional: ver tabla guardada en e(b), e(V) del bootstrap
+> ereturn list
+> */
+. 
+. 
+. ********************* metodo de bootstrap acelerado: parallel ************************
+.                 
+. *------------------------------------------------------------
+. * 0) Recomendación práctica: guardá BOOTBASE_FIXED a disco
+. *------------------------------------------------------------
+. use "BOOTBASE_FIXED.dta", clear
+
+. 
+. xtset, clear
+
+. set seed 12345
+
+. 
+. *------------------------------------------------------------
+. * 1) Instalar parallel (si hace falta)
+. *------------------------------------------------------------
+. cap which parallel
+
+. if _rc {
+.     net install parallel, from(https://raw.github.com/gvegayon/parallel/master/) replace
+.     * alternativa :
+.         * ssc install parallel, replace
+. }
+
+. 
+. *------------------------------------------------------------
+. * 2) Setear clusters (en tu máquina 8-core: 8)
+. *------------------------------------------------------------
+. set processors 1
+    The maximum number of processors or cores being used is changed from 2 to 1.  It can be set to any number between 1 and 2
+
+. parallel setclusters 8, force
+N Child processes: 8
+Stata dir:  C:\Program Files\StataNow19/StataMP-64.exe
+
+. 
+. *------------------------------------------------------------
+. * 3) Smoke test (pocas reps) para confirmar que corre
+. *  Para la estimacion real poner aprox 600 reps para obtener aprox 500 replicas sin fallas; hay un % de fallas de aprox. 18%!.
+. *  O incluso poner 900 para obtener aprox unas 750 reps sin fallas. 
+. *------------------------------------------------------------
+. parallel bs, ///
+>     expression( diff1 = r(diff1) diff2 = r(diff2) diff3 = r(diff3) ) ///
+>     reps(1000)  cluster(correlativo) strata(macro_sector) : ///
+>     ipwra_diff_manu_serv, dvar(D_pp_ignore) yvar(Y_cond) sector(macro_sector) ///
+>         xtr("`XTR0'") xy("`XY0'") vcetype(robust) 
+--------------------------------------------------------------------------------
+Exporting the following program(s): ipwra_diff_manu_serv
+
+ipwra_diff_manu_serv, rclass:
+  1.     version 19.0
+  2.     syntax , DVAR(name) YVAR(name) XTR(string asis) XY(string asis) SECTOR(name) [VCETYPE(string) CLUSTERVAR(name) MINCELL(integer 30) MAXITER(integer 55)]
+  3.     if ("`vcetype'"=="") local vcetype "robust"
+  4.     if ("`clustervar'"=="") local clustervar "correlativo"
+  5.     if ("`mincell'"=="") local mincell = 30
+  6.     if ("`maxiter'"=="") local maxiter = 55
+  7.     local xtr : subinstr local xtr `"""' "", all
+  8.     local xy : subinstr local xy `"""' "", all
+  9.     local xtr : list retokenize xtr
+ 10.     local xy : list retokenize xy
+ 11.     local xtr0 : subinstr local xtr "i.macro_sector" "", all
+ 12.     local xy0 : subinstr local xy "i.macro_sector" "", all
+ 13.     local xtr0 : list retokenize xtr0
+ 14.     local xy0 : list retokenize xy0
+ 15.     local vceopt "vce(`vcetype')"
+ 16.     if (lower("`vcetype'")=="cluster") local vceopt "vce(cluster `clustervar')"
+ 17.     tempname a1m a2m a3m a1s a2s a3s b
+ 18.     scalar `a1m' = .
+ 19.     scalar `a2m' = .
+ 20.     scalar `a3m' = .
+ 21.     scalar `a1s' = .
+ 22.     scalar `a2s' = .
+ 23.     scalar `a3s' = .
+ 24.     foreach s in 1 2 {
+ 25.         preserve
+ 26.             keep if `sector'==`s'
+ 27.             keep if inlist(`dvar',0,1,2,3)
+ 28.             drop if missing(`yvar')
+ 29.             forvalues t=1/3 {
+ 30.                 quietly count if `dvar'==`t'
+ 31.                 local Nt = r(N)
+ 32.                 quietly count if `dvar'==0
+ 33.                 local N0 = r(N)
+ 34.                 if (`Nt' < `mincell' | `N0' < `mincell') continue
+ 35.                 quietly capture teffects ipwra (`yvar' `xy0', logit) (`dvar' `xtr0', mlogit), atet control(0) tlevel(`t') `vceopt' iterate(`maxiter')
+ 36.                 if (_rc==0 & e(converged)==1) {
+ 37.                     matrix `b' = e(b)
+ 38.                     local cn : colfullnames `b'
+ 39.                     local atetcols ""
+ 40.                     foreach nm of local cn {
+ 41.                         if (substr("`nm'",1,5)=="ATET:") local atetcols "`atetcols' `nm'"
+ 42.                     }
+ 43.                     local diagcol : word `t' of `atetcols'
+ 44.                     if ("`diagcol'"=="") local diagcol : word 1 of `atetcols'
+ 45.                     if ("`diagcol'"=="") continue
+ 46.                     local j = colnumb(`b', "`diagcol'")
+ 47.                     if (`j'<=0) continue
+ 48.                     scalar __atet = el(`b', 1, `j')
+ 49.                     if (`s'==1 & `t'==1) scalar `a1m' = __atet
+ 50.                     if (`s'==1 & `t'==2) scalar `a2m' = __atet
+ 51.                     if (`s'==1 & `t'==3) scalar `a3m' = __atet
+ 52.                     if (`s'==2 & `t'==1) scalar `a1s' = __atet
+ 53.                     if (`s'==2 & `t'==2) scalar `a2s' = __atet
+ 54.                     if (`s'==2 & `t'==3) scalar `a3s' = __atet
+ 55.                 }
+ 56.             }
+ 57.         restore
+ 58.     }
+ 59.     local ok = 1
+ 60.     if (missing(`a1m') | missing(`a2m') | missing(`a3m') | missing(`a1s') | missing(`a2s') | missing(`a3s')) local ok = 0
+ 61.     return scalar ok = `ok'
+ 62.     return scalar a1m = `a1m'
+ 63.     return scalar a2m = `a2m'
+ 64.     return scalar a3m = `a3m'
+ 65.     return scalar a1s = `a1s'
+ 66.     return scalar a2s = `a2s'
+ 67.     return scalar a3s = `a3s'
+ 68.     return scalar diff1 = (`a1m' - `a1s')
+ 69.     return scalar diff2 = (`a2m' - `a2s')
+ 70.     return scalar diff3 = (`a3m' - `a3s')
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Parallel Computing with Stata
+Child processes: 8
+pll_id         : 7y8omzbuc1
+Running at     : C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\TALLER 2 - IPW-RA
+Randtype       : datetime
+Waiting for the child processes to finish...
+child process 0002 Exited with error -700- while running the command/dofile (view log)...
+child process 0003 Exited with error -700- while running the command/dofile (view log)...
+child process 0005 Exited with error -700- while running the command/dofile (view log)...
+child process 0006 Exited with error -700- while running the command/dofile (view log)...
+child process 0007 Exited with error -700- while running the command/dofile (view log)...
+child process 0008 Exited with error -700- while running the command/dofile (view log)...
+child process 0001 Exited with error -700- while running the command/dofile (view log)...
+child process 0004 Exited with error -700- while running the command/dofile (view log)...
+--------------------------------------------------------------------------------
+Enter -parallel printlog #- to checkout logfiles.
+--------------------------------------------------------------------------------
+8 child processes encountered errors. Throwing last error.
+r(700);
+
+end of do-file
+
+r(700);
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\6_IPWRA.log
+  log type:  text
+ closed on:  28 Mar 2026, 11:05:52
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

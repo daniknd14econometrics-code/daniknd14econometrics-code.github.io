@@ -1,0 +1,95 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T1 (INTRO)
+
+Base usada para este diagnóstico: exclusivamente do + log del taller actual, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 01. Tema central: introducción al problema de inferencia causal en corte transversal, usando una base simple con tratamiento binario, salario como resultado y dos covariables observables (`mont` y `edu`). La unidad de análisis son individuos. El taller parte de una base con 1.000 observaciones, detecta una observación anómala con educación negativa y salario negativo, y finalmente trabaja con 999 observaciones.
+
+2. Qué es realmente este taller
+
+Este taller no debe leerse como una pieza aplicada fuerte ni como un hallazgo sustantivo. Su función real es introductoria y metodológica. La historia central no es “cuánto aumenta el salario por el tratamiento”, sino por qué una diferencia bruta entre tratados y controles no alcanza para una interpretación causal creíble, cómo cambia la lectura al incorporar controles, y por qué aparece matching como respuesta al problema del contrafactual.
+
+Clasificación editorial sugerida:
+Ejercicio metodológico, no orientado a una especificación final única.
+
+3. Núcleo empírico del taller
+
+El núcleo empírico está en tres bloques.
+
+Primero, la comparación inicial entre tratados y controles muestra diferencias grandes en observables:
+- salario medio: 47.523,68 en tratados vs 40.359,86 en controles;
+- educación media: 11,79 vs 10,07;
+- proporción de Montevideo: 0,498 vs 0,167.
+
+Segundo, los tests de diferencia de medias para salario, educación y Montevideo rechazan igualdad con p-valor 0.0000 en todos los casos.
+
+Tercero, el taller muestra cómo cambia la magnitud estimada del tratamiento cuando cambia el diseño:
+- diferencia de medias / MCO simple: 7.163,8;
+- MCO con controles (`mont`, `edu`): 100,1;
+- PSM ATE logit: 976,0;
+- PSM ATE probit: 1.012,0;
+- PSM ATET logit: 3.614,4.
+
+4. Lectura que gana
+
+Acá no conviene forzar una “especificación ganadora” como si el objetivo fuera decidir cuál número es el verdadero efecto causal final. La lectura que gana es otra: cuando tratados y controles son muy distintos en observables, la comparación ingenua no es un contrafactual creíble, y la magnitud estimada cambia de manera muy fuerte cuando cambia el diseño de comparación.
+
+En otras palabras, el taller enseña que la pregunta causal no empieza en el coeficiente; empieza en la credibilidad del contrafactual.
+
+5. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+- una diferencia de medias entre tratados y controles no debe interpretarse automáticamente como efecto causal;
+- en esta base, los grupos difieren de forma fuerte en observables relevantes;
+- al pasar de comparación bruta a modelos con controles y luego a matching, la estimación cambia mucho;
+- el valor pedagógico del taller está en mostrar cómo el método altera la lectura.
+
+6. Qué no debe decir una pieza pública
+
+No debería decir que:
+- el efecto causal verdadero del programa es 7.163,8;
+- el efecto causal verdadero del programa es 100;
+- el efecto causal verdadero del programa es 976 o 3.614;
+- este taller constituye evidencia aplicada robusta sobre un programa real.
+
+Tampoco conviene presentarlo como si el matching “resolviera definitivamente” la causalidad en este caso. El propio ejercicio está construido con una base artificial y casi determinística, por lo que su valor principal es pedagógico, no sustantivo.
+
+7. Riesgo editorial principal
+
+El principal riesgo editorial es sobreactuar el taller y venderlo como una estimación causal seria. Eso sería un error. El log deja ver que la base es de juguete y extremadamente artificial: la correlación entre `edu` y `salario` es casi perfecta (0.9998), y la regresión con controles alcanza un `R^2 = 1.000`, algo totalmente irreal para una aplicación empírica seria.
+
+Por eso, el taller sirve para enseñar el problema del contrafactual, pero no para mostrar una pieza aplicada fuerte de portfolio en el mismo sentido que un buen caso empírico más realista.
+
+8. Recomendación editorial concreta
+
+Mi recomendación es no usar este taller como ficha pública fuerte e independiente. Su mejor uso sería uno de estos dos:
+
+Opción A:
+una pieza breve de apertura de la sección “Causalidad”, con una lógica tipo:
+“Por qué una diferencia de medias no es causal”.
+
+Opción B:
+dejarlo como soporte privado o como nota metodológica corta, y reservar las primeras fichas públicas fuertes de causalidad para talleres posteriores como matching exacto, PSM e IPWRA.
+
+9. Si igual se publicara, cuál debería ser el objeto de decisión final
+
+Si se transforma en pieza pública, debería ser una pieza corta, con un único objeto de decisión final:
+una tabla comparativa simple con cinco filas:
+- diferencia bruta;
+- MCO robusto;
+- MCO con controles;
+- PSM ATE;
+- PSM ATET.
+
+Debajo de esa tabla, la caja de lectura final debería decir algo equivalente a esto:
+
+“La magnitud estimada del tratamiento cambia fuertemente cuando cambia el contrafactual. La lección central no es el número puntual, sino la credibilidad de la comparación usada para estimarlo.”
+
+10. Veredicto final
+
+Diagnóstico final:
+taller útil, claro y bien secuenciado para introducir causalidad, pero no como pieza pública aplicada fuerte. Su mejor rol es introductorio, conceptual y metodológico.
+
+Etiqueta editorial sugerida:
+Ejercicio metodológico, no orientado a una especificación final única.

@@ -1,0 +1,195 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T5 (PSM CON SELECTOR AUTOMÁTICO)
+
+Base usada para este diagnóstico: exclusivamente do + log + gráficos del taller actual, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 05. Tema central: selector automático para Propensity Score Matching (PSM), aplicado a la misma base `hh_98.dta` del taller anterior. La unidad de análisis son hogares. El tratamiento es `dfmfd`, indicador de participación femenina en microcrédito dentro del hogar. La variable de resultado es `lexptot = ln(1+exptot)`. El taller define explícitamente una separación entre DISEÑO y ANÁLISIS: en la fase de diseño se rankean candidatos solo con métricas de balance y soporte; recién después se estima el efecto para el ganador.  
+
+2. Qué es realmente este taller
+
+Este taller no es una nueva ficha aplicada sobre microcrédito. Su función real es metodológica y de gobernanza del diseño. Es el análogo, para PSM, de lo que T3 fue para matching exacto: toma un taller comparativo previo y le agrega una regla explícita de decisión.
+
+Clasificación editorial sugerida:
+Pieza principalmente técnica / apéndice metodológico.
+
+3. Núcleo metodológico del taller
+
+El aporte fuerte del taller es la arquitectura de selección.
+
+La grilla de candidatos se arma sobre una sola regla de soporte, `common`, y evalúa cuatro familias:
+
+* nearest neighbor (`k = 1, 2, 3, 4, 5`);
+* caliper;
+* radius;
+* kernel.
+
+Además, fija criterios explícitos de diseño:
+
+* `max|SMD| <= 0.10`;
+* `maxvr <= 2`;
+* `share1 >= 0.80` como retención mínima de tratados;
+* sin usar el outcome para rankear;
+* priorizando, entre candidatos que pasan, primero retención de tratados, luego ESS de controles y recién después balance fino.  
+
+Eso es importante editorialmente porque convierte una comparación abierta en una decisión reproducible.
+
+4. Qué candidatos quedan arriba
+
+La tabla de top candidatos muestra algo interesante. El ranking no queda dominado por NN, aunque algunos NN alcanzan balances excelentes en `max|SMD|`. El top del selector queda encabezado por:
+
+* `KER | kernel=biweight bw=0.40*SD(LPS) + common`
+* `RAD | radius cal=0.20*SD(LPS) + common`
+* `KER | kernel=uniform bw=0.20*SD(LPS) + common`
+* `KER | kernel=epan bw=0.20*SD(LPS) + common`
+
+Todos conservan prácticamente la totalidad de tratados (`share1 ≈ 0.998`) y tienen ESS de controles altos. El ganador final declarado por el taller es:
+
+`KER | kernel=biweight bw=0.40*SD(LPS) + common`.  
+
+5. Por qué gana ese candidato
+
+Este es el corazón del taller.
+
+El ganador no tiene el menor `max|SMD|` absoluto de toda la grilla. De hecho, algunos NN muestran `max|SMD|` muchísimo más bajo. Pero el selector está construido para no premiar solo balance marginal si eso viene acompañado de menor ESS o de una pérdida innecesaria de precisión.
+
+Bajo la regla definida, el kernel biweight con bandwidth `0.40*SD(LPS)` gana porque combina:
+
+* balance aceptable: `max|SMD| ≈ 0.081`;
+* varianzas aceptables: `maxvr ≈ 1.32`;
+* diagnósticos de Rubin aceptables: `B_ps ≈ 10.8`, `R_ps ≈ 1.10`;
+* altísima retención de tratados: `share1 ≈ 0.998`;
+* ESS de controles alto: `≈ 451`.  
+
+La lectura correcta, entonces, es esta:
+el selector prefiere una especificación que compre un buen compromiso sesgo-varianza, no una que minimice obsesivamente el desbalance a costa de perder precisión.
+
+6. Resultado final del análisis
+
+Una vez fijado el ganador, el taller recién pasa a ANÁLISIS. Para el método seleccionado, reporta:
+
+* `ATET = 0.1099`
+* `ATE = 0.0773`
+
+Y además distingue entre errores estándar por defecto y bootstrap:
+
+* para `ATET`, `SE_def = 0.0324` y `SE_boot = 0.0273`;
+* para `ATE`, el SE por defecto no está disponible en `psmatch2`, por lo que el principal relevante pasa a ser `SE_boot = 0.0275`.  
+
+En términos sustantivos, esto deja dos mensajes:
+
+* el efecto sigue siendo positivo;
+* el `ATET` vuelve a quedar cerca de 0.11, muy en línea con la banda que ya sugería el taller 04 para especificaciones razonables con buen soporte.
+
+7. Qué aportan los gráficos
+
+Los gráficos sí aportan valor.
+
+El gráfico de overlap sobre `logit(PS)` es útil porque muestra la superposición efectiva en la escala relevante para la decisión del selector, no solo en el PS crudo. Eso está alineado con la lógica del taller, que define calipers y bandwidths como múltiplos de la desviación estándar del logit del propensity score. 
+
+El love plot del ganador también agrega bastante. El `pstest` final muestra que, para el método ganador, el balance mejora mucho:
+
+* `sexhead` pasa a un sesgo de 1.2;
+* `vaccess` queda en 2.7;
+* `educhead` cae a -3.9;
+* `lnland` queda en 1.0;
+* `pcirr` en -4.9.
+
+Globalmente, el matching ganador deja:
+
+* `MeanBias = 3.2`;
+* `B = 10.0`;
+* `R = 1.01`.
+
+Eso es una mejora fuerte frente al antes del matching y le da sostén visual y estadístico a la decisión del selector.  
+
+8. Lectura que gana
+
+La lectura que gana en este taller sí es una lectura con especificación ganadora explícita.
+
+No corresponde “comparación sin ganador único”.
+No corresponde “ejercicio metodológico sin especificación final”.
+Acá sí corresponde:
+
+Especificación ganadora.
+
+Y la formulación editorial correcta sería:
+
+“Bajo la regla de diseño adoptada —balance aceptable, varianzas en rango y prioridad a retención/ESS entre los candidatos que pasan—, la especificación preferida es PSM kernel biweight con bandwidth 0.40*SD(LPS) y soporte común.”
+
+Eso es exactamente lo que el taller agrega respecto a T4.
+
+9. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+
+* elegir un método de PSM mirando primero el tamaño del efecto es una mala práctica;
+* una selección seria debe separar diseño y análisis;
+* bajo una regla explícita de balance y soporte, el método preferido no necesariamente es el que minimiza más el `max|SMD|`, sino el que logra una mejor combinación entre balance y precisión;
+* en esta aplicación, esa regla favorece un kernel biweight con soporte común;
+* el `ATET` resultante queda cerca de 0.11, en línea con otras especificaciones razonables del taller anterior.
+
+10. Qué no debe decir una pieza pública
+
+No debería decir que:
+
+* el selector demuestra una verdad universal sobre PSM;
+* kernel biweight es siempre superior a NN o radius;
+* el efecto causal verdadero quedó “demostrado” en 0.1099;
+* ya no hace falta mirar robustez porque el selector resolvió todo;
+* T5 es una nueva aplicación sustantiva distinta de T4.
+
+Tampoco conviene vender el bootstrap como si resolviera cualquier problema de identificación. Acá mejora inferencia, pero no reemplaza los supuestos causales del diseño.
+
+11. Riesgo editorial principal
+
+El principal riesgo editorial es publicarlo como ficha autónoma fuerte y que parezca repetición de T4 con más automatización.
+
+En realidad, el valor de T5 no está en una nueva historia aplicada. Está en cerrar la capa de decisión que T4 todavía dejaba abierta.
+
+Por eso, igual que en T3 con respecto a T2, mi recomendación es:
+T5 no debería competir con T4 como pieza pública principal.
+Su mejor función es actuar como respaldo metodológico de T4 o como subsección técnica breve dentro de la pieza pública de PSM.
+
+12. Implicancia sobre el taller 04
+
+Sí: este taller modifica de manera importante el diagnóstico del taller 04.
+
+T4 quedaba como comparación metodológica con preferencia provisional, todavía sin regla formal de selección.
+Después de T5, esa provisionalidad se puede cerrar mejor.
+
+La actualización correcta de T4 sería algo como:
+
+* mantener que `common` parece preferible a `trim(10)`;
+* pero reemplazar la idea de “preferencia provisional entre algoritmos” por una decisión explícita:
+  bajo la regla de diseño del selector, la especificación preferida es `kernel biweight bw = 0.40*SD(LPS) + common`.
+
+O sea:
+T4 aporta la comparación amplia.
+T5 aporta la decisión final defendible.
+
+13. Objeto de decisión final recomendado
+
+Si esto se integra al portfolio, el objeto de decisión final no debería ser la tabla larga de 33 candidatos. Eso es demasiado técnico para una pieza pública.
+
+El objeto final correcto sería:
+una tabla muy corta con tres elementos:
+
+* la especificación ganadora;
+* sus métricas clave de diseño (`max|SMD|`, ESS, share1);
+* el resultado final (`ATE`, `ATET`, bootstrap).
+
+Y debajo, una caja de lectura final del tipo:
+
+“Entre múltiples variantes de PSM, la especificación preferida fue elegida sin mirar el outcome: primero se filtró por balance y soporte, y luego se privilegió precisión entre las candidatas viables. En esta aplicación, esa regla favorece un kernel biweight con soporte común.”
+
+14. Veredicto final
+
+Diagnóstico final:
+taller metodológicamente muy valioso, con decisión clara y bien construida. No es una ficha pública principal por sí sola, pero sí una pieza clave para darle cierre sólido al bloque de PSM.
+
+Etiqueta editorial sugerida:
+Pieza principalmente técnica / apéndice metodológico.
+
+Subetiqueta útil:
+Especificación ganadora explícita para PSM: kernel biweight, `bw = 0.40*SD(LPS)`, `common`.

@@ -1,0 +1,143 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T7 (SELECTOR DE DISEÑO PARA IPWRA MULTIVALUE)
+
+Base usada para este diagnóstico: exclusivamente do + txt/log del taller actual + material auxiliar del taller, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 07. Tema central: selector de diseño para IPWRA multivaluado en un panel de innovación, aplicado al outcome ambiental definido solo entre firmas innovadoras. La muestra se restringe a empresas con actividad de innovación (`b1_9==1`) y outcome observado `Y_cond`, donde `Y_cond = 1` si la mejora ambiental reportada es media o alta. El tratamiento no se define por episodios, sino por estado: 0 = no producto/proceso, 1 = solo producto, 2 = solo proceso, 3 = ambas. Esa decisión es deliberada: el propio taller descarta el tratamiento por episodios porque genera celdas demasiado pequeñas y rompe el solapamiento. 
+
+2. Qué es realmente este taller
+
+Este taller no es una pieza aplicada final sobre resultados ambientales. Tampoco es una corrida principal de efectos. Su función real es metodológica y decisional: seleccionar, a ciegas respecto del ATET, el diseño ganador que después se va a usar en la estimación principal. En ese sentido, T7 cumple para IPWRA el mismo rol que T3 y T5 cumplieron antes para matching exacto y PSM: separa DISEÑO de ANÁLISIS y explicita una regla de elección. 
+
+Clasificación editorial sugerida:
+Pieza principalmente técnica / apéndice metodológico.
+
+3. Arquitectura del selector
+
+El selector compara dos modos conceptuales.
+
+Modo 1: `IGNORE_ORG`.
+No excluye innovación organizacional/comercial al definir el tratamiento principal. Conserva toda la muestra de innovadores y, si se quisiera, permitiría controlar por `org1` y `org_miss`. En la corrida concreta enviada, `INCLUDE_ORG_CONTROLS = 0`, de modo que esos controles no entran al modelo de tratamiento. 
+
+Modo 2: `STRICT_AVOID_ORG`.
+Excluye observaciones con innovación organizacional/comercial igual a 1 y también las faltantes en esa variable. El propio log advierte que este modo es más “limpio” en términos conceptuales, pero reduce mucho la muestra y puede romper el mlogit o el overlap. Eso no es una advertencia abstracta: efectivamente termina ocurriendo. 
+
+Además, el taller fija una lógica de selección ciega: no usa el ATET para rankear. Compara especificaciones candidatas usando métricas de balance, solapamiento, ESS y concentración de pesos. 
+
+4. Especificaciones candidatas
+
+El taller arma cinco specs de tratamiento, pero en esta corrida hay un detalle importante: S1, S2 y S3 quedan idénticas en la práctica, porque `ADD1` y `ADD2` están vacíos. Recién S4 agrega `apoyo_publico` y S5 agrega además `grupo_economico`. Por tanto, el verdadero espacio de decisión no son cinco diseños sustantivamente distintos, sino tres bloques: el bloque base S1/S2/S3, S4 y S5. 
+
+La configuración concreta también importa: `USE_LAGS = 0`, `RUN_TEW = 1` y `RUN_TEB = 0`. O sea, el ranking principal no se construye con el benchmark más exigente basado en `tebalance`, sino con el proxy TEW. El propio log lo deja explícito al imprimir: “Ganadores finales por modo (fuente de ranking = TEW)”. 
+
+5. Qué pasa con la muestra en cada modo
+
+Acá aparece una de las decisiones más importantes del taller.
+
+En `IGNORE_ORG`, la distribución del tratamiento es amplia y usable: 701 observaciones en 0, 918 en solo producto, 1.817 en solo proceso y 1.957 en ambas. En cambio, en `STRICT_AVOID_ORG`, al excluir org==1 y missing, la muestra útil colapsa: quedan solo 82 en 0, 385 en 1, 679 en 2 y 607 en 3, mientras que 3.640 observaciones pasan a missing por exclusión. Eso equivale a perder 67.49% del total del bloque analizado. 
+
+Entonces, antes incluso del ranking fino, el taller ya muestra que el modo estricto tiene una desventaja estructural fuerte: la limpieza conceptual se paga con un costo enorme de soporte.
+
+6. Qué métrica manda efectivamente en esta corrida
+
+La lectura correcta acá exige una precisión importante.
+
+El selector tiene preparado un bloque más exigente tipo TEB, pero en esta corrida está apagado (`RUN_TEB = 0`). Por lo tanto, la capa de decisión efectiva la da el bloque TEW: pesos ATET tipo `teffects`, balance por SMD y varianzas, ESS de controles y concentración de pesos. Esto no invalida el selector, pero sí define con exactitud qué clase de “ganador” está seleccionando. No es el ganador bajo el benchmark más severo posible; es el ganador bajo la regla TEW activada en esta corrida. 
+
+7. Ganadores del selector
+
+El resultado central del ranking es muy claro.
+
+Para `IGNORE_ORG`, el ganador es `S1`, con `rank_group = 1`, `minN1 = 812`, `minN0 = 594`, `minESS0 = 395.0`, `maxSMD_w ≈ 0.0789`, `meanSMD_w ≈ 0.0297`, `VRsym ≈ 1.179`, `w_p99 ≈ 4.036` y `w_max ≈ 4.763`. Es decir: buen balance, ESS razonable, pesos contenidos y soporte claramente suficiente. 
+
+Para `STRICT_AVOID_ORG`, también aparece `S1` como primero dentro de ese modo, pero con `rank_group = 4`, `minN1 = 52`, `minN0 = 16`, `minESS0 ≈ 14.14`, `maxSMD_w ≈ 0.752`, `meanSMD_w ≈ 0.418`, `VRsym ≈ 3.64`, y un soporte francamente débil. O sea: aunque el ranking interno del modo lo deja primero, ese “ganador” no es defendible como diseño serio. En la práctica, el selector está mostrando que el modo estricto fracasa. 
+
+8. Lectura que gana
+
+La lectura que gana no es simplemente “S1 ganó en ambos modos”. Eso sería una lectura torpe.
+
+La lectura correcta es esta:
+el selector favorece de forma clara al diseño `IGNORE_ORG + S1`, mientras que `STRICT_AVOID_ORG + S1` queda como un pseudo-ganador interno de un modo que, en términos prácticos, está roto por falta de soporte y mala calidad de balance.
+
+En otras palabras, el verdadero objeto de decisión del taller no es elegir entre cinco specs cualquiera. Es elegir entre dos filosofías de tratamiento y, dentro de la filosofía viable, fijar una especificación concreta. El taller resuelve ambas cosas a la vez:
+
+* descarta en la práctica el modo estricto;
+* y dentro del modo ignorar-org, elige S1.
+
+9. Qué aporta el bloque opcional de ATET al final
+
+Aunque el corazón del taller es la selección de diseño, el bloque final de `RUN_ATET = 1` sirve como chequeo importante. Al correr `teffects ipwra` sobre `IGNORE_ORG + S1`, obtiene los tres ATET diagonales relevantes:
+
+* ATET_1 = 0.11796
+* ATET_2 = 0.18043
+* ATET_3 = 0.27051
+
+Esos son justamente los tres efectos que luego reaparecen como corrida principal en T6. Entonces, T7 no solo elige el diseño: también verifica que el diseño elegido produce un patrón empírico ordenado y estable, el mismo que luego se reporta en el taller sustantivo.  
+
+10. Qué pasa con el modo estricto en la etapa final
+
+Acá el taller es muy honesto y eso hay que preservarlo editorialmente.
+
+Cuando intenta correr la etapa final con `STRICT_AVOID_ORG + S1`, la estimación falla con predicciones perfectas y el comando termina en `r(322)`. O sea: el propio pipeline confirma que el problema del modo estricto no era solo “lucir peor” en el ranking, sino directamente perder identificabilidad operativa en la estimación final. Este es uno de los puntos más fuertes del taller, porque le da una justificación práctica muy clara al descarte del modo estricto. 
+
+11. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+
+* la comparación conceptual relevante era entre mantener o excluir la innovación organizacional/comercial al definir el diseño;
+* la versión estricta colapsa demasiado la muestra y termina rompiendo la estimación;
+* el diseño elegido es `IGNORE_ORG + S1`;
+* esa elección se hizo a ciegas respecto del ATET, usando solo métricas de balance, soporte y pesos;
+* el patrón de efectos que luego se reporta en T6 descansa sobre este diseño seleccionado.
+
+12. Qué no debe decir una pieza pública
+
+No debería decir que:
+
+* T7 es una pieza sustantiva independiente sobre efectos ambientales;
+* `S1` es un ganador universal en cualquier configuración posible;
+* el selector usó el benchmark más exigente disponible, porque en esta corrida el ranking efectivo viene de TEW y no de TEB;
+* el modo estricto fue “comparativamente peor pero igual válido”; en realidad, el log muestra que termina siendo inviable en la estimación final.  
+
+13. Riesgo editorial principal
+
+El principal riesgo editorial es narrarlo mal de dos maneras posibles.
+
+La primera sería venderlo como si fuera otra pieza aplicada más sobre medio ambiente, cuando en realidad es un selector.
+La segunda sería resumirlo como “ganó S1” y perder la capa de decisión realmente importante, que es la elección entre `IGNORE_ORG` y `STRICT_AVOID_ORG`.
+
+Ese sería un error serio, porque la historia metodológica verdadera del taller no es “una spec venció a otra”, sino “un enfoque conceptual del tratamiento conservó soporte, balance y viabilidad de estimación, y el otro no”.
+
+14. Recomendación editorial concreta
+
+Mi recomendación es muy clara:
+T7 no debería ser la ficha pública principal del bloque IPWRA.
+Su mejor rol es respaldar metodológicamente a T6.
+
+Editorialmente, la mejor estructura sería:
+
+* T7 como apéndice metodológico o subsección técnica privada: cómo se eligió el diseño ganador.
+* T6 como pieza pública principal: qué resultado sale una vez fijado el diseño.
+
+Eso además te ordena la narrativa del portfolio: primero mostrás el resultado importante; después, si alguien quiere profundidad técnica, mostras cómo se seleccionó el diseño que lo sostiene.
+
+15. Implicancia directa sobre T6
+
+Sí: T7 permite afinar el diagnóstico de T6.
+
+T6 ya no debe formularse solo como “corrida del ganador IGNORE_ORG + S1”, sino más precisamente como:
+corrida principal del diseño ganador elegido por el selector T7 bajo la regla TEW activada en esa corrida.
+
+También ayuda a endurecer la justificación de por qué se descarta el modo estricto: no solo por narrativa o preferencia teórica, sino porque el selector muestra pérdida masiva de soporte y la estimación final directamente falla.
+
+16. Veredicto final
+
+Diagnóstico final:
+taller metodológico fuerte y muy útil, con una decisión clara y sustantivamente importante: el diseño viable y preferido es `IGNORE_ORG + S1`, mientras que `STRICT_AVOID_ORG` queda descartado en la práctica por fragilidad de muestra, mal desempeño de balance y falla final de estimación.
+
+Etiqueta editorial sugerida:
+Pieza principalmente técnica / apéndice metodológico.
+
+Subetiqueta útil:
+selector con especificación ganadora clara para IPWRA multivalue: `IGNORE_ORG + S1`.

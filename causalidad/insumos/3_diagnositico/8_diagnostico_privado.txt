@@ -1,0 +1,152 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T8 (VARIABLES INSTRUMENTALES, ANGrist–KRUEGER)
+
+Base usada para este diagnóstico: exclusivamente do + log + gráficos del taller actual, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 08. Tema central: variables instrumentales en corte transversal para estimar el retorno de la educación sobre el salario, siguiendo la lógica de Angrist y Krueger. La variable dependiente es `logSalSem`; la variable potencialmente endógena es `educ`; el universo principal que usa el taller para la comparación central es la cohorte 1930–1939, definida con `global muestra "inrange(AdN,1930,1939)"`, lo que deja 329.509 observaciones en la muestra de trabajo. El taller además normaliza correctamente las variables temporales entre censos, genera `edadTQ`, arma dummies de año de nacimiento y construye instrumentos simples y ricos basados en trimestre de nacimiento e interacciones trimestre × año de nacimiento.  
+
+2. Qué es realmente este taller
+
+Este taller no debe leerse como una pieza de hallazgo sustantivo puro del tipo “el retorno causal verdadero de la educación es X”. Su núcleo real es metodológico. Más precisamente, es una comparación metodológica dentro del universo IV: muestra cómo cambia la lectura cuando definís instrumentos de manera más simple o más rica, cómo entran los diagnósticos de primera etapa, por qué no hay que confundir endogeneidad con sobreidentificación, y qué pasa cuando una especificación conceptualmente más fiel al paper termina debilitando la identificación. El propio do-file está escrito con esa intención pedagógica: va desde Wald/2SLS básico hasta first stage, weak IV, sobreidentificación, GMM y puente a panel. 
+
+Clasificación editorial sugerida:
+Comparación metodológica.
+
+3. Núcleo empírico del taller
+
+La secuencia sustantiva del log tiene cinco bloques que importan de verdad.
+
+Primero, una apertura descriptiva con gráficos por año-trimestre de nacimiento. Los SVG de “primera etapa” y “forma reducida” son útiles como introducción visual, pero no como evidencia decisiva: muestran variación por grupos anio–trimestre, aunque la lectura formal de identificación recién aparece cuando entran las regresiones y los tests.
+
+Segundo, el bloque más básico con un solo instrumento binario `Z = 1(TdN==1)` deja una comparación clara:
+
+* MCO robusto: coeficiente de `educ` ≈ 0.0709.
+* IV/2SLS robusto con `Z`: coeficiente ≈ 0.1020.
+* Primera etapa robusta de `educ` sobre `Z`: F ≈ 66.8.
+
+Tercero, al redefinir el instrumento:
+
+* usando `TdN` como variable numérica, el coeficiente IV queda ≈ 0.0992 y la primera etapa es fuerte, pero impone una estructura lineal demasiado rígida entre trimestres;
+* usando dummies de trimestre (`qob_2 qob_3 qob_4`), el coeficiente IV queda ≈ 0.1026, la primera etapa robusta sigue siendo razonablemente fuerte (F ≈ 34.1) y aparece un test de sobreidentificación con p ≈ 0.2365.
+
+Cuarto, cuando pasa a los instrumentos ricos tipo Angrist–Krueger (`qob × yob`) con controles por año de nacimiento, el coeficiente IV baja a ≈ 0.0891, mientras la fuerza del instrumento ya se debilita bastante: KP rk F ≈ 4.80. No colapsa del todo, pero ya entra en zona incómoda.
+
+Quinto, en la especificación más completa y conceptualmente más alineada con el paper —`edad`, `edadTQ`, controles por año de nacimiento e interacciones trimestre × año de nacimiento como instrumentos excluidos— el coeficiente IV robusto cae a ≈ 0.0656, el test de endogeneidad no rechaza exogeneidad de `educ` (Durbin/Wu-Hausman p ≈ 0.8446), la primera etapa se vuelve francamente débil (KP rk F ≈ 1.699), el test de sobreidentificación no rechaza (Hansen J p ≈ 0.6424), y GMM2S da un coeficiente muy parecido, ≈ 0.0674.    
+
+4. Qué comparación es realmente decisiva
+
+La comparación decisiva del taller no es “MCO versus un único IV”. Tampoco es “qué coeficiente es más grande”.
+
+La comparación que de verdad manda es esta:
+a medida que la estrategia IV se vuelve más rica y más fiel a la arquitectura de Angrist–Krueger, la identificación se vuelve más frágil en primera etapa.
+
+Esa es la enseñanza fuerte del taller.
+
+Con el instrumento binario simple o con las dummies de trimestre, la primera etapa luce suficientemente fuerte y el coeficiente IV ronda 0.10. En cambio, cuando el taller pasa a la versión rica con interacciones `QOB × YOB` y controles más completos, el coeficiente baja hacia 0.066–0.067 y los diagnósticos de weak IV pasan a ser claramente problemáticos. Es decir: el taller enseña que “hacer la estrategia más sofisticada” no garantiza mejorar la identificación; puede también debilitarla.   
+
+5. Lectura que gana
+
+Acá no conviene forzar una “especificación ganadora” en el sentido clásico.
+
+La lectura que gana es otra:
+
+cuando la estrategia IV se formula de manera más flexible y más cercana al paper, la primera etapa pierde fuerza, el test de endogeneidad no da evidencia a favor de tratar `educ` como claramente endógena en esta muestra, y el no-rechazo de Hansen no rescata por sí solo una especificación con weak instruments.
+
+Entonces, la salida editorial correcta no es:
+“IV demuestra que el retorno causal es 6.6%”
+ni tampoco
+“el verdadero efecto es 10% porque el IV simple da eso”.
+
+La salida correcta es:
+este taller muestra que la lectura causal en IV depende críticamente de cómo definís el set de instrumentos y de que la primera etapa realmente sostenga la identificación.
+
+6. ¿Hay especificación ganadora?
+
+No en el sentido de “modelo final triunfante” listo para afirmación causal fuerte.
+
+Sí hay, en cambio, una especificación conceptualmente central:
+la versión rica con `edad`, `edadTQ`, dummies de año de nacimiento y las interacciones `QOB × YOB`.
+
+Esa es la especificación que mejor representa la lógica del paper y la que organiza la parte formal de endogeneidad, weak IV y sobreidentificación.
+
+Pero justamente esa especificación no debe presentarse como “ganadora” en tono triunfal, porque sus diagnósticos muestran fragilidad seria de primera etapa. Por eso, la etiqueta editorial más honesta no es “Especificación ganadora”, sino:
+
+Comparación sin ganador único.
+
+Si igual hubiera que fijar una especificación de referencia para narrar el taller, esa debería ser la especificación rica final, no porque “gane” empíricamente, sino porque es la que mejor revela el problema econométrico de fondo.
+
+7. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+
+* el retorno estimado de la educación cambia de forma no trivial cuando se pasa de MCO a IV;
+* la definición del instrumento importa mucho;
+* instrumentos simples pueden parecer fuertes, pero una especificación más rica puede debilitar fuertemente la primera etapa;
+* no hay que confundir tres preguntas distintas: endogeneidad, fuerza del instrumento y validez de instrumentos excedentes;
+* en esta muestra, la especificación rica tipo Angrist–Krueger no ofrece una base especialmente cómoda para una afirmación causal fuerte, porque la primera etapa es débil y el test de endogeneidad no da apoyo claro para abandonar MCO.
+
+8. Qué no debe decir una pieza pública
+
+No debería decir que:
+
+* “IV gana” de forma limpia y definitiva;
+* el no-rechazo del Hansen J prueba que los instrumentos son válidos;
+* el coeficiente IV de la especificación rica es el retorno causal final de la educación sin mayores matices;
+* el salto entre 7% y 10% significa automáticamente que MCO estaba sesgado a la baja de manera concluyente;
+* el test de sobreidentificación reemplaza el diagnóstico de relevancia.
+
+Tampoco conviene usar como bloque central la regresión “manual” de `educ` sobre todos los instrumentos y luego `test $z_yobqob`, porque en el log esa parte aparece contaminada por colinealidades severas y produce una salida visualmente muy mala para comunicación pública. Sirve como advertencia técnica, no como objeto principal de la pieza.
+
+9. Riesgo editorial principal
+
+El principal riesgo editorial es contar una historia demasiado lineal del tipo:
+“MCO da 7%, IV da 10%, entonces había endogeneidad y IV corrige”.
+
+Esa historia sería incompleta y, en este taller, bastante engañosa.
+
+La secuencia completa del log muestra algo más sofisticado:
+
+* con instrumentos simples, IV parece fuerte y da retornos cercanos a 10%;
+* con instrumentos más ricos y controles más completos, el retorno IV baja y la primera etapa se debilita mucho;
+* además, el test formal de endogeneidad no rechaza exogeneidad en la especificación rica final.
+
+Entonces, el riesgo es sobreactuar la parte “causal” y borrar justamente lo mejor del taller, que es su honestidad diagnóstica.
+
+10. Objeto de decisión final recomendado para una futura pieza pública
+
+El objeto de decisión final debería ser una tabla comparativa corta, no un desfile completo de comandos.
+
+Mi recomendación sería una tabla con cuatro filas:
+
+* MCO robusto
+* IV simple con `Z`
+* IV con dummies de trimestre
+* IV rica tipo Angrist–Krueger con controles
+
+Y columnas del tipo:
+método / instrumento, coeficiente de `educ`, diagnóstico de primera etapa, test de sobreidentificación si aplica, lectura editorial.
+
+Debajo de esa tabla, la caja final debería decir algo equivalente a esto:
+
+“En IV, una estrategia más rica no siempre fortalece la identificación. En esta aplicación, la versión conceptualmente más cercana a Angrist–Krueger debilita fuertemente la primera etapa y vuelve mucho más frágil la lectura causal.”
+
+11. Recomendación editorial concreta
+
+Este taller sí puede convertirse en una ficha pública del sector de causalidad, pero no como “caso exitoso de IV” ni como hallazgo sustantivo puro.
+
+La mejor versión pública sería una pieza metodológica-aplicada del tipo:
+“Cuando una estrategia IV se vuelve frágil: lecciones desde Angrist–Krueger”.
+
+Eso, de hecho, puede ser muy valioso para tu portfolio, porque muestra madurez econométrica: no te limitás a correr 2SLS, sino que sabés distinguir entre una historia donde IV realmente convence y otra donde los diagnósticos obligan a ser cauteloso.
+
+12. Veredicto final
+
+Diagnóstico final:
+taller fuerte y publicable, pero como comparación metodológica honesta, no como pieza de hallazgo causal cerrado. Su enseñanza principal no es un coeficiente puntual, sino una lección de identificación: la fuerza y credibilidad de IV dependen de cómo se construye el instrumento, y en la especificación rica final la primera etapa es débil y la evidencia de endogeneidad no es concluyente.
+
+Etiqueta editorial sugerida:
+Comparación sin ganador único.
+
+Subetiqueta útil:
+estrategia IV rica como referencia conceptual, pero con evidencia débil de primera etapa y lectura causal necesariamente cautelosa.

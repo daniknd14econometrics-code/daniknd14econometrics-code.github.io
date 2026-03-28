@@ -1,0 +1,1815 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\4_PSM.log
+  log type:  text
+ opened on:  28 Mar 2026, 09:29:30
+
+. do "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\TALLER 1 - ME-PSM\4_PSM.do"
+
+. /*------------------------------------------------------------------------------
+> Taller: Propensity Score Matching (PSM) en Stata
+> Datos: hh_98.dta (microcrédito). 
+> 
+> Idea general:
+>       PSM:
+>    - Estimar propensity score (probit/logit)
+>    - Imponer soporte común (common, trim)
+>    - Chequear balance en observables sobre el soporte común
+>    - Probar varios algoritmos: NN(1), NN(2), NN(8), radius (2 calipers), kernel (3 kernels x 2 bandwidths)
+>    - Reportar ATE y ATET
+>    - Bootstrap que re-hace los 3 pasos (pscore + soporte + matching)
+> 
+> Requisitos:
+> - Si no tenés psmatch2: ssc install psmatch2, replace
+> ------------------------------------------------------------------------------*/
+. 
+. 
+. **# Directorio de trabajo comun
+. 
+. clear all      
+
+. set more off
+
+. global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+
+. 
+. local username = c(username)
+
+. display "`username'"
+Equipo
+
+. 
+. local username = c(username)
+
+. 
+. if "`username'" == "Equipo" {
+.      global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. else if "`username'" == "dmendez" {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. else {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. 
+. 
+. *---------------------------
+. * 0) Directorio y datos
+. *---------------------------
+. 
+. use "$seteo\Directorio común bases\hh_98.dta", clear 
+
+. set more off
+
+. 
+. **# Base: preparacion
+. 
+. *---------------------------
+. * 1) Variables del taller
+. *---------------------------
+. describe
+
+Contains data from C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\\Directorio común bases\hh_
+> 98.dta
+ Observations:         1,129                  
+    Variables:            24                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nh              long    %12.0g                HH ID
+year            byte    %8.0g                 Year of observation
+villid          byte    %8.0g                 Village ID
+thanaid         byte    %8.0g                 Thana ID
+agehead         byte    %8.0g                 Age of HH head: years
+sexhead         byte    %8.0g                 Gender of HH head: 1=M, 0=F
+educhead        byte    %8.0g                 Education of HH head: years
+famsize         byte    %8.0g                 HH size
+hhland          float   %9.0g                 HH land: decimals
+hhasset         double  %12.0g                HH total asset: Tk.
+expfd           float   %9.0g                 HH per capita food expenditure: Tk/year
+expnfd          float   %9.0g                 HH per capita nonfood expenditure: Tk/year
+exptot          float   %9.0g                 HH per capita total expenditure: Tk/year
+dmmfd           byte    %8.0g                 HH has male microcredit participant: 1=Y, 0=N
+dfmfd           byte    %8.0g                 HH has female microcredit participant: 1=Y, 0=N
+weight          float   %9.0g                 HH sampling weight
+vaccess         byte    %8.0g                 Village is accessible by road all year: 1=Y, 0=N
+pcirr           float   %9.0g                 Proportion of village land irrigated
+rice            float   %9.0g                 Village price of rice: Tk./kg
+wheat           float   %9.0g                 Village price of wheat: Tk./kg
+milk            float   %9.0g                 Village price of milk: Tk./liter
+potato          float   %9.0g                 Village price of potato: Tk./kg
+egg             float   %9.0g                 Village price of egg: Tk./4 counts
+oil             float   %9.0g                 Village price of edible oil: Tk./kg
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. * D=Tratamiento: dfmfd = 1 si hay participante mujer en microcrédito
+. * Y=Outcome: exptot (gasto p/c total). Usamos log(1+exptot).
+. gen lexptot = ln(1+exptot)
+
+. gen lnland  = ln(1+hhland/100)
+
+. 
+. global Y lexptot
+
+. global D dfmfd
+
+. 
+. * Set de covariables (pre-tratamiento)
+. global X    ///
+>     sexhead ///
+>     agehead ///
+>     educhead ///
+>     lnland ///
+>     vaccess ///
+>     pcirr ///
+>     rice ///
+>     wheat ///
+>     milk ///
+>     oil ///
+>     egg
+
+. 
+. summ $Y $D $X
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     lexptot |      1,129    8.450665    .5138679   7.085339   10.77858
+       dfmfd |      1,129    .5270151    .4994909          0          1
+     sexhead |      1,129    .9078831    .2893191          0          1
+     agehead |      1,129     46.0124    12.67865         18         95
+    educhead |      1,129    2.317095     3.47617          0         16
+-------------+---------------------------------------------------------
+      lnland |      1,129    .3785037    .5058872    .001998   3.763059
+     vaccess |      1,129    .8352524     .371117          0          1
+       pcirr |      1,129    .5603686    .3320238          0        .99
+        rice |      1,129    10.28298    1.566328   6.879596    15.4509
+       wheat |      1,129    7.466872    .8467278   5.413453   9.473542
+-------------+---------------------------------------------------------
+        milk |      1,129    10.89583    3.381805   6.766816   20.30045
+         oil |      1,129    39.40337    4.008882   23.00717   50.75112
+         egg |      1,129    1.953326    .3740207   1.353363   2.706726
+
+. 
+. *---------------------------
+. * 1.5) Registro de resultados (para tabla comparativa al final)
+. *---------------------------
+. * La idea: ir guardando (método, soporte, algoritmo, ATE, ATET, Ns) en un archivo temporal.
+. * Luego imprimimos una tabla comparativa al final del do-file.
+. tempfile _results_match
+
+. tempname  _posth
+
+. 
+. postfile `_posth' ///
+>     str28 method ///
+>     str18 support ///
+>     str26 algorithm ///
+>     double ate ///
+>     double atet ///
+>     double se_ate ///
+>     double se_atet ///
+>     int N1 ///
+>     int N0 ///
+>     using "`_results_match'", replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_1298_000001.tmp not found)
+
+. 
+. 
+. /*------------------------------------------------------------------------------
+> 2) Concepto: ATE y ATET (definiciones poblacionales)
+> 
+> ATE  = E[ Y(1) - Y(0) ].
+> ATET = E[ Y(1) - Y(0) | D=1 ].
+> 
+> Bajo unconfoundedness (Y(0),Y(1)) _||_ D | X y overlap, se puede usar matching:
+> ATE  = E_X[ E(Y|D=1,X) - E(Y|D=0,X) ].
+> ATET = E_{X|D=1}[ E(Y|D=1,X) - E(Y|D=0,X) ].
+> ------------------------------------------------------------------------------*/
+. 
+.         
+. **# Lectura previa PSM
+. 
+.         
+. *==============================================================================
+. *  PROPENSITY SCORE MATCHING (PSM)
+. *==============================================================================
+. 
+. /*------------------------------------------------------------------------------
+>   Propensity score e implementación
+> 
+> - El propensity score es p(X)=Pr(D=1|X). Se estima con logit o probit.
+> - psmatch2 estima p(X) internamente; por defecto usa probit, y con opción logit usa logit.
+> - Soporte común en psmatch2:
+>     common  -> elimina tratados fuera del rango [min,max] de controles en pscore.
+>     trim(#) -> elimina #% de tratados donde la densidad de controles es más baja.
+> - por defecto, la tecnica de emparejamiento de psmatch2 es el vecino mas cercano (NN(1)).
+> 
+> Ver help psmatch2 para detalles.
+> 
+> - sobre los errores estandar sobre el ATET:
+> 
+> By default psmatch2 calculates approximate standard errors on the treatment effects assuming 
+> a) independent observations, 
+> b) fixed weights, 
+> c) homoskedasticity of the outcome variable within the treated and within the control groups and 
+> d) that the variance of the outcome does not depend on the propensity score:
+> 1/N1*Var(Y  DM=1) + Sum(w_i^2; i in DM=0)/(N1)^2*Var(Y  DM=0)
+> where N1 is the number of matched treated, 
+>       DM=1 denotes the matched treated, 
+>           DM=0 the matched controls and 
+>           w_i is the weight given to control i. 
+> psmatch2 stores the estimate of the standard error of the ATT in r(seatt) or with more than one outcome variable, in r(seatt_varname).
+> With nearest neighbor matching on the X's (mahal()), then analytical standard errors as in Abadie and Imbens (2006) are calculated when M>0 is passed using option 
+> ai(M), where M is the number of neighbors that are used to calculate the conditional variance (formula (14) in Abadie and Imbens, 2006).
+> 
+> ------------------------------------------------------------------------------*/
+. 
+. *---------------------------
+. * B0) Instalar psmatch2 si hace falta
+. *---------------------------
+. * ssc install psmatch2, replace
+. 
+. *---------------------------
+. * B1) Estimar propensity score (probit vs logit) y mirar overlap (didáctico)
+. *---------------------------
+. probit $D $X
+
+Iteration 0:  Log likelihood = -780.91445  
+Iteration 1:  Log likelihood = -736.80796  
+Iteration 2:  Log likelihood = -736.71461  
+Iteration 3:  Log likelihood = -736.71461  
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+
+. predict p_probit, pr
+
+. 
+. logit $D $X
+
+Iteration 0:  Log likelihood = -780.91445  
+Iteration 1:  Log likelihood = -736.65012  
+Iteration 2:  Log likelihood = -736.60373  
+Iteration 3:  Log likelihood = -736.60373  
+
+Logistic regression                                     Number of obs =  1,129
+                                                        LR chi2(11)   =  88.62
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.60373                             Pseudo R2     = 0.0567
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0297837   .2175496    -0.14   0.891     -.456173    .3966057
+     agehead |     .00678   .0051083     1.33   0.184     -.003232    .0167921
+    educhead |  -.0656929   .0196058    -3.35   0.001    -.1041196   -.0272661
+      lnland |  -.8878779   .1479412    -6.00   0.000    -1.177837   -.5979185
+     vaccess |  -.2642892   .1751094    -1.51   0.131    -.6074974    .0789189
+       pcirr |   .3829183   .2114029     1.81   0.070    -.0314238    .7972604
+        rice |   -.026409   .0412012    -0.64   0.522    -.1071618    .0543438
+       wheat |   .0164894   .0764119     0.22   0.829    -.1332751    .1662539
+        milk |  -.0042485   .0256895    -0.17   0.869     -.054599     .046102
+         oil |   .0346505   .0163637     2.12   0.034     .0025783    .0667228
+         egg |   .2798352   .2202475     1.27   0.204     -.151842    .7115123
+       _cons |   -1.41032    1.00356    -1.41   0.160    -3.377262    .5566223
+------------------------------------------------------------------------------
+
+. predict p_logit, pr
+
+. 
+. * Overlap visual simple (histogramas por grupo)
+. twoway ///
+>  (hist p_probit if $D==1, percent width(.02) ///
+>      fcolor(navy%35) lcolor(navy) lwidth(medthick)) ///
+>  (hist p_probit if $D==0, percent width(.02) ///
+>      fcolor(maroon%35) lcolor(maroon) lwidth(medthick)), ///
+>  legend(order(1 "Tratados" 2 "Controles")) ///
+>  title("Overlap en pscore (probit)") name(hprobit, replace)
+
+. 
+.  
+. **# PSM: NN(1) y common-trim
+.  
+. *---------------------------
+. * B2a) Soporte común en psmatch2: common 
+. *---------------------------
+. * ---------------------------------------------------------------------------
+. *  psmatch2: ATET vs ATE, y por qué aparecen "." en S.E.
+. *
+. * 1) ¿Qué estima psmatch2 por defecto?
+. *    - El parámetro "central" por defecto es el ATT (≡ ATET).
+. *    - Si agregás la opción ate, le estás diciendo:
+. *         "además de ATET, calculame también ATE (y típicamente reportame ATU, U=untreated)".
+. *      Por eso en la salida aparecen tres líneas: ATT, ATU y ATE.
+. *      (En puntos, ya te los muestra "en la misma salida".)
+. *
+. * 2) ¿Por qué hay valores vacíos y puntos (.) en errores estándar / t-stat?
+. *    - En general, psmatch2 reporta S.E. "naive" para ATET y deja vacío (.) para
+. *      ATU y ATE en esa tabla: no los está calculando allí (no es cero, es missing).
+. *    - Además, el propio output advierte:
+. *        "S.E. does not take into account that the propensity score is estimated."
+. *      Es decir, incluso el S.E. que aparece para ATET es "naive":
+. *      trata el pscore como si fuera fijo (condicional en el pscore estimado).
+. *
+. * 3) Buenas prácticas de inferencia
+. *    - Si querés S.E. coherentes (para ATET y/o ATE), lo estándar es bootstrap del
+. *      procedimiento completo (pscore + soporte común + matching) en cada réplica.
+. *    Eso lo hacemos mas abajo.
+. 
+. * psmatch en la primera etapa (ps), estima un probit o logit sin asumir heterocedasticidad ni correlacion serial (es decir, homocedastico).
+. 
+. * ---------------------------------------------------------------------------
+. 
+. psmatch2 $D $X, out($Y) common ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34307215   .110831867   .042790467     2.59
+                        ATU | 8.44287162   8.47128023   .028408612            .        .
+                        ATE |                           .071862799            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+
+. 
+. * Guardar resultados INMEDIATO (antes de psgraph o cualquier otro comando)
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. 
+. * (SE) Por ahora los dejamos vacíos a propósito (preferimos bootstrap más abajo)
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. 
+. * Conteos en soporte común (psmatch2 crea _support cuando usás common/trim)
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. * Post a la tabla (SE vacíos)
+. post `_posth' ("PSM (psmatch2)") ("common") ("NN(1)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. * Display usando scalars (no r())
+. di as result "ATET (ATT) = " %9.6f ATET_psm "   |   ATE = " %9.6f ATE_psm
+ATET (ATT) =  0.110832   |   ATE =  0.071863
+
+. 
+. * Gráfico (puede pisar r(), pero ya guardamos)
+. psgraph, scheme(s2color) name(segundo, replace)
+
+. 
+. 
+. *---------------------------
+. * B2b) Soporte común: trim
+. *---------------------------
+. psmatch2 $D $X, out($Y) trim(10) ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.44608355   8.31815208   .127931471   .044079202     2.90
+                        ATU | 8.38664116   8.48970565   .103064489            .        .
+                        ATE |                           .116170391            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |        53        481 |       534 
+   Treated |        59        536 |       595 
+-----------+----------------------+----------
+     Total |       112      1,017 |     1,129 
+
+. 
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. 
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. 
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. post `_posth' ("PSM (psmatch2)") ("trim(10)") ("NN(1)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. di as result "ATET (ATT) = " %9.6f ATET_psm "   |   ATE = " %9.6f ATE_psm
+ATET (ATT) =  0.127931   |   ATE =  0.116170
+
+. 
+. psgraph, scheme(s2color) name(tercero, replace)
+
+. 
+. 
+. **# Balance de observables
+. 
+. *---------------------------
+. * B3) Balance en observables (siempre sobre el soporte común que elegiste)
+. *---------------------------
+. * Re-ejecutamos una especificación (quietly) y corremos pstest.
+. 
+. qui psmatch2 $D $X, out($Y) common
+
+. pstest, both
+
+----------------------------------------------------------------------------------------
+                Unmatched |       Mean               %reduct |     t-test    |  V(T)/
+Variable          Matched | Treated Control    %bias  |bias| |    t    p>|t| |  V(C)
+--------------------------+----------------------------------+---------------+----------
+sexhead                U  | .90084   .91573     -5.2         |  -0.86  0.388 |     .
+                       M  | .90017   .85956     14.1  -172.7 |   2.15  0.032 |     .
+                          |                                  |               |
+agehead                U  | 46.096   45.919      1.4         |   0.23  0.816 |  0.75*
+                       M  | 46.061   46.426     -2.9  -107.3 |  -0.49  0.627 |  0.71*
+                          |                                  |               |
+educhead               U  | 1.7529   2.9457    -34.6         |  -5.84  0.000 |  0.62*
+                       M  | 1.7648     1.78     -0.4    98.7 |  -0.09  0.932 |  0.96
+                          |                                  |               |
+lnland                 U  | .26885   .50068    -46.4         |  -7.89  0.000 |  0.35*
+                       M  | .27047   .27133     -0.2    99.6 |  -0.04  0.968 |  1.00
+                          |                                  |               |
+vaccess                U  | .82185   .85019     -7.7         |  -1.28  0.200 |     .
+                       M  | .82741   .79188      9.6   -25.4 |   1.56  0.120 |     .
+                          |                                  |               |
+pcirr                  U  | .57655   .54234     10.3         |   1.73  0.084 |  1.03
+                       M  | .57673    .5749      0.6    94.7 |   0.10  0.923 |  1.11
+                          |                                  |               |
+rice                   U  | 10.291   10.274      1.1         |   0.19  0.848 |  0.99
+                       M  | 10.297   10.257      2.5  -122.1 |   0.44  0.660 |  1.04
+                          |                                  |               |
+wheat                  U  | 7.4788   7.4536      3.0         |   0.50  0.619 |  0.88
+                       M  | 7.4744   7.4492      3.0    -0.3 |   0.50  0.615 |  0.84*
+                          |                                  |               |
+milk                   U  | 10.872   10.922     -1.5         |  -0.25  0.806 |  0.87
+                       M  | 10.891   10.651      7.1  -385.3 |   1.26  0.208 |  0.98
+                          |                                  |               |
+oil                    U  | 39.648   39.131     12.9         |   2.17  0.030 |  1.05
+                       M  | 39.623   39.589      0.9    93.4 |   0.15  0.881 |  1.11
+                          |                                  |               |
+egg                    U  | 1.9698    1.935      9.3         |   1.56  0.119 |  1.14
+                       M  | 1.9648    1.927     10.1    -8.7 |   1.77  0.076 |  1.19*
+                          |                                  |               |
+----------------------------------------------------------------------------------------
+* if variance ratio outside [0.85; 1.17] for U and [0.85; 1.18] for M
+
+-----------------------------------------------------------------------------------
+ Sample    | Ps R2   LR chi2   p>chi2   MeanBias   MedBias      B      R     %Var
+-----------+-----------------------------------------------------------------------
+ Unmatched | 0.057     88.40    0.000     12.1       7.7      56.3*   0.53     33
+ Matched   | 0.007     11.99    0.364      4.7       2.9      20.2    0.93     33
+-----------------------------------------------------------------------------------
+* if B>25%, R outside [0.5; 2]
+
+. 
+. /*------------------------------------------------------------------------------
+> LECTURA DE SALIDAS pstest, both (después de psmatch2)
+> 
+> La clave es leer: 
+> (i) qué mejoró con el matching, 
+> (ii) qué empeoró, y 
+> (iii) si el balance global quedó aceptable.
+> 
+> 1) ¿Qué muestra `pstest, both`?
+> 
+> Para cada covariable aparecen dos filas:
+> - U (Unmatched): antes del matching.
+> - M (Matched): después del matching (usando pesos/pareos que dejó `psmatch2`).
+> 
+> Columnas:
+> - Mean Treated / Mean Control: medias en tratados y controles (U o M).
+> - %bias: diferencia estandarizada en % (standardized mean difference × 100).
+>   Regla práctica: |%bias| < 10 suele ser "ok"; |%bias| < 5 es "muy bueno".
+> - %reduct bias: % de reducción del sesgo estandarizado por el matching.
+>   Si es negativo (ej. -172%), el sesgo empeoró.
+> - t-test / p>t: test de igualdad de medias. OJO: en matching suele pesar más el %bias que el p-valor (con N grande, o con pesos, podés "significar" por nada).
+> - V(T)/V(C): ratio de varianzas (tratados/controles). El output marca con * cuando el ratio queda fuera de rangos "aceptables" (es una alerta de diferencias
+>   en dispersión/distribución, no solo medias).
+> 
+> 2) Caso 1: `psmatch2 ..., common`  + `pstest, both`
+> 
+> LO BUENO (mejoras claras):
+> - educhead: %bias pasa de -34.6 (muy mal) a -0.4 (excelente). Reducción ~99%.
+> - lnland:   %bias pasa de -46.4 a -0.2 (excelente).
+> - pcirr:    %bias pasa de 10.3 a 0.6 (muy bien).
+> - oil:      %bias pasa de 12.9 a 0.9 (muy bien).
+> En general, el matching está "alineando" bien los X entre tratados y controles.
+> 
+> LO MALO (empeora o queda flojo):
+> - sexhead: antes era -5.2 (bastante ok) y después queda en +14.1 con p=0.032.
+>   Esto es un empeoramiento fuerte; por eso aparece %reduct bias = -172.7.
+> - vaccess: queda en 9.6 (no dramático, pero no perfecto).
+> - egg:     queda en 10.1 (borderline).
+> - Ratios de varianza: aparecen * en algunas variables (ej. agehead, wheat, egg),
+>   indicando posibles diferencias en dispersión (no solo en medias).
+> 
+> DIAGNÓSTICOS GLOBALES (bloque final):
+> - Ps R2 cae de 0.057 a 0.007 y p>chi2 pasa a 0.364: después del matching, X casi no "explica" D (buena señal).
+> - MeanBias baja de 12.1 a 4.7 y MedBias de 7.7 a 2.9: avance global muy bueno.
+> - B = 20.2 (umbral 25): bien.
+> - R = 0.93 (rango aceptable [0.5, 2]): bien.
+> 
+> CONCLUSIÓN (common):
+> Balance global bastante bueno, pero queda un problema puntual con sexhead (y algo menor con egg).
+> 
+> */
+. 
+. qui psmatch2 $D $X, out($Y) trim(10)
+
+. pstest, both
+
+----------------------------------------------------------------------------------------
+                Unmatched |       Mean               %reduct |     t-test    |  V(T)/
+Variable          Matched | Treated Control    %bias  |bias| |    t    p>|t| |  V(C)
+--------------------------+----------------------------------+---------------+----------
+sexhead                U  | .90084   .91573     -5.2         |  -0.86  0.388 |     .
+                       M  | .89366   .84888     15.5  -200.7 |   2.19  0.029 |     .
+                          |                                  |               |
+agehead                U  | 46.096   45.919      1.4         |   0.23  0.816 |  0.75*
+                       M  | 45.705   45.858     -1.2    13.2 |  -0.20  0.844 |  0.68*
+                          |                                  |               |
+educhead               U  | 1.7529   2.9457    -34.6         |  -5.84  0.000 |  0.62*
+                       M  | 1.4963   1.5149     -0.5    98.4 |  -0.11  0.909 |  1.07
+                          |                                  |               |
+lnland                 U  | .26885   .50068    -46.4         |  -7.89  0.000 |  0.35*
+                       M  | .22723    .2215      1.1    97.5 |   0.34  0.735 |  1.14
+                          |                                  |               |
+vaccess                U  | .82185   .85019     -7.7         |  -1.28  0.200 |     .
+                       M  | .83955    .8209      5.0    34.2 |   0.81  0.416 |     .
+                          |                                  |               |
+pcirr                  U  | .57655   .54234     10.3         |   1.73  0.084 |  1.03
+                       M  | .56905   .57455     -1.7    83.9 |  -0.28  0.783 |  1.09
+                          |                                  |               |
+rice                   U  | 10.291   10.274      1.1         |   0.19  0.848 |  0.99
+                       M  | 10.282   10.249      2.1   -83.7 |   0.34  0.732 |  1.02
+                          |                                  |               |
+wheat                  U  | 7.4788   7.4536      3.0         |   0.50  0.619 |  0.88
+                       M  | 7.4845   7.4713      1.6    47.2 |   0.26  0.795 |  0.88
+                          |                                  |               |
+milk                   U  | 10.872   10.922     -1.5         |  -0.25  0.806 |  0.87
+                       M  | 10.925   10.579     10.2  -598.1 |   1.71  0.088 |  1.04
+                          |                                  |               |
+oil                    U  | 39.648   39.131     12.9         |   2.17  0.030 |  1.05
+                       M  | 39.557   39.561     -0.1    99.3 |  -0.02  0.987 |  1.13
+                          |                                  |               |
+egg                    U  | 1.9698    1.935      9.3         |   1.56  0.119 |  1.14
+                       M  | 1.9735   1.9186     14.7   -58.0 |   2.44  0.015 |  1.25*
+                          |                                  |               |
+----------------------------------------------------------------------------------------
+* if variance ratio outside [0.85; 1.17] for U and [0.84; 1.18] for M
+
+-----------------------------------------------------------------------------------
+ Sample    | Ps R2   LR chi2   p>chi2   MeanBias   MedBias      B      R     %Var
+-----------+-----------------------------------------------------------------------
+ Unmatched | 0.057     88.40    0.000     12.1       7.7      56.3*   0.53     33
+ Matched   | 0.009     12.72    0.312      4.9       1.7      21.8    0.95     22
+-----------------------------------------------------------------------------------
+* if B>25%, R outside [0.5; 2]
+
+. 
+. /*----------------------------------------------------------------------
+> 
+> 3) Caso 2: `psmatch2 ..., trim(10)`  + `pstest, both`
+> 
+> GLOBAL:
+> - MeanBias 4.9 (vs 4.7) y MedBias 1.7 (mejor que 2.9): globalmente sigue bien.
+> - B = 21.8 y R = 0.95: bien.
+> - %Var baja de 33 a 22: mejora (menos covariables con varianzas "fuera de rango").
+> 
+> PERO persisten/peoran dos puntos:
+> - sexhead: queda alto (15.5) y significativo (p=0.029). Trim no lo arregla.
+> - egg:     queda 14.7 y ahora significativo (p=0.015). Peor que en common.
+> 
+> CONCLUSIÓN (trim(10)):
+> Mejora algún aspecto global (MedBias y var ratios), pero deja peor egg y no corrige sexhead.
+> 
+> 4) Qué hacer con esto (didáctico/práctico)
+> 
+> - No obsesionarse con el p-valor; mirar principalmente el %bias.
+> - El mensaje es: "casi todo quedó bien, pero 1–2 covariables siguen problemáticas".
+> 
+> Soluciones típicas (para un taller):
+> a) Probar otro algoritmo (radius/caliper o kernel). NN(1) a veces deja desbalance
+>    en dummies si la región de overlap es "rara".
+> b) Reespecificar el propensity score (agregar no linealidades/interacciones):
+>    ej. agehead^2, educhead×lnland, etc. En PSM es normal iterar:
+>    especifico pscore → chequeo balance → ajusto especificación → repito.
+> ------------------------------------------------------------------------------*/
+. 
+. **# PSM: otros emparejamientos
+. 
+. 
+. *==============================================================================
+. * B4) Algoritmos de emparejamiento (PSM)
+. *==============================================================================
+. 
+. /*------------------------------------------------------------------------------
+> Vecino más cercano:
+> - neighbor(1): 1-NN (default; el utilizado hasta ahora en este taller)
+> - neighbor(2): 2-NN
+> - neighbor(8): k-NN con k=8
+> 
+> Radial:
+> - radius caliper(c): usa TODOS los controles con |pscore_t - pscore_c| <= c
+> 
+> Kernel:
+> - kernel k(epan|gauss|biweight|uniform|tricube) bwidth(h)
+>   Epanechnikov (epan) es el default en kernel matching.
+>   
+> NOTA: deberiamos hacer el test de balance de observables en cada caso. Pero ya mostramos como hacerlo y como leer la salida. 
+> ahora se trata de mostrar otros emparejamientos.
+> ------------------------------------------------------------------------------*/
+. 
+. *---------------------------
+. * B4.1 Nearest neighbor: 1, 2, 8
+. *---------------------------
+. psmatch2 $D $X, out($Y) common neighbor(1) ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34307215   .110831867   .042790467     2.59
+                        ATU | 8.44287162   8.47128023   .028408612            .        .
+                        ATE |                           .071862799            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+
+. 
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. post `_posth' ("PSM (psmatch2)") ("common") ("NN(1)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. di as result "NN(1)+common: ATET=" %9.6f ATET_psm "   |   ATE = " %9.6f ATE_psm
+NN(1)+common: ATET= 0.110832   |   ATE =  0.071863
+
+. 
+. 
+. 
+. psmatch2 $D $X, out($Y) common neighbor(2) ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34041177   .113492254   .038630791     2.94
+                        ATU | 8.44287162   8.50348202   .060610406            .        .
+                        ATE |                           .088490131            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+
+. 
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. post `_posth' ("PSM (psmatch2)") ("common") ("NN(2)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. display as result "NN(2)+common: ATET=" %9.6f ATET_psm " | ATE=" %9.6f ATE_psm
+NN(2)+common: ATET= 0.113492 | ATE= 0.088490
+
+. 
+. 
+. 
+. 
+. psmatch2 $D $X, out($Y) common neighbor(8) ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34196303   .111940985   .034833231     3.21
+                        ATU | 8.44287162   8.49528574   .052414125            .        .
+                        ATE |                           .083797153            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+
+. 
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. 
+. post `_posth' ("PSM (psmatch2)") ("common") ("NN(8)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. display as result "NN(8)+common: ATET=" %9.6f ATET_psm " | ATE=" %9.6f ATE_psm
+NN(8)+common: ATET= 0.111941 | ATE= 0.083797
+
+. 
+. 
+. 
+. *---------------------------
+. * B4.2 Radial matching: dos calipers
+. *---------------------------
+. psmatch2 $D $X, out($Y) common radius caliper(0.002) ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45260786   8.32237263   .130235229   .036390103     3.58
+                        ATU |  8.3714778   8.49926889   .127791089            .        .
+                        ATE |                           .129142498            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |        82        452 |       534 
+   Treated |        36        559 |       595 
+-----------+----------------------+----------
+     Total |       118      1,011 |     1,129 
+
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. post `_posth' ("PSM (psmatch2)") ("common") ("Radius(0.002)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. display as result "Radius(0.002)+common: ATET=" %9.6f ATET_psm " | ATE=" %9.6f ATE_psm
+Radius(0.002)+common: ATET= 0.130235 | ATE= 0.129142
+
+. 
+. 
+. psmatch2 $D $X, out($Y) common radius caliper(0.01) ate
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.35310092   .100803102   .034260047     2.94
+                        ATU | 8.43910717   8.49301185   .053904685            .        .
+                        ATE |                           .078696245            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         7        527 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |        11      1,118 |     1,129 
+
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. quietly count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. quietly count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. post `_posth' ("PSM (psmatch2)") ("common") ("Radius(0.01)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. display as result "Radius(0.01)+common: ATET=" %9.6f ATET_psm " | ATE=" %9.6f ATE_psm
+Radius(0.01)+common: ATET= 0.100803 | ATE= 0.078696
+
+. 
+. *---------------------------
+. * B4.3 Kernel matching: mostraremos 3 kernel (K(.)) y 2 bandwidths (h) diferentes como ejemplos
+. *---------------------------
+. * Kernels: epan (default), normal, uniform
+. * Bandwidths: 0.03 y 0.06 (0.06 es un default común en psmatch2)
+. foreach K in epan normal uniform {
+  2.     foreach H in 0.03 0.06 {
+  3.         psmatch2 $D $X, out($Y) common kernel k(`K') bwidth(`H') ate
+  4.                 scalar ATE_psm  = r(ate)
+  5.                 scalar ATET_psm = r(att)
+  6.                 scalar SE_ATE_psm  = .
+  7.                 scalar SE_ATET_psm = .
+  8.                 quietly count if _support==1 & $D==1
+  9.                 scalar N1_psm = r(N)
+ 10.                 quietly count if _support==1 & $D==0
+ 11.                 scalar N0_psm = r(N)
+ 12.                  post `_posth' ("PSM (psmatch2)") ("common") ("Kernel(`K') h=`H'") ///
+>          (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+ 13.          display as result "Kernel(`K'), h=`H'+common: ATET=" %9.6f  ATET_psm " | ATE=" %9.6f  ATE_psm
+ 14. 
+.     }
+ 15. }
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.35284522   .101058802   .033428858     3.02
+                        ATU | 8.44287162   8.48980799    .04693637            .        .
+                        ATE |                           .075470141            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+Kernel(epan), h=0.03+common: ATET= 0.101059 | ATE= 0.075470
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34690633   .106997691   .032943895     3.25
+                        ATU | 8.44287162   8.49252985   .049658229            .        .
+                        ATE |                           .079888044            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+Kernel(epan), h=0.06+common: ATET= 0.106998 | ATE= 0.079888
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34605349    .10785053   .032893305     3.28
+                        ATU | 8.44287162   8.49147374   .048602121            .        .
+                        ATE |                           .079838347            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+Kernel(normal), h=0.03+common: ATET= 0.107851 | ATE= 0.079838
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34250884   .111395182    .03259518     3.42
+                        ATU | 8.44287162   8.48553437   .042662754            .        .
+                        ATE |                           .078899029            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+Kernel(normal), h=0.06+common: ATET= 0.111395 | ATE= 0.078899
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.35161596   .102288057   .033233776     3.08
+                        ATU | 8.44287162   8.49091652   .048044908            .        .
+                        ATE |                           .076642322            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+Kernel(uniform), h=0.03+common: ATET= 0.102288 | ATE= 0.076642
+
+Probit regression                                       Number of obs =  1,129
+                                                        LR chi2(11)   =  88.40
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -736.71461                             Pseudo R2     = 0.0566
+
+------------------------------------------------------------------------------
+       dfmfd | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     sexhead |  -.0153141   .1343983    -0.11   0.909      -.27873    .2481017
+     agehead |   .0039732   .0031326     1.27   0.205    -.0021666     .010113
+    educhead |  -.0400969   .0120517    -3.33   0.001    -.0637177   -.0164761
+      lnland |  -.5420566   .0887917    -6.10   0.000    -.7160851   -.3680281
+     vaccess |  -.1609772   .1076142    -1.50   0.135    -.3718972    .0499428
+       pcirr |   .2333795   .1302629     1.79   0.073     -.021931    .4886901
+        rice |  -.0158624   .0253178    -0.63   0.531    -.0654844    .0337596
+       wheat |   .0130074   .0471693     0.28   0.783    -.0794428    .1054576
+        milk |  -.0031363   .0158907    -0.20   0.844    -.0342814    .0280089
+         oil |   .0212828   .0100652     2.11   0.034     .0015555    .0410102
+         egg |   .1716924   .1362023     1.26   0.207    -.0952592    .4386441
+       _cons |  -.8779291     .61929    -1.42   0.156    -2.091715    .3358571
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+        Variable     Sample |    Treated     Controls   Difference         S.E.   T-stat
+----------------------------+-----------------------------------------------------------
+         lexptot  Unmatched | 8.45307857   8.44797659   .005101982   .030644787     0.17
+                        ATT | 8.45390402   8.34372257   .110181448   .032821253     3.36
+                        ATU | 8.44287162   8.49202708   .049155467            .        .
+                        ATE |                           .081328843            .        .
+----------------------------+-----------------------------------------------------------
+Note: S.E. does not take into account that the propensity score is estimated.
+
+ psmatch2: |   psmatch2: Common
+ Treatment |        support
+assignment | Off suppo  On suppor |     Total
+-----------+----------------------+----------
+ Untreated |         4        530 |       534 
+   Treated |         4        591 |       595 
+-----------+----------------------+----------
+     Total |         8      1,121 |     1,129 
+Kernel(uniform), h=0.06+common: ATET= 0.110181 | ATE= 0.081329
+
+. 
+. **# PSM: SE bootstrap
+.  
+. *==============================================================================
+. * B5) Bootstrap "correcto" para psmatch2 (pscore + soporte + matching)
+. *==============================================================================
+. 
+. /*------------------------------------------------------------------------------
+> Idea:
+> - Al envolver psmatch2 dentro de bootstrap, cada réplica re-estima el pscore,
+>   re-aplica common/trim y re-hace el matching.
+> - Para ATE/ATET en psmatch2, pedimos la opción ate para que existan r(ate) y r(att).
+> - vamos a mostrar con dos ejemplos. Pero, en una rutina seria, deberiamos probar con varios casos, y a todos pasarlos por bootstrap y luego elegir el mejor bajo un
+>  criterio inteligente.
+> ------------------------------------------------------------------------------*/
+. 
+. set seed 20260211
+
+. 
+. *---------------------------
+. * B5.1) Kernel epan, bwidth(0.06), common
+. *---------------------------
+. 
+. * (i) Corré 1 vez para dejar _support y contar N1/N0 (y como chequeo rápido)
+. qui psmatch2 $D $X, out($Y) common kernel k(epan) bwidth(0.06) ate
+
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. * Por ahora, dejás SE en missing:
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. 
+. qui count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. qui count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. * (ii) Bootstrap: nombrá las stats para poder usar _b[atet], _se[atet], etc.
+. bootstrap atet=r(att) ate=r(ate), reps(200) seed(20260211) nodots: ///
+>     psmatch2 $D $X, out($Y) common kernel k(epan) bwidth(0.06) ate
+
+Bootstrap results                                        Number of obs = 1,129
+                                                         Replications  =   200
+
+      Command: psmatch2 dfmfd sexhead agehead educhead lnland vaccess pcirr rice wheat milk oil egg, out(lexptot) common kernel k(epan) bwidth(0.06) ate
+         atet: r(att)
+          ate: r(ate)
+
+------------------------------------------------------------------------------
+             |   Observed   Bootstrap                         Normal-based
+             | coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        atet |   .1069977   .0294852     3.63   0.000     .0492077    .1647877
+         ate |    .079888   .0280064     2.85   0.004     .0249966    .1347795
+------------------------------------------------------------------------------
+
+. 
+. * 3) Guardar puntos y SE desde el resultado del bootstrap
+. scalar ATET_psm     = _b[atet]
+
+. scalar ATE_psm      = _b[ate]
+
+. scalar SE_ATET_psm  = _se[atet]
+
+. scalar SE_ATE_psm   = _se[ate]
+
+. 
+. * 4) Post a la tabla comparativa (igual que venías haciendo)
+. post `_posth' ("PSM (psmatch2)") ("common") ("Kernel(epan); h=0.06 (boots)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. display as result "Kernel(epan); h=0.06+common (BOOT): ATET=" %9.6f ATET_psm ///
+>     " (SE=" %9.6f SE_ATET_psm ") | ATE=" %9.6f ATE_psm " (SE=" %9.6f SE_ATE_psm ")"
+Kernel(epan); h=0.06+common (BOOT): ATET= 0.106998 (SE= 0.029485) | ATE= 0.079888 (SE= 0.028006)
+
+. 
+.         
+. *---------------------------
+. * B5.2) NN(8), trim(10)
+. *---------------------------
+. 
+. qui psmatch2 $D $X, out($Y) trim(10) neighbor(8) ate
+
+. scalar ATE_psm  = r(ate)
+
+. scalar ATET_psm = r(att)
+
+. * Por ahora, dejás SE en missing:
+. scalar SE_ATE_psm  = .
+
+. scalar SE_ATET_psm = .
+
+. 
+. qui count if _support==1 & $D==1
+
+. scalar N1_psm = r(N)
+
+. qui count if _support==1 & $D==0
+
+. scalar N0_psm = r(N)
+
+. 
+. 
+. bootstrap atet=r(att) ate=r(ate), reps(200) seed(20260211) nodots: ///
+>     psmatch2 $D $X, out($Y) trim(10) neighbor(8) ate
+
+Bootstrap results                                        Number of obs = 1,129
+                                                         Replications  =   200
+
+      Command: psmatch2 dfmfd sexhead agehead educhead lnland vaccess pcirr rice wheat milk oil egg, out(lexptot) trim(10) neighbor(8) ate
+         atet: r(att)
+          ate: r(ate)
+
+------------------------------------------------------------------------------
+             |   Observed   Bootstrap                         Normal-based
+             | coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        atet |   .1338443   .0360398     3.71   0.000     .0632076    .2044809
+         ate |   .1195329   .0338345     3.53   0.000     .0532185    .1858474
+------------------------------------------------------------------------------
+
+. 
+. scalar ATET_psm     = _b[atet]
+
+. scalar ATE_psm      = _b[ate]
+
+. scalar SE_ATET_psm  = _se[atet]
+
+. scalar SE_ATE_psm   = _se[ate]
+
+. 
+. post `_posth' ("PSM (psmatch2)") ("trim(10)") ("NN(8) (boots)") ///
+>     (ATE_psm) (ATET_psm) (SE_ATE_psm) (SE_ATET_psm) (N1_psm) (N0_psm)
+
+. 
+. display as result "NN(8)+trim(10) (BOOT): ATET=" %9.6f ATET_psm ///
+>     " (SE=" %9.6f SE_ATET_psm ") | ATE=" %9.6f ATE_psm " (SE=" %9.6f SE_ATE_psm ")"
+NN(8)+trim(10) (BOOT): ATET= 0.133844 (SE= 0.036040) | ATE= 0.119533 (SE= 0.033835)
+
+. 
+. 
+. 
+. **# PSM: con teffects 
+.         
+. *==============================================================================
+. * B6) ATE y ATET con teffects psmatch (alternativa oficial)
+. *==============================================================================
+. 
+. /*------------------------------------------------------------------------------
+> "teffects psmatch" estima ATE (default) o ATET.
+> Ejemplo (probit):
+>     teffects psmatch (Y) (D X, probit), ate
+>     teffects psmatch (Y) (D X, probit), atet
+>         
+> Guardar resultados teffects (usa SE que contemplan la estimación del pscore)
+> -Extraemos el primer coeficiente y su SE desde e(b) y e(V).
+> -Nota: hacemos dos corridas separadas: ate y atet.      
+>  
+> "teffects psmatch": Esto es propensity score matching. 
+> -Por diseño se implementa como matching por vecino más cercano (NN) sobre el propensity score.
+> -Podés elegir cuántos vecinos (nneighbor(#)), si con o sin reemplazo (osample()/atet etc.), calipers (caliper(#)), y algunas variantes de soporte.
+> -Pero no te ofrece kernel matching ni radius matching "tipo psmatch2" en el sentido clásico (aunque el caliper hace algo parecido a "restringir" emparejamientos).
+> 
+> Lo que teffects NO te da como opciones nativas dentro de su matching:
+> -Kernel matching (Epanechnikov, Gaussian, etc.) como lo hacés con psmatch2.
+> -Radius matching en el sentido de "usar todos los controles dentro de un radio y ponderar" (aunque con caliper() y nneighbor() podés aproximar algunas cosas, no es
+>  lo mismo)
+> 
+> * ---------------------------------------------------------------------------
+> *  SE en teffects psmatch: ¿son naive? ¿vienen por bootstrap?
+> *
+> * 1) NO son bootstrap por defecto.
+> *    - teffects psmatch reporta errores estándar asintóticos calculados por Stata
+> *      (linearization / M-estimation, tipo "sandwich").
+> *    - Por eso ya aparecen z/t y p-values sin que uno haga bootstrap.
+> *
+> * 2) NO son "naive" en el sentido de psmatch2.
+> *    - En psmatch2 suele aparecer la advertencia:
+> *        "S.E. does not take into account that the propensity score is estimated."
+> *      (es decir, trata el pscore como si fuera fijo).
+> *    - En cambio, en teffects psmatch la inferencia está planteada para el
+> *      estimador implementado y, en principio, incorpora la primera etapa
+> *      (que el propensity score fue estimado).
+> *
+> * 3) Matching tiene matices teóricos (Abadie–Imbens, etc.).
+> *    - En NN matching la varianza puede depender de detalles del matching:
+> *      # vecinos, con/sin reemplazo, dimensión de X, etc.
+> *    - teffects tiene estimadores con teoría propia; suele funcionar bien,
+> *      pero bootstrap puede usarse como chequeo de robustez (sobre todo con
+> *      muestras chicas, soporte frágil, o para IC por percentiles).
+> *
+> * 4) Si hay estructura de panel / clustering:
+> *    - Si existe correlación intra-cluster (misma firma/persona/aldea, etc.),
+> *      los SE por defecto pueden ser incorrectos si no ajustás.
+> *    - En teffects podés pedir SE clusterizados con:
+> *         vce(cluster id)
+> *    - Si querés bootstrap cluster, se hace explícitamente, por ejemplo:
+> *         bootstrap, cluster(id): teffects ...
+> *
+> * Regla práctica del taller:
+> * - psmatch2: SE en pantalla = "naive"; lo serio es bootstrap re-haciendo
+> *   pscore + soporte + matching.
+> * - teffects psmatch: SE ya vienen "bien armados" por Stata (no bootstrap);
+> *   si hay clustering/panel, usar vce(cluster ...).
+> * ---------------------------------------------------------------------------
+> 
+> 
+> ------------------------------------------------------------------------------*/
+. 
+. 
+. * ATE
+. teffects psmatch ($Y) ($D $X, probit), ate vce(robust)
+
+Treatment-effects estimation                   Number of obs      =      1,129
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: probit                                       max =          1
+------------------------------------------------------------------------------
+             |              AI robust
+     lexptot | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATE          |
+       dfmfd |
+   (1 vs 0)  |   .0688205   .0333497     2.06   0.039     .0034563    .1341847
+------------------------------------------------------------------------------
+
+. matrix b = e(b)
+
+. matrix V = e(V)
+
+. scalar ATE_te = b[1,1]
+
+. scalar SE_ATE_te = sqrt(V[1,1])
+
+. quietly count if e(sample) & $D==1
+
+. scalar N1_te = r(N)
+
+. quietly count if e(sample) & $D==0
+
+. scalar N0_te = r(N)
+
+. post `_posth' ("teffects") ("psmatch") ("ATE, nn(1)") (ATE_te) (.) (SE_ATE_te) (.) (N1_te) (N0_te)
+
+. 
+. * ATET
+. teffects psmatch ($Y) ($D $X, probit), atet vce(robust)
+
+Treatment-effects estimation                   Number of obs      =      1,129
+Estimator      : propensity-score matching     Matches: requested =          1
+Outcome model  : matching                                     min =          1
+Treatment model: probit                                       max =          1
+------------------------------------------------------------------------------
+             |              AI robust
+     lexptot | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ATET         |
+       dfmfd |
+   (1 vs 0)  |   .1099143   .0361865     3.04   0.002       .03899    .1808386
+------------------------------------------------------------------------------
+
+. matrix b = e(b)
+
+. matrix _V = e(V)
+
+. scalar ATET_te = b[1,1]
+
+. scalar SE_ATET_te = sqrt(V[1,1])
+
+. quietly count if e(sample) & $D==1
+
+. scalar N1_te = r(N)
+
+. quietly count if e(sample) & $D==0
+
+. scalar N0_te = r(N)
+
+. post `_posth' ("teffects") ("psmatch") ("ATET, nn(1)") (.) (ATET_te) (.) (SE_ATET_te) (N1_te) (N0_te)
+
+. 
+. **# Balance de observables con teffects
+. 
+. 
+. * Balance de observables usando teffects
+. tebalance summarize
+(refitting the model using the generate() option)
+
+Covariate balance summary
+
+                         Raw      Matched
+-----------------------------------------
+Number of obs =        1,129        1,190
+Treated obs   =          595          595
+Control obs   =          534          595
+-----------------------------------------
+
+-----------------------------------------------------------------
+                |Standardized differences          Variance ratio
+                |        Raw     Matched           Raw    Matched
+----------------+------------------------------------------------
+        sexhead |  -.0515613    .1245642      1.157339   .7441642
+        agehead |   .0138467   -.0207024      .7470835   .7128034
+       educhead |  -.3458966   -.0049631      .6189556   .9585887
+         lnland |  -.4644113   -.0025375      .3527149   1.000598
+        vaccess |  -.0765253     .088957      1.149301   .8720977
+          pcirr |   .1031526     .005569      1.033049   1.110816
+           rice |    .011403    .0255083      .9854788   1.042398
+          wheat |   .0296057    .0291283      .8841953   .8444121
+           milk |  -.0146168    .0728183      .8656936   .9827985
+            oil |   .1292329    .0086548      1.048186   1.113431
+            egg |   .0931657    .1014272       1.13647   1.178355
+-----------------------------------------------------------------
+
+. tebalance density
+(refitting the model using the generate() option)
+
+. 
+. 
+. **# Tabla comparativa
+. 
+. 
+. *==============================================================================
+. * C) Tabla comparativa final (todos los métodos del taller)
+. *==============================================================================
+. postclose `_posth'
+
+. 
+. use "`_results_match'", clear
+
+. order method support algorithm ate atet se_ate se_atet N1 N0
+
+. sort method support algorithm
+
+. 
+. format ate atet se_ate se_atet %9.6f
+
+. 
+. di as text "=================================================================="
+==================================================================
+
+. di as text "Tabla comparativa (puntos estimados; SE en teffects, y en bootstrap si los agregas)"
+Tabla comparativa (puntos estimados; SE en teffects, y en bootstrap si los agregas)
+
+. di as text "=================================================================="
+==================================================================
+
+. list, noobs sepby(method support)
+
+  +----------------------------------------------------------------------------------------------------------------+
+  |         method    support                    algorithm        ate       atet     se_ate    se_atet    N1    N0 |
+  |----------------------------------------------------------------------------------------------------------------|
+  | PSM (psmatch2)     common          Kernel(epan) h=0.03   0.075470   0.101059          .          .   591   530 |
+  | PSM (psmatch2)     common          Kernel(epan) h=0.06   0.079888   0.106998          .          .   591   530 |
+  | PSM (psmatch2)     common   Kernel(epan); h=0.06 (boot   0.079888   0.106998   0.028006   0.029485   591   530 |
+  | PSM (psmatch2)     common        Kernel(normal) h=0.03   0.079838   0.107851          .          .   591   530 |
+  | PSM (psmatch2)     common        Kernel(normal) h=0.06   0.078899   0.111395          .          .   591   530 |
+  | PSM (psmatch2)     common       Kernel(uniform) h=0.03   0.076642   0.102288          .          .   591   530 |
+  | PSM (psmatch2)     common       Kernel(uniform) h=0.06   0.081329   0.110181          .          .   591   530 |
+  | PSM (psmatch2)     common                        NN(1)   0.071863   0.110832          .          .   591   530 |
+  | PSM (psmatch2)     common                        NN(1)   0.071863   0.110832          .          .   591   530 |
+  | PSM (psmatch2)     common                        NN(2)   0.088490   0.113492          .          .   591   530 |
+  | PSM (psmatch2)     common                        NN(8)   0.083797   0.111941          .          .   591   530 |
+  | PSM (psmatch2)     common                Radius(0.002)   0.129142   0.130235          .          .   559   452 |
+  | PSM (psmatch2)     common                 Radius(0.01)   0.078696   0.100803          .          .   591   527 |
+  |----------------------------------------------------------------------------------------------------------------|
+  | PSM (psmatch2)   trim(10)                        NN(1)   0.116170   0.127931          .          .   536   481 |
+  | PSM (psmatch2)   trim(10)                NN(8) (boots)   0.119533   0.133844   0.033835   0.036040   536   481 |
+  |----------------------------------------------------------------------------------------------------------------|
+  |       teffects    psmatch                   ATE, nn(1)   0.068820          .   0.033350          .   595   534 |
+  |       teffects    psmatch                  ATET, nn(1)          .   0.109914          .   0.033350   595   534 |
+  +----------------------------------------------------------------------------------------------------------------+
+
+. 
+. * Export simple para llevar a Excel / LaTeX
+. export delimited using "tabla_resultados_psm.csv", replace
+file tabla_resultados_psm.csv saved
+
+. 
+. * (Opcional) generar un .tex con una tabla simple (sin depender de paquetes extra)
+. tempname _fh
+
+. file open `_fh' using "tabla_resultados_psm.tex", write replace
+
+. file write `_fh' "\begin{table}[!htbp]\centering" _n
+
+. file write `_fh' "\caption{Comparacion de estimadores (PSM)}" _n
+
+. file write `_fh' "\label{tab:match_psm_comparacion}" _n
+
+. file write `_fh' "\small" _n
+
+. file write `_fh' "\begin{tabular}{lllrrrrrr}" _n
+
+. file write `_fh' "\toprule" _n
+
+. file write `_fh' "Metodo & Soporte & Algoritmo & ATE & ATET & SE(ATE) & SE(ATET) & N1 & N0 \\" _n
+
+. file write `_fh' "\midrule" _n
+
+. 
+. forvalues i=1/`=_N' {
+  2.     local m  = method[`i']
+  3.     local s  = support[`i']
+  4.     local a  = algorithm[`i']
+  5.     local ate_s  = cond(missing(ate[`i']),  "", string(ate[`i'],  "%9.6f"))
+  6.     local atet_s = cond(missing(atet[`i']), "", string(atet[`i'], "%9.6f"))
+  7.     local seate_s  = cond(missing(se_ate[`i']),  "", string(se_ate[`i'],  "%9.6f"))
+  8.     local seatet_s = cond(missing(se_atet[`i']), "", string(se_atet[`i'], "%9.6f"))
+  9.     local n1 = string(N1[`i'])
+ 10.     local n0 = string(N0[`i'])
+ 11. 
+.     file write `_fh' "`m' & `s' & `a' & `ate_s' & `atet_s' & `seate_s' & `seatet_s' & `n1' & `n0' \\\\" _n
+ 12. }
+
+. 
+. file write `_fh' "\bottomrule" _n
+
+. file write `_fh' "\end{tabular}" _n
+
+. file write `_fh' "\end{table}" _n
+
+. file close `_fh'
+
+. 
+. di as text "Se exportaron:"
+Se exportaron:
+
+. di as result " - tabla_resultados_psm.csv"
+ - tabla_resultados_psm.csv
+
+. di as result " - tabla_resultados_psm.tex"
+ - tabla_resultados_psm.tex
+
+. 
+. 
+. /*------------------------------------------------------------------------------
+> Notas finales para el taller:
+> 1) Interpretación en log:
+>    Si Y = ln(1+exptot), una diferencia de 0.11 son ~11% en primera aproximación,
+>    pero la conversión exacta sería exp(0.11)-1 ≈ 11.6%.
+> 
+> 2) Qué mirar para "robustez":
+>    - Que ATE/ATET no cambien drásticamente entre métodos razonables.
+>    - Que el balance (pstest/tebalance) mejore post-matching.
+>    - Que el soporte común no deje afuera una parte grande de los tratados.
+> 
+> 3) Taller avanzado (próximo):
+>    - Elegir automáticamente (método, caliper/bandwidth, k) minimizando MSE.
+>    - O elegir por validación cruzada (predictive performance de Y o balance).
+> ------------------------------------------------------------------------------*/
+. 
+end of do-file
+
+. graph export "C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_hprobit.svg", as(svg) name("hprobit")
+file C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_hprobit.svg saved as SVG format
+
+. graph export "C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_segundo.svg", as(svg) name("segundo")
+file C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_segundo.svg saved as SVG format
+
+. graph export "C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_tercero.svg", as(svg) name("tercero")
+file C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_tercero.svg saved as SVG format
+
+. graph export "C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_balanceplot.svg", as(svg) name("Graph")
+file C:\Users\Equipo\Downloads\GRAFICOS\CAUSALIDAD\PSM\4_balanceplot.svg saved as SVG format
+
+. exit, clear

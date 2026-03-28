@@ -1,0 +1,2006 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\2_Matching_exacto.log
+  log type:  text
+ opened on:  28 Mar 2026, 08:58:17
+
+. do "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\TALLER 1 - ME-PSM\2_Matching_exacto.do"
+
+. /*------------------------------------------------------------------------------
+> Taller: Matching exacto en Stata
+> Datos: hh_98.dta (microcrédito). 
+> 
+> Idea general:
+> 1) Arrancar con "matching exacto" (por celdas/estratos) para fijar intuición:
+>    - Elección de X
+>    - Soporte común (overlap) en matching exacto
+>    - Fórmulas y cálculo de ATE y ATET
+>    - Formulas y calculo de los respectivos SE estandar
+>    - Bootstrap para SE correctos
+>    - Uso de CEM en Matching exacto: solo es valido ATET
+> 
+> Requisitos:
+> - Si no tenes cem: ssc install cem, replace.
+> ------------------------------------------------------------------------------*/
+. 
+. 
+. **# Directorio de trabajo comun
+. 
+. clear all      
+
+. set more off
+
+. global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+
+. 
+. local username = c(username)
+
+. display "`username'"
+Equipo
+
+. 
+. local username = c(username)
+
+. 
+. if "`username'" == "Equipo" {
+.      global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. else if "`username'" == "dmendez" {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. else {
+.     global seteo "C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\"
+. }
+
+. 
+. 
+. *---------------------------
+. * 0) Directorio y datos
+. *---------------------------
+. 
+. use "$seteo\Directorio común bases\hh_98.dta", clear 
+
+. set more off
+
+. 
+. **# Base: preparacion
+. 
+. *---------------------------
+. * 1) Variables del taller
+. *---------------------------
+. describe
+
+Contains data from C:\Users\Equipo\OneDrive\Desktop\Notebook HP NEGRA\POSGRADO\MicroEconometría Aplicada\Talleres y Prácticos\1. Talleres\\Directorio común bases\hh_
+> 98.dta
+ Observations:         1,129                  
+    Variables:            24                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+nh              long    %12.0g                HH ID
+year            byte    %8.0g                 Year of observation
+villid          byte    %8.0g                 Village ID
+thanaid         byte    %8.0g                 Thana ID
+agehead         byte    %8.0g                 Age of HH head: years
+sexhead         byte    %8.0g                 Gender of HH head: 1=M, 0=F
+educhead        byte    %8.0g                 Education of HH head: years
+famsize         byte    %8.0g                 HH size
+hhland          float   %9.0g                 HH land: decimals
+hhasset         double  %12.0g                HH total asset: Tk.
+expfd           float   %9.0g                 HH per capita food expenditure: Tk/year
+expnfd          float   %9.0g                 HH per capita nonfood expenditure: Tk/year
+exptot          float   %9.0g                 HH per capita total expenditure: Tk/year
+dmmfd           byte    %8.0g                 HH has male microcredit participant: 1=Y, 0=N
+dfmfd           byte    %8.0g                 HH has female microcredit participant: 1=Y, 0=N
+weight          float   %9.0g                 HH sampling weight
+vaccess         byte    %8.0g                 Village is accessible by road all year: 1=Y, 0=N
+pcirr           float   %9.0g                 Proportion of village land irrigated
+rice            float   %9.0g                 Village price of rice: Tk./kg
+wheat           float   %9.0g                 Village price of wheat: Tk./kg
+milk            float   %9.0g                 Village price of milk: Tk./liter
+potato          float   %9.0g                 Village price of potato: Tk./kg
+egg             float   %9.0g                 Village price of egg: Tk./4 counts
+oil             float   %9.0g                 Village price of edible oil: Tk./kg
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. * D=Tratamiento: dfmfd = 1 si hay participante mujer en microcrédito
+. * Y=Outcome: exptot (gasto p/c total). Usamos log(1+exptot).
+. gen lexptot = ln(1+exptot)
+
+. gen lnland  = ln(1+hhland/100)
+
+. 
+. global Y lexptot
+
+. global D dfmfd
+
+. 
+. * Set de covariables (pre-tratamiento)
+. global X    ///
+>     sexhead ///
+>     agehead ///
+>     educhead ///
+>     lnland ///
+>     vaccess ///
+>     pcirr ///
+>     rice ///
+>     wheat ///
+>     milk ///
+>     oil ///
+>     egg
+
+. 
+. summ $Y $D $X
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     lexptot |      1,129    8.450665    .5138679   7.085339   10.77858
+       dfmfd |      1,129    .5270151    .4994909          0          1
+     sexhead |      1,129    .9078831    .2893191          0          1
+     agehead |      1,129     46.0124    12.67865         18         95
+    educhead |      1,129    2.317095     3.47617          0         16
+-------------+---------------------------------------------------------
+      lnland |      1,129    .3785037    .5058872    .001998   3.763059
+     vaccess |      1,129    .8352524     .371117          0          1
+       pcirr |      1,129    .5603686    .3320238          0        .99
+        rice |      1,129    10.28298    1.566328   6.879596    15.4509
+       wheat |      1,129    7.466872    .8467278   5.413453   9.473542
+-------------+---------------------------------------------------------
+        milk |      1,129    10.89583    3.381805   6.766816   20.30045
+         oil |      1,129    39.40337    4.008882   23.00717   50.75112
+         egg |      1,129    1.953326    .3740207   1.353363   2.706726
+
+. 
+. *---------------------------
+. * 1.5) Registro de resultados (para tabla comparativa al final)
+. *---------------------------
+. * La idea: ir guardando (método, soporte, algoritmo, ATE, ATET, Ns) en un archivo temporal.
+. * Luego imprimimos una tabla comparativa al final del do-file.
+. tempfile _results_match
+
+. tempname  _posth
+
+. 
+. postfile `_posth' ///
+>     str28 method ///
+>     str18 support ///
+>     str26 algorithm ///
+>     double ate ///
+>     double atet ///
+>     double se_ate ///
+>     double se_atet ///
+>     int N1 ///
+>     int N0 ///
+>     using "`_results_match'", replace
+(file C:\Users\Equipo\AppData\Local\Temp\ST_1db8_000001.tmp not found)
+
+. 
+. 
+. /*------------------------------------------------------------------------------
+> 2) Concepto: ATE y ATET (definiciones poblacionales)
+> 
+> ATE  = E[ Y(1) - Y(0) ].
+> ATET = E[ Y(1) - Y(0) | D=1 ].
+> 
+> Bajo unconfoundedness (Y(0),Y(1)) _||_ D | X y overlap, se puede usar matching:
+> ATE  = E_X[ E(Y|D=1,X) - E(Y|D=0,X) ].
+> ATET = E_{X|D=1}[ E(Y|D=1,X) - E(Y|D=0,X) ].
+> ------------------------------------------------------------------------------*/
+. 
+. **# Matching exacto: SE estandar
+. 
+. *==============================================================================
+. * PARTE A. MATCHING EXACTO (por celdas/estratos)
+. *==============================================================================
+. 
+. /*------------------------------------------------------------------------------
+> 3) ¿Qué es matching exacto?
+> 
+> Definís "celdas" por valores exactos de X (o por X discretizada).
+> Dentro de cada celda s:
+>    diff(s) = mean(Y|D=1,s) - mean(Y|D=0,s)
+> 
+> Soporte común (exact matching):
+>    conservar SOLO celdas con tratados y controles: N1(s)>0 y N0(s)>0.
+> 
+> Estimadores (en la muestra en soporte común):
+> ATE_exact  = Σ_s [ N(s)/N ] * diff(s)
+> ATET_exact = Σ_s [ N1(s)/N1 ] * diff(s)
+> 
+> Nota práctica:
+> - Con X continuas (edad, tierra, precios), exact matching “puro” genera
+>   demasiadas celdas vacías. En taller conviene:
+>   (i) elegir pocas X, y/o (ii) discretizar (“coarsening”) continuas.
+> ------------------------------------------------------------------------------*/
+. 
+. *---------------------------
+. * A1) Elegir X para exact matching (versión didáctica)
+. *---------------------------
+. * Para evitar explosión de celdas, usamos un subconjunto y discretizamos algunas X.
+. * (Podés cambiar estos cortes; el punto del taller es mostrar el mecanismo.)
+. 
+. ** variables que son cuasi continuas:
+. 
+. summ agehead 
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     agehead |      1,129     46.0124    12.67865         18         95
+
+. * Edad: bins amplios
+. recode agehead ///
+>     (min/25 = 1 "18-25") ///
+>     (26/35  = 2 "26-35") ///
+>     (36/45  = 3 "36-45") ///
+>     (46/55  = 4 "46-55") ///
+>     (56/65  = 5 "56-65") ///
+>     (66/75  = 6 "66-75") ///
+>     (76/max = 7 "76+") , gen(agebin)
+(1,129 differences between agehead and agebin)
+
+. 
+. sum educhead
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+    educhead |      1,129    2.317095     3.47617          0         16
+
+. * Educación: 0, 1-4, 5-8, 9+
+. recode educhead ///
+>     (0 = 0 "0") ///
+>     (1/4 = 1 "1-4") ///
+>     (5/8 = 2 "5-8") ///
+>     (9/max = 3 "9+") , gen(edubin)
+(429 differences between educhead and edubin)
+
+. 
+. ** variables continuas puras:
+. sum lnland
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      lnland |      1,129    .3785037    .5058872    .001998   3.763059
+
+. sum pcirr
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+       pcirr |      1,129    .5603686    .3320238          0        .99
+
+. * Tierra (log) y riego: cuartiles
+. xtile landbin  = lnland, nq(4)
+
+. xtile pcirrbin = pcirr,  nq(4)
+
+. 
+. * Strata exactos (celdas)
+. summ sexhead vaccess agebin edubin landbin pcirrbin
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     sexhead |      1,129    .9078831    .2893191          0          1
+     vaccess |      1,129    .8352524     .371117          0          1
+      agebin |      1,129    3.497786    1.282812          1          7
+      edubin |      1,129    .7546501    1.029287          0          3
+     landbin |      1,129    2.468556    1.137347          1          4
+-------------+---------------------------------------------------------
+    pcirrbin |      1,129    2.474756    1.105086          1          4
+
+. egen stratum_exact = group(sexhead vaccess agebin edubin landbin pcirrbin), label
+
+. 
+. *---------------------------
+. * A2) Soporte común en exact matching
+. *---------------------------
+. bys stratum_exact: egen N1 = total($D==1)
+
+. bys stratum_exact: egen N0 = total($D==0)
+
+. gen support_exact = (N1>0 & N0>0)
+
+. 
+. br N1 N0 support_exact
+
+. 
+. 
+. tab support_exact $D, col
+
++-------------------+
+| Key               |
+|-------------------|
+|     frequency     |
+| column percentage |
++-------------------+
+
+           |     HH has female
+           |      microcredit
+support_ex | participant: 1=Y, 0=N
+       act |         0          1 |     Total
+-----------+----------------------+----------
+         0 |       209        186 |       395 
+           |     39.14      31.26 |     34.99 
+-----------+----------------------+----------
+         1 |       325        409 |       734 
+           |     60.86      68.74 |     65.01 
+-----------+----------------------+----------
+     Total |       534        595 |     1,129 
+           |    100.00     100.00 |    100.00 
+
+. * Interpretación: en exact matching “soporte común” = celdas con ambos grupos.
+. 
+. 
+. *---------------------------
+. * A3) Cálculo de ATE y ATET (exact matching)
+. *---------------------------
+. preserve
+
+.     keep if support_exact==1
+(395 observations deleted)
+
+. 
+.     * Crear variables auxiliares (collapse no acepta cond() dentro)
+.     gen double y1_tmp = $Y if $D==1
+(325 missing values generated)
+
+.     gen double y0_tmp = $Y if $D==0
+(409 missing values generated)
+
+. 
+.     * Resumir por celda (estrato)
+.     collapse ///
+>         (count) Ncell = $Y ///
+>         (sum)   N1cell = $D ///
+>         (mean)  y1 = y1_tmp ///
+>         (mean)  y0 = y0_tmp ///
+>         (sd)    sd1 = y1_tmp ///
+>         (sd)    sd0 = y0_tmp ///
+>         , by(stratum_exact)
+
+. 
+.     gen N0cell = Ncell - N1cell
+
+.     gen diff   = y1 - y0
+
+. 
+.     quietly summarize Ncell, meanonly
+
+.     scalar Ntot = r(sum)
+
+. 
+.     quietly summarize N1cell, meanonly
+
+.     scalar N1tot = r(sum)
+
+. 
+.     scalar N0tot = Ntot - N1tot
+
+. 
+.     * Pesos para ATE y ATET
+.     gen w_ate  = Ncell/Ntot
+
+.     gen w_atet = N1cell/N1tot
+
+. 
+.     * ATE y ATET (puntos)
+.     gen contrib_ate  = w_ate  * diff
+
+.     gen contrib_atet = w_atet * diff
+
+. 
+.     quietly summarize contrib_ate, meanonly
+
+.     scalar ATE_exact = r(sum)
+
+. 
+.     quietly summarize contrib_atet, meanonly
+
+.     scalar ATET_exact = r(sum)
+
+. 
+.     *------------------------------------------------------------
+.     * SE "estándar" (analíticos) por estratos (plug-in)
+.     * Var(diff_s) ≈ s^2_{1s}/N1_s + s^2_{0s}/N0_s
+.     * Var(ATE)  ≈ Σ_s w_s^2  Var(diff_s)
+.     * Var(ATET) ≈ Σ_s w1_s^2 Var(diff_s)
+.     *------------------------------------------------------------
+.     replace sd1 = 0 if missing(sd1) & N1cell==1
+(74 real changes made)
+
+.     replace sd0 = 0 if missing(sd0) & N0cell==1
+(70 real changes made)
+
+. 
+.     gen var_diff = (sd1^2)/N1cell + (sd0^2)/N0cell
+
+. 
+.     gen var_contrib_ate  = (w_ate^2)  * var_diff
+
+.     gen var_contrib_atet = (w_atet^2) * var_diff
+
+. 
+.     quietly summarize var_contrib_ate, meanonly
+
+.     scalar se_ate_exact_ana  = sqrt(r(sum))
+
+. 
+.     quietly summarize var_contrib_atet, meanonly
+
+.     scalar se_atet_exact_ana = sqrt(r(sum))
+
+. 
+.     display as text "----------------------------------------"
+----------------------------------------
+
+.     display as text "Exact matching (con discretización):"
+Exact matching (con discretización):
+
+.     display as result "ATE_exact  = " %9.6f ATE_exact  "    (SE analítico = " %9.6f se_ate_exact_ana  ")"
+ATE_exact  =  0.095280    (SE analítico =  0.026459)
+
+.     display as result "ATET_exact = " %9.6f ATET_exact "    (SE analítico = " %9.6f se_atet_exact_ana ")"
+ATET_exact =  0.106274    (SE analítico =  0.026322)
+
+.     display as text "----------------------------------------"
+----------------------------------------
+
+. restore
+
+. 
+. * Guardar Ns "limpios" (del soporte común en la muestra original) para la tabla
+. scalar N1_exact = N1tot
+
+. scalar N0_exact = N0tot
+
+. 
+. * Guardar en tabla comparativa: SE analíticos (estratos)
+. post `_posth' ("Exact manual (SE ana)") ("overlap celdas") ("estratos discretos") ///
+>     (ATE_exact) (ATET_exact) (se_ate_exact_ana) (se_atet_exact_ana) (N1_exact) (N0_exact)
+
+. 
+. **# Matching exacto: bootstrap para SE
+.         
+. *---------------------------
+. * A4) Bootstrap para SE en exact matching
+. *---------------------------
+. * Idea: replicar el matching manual dentro de un program, para que bootstrap
+. * re-haga (i) coarsening (bins), (ii) soporte común, (iii) matching/estratos.
+. capture program drop exactmatch_est
+
+. program define exactmatch_est, rclass
+  1.     tempvar agebin edubin landbin pcirrbin stratum_exact N1 N0 support_exact
+  2.     tempvar y1_tmp y0_tmp
+  3. 
+.     recode agehead (min/25=1) (26/35=2) (36/45=3) (46/55=4) (56/65=5) (66/75=6) (76/max=7), gen(`agebin')
+  4.     recode educhead (0=0) (1/4=1) (5/8=2) (9/max=3), gen(`edubin')
+  5.     xtile `landbin'  = lnland, nq(4)
+  6.     xtile `pcirrbin' = pcirr,  nq(4)
+  7.     egen `stratum_exact' = group(sexhead vaccess `agebin' `edubin' `landbin' `pcirrbin')
+  8. 
+.     bys `stratum_exact': egen `N1' = total($D==1)
+  9.     bys `stratum_exact': egen `N0' = total($D==0)
+ 10.     gen `support_exact' = (`N1'>0 & `N0'>0)
+ 11. 
+.     preserve
+ 12.         keep if `support_exact'==1
+ 13. 
+.         gen double `y1_tmp' = $Y if $D==1
+ 14.         gen double `y0_tmp' = $Y if $D==0
+ 15. 
+.         collapse (count) Ncell = $Y ///
+>                  (sum)   N1cell = $D ///
+>                  (mean)  y1 = `y1_tmp' ///
+>                  (mean)  y0 = `y0_tmp' ///
+>                  , by(`stratum_exact')
+ 16. 
+.         gen diff = y1 - y0
+ 17. 
+.         quietly summarize Ncell, meanonly
+ 18.         local Ntot = r(sum)
+ 19. 
+.         quietly summarize N1cell, meanonly
+ 20.         local N1tot = r(sum)
+ 21. 
+.         gen w_ate  = Ncell/`Ntot'
+ 22.         gen w_atet = N1cell/`N1tot'
+ 23. 
+.         gen contrib_ate  = w_ate  * diff
+ 24.         gen contrib_atet = w_atet * diff
+ 25. 
+.         quietly summarize contrib_ate, meanonly
+ 26.         return scalar ate  = r(sum)
+ 27. 
+.         quietly summarize contrib_atet, meanonly
+ 28.         return scalar atet = r(sum)
+ 29.     restore
+ 30. end
+
+. 
+. * Bootstrap (sube reps si querés más precisión; baja reps si querés rapidez)
+. bootstrap r(ate) r(atet) if !missing($Y, $D, sexhead, vaccess, agehead, educhead, lnland, pcirr), reps(300) seed(12345): exactmatch_est
+(running exactmatch_est on estimation sample)
+
+warning: exactmatch_est does not set e(sample), so no observations will be excluded from the resampling because of missing values or other reasons. To exclude
+         observations, press Break, save the data, drop any observations that are to be excluded, and rerun bootstrap.
+
+Bootstrap replications (300): .........10.........20.........30.........40.........50.........60.........70.........80.........90.........100.........110.........120
+> .........130.........140.........150.........160.........170.........180.........190.........200.........210.........220.........230.........240.........250.......
+> ..260.........270.........280.........290.........300 done
+
+Bootstrap results                                        Number of obs = 1,129
+                                                         Replications  =   300
+
+      Command: exactmatch_est
+        _bs_1: r(ate)
+        _bs_2: r(atet)
+
+------------------------------------------------------------------------------
+             |   Observed   Bootstrap                         Normal-based
+             | coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       _bs_1 |   .0952796   .0388656     2.45   0.014     .0191045    .1714547
+       _bs_2 |    .106274   .0410302     2.59   0.010     .0258563    .1866917
+------------------------------------------------------------------------------
+
+. matrix se = e(se)
+
+. scalar se_ate_exact_boot  = se[1,1]
+
+. scalar se_atet_exact_boot = se[1,2]
+
+. 
+. display as text "----------------------------------------"
+----------------------------------------
+
+. display as text "Bootstrap SE (exact matching):"
+Bootstrap SE (exact matching):
+
+. display as result "SE_boot(ATE)  = " %9.6f se_ate_exact_boot
+SE_boot(ATE)  =  0.038866
+
+. display as result "SE_boot(ATET) = " %9.6f se_atet_exact_boot
+SE_boot(ATET) =  0.041030
+
+. display as text "----------------------------------------"
+----------------------------------------
+
+. 
+. * Guardar en tabla comparativa: SE bootstrap
+. post `_posth' ("Exact manual (SE boot)") ("overlap celdas") ("estratos discretos") ///
+>     (ATE_exact) (ATET_exact) (se_ate_exact_boot) (se_atet_exact_boot) (N1_exact) (N0_exact)
+
+. 
+. * ---------------------------------------------------------------------------
+. * Nota (varianza estándar vs bootstrap) – Matching exacto
+. *
+. * 1) SE "estándar" (analíticos) por estratos:
+. *    - Trata estratos y soporte común como fijos.
+. *    - Usa Var(diff_s) ≈ s^2_{1s}/N1_s + s^2_{0s}/N0_s, y agrega con pesos^2.
+. *    - Es muy didáctico y suele ser razonable si bins/celdas están "dados".
+. *
+. * 2) Contras del SE analítico:
+. *    - No captura la incertidumbre de la discretización por cuantiles (xtile),
+. *      ni el hecho de que el soporte común (celdas con N1>0 y N0>0) depende
+. *      de la muestra.
+. *    - Puede ser frágil si hay celdas pequeñas.
+. *
+. * 3) En un trabajo serio, el bootstrap del procedimiento completo suele ser
+. *    preferible (re-hace bins + soporte común + cálculo de ATE/ATET).
+. *
+. * 4) Si tenés panel/correlación intra-unidad (id), usá cluster bootstrap:
+. *      bootstrap r(ate) r(atet), reps(500) seed(12345) cluster(id) idcluster(_cid): ///
+> *          exactmatch_est
+. *    (cluster(id) re-muestrea unidades completas, preservando dependencia dentro de id)
+. * ---------------------------------------------------------------------------
+. 
+. 
+. * ---------------------------------------------------------------------------
+. * Nota importante (Exact matching + Bootstrap)
+. *
+. * - NO es necesario (ni recomendable) calcular/guardar N0tot dentro del program
+. *   exactmatch_est si tu objetivo es obtener SE bootstrap para ATE/ATET.
+. *   En bootstrap, el program se ejecuta muchas veces y cualquier scalar global
+. *   (Ntot, N1tot, N0tot, etc.) se pisa en cada réplica, lo cual puede confundir.
+. *
+. * - La lógica correcta es separar roles:
+. *
+. *   (A) Bloque A3 MANUAL (una sola vez, sobre la muestra original):
+. *       1) Calculás Ntot, N1tot y N0tot (= Ntot - N1tot).
+. *       2) Guardás Ns "limpios" para reportar en la tabla:
+. *            scalar N1_exact = N1tot
+. *            scalar N0_exact = N0tot
+. *       Estos Ns corresponden al soporte común del matching exacto en la muestra
+. *       original, y son los que deben ir a la tabla comparativa.
+. *
+. *   (B) Program exactmatch_est (solo para bootstrap):
+. *       - Su único objetivo es devolver r(ate) y r(atet) en cada réplica:
+. *            return scalar ate  = ...
+. *            return scalar atet = ...
+. *       - NO debe guardar N1_exact/N0_exact (porque variarían por réplica).
+. *       - N0tot adentro del program es opcional y, si no se usa, se omite.
+. *
+. * - Recomendación de prolijidad:
+. *   dentro del program, usar locals para Ntot y N1tot (no scalars globales),
+. *   para evitar "pisadas" del entorno durante el bootstrap.
+. * ---------------------------------------------------------------------------
+. 
+. 
+. **# Matching exacto: CEM 
+. 
+. *==============================================================================
+. * PARTE A.2 Coarsened Exact Matching (CEM) como alternativa “lista”
+. *==============================================================================
+. /*------------------------------------------------------------------------------
+> CEM (Iacus–King–Porro / Blackwell et al.) es una forma práctica de hacer “exact matching”
+> sobre una versión coarsened de X, y automáticamente:
+> (i) restringe a soporte común (cem_matched==1),
+> (ii) crea estratos (cem_strata),
+> (iii) genera pesos (cem_weights) para estimar (usualmente) el efecto en tratados (ATET/SATT).
+> 
+> 
+> * ---------------------------------------------------------------------------
+> * ¿Qué hace CEM (Coarsened Exact Matching) y por qué lo incluimos?
+> *
+> * CEM sí "te hace el matching", pero NO en el sentido de devolverte ATE/ATET automáticamente con algo tipo:  cem ... , ate
+> * Lo que hace CEM es construir una muestra emparejada (y pesos) con una regla muy específica:
+> *   (i) coarsen (discretizás X),
+> *   (ii) exact matching sobre esas celdas/estratos,
+> *   (iii) te devuelve un esquema de pesos tal que el análisis posterior (diferencia de medias o regresión ponderada) sea el estimador.
+> *
+> * Qué hace CEM, exactamente:
+> * 1) Definís (o dejás que el comando defina) una discretización de X:
+> *    edad en bins, educación en bins, etc. A esto CEM le llama "coarsening".
+> * 2) Con esas variables coarsened, hace exact matching por celdas-estratos:
+> *    una unidad tratada es "comparable" solo con controles en la misma celda.
+> * 3) Elimina (o marca como no matched) observaciones en celdas sin el otro grupo.
+> *    Eso implementa el "soporte común" en CEM.
+> * 4) Devuelve dos objetos clave:
+> *    - cem_matched: indicador de si la observación quedó dentro del soporte común.
+> *    - cem_weights: pesos para que, al comparar resultados (dif. de medias o regresión ponderada), 
+> *      el balance entre tratados y controles dentro de las celdas sea el que CEM define: (spoiler: ATET)
+> *
+> * En otras palabras: CEM NO es un "estimador final" por sí solo; 
+> * es un procedimiento de pre-procesamiento + reponderación. 
+> * El efecto se estima después usando cem_weights (por ejemplo con reg ponderada).
+> *
+> * Diferencias respecto a matching exacto "manual" (con X discretizada):
+> * - Conceptualmente, el matching exacto manual anterior ya es "coarsened exact matching".
+> *   La diferencia práctica está en:
+> *   (A) Qué pesos usa para re-equilibrar dentro de celdas:
+> *       * Manual: agregás celdas con pesos Ns/N (ATE) o N1s/N1 (ATET), típico estimador por estratos ("estratificación").
+> *       * CEM: además de definir estos estratos, 
+> *         define cem_weights para re-equilibrar la contribución de controles vs tratados DENTRO de cada estrato.
+> *         Esto importa cuando hay asimetrías fuertes en tamaños de celda.
+> *   (B) Diagnóstico y control del nivel de coarsening:
+> *       * Más coarsening (cajas más anchas)  => más superposicion (menos pérdida muestral) pero más "diferencias residuales" dentro de celda.
+> *       * Menos coarsening (bins más finos) => más balance exacto, pero más pérdida por soporte común.
+> *       CEM está diseñado para que este trade-off sea transparente y controlable.
+> *
+> * --------------------------------------------------------------------------------*
+> 
+> * ---------------------------------------------------------------------------
+> * EXTENSIÓN IMPORTANTE (para entender "asimetrías dentro de celda" y ATE vs ATET)
+> *
+> * 1) ¿Qué "asimetrías dentro de celdas" corrige CEM?
+> *
+> *    Pensá un estrato/celda s donde hay MUCHOS controles y POCOS tratados.
+> *    Si vos hacés algo "a pelo" (por ejemplo, tomar todos los controles tal cual)
+> *    y luego agregás celdas, esa celda podría quedar dominada por la masa de controles,
+> *    y el "control global" resultante no representaría bien a los tratados.
+> *
+> *    CEM corrige esto generando PESOS (principalmente para controles) de manera que,
+> *    DENTRO de cada celda s, la "masa ponderada" de controles replique la de tratados.
+> *    Esa es la idea de "re-equilibrar" dentro de estrato.
+> *
+> *    Notación por estrato s:
+> *      N1_s = # tratados en s
+> *      N0_s = # controles en s
+> *
+> *    Esquema típico (intuición estándar):
+> *      - Para tratados:   w_i = 1
+> *      - Para controles:  w_i = N1_s / N0_s   (para i en s con D=0)
+> *
+> *    Entonces, la suma de pesos por estrato cumple:
+> *      W1_s = sum_{i in s, D=1} w_i = N1_s
+> *      W0_s = sum_{i in s, D=0} w_i = N0_s * (N1_s/N0_s) = N1_s
+> *
+> *    O sea: W0_s = W1_s por construcción.
+> *    Esto es EXACTAMENTE "ponderar por asimetrías dentro de la celda".
+> *
+> *
+> * 2) ¿Por qué eso está alineado con ATET y no con ATE?
+> *
+> *    Porque al forzar W0_s = W1_s, estás construyendo un grupo control ponderado
+> *    que tiene la MISMA composición en X que el grupo tratado (en el soporte común).
+> *    Es decir: estás armando el contrafactual "para los tratados":
+> *      ¿qué le habría pasado a los tratados si hubieran sido controles?
+> *    Eso es ATET.
+> *
+> *    En cambio, ATE apunta al efecto promedio en TODA la población (tratados+controles).
+> *    Para ATE, la distribución objetivo de X no es "la de los tratados", sino la
+> *    distribución poblacional. Eso requiere un objetivo de ponderación distinto:
+> *    (en general) reponderar para representar la población total, no para "control → tratado".
+> *
+> *
+> * 3) Entonces, ¿CEM "no sirve" para ATE?
+> *
+> *    Sirve, pero NO "gratis" con los pesos por defecto (cem_weights) ni con el
+> *    agregador que construiste. Hay tres caminos conceptualmente correctos:
+> *
+> *    (A) Lo más estándar en talleres y papers con CEM:
+> *        Usar CEM para ATET (SATT) y decirlo explícitamente:
+> *          reg Y D [iw=cem_weights] if cem_matched==1
+> *
+> *    (B) Si querés ATE poblacional:
+> *        Necesitás definir una distribución objetivo poblacional y un esquema
+> *        de pesos que haga que tratados y controles representen esa población.
+> *        Eso ya es otra capa (no es el default de CEM) y conviene explicitarlo
+> *        como extensión/avance, no mezclarlo con la versión estándar.
+> * ---------------------------------------------------------------------------
+> 
+> 
+> 
+> ------------------------------------------------------------------------------*/
+. 
+. capture which cem
+
+. if _rc {
+.     di as error "No tenés instalado -cem-. Si querés usarlo:  ssc install cem, replace"
+. }
+
+. else 
+
+. 
+.     * (Opcional) fijar semilla por reproducibilidad cuando cem usa auto-coarsening
+.      set seed 12345
+
+.          
+. * Por prolijidad: si ya existieran de una corrida anterior
+. capture drop cem_matched cem_weights cem_strata
+
+. 
+. * CEM sobre covariables discretizadas (coarsened): distintas reglas de discretizacion
+. cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(sturges)
+
+Matching Summary:
+-----------------
+Number of strata: 656
+Number of matched strata: 96
+
+             0    1
+      All  534  595
+  Matched  195  279
+Unmatched  339  316
+
+
+Multivariate L1 distance: .56365809
+
+Univariate imbalance:
+
+               L1     mean      min      25%      50%      75%      max
+ sexhead  6.8e-17  1.1e-16        0        0        0        0        0
+ vaccess  1.9e-16  3.3e-16        0        0        0        0        0
+ agehead   .07022   .03573        7        0        0        0        0
+educhead   .01464   .00687        0        0        0        0        0
+  lnland   .11451  -.01949  -.00795        0  -.01869  -.05763   .14561
+   pcirr   .00358   .00237        0        0        0        0        0
+
+. cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(fd)
+(using the scott break method for imbalance)
+  0
+  0
+
+Matching Summary:
+-----------------
+Number of strata: 775
+Number of matched strata: 80
+
+             0    1
+      All  534  595
+  Matched  156  201
+Unmatched  378  394
+
+
+Multivariate L1 distance: .47951907
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead    .02715   -.02715         0         0         0         0         0
+ vaccess    .07062   -.07062         0         0         0         0         0
+ agehead    .03648   -.11681         0         0         0        -2         0
+educhead   7.0e-17  -1.1e-16         0         0         0         0         0
+  lnland    .08596    .00229   -.00795         0         0    .01392    .08351
+   pcirr    .04793    .00386         0         0   -.02355         0         0
+
+. cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(scott) 
+(using the scott break method for imbalance)
+
+Matching Summary:
+-----------------
+Number of strata: 764
+Number of matched strata: 80
+
+             0    1
+      All  534  595
+  Matched  157  192
+Unmatched  377  403
+
+
+Multivariate L1 distance: .47690972
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead   1.7e-16  -3.3e-16         0         0         0         0         0
+ vaccess   2.8e-16  -5.6e-16         0         0         0         0         0
+ agehead    .10677   -.03142         0        -1        -2        -2         0
+educhead    .00911    .00911         0         0         0         0         0
+  lnland    .06927   -.00089         0   -.00976         0   -.00445   -.07608
+   pcirr    .02483     .0055         0         0         0         0         0
+
+. cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(ss)
+(using the scott break method for imbalance)
+  832
+  -15288
+  -27733.33333
+  -39260
+  -50419.2
+  -61394.66667
+  -72265.14286
+  -83070
+  -93831.11111
+  -104561.6
+  -115269.8182
+  -125961.3333
+  -136640
+  -147308.5714
+  -157969.0667
+  -168623
+  -179271.5294
+  -189915.5556
+  -200555.7895
+  -211192.8
+  -221827.0476
+  -232458.9091
+  -243088.6957
+  -253716.6667
+  -264343.04
+  -274968
+  -285591.7037
+  -296214.2857
+  -306835.8621
+  -317456.5333
+  -328076.3871
+  -338695.5
+  -349313.9394
+  -359931.7647
+  -370549.0286
+  -381165.7778
+  -391782.0541
+  -402397.8947
+  -413013.3333
+  -423628.4
+  -434243.122
+  -444857.5238
+  -455471.6279
+  -466085.4545
+  -476699.0222
+  -487312.3478
+  -497925.4468
+  -508538.3333
+  -519151.0204
+  -529763.52
+  -540375.8431
+  -550988
+  -561600
+  -572211.8519
+  -582823.5636
+  -593435.1429
+  -604046.5965
+  -614657.931
+  -625269.1525
+  -635880.2667
+  -646491.2787
+  -657102.1935
+  -667713.0159
+  -678323.75
+  -688934.4
+  -699544.9697
+  -710155.4627
+  -720765.8824
+  -731376.2319
+  -741986.5143
+  -752596.7324
+  -763206.8889
+  -773816.9863
+  -784427.027
+  -795037.0133
+  -805646.9474
+  -816256.8312
+  -826866.6667
+  -837476.4557
+  -848086.2
+  -858695.9012
+  -869305.561
+  -879915.1807
+  -890524.7619
+  -901134.3059
+  -911743.814
+  -922353.2874
+  -932962.7273
+  -943572.1348
+  -954181.5111
+  -964790.8571
+  -975400.1739
+  -986009.4624
+  -996618.7234
+  -1007227.958
+  -1017837.167
+  -1028446.351
+  -1039055.51
+  -1049664.646
+  1488
+  -50220
+  -90272
+  -127410
+  -163382.4
+  -198772
+  -233828.5714
+  -268677
+  -303386.6667
+  -337999.2
+  -372541.0909
+  -407030
+  -441478.1538
+  -475894.2857
+  -510284.8
+  -544654.5
+  -579007.0588
+  -613345.3333
+  -647671.5789
+  -681987.6
+  -716294.8571
+  -750594.5455
+  -784887.6522
+  -819175
+  -853457.28
+  -887735.0769
+  -922008.8889
+  -956279.1429
+  -990546.2069
+  -1024810.4
+  -1059072
+  -1093331.25
+  -1127588.364
+  -1161843.529
+  -1196096.914
+  -1230348.667
+  -1264598.919
+  -1298847.789
+  -1333095.385
+  -1367341.8
+  -1401587.122
+  -1435831.429
+  -1470074.791
+  -1504317.273
+  -1538558.933
+  -1572799.826
+  -1607040
+  -1641279.5
+  -1675518.367
+  -1709756.64
+  -1743994.353
+  -1778231.538
+  -1812468.226
+  -1846704.444
+  -1880940.218
+  -1915175.571
+  -1949410.526
+  -1983645.103
+  -2017879.322
+  -2052113.2
+  -2086346.754
+  -2120580
+  -2154812.952
+  -2189045.625
+  -2223278.031
+  -2257510.182
+  -2291742.09
+  -2325973.765
+  -2360205.217
+  -2394436.457
+  -2428667.493
+  -2462898.333
+  -2497128.986
+  -2531359.459
+  -2565589.76
+  -2599819.895
+  -2634049.87
+  -2668279.692
+  -2702509.367
+  -2736738.9
+  -2770968.296
+  -2805197.561
+  -2839426.699
+  -2873655.714
+  -2907884.612
+  -2942113.395
+  -2976342.069
+  -3010570.636
+  -3044799.101
+  -3079027.467
+  -3113255.736
+  -3147483.913
+  -3181712
+  -3215940
+  -3250167.916
+  -3284395.75
+  -3318623.505
+  -3352851.184
+  -3387078.788
+  1.522010457
+  -107.8249283
+  -95.8772137
+  -135.960533
+  -175.3813459
+  -160.3966942
+  -176.9048021
+  -176.2263451
+  -168.3240569
+  -181.380334
+  -183.2922308
+  -176.487772
+  -167.1281446
+  -199.5622003
+  -165.1327374
+  -174.9230899
+  -177.920927
+  -168.8774948
+  -188.2667708
+  -188.4651712
+  -185.1683011
+  -187.9406001
+  -217.7805481
+  -193.2534997
+  -192.5569911
+  -182.7538176
+  -194.3854126
+  -214.4461364
+  -199.9303249
+  -185.1320627
+  -229.8051241
+  -244.5612245
+  -209.2215459
+  -211.3257865
+  -235.7196347
+  -216.6165177
+  -216.7215838
+  -220.9682648
+  -202.4552071
+  -229.6940462
+  -247.0357935
+  -245.4780618
+  -240.3800319
+  -230.7220289
+  -251.6435599
+  -307.9251872
+  -237.5631641
+  -266.6859504
+  -292.5867665
+  -295.4301231
+  -303.0458861
+  -293.00349
+  -284.4375424
+  -295.3762111
+  -315.9265858
+  -300.5894032
+  -305.8367169
+  -306.2889945
+  -338.9097541
+  -348.6537359
+  -313.5895197
+  -289.5863198
+  -377.9510236
+  -371.9301316
+  -317.4339946
+  -324.5389227
+  -325.5091116
+  -366.9754249
+  -348.2521431
+  -358.3033998
+  -332.3405842
+  -339.8048013
+  -361.5900115
+  -346.438714
+  -350.4383201
+  -354.5768968
+  -362.0472649
+  -369.5166911
+  -376.9852111
+  -384.4528588
+  -391.9196667
+  -399.3856653
+  -406.8508841
+  -414.3153507
+  -421.7790918
+  -429.2421327
+  -436.7044975
+  -444.1662092
+  -451.62729
+  -459.0877607
+  -466.5476416
+  -474.0069518
+  -481.4657098
+  -488.9239332
+  -496.3816389
+  -503.838843
+  -511.295561
+  -518.751808
+  -526.207598
+  35.25
+  -4055.4375
+  -7667.15625
+  -7288.007812
+  -10067.95313
+  -11258.46094
+  -13256.89286
+  -12951.98438
+  -15090.75521
+  -16988.21094
+  -18854.42045
+  -21097.375
+  -22775.30769
+  -24720.01674
+  -26567
+  -25239.08984
+  -27053.23897
+  -28865.35417
+  -30675.75658
+  -32484.70313
+  -34292.40179
+  -36099.02273
+  -37904.70652
+  -39709.57031
+  -41513.7125
+  -43317.21635
+  -45120.15278
+  -46922.58259
+  -48724.55819
+  -50526.125
+  -52327.32258
+  -54128.18555
+  -55928.74432
+  -57729.02574
+  -59529.05357
+  -61328.84896
+  -63128.43074
+  -64927.81579
+  -66727.01923
+  -68526.05469
+  -70324.93445
+  -72123.66964
+  -73922.27035
+  -75720.74574
+  -77519.10417
+  -79317.35326
+  -81115.5
+  -82913.55078
+  -84711.51148
+  -86509.3875
+  -88307.18382
+  -90104.90505
+  -91902.55542
+  -93700.13889
+  -95497.65909
+  -97295.11942
+  -99092.52303
+  -100889.8728
+  -102687.1716
+  -104484.4219
+  -106281.626
+  -108078.7863
+  -109875.9048
+  -111672.9834
+  -113470.024
+  -115267.0284
+  -117063.9981
+  -118860.9347
+  -120657.8397
+  -122454.7143
+  -124251.5599
+  -126048.3776
+  -127845.1687
+  -129641.9341
+  -131438.675
+  -133235.3923
+  -135032.0869
+  -136828.7596
+  -138625.4114
+  -140422.043
+  -142218.6551
+  -144015.2485
+  -145811.8238
+  -147608.3817
+  -149404.9228
+  -151201.4477
+  -152997.9569
+  -154794.451
+  -156590.9305
+  -158387.3958
+  -160183.8475
+  -161980.286
+  -163776.7117
+  -165573.125
+  -167369.5263
+  -169165.916
+  -170962.2945
+  -172758.662
+  -174555.0189
+  637.9378284
+  -124806.7675
+  -189782.5451
+  -228367.4625
+  -262331.5722
+  -297542.0077
+  -324905.2263
+  -341208.5128
+  -362866.257
+  -382409.5125
+  -405086.8193
+  -423494.9991
+  -438006.1597
+  -452123.8932
+  -461276.556
+  -473715.1418
+  -492571.7878
+  -497429.948
+  -523399.8299
+  -540992.4865
+  -542188.5392
+  -556230.5915
+  -577935.8217
+  -585175.7608
+  -599856.5596
+  -600269.479
+  -622117.1337
+  -615347.1055
+  -633363.0349
+  -624011.3572
+  -643752.9725
+  -641919.956
+  -654961.8431
+  -639684.7055
+  -655195.3555
+  -670511.7747
+  -671583.2711
+  -689649.5921
+  -702412.8787
+  -718718.4026
+  -656898.8917
+  -664417.5806
+  -679706.7236
+  -691387.1008
+  -680299.5206
+  -695699.2272
+  -705396.3605
+  -712654.9534
+  -725671.7368
+  -739133.3463
+  -708314.5202
+  -713058.5206
+  -727170.9508
+  -735618.9165
+  -738420.4399
+  -751815.4267
+  -764485.7686
+  -733094.3039
+  -735104.2947
+  -746450.742
+  -758644.9591
+  -770974.8204
+  -773830.4354
+  -785352.3484
+  -795458.2906
+  -806275.0354
+  -746222.0856
+  -744961.1808
+  -755568.0044
+  -762175.2914
+  -772535.8759
+  -780299.9513
+  -785959.1407
+  -792804.9514
+  -802256.3612
+  -812233.3032
+  -822130.0922
+  -828773.3146
+  -839721.3892
+  -848440.9816
+  -729939.414
+  -729957.0807
+  -739673.8467
+  -742896.113
+  -751359.5714
+  -760861.2234
+  -767979.0911
+  -768064.382
+  -777615.2634
+  -773087.7097
+  -781255.6068
+  -790446.0577
+  -795921.7597
+  -798652.3518
+  -804675.3457
+  -812726.6077
+  -820972.78
+  -828286.8735
+  -837879.0844
+  9133.761685
+  -193619.5249
+  -221161.1017
+  -529850.2602
+  -374834.3974
+  -478711.8569
+  -439050.2342
+  -669578.7291
+  -428969.8247
+  -464905.7149
+  -585206.322
+  -749754.8575
+  -589550.8194
+  -578712.438
+  -555345.7703
+  -871578.4573
+  -558252.0284
+  -613912.004
+  -712253.8379
+  -801840.6641
+  -758736.5575
+  -864403.4765
+  -930564.1215
+  -1077603.668
+  -968985.8399
+  -953247.4917
+  -1035030.873
+  -1086472.824
+  -1003974.945
+  -1295974.569
+  -1303720.53
+  -1487038.061
+  -1745649.297
+  -1524948.355
+  -1613481.275
+  -1714306.245
+  -1974570.235
+  -1791369.724
+  -1745084.063
+  -1907854.289
+  -2059757.028
+  -1965090.623
+  -1946079.883
+  -2156746.139
+  -2244639.755
+  -2248646.479
+  -2214124.699
+  -2288050.856
+  -2353791.425
+  -2598289.941
+  -2460035.603
+  -2524269.865
+  -2605790.272
+  -2604454.994
+  -2927001.01
+  -2930607.043
+  -2995808.533
+  -3018651.54
+  -3067401.226
+  -2933946.837
+  -3035354.581
+  -3102032.139
+  -3033545.401
+  -3101577.346
+  -3187242.622
+  -3592539.421
+  -3617413.079
+  -3650146.808
+  -3710714.452
+  -3749215.329
+  -3824676.397
+  -3733702.399
+  -3798640.323
+  -3874170.584
+  -3957620.248
+  -4036568.385
+  -4344960.741
+  -4400089.663
+  -4391921.69
+  -4186529.878
+  -4053950.124
+  -4151223.725
+  -4132186.186
+  -4203400.264
+  -4297926.011
+  -4282889.383
+  -4366565.185
+  -4768684.191
+  -4863051.257
+  -4662738.644
+  -4647815.843
+  -4692057.075
+  -4804141.157
+  -4869157.472
+  -4882453.533
+  -4946925.059
+  -4992595.61
+  -5129192.851
+  -5269493.117
+
+Matching Summary:
+-----------------
+Number of strata: 1078
+Number of matched strata: 19
+
+             0    1
+      All  534  595
+  Matched   20   22
+Unmatched  514  573
+
+
+Multivariate L1 distance: 5.204e-17
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead   5.9e-17   1.1e-16         0         0         0         0         0
+ vaccess         0         0         0         0         0         0         0
+ agehead   8.3e-17  -7.1e-15         0         0         0         0         0
+educhead   5.9e-17  -2.8e-17         0         0         0         0         0
+  lnland   6.9e-17    .00652         0    .00985    .00976    .00957         0
+   pcirr   7.3e-17  -1.1e-16         0         0         0         0         0
+
+. 
+. * cem esta usando diferentes algoritmos internos para discretizar las X.
+. 
+. * ---------------------------------------------------------------------------
+. * CEM y variables continuas "originales": ¿discretiza?
+. *
+. * Sí discretiza. Si le pasás continuas (agehead, lnland, pcirr, etc.) sin
+. * cutpoints explícitos, cem construye internamente cortes (bins) para cada
+. * continua, arma estratos con el cruce de esos bins + las covariables
+. * categóricas, y hace exact matching a nivel de estrato.
+. *
+. * Esto NO elimina arbitrariedad: la reemplaza por una regla default.
+. * En Stata-cem, si no ponés nada entre paréntesis, usa el default de autocuts(),
+. * cuyo valor por defecto es Sturges (autocuts(sturges)).
+. * Podés cambiarlo, por ejemplo:
+. *   cem x1 x2 x3, tr(D) autocuts(fd)
+. * y también podés sobre-escribir por variable:
+. *   cem agehead(#6) educhead(scott) lnland(fd) pcirr(sturges), tr(D)
+. * donde:
+. *   - (numlist) fija cortes manuales
+. *   - (sturges|fd|scott|ss) elige algoritmo automático para ESA variable
+. *   - (#k) pide k bins de igual ancho
+. *   - (#0) no coarsen esa variable
+. *
+. * Por eso "dejo las originales y que cem haga todo" es válido como demo, pero
+. * conceptualmente NO es "sin discretizar": es "discretizar con defaults".
+. *
+. * ¿Qué es el L1 que reporta CEM?
+. * Es una medida de desbalance basada en la distribución de tratados y controles
+. * en el espacio coarsened (los estratos/celdas). La forma típica es:
+. *
+. *   L1 = (1/2) * sum_{s in S} | p1(s) - p0(s) |,
+. *
+. * donde p1(s) es la proporción (masa) de tratados en el estrato s y p0(s) la
+. * proporción (masa) de controles en ese mismo estrato (antes/después según el
+. * reporte).
+. *Interpretación práctica: L1=0: balance perfecto (misma distribución de X coarsened entre tratados y controles).
+. * L1 más alto: más desbalance (distribuciones más distintas). Está acotado entre 0 y 1.
+. 
+. * Tip: para VER los cortes usados por cem, usar:
+. *   cem ..., tr(D) showbreaks 
+. * (o showcutpoints, según versión/comando)
+. * ---------------------------------------------------------------------------
+. 
+. /* -----------------------CEM: lectura de analisis y eleccion --------------------------------------
+> 
+> Observar que usamos las variables continuas originales de la base.
+> con: cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(fd)
+> ** la opcion fd es el que nos dio un valor del L1 multivariado menor usando estas X originales. 
+> ** sin contar la opcion ss, que es un mundo "ideal" porque L1=0, pero el soporte es muy muy reducido: trade off sesgo-varianza.
+> ** comparando fd con scott: scott nos da un valor de L1 multivariado muy similar fd, comparemos el soporte comun:
+> ** en fd       156 + 201 = 357  ---> 357/1129  = 32%.
+> ** en scott    157 + 192 = 349  ---> 349/1129  = 31%.
+> 
+> Por lo que nos quedamos con el que se basa en la medida de fd.
+> La alternativa es usar la opcion sturges si queremos un soporte mayor (42%) (esto es algo deseable) pero a costa de un mayor (L1=0.56). (tension sesgo-varianza)
+> (en el proximo taller, implementamos una mejor manera de elegir: en base a criterios que permiten discernir mejor esta tension entre sesgo-varianza.)
+> 
+> A todo esto, no perder de vista que nuestra discretizacion manual de hoy nos daba un soporte comun de 65%, el mas grande de todos estos. 
+> Pero su L1 no es comparable porque esas X son discretizadas manualmente, no ingresan continuas al metodo cem, ya ingresan discretizadas, con lo cual, no son las mi
+> smas X y sus L1 no son comparables.
+> 
+> Multivariate L1 distance  (fd): .47951907 es una distancia multivariada.
+> Compara la distribución conjunta (sobre todas las celdas/estratos) entre tratados y controles.
+> 
+> Muy importante: no compares L1 entre corridas con coarsenings (X) distintos como si fueran directamente "mejor/peor". 
+> Si coarseneás más grueso, por construcción es más fácil que baje el L1 (porque estás mirando una grilla más burda). 
+> El L1 tiene sentido "dentro" de una especificación de coarsening (mismas X) y como herramienta para ver el trade-off.
+> 
+> Univariate imbalance (por variable): es la misma idea, pero mirando la distribución marginal de cada covariable.
+> */
+. 
+. 
+. * ---------------------------------------------------------------------------
+. 
+. 
+. *------------------------------------------------------------
+. * 1) ATET "a mano" por estratos CEM, USANDO cem_weights
+. *    (NO reportamos ATE porque con cem_weights el foco es ATET/SATT)
+. *------------------------------------------------------------
+. 
+. capture drop cem_matched cem_weights cem_strata
+
+. cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(fd)
+  0
+  0
+
+Matching Summary:
+-----------------
+Number of strata: 775
+Number of matched strata: 80
+
+             0    1
+      All  534  595
+  Matched  156  201
+Unmatched  378  394
+
+
+Multivariate L1 distance: .47951907
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead    .02715   -.02715         0         0         0         0         0
+ vaccess    .07062   -.07062         0         0         0         0         0
+ agehead    .03648   -.11681         0         0         0        -2         0
+educhead   7.0e-17  -1.1e-16         0         0         0         0         0
+  lnland    .08596    .00229   -.00795         0         0    .01392    .08351
+   pcirr    .04793    .00386         0         0   -.02355         0         0
+
+. 
+. preserve
+
+.     keep if cem_matched==1
+(772 observations deleted)
+
+. 
+.     * Pesos CEM
+.     gen double w = cem_weights
+
+. 
+.     * Variables auxiliares por grupo
+.     gen double y1_tmp = $Y if $D==1
+(156 missing values generated)
+
+.     gen double y0_tmp = $Y if $D==0
+(201 missing values generated)
+
+. 
+.     * Sumas ponderadas por estrato
+.     gen double w1  = w if $D==1
+(156 missing values generated)
+
+.     gen double w0  = w if $D==0
+(201 missing values generated)
+
+.     gen double wy1 = w*y1_tmp
+(156 missing values generated)
+
+.     gen double wy0 = w*y0_tmp
+(201 missing values generated)
+
+. 
+.     collapse ///
+>         (count) Ncell = $Y ///
+>         (sum)   N1cell = $D ///
+>         (sum)   W1  = w1 ///
+>         (sum)   W0  = w0 ///
+>         (sum)   WY1 = wy1 ///
+>         (sum)   WY0 = wy0 ///
+>         , by(cem_strata)
+
+. 
+.     gen N0cell = Ncell - N1cell
+
+. 
+.     * Medias ponderadas dentro de estrato (tratado y control)
+.     gen y1 = WY1/W1
+
+.     gen y0 = WY0/W0
+
+.     gen diff = y1 - y0
+
+. 
+.     * Totales (conteos) para reportar N1/N0 en la tabla (no ponderados)
+.     quietly summarize Ncell, meanonly
+
+.     scalar Ntot_cem = r(sum)
+
+.     quietly summarize N1cell, meanonly
+
+.     scalar N1tot_cem = r(sum)
+
+.     scalar N0tot_cem = Ntot_cem - N1tot_cem
+
+. 
+.     * Agregación ATET: ponderar por masa ponderada de tratados en cada estrato
+.     quietly summarize W1, meanonly
+
+.     scalar W1tot_cem = r(sum)
+
+. 
+.     gen w_atet = W1/W1tot_cem
+
+.     gen contrib_atet = w_atet * diff
+
+. 
+.     quietly summarize contrib_atet, meanonly
+
+.     scalar ATET_cem = r(sum)
+
+. restore
+
+. 
+. di as text "----------------------------------------"
+----------------------------------------
+
+. di as text "CEM (con pesos cem_weights):"
+CEM (con pesos cem_weights):
+
+. di as result "ATET_cem = " %9.6f ATET_cem
+ATET_cem =  0.224886
+
+. di as text "----------------------------------------"
+----------------------------------------
+
+. 
+. *------------------------------------------------------------
+. * 2) Chequeo rápido: regresión ponderada (coef(D) = ATET)
+. *    (SE robusto: útil como chequeo; el SE "principal" lo damos por bootstrap)
+. *------------------------------------------------------------
+. quietly reg $Y $D [iweight=cem_weights] if cem_matched==1, vce(robust)
+
+. di as text "Regresion ponderada, SE robusto: coef(D) = " %9.6f _b[$D] "  SE = " %9.6f _se[$D]
+Regresion ponderada, SE robusto: coef(D) =  0.224886  SE =  0.049795
+
+. 
+. **# Matching exacto: CEM con Bootstrap
+. 
+. *------------------------------------------------------------
+. * 3) Bootstrap para SE de ATET (re-hace CEM + soporte + estimación)
+. *------------------------------------------------------------
+. capture drop cem_matched cem_weights cem_strata
+
+. cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(fd)
+  0
+  0
+
+Matching Summary:
+-----------------
+Number of strata: 775
+Number of matched strata: 80
+
+             0    1
+      All  534  595
+  Matched  156  201
+Unmatched  378  394
+
+
+Multivariate L1 distance: .47951907
+
+Univariate imbalance:
+
+                L1      mean       min       25%       50%       75%       max
+ sexhead    .02715   -.02715         0         0         0         0         0
+ vaccess    .07062   -.07062         0         0         0         0         0
+ agehead    .03648   -.11681         0         0         0        -2         0
+educhead   7.0e-17  -1.1e-16         0         0         0         0         0
+  lnland    .08596    .00229   -.00795         0         0    .01392    .08351
+   pcirr    .04793    .00386         0         0   -.02355         0         0
+
+. 
+. capture program drop cem_est
+
+. program define cem_est, rclass
+  1.     tempvar y1t y0t w w1 w0 wy1 wy0
+  2. 
+.     capture drop cem_matched cem_weights cem_strata
+  3.     cem sexhead vaccess agehead educhead lnland pcirr, tr($D) autocuts(fd)
+  4. 
+.     preserve
+  5.         keep if cem_matched==1
+  6. 
+.         gen double `w' = cem_weights
+  7.         gen double `y1t' = $Y if $D==1
+  8.         gen double `y0t' = $Y if $D==0
+  9. 
+.         gen double `w1'  = `w' if $D==1
+ 10.         gen double `w0'  = `w' if $D==0
+ 11.         gen double `wy1' = `w'*`y1t'
+ 12.         gen double `wy0' = `w'*`y0t'
+ 13. 
+.         collapse ///
+>             (sum) W1  = `w1' ///
+>             (sum) W0  = `w0' ///
+>             (sum) WY1 = `wy1' ///
+>             (sum) WY0 = `wy0' ///
+>             , by(cem_strata)
+ 14. 
+.         gen y1 = WY1/W1
+ 15.         gen y0 = WY0/W0
+ 16.         gen diff = y1 - y0
+ 17. 
+.         quietly summarize W1, meanonly
+ 18.         local W1tot = r(sum)
+ 19. 
+.         gen w_atet = W1/`W1tot'
+ 20.         gen c_atet = w_atet * diff
+ 21. 
+.         quietly summarize c_atet, meanonly
+ 22.         return scalar atet = r(sum)
+ 23.     restore
+ 24. end
+
+. 
+. bootstrap r(atet)       if !missing($Y, $D, sexhead, vaccess, agehead, educhead, lnland, pcirr), reps(300) seed(12345): cem_est
+(running cem_est on estimation sample)
+
+warning: cem_est does not set e(sample), so no observations will be excluded from the resampling because of missing values or other reasons. To exclude
+         observations, press Break, save the data, drop any observations that are to be excluded, and rerun bootstrap.
+
+Bootstrap replications (300): .........10.........20.........30.........40.........50.........60.........70.........80.........90.........100.........110.........120
+> .........130.........140.........150.........160.........170.........180.........190.........200.........210.........220.........230.........240.........250.......
+> ..260.........270.........280.........290.........300 done
+
+Bootstrap results                                        Number of obs = 1,129
+                                                         Replications  =   300
+
+      Command: cem_est
+        _bs_1: r(atet)
+
+------------------------------------------------------------------------------
+             |   Observed   Bootstrap                         Normal-based
+             | coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       _bs_1 |    .224886   .0642573     3.50   0.000      .098944    .3508281
+------------------------------------------------------------------------------
+
+. matrix se = e(se)
+
+. scalar se_atet_cem_boot = se[1,1]
+
+. 
+. di as text "----------------------------------------"
+----------------------------------------
+
+. di as text "Bootstrap SE (CEM ATET):"
+Bootstrap SE (CEM ATET):
+
+. di as result "SE_boot(ATET) = " %9.6f se_atet_cem_boot
+SE_boot(ATET) =  0.064257
+
+. di as text "----------------------------------------"
+----------------------------------------
+
+. 
+. * Guardar en tabla comparativa:
+. * - ATE y SE_ATE quedan missing (.), porque con cem_weights reportamos ATET.
+. post `_posth' ("CEM (ATET) (SE boot)") ("cem_matched") ("estratos CEM (fd) + w") ///
+>     (.) (ATET_cem) (.) (se_atet_cem_boot) (N1tot_cem) (N0tot_cem)
+
+. 
+. * Nota panel/cluster (si aplica):
+. * bootstrap r(atet), reps(500) seed(12345) cluster(id) idcluster(_cid): cem_est
+.         
+. 
+. **# Tabla comparativa
+.         
+. *==============================================================================
+. * C) Tabla comparativa final (todos los métodos del taller)
+. *==============================================================================
+. postclose `_posth'
+
+. 
+. use "`_results_match'", clear
+
+. order method support algorithm ate atet se_ate se_atet N1 N0
+
+. sort method support algorithm
+
+. 
+. format ate atet se_ate se_atet %9.6f
+
+. 
+. di as text "=================================================================="
+==================================================================
+
+. di as text "Tabla comparativa (puntos estimados; SE en teffects, y en bootstrap si los agregas)"
+Tabla comparativa (puntos estimados; SE en teffects, y en bootstrap si los agregas)
+
+. di as text "=================================================================="
+==================================================================
+
+. list, noobs sepby(method support)
+
+  +-------------------------------------------------------------------------------------------------------------------------+
+  |                 method          support               algorithm        ate       atet     se_ate    se_atet    N1    N0 |
+  |-------------------------------------------------------------------------------------------------------------------------|
+  |   CEM (ATET) (SE boot)      cem_matched   estratos CEM (fd) + w          .   0.224886          .   0.064257   201   156 |
+  |-------------------------------------------------------------------------------------------------------------------------|
+  |  Exact manual (SE ana)   overlap celdas      estratos discretos   0.095280   0.106274   0.026459   0.026322   409   325 |
+  |-------------------------------------------------------------------------------------------------------------------------|
+  | Exact manual (SE boot)   overlap celdas      estratos discretos   0.095280   0.106274   0.038866   0.041030   409   325 |
+  +-------------------------------------------------------------------------------------------------------------------------+
+
+.  
+. *============================================================
+. * (Opcional pero recomendado) IC 95% + strings LaTeX-safe
+. *============================================================
+. 
+. * 1) IC normal-based 95% (solo donde hay estimación + SE)
+. local z = invnormal(0.975)
+
+. 
+. gen double ci_ate_lo  = . 
+(3 missing values generated)
+
+. gen double ci_ate_hi  = .
+(3 missing values generated)
+
+. gen double ci_atet_lo = .
+(3 missing values generated)
+
+. gen double ci_atet_hi = .
+(3 missing values generated)
+
+. 
+. replace ci_ate_lo  = ate  - `z'*se_ate   if !missing(ate,  se_ate)
+(2 real changes made)
+
+. replace ci_ate_hi  = ate  + `z'*se_ate   if !missing(ate,  se_ate)
+(2 real changes made)
+
+. replace ci_atet_lo = atet - `z'*se_atet  if !missing(atet, se_atet)
+(3 real changes made)
+
+. replace ci_atet_hi = atet + `z'*se_atet  if !missing(atet, se_atet)
+(3 real changes made)
+
+. 
+. format ci_ate_lo ci_ate_hi ci_atet_lo ci_atet_hi %9.6f
+
+. 
+. * 2) IC como texto compacto para tabla (queda una sola columna por IC)
+. gen str40 ci_ate  = ""
+(3 missing values generated)
+
+. gen str40 ci_atet = ""
+(3 missing values generated)
+
+. replace ci_ate  = "[" + string(ci_ate_lo,"%9.6f")  + ", " + string(ci_ate_hi,"%9.6f")  + "]" if !missing(ci_ate_lo,ci_ate_hi)
+(2 real changes made)
+
+. replace ci_atet = "[" + string(ci_atet_lo,"%9.6f") + ", " + string(ci_atet_hi,"%9.6f") + "]" if !missing(ci_atet_lo,ci_atet_hi)
+(3 real changes made)
+
+. 
+. * 3) Versiones "LaTeX-safe" de strings (evita que LaTeX rompa)
+. gen strL method_tex    = method
+
+. gen strL support_tex   = support
+
+. gen strL algorithm_tex = algorithm
+
+. 
+. foreach v in method_tex support_tex algorithm_tex {
+  2.     replace `v' = subinstr(`v', "\", "\\textbackslash{}", .)
+  3.     replace `v' = subinstr(`v', "&", "\&", .)
+  4.     replace `v' = subinstr(`v', "%", "\%", .)
+  5.     replace `v' = subinstr(`v', "_", "\_", .)
+  6.     replace `v' = subinstr(`v', "#", "\#", .)
+  7. }
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(1 real change made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. 
+. * Export simple para llevar a Excel / LaTeX
+. export delimited using "tabla_resultados_matching.csv", replace
+file tabla_resultados_matching.csv saved
+
+. 
+. 
+. * (Opcional) generar un .tex con una tabla simple (sin depender de paquetes extra)
+. tempname _fh
+
+. file open `_fh' using "tabla_resultados_matching.tex", write replace
+
+. file write `_fh' "\begin{table}[!htbp]\centering" _n
+
+. file write `_fh' "\caption{Comparacion de estimadores (matching exacto)}" _n
+
+. file write `_fh' "\label{tab:matching_comparacion}" _n
+
+. file write `_fh' "\small" _n
+
+. file write `_fh' "\begin{tabular}{lllrrrrrrrr}" _n
+
+. file write `_fh' "\toprule" _n
+
+. file write `_fh' "Metodo & Soporte & Algoritmo & ATE & ATET & SE(ATE) & SE(ATET) & IC95(ATE) & IC95(ATET) & N1 & N0 \\" _n
+
+. file write `_fh' "\midrule" _n
+
+. 
+. forvalues i=1/`=_N' {
+  2.     local m  = method[`i']
+  3.     local s  = support[`i']
+  4.     local a  = algorithm[`i']
+  5.     local ate_s  = cond(missing(ate[`i']),  "", string(ate[`i'],  "%9.6f"))
+  6.     local atet_s = cond(missing(atet[`i']), "", string(atet[`i'], "%9.6f"))
+  7.     local seate_s  = cond(missing(se_ate[`i']),  "", string(se_ate[`i'],  "%9.6f"))
+  8.     local seatet_s = cond(missing(se_atet[`i']), "", string(se_atet[`i'], "%9.6f"))
+  9.         local ciate_s  = ci_ate[`i']
+ 10.     local ciatet_s = ci_atet[`i']
+ 11.     local n1 = string(N1[`i'])
+ 12.     local n0 = string(N0[`i'])
+ 13. 
+.     file write `_fh' "`m' & `s' & `a' & `ate_s' & `atet_s' & `seate_s' & `seatet_s' & `ciate_s' & `ciatet_s' & `n1' & `n0' \\\\" _n
+ 14. }
+
+. 
+. file write `_fh' "\bottomrule" _n
+
+. file write `_fh' "\end{tabular}" _n
+
+. file write `_fh' "\end{table}" _n
+
+. file close `_fh'
+
+. 
+. di as text "Se exportaron:"
+Se exportaron:
+
+. di as result " - tabla_resultados_matching.csv"
+ - tabla_resultados_matching.csv
+
+. di as result " - tabla_resultados_matching.tex"
+ - tabla_resultados_matching.tex
+
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Equipo\Downloads\2_Matching_exacto.log
+  log type:  text
+ closed on:  28 Mar 2026, 08:59:09
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

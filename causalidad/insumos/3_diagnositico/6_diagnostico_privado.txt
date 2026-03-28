@@ -1,0 +1,139 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T6 (IPWRA MULTIVALUE SOBRE EL DISEÑO GANADOR)
+
+Base usada para este diagnóstico: do + log + gráficos del taller actual, leídos junto con la decisión de diseño ya fijada en T7, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 06. Tema central: estimación de efectos causales con IPWRA multivaluado, usando como diseño fijo la especificación ganadora `IGNORE_ORG + S1`, elegida por el selector T7 bajo la regla TEW activada en esa corrida. La base es un panel de innovación, pero el objeto causal del taller no es una dinámica temporal sino la comparación entre estados de tratamiento dentro de la muestra filtrada. El outcome es `Y_cond`, definido como mejora ambiental media/alta entre firmas innovadoras. El tratamiento `D_pp_ignore` tiene cuatro estados: 0 = no innovación de producto/proceso, 1 = solo producto, 2 = solo proceso, 3 = ambas. El taller se restringe a firmas con actividades de innovación (`b1_9==1`), elimina observaciones con outcome faltante, descarta `macro_sector==3`, impone completitud en la unión de covariables de tratamiento y outcome, y luego aplica trimming sobre `p0` en el rango [0.05, 0.95]. Tras esas reglas, la muestra final para la estimación principal queda en 4.393 observaciones. 
+
+2. Qué es realmente este taller
+
+Este taller no debe leerse como comparación metodológica entre muchas especificaciones rivales. Tampoco como selector. Su función real es otra: correr y documentar el ganador ya fijado por el diseño en T7. En ese sentido, T6 es una pieza de estimación principal sobre especificación ganadora. El do-file está construido justamente así: “correr directamente el ganador”, respetando muestra, soporte y tratamiento de pesos, y luego producir diagnósticos gráficos y de balance. 
+
+Clasificación editorial sugerida:
+Especificación ganadora.
+
+3. Qué comparación causal se está estimando
+
+El taller quiere tres efectos diagonales, siempre contra el grupo base 0:
+
+* ATET_1 = E[Y(1) - Y(0) | D=1]
+* ATET_2 = E[Y(2) - Y(0) | D=2]
+* ATET_3 = E[Y(3) - Y(0) | D=3]
+
+Para evitar ambigüedad en el caso multivaluado, corre `teffects ipwra` tres veces con `tlevel(1)`, `tlevel(2)` y `tlevel(3)`, siempre con `control(0)`, y extrae explícitamente el contraste relevante `t vs 0`. La ecuación de tratamiento usa `mlogit`; la de outcome usa `logit`; y la inferencia principal está clusterizada a nivel `correlativo`. 
+
+4. Resultado principal
+
+El resultado principal es muy claro y ordenado: los tres ATET diagonales son positivos y estadísticamente distintos de cero.
+
+En la corrida principal sobre la muestra de diseño, el taller reporta:
+
+* ATET_1 = 0.11796, SE = 0.03344
+* ATET_2 = 0.18043, SE = 0.03312
+* ATET_3 = 0.27051, SE = 0.03155
+
+Eso implica una gradación muy nítida: el efecto estimado es menor para “solo producto”, mayor para “solo proceso”, y más alto todavía para “ambas”. En otras palabras, dentro de este diseño ganador, la innovación combinada aparece asociada con la mayor mejora ambiental reportada. 
+
+5. Balance y soporte
+
+El soporte efectivo luce muy sólido en esta corrida. El propio log muestra que, para cada contraste `t vs 0`, las variables `os_t1`, `os_t2` y `os_t3` no registran violaciones de soporte: todas las observaciones comparadas quedan con indicador 0. Eso es importante porque evita que la lectura central quede contaminada por una pérdida posterior de soporte dentro de `teffects`. 
+
+Además, los diagnósticos `tebalance summarize` muestran que el balance ponderado mejora mucho respecto al raw. Para los tres contrastes, los SMD ponderados quedan, en términos generales, muy por debajo de 0.10. En t=1 las covariables ponderadas más exigentes siguen siendo chicas; en t=2 también; y en t=3, aunque el raw es peor en varias covariables, el weighted baja fuerte y sigue dentro de una zona aceptable. Los loveplots que mandaste son coherentes con eso: t=1 y t=2 quedan muy cómodos, y t=3 sigue siendo el contraste más exigente, pero aun así no rompe el umbral de 0.10. 
+
+6. Qué aportan los gráficos de pesos y overlap
+
+Los gráficos sí suman valor acá.
+
+Los histogramas de pesos muestran que t=1 y t=2 tienen distribuciones de pesos de controles relativamente concentradas alrededor de 1 una vez normalizados, mientras que t=3 presenta una cola derecha más larga y, por tanto, una situación de reponderación más exigente. Eso no invalida el diseño, pero sí sugiere que el contraste “ambas vs 0” es el más demandante desde el punto de vista del weighting.
+
+Los gráficos de overlap también son informativos. En t=2, el solapamiento entre controles y tratados ya es bueno incluso sin ponderar. En t=1 y especialmente en t=3, el solapamiento raw es menos limpio, pero los gráficos ponderados muestran una alineación bastante mejor. Eso es consistente con la lógica del taller: no pretende que la muestra raw sea perfecta, sino que el weighting la lleve a una comparación más creíble.
+
+7. Qué lectura gana
+
+La lectura que gana es fuerte y sí orientada a especificación final.
+
+No es una comparación sin ganador.
+No es un ejercicio metodológico sin cierre.
+Acá la lectura correcta es:
+
+Dado el diseño ganador `IGNORE_ORG + S1`, elegido por T7 bajo la regla TEW activada en esa corrida, el IPWRA multivaluado encuentra evidencia positiva y ordenada de mejora ambiental frente al grupo sin innovación de producto/proceso, con magnitudes crecientes desde “solo producto” hasta “ambas”.
+
+Eso deja un objeto de decisión final bastante limpio: dentro del diseño elegido, el patrón empírico relevante es la jerarquía
+ATET_3 > ATET_2 > ATET_1 > 0.
+
+8. Qué sí puede decir una pieza pública
+
+Sí puede decir que:
+
+* una vez fijado el diseño ganador, el IPWRA multivaluado entrega tres efectos diagonales positivos frente al grupo base;
+* la magnitud del efecto aumenta cuando la innovación combina producto y proceso;
+* el balance ponderado queda bien en los tres contrastes;
+* el soporte efectivo no muestra violaciones en `teffects` para ninguno de los tres tlevels.
+
+También puede decir que este no es un taller de búsqueda de especificación, sino de estimación y lectura del diseño ganador ya fijado por T7.
+
+9. Qué no debe decir una pieza pública
+
+No debería decir que:
+
+* T6 prueba por sí solo que esa especificación era la mejor, porque esa decisión pertenece al selector T7 y, más precisamente, a la regla TEW activada en esa corrida;
+* el resultado ya es “definitivamente causal” sin condiciones, como si IPWRA eliminara cualquier amenaza no observada;
+* la innovación de producto o proceso “causa” mecánicamente esos porcentajes sin recordar que el outcome está definido en la submuestra de innovadores con resultado observado;
+* la comparación sectorial ya quedó cerrada con inferencia formal robusta, porque en el log las diferencias por macro-sector aparecen primero como point estimates, y el bootstrap paralelo posterior falla con error `r(700)`. 
+
+10. Observación metodológica importante
+
+Hay una nota técnica muy valiosa en el propio log y conviene dejarla explícita: los diagnósticos manuales de pesos y SMD no siempre coinciden exactamente con los diagnósticos internos de `teffects ipwra`, porque `teffects` puede modificar la muestra efectiva y usa pesos internos propios. El mismo taller deja asentado que, si se quiere replicar exactamente el balance de `teffects`, la fuente correcta es `tebalance summarize` inmediatamente después de cada estimación. Editorialmente, esto importa mucho: para una pieza pública o para un paper, el balance “oficial” del taller debe apoyarse en `tebalance`, no en los SMD manuales cuando difieran.
+
+11. Heterogeneidad por sector
+
+El taller también explora manufactura versus servicios. En point estimates, las diferencias entre sectores son casi nulas para ATET_1 y muy chicas para ATET_2, pero bastante más grandes para ATET_3:
+
+* diff1 = -0.00245
+* diff2 = 0.00828
+* diff3 = 0.11737
+
+Eso sugiere que la heterogeneidad sectorial más visible aparece en el tratamiento “ambas”. Pero esto debe leerse con cautela: el intento de bootstrap paralelo para esas diferencias falla completamente con `r(700)`, así que en este taller la comparación sectorial queda como evidencia descriptiva o exploratoria, no como resultado cerrado de inferencia final. 
+
+12. Riesgo editorial principal
+
+El principal riesgo editorial es doble.
+
+Por un lado, vender T6 como si él mismo eligiera el diseño ganador. No lo hace. Corre el ganador ya fijado por T7 bajo la regla TEW de esa corrida.
+Por otro lado, sobrecargar la pieza pública con demasiados gráficos de pesos y overlap, perdiendo la decisión central. Acá el lector no necesita quince figuras. Necesita entender tres cosas: cuál es el diseño fijado, cuáles son los tres ATET relevantes, y que el balance/soporte son aceptables.
+
+13. Objeto de decisión final recomendado
+
+El objeto final de decisión para una futura pieza pública debería ser una tabla corta con tres filas:
+
+* Solo producto vs 0
+* Solo proceso vs 0
+* Ambas vs 0
+
+Y columnas del tipo:
+ATET, error estándar, estado del balance/soporte.
+
+Debajo, una caja final de lectura algo así:
+
+“Sobre el diseño ganador IGNORE_ORG + S1, el IPWRA multivaluado encuentra efectos positivos frente al grupo sin innovación de producto/proceso. La magnitud crece desde solo producto hasta ambas, y los diagnósticos de soporte y balance no muestran señales de fragilidad severa.”
+
+14. Recomendación editorial concreta
+
+Este sí me parece un candidato fuerte a ficha pública dentro de causalidad. Mucho más fuerte que un selector puro. Pero su pieza pública ideal no debería salir sola, aislada de T7. La mejor estrategia editorial sería:
+
+* T7 como respaldo metodológico privado o subsección técnica de “cómo se eligió el diseño”.
+* T6 como pieza pública principal del bloque IPWRA.
+
+O sea: la cara visible del bloque debería ser T6, porque ahí está el resultado sustantivo; la justificación de por qué esa especificación manda quedaría apoyada por T7.
+
+15. Veredicto final
+
+Diagnóstico final:
+taller fuerte, publicable y con cierre claro. No es una comparación metodológica abierta, sino la estimación principal sobre una especificación ganadora ya fijada. La lectura empírica central es robusta dentro del taller: los tres ATET diagonales son positivos, el tratamiento combinado muestra el mayor efecto, y los diagnósticos de balance/soporte acompañan razonablemente bien.
+
+Etiqueta editorial sugerida:
+Especificación ganadora.
+
+Subetiqueta útil:
+resultado principal multivaluado con gradación clara de efectos: ambas > solo proceso > solo producto.

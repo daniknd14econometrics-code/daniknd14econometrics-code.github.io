@@ -1,0 +1,405 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=2.7cm}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bbm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=black}
+
+\newcommand{\q}[1]{``#1''}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\source}[2]{\footnote{Fuente: Slides p.~#1; Audio t=#2.}}
+\newcommand{\sourced}[3]{\footnote{Fuente: Slides p.~#1; Audio t=#2; Do-file: #3.}}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  framerule=0.3pt,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em
+}
+
+\title{Guía de estudio independiente\\Taller de Variables Instrumentales en contexto de LATE}
+\author{Microeconometría Aplicada}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\begin{tcolorbox}[colback=gray!6,colframe=gray!50,title=Nota de alcance]
+Este documento se redacta deliberadamente como un archivo \texttt{.tex} separado del archivo madre del curso. La decisión es metodológicamente razonable: el material no introduce un método nuevo distinto de la teoría de VI ya trabajada en la clase 3, sino que funciona como un taller aplicado de replicación, interpretación e implementación en Stata. Por eso conviene tratarlo como un complemento autónomo sobre \emph{Variables Instrumentales en el caso Angrist y Krueger (1991)}, sin ocupar la \q{Clase 4}, que queda reservada para RDD.
+\end{tcolorbox}
+
+\section{Taller 2: Variables Instrumentales}
+
+\noindent\textit{Fuentes integradas en este documento:} las slides del taller como fuente canónica del orden, los objetivos y la formalización mínima; la transcripción \texttt{txt} y el \texttt{srt} leídos completos para reconstruir la explicación oral; el \texttt{do-file} del práctico para fijar la implementación en Stata; y el archivo madre del curso como referencia de estilo, no como fuente sustantiva adicional.
+
+\subsection*{Índice interno breve}
+\begin{itemize}[leftmargin=1.5em]
+    \item Objetivos del taller y preparación de materiales.
+    \item Evidencia descriptiva: trimestre de nacimiento, educación e ingresos.
+    \item Estimador de Wald como cociente entre forma reducida y primera etapa.
+    \item Implementación por dos etapas \q{a mano} y con \texttt{ivreg2}.
+    \item Codificaciones alternativas del instrumento y especificaciones con controles.
+    \item Primer etapa, instrumentos débiles y lectura de Stock--Yogo.
+    \item Errores estándar robustos y estadístico de Kleibergen--Paap.
+    \item Implicancias de estimar un LATE con distintos instrumentos.
+    \item Preguntas de control, resumen y glosario.
+\end{itemize}
+
+\subsection{Objetivo del taller: pasar de la intuición teórica a la replicación empírica}
+
+Las slides dejan claro que el taller no está pensado como una segunda exposición teórica de VI, sino como una práctica guiada para \emph{replicar} la lógica empírica de Angrist y Krueger (1991). El foco está puesto en cuatro tareas: rehacer gráficos descriptivos, mirar explícitamente la primera etapa y la forma reducida, reproducir tablas de resultados y conectar el estimador de Wald con MC2E.\source{2}{00:00--08:00}
+
+El profesor, en el audio, trabaja exactamente en esa dirección. La clase arranca \q{adentro} del do-file, no en un pizarrón abstracto. La idea no es volver a discutir desde cero por qué VI identifica bajo relevancia, exogeneidad y exclusión ---eso ya había quedado en la clase teórica---, sino mostrar cómo esa lógica aterriza en decisiones concretas: cómo se codifica el trimestre de nacimiento, qué se grafica primero, por qué una primera etapa visual no alcanza, cuándo los errores estándar quedan mal calculados y por qué distintos instrumentos pueden cambiar el parámetro estimado.
+
+Hay además una advertencia pedagógica importante. Varias frases de Whisper están muy deterioradas; por ejemplo, en la transcripción aparece \q{Iberrake 2}, pero por contexto corresponde a \texttt{ivreg2}; también aparece \q{compliance}, pero por contexto el profesor está hablando de \emph{compliers}. Como las slides ordenan muy bien el recorrido, se puede corregir ese ruido sin alterar el contenido de la clase.
+
+\subsection{Paso cero: base, do-file y construcción de variables}
+
+El \q{paso cero} del taller es completamente operativo: descargar materiales, abrir la base y abrir el do-file.\source{3}{00:00--08:00} Esa aparente trivialidad tiene sentido econométrico. En VI, buena parte del argumento causal se juega en cómo se construyen las variables que van a representar la fuente de variación exógena. En este caso, el práctico trabaja con datos del censo de EE.UU.\ de 1980 y con la estrategia clásica de trimestre de nacimiento.
+
+El do-file hace tres cosas preparatorias que conviene tener presentes. Primero, renombra variables para volver legible la base: educación, log salario semanal, trimestre de nacimiento, año de nacimiento, edad, estado civil, región, etc. Segundo, armoniza cohortes y codificaciones de año de nacimiento. Tercero, construye dummies por año y por trimestre, además de interacciones entre ambas. Ese último paso no es meramente técnico: refleja que la variación explotada por Angrist y Krueger no es \q{nacer en tal trimestre} en abstracto, sino nacer en cierto trimestre \emph{dentro de una cohorte determinada}. \sourced{3}{00:00--08:00}{bloques de renombrado, cohortes, dummies por año/trimestre e interacciones \(i.AdN\#i.TdN\)}
+
+Una traducción compacta del do-file sería la siguiente:
+\begin{lstlisting}
+rename v4 educ
+rename v9 logSalSem
+rename v18 TdN
+rename v27 AdN
+
+gen TRIM1 = TdN==1
+gen TRIM2 = TdN==2
+gen TRIM3 = TdN==3
+gen TRIM4 = TdN==4
+\end{lstlisting}
+
+Más adelante, el archivo también genera grupos año--trimestre para construir promedios descriptivos y arma interacciones entre dummies de año de nacimiento y trimestre de nacimiento. El audio no se detiene demasiado en la sintaxis fina aquí; el agregado oral relevante es otro: antes de correr cualquier IV conviene \emph{mirar} si el instrumento parece mover a la variable endógena y si también aparece alguna señal en el resultado.
+
+\subsection{Primera evidencia descriptiva: trimestre de nacimiento y logro educacional}
+
+Las slides pasan enseguida a la relación entre trimestre de nacimiento y educación. La idea es computar el promedio de años de educación para cada combinación año--trimestre de nacimiento y graficarlo en el orden de esas celdas.\source{4--9}{00:00--08:00}
+
+Ese gráfico cumple la función de una primera etapa \emph{descriptiva}. No es todavía la primera etapa econométrica con errores estándar, \(p\)-values y test conjuntos, pero sí permite ver si hay una regularidad visual consistente con relevancia. En el do-file, esa parte se implementa agrupando por año y trimestre y calculando el promedio de educación dentro de cada celda:
+\begin{lstlisting}
+sort AdN TdN
+egen AdNTdN = group(AdN TdN)
+bysort AdNTdN: egen prom_edu = mean(educ)
+
+scatter prom_edu AdNTdN if AdN<=40
+scatter prom_edu AdNTdN if AdN>=40 & AdN<=50
+\end{lstlisting}
+
+La lectura económica de esos gráficos es sencilla pero importante. Si el trimestre de nacimiento está vinculado a la edad a la que una persona puede dejar legalmente la escuela, entonces nacer antes o después dentro del año puede cambiar la educación completada. El profesor lo usa como chequeo visual de la condición \(\Cov(Z,X)\neq 0\): \q{a priori, trimestre de nacimiento mueve la educación}. Esa es una buena noticia para la relevancia, pero no un resultado final. El propio audio insiste en que una figura ascendente no reemplaza a la regresión de primera etapa y menos todavía a los tests de fortaleza del instrumento. \sourced{4--9}{00:00--08:00}{bloque \texttt{prom\_edu} y gráficos \texttt{scatter}}
+
+Hay además un matiz útil que el audio enfatiza. El efecto no tiene por qué ser enorme en unidades de años de educación. La variación que el instrumento induce en \(X\) puede ser chica en términos absolutos y aun así ser econométricamente relevante. Eso prepara el terreno para dos ideas del final del taller: la preocupación por instrumentos débiles y la interpretación local de VI.
+
+\subsection{Forma reducida: trimestre de nacimiento e ingresos}
+
+El siguiente bloque de slides repite la lógica descriptiva, pero ahora sobre ingresos. Se computa el promedio del log salario semanal para cada celda año--trimestre y se vuelve a graficar.\source{10--12}{08:00--16:00} En el do-file:
+\begin{lstlisting}
+bysort AdNTdN: egen prom_sal = mean(logSalSem)
+scatter prom_sal AdNTdN if AdN>=30 & AdN<=50
+\end{lstlisting}
+
+Este gráfico es la contraparte visual de la \emph{forma reducida}. Si el trimestre de nacimiento modifica la educación y, a través de ella, modifica ingresos, entonces debería aparecer alguna relación entre \(Z\) y \(Y\). El profesor lo resume justamente así: trimestre de nacimiento \q{mueve} salarios, presumiblemente a través de educación. En lenguaje de momentos, el argumento es que aparece señal en \(\Cov(Z,Y)\), mientras que la historia causal del diseño sostiene que esa señal opera por la vía de \(X\). \sourced{10--12}{08:00--16:00}{bloque \texttt{prom\_sal} y gráfico \texttt{scatter}}
+
+Acá conviene no sobrerreclamar lo que muestran las figuras. Un patrón visual compatible con forma reducida no prueba, por sí solo, la restricción de exclusión. Lo que hace es volver plausible la historia empírica del diseño y mostrar que el instrumento no es completamente irrelevante para el resultado. La validez causal sigue descansando en la argumentación institucional trabajada en la clase teórica y en la plausibilidad de que el trimestre de nacimiento afecte salarios sólo a través de la escolaridad completada.
+
+\subsection{Estimador de Wald: del gráfico al cociente de diferencias}
+
+Una vez mostradas la primera etapa descriptiva y la forma reducida descriptiva, el taller da el salto central: si el instrumento es binario, el estimador de Wald se puede leer como el cociente entre el cambio en ingresos inducido por \(Z\) y el cambio en educación inducido por \(Z\).\source{13--14}{08:00--16:00}
+
+La explicación oral es muy transparente: tomar el ingreso medio de quienes nacieron en el trimestre 1 menos el ingreso medio de quienes nacieron en los otros trimestres, y dividirlo por la diferencia análoga en educación. Eso es exactamente lo que está haciendo IV cuando el instrumento es binario. Vale la pena escribir la equivalencia sin compactarla:
+\[
+\begin{aligned}
+Y_i &= \alpha + \beta X_i + \varepsilon_i, \\
+X_i &= \pi_0 + \pi_1 Z_i + u_i,
+\end{aligned}
+\]
+con \(Z_i\in\{0,1\}\), donde \(Z_i=1\) indica \q{nacer en el primer trimestre}. Entonces,
+\[
+\begin{aligned}
+\E[Y_i\mid Z_i=1]-\E[Y_i\mid Z_i=0]
+&=\E[\alpha+\beta X_i+\varepsilon_i\mid Z_i=1]
+ -\E[\alpha+\beta X_i+\varepsilon_i\mid Z_i=0]
+ \qquad \text{(sustitución del modelo estructural)}\\
+&=\beta\Big(\E[X_i\mid Z_i=1]-\E[X_i\mid Z_i=0]\Big)
+ +\Big(\E[\varepsilon_i\mid Z_i=1]-\E[\varepsilon_i\mid Z_i=0]\Big)
+ \qquad \text{(linealidad de \(\E[\cdot]\))}\\
+&=\beta\Big(\E[X_i\mid Z_i=1]-\E[X_i\mid Z_i=0]\Big)
+ \qquad \text{(por exogeneidad del instrumento)}\\
+&\qquad \text{con }\E[\varepsilon_i\mid Z_i=1]=\E[\varepsilon_i\mid Z_i=0].
+\end{aligned}
+\]
+Si además la primera etapa no es nula, podemos dividir ambos lados por la diferencia en \(X\):
+\[
+\begin{aligned}
+\beta
+&=\frac{\E[Y_i\mid Z_i=1]-\E[Y_i\mid Z_i=0]}
+        {\E[X_i\mid Z_i=1]-\E[X_i\mid Z_i=0]}
+\qquad \text{(división por la variación inducida en \(X\))}\\
+&=\underbrace{\frac{\text{efecto de }Z\text{ sobre }Y}{\text{efecto de }Z\text{ sobre }X}}_{\text{forma reducida / primera etapa}}.
+\end{aligned}
+\]
+Por lo tanto,
+\[
+\boxed{
+\beta^{Wald}
+=
+\frac{\E[Y_i\mid Z_i=1]-\E[Y_i\mid Z_i=0]}
+{\E[X_i\mid Z_i=1]-\E[X_i\mid Z_i=0]}
+=
+\frac{\underbrace{\Delta_Y(Z=1,Z=0)}_{\text{forma reducida}}}
+{\underbrace{\Delta_X(Z=1,Z=0)}_{\text{primera etapa}}}
+}.
+\]
+Esta es exactamente la equivalencia que el profesor verbaliza cuando dice que el coeficiente estimado \q{puede escribirse con el cociente de dos restas}. En la transcripción aparece \q{operación} donde claramente corresponde a \q{educación}. \source{13--14}{08:00--16:00}
+
+En el práctico, ese Wald aparece numéricamente muy cerca de \(0.102\). La lectura oral es inmediata: un año más de educación aumenta el ingreso en alrededor de \(10.2\%\), recordando que la variable dependiente está en logaritmos. Esa interpretación es útil, pero el profesor agrega una cautela esencial: ese \(10.2\%\) no es \q{el retorno universal a la educación}; es el retorno local identificado por la variación del trimestre de nacimiento.
+
+\subsection{De Wald a MC2E: la misma idea escrita como regresiones}
+
+El audio insiste en que el estimador anterior no es una receta separada de MC2E. Es la misma lógica escrita de otra manera. Si uno corre la primera etapa, luego predice \(X\) usando sólo la parte explicada por el instrumento, y finalmente regresa \(Y\) sobre esa \(X\) predicha, obtiene el mismo coeficiente que con el cociente de Wald cuando el instrumento es binario.\source{13--17}{08:00--24:00}
+
+La secuencia \q{a mano} del do-file es:
+\begin{lstlisting}
+gen Z = TdN==1
+
+reg educ Z if AdN>=1930 & AdN<1940
+predict xhat
+
+reg logSalSem xhat if AdN>=1930 & AdN<1940
+\end{lstlisting}
+
+La intuición oral es muy buena y vale la pena conservarla. Cuando se usa \texttt{predict}, lo que se obtiene no es \q{la verdadera educación} de cada persona, sino la parte de la educación que puede reconstruirse \emph{solamente} a partir del trimestre de nacimiento. Esa \( \hat X_i \) es, en palabras del profesor, la \q{variación exógena de la educación}. En la transcripción aparece \q{X borro}, pero por contexto corresponde a \(X\) gorro. \sourced{13--17}{16:00--24:00}{bloque \texttt{reg educ Z}; \texttt{predict}; \texttt{reg logSalSem xhat}}
+
+Conviene escribir el mecanismo:
+\[
+\begin{aligned}
+X_i &= \pi_0+\pi_1 Z_i+u_i
+\qquad \text{(primera etapa)}\\
+\hat X_i &= \hat\pi_0+\hat\pi_1 Z_i
+\qquad \text{(predicción usando sólo \(Z_i\))}\\
+Y_i &= \alpha+\beta \hat X_i+\nu_i
+\qquad \text{(segunda etapa escrita con la parte exógena de \(X_i\))}.
+\end{aligned}
+\]
+La gracia económica de \(\hat X_i\) no es que prediga bien los niveles individuales de educación. De hecho, el profesor subraya exactamente lo contrario: la predicción es \q{porquería} como pronóstico individual, porque su dispersión es ínfima comparada con la de la educación observada. Sin embargo, eso no invalida el método. Lo que necesitamos no es un excelente \emph{predictor} de \(X\), sino un \emph{extractor} de la parte de \(X\) que proviene de una fuente exógena. Ese comentario oral es uno de los puntos más valiosos del taller.\source{13--17}{16:00--24:00}
+
+\subsection{Por qué no conviene quedarse con la versión \q{a mano}: errores estándar}
+
+Acá aparece una advertencia central del práctico. Aunque el coeficiente salga igual si uno hace las dos regresiones manualmente, los errores estándar no quedan bien calculados. La razón es que la segunda etapa trata a \(\hat X_i\) como si fuera una variable observada sin error, cuando en realidad fue estimada en una primera etapa y arrastra incertidumbre propia.\source{17--20}{16:00--32:00}
+
+La intuición oral es muy concreta: cada valor predicho de \(\hat X_i\) tiene su propio intervalo de confianza, y esa fuente de ruido debe entrar en la inferencia final. Por eso el profesor recomienda pasar a \texttt{ivreg2}, que implementa correctamente la estimación y reporta, además, varios tests útiles.
+
+El práctico lo muestra de manera explícita:
+\begin{lstlisting}
+ivregress 2sls logSalSem (educ=Z) if AdN>=1930 & AdN<1940
+ivreg2     logSalSem (educ=Z) if AdN>=1930 & AdN<1940
+ivreg2     logSalSem (educ=Z) if AdN>=1930 & AdN<1940, first
+\end{lstlisting}
+
+El mensaje econométrico de fondo es simple. \texttt{ivregress 2sls} y \texttt{ivreg2} recuperan el mismo parámetro, pero \texttt{ivreg2} ofrece una salida mucho más informativa para estudiar la primera etapa y la fortaleza del instrumento. El audio remarca dos ventajas: reportar directamente la primera etapa y mostrar tests específicos de debilidad de instrumento. \sourced{17--19}{24:00--32:00}{bloques \texttt{ivregress 2sls}, \texttt{ivreg2}, opción \texttt{first}}
+
+\subsection{Tres maneras de codificar el instrumento y por qué eso cambia la variación explotada}
+
+Una parte especialmente útil del taller es que no se queda con una única codificación de trimestre de nacimiento. El práctico muestra al menos tres opciones y el audio insiste en que no son equivalentes en interpretación.\source{17--18}{24:00--32:00}
+
+La primera opción es binaria:
+\[
+Z_i=\mathbbm{1}\{TdN_i=1\}.
+\]
+Ahí el contraste es \q{primer trimestre} contra \q{resto de trimestres}. Ese caso reproduce limpiamente la lectura tipo Wald entre \q{tratados} y \q{controles} que propone la slide.
+
+La segunda opción usa el trimestre como variable numérica,
+\[
+Z_i\in\{1,2,3,4\},
+\]
+lo cual impone una estructura lineal: aumentar un trimestre cambia \(X\) en una misma cantidad promedio. El audio llama la atención sobre esto porque, si la relación verdadera no es lineal entre trimestres, esa parametrización puede esconder heterogeneidad relevante.
+
+La tercera opción usa dummies trimestrales:
+\[
+X_i=\pi_0+\pi_2Q2_i+\pi_3Q3_i+\pi_4Q4_i+u_i,
+\]
+dejando al trimestre 1 como categoría omitida para evitar multicolinealidad. Esta especificación permite que el salto entre trimestre 1 y 2 no sea igual al salto entre 1 y 4. El profesor lo explica justamente así: con tres instrumentos, uno ve con más detalle \emph{cómo} cambia la educación cuando cambia el trimestre de nacimiento. En la transcripción aparece \q{tenemos tres AMIs}; por contexto corresponde a \q{tres dummies}. \source{17--18}{24:00--32:00}
+
+El do-file refleja esas tres variantes:
+\begin{lstlisting}
+ivreg2 logSalSem (educ=Z)      if AdN>=1930 & AdN<1940, first
+ivreg2 logSalSem (educ=TdN)    if AdN>=1930 & AdN<1940, first
+ivreg2 logSalSem (educ=i.TdN)  if AdN>=1930 & AdN<1940, first
+\end{lstlisting}
+
+El audio agrega la intuición sustantiva detrás de esta comparación: distintos instrumentos, o distintas maneras de codificar una misma fuente de variación, pueden empujar a personas distintas. Por eso el \(\beta^{IV}\) puede cambiar sin que eso implique automáticamente que una especificación está \q{mal} y la otra \q{bien}. En un marco LATE, cambiar el instrumento cambia la población local que se está usando para identificar.
+
+\subsection{\texorpdfstring{Especificaciones con controles y con interacciones año de nacimiento \(\times\) trimestre}{Especificaciones con controles y con interacciones año de nacimiento x trimestre}}
+
+Las slides piden correr MCO y 2SLS controlando por distintas combinaciones de covariables: raza, urbano, casado, dummies por año de nacimiento, edad, edad al cuadrado y región.\source{17}{24:00--32:00} El do-file va en esa dirección y, además, replica la estrategia más cercana a Angrist y Krueger al usar interacciones entre dummies de año de nacimiento y trimestre de nacimiento como instrumentos excluidos.
+
+En forma esquemática, la especificación completa del práctico se puede escribir como
+\[
+\begin{aligned}
+Y_i &= \alpha + \beta X_i + W_i'\delta + \varepsilon_i,\\
+X_i &= \pi_0 + W_i'\gamma + \sum_c \lambda_c Cohorte_{ic}
+     + \sum_c \sum_{q=2}^{4}\pi_{cq}\big(Cohorte_{ic}\times Quarter_{iq}\big)+u_i,
+\end{aligned}
+\]
+donde \(W_i\) reúne controles como edad y edad cuadrática. El punto no es \q{cargar controles porque sí}, sino separar mejor la variación del instrumento de otras diferencias observables entre cohortes o regiones. El profesor da un ejemplo muy intuitivo: si ciertas zonas urbanas y rurales tienen patrones distintos de nacimiento y también niveles distintos de educación, omitir esos controles puede contaminar la lectura del instrumento. \source{17--18}{24:00--32:00}
+
+El bloque más representativo del do-file es:
+\begin{lstlisting}
+ivreg2 logSalSem edad edadTQ ///
+      (educ=i.AdN#i.TdN i.AdN) ///
+      if AdN>=1930 & AdN<1940, first
+\end{lstlisting}
+
+La explicación oral agrega dos puntos finos. Primero, cuando se ponen dummies e interacciones, siempre hay que dejar categorías omitidas para evitar colinealidad perfecta. Segundo, el coeficiente puede cambiar al introducir controles no sólo porque \q{mejora} la especificación, sino porque cambia la variación neta que está quedando disponible para identificar el efecto causal. Esa advertencia es metodológicamente sana: no hay que leer cualquier cambio en \(\hat\beta^{IV}\) como una simple corrección mecánica hacia \q{la verdad}. \sourced{17--18}{24:00--32:00}{bloques con \(i.AdN\), \(i.TdN\) e interacciones}
+
+\subsection{Resultados de primera etapa e instrumentos débiles}
+
+El tramo siguiente del taller es probablemente el más importante como entrenamiento empírico. Una vez corrida la regresión IV, el profesor se detiene en la pregunta \q{\emph{qué tan fuerte es el instrumento?}}. Las slides indican explícitamente que hay que mirar la primera etapa, el estadístico \(F\) y, bajo homocedasticidad, el estadístico de Cragg--Donald con la tabulación de Stock y Yogo.\source{19}{32:00--48:00}
+
+La hipótesis nula de ese chequeo conjunto es que los instrumentos excluidos no explican la variable endógena en la primera etapa. En símbolos, si \(Z_i^{excl}\) denota el conjunto de instrumentos excluidos,
+\[
+H_0:\ \pi_1=\pi_2=\cdots=\pi_K=0.
+\]
+Lo que interesa es rechazar esa hipótesis. Pero el taller va más allá del mero rechazo estadístico y entra en la lógica de \emph{instrumentos débiles}. El profesor explica dos maneras de leer la tabulación de Stock y Yogo.
+
+La primera lectura es la de \q{sesgo relativo}. Si el instrumento está demasiado débilmente relacionado con \(X\), el estimador IV puede heredar más sesgo relativo respecto de MCO. La explicación oral usa justamente esa intuición: cuando \(Z\) está demasiado \q{pegada} a una parte problemática del sistema y muy poco a la variación útil de \(X\), el procedimiento deja de purgar bien la endogeneidad.
+
+La segunda lectura es la del \q{size distortion} o \q{maximal IV size}. Acá la intuición del audio es muy buena: si la variación inducida por el instrumento en el denominador del cociente es muy pequeña, cualquier pequeño error en esa diferencia puede hacer explotar la estimación. Es decir, no sólo importa que haya correlación entre \(Z\) y \(X\), sino que la magnitud de la primera etapa no sea microscópica. \source{19}{40:00--48:00}
+
+Para conectar esa idea con el caso Wald, conviene escribir:
+\[
+\beta^{Wald}
+=
+\frac{\underbrace{\E[Y_i\mid Z_i=1]-\E[Y_i\mid Z_i=0]}_{\text{numerador}}}
+{\underbrace{\E[X_i\mid Z_i=1]-\E[X_i\mid Z_i=0]}_{\text{denominador}}}.
+\]
+Si el denominador está demasiado cerca de cero,
+\[
+\begin{aligned}
+\beta^{Wald}
+&=\frac{\Delta Y}{\Delta X},\\
+\Delta X &\approx 0
+\qquad \Rightarrow \qquad
+\text{pequeños errores en }\Delta X\text{ generan grandes cambios en }\beta^{Wald}.
+\end{aligned}
+\]
+Por eso el taller insiste en que no alcanza con decir \q{la primera etapa es significativa}; hay que mirar si es \emph{suficientemente fuerte}.
+
+El práctico usa:
+\begin{lstlisting}
+ivreg2 logSalSem edad edadTQ ///
+      (educ=i.AdN#i.TdN i.AdN) ///
+      if AdN>=1930 & AdN<1940, first
+\end{lstlisting}
+y luego lee la salida con criterios de Stock--Yogo. En las notas del do-file aparecen valores críticos del orden de \(11.24\) y \(21.39\) para sesgo relativo, y un umbral mucho más alto para \q{maximal IV size}. El mensaje práctico es inequívoco: una \(F\) observada muy por debajo de esos valores prende una alarma seria de instrumento débil. \sourced{19}{40:00--48:00}{bloque \texttt{ivreg2 ..., first} y comentarios sobre Stock--Yogo}
+
+\subsection{Errores estándar heteroscedásticos y estadístico de Kleibergen--Paap}
+
+La slide siguiente agrega una complicación realista: heteroscedasticidad.\source{20}{48:00--56:00} El mensaje del taller es doble. Primero, si se quieren errores estándar robustos, conviene usar \texttt{ivreg2}, porque el tratamiento de la primera etapa y de la inferencia es más completo que en implementaciones básicas. Segundo, al pasar a robustez heteroscedástica, el diagnóstico de fortaleza cambia: el estadístico relevante pasa a ser el \emph{Kleibergen--Paap rk statistic}.
+
+En el do-file esto aparece así:
+\begin{lstlisting}
+ivreg2 logSalSem edad edadTQ ///
+      (educ=i.AdN#i.TdN i.AdN) ///
+      if AdN>=1930 & AdN<1940, robust first
+\end{lstlisting}
+
+La explicación oral acá es bastante honesta: bajo heteroscedasticidad no se dispone tan limpiamente de la misma tabulación universal que se usa en el caso homocedástico. Por eso la clase propone una regla práctica prudente: mirar el estadístico robusto, pero usar la tabla de homocedasticidad como referencia orientativa y exigir, en todo caso, una primera etapa claramente fuerte. No es una solución perfecta; es una forma aplicada de no leer con ingenuidad un IV frágil. \source{20}{48:00--56:00}
+
+La slide siguiente muestra la portada de un trabajo reciente sobre inferencia válida en IV. El audio prácticamente no agrega detalle ahí. La función pedagógica de esa inserción parece ser otra: recordar que la inferencia con instrumentos débiles no se agota en la heurística \(F>10\), y que existe una literatura más moderna dedicada a construir procedimientos robustos cuando la primera etapa es problemática.\source{21}{48:00--56:00}
+
+\subsection{Implicancias de estimar LATE: por qué distintos instrumentos pueden dar distintos resultados}
+
+El cierre del taller vuelve al punto conceptual más fino: IV estima un \emph{Local Average Treatment Effect}. Las slides lo dicen explícitamente y el audio lo reformula con un ejemplo intuitivo.\source{22}{16:00--32:00 y 56:00--56:30}
+
+El efecto IV no es el promedio sobre toda la población, sino el promedio sobre quienes cambian su comportamiento por el instrumento. Si llamamos \(\mathcal{C}(Z)\) al conjunto de \emph{compliers} inducidos por \(Z\), entonces la lectura conceptual es
+\[
+\beta^{IV}(Z)=\E\big[Y_i(1)-Y_i(0)\mid i\in \mathcal{C}(Z)\big].
+\]
+Esto ayuda a entender por qué dos instrumentos distintos pueden producir coeficientes distintos sin que eso signifique automáticamente contradicción. Si \(Z_1\) mueve a un tipo de individuos y \(Z_2\) mueve a otro tipo, entonces
+\[
+\boxed{
+\beta^{IV}(Z_1)
+=
+\E\big[Y_i(1)-Y_i(0)\mid i\in \mathcal{C}(Z_1)\big]
+\neq
+\E\big[Y_i(1)-Y_i(0)\mid i\in \mathcal{C}(Z_2)\big]
+=
+\beta^{IV}(Z_2)
+}
+\]
+porque, simplemente, las poblaciones locales son distintas.
+
+La slide usa un ejemplo hipotético de dos instrumentos: uno que afecta a individuos \q{muy hábiles} y otro que afecta a individuos \q{poco hábiles}. El audio lo reformula de manera todavía más cotidiana: un instrumento puede cambiar la educación de quienes nacen en cierto momento del año, mientras otro puede cambiar la educación de quienes viven lejos o cerca de una institución. Ambos son \q{efecto de la educación sobre ingreso}, pero explotando márgenes distintos de decisión. \source{22}{24:00--32:00}
+
+Este punto también ayuda a releer la comparación entre MCO e IV que aparece en el práctico. Que \(\hat\beta^{OLS}\) y \(\hat\beta^{IV}\) difieran no autoriza, por sí solo, a interpretar toda la diferencia como \q{sesgo corregido}. Parte de la brecha puede venir de endogeneidad; pero parte puede venir, simplemente, de que MCO promedia sobre toda la muestra y IV sobre un subconjunto local de compliers. Esa advertencia aparece con mucha claridad en los comentarios del do-file y es una muy buena vacuna contra comparaciones ingenuas. \sourced{22}{16:00--32:00}{comentarios al comparar \texttt{reg} con \texttt{ivregress/ivreg2}}
+
+\subsection{Preguntas de control y mini-ejercicios}
+
+\begin{enumerate}[leftmargin=1.7em]
+    \item Explicá con palabras por qué los gráficos de educación contra año--trimestre de nacimiento son una evidencia de primera etapa \emph{descriptiva}, pero no un test suficiente de fortaleza del instrumento.
+    \item Derivá el estimador de Wald a partir de la igualdad
+    \[
+    \E[Y\mid Z=1]-\E[Y\mid Z=0]
+    =
+    \beta\big(\E[X\mid Z=1]-\E[X\mid Z=0]\big),
+    \]
+    indicando en qué paso se usa exogeneidad del instrumento.
+    \item ¿Qué diferencia conceptual hay entre usar \(Z=\mathbbm{1}\{TdN=1\}\), usar \(Z=TdN\) y usar \(Z=(Q2,Q3,Q4)\) como conjunto de dummies instrumentales?
+    \item ¿Por qué hacer las dos etapas \q{a mano} entrega el mismo coeficiente pero no los mismos errores estándar correctos?
+    \item ¿Qué información adicional aporta \texttt{ivreg2, first} respecto de una salida IV estándar?
+    \item ¿Por qué un valor bajo de la primera etapa puede volver extremadamente inestable al cociente tipo Wald?
+    \item Si dos instrumentos válidos producen dos estimaciones IV distintas, ¿qué interpretación LATE ayuda a racionalizar esa diferencia?
+\end{enumerate}
+
+\subsection{Resumen final del taller}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item El taller operacionaliza la lógica de VI ya vista en teoría: partir de una fuente de variación exógena, mostrar primera etapa, mostrar forma reducida y conectar ambas con Wald y MC2E.
+    \item Los gráficos por año--trimestre son un primer chequeo visual útil, pero no reemplazan la estimación formal de la primera etapa.
+    \item Con instrumento binario, el estimador de Wald coincide con el cociente entre forma reducida y primera etapa, y también con MC2E.
+    \item La variable predicha en la primera etapa no tiene que ser una buena predicción individual de educación; tiene que aislar la parte exógena de la educación inducida por el instrumento.
+    \item Hacer dos etapas manuales sirve para entender el método, pero no para inferencia final; para eso conviene \texttt{ivreg2}.
+    \item Distintas codificaciones del instrumento y distintas combinaciones de controles cambian la variación explotada y, con ello, la interpretación local del parámetro.
+    \item La fortaleza de los instrumentos no se resume en \q{es significativo}; hay que mirar primera etapa, \(F\), Cragg--Donald o Kleibergen--Paap, y leer críticamente la posibilidad de instrumentos débiles.
+    \item El parámetro IV es local: distintos instrumentos pueden identificar distintos LATEs porque afectan a distintos grupos de compliers.
+\end{itemize}
+
+\subsection{Glosario de la guía}
+
+\begin{description}[leftmargin=1.8em,style=nextline]
+    \item[Primera etapa] Regresión de la variable endógena sobre los instrumentos y controles. Mide qué parte de \(X\) logra mover el instrumento.
+    \item[Forma reducida] Regresión del resultado \(Y\) sobre el instrumento \(Z\) y controles. Resume cuánto cambia \(Y\) cuando cambia \(Z\).
+    \item[Estimador de Wald] Cociente entre el efecto del instrumento sobre \(Y\) y el efecto del instrumento sobre \(X\), en el caso de instrumento binario.
+    \item[MC2E / 2SLS] Procedimiento que primero proyecta \(X\) sobre los instrumentos y luego usa esa parte proyectada para estimar el efecto sobre \(Y\).
+    \item[\texttt{ivreg2}] Comando de Stata útil para IV porque reporta correctamente inferencia, primera etapa y tests de instrumentos débiles.
+    \item[Cragg--Donald] Estadístico usado, bajo homocedasticidad, para diagnosticar fortaleza de instrumentos en modelos IV.
+    \item[Stock--Yogo] Tabulación de valores críticos usada para interpretar la gravedad potencial de un problema de instrumentos débiles.
+    \item[Kleibergen--Paap rk] Estadístico robusto a heteroscedasticidad para evaluar relevancia conjunta de los instrumentos.
+    \item[Compliers] Individuos cuya decisión de tratamiento cambia cuando cambia el instrumento.
+    \item[LATE] Efecto promedio local del tratamiento: el efecto causal promedio sobre los compliers inducidos por el instrumento utilizado.
+\end{description}
+
+\end{document}

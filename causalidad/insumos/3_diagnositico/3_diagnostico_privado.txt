@@ -1,0 +1,232 @@
+DIAGNÓSTICO EDITORIAL PRIVADO — CAUSALIDAD T3 (SELECTOR AUTOMÁTICO PARA MATCHING EXACTO / CEM)
+
+Base usada para este diagnóstico: exclusivamente do + log + gráfico del taller actual, más criterios editoriales ya fijados.
+
+1. Identificación básica
+
+Taller 03. Tema central: diseño de un selector automático para elegir, dentro de un conjunto de candidatos de matching exacto y CEM, una especificación ganadora en la etapa de diseño, y recién después estimar el efecto. La aplicación sigue siendo la misma del taller anterior: hogares, microcrédito femenino (`dfmfd`) como tratamiento, y `lexptot = ln(1+exptot)` como outcome.
+
+La diferencia respecto al taller 02 no está en la base ni en la pregunta aplicada, sino en la arquitectura metodológica: este taller formaliza un criterio automático de selección entre alternativas de diseño.
+
+2. Qué es realmente este taller
+
+Este taller no debe leerse como una nueva pieza aplicada independiente sobre microcrédito. Su función real es técnica y metodológica. Más precisamente, es una pieza de diseño empírico: ordena cómo elegir entre distintos esquemas de matching sin usar el outcome para “optimizar resultados”.
+
+La idea central del taller está muy bien planteada:
+
+* separar DISEÑO de ANÁLISIS;
+* en DISEÑO, elegir con criterios de balance y soporte;
+* en ANÁLISIS, estimar el efecto solo para el método ganador.
+
+Clasificación editorial sugerida:
+Pieza principalmente técnica / apéndice metodológico.
+
+3. Núcleo metodológico del taller
+
+El aporte fuerte de este taller es conceptual y operativo al mismo tiempo.
+
+El selector compara candidatos usando:
+
+* balance: `max|SMD|`, `mean|SMD|`, y L1;
+* soporte / precisión-proxy: ESS de controles y número de tratados retenidos.
+
+Y lo más importante:
+NO usa el outcome, ni el ATET, ni el error estándar bootstrap para rankear. Eso es un acierto metodológico claro, porque evita elegir una especificación por el tamaño o la “conveniencia” del resultado final.
+
+En esta corrida, el modo base usa:
+
+* `USE_CORE = 1`;
+* `ADD_SQ = 0`;
+* umbral principal `max|SMD| <= 0.10`.
+
+Eso implica que el diseño y la evaluación de balance se hacen solo con el conjunto core de covariables:
+`sexhead`, `vaccess`, `agehead`, `educhead`, `lnland`, `pcirr`.
+
+4. Qué candidatos se comparan
+
+El selector evalúa seis candidatos:
+
+Exact:
+
+* S1
+* S2
+
+CEM:
+
+* sturges
+* fd
+* scott
+* ss
+
+La tabla de resultados deja algo muy útil para lectura editorial:
+
+* Exact / S1:
+  max|SMD| = 0.0839
+  ESS0 = 164.26
+  N1 = 409
+  N0 = 325
+
+* Exact / S2:
+  max|SMD| = 0.1697
+  ESS0 = 268.99
+  N1 = 505
+  N0 = 431
+
+* CEM / sturges:
+  max|SMD| = 0.1024
+  ESS0 = 124.70
+  N1 = 279
+  N0 = 195
+
+* CEM / fd:
+  max|SMD| = 0.2114
+  ESS0 = 86.15
+  N1 = 201
+  N0 = 156
+
+* CEM / scott:
+  max|SMD| = 0.0184
+  ESS0 = 63.59
+  N1 = 192
+  N0 = 157
+
+* CEM / ss:
+  max|SMD| = 0.1873
+  ESS0 = 17.60
+  N1 = 22
+  N0 = 20
+
+5. Lectura que gana
+
+La lectura principal del taller es muy clara:
+
+el “mejor” diseño no se define por el estimando más atractivo, sino por una regla explícita de compromiso entre balance y soporte.
+
+Con el umbral base `max|SMD| <= 0.10`, los candidatos que pasan son:
+
+* Exact / S1
+* CEM / scott
+
+Pero el ranking final favorece a Exact / S1, porque conserva bastante más soporte y ESS que CEM / scott, aun cuando CEM / scott logra un balance marginalmente mejor.
+
+Eso está muy bien desde el punto de vista narrativo y metodológico: el taller muestra que un diseño con mejor balance puro puede no ser el ganador si compra ese balance perdiendo demasiada muestra efectiva.
+
+6. Ganador del taller
+
+Ganador de diseño:
+Exact / S1
+
+Resumen del ganador:
+
+* max|SMD| = 0.0839
+* variable más desbalanceada residual: `lnland`
+* mean|SMD| = 0.0319
+* L1 = 0.3146
+* ESS0 = 164.26
+* N1 = 409
+* N0 = 325
+
+El love plot del ganador es coherente con esa lectura: `lnland` aparece como la covariable con mayor desbalance residual, seguida por `agehead` y `educhead`, mientras que `sexhead` y `vaccess` quedan prácticamente en cero. O sea: el diseño ganador no produce balance perfecto, pero sí un balance aceptable bajo la regla impuesta, sin destruir soporte.
+
+7. Resultado final del análisis
+
+Una vez elegido el ganador, el taller recién pasa a la etapa de análisis.
+
+Para Exact / S1, con 700 réplicas bootstrap, el taller obtiene:
+
+* ATET = 0.1063
+
+* SE_boot(ATET) = 0.0397
+
+* ATE = 0.0953
+
+* SE_boot(ATE) = 0.0354
+
+Y esto es importante:
+estos números coinciden con el bloque de matching exacto manual del taller 02 para S1. O sea, el taller 03 no “descubre” un nuevo efecto; lo que hace es justificar de manera más rigurosa por qué esa especificación puede ser preferida dentro del conjunto de candidatas.
+
+8. Sensibilidad importante
+
+El taller no cierra de forma dogmática, y eso está bien.
+
+Deja una sensibilidad muy importante:
+si el umbral se relaja a `max|SMD| <= 0.20`, el top pasa a ser Exact / S2.
+
+Además, la frontera no dominada incluye:
+
+* Exact / S1
+* CEM / scott
+* Exact / S2
+
+Por tanto, el mensaje correcto no es “el selector resolvió de forma absoluta la elección”, sino algo más fino:
+
+bajo una regla estricta de balance (`0.10`) y priorizando soporte entre los que pasan, gana Exact / S1; bajo una regla más laxa, la elección puede cambiar.
+
+9. Qué sí puede decir una pieza pública basada en este taller
+
+Sí puede decir que:
+
+* es mala práctica elegir matching mirando primero el resultado del tratamiento;
+* una selección seria debe separar diseño y análisis;
+* balance y soporte deben evaluarse conjuntamente;
+* el mejor diseño no siempre es el que minimiza al máximo el desbalance residual, si eso destruye la muestra efectiva;
+* en esta aplicación, una regla estricta lleva a preferir Exact / S1 frente a alternativas CEM más agresivas.
+
+10. Qué no debe decir una pieza pública
+
+No debería decir que:
+
+* el selector “demuestra” que Exact / S1 es universalmente superior;
+* CEM queda descartado en general;
+* el método ganador es robusto a cualquier umbral o prioridad;
+* el taller 03 constituye una nueva aplicación sustantiva separada del taller 02.
+
+Tampoco debería presentarse como si el aporte central fuera el número 0.1063. Ese número ya estaba implícitamente en el taller anterior. Acá el aporte es otro: el criterio de selección.
+
+11. Riesgo editorial principal
+
+El principal riesgo editorial es publicarlo como ficha independiente y que parezca repetición del taller 02.
+
+Si se lo presenta mal, puede dar la impresión de que es “otro matching exacto más” sobre la misma base y la misma pregunta. En realidad, su valor está en formalizar la gobernanza del diseño empírico:
+cómo elegís entre varios candidatos sin contaminar la decisión con el outcome.
+
+Por eso, como pieza pública independiente, este taller es más débil que T2. Pero como soporte metodológico o anexo técnico de T2, es muy valioso.
+
+12. Recomendación editorial concreta
+
+Mi recomendación es NO tratarlo como ficha pública principal separada, al menos no en una primera versión del sitio.
+
+Lo usaría de una de estas dos formas:
+
+Opción A:
+como apéndice metodológico privado que respalda el taller 02.
+
+Opción B:
+como una subsección corta dentro de la futura ficha pública de T2, del tipo:
+“Cómo se eligió la especificación final”.
+
+Eso le agrega mucha credibilidad a T2, porque ya no sería solo una comparación entre Exact y CEM, sino una comparación con regla de selección explícita y defendible.
+
+13. Implicancia sobre el taller 02
+
+Sí: este taller potencialmente modifica parte del diagnóstico editorial de T2.
+
+En particular, si aceptás este selector como regla de diseño válida para el proyecto, entonces T2 deja de ser simplemente “comparación sin ganador único” y pasa a tener una lectura más disciplinada:
+
+* sin selector: T2 era una comparación metodológica abierta;
+* con selector: bajo la regla base actual, el diseño preferido pasa a ser Exact / S1.
+
+Pero eso no elimina la cautela: el propio T3 muestra sensibilidad a los umbrales y deja una frontera no dominada. Entonces, si luego actualizás T2, la redacción correcta no sería “ganador absoluto”, sino algo como:
+
+“Bajo la regla de diseño adoptada en el selector automático, la especificación preferida es Exact / S1, aunque la conclusión depende del umbral de balance elegido.”
+
+14. Veredicto final
+
+Diagnóstico final:
+taller fuerte en términos metodológicos, útil y valioso, pero más como soporte técnico que como ficha pública independiente. Su mayor contribución no es estimar un nuevo efecto, sino disciplinar la elección entre especificaciones rivales de matching.
+
+Etiqueta editorial sugerida:
+Pieza principalmente técnica / apéndice metodológico.
+
+Función recomendada dentro del portfolio:
+respaldo metodológico de T2, no pieza pública autónoma de primera línea.
