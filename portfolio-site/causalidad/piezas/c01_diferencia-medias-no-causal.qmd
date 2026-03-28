@@ -93,9 +93,16 @@ La comparación central evalúa cómo varía la magnitud estimada de `treat` cua
 | PSM ATET (logit) | 3614.4 | Efecto sobre tratados, no equivalente al ATE |
 :::
 
-Nota de población objetivo: la diferencia de medias y las regresiones MCO se estiman sobre la muestra depurada completa (`N = 999`). El PSM-ATE apunta al efecto promedio poblacional bajo selección en observables y `overlap`; el PSM-ATET apunta al efecto sobre tratados bajo matching. Por construcción, ATE y ATET no responden para la misma población.
+::: {.small-note}
+**Cómo leer estimandos y población objetivo**
 
-Lectura sustantiva mínima: en la muestra completa, los tratados registran salarios promedio mayores que los controles. Los estimandos de matching no descubren un efecto verdadero único, sino que reconstruyen esa comparación bajo contrafactuales más creíbles y para poblaciones objetivo distintas.
+- Diferencia de medias y MCO (simple y con controles): comparan la muestra depurada completa (`N = 999`).
+- PSM-ATE: resume el efecto promedio poblacional bajo selección en observables y soporte común.
+- PSM-ATET: resume el efecto promedio sobre los tratados emparejados.
+- ATE y ATET no responden para la misma población objetivo.
+:::
+
+Lectura sustantiva mínima: en la muestra completa, los tratados registran salarios promedio mayores que los controles. Al incorporar controles y emparejamiento, la magnitud cambia porque cambia el contrafactual de comparación.
 
 La lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en "el coeficiente más alto", sino en la credibilidad del diseño.
 
@@ -105,6 +112,6 @@ La lección principal es metodológica y no de resultado puntual: una diferencia
 
 Por ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.
 
-En particular, los estimandos de matching (ATE/ATET) no deben leerse como "el efecto verdadero": su validez depende de supuestos como selección en observables y soporte común (`overlap`).
+En particular, los estimandos de emparejamiento (ATE/ATET) no deben leerse como "el efecto verdadero": su validez depende de supuestos como selección en observables y soporte común.
 
 Además, el ejercicio utiliza una base sintética y casi determinística (`corr(edu, salario) ~ 0.9998` y `R^2 ~ 1` con controles), por lo que la lectura debe ser cauta y no extrapolarse como evidencia causal concluyente.
