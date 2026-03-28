@@ -95,7 +95,7 @@ La comparación central evalúa cómo varía la magnitud estimada de `treat` cua
 
 Nota de población objetivo: la diferencia de medias y las regresiones MCO se estiman sobre la muestra depurada completa (`N = 999`). El PSM-ATE apunta al efecto promedio poblacional bajo selección en observables y `overlap`; el PSM-ATET apunta al efecto sobre tratados bajo matching. Por construcción, ATE y ATET no responden para la misma población.
 
-Lectura sustantiva mínima: la brecha de `7163.8` describe que, en la muestra completa, los tratados observan salarios promedio mayores que los controles; los estimandos de matching reexpresan esa diferencia con contrafactuales construidos por comparabilidad y para poblaciones objetivo distintas (ATE poblacional, ATET en tratados).
+Lectura sustantiva mínima: en la muestra completa, los tratados registran salarios promedio mayores que los controles. Los estimandos de matching no descubren un efecto verdadero único, sino que reconstruyen esa comparación bajo contrafactuales más creíbles y para poblaciones objetivo distintas.
 
 La lectura principal es directa: cuando la magnitud estimada cambia de forma sustantiva al cambiar el contrafactual, la decisión analítica no debe apoyarse en "el coeficiente más alto", sino en la credibilidad del diseño.
 
