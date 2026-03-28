@@ -44,7 +44,7 @@ Esta pieza compara estrategias de matching exacto y CEM sobre hogares con partic
 ::: {.section-box}
 ## Pregunta central
 
-En esta aplicación, ¿cuál es el efecto de `dfmfd` sobre `ln(1 + exptot)` cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?
+En esta aplicación, ¿cuál es el efecto de `dfmfd` sobre el log del gasto total del hogar cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?
 :::
 
 ::: {.section-box}
@@ -52,7 +52,7 @@ En esta aplicación, ¿cuál es el efecto de `dfmfd` sobre `ln(1 + exptot)` cuan
 
 ::: {.small-note}
 Unidad de análisis: hogares (`N = 1129`).
-Resultado: `lexptot = ln(1 + exptot)`.
+Resultado: log del gasto total del hogar (`lexptot`). Definición exacta: `lexptot = ln(1 + exptot)`.
 Tratamiento: `dfmfd` (participación femenina en microcrédito).
 Covariables clave de comparabilidad: `sexhead`, `vaccess`, `agehead`, `educhead`, `lnland`, `pcirr`.
 :::
@@ -89,7 +89,9 @@ La tabla resume el trade-off relevante para decidir entre estrategias de matchin
 | CEM - regla FD (CEM / fd) | 0.2114 | No pasa regla base | 86.1 | 201 / 156 | 0.2249 (SE boot 0.0643) | Reporta ATET más alto, pero no cumple la regla base de balance |
 :::
 
-En esta pieza, el parámetro central reportado es el ATET. Cada ATET aplica a hogares tratados dentro del soporte común (muestra matched) de cada especificación (`N1` / `N0`), no a toda la población de hogares.
+Interpretación sustantiva visible (especificación preferida): bajo `Matching exacto - Exact / S1`, `ATET = 0.1063` implica que los hogares tratados comparables en soporte común muestran, en promedio, un log del gasto total del hogar 0.1063 puntos mayor que su contrafactual construido con hogares no tratados comparables.
+
+Población objetivo de esta respuesta: hogares tratados comparables dentro del soporte común (muestra matched) de la especificación preferida (`N1/N0 = 409/325`), no toda la población de hogares.
 
 El contraste dominante es claro: un ATET mayor (`CEM - regla FD`) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.
 
@@ -105,8 +107,8 @@ Entonces, la conclusión correcta no es "hay un ganador absoluto", sino "hay una
 
 ## Cierre
 
-La aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.
+En términos sustantivos, la respuesta principal es esta: bajo la regla base (`max|SMD| <= 0.10`), la especificación preferida `Matching exacto - Exact / S1` entrega un `ATET = 0.1063`; para hogares tratados comparables dentro del soporte común, el log del gasto total del hogar es mayor que en su contrafactual de hogares no tratados comparables.
 
-Bajo la regla base (`max|SMD| <= 0.10`), la especificación preferida `Matching exacto - especificación base (Exact / S1)` reporta un ATET de `0.1063` para hogares tratados comparables dentro de su soporte común (`N1/N0 = 409/325`).
+Esa respuesta vale para la subpoblación tratada en soporte común (`N1/N0 = 409/325`), no para toda la población de hogares.
 
-Esta lectura no debe extrapolarse a toda la población: el resultado está en logaritmos (`ln(1 + exptot)`) y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.
+La lectura debe seguir siendo cauta: el resultado está condicionado al diseño y a supuestos como selección en observables y `overlap`, no representa una verdad causal definitiva.
