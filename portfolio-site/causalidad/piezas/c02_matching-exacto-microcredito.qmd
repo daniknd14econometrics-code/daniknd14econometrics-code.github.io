@@ -44,7 +44,7 @@ Esta pieza compara estrategias de matching exacto y CEM sobre hogares con partic
 ::: {.section-box}
 ## Pregunta central
 
-En esta aplicación, ¿cómo cambia la lectura del efecto de `dfmfd` sobre gasto del hogar cuando exigimos comparabilidad de forma explícita?
+En esta aplicación, ¿cuál es el efecto de `dfmfd` sobre `ln(1 + exptot)` cuando el contrafactual se construye con matching, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?
 :::
 
 ::: {.section-box}
@@ -89,6 +89,8 @@ La tabla resume el trade-off relevante para decidir entre estrategias de matchin
 | CEM - regla FD (CEM / fd) | 0.2114 | No pasa regla base | 86.1 | 201 / 156 | 0.2249 (SE boot 0.0643) | Reporta ATET más alto, pero no cumple la regla base de balance |
 :::
 
+En esta pieza, el parámetro central reportado es el ATET. Cada ATET aplica a hogares tratados dentro del soporte común (muestra matched) de cada especificación (`N1` / `N0`), no a toda la población de hogares.
+
 El contraste dominante es claro: un ATET mayor (`CEM - regla FD`) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.
 
 ## Decisión metodológica y alcance
@@ -105,4 +107,6 @@ Entonces, la conclusión correcta no es "hay un ganador absoluto", sino "hay una
 
 La aplicación de microcrédito deja una lección metodológica concreta: en matching, el resultado depende tanto del estimador como del soporte que se conserva y del balance que se exige.
 
-Con la regla adoptada, `Matching exacto - especificación base (Exact / S1)` es la opción preferida para esta aplicación. A la vez, la lectura debe seguir siendo cauta: el resultado está en logaritmos (`ln(1 + exptot)`), y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.
+Bajo la regla base (`max|SMD| <= 0.10`), la especificación preferida `Matching exacto - especificación base (Exact / S1)` reporta un ATET de `0.1063` para hogares tratados comparables dentro de su soporte común (`N1/N0 = 409/325`).
+
+Esta lectura no debe extrapolarse a toda la población: el resultado está en logaritmos (`ln(1 + exptot)`) y la evidencia describe un efecto condicionado al diseño y a observables, no una verdad causal definitiva.
