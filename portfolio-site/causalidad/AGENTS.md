@@ -88,12 +88,15 @@ Preferir
 - TOC por defecto en piezas públicas; omitir solo en notas extremadamente breves donde no aporte navegación.
 - Registro para lector externo; no redactar como conversación interna, diagnóstico privado ni nota de trabajo.
 - Evitar lenguaje meta-editorial en la cara pública (por ejemplo: “pieza aplicada fuerte”, “en términos editoriales”, “apertura conceptual de la sección”, “respaldo metodológico”).
+- Evitar también fórmulas internas como "en lectura pública", "en la cara pública", "bloque PSM", "bloque IPWRA", "caso aplicado fuerte", "apertura conceptual" o equivalentes metaeditoriales.
 - Evaluar si conviene mostrar prefijos internos (`T1`, `T2`, etc.) en títulos visibles; si debilitan la presentación profesional, omitirlos.
 - No alcanza con compilar o estar “correcto”: la pieza debe sentirse tan curada como las mejores piezas de `econometria-clasica`.
 - Cuando haya pregunta empírica, causal o metodológica reconocible, debe abrir la pieza y encontrar respuesta clara y sobria al cierre.
+- La pregunta principal debe dejar explícito el efecto de qué sobre qué, en formulación humana y sustantiva.
+- Evaluar una "respuesta corta" debajo de la pregunta cuando ayude a orientar la lectura.
 - Si el material permite una historia narrativa clara, conservarla; la técnica la sostiene, no la reemplaza.
-- Incluir orientación temprana para lector externo: unidad de análisis, resultado, variable principal/tratamiento y observables o controles clave cuando corresponda.
-- Si los nombres de variables no son autoexplicativos, incluir bloque breve de “Datos y variables” con traducción a lenguaje humano.
+- Incluir orientación temprana para lector externo: unidad de análisis, resultado, variable principal/tratamiento, covariables relevantes y población objetivo cuando corresponda.
+- Si los nombres de variables no son autoexplicativos, incluir bloque breve de “Datos y variables” con traducción a lenguaje humano y sin estilo de log crudo.
 - Cuando la pieza compare contra un análisis ingenuo, explicitar por qué esa comparación falla antes o alrededor del resultado principal.
 - Elegir bloque visual según función: `metric-grid` para métricas headline; en piezas introductorias, preferir `quick-grid` o equivalente (pregunta, diseño del caso, variables clave).
 - La brevedad no habilita vacíos: incluso piezas introductorias deben tener densidad empírica o metodológica suficiente para lector externo.
@@ -120,6 +123,8 @@ Preferir
 - Si hay un resultado central interpretable, su lectura sustantiva debe tener entidad visual suficiente (caja, bloque o sección breve destacada), con sobriedad.
 - En “Datos y variables”, priorizar legibilidad: evitar texto corrido excesivo y separar unidad de análisis, resultado, tratamiento y covariables en líneas o lista breve cuando convenga.
 - En el cierre visual-editorial, verificar explícitamente limpieza del español, ausencia de lenguaje interno, visibilidad de la interpretación sustantiva y legibilidad de cajas informativas.
+- Antes de renderizar piezas nuevas o muy editadas, auditar el `.qmd` real y separar problemas narrativos, sustantivos y técnicos.
+- Después de renderizar, revisar HTML real (TOC, hero, CSS, layout, tablas, bloques visuales y lectura pública final); compilar no equivale a curar.
 
 ## Regla sobre causalidad
 
@@ -134,6 +139,12 @@ Siempre distinguir entre
 Nunca transformar automáticamente un coeficiente en afirmación causal fuerte.
 Nunca usar un no-rechazo de sobreidentificación como “prueba” de validez.
 Nunca presentar una especificación débil como evidencia concluyente.
+Cuando el diseño causal observacional ya está fijado y el estimando es interpretable causalmente dentro de ese marco, no degradar innecesariamente la redacción a "asociación".
+No usar fórmulas débiles del tipo "no implica causalidad absoluta fuera de ese marco"; comunicar con firmeza sobria el alcance causal dentro del diseño y la población objetivo.
+La interpretación del efecto debe depender de Y, del tratamiento y del estimando concreto; no de fórmulas repetidas por reflejo.
+Si el resultado es binario, comunicar en puntos porcentuales cuando corresponda.
+Si Y está en log y el tratamiento es binario, revisar la forma más comunicable y correcta de interpretar el efecto.
+La sección de alcance debe enfatizar población/subpoblación, diseño y prudencia, sin degradarse en una lista defensiva de negaciones.
 
 ## Regla sobre tablas
 
@@ -147,11 +158,17 @@ La tabla principal debe ser
 
 No volcar tablas enormes del taller.
 No mostrar salidas crudas de Stata como pieza central.
+No acumular variantes sin función de decisión/lectura clara.
 
 La tabla principal debe ayudar al lector a responder
 - qué métodos o especificaciones se comparan
 - qué decisión o resultado domina
 - qué lectura final se sostiene
+- usar rótulos de filas/columnas públicos, no internos (evitar etiquetas tipo "Referencia base del taller"; preferir "Referencia comparativa" o "Especificación de referencia")
+- aclarar o expandir siglas ambiguas para lector externo (por ejemplo, "AI" -> "Abadie-Imbens")
+- mantener convención de inferencia consistente (si corresponde bootstrap, reportar bootstrap y no mezclar versiones de forma confusa)
+- no sobredimensionar contrastes metodológicos auxiliares cuando no son núcleo del mensaje
+- al resumir patrones de estimandos, usar formulaciones precisas (por ejemplo, `ATET_3 > ATET_2 > ATET_1 > 0` cuando corresponda)
 
 ## Regla sobre gráficos
 
@@ -200,6 +217,11 @@ Aplicación actual
 - T7 respalda T6
 
 Si una pieza principal depende de un selector, debe mencionarlo brevemente como capa de decisión, sin convertir la ficha pública en una auditoría del selector.
+Si el selector no es público, no remitir al lector como si pudiera abrir una pieza inexistente; usar formulaciones impersonales de regla/diseño preseleccionado.
+
+Diferencia operativa entre bloques:
+- en T2/T3 y T4/T5, la ficha principal compara varias especificaciones y el selector posterior ayuda a cerrar la preferida.
+- en T6/T7, la ficha principal ya incorpora la especificación ganadora y el selector opera como justificación interna.
 
 ## Mapa editorial actual de producción
 

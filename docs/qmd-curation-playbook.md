@@ -242,6 +242,22 @@ Ejemplos típicos:
 La pieza visible debe ser el resultado principal.  
 El selector debe aparecer como justificación breve de la elección de especificación, no como protagonista del portfolio.
 
+Patrón operativo ya validado:
+- T3 respalda T2
+- T5 respalda T4
+- T7 respalda T6
+
+Diferencia clave entre bloques:
+- En T2/T3 y T4/T5, la ficha principal compara varias especificaciones y el selector posterior ayuda a cerrar la preferida.
+- En T6/T7, la ficha principal ya corre con la especificación ganadora y el selector solo justifica internamente ese diseño.
+
+Regla de publicación:
+- si un selector no aporta historia aplicada nueva para lector externo, no se publica como pieza autónoma.
+
+Regla de visibilidad pública:
+- si el selector no es público, la pieza principal no debe remitir al lector como si pudiera consultarlo.
+- en la cara pública, reemplazar referencias internas por formulaciones impersonales (por ejemplo: "regla previa de selección de diseño", "criterio de comparabilidad, soporte y precisión", "diseño preseleccionado").
+
 ---
 
 ## 13. Regla sobre la historia
@@ -428,6 +444,61 @@ Si el ancho es limitado, evitar texto corrido excesivo y ordenar la información
 
 34. **Checklist de cierre visual-editorial**
 Antes de cerrar, verificar además de contenido y método: limpieza del español, ausencia de lenguaje interno, visibilidad de la interpretación sustantiva y legibilidad de cajas informativas.
+
+35. **Pregunta sustantiva primero**
+La pregunta principal debe formular con claridad el efecto de qué sobre qué, en lenguaje humano y sustantivo.
+Evitar que los nombres internos de variables sean la primera puerta de entrada visual salvo necesidad real.
+
+36. **Respuesta corta opcional pero recomendable**
+Cuando la pieza tiene pregunta central clara, evaluar si conviene una "respuesta corta" inmediata debajo de la pregunta para orientar lectura.
+No es obligatoria en todos los casos, pero sí recomendable cuando mejora legibilidad.
+
+37. **Contenido mínimo de "Datos y variables"**
+El bloque de "Datos y variables" debe definir explícitamente: unidad de análisis, tratamiento, resultado, covariables relevantes y población objetivo.
+Debe mantener claridad técnica sin sonar a volcado crudo de log o lista de código.
+
+38. **Transformaciones internas en lenguaje público**
+No exponer transformaciones internas como frase principal visible si no agregan interpretación.
+Preferir formulación pública (por ejemplo, "logaritmo del gasto total del hogar") y dejar la sintaxis exacta en segundo plano cuando haga falta.
+
+39. **Interpretación del efecto dependiente del diseño**
+La interpretación pública del efecto debe depender de la definición concreta de Y, del tratamiento y del estimando; no de una fórmula repetida por reflejo.
+Si Y está en log y el tratamiento es binario, revisar cuidadosamente la forma más comunicable y correcta.
+Si el resultado es binario, comunicar en puntos porcentuales cuando corresponda.
+
+40. **Lenguaje causal con firmeza sobria**
+Cuando la pieza se apoya en un diseño causal observacional ya fijado y el estimando es interpretable causalmente dentro de ese marco, no degradar innecesariamente a "asociación".
+Evitar fórmulas débiles o torpes; comunicar con sobriedad que el efecto es causal dentro del diseño y para la población objetivo.
+
+41. **Alcance con prudencia no defensiva**
+La sección de alcance debe enfatizar para qué población vale la interpretación, bajo qué diseño y con qué prudencia debe leerse.
+No convertir el alcance en lista defensiva de negaciones que debilite la pieza.
+
+42. **Tablas públicas orientadas a decisión**
+Las tablas deben cumplir función clara de lectura/decisión y no acumular variantes innecesarias.
+Usar rótulos de filas y columnas públicos (evitar etiquetas internas como "Referencia base del taller"; preferir "Referencia comparativa" o "Especificación de referencia").
+Si aparece sigla ambigua para lector externo (por ejemplo, "AI"), aclararla o expandirla.
+
+43. **Convención consistente de inferencia**
+Si una especificación se estimó en versión base y luego con bootstrap, y bootstrap es la versión a reportar, preferir públicamente esos errores estándar.
+No mezclar versiones de inferencia de forma confusa dentro de la misma tabla pública.
+
+44. **No sobredimensionar contrastes auxiliares**
+Si un contraste metodológico intermedio (por ejemplo, `common` vs `trim(10)`) no es el núcleo del mensaje, no presentarlo como conclusión central.
+Subordinar contrastes auxiliares al mensaje metodológico y sustantivo principal.
+
+45. **Precisión formal en patrones de estimandos**
+Al resumir patrones, evitar formulaciones ambiguas si puede declararse el orden con precisión.
+En tratamientos multivaluados, priorizar expresiones tipo `ATET_3 > ATET_2 > ATET_1 > 0` cuando correspondan.
+
+46. **Control de calidad en dos etapas**
+Antes de renderizar una pieza nueva o muy editada: auditar el `.qmd` real y separar problemas narrativos, sustantivos y técnicos.
+Después del render: revisar el HTML real (TOC, hero, CSS, layout, tablas, bloques visuales y lectura pública final).
+Mantener como regla operativa que render exitoso no equivale a pieza bien curada.
+
+47. **Disciplina explícita de BOM y front matter**
+Mantener control activo sobre UTF-8 sin BOM y lectura correcta del front matter en todas las piezas.
+Esta verificación no es opcional cuando se toque estructura o metadata.
 
 ---
 

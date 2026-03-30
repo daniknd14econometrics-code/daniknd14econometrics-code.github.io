@@ -48,6 +48,10 @@ En `causalidad`, distinguir entre:
 Los talleres tipo “selector”, cuando existen para el mismo tema que un taller principal, normalmente NO deben transformarse en una ficha pública autónoma de primer nivel.  
 Su función usual es respaldar técnicamente la elección de especificación del taller principal.
 
+Regla de visibilidad pública:
+- si el selector no se publica como ficha autónoma, la pieza principal no debe remitir al lector como si ese selector fuera visible.
+- usar formulaciones impersonales (por ejemplo: "regla previa de selección de diseño", "criterio de comparabilidad, soporte y precisión", "diseño preseleccionado").
+
 ## Mapa editorial actual de la sección causalidad
 
 ### Apertura breve conceptual
@@ -97,10 +101,24 @@ T6 es la pieza pública principal del bloque IPWRA.
 T7 justifica la elección del diseño ganador.
 La formulación correcta es que T6 corre sobre el diseño ganador elegido en T7, no que T6 elige por sí mismo la especificación.
 
+Diferencia operativa entre bloques:
+- en T2/T3 y T4/T5, la ficha principal compara especificaciones y el selector posterior ayuda a cerrar la preferida.
+- en T6/T7, la ficha principal ya incorpora la especificación ganadora y el selector queda como justificación interna.
+
 ### T8
 No presentarlo como “caso exitoso de IV” sin matices.
 La lectura correcta es metodológica y cauta:
 la especificación rica es conceptualmente importante, pero la primera etapa resulta débil y no corresponde sobreactuar la conclusión causal.
+
+## Regla de redacción pública y variables
+
+- La pregunta principal debe declarar con claridad el efecto de qué sobre qué en lenguaje humano y sustantivo.
+- Evitar que nombres internos de variables sean la puerta de entrada visual; ubicar detalle técnico en "Datos y variables".
+- Evaluar una "respuesta corta" inmediata debajo de la pregunta cuando mejore legibilidad.
+- En "Datos y variables", definir de forma explícita: unidad de análisis, tratamiento, resultado, covariables relevantes y población objetivo.
+- Mantener claridad técnica sin tono de log ni lista de código.
+- Traducir transformaciones internas a lenguaje público cuando no aporten interpretación directa (por ejemplo, priorizar "logaritmo del gasto total del hogar" sobre sintaxis cruda).
+- Evitar metadiscurso interno visible para lector externo.
 
 ## Regla sobre gráficos
 
@@ -128,6 +146,19 @@ Siempre distinguir entre:
 No transformar automáticamente un coeficiente en una afirmación causal fuerte.
 No presentar un no-rechazo de sobreidentificación como “prueba” de validez.
 No presentar una especificación débil como si fuera evidencia concluyente.
+Cuando el diseño causal observacional ya está fijado y el estimando admite lectura causal en ese marco, no degradar innecesariamente a "asociación".
+La interpretación del efecto debe depender de Y, del tratamiento y del estimando concreto (incluyendo puntos porcentuales cuando corresponda en resultados binarios).
+La sección de alcance debe explicar para qué población vale la lectura causal, bajo qué diseño y con qué prudencia, sin convertir el cierre en una lista defensiva de negaciones.
+
+## Regla sobre tablas e inferencia pública
+
+- Las tablas públicas deben cumplir función de decisión/lectura y no acumular variantes por inercia.
+- Los rótulos de filas y columnas deben ser públicos; evitar etiquetas internas como "Referencia base del taller" y preferir "Referencia comparativa" o "Especificación de referencia".
+- Toda sigla ambigua para lector externo debe aclararse o expandirse (por ejemplo, "AI" -> "Abadie-Imbens").
+- Si la versión bootstrap es la que corresponde reportar para una especificación, usarla de forma consistente en la tabla pública.
+- No mezclar versiones de inferencia de manera confusa.
+- No sobredimensionar contrastes metodológicos auxiliares (por ejemplo `common` vs `trim(10)`) cuando no son el núcleo del mensaje.
+- Al resumir patrones de estimandos, priorizar precisión formal (por ejemplo, `ATET_3 > ATET_2 > ATET_1 > 0` cuando corresponda).
 
 ## Regla de estilo narrativo
 
