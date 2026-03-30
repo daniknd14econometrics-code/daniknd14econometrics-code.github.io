@@ -1706,5 +1706,68 @@
     "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
     "section": "Cierre: qué se concluye y qué no",
     "text": "Cierre: qué se concluye y qué no\nLa pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un gasto total esperado 11%-12% mayor frente a su contrafactual comparable.\nDentro de las reglas de soporte evaluadas, common resulta más defendible que trim(10); ese contraste funciona como un insumo del criterio general de diseño, no como fundamento único de la elección final.\nEsta evidencia no autoriza una afirmación causal absoluta para toda la población. Su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "",
+    "text": "&lt;- Volver al índice de Causalidad\nEl patrón central es nítido y consistente: ATET_3 &gt; ATET_2 &gt; ATET_1 &gt; 0 (producto y proceso &gt; solo proceso &gt; solo producto, siempre frente al grupo base)."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#resumen-ejecutivo",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#resumen-ejecutivo",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Resumen ejecutivo",
+    "text": "Resumen ejecutivo\nEsta ficha presenta esta estimación principal sobre una muestra de firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. La lectura central no es metodológica ni abierta: los tres efectos estimados frente al grupo base son positivos y muestran una gradación clara.\nEn términos sustantivos, la probabilidad de reportar mejora ambiental media/alta aumenta en los tres estados de tratamiento, con mayor magnitud cuando la firma combina innovación de producto y proceso."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#pregunta-central",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#pregunta-central",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Pregunta central",
+    "text": "Pregunta central\n¿Cómo cambia la probabilidad de mejora ambiental media/alta entre firmas innovadoras cuando se compara cada estado de innovación de producto/proceso frente al grupo sin innovación de producto/proceso, bajo un diseño de comparabilidad previamente definido?\nRespuesta corta: frente al grupo sin innovación de producto/proceso, se estiman aumentos de 11.8, 18.0 y 27.1 puntos porcentuales en la probabilidad de mejora ambiental media/alta (ATET_3 &gt; ATET_2 &gt; ATET_1 &gt; 0)."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#datos-y-variables",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#datos-y-variables",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Datos y variables",
+    "text": "Datos y variables\n\n\nUnidad de análisis: observación firma-año en panel de innovación.\nMuestra de estimación principal: N = 4,393 observaciones comparables.\nResultado: indicador binario de mejora ambiental media/alta (Y_cond).\nEstados de tratamiento:\n0 = sin innovación de producto/proceso,\n1 = solo producto,\n2 = solo proceso,\n3 = producto y proceso.\nPoblación objetivo de los efectos: subpoblaciones tratadas comparables de cada estado (D=1, D=2, D=3) frente a su contrafactual en el grupo base (D=0) dentro del soporte común operativo.\n\n\nLa estimación reporta tres ATET diagonales (1 vs 0, 2 vs 0, 3 vs 0) sobre un diseño ya seleccionado con criterio de comparabilidad, soporte y estabilidad de pesos."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#por-qué-importa-la-comparabilidad",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#por-qué-importa-la-comparabilidad",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Por qué importa la comparabilidad",
+    "text": "Por qué importa la comparabilidad\nEn este caso, la comparación directa entre estados de innovación puede confundir diferencias de composición con diferencias asociadas al tratamiento. Por eso, la interpretación se apoya en un diseño que restringe la comparación a observaciones con soporte útil y pesos estables.\nEsta decisión permite que la lectura final se concentre en una pregunta sustantiva: cuánto cambia la probabilidad de mejora ambiental cuando el estado de innovación pasa de 0 a cada uno de los estados tratados."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#resultado-principal",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#resultado-principal",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Resultado principal",
+    "text": "Resultado principal\n\n\n\n\n\n\n\n\n\nContraste principal (vs grupo base 0)\nATET\nError estándar\nLectura breve\n\n\n\n\nSolo producto (1) vs sin producto/proceso (0)\n0.11796\n0.03344\nAumento estimado de 11.8 puntos porcentuales\n\n\nSolo proceso (2) vs sin producto/proceso (0)\n0.18043\n0.03312\nAumento estimado de 18.0 puntos porcentuales\n\n\nProducto y proceso (3) vs sin producto/proceso (0)\n0.27051\n0.03155\nAumento estimado de 27.1 puntos porcentuales"
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#soporte-y-balance",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#soporte-y-balance",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Soporte y balance",
+    "text": "Soporte y balance\nLos diagnósticos de la estimación principal no muestran señales de ruptura severa:\n\nen los tres contrastes (t=1,2,3) no se observan violaciones de soporte en los indicadores os_t# de teffects;\nel balance ponderado mejora de forma marcada respecto del balance crudo;\nel contraste ambas vs 0 es el más exigente en términos de reponderación, pero permanece dentro de una zona de balance aceptable.\n\nEstos chequeos funcionan como respaldo del resultado principal y no cambian la lectura sustantiva dominante."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#lectura-sustantiva-y-alcance",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#lectura-sustantiva-y-alcance",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Lectura sustantiva y alcance",
+    "text": "Lectura sustantiva y alcance\n\n\nEstimandos reportados\nATET diagonales en tratamiento multivaluado (1 vs 0, 2 vs 0, 3 vs 0) sobre un resultado binario de mejora ambiental media/alta.\n\n\nPoblación objetivo\nFirmas innovadoras tratadas comparables de cada estado, dentro de la muestra filtrada por soporte y completitud de covariables.\n\n\nAlcance\nEfectos causales interpretables como cambios en probabilidad (puntos porcentuales) dentro del diseño observacional adoptado, para firmas innovadoras tratadas comparables en soporte.\n\n\nDentro del diseño aplicado, la innovación de producto/proceso incrementa la probabilidad de mejora ambiental reportada frente al grupo base, y la magnitud esperada es mayor cuando ambas innovaciones aparecen de forma conjunta."
+  },
+  {
+    "objectID": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#cierre-qué-se-concluye-y-qué-no",
+    "href": "causalidad/piezas/c06_ipwra_innovacion_ambiental.html#cierre-qué-se-concluye-y-qué-no",
+    "title": "Innovación de producto/proceso y mejora ambiental en firmas innovadoras",
+    "section": "Cierre: qué se concluye y qué no",
+    "text": "Cierre: qué se concluye y qué no\nSe concluye que, para firmas innovadoras comparables en soporte, los tres estados de innovación frente al grupo base generan aumentos positivos en la probabilidad de mejora ambiental media/alta, con un gradiente creciente desde solo producto hasta producto y proceso.\nEstos efectos causales se interpretan para la población objetivo del diseño: firmas innovadoras comparables en soporte con las covariables observadas incluidas en la estimación."
   }
 ]
