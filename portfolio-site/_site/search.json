@@ -1636,5 +1636,75 @@
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Lectura sustantiva del efecto",
     "text": "Lectura sustantiva del efecto\nBajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito se asocia con un nivel esperado del log del gasto total del hogar 0.1063 puntos mayor que el de su contrafactual construido con hogares no tratados comparables.\nEsta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html",
+    "href": "causalidad/piezas/c04_psm_microcredito.html",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "",
+    "text": "&lt;- Volver al índice de Causalidad"
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#resumen-ejecutivo",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#resumen-ejecutivo",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Resumen ejecutivo",
+    "text": "Resumen ejecutivo\nEsta pieza evalúa el efecto de la participación femenina en microcrédito sobre el gasto del hogar con Propensity Score Matching (PSM) en una muestra de 1.129 hogares. El punto central no es maximizar el ATET, sino elegir un diseño que combine soporte, balance y precisión.\nLa comparación entre reglas de soporte muestra que common ofrece, en esta aplicación, un compromiso más defendible entre cobertura y comparabilidad que trim(10).\nBajo ese marco, la especificación preferida en esta aplicación es kernel biweight bw = 0.40*SD(LPS) + common, con respaldo en una regla de selección predefinida."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#pregunta-central",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#pregunta-central",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Pregunta central",
+    "text": "Pregunta central\n¿Cuál es el efecto de la participación femenina en microcrédito sobre el gasto del hogar cuando el contrafactual se construye con PSM y la decisión de diseño prioriza comparabilidad?\nRespuesta corta: para hogares tratados comparables en soporte común, la participación femenina en microcrédito se asocia con un gasto total esperado aproximadamente 11%-12% mayor que el de su contrafactual no tratado comparable."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#datos-y-variables",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#datos-y-variables",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Datos y variables",
+    "text": "Datos y variables\n\n\nUnidad de análisis: hogares (N = 1129).\nTratamiento: participación femenina en microcrédito (dfmfd).\nResultado: logaritmo del gasto total del hogar (lexptot).\nCovariables de comparabilidad: sexo, edad y educación de la jefatura del hogar; tierra; acceso vial; riego per cápita; e indicadores de producción/consumo alimentario.\n\n\nLa lectura causal descansa en selección en observables y soporte común. Por eso, el diseño se evalúa por comparabilidad ex ante entre tratados y controles antes de convertir los resultados en afirmaciones sustantivas."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#por-qué-la-comparabilidad-importa",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#por-qué-la-comparabilidad-importa",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Por qué la comparabilidad importa",
+    "text": "Por qué la comparabilidad importa\nEn este caso, tratados y controles no son intercambiables sin ajuste: difieren en covariables que también se asocian con el gasto. Si esa diferencia no se corrige, la comparación mezcla efecto del tratamiento con composición inicial de grupos.\nPSM permite construir un contrafactual más creíble al combinar tres capas: estimación del propensity score, decisión de soporte y chequeo de balance. La decisión metodológica relevante surge de esa secuencia, no del tamaño aislado del coeficiente final."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#soporte-y-comparabilidad-common-frente-a-trim10",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#soporte-y-comparabilidad-common-frente-a-trim10",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Soporte y comparabilidad: common frente a trim(10)",
+    "text": "Soporte y comparabilidad: common frente a trim(10)\n\n\n\n\n\n\n\n\n\n\n\nRegla de soporte\nSoporte retenido (N1/N0)\nObservaciones fuera de soporte\nBalance global (post-matching)\nLectura\n\n\n\n\ncommon\n591 / 530\n8\nMeanBias = 4.7, B = 20.2, R = 0.93\nMayor cobertura con mejora global clara de comparabilidad\n\n\ntrim(10)\n536 / 481\n112\nMeanBias = 4.9, B = 21.8, R = 0.95\nPodado más agresivo sin mejora concluyente en desbalances residuales clave\n\n\n\n\nAunque trim(10) recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#comparación-de-especificaciones-psm-en-soporte-común",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#comparación-de-especificaciones-psm-en-soporte-común",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Comparación de especificaciones PSM en soporte común",
+    "text": "Comparación de especificaciones PSM en soporte común\n\n\n\n\n\n\n\n\n\nEspecificación PSM (common)\nATET estimado\nLectura breve\n\n\n\n\nNN(1)\n0.1108\nReferencia comparativa\n\n\nNN(2)\n0.1135\nResultado cercano a la referencia\n\n\nNN(8)\n0.1119\nEstabilidad en el rango central\n\n\nRadius (caliper 0.01)\n0.1008\nMagnitud algo menor, misma señal positiva\n\n\nKernel epanechnikov (h = 0.06, bootstrap)\n0.1070\nMagnitud consistente con el rango principal\n\n\n\n\nLa comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11 para diseños razonables en soporte común. Esa estabilidad es más informativa que la búsqueda del valor más alto.\nEsa estabilidad descriptiva no reemplaza el criterio de elección: la especificación preferida se presenta más adelante, a partir de una regla basada en comparabilidad, soporte y precisión."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#lectura-sustantiva-del-atet-población-objetivo-y-alcance",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#lectura-sustantiva-del-atet-población-objetivo-y-alcance",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Lectura sustantiva del ATET: población objetivo y alcance",
+    "text": "Lectura sustantiva del ATET: población objetivo y alcance\n\n\nEstimando reportado\nATET para hogares tratados comparables en soporte común, con valor de referencia de 0.11 en log del gasto, equivalente aproximadamente a 11%-12%.\n\n\nPoblación objetivo\nHogares tratados que permanecen en la región de soporte común y pueden compararse con controles observacionalmente similares.\n\n\nAlcance\nInterpretación válida bajo selección en observables y overlap; no extrapolable automáticamente al total de hogares.\n\n\nEn términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el gasto total esperado es mayor que su contrafactual no tratado comparable."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#especificación-preferida-y-criterio-de-elección",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#especificación-preferida-y-criterio-de-elección",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Especificación preferida y criterio de elección",
+    "text": "Especificación preferida y criterio de elección\nLa especificación preferida en esta aplicación es:\nkernel biweight bw = 0.40*SD(LPS) + common.\nLa lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. Por diseño, ese criterio evita elegir la alternativa solo por reportar el ATET más alto.\n\n\n\n\n\n\n\n\n\n\nOpción de contraste\nATET\nPrecisión / inferencia\nRol en la decisión\n\n\n\n\nPSM common + NN(1)\n0.1108\nEE psmatch2 (aprox.) 0.0428\nReferencia metodológica base\n\n\nPSM trim(10) + NN(1)\n0.1279\nEE psmatch2 (aprox.) 0.0441\nContraste con menor soporte y mayor poda\n\n\nPSM common + kernel biweight bw = 0.40*SD(LPS)\n0.1099\nEE bootstrap 0.0273\nEspecificación preferida\n\n\nteffects psmatch (ATET, probit, NN(1))\n0.1099\nEE robusta de Abadie–Imbens 0.0362\nContraste secundario de estabilidad\n\n\n\n\nLa especificación preferida se respalda en una regla de selección predefinida, basada en comparabilidad, soporte y precisión; en esta pieza se presenta su lectura empírica y sustantiva."
+  },
+  {
+    "objectID": "causalidad/piezas/c04_psm_microcredito.html#cierre-qué-se-concluye-y-qué-no",
+    "href": "causalidad/piezas/c04_psm_microcredito.html#cierre-qué-se-concluye-y-qué-no",
+    "title": "Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad",
+    "section": "Cierre: qué se concluye y qué no",
+    "text": "Cierre: qué se concluye y qué no\nLa pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un gasto total esperado 11%-12% mayor frente a su contrafactual comparable.\nDentro de las reglas de soporte evaluadas, common resulta más defendible que trim(10); ese contraste funciona como un insumo del criterio general de diseño, no como fundamento único de la elección final.\nEsta evidencia no autoriza una afirmación causal absoluta para toda la población. Su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables."
   }
 ]
