@@ -718,14 +718,14 @@
     "href": "causalidad/index.html",
     "title": "Causalidad",
     "section": "",
-    "text": "Esta sección está estructurada para publicar estudios de identificación causal. Las piezas se incorporarán de forma progresiva, una vez cerrada su revisión técnica y editorial.\n\nActualmente no hay piezas publicadas en esta sección.\n\nConvención de nombres prevista para nuevas piezas: c01_slug-tema.qmd, c02_slug-tema.qmd."
+    "text": "Esta sección reúne piezas aplicadas de identificación causal ya publicadas y curadas bajo revisión técnica y editorial.\n\nPiezas publicadas actualmente:\n\n\nPor qué una diferencia de medias no equivale a efecto causal\nDiseño de matching primero: soporte, balance y muestra efectiva en microcrédito\nMicrocrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad\nInnovación de producto/proceso y mejora ambiental en firmas innovadoras"
   },
   {
     "objectID": "causalidad/index.html#índice-de-piezas-aplicadas",
     "href": "causalidad/index.html#índice-de-piezas-aplicadas",
     "title": "Causalidad",
     "section": "",
-    "text": "Esta sección está estructurada para publicar estudios de identificación causal. Las piezas se incorporarán de forma progresiva, una vez cerrada su revisión técnica y editorial.\n\nActualmente no hay piezas publicadas en esta sección.\n\nConvención de nombres prevista para nuevas piezas: c01_slug-tema.qmd, c02_slug-tema.qmd."
+    "text": "Esta sección reúne piezas aplicadas de identificación causal ya publicadas y curadas bajo revisión técnica y editorial.\n\nPiezas publicadas actualmente:\n\n\nPor qué una diferencia de medias no equivale a efecto causal\nDiseño de matching primero: soporte, balance y muestra efectiva en microcrédito\nMicrocrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad\nInnovación de producto/proceso y mejora ambiental en firmas innovadoras"
   },
   {
     "objectID": "econometria/piezas/t01_vi.html",
@@ -1628,14 +1628,14 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#cierre",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Cierre",
-    "text": "Cierre\nEn términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: su nivel esperado del log del gasto total del hogar es mayor que el de su contrafactual no tratado comparable. Ese resultado se resume en un ATET de 0.1063 bajo la regla base (max|SMD| &lt;= 0.10).\nEsa respuesta vale para la subpoblación tratada en soporte común (N1/N0 = 409/325), no para toda la población de hogares.\nLa lectura debe seguir siendo cauta: el resultado está condicionado al diseño y a supuestos como selección en observables y overlap, no representa una verdad causal definitiva."
+    "text": "Cierre\nEn términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: el ATET de 0.1063 bajo la regla base (max|SMD| &lt;= 0.10) equivale aproximadamente a 11.2% más en 1 + gasto total del hogar frente a su contrafactual no tratado comparable.\nEsa respuesta vale para la subpoblación tratada en soporte común (N1/N0 = 409/325), no para toda la población de hogares.\nLa lectura debe seguir siendo cauta: el resultado está condicionado al diseño y a supuestos como selección en observables y overlap, no representa una verdad causal definitiva."
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#lectura-sustantiva-del-efecto",
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#lectura-sustantiva-del-efecto",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Lectura sustantiva del efecto",
-    "text": "Lectura sustantiva del efecto\nBajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito se asocia con un nivel esperado del log del gasto total del hogar 0.1063 puntos mayor que el de su contrafactual construido con hogares no tratados comparables.\nEsta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares."
+    "text": "Lectura sustantiva del efecto\nBajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en 0.1063 log-puntos frente a su contrafactual no tratado comparable.\nTraducido a una escala más comunicable, ese valor implica aproximadamente 11.2% más en 1 + gasto total del hogar (porque exp(0.1063) - 1 ≈ 0.112).\nEsta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares."
   },
   {
     "objectID": "causalidad/piezas/c04_psm_microcredito.html",

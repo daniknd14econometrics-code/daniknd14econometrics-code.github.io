@@ -92,7 +92,9 @@ La tabla resume la compensación relevante para decidir entre estrategias de emp
 ::: {.section-box}
 ## Lectura sustantiva del efecto
 
-Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito se asocia con un nivel esperado del log del gasto total del hogar 0.1063 puntos mayor que el de su contrafactual construido con hogares no tratados comparables.
+Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en **0.1063 log-puntos** frente a su contrafactual no tratado comparable.
+
+Traducido a una escala más comunicable, ese valor implica aproximadamente **11.2%** más en `1 + gasto total del hogar` (porque `exp(0.1063) - 1 ≈ 0.112`).
 
 Esta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares.
 :::
@@ -111,7 +113,7 @@ Entonces, la conclusión correcta no es "hay un ganador absoluto", sino "hay una
 
 ## Cierre
 
-En términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: su nivel esperado del log del gasto total del hogar es mayor que el de su contrafactual no tratado comparable. Ese resultado se resume en un ATET de 0.1063 bajo la regla base (max|SMD| <= 0.10).
+En términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: el ATET de 0.1063 bajo la regla base (`max|SMD| <= 0.10`) equivale aproximadamente a **11.2%** más en `1 + gasto total del hogar` frente a su contrafactual no tratado comparable.
 
 Esa respuesta vale para la subpoblación tratada en soporte común (`N1/N0 = 409/325`), no para toda la población de hogares.
 

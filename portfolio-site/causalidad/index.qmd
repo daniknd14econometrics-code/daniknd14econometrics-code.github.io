@@ -4,10 +4,13 @@ title: "Causalidad"
 
 ## Índice de piezas aplicadas
 
-Esta sección está estructurada para publicar estudios de identificación causal. Las piezas se incorporarán de forma progresiva, una vez cerrada su revisión técnica y editorial.
+Esta sección reúne piezas aplicadas de identificación causal ya publicadas y curadas bajo revisión técnica y editorial.
 
 ::: {.section-status}
-Actualmente no hay piezas publicadas en esta sección.
+Piezas publicadas actualmente:
 :::
 
-Convención de nombres prevista para nuevas piezas: `c01_slug-tema.qmd`, `c02_slug-tema.qmd`.
+- [Por qué una diferencia de medias no equivale a efecto causal](piezas/c01_diferencia-medias-no-causal.qmd)
+- [Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito](piezas/c02_matching-exacto-microcredito.qmd)
+- [Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad](piezas/c04_psm_microcredito.qmd)
+- [Innovación de producto/proceso y mejora ambiental en firmas innovadoras](piezas/c06_ipwra_innovacion_ambiental.qmd)
