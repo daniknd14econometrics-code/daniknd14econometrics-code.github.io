@@ -13,7 +13,7 @@ Cuando trabajes en `causalidad`, debes mantener coherencia estricta con `econome
 - diseño general
 - colores
 - tono profesional
-- lenguaje
+- lenguaje público sobrio
 - jerarquía narrativa
 - sobriedad visual
 - tipo de tablas
@@ -21,6 +21,19 @@ Cuando trabajes en `causalidad`, debes mantener coherencia estricta con `econome
 - calidad editorial
 
 No crear una estética nueva para `causalidad`.
+
+Importante: `econometria-clasica` funciona aquí como benchmark de curaduría formal, no como plantilla automática del lenguaje sustantivo.
+
+## Precedencia y alcance de este AGENT
+
+- Este AGENT gobierna piezas de `causalidad`; sus reglas no deben extrapolarse automáticamente a `econometria-clasica` ni a futuros bloques de `ML`.
+- Si una regla general del playbook entra en tensión con una regla específica de `causalidad`, prevalece la regla específica de `causalidad`.
+
+## Objetivo sustantivo de la sección causalidad
+
+- El objetivo central es comunicar efectos causales interpretables dentro del diseño y para la población objetivo.
+- No degradar automáticamente a “asociación” cuando la pieza está construida para reportar un estimando causal válido.
+- Mantener sobriedad: no afirmar más allá de lo que permite el diseño.
 
 ## Regla de producción
 

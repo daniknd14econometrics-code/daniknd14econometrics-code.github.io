@@ -2,14 +2,16 @@
 
 ## Alcance de este AGENT
 
-Este archivo regula la producción de piezas públicas de la sección `causalidad` dentro de `portfolio-sitecausalidad`.
+Este archivo regula la producción de piezas públicas de la sección `causalidad` dentro de `portfolio-site/causalidad`.
 
 Seguir obligatoriamente `docs/qmd-curation-playbook.md` como protocolo maestro de construcción de piezas públicas `.qmd`.
 Si hay conflicto entre improvisación narrativa y el playbook, prevalece el playbook.
+Si una regla general del playbook entra en tensión con una regla específica de `causalidad`, prevalece la regla específica de `causalidad`.
 
-Debe leerse junto con el `causalidadAGENTS.md` ubicado más arriba en el repo.
+Debe leerse junto con el `causalidad/AGENTS.md` ubicado más arriba en el repo.
 Ese archivo define la jerarquía editorial general de la sección.
 Este archivo define cómo debe verse, estructurarse y redactarse una pieza pública `.qmd`.
+Estas reglas son específicas de `causalidad` y no deben extrapolarse automáticamente a `econometria-clasica` ni a futuros bloques de `ML`.
 
 ## Regla principal
 
@@ -17,6 +19,7 @@ No empezar desde cero.
 
 Las piezas públicas de `causalidad` deben heredar el estándar ya logrado en las piezas curadas de `econometria-clasica`.
 No crear una nueva estética, una nueva lógica narrativa ni una nueva forma de presentar resultados.
+Ese benchmark aplica como estándar de curaduría formal; no obliga a copiar el mismo lenguaje sustantivo de otras secciones.
 
 La referencia obligatoria es
 - el estándar visual y narrativo de `econometria-clasica`
@@ -127,6 +130,8 @@ Preferir
 - Después de renderizar, revisar HTML real (TOC, hero, CSS, layout, tablas, bloques visuales y lectura pública final); compilar no equivale a curar.
 
 ## Regla sobre causalidad
+
+El objetivo central de esta sección es comunicar efectos causales interpretables dentro del diseño y para la población objetivo.
 
 No sobreactuar causalidad.
 
