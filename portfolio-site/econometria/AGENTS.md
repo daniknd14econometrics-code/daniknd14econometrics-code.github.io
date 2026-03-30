@@ -13,6 +13,13 @@ Regla de precedencia:
 
 Estas reglas son específicas de econometría clásica y no deben extrapolarse automáticamente a `causalidad` ni a futuros bloques de `ML`.
 
+## Regla operativa de canonicidad (.qmd)
+
+- Fuente canónica: portfolio-site/econometria/piezas/*.qmd
+- Copia espejo: econometria-clasica/01_portfolio/qmd/*.qmd
+- Edición solo en la fuente canónica.
+- Sincronización unidireccional explícita hacia la copia espejo.
+- No editar manualmente en paralelo ambas rutas.
 ## Regla principal
 
 Las piezas públicas aquí deben verse como trabajo profesional curado.

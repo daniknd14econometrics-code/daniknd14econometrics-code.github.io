@@ -181,7 +181,7 @@ Estos diagnósticos se presentan de forma breve para respaldar la lectura del ca
 
 El aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es plantear FE, RE e IV como una competencia, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.
 
-En esta aplicación, IV se mantiene como contraste relevante y bien justificado tecnicamente, pero la narrativa principal queda anclada en el problema empírico de demanda y en la estabilidad de la lectura sustantiva bajo especificaciones no instrumentadas.
+En esta aplicación, IV se mantiene como contraste relevante de sensibilidad; la lectura operativa que gana con evidencia robusta vuelve al bloque no IV para decidir entre FE y RE.
 
 ## Cierre
 

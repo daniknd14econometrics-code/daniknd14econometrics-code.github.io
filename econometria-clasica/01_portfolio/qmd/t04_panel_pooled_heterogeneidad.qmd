@@ -80,7 +80,7 @@ Si `E(x_it,c_i) != 0`, pooled no identifica limpio
 
 ::: {.metric-card}
 ::: {.metric-label}
-FD En esta base
+FD en esta base
 :::
 
 ::: {.metric-value}
@@ -145,7 +145,7 @@ La secuencia aplicada en T4 es:
 1. Estimar pooled OLS en niveles como benchmark.
 2. Corregir inferencia con `vce(cluster nr)` para heterocedasticidad y dependencia intraindividuo.
 3. Evaluar la contribución de controles de tiempo como chequeo de especificación.
-4. Analizar primeras diferencias como estrategia alternativa para remover `c_i`, explicitando su capacidad empírica En esta base.
+4. Analizar primeras diferencias como estrategia alternativa para remover `c_i`, explicitando su capacidad empírica en esta base.
 
 ## Qué pasa con un análisis ingenuo
 
@@ -178,7 +178,7 @@ En términos aplicados, los coeficientes de la ecuación salarial deben leerse c
 Como chequeo de especificación, el test conjunto de dummies de año no rechaza al 5% (`F(7,544)=1.34`, `p=0.2296`) en este caso.
 Por eso, dentro del subbloque pooled, el cierre operativo queda en pooled OLS con `vce(cluster nr)` sin dummies de año; este cierre no resuelve por sí solo el problema general de identificación frente a `c_i`.
 
-En primeras diferencias, la estrategia tiene capacidad empírica limitada En esta base: al diferenciar, `D.educ` queda omitida por falta de variación temporal útil y `D.exper` por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.
+En primeras diferencias, la estrategia tiene capacidad empírica limitada en esta base: al diferenciar, `D.educ` queda omitida por falta de variación temporal útil y `D.exper` por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.
 
 | Bloque | Resultado | Lectura |
 |---|---:|---|
@@ -186,6 +186,14 @@ En primeras diferencias, la estrategia tiene capacidad empírica limitada En est
 | FD: `D.educ` | Omitida | Sin variación temporal útil dentro de individuo |
 | FD: `D.exper` | Omitida | Colinealidad en diferencias para esta base |
 | FD: `D.expersq` | coef. = -0.0058, p < 0.001 | Variable con variación útil en FD |
+
+Como objeto final de decisión en T4, la lectura queda en dos niveles:
+
+| Nivel de decisión | Veredicto | Alcance |
+|---|---|---|
+| Cierre del subbloque pooled | `pooled + cluster` sin `i.year` (test conjunto p = 0.2296) | Benchmark operativo de inferencia y reporte |
+| Problema general de identificación | Sigue abierto por posible correlación entre `x_it` y `c_i` | El pooled no cierra por sí solo la lectura del caso |
+| Contraste en diferencias | Capacidad limitada (`D.educ` y `D.exper` omitidas) | Aporta diagnóstico, pero no reemplaza el cierre del subbloque pooled |
 :::
 
 ## Lectura profesional del caso
@@ -203,8 +211,8 @@ Por eso, el resultado debe comunicarse como evidencia de referencia econométric
 Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.
 
 El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled.
-La decisión final del taller es metodológica: cierre operativo en el subbloque pooled y reconocimiento explícito de que el problema general requiere tratar `c_i` con estrategias adicionales.
 
+La decisión final del taller queda explícita: cierre operativo dentro del subbloque pooled y, al mismo tiempo, reconocimiento de que el problema general requiere estrategias adicionales para tratar `c_i`.
 
 
 
