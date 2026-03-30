@@ -1,8 +1,8 @@
 ---
 title: "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito"
 subtitle: "Comparación metodológica con regla explícita de diseño"
-author: "Daniel Mendez"
-profile: "Economista | Econometria aplicada, causalidad y machine learning"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "c02_t2_matching_exacto_microcredito"
@@ -44,7 +44,7 @@ Esta pieza compara estrategias de matching exacto y CEM sobre hogares con partic
 ::: {.section-box}
 ## Pregunta central
 
-En esta aplicación, ¿cuál es el efecto de `dfmfd` sobre el log del gasto total del hogar cuando el contrafactual se construye con emparejamiento, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?
+En esta aplicación, ¿cuál es el efecto de la participación femenina en microcrédito (`dfmfd`) sobre el log del gasto total del hogar cuando el contrafactual se construye con emparejamiento, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?
 :::
 
 ::: {.section-box}

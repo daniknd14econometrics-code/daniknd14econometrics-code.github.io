@@ -1551,7 +1551,7 @@
     "href": "causalidad/piezas/c01_diferencia-medias-no-causal.html#diseño-del-caso",
     "title": "Por qué una diferencia de medias no equivale a efecto causal",
     "section": "Diseño del caso",
-    "text": "Diseño del caso\nEl ejercicio usa una base de corte transversal con propósito introductorio y sintético.\n\nUnidad de análisis: individuos. Resultado: salario. Tratamiento: treat. Observables clave: edu y mont. Carácter del ejercicio: apertura conceptual, no caso aplicado fuerte."
+    "text": "Diseño del caso\nEl ejercicio usa una base de corte transversal con propósito introductorio y sintético.\n\nUnidad de análisis: individuos. Resultado: salario. Tratamiento: treat. Observables clave: edu y mont. Carácter del ejercicio: introducción conceptual breve."
   },
   {
     "objectID": "causalidad/piezas/c01_diferencia-medias-no-causal.html#datos-y-variables",
@@ -1586,7 +1586,7 @@
     "href": "causalidad/piezas/c02_matching-exacto-microcredito.html#pregunta-central",
     "title": "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito",
     "section": "Pregunta central",
-    "text": "Pregunta central\nEn esta aplicación, ¿cuál es el efecto de dfmfd sobre el log del gasto total del hogar cuando el contrafactual se construye con emparejamiento, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?"
+    "text": "Pregunta central\nEn esta aplicación, ¿cuál es el efecto de la participación femenina en microcrédito (dfmfd) sobre el log del gasto total del hogar cuando el contrafactual se construye con emparejamiento, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?"
   },
   {
     "objectID": "causalidad/piezas/c02_matching-exacto-microcredito.html#datos-y-variables",

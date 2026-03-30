@@ -1,6 +1,6 @@
 ---
 title: "Por qué una diferencia de medias no equivale a efecto causal"
-subtitle: "Apertura conceptual de la sección Causalidad"
+subtitle: "Fundamentos para interpretar comparaciones entre tratados y controles"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
@@ -31,7 +31,7 @@ Una diferencia de medias describe una brecha, pero no identifica causalidad
 :::
 
 ::: {.hero-sub}
-¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal? Esta apertura muestra por qué la respuesta es negativa cuando el contrafactual no es creíble.
+¿Puede interpretarse una diferencia de medias entre tratados y controles como efecto causal? La respuesta es negativa cuando el contrafactual no es creíble.
 :::
 :::
 
@@ -57,7 +57,7 @@ Unidad de análisis: individuos.
 Resultado: `salario`.
 Tratamiento: `treat`.
 Observables clave: `edu` y `mont`.
-Carácter del ejercicio: apertura conceptual, no caso aplicado fuerte.
+Carácter del ejercicio: introducción conceptual breve.
 :::
 :::
 
