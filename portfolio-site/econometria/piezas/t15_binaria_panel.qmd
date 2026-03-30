@@ -156,7 +156,7 @@ La lectura se organiza en cuatro pasos:
 3. Ambas asociaciones se reducen en magnitud al pasar de pooled a RE y luego a CRE.
 4. Esa atenuacion sugiere que parte de la lectura pooled absorbia heterogeneidad persistente no modelada.
 
-En esta comparación, pooled funciona como benchmark inicial, RE como transición importante y CRE-probit como lectura metodológica preferida porque permite incorporar heterogeneidad correlacionada de forma parsimoniosa.
+En esta comparación, pooled funciona como benchmark inicial, RE como transición importante y CRE-probit como lectura metodológica preferida porque permite incorporar heterogeneidad correlacionada de forma parsimoniosa. No hay un método superior en abstracto: la jerarquía depende de los supuestos defendibles y de la evidencia del caso.
 
 Recién después de esa lectura sustantiva conviene mirar magnitudes aproximadas:
 
@@ -190,6 +190,8 @@ En términos aplicados, la pieza muestra una decisión profesional concreta: cua
 ## Cierre
 
 Esta pieza no busca declarar un método superior entre pooled, RE y CRE. Su aporte es mostrar criterio para no sobrerreaccionar a resultados pooled cuando la estructura de panel permite capturar heterogeneidad persistente y depurar la lectura aplicada de magnitudes en probabilidad.
+
+Esa regla general convive con una decisión concreta del caso: con evidencia Mundlak fuerte y atenuación sistemática de magnitudes al pasar a CRE, el cierre operativo de T15 queda en CRE, dejando pooled y RE como benchmarks de contraste.
 
 La lección metodológica es que en panel binario la heterogeneidad inobservable sigue importando aunque el modelo ya sea no lineal.
 
