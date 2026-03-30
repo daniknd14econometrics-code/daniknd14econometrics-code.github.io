@@ -223,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>FD En esta base</p>
+<p>FD en esta base</p>
 </div>
 <div class="metric-value">
 <p>Capacidad limitada</p>
@@ -275,7 +275,7 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
 <li>Estimar pooled OLS en niveles como benchmark.</li>
 <li>Corregir inferencia con <code>vce(cluster nr)</code> para heterocedasticidad y dependencia intraindividuo.</li>
 <li>Evaluar la contribución de controles de tiempo como chequeo de especificación.</li>
-<li>Analizar primeras diferencias como estrategia alternativa para remover <code>c_i</code>, explicitando su capacidad empírica En esta base.</li>
+<li>Analizar primeras diferencias como estrategia alternativa para remover <code>c_i</code>, explicitando su capacidad empírica en esta base.</li>
 </ol>
 </section>
 <section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
@@ -337,7 +337,7 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
 <section id="hallazgos-secundarios-y-contrastes" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-contrastes">Hallazgos secundarios y contrastes</h2>
 <p>Como chequeo de especificación, el test conjunto de dummies de año no rechaza al 5% (<code>F(7,544)=1.34</code>, <code>p=0.2296</code>) en este caso. Por eso, dentro del subbloque pooled, el cierre operativo queda en pooled OLS con <code>vce(cluster nr)</code> sin dummies de año; este cierre no resuelve por sí solo el problema general de identificación frente a <code>c_i</code>.</p>
-<p>En primeras diferencias, la estrategia tiene capacidad empírica limitada En esta base: al diferenciar, <code>D.educ</code> queda omitida por falta de variación temporal útil y <code>D.exper</code> por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.</p>
+<p>En primeras diferencias, la estrategia tiene capacidad empírica limitada en esta base: al diferenciar, <code>D.educ</code> queda omitida por falta de variación temporal útil y <code>D.exper</code> por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -374,6 +374,38 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
 </tr>
 </tbody>
 </table>
+<p>Como objeto final de decisión en T4, la lectura queda en dos niveles:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nivel de decisión</th>
+<th>Veredicto</th>
+<th>Alcance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cierre del subbloque pooled</td>
+<td><code>pooled + cluster</code> sin <code>i.year</code> (test conjunto p = 0.2296)</td>
+<td>Benchmark operativo de inferencia y reporte</td>
+</tr>
+<tr class="even">
+<td>Problema general de identificación</td>
+<td>Sigue abierto por posible correlación entre <code>x_it</code> y <code>c_i</code></td>
+<td>El pooled no cierra por sí solo la lectura del caso</td>
+</tr>
+<tr class="odd">
+<td>Contraste en diferencias</td>
+<td>Capacidad limitada (<code>D.educ</code> y <code>D.exper</code> omitidas)</td>
+<td>Aporta diagnóstico, pero no reemplaza el cierre del subbloque pooled</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="lectura-profesional-del-caso" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
@@ -388,7 +420,8 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.</p>
-<p>El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled. La decisión final del taller es metodológica: cierre operativo en el subbloque pooled y reconocimiento explícito de que el problema general requiere tratar <code>c_i</code> con estrategias adicionales.</p>
+<p>El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled.</p>
+<p>La decisión final del taller queda explícita: cierre operativo dentro del subbloque pooled y, al mismo tiempo, reconocimiento de que el problema general requiere estrategias adicionales para tratar <code>c_i</code>.</p>
 
 
 </section>
