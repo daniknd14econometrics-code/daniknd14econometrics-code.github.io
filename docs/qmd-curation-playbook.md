@@ -28,7 +28,27 @@ Regla sobre benchmark de `econometria-clasica`:
 - `econometria-clasica` sigue siendo benchmark de curaduría formal (pulido, orden narrativo, limpieza visual, calidad editorial).
 - ese benchmark no implica copiar automáticamente su lenguaje sustantivo a `causalidad` o `ML`.
 
----
+### 0.1 Criterios visuales consolidados del sitio (rediseño reciente)
+
+Estos criterios ya consolidados pasan a ser regla explícita del proyecto:
+
+- `home`: hero visual fuerte pero sobrio.
+- `portales de sección`: hero visible + sistema visual consistente entre secciones.
+- `piezas individuales`: estética editorial clara, sin imagen de fondo aplicada a todo el cuerpo del artículo.
+
+Regla de imagen:
+
+- uso protagonista de imagen en `home` y `portales`.
+- no usar imagen de fondo en todo el cuerpo de piezas individuales.
+
+### 0.2 Regla de intervención y preservación
+
+- no rediseñar por defecto una pieza que ya funciona.
+- preferir microajustes compatibles y no invasivos.
+- priorizar fidelidad de contenido y estructura de la pieza.
+- integrar `hero-box`, métricas, TOC, tablas y figuras con sobriedad, sin forzar una plantilla única.
+- ante conflicto entre rediseño global y pieza individual consolidada, priorizar la pieza individual.
+- cuando exista versión canónica/original consolidada, tratarla como fuente de verdad y restaurarla ante regresiones visuales.
 
 ## 1. Principio general
 

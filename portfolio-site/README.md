@@ -27,6 +27,20 @@ Este directorio contiene un sitio Quarto nuevo e independiente para portfolio pr
 - Causalidad: `c01_slug-tema.qmd`, `c02_slug-tema.qmd`, ...
 - Machine Learning: `ml01_slug-tema.qmd`, `ml02_slug-tema.qmd`, ...
 
+## Criterios operativos vigentes (visual/editorial)
+
+Este README resume criterios operativos ya consolidados.
+El contrato maestro sigue siendo `docs/qmd-curation-playbook.md`.
+
+- `home`: hero visual fuerte pero sobrio.
+- `portales de sección`: hero + sistema visual consistente.
+- `piezas individuales`: estética editorial clara, con fondo claro y lectura larga cómoda.
+- `piezas individuales`: no usar imagen de fondo en todo el cuerpo del artículo.
+- intervenir por defecto con microajustes compatibles y no invasivos; no rediseñar una pieza que ya funciona.
+- priorizar fidelidad de contenido y estructura; sobreeditar una pieza consolidada es regresión editorial.
+- si hay conflicto entre rediseño global y pieza individual consolidada, priorizar la pieza.
+- cuando exista versión canónica/original consolidada, usarla como fuente de verdad ante regresiones visuales.
+
 ## Próximo paso sugerido
 
 Revisar textos y metadatos de las 17 fichas, y luego decidir si los HTML curados se integran por enlace (actual) o por copia controlada de artefactos públicos al propio `portfolio-site/`.
