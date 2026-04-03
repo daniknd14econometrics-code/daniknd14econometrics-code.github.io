@@ -153,12 +153,18 @@ td {
 }
 
 th {
-  background: #f3f6fa !important;
+  background: #f5f7fb !important;
   color: var(--t1-text) !important;
 }
 
 tbody tr:nth-child(even) {
-  background: #f8fafd !important;
+  background: #fafbfd !important;
+}
+
+table th,
+table td {
+  padding-top: 0.43rem !important;
+  padding-bottom: 0.43rem !important;
 }
 
 hr {
