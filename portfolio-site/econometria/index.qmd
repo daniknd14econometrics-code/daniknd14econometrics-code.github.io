@@ -27,7 +27,7 @@ Este portal reúne piezas con estructura comparable: pregunta, estrategia de ide
 ## Índice de piezas aplicadas
 
 ::: {.section-lead}
-Esta sección reúne 17 piezas ordenadas por número de taller. Cada tarjeta resume tema, método y tipo de datos, con acceso a su ficha individual.
+Esta sección reúne 17 piezas curadas para lectura externa del portfolio. Cada tarjeta resume tema, método y tipo de datos, con acceso a su ficha individual.
 :::
 
 ::: {.piece-grid}

@@ -16,6 +16,7 @@ No debe tratarse como una sección de causalidad por defecto.
 ## Relación con el playbook maestro
 
 Seguir obligatoriamente `docs/qmd-curation-playbook.md`.
+Para criterios visuales consolidados e intervención/preservación, remitir explícitamente a las secciones `0.1` y `0.2` del playbook.
 
 Regla de precedencia:
 - si una regla general del playbook entra en tensión con una regla específica de `econometria-clasica`, prevalece la regla específica de `econometria-clasica` para esta sección.

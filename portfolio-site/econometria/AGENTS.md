@@ -7,6 +7,7 @@ Este archivo regula la producción pública de `portfolio-site/econometria`.
 Debe leerse junto con:
 - `docs/qmd-curation-playbook.md` (contrato maestro)
 - `econometria-clasica/AGENTS.md` (contrato específico de sección)
+- `docs/qmd-curation-playbook.md` secciones `0.1` y `0.2` (criterios visuales consolidados e intervención/preservación).
 
 Regla de precedencia:
 - si una regla general del playbook entra en tensión con una regla específica de `econometria-clasica`, prevalece la regla específica de sección en esta carpeta.

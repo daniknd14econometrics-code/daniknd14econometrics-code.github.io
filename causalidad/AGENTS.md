@@ -28,6 +28,7 @@ Importante: `econometria-clasica` funciona aquí como benchmark de curaduría fo
 
 - Este AGENT gobierna piezas de `causalidad`; sus reglas no deben extrapolarse automáticamente a `econometria-clasica` ni a futuros bloques de `ML`.
 - Si una regla general del playbook entra en tensión con una regla específica de `causalidad`, prevalece la regla específica de `causalidad`.
+- Para criterios visuales consolidados e intervención/preservación, remitir explícitamente a `docs/qmd-curation-playbook.md` secciones `0.1` y `0.2`.
 
 ## Objetivo sustantivo de la sección causalidad
 
