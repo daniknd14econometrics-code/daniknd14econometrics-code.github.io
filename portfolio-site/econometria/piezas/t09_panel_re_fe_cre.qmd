@@ -190,6 +190,8 @@ Ese diagnóstico no decide por sí solo entre RE y FE/CRE. La elección entre es
 | Mundlak robusto (cluster) | chi2(2)=1.85, p=0.3965 | Respaldo formal robusto a la misma conclusión |
 :::
 
+<img src="../assets/t09_decision_secuencial.svg" alt="Sintesis secuencial de decision metodologica en T9: comparacion FE-RE-CRE, contraste Hausman/Mundlak y cierre operativo RE con cautela" width="780" style="display:block; max-width:100%; height:auto;" />
+
 ## Lectura profesional del caso
 
 La conclusión se formula con prudencia aplicada: no rechazar RE no significa probar que RE sea verdadero; significa que En esta muestra no aparece evidencia fuerte contra esa formulación. Por eso, la interpretación final se apoya en la combinación de estabilidad sustantiva de coeficientes, contexto del caso y respaldo formal de contrastes.
@@ -199,6 +201,7 @@ En términos aplicados, T9 muestra una práctica profesional útil: cuando FE, R
 ## Cierre
 
 En este panel corto de plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo mantiene un patrón similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente condicionada a los supuestos del marco.
+
 
 
 

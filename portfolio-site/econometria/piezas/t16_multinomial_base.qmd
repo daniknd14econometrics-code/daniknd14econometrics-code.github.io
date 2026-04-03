@@ -108,7 +108,7 @@ La econometría se usa para ordenar una pregunta aplicada. El panel se trata com
 ¿Cómo se redistribuyen las probabilidades entre estudio, hogar y distintos tipos de empleo según educación, experiencia y perfil demográfico?
 
 ::: {.small-note}
-Resultado: `choice` (1 escuela, 2 hogar, 3 white collar, 4 blue collar, 5 services). Variables clave: `educ`, `exper`, `expersq`, `black`, dummies anuales.
+Resultado: `choice` con cinco categorías de actividad: Escuela, Hogar, Empleo white collar, Empleo blue collar y Servicios. Variables clave: `educ`, `exper`, `expersq`, `black`, dummies anuales.
 :::
 :::
 
@@ -161,14 +161,18 @@ La lectura comparativa del caso deja los mensajes sustantivos del modelo princip
 ::: {.table-box}
 ## Sintesis comparativa de magnitudes (APE)
 
-| Variable | Escuela (1) | Hogar (2) | White collar (3) | Blue collar (4) | Services (5) | Lectura sustantiva |
+| Variable | Escuela | Hogar | Empleo white collar | Empleo blue collar | Servicios | Lectura sustantiva |
 |---|---:|---:|---:|---:|---:|---|
 | `educ` | +0.0408 (0.0017) | -0.0562 (0.0020) | +0.0551 (0.0028) | -0.0364 (0.0028) | -0.0034 (0.0016) | Más educación desplaza probabilidad desde `hogar` hacia `escuela` y `white collar` |
 | `exper` | -0.1503 (0.0061) | -0.0798 (0.0060) | +0.0802 (0.0054) | +0.1277 (0.0059) | +0.0222 (0.0039) | Más experiencia reubica desde `escuela/hogar` hacia categorías de empleo |
-| `black=1` vs `0` | -0.0628 (0.0078) | +0.0994 (0.0097) | -0.0349 (0.0099) | -0.0459 (0.0124) | +0.0442 (0.0085) | Cambios de composición: mayor peso relativo en `hogar` y `services` |
+| Perfil demográfico (categoría reportada vs base) | -0.0628 (0.0078) | +0.0994 (0.0097) | -0.0349 (0.0099) | -0.0459 (0.0124) | +0.0442 (0.0085) | Cambios de composición: mayor peso relativo en `hogar` y `services` |
 :::
 
 La tabla protagonista resume APEs de `choice` por categoria; `status` se usa solo como contraste secundario.
+
+El esquema siguiente sintetiza como educacion, experiencia y perfil demografico reubican probabilidad entre categorias, sin recargar la lectura con una matriz numerica extensa.
+
+<img src="../assets/t16_redistribucion_categorias.svg" alt="Redistribución de probabilidad en T16: Educación, Experiencia y perfil demográfico desplazan probabilidad entre Escuela, Hogar, Empleo white collar, Empleo blue collar y Servicios." width="800" style="display:block; max-width:100%; height:auto;" />
 
 ## Diagnosticos de respaldo
 

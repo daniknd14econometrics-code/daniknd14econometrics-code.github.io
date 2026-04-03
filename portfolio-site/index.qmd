@@ -1,19 +1,67 @@
-﻿---
+---
 title: "Inicio"
+format:
+  html:
+    title-block-style: none
 ---
 
-::: {.hero}
-# Portfolio de Econometría Aplicada — Daniel Méndez
+::: {.hero-banner .hero-banner--home}
+::: {.hero-banner__content}
+<span class="hero-banner__kicker">Portfolio profesional</span>
 
-Economista especializado en análisis cuantitativo aplicado. Este sitio reúne trabajos en econometría, causalidad y machine learning, presentados en un formato ordenado y orientado a la exposición clara de preguntas, métodos y resultados.
+# Econometría aplicada con enfoque riguroso y lectura ejecutiva
 
-La estructura del sitio está organizada por áreas temáticas para facilitar una lectura secuencial de cada pieza y su referencia metodológica.
-
-<a class="cta-link" href="econometria/index.qmd">Ver Econometría</a>
-<a class="cta-link" href="causalidad/index.qmd">Ver Causalidad</a>
-<a class="cta-link" href="machine-learning/index.qmd">Ver Machine Learning</a>
+::: {.hero-banner__lead}
+Este sitio organiza piezas de econometría, causalidad y machine learning para presentar preguntas económicas reales, estrategia empírica y conclusiones accionables con una narrativa clara.
 :::
 
-## Propósito del sitio
+::: {.hero-banner__actions}
+<a class="button-primary" href="econometria/index.qmd">Explorar Econometría</a>
+<a class="button-secondary" href="causalidad/index.qmd">Explorar Causalidad</a>
+<a class="button-secondary" href="machine-learning/index.qmd">Explorar Machine Learning</a>
+:::
+:::
 
-Reunir y ordenar trabajos aplicados en un formato de consulta clara, con foco en la descripción de preguntas empíricas, estrategia metodológica y resultados principales.
+::: {.hero-banner__media}
+:::
+:::
+
+## Mapa del sitio
+
+::: {.portal-grid}
+::: {.portal-card}
+### [Econometría](econometria/index.qmd)
+
+Piezas aplicadas sobre panel, variables instrumentales y modelos de respuesta discreta con foco en interpretación económica.
+
+<a class="cta-link" href="econometria/index.qmd">Ver índice de piezas</a>
+:::
+
+::: {.portal-card}
+### [Causalidad](causalidad/index.qmd)
+
+Aplicaciones de identificación causal con diseños observacionales, comparabilidad y validación de supuestos.
+
+<a class="cta-link" href="causalidad/index.qmd">Ver índice de piezas</a>
+:::
+
+::: {.portal-card}
+### [Machine Learning](machine-learning/index.qmd)
+
+Espacio para modelos predictivos y pipelines reproducibles orientados a problemas económicos y de negocio.
+
+<a class="cta-link" href="machine-learning/index.qmd">Ver hoja de ruta</a>
+:::
+
+::: {.portal-card}
+### [Sobre mí](sobre-mi.qmd)
+
+Perfil profesional, enfoque de trabajo y canales de contacto para proyectos, colaboraciones y consultoría aplicada.
+
+<a class="cta-link" href="sobre-mi.qmd">Ver perfil</a>
+:::
+:::
+
+## Propósito
+
+El objetivo es mantener un repositorio de piezas técnicas bien curadas, con estructura consistente, lectura limpia y utilidad práctica para la toma de decisiones.

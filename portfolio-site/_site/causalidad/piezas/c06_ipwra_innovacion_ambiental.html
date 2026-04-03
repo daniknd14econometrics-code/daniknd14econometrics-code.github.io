@@ -134,10 +134,11 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#resumen-ejecutivo" id="toc-resumen-ejecutivo" class="nav-link active" data-scroll-target="#resumen-ejecutivo">Resumen ejecutivo</a></li>
   <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link" data-scroll-target="#pregunta-central">Pregunta central</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
   <li><a href="#por-qué-importa-la-comparabilidad" id="toc-por-qué-importa-la-comparabilidad" class="nav-link" data-scroll-target="#por-qué-importa-la-comparabilidad">Por qué importa la comparabilidad</a></li>
-  <li><a href="#resultado-principal" id="toc-resultado-principal" class="nav-link" data-scroll-target="#resultado-principal">Resultado principal</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#diseño-seleccionado-y-por-qué" id="toc-diseño-seleccionado-y-por-qué" class="nav-link" data-scroll-target="#diseño-seleccionado-y-por-qué">Diseño seleccionado y por qué</a></li>
   <li><a href="#soporte-y-balance" id="toc-soporte-y-balance" class="nav-link" data-scroll-target="#soporte-y-balance">Soporte y balance</a></li>
+  <li><a href="#resultado-principal" id="toc-resultado-principal" class="nav-link" data-scroll-target="#resultado-principal">Resultado principal</a></li>
   <li><a href="#lectura-sustantiva-y-alcance" id="toc-lectura-sustantiva-y-alcance" class="nav-link" data-scroll-target="#lectura-sustantiva-y-alcance">Lectura sustantiva y alcance</a></li>
   <li><a href="#cierre-qué-se-concluye-y-qué-no" id="toc-cierre-qué-se-concluye-y-qué-no" class="nav-link" data-scroll-target="#cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</a></li>
   </ul>
@@ -189,13 +190,17 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen-ejecutivo" class="level2">
 <h2 class="anchored" data-anchor-id="resumen-ejecutivo">Resumen ejecutivo</h2>
-<p>Esta ficha presenta esta estimación principal sobre una muestra de firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. La lectura central no es metodológica ni abierta: los tres efectos estimados frente al grupo base son positivos y muestran una gradación clara.</p>
-<p>En términos sustantivos, la probabilidad de reportar mejora ambiental media/alta aumenta en los tres estados de tratamiento, con mayor magnitud cuando la firma combina innovación de producto y proceso.</p>
+<p>Esta ficha presenta una estimación principal sobre firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. El foco narrativo es explícito: primero se hace visible la arquitectura de diseño causal y recién después se reportan los efectos.</p>
+<p>La lectura metodológica central es que la credibilidad de la comparación depende de soporte, balance y estabilidad de ponderación, no de buscar de antemano la magnitud más alta.</p>
 </section>
 <section id="pregunta-central" class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
 <p>¿Cómo cambia la probabilidad de mejora ambiental media/alta entre firmas innovadoras cuando se compara cada estado de innovación de producto/proceso frente al grupo sin innovación de producto/proceso, bajo un diseño de comparabilidad previamente definido?</p>
-<p>Respuesta corta: frente al grupo sin innovación de producto/proceso, se estiman aumentos de 11.8, 18.0 y 27.1 puntos porcentuales en la probabilidad de mejora ambiental media/alta (<code>ATET_3 &gt; ATET_2 &gt; ATET_1 &gt; 0</code>).</p>
+</section>
+<section id="por-qué-importa-la-comparabilidad" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-importa-la-comparabilidad">Por qué importa la comparabilidad</h2>
+<p>En este caso, la comparación directa entre estados de innovación puede confundir diferencias de composición con diferencias asociadas al tratamiento. Por eso, la interpretación se apoya en un diseño que restringe la comparación a observaciones con soporte útil y pesos estables.</p>
+<p>Esta decisión permite que la lectura final se concentre en una pregunta sustantiva: cuánto cambia la probabilidad de mejora ambiental cuando el estado de innovación pasa de <code>0</code> a cada uno de los estados tratados.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -212,12 +217,41 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Población objetivo de los efectos:</strong> subpoblaciones tratadas comparables de cada estado (<code>D=1</code>, <code>D=2</code>, <code>D=3</code>) frente a su contrafactual en el grupo base (<code>D=0</code>) dentro del soporte común operativo.</li>
 </ul>
 </div>
-<p>La estimación reporta tres ATET diagonales (<code>1 vs 0</code>, <code>2 vs 0</code>, <code>3 vs 0</code>) sobre un diseño ya seleccionado con criterio de comparabilidad, soporte y estabilidad de pesos.</p>
+<p>La estimación se organiza en tres contrastes diagonales (<code>1 vs 0</code>, <code>2 vs 0</code>, <code>3 vs 0</code>) definidos para subpoblaciones tratadas comparables dentro del soporte común operativo.</p>
 </section>
-<section id="por-qué-importa-la-comparabilidad" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-importa-la-comparabilidad">Por qué importa la comparabilidad</h2>
-<p>En este caso, la comparación directa entre estados de innovación puede confundir diferencias de composición con diferencias asociadas al tratamiento. Por eso, la interpretación se apoya en un diseño que restringe la comparación a observaciones con soporte útil y pesos estables.</p>
-<p>Esta decisión permite que la lectura final se concentre en una pregunta sustantiva: cuánto cambia la probabilidad de mejora ambiental cuando el estado de innovación pasa de <code>0</code> a cada uno de los estados tratados.</p>
+<section id="diseño-seleccionado-y-por-qué" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-seleccionado-y-por-qué">Diseño seleccionado y por qué</h2>
+<p>La estimación principal se apoya en una configuración de diseño fijada antes de leer magnitudes de efecto. Esa configuración se adopta porque preserva soporte efectivo amplio, mantiene balance ponderado en rangos aceptables y evita alternativas más restrictivas que reducen en exceso la muestra utilizable.</p>
+<p>La decisión metodológica es deliberada: primero asegurar comparabilidad, soporte y estabilidad de pesos; después interpretar resultados. La especificación no se elige por el efecto más alto, sino por la credibilidad del contrafactual.</p>
+</section>
+<section id="soporte-y-balance" class="level2">
+<h2 class="anchored" data-anchor-id="soporte-y-balance">Soporte y balance</h2>
+<p>Los diagnósticos de la estimación principal no muestran señales de ruptura severa:</p>
+<ul>
+<li>en los tres contrastes (<code>t=1,2,3</code>) no se observan violaciones de soporte en los indicadores <code>os_t#</code> de <code>teffects</code>;</li>
+<li>el balance ponderado mejora de forma marcada respecto del balance crudo;</li>
+<li>el contraste <code>ambas vs 0</code> es el más exigente en términos de reponderación, pero permanece dentro de una zona de balance aceptable.</li>
+</ul>
+<p>Estos chequeos respaldan la credibilidad del diseño y ordenan la lectura del resultado principal.</p>
+<p>Para el contraste más exigente (<code>3 vs 0</code>), se muestra el overlap antes y después de ponderar.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../causalidad/insumos/5_graficos/6_ IPWRA/6_overlap_manual_t3.png" class="img-fluid figure-img"></p>
+<figcaption>Overlap antes de ponderar (<code>3 vs 0</code>): Pr(D=3)</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../causalidad/insumos/5_graficos/6_ IPWRA/6_overlap_weighted_manual_t3.png" class="img-fluid figure-img"></p>
+<figcaption>Overlap después de ponderar (IPW, <code>3 vs 0</code>): Pr(D=3)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Con estas condiciones de comparabilidad y soporte, el bloque siguiente resume los tres efectos ATET principales.</p>
 </section>
 <section id="resultado-principal" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="resultado-principal">Resultado principal</h2>
@@ -259,16 +293,13 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 <p>El patrón central es nítido y consistente: <code>ATET_3 &gt; ATET_2 &gt; ATET_1 &gt; 0</code> (producto y proceso &gt; solo proceso &gt; solo producto, siempre frente al grupo base).</p>
-<section id="soporte-y-balance" class="level2">
-<h2 class="anchored" data-anchor-id="soporte-y-balance">Soporte y balance</h2>
-<p>Los diagnósticos de la estimación principal no muestran señales de ruptura severa:</p>
-<ul>
-<li>en los tres contrastes (<code>t=1,2,3</code>) no se observan violaciones de soporte en los indicadores <code>os_t#</code> de <code>teffects</code>;</li>
-<li>el balance ponderado mejora de forma marcada respecto del balance crudo;</li>
-<li>el contraste <code>ambas vs 0</code> es el más exigente en términos de reponderación, pero permanece dentro de una zona de balance aceptable.</li>
-</ul>
-<p>Estos chequeos funcionan como respaldo del resultado principal y no cambian la lectura sustantiva dominante.</p>
-</section>
+<p>Como síntesis visual del resultado principal, se muestra un mini coefplot horizontal con los tres ATET diagonales y sus IC 95%.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../causalidad/insumos/5_graficos/6_ IPWRA/6_mini_coefplot_atet_diagonales.svg" class="img-fluid figure-img"></p>
+<figcaption>Mini coefplot horizontal de ATET diagonales (IC 95%)</figcaption>
+</figure>
+</div>
 <section id="lectura-sustantiva-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-sustantiva-y-alcance">Lectura sustantiva y alcance</h2>
 <div class="quick-grid">

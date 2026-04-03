@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Méndez">
 
-<title>Efectos fijos en panel de firmas: identificación within e inferencia robusta – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<title>agents-daniel – Portfolio de Econometría Aplicada — Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -27,23 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,19 +73,17 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 
 
-<link rel="stylesheet" href="../../styles.css">
-<link rel="stylesheet" href="../assets/portfolio.css">
-<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Portfolio de Econometría Aplicada — Daniel Méndez</span>
     </a>
   </div>
@@ -97,23 +94,23 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../econometria/index.html"> 
+    <a class="nav-link" href="../econometria/index.html"> 
 <span class="menu-text">Econometría</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../causalidad/index.html"> 
+    <a class="nav-link" href="../causalidad/index.html"> 
 <span class="menu-text">Causalidad</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../machine-learning/index.html"> 
+    <a class="nav-link" href="../machine-learning/index.html"> 
 <span class="menu-text">Machine Learning</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../sobre-mi.html"> 
+    <a class="nav-link" href="../sobre-mi.html"> 
 <span class="menu-text">Sobre mí</span></a>
   </li>  
 </ul>
@@ -124,269 +121,196 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En esta página</h2>
-   
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
-  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#hallazgos-secundarios-y-validación" id="toc-hallazgos-secundarios-y-validación" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-validación">Hallazgos secundarios y validación</a></li>
-  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Efectos fijos en panel de firmas: identificación within e inferencia robusta</h1>
-<p class="subtitle lead">Subsidios de capacitación (<code>grant</code>, <code>grant_1</code>) y desperdicio productivo (<code>lscrap</code>) en un panel corto de plantas</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta column-page-left">
 
-    <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
-    <div class="quarto-title-meta-contents">
-             <p>Daniel Méndez </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Fecha de publicación</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">26 de marzo de 2026</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div class="hero-box">
-<div class="hero-title">
-<p>En este panel corto de firmas, la pregunta aplicada es como cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo al seguir a las mismas plantas en el tiempo</p>
-</div>
-<div class="hero-sub">
-<p>El modelo FE con inferencia clusterizada organiza una lectura más creíble de <code>lscrap</code>: controla heterogeneidad fija no observada de planta y evita sobrerreaccionar a significancia convencional.</p>
-</div>
-</div>
-<div class="metric-grid">
-<div class="metric-card">
-<div class="metric-label">
-<p>Modelo operativo</p>
-</div>
-<div class="metric-value">
-<p>FE + cluster</p>
-</div>
-<div class="metric-note">
-<p><code>xtreg lscrap d88 d89 grant grant_1, fe vce(cluster fcode)</code></p>
-</div>
-</div>
-<div class="metric-card">
-<div class="metric-label">
-<p>Contexto aplicado</p>
-</div>
-<div class="metric-value">
-<p>Panel corto</p>
-</div>
-<div class="metric-note">
-<p>54 firmas, 3 periodos (1987-1989), <code>N=162</code></p>
-</div>
-</div>
-<div class="metric-card">
-<div class="metric-label">
-<p>Evidencia conjunta de subsidios</p>
-</div>
-<div class="metric-value">
-<p>Inferencia robusta/cluster</p>
-</div>
-<div class="metric-note">
-<p><code>F(2,53)=1.56</code>, <code>p=0.2198</code> para <code>grant</code> y <code>grant_1</code></p>
-</div>
-</div>
-<div class="metric-card">
-<div class="metric-label">
-<p>Heterogeneidad fija</p>
-</div>
-<div class="metric-value">
-<p>rho = 0.893</p>
-</div>
-<div class="metric-note">
-<p><code>F test all u_i=0</code>: <code>F(53,104)=24.66</code>, <code>p=0.0000</code></p>
-</div>
-</div>
-</div>
-<section id="resumen" class="level2">
-<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Este taller analiza un panel corto de plantas para estudiar la relación empírica entre subsidios de capacitación (<code>grant</code>, <code>grant_1</code>) y desempeño productivo medido por <code>lscrap</code>. La motivacion aplicada es concreta: comparar firmas entre si puede mezclar diferencias estructurales persistentes con la asociación de interés.</p>
-<p>Por eso, la pieza usa FE como modelo operativo para concentrarse en variación within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadística.</p>
+<section id="agents.md" class="level1">
+<h1>AGENTS.md</h1>
+<section id="alcance-de-este-agent" class="level2">
+<h2 class="anchored" data-anchor-id="alcance-de-este-agent">Alcance de este AGENT</h2>
+<p>Este archivo regula la producción pública de <code>portfolio-site/econometria</code>.</p>
+<p>Debe leerse junto con: - <code>docs/qmd-curation-playbook.md</code> (contrato maestro) - <code>econometria-clasica/AGENTS.md</code> (contrato específico de sección)</p>
+<p>Regla de precedencia: - si una regla general del playbook entra en tensión con una regla específica de <code>econometria-clasica</code>, prevalece la regla específica de sección en esta carpeta.</p>
+<p>Estas reglas son específicas de econometría clásica y no deben extrapolarse automáticamente a <code>causalidad</code> ni a futuros bloques de <code>ML</code>.</p>
 </section>
-<div class="quick-grid">
-<section id="pregunta" class="level2 section-box">
-<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>¿Cómo cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo cuando seguimos a las mismas plantas en el tiempo y controlamos heterogeneidad fija no observada?</p>
-<div class="small-note">
-<p>Resultado: <code>lscrap</code> (log del desperdicio/scrap rate). Regresores de interés: <code>grant</code>, <code>grant_1</code>. Controles de periodo: <code>d88</code>, <code>d89</code>. Unidad de panel: <code>fcode</code>.</p>
-</div>
+<section id="regla-operativa-de-canonicidad-.qmd" class="level2">
+<h2 class="anchored" data-anchor-id="regla-operativa-de-canonicidad-.qmd">Regla operativa de canonicidad (.qmd)</h2>
+<ul>
+<li>Fuente canónica: portfolio-site/econometria/piezas/*.qmd</li>
+<li>Copia espejo: econometria-clasica/01_portfolio/qmd/*.qmd</li>
+<li>Edición solo en la fuente canónica.</li>
+<li>Sincronización unidireccional explícita hacia la copia espejo.</li>
+<li>No editar manualmente en paralelo ambas rutas. ## Regla principal</li>
+</ul>
+<p>Las piezas públicas aquí deben verse como trabajo profesional curado. No producir estilo de taller, apunte de clase ni log comentado.</p>
+<p><code>econometria-clasica</code> sigue siendo benchmark de curaduría formal del portfolio, pero eso no implica adoptar automáticamente lenguaje causal.</p>
 </section>
-<section id="idea-central" class="level2 section-box">
-<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>En este caso, la econometría está al servicio de la historia aplicada: FE se usa para tratar sesgo por heterogeneidad fija no observada entre plantas, mientras que cluster se usa para no sobredimensionar precisión inferencial.</p>
-<p><span class="badge">Portfolio econométrico</span></p>
+<section id="estructura-esperada-de-una-pieza-pública" class="level2">
+<h2 class="anchored" data-anchor-id="estructura-esperada-de-una-pieza-pública">Estructura esperada de una pieza pública</h2>
+<p>Orden recomendado:</p>
+<ol type="1">
+<li>pregunta central clara</li>
+<li>por qué la comparación econométrica importa</li>
+<li>especificaciones/métodos comparados</li>
+<li>resultado principal</li>
+<li>lectura econométrica dominante</li>
+<li>cierre honesto con alcance</li>
+</ol>
 </section>
-</div>
-<section id="por-qué-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
-<p>El interés sustantivo del ejemplo es si plantas con subsidios de capacitación muestran menor desperdicio productivo en el tiempo. Esa lectura puede distorsionarse si algunas firmas tienen rasgos persistentes no observados (gestión, tecnología, cultura operativa) que afectan <code>lscrap</code> y también se asocian con la recepción de subsidios.</p>
-<p>En ese contexto, pasar de pooled a FE es razonable: cambia la comparación desde “entre plantas” hacia “dentro de la misma planta a lo largo del tiempo”, que es la escala relevante para leer desempeño productivo en este caso.</p>
+<section id="lenguaje-y-lectura-inferencial" class="level2">
+<h2 class="anchored" data-anchor-id="lenguaje-y-lectura-inferencial">Lenguaje y lectura inferencial</h2>
+<p>En esta carpeta, por defecto usar:</p>
+<ul>
+<li>relación</li>
+<li>cambio estimado</li>
+<li>evidencia</li>
+<li>comparación de especificaciones</li>
+</ul>
+<p>Solo usar causalidad si el diseño del caso lo justifica explícitamente.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
-<p>Se trabaja con <code>jtrain1</code>, un panel corto de plantas.</p>
 <ul>
-<li>Unidad de observacion: planta/firma (<code>fcode</code>)</li>
-<li>Estructura: 54 firmas, 3 periodos (1987-1989), <code>N=162</code> en FE</li>
-<li>Variable de resultado: <code>lscrap</code> (log del desperdicio/scrap rate)</li>
-<li>Regresores clave: <code>grant</code> (subsidio actual), <code>grant_1</code> (subsidio rezagado)</li>
-<li>Controles temporales: <code>d88</code>, <code>d89</code></li>
-<li>Variable absorbida en FE por invarianza temporal: <code>union</code></li>
+<li>Incluir bloque claro de “Datos y variables” cuando sea necesario para legibilidad.</li>
+<li>Definir unidad de análisis, resultado, regresores/variables clave y población analizada.</li>
+<li>Evitar sintaxis interna como primera capa visual.</li>
 </ul>
 </section>
-<section id="estrategia-empírica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
-<p>La secuencia del taller prioriza decisiones metodológicas para responder mejor la pregunta aplicada:</p>
-<ol type="1">
-<li>Estimar FE (<code>xtreg ..., fe</code>) como modelo operativo frente al riesgo de heterogeneidad fija no observada.</li>
-<li>Reestimar FE con <code>vce(cluster fcode)</code> como inferencia principal.</li>
-<li>Evaluar evidencia conjunta de subsidios con tests robustos sobre <code>grant</code> y <code>grant_1</code>.</li>
-<li>Dejar equivalencia FE / within manual / LSDV como validación técnica secundaria.</li>
-<li>Tratar serial correlation como diagnóstico de apoyo, no como mensaje central.</li>
-</ol>
+<section id="tablas-gráficos-e-inferencia" class="level2">
+<h2 class="anchored" data-anchor-id="tablas-gráficos-e-inferencia">Tablas, gráficos e inferencia</h2>
+<ul>
+<li>Tabla principal obligatoria con función clara de lectura/decisión.</li>
+<li>Rótulos públicos y comprensibles; no etiquetas internas de taller.</li>
+<li>Expandir siglas ambiguas para lector externo.</li>
+<li>Mantener convención consistente de inferencia (incluyendo bootstrap cuando corresponda).</li>
+<li>Evitar sobredimensionar contrastes auxiliares.</li>
+<li>Usar gráficos solo cuando agregan comprensión real.</li>
+</ul>
 </section>
-<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
-<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
-<p>Un análisis ingenuo puede mezclar dos planos distintos:</p>
-<ol type="1">
-<li>Inferencia: usar solo errores clásicos puede sobreconfiar en significancia.</li>
-<li>Identificacion: aun con inferencia robusta, pooled no corrige sesgo por heterogeneidad fija no observada.</li>
-</ol>
-<p>La lectura profesional separa ambos temas: FE atiende el problema de sesgo por <code>c_i</code> fijo; cluster mejora la credibilidad inferencial.</p>
+<section id="reglas-visuales-específicas-de-econometría-clásica" class="level2">
+<h2 class="anchored" data-anchor-id="reglas-visuales-específicas-de-econometría-clásica">Reglas visuales específicas de econometría clásica</h2>
+<p>No aplicar formato único por inercia: los gráficos son opcionales y solo entran si mejoran lectura pública.</p>
+<section id="familia-1-mini-gráfico-punto-ic-95" class="level3">
+<h3 class="anchored" data-anchor-id="familia-1-mini-gráfico-punto-ic-95">Familia 1: mini gráfico punto + IC 95%</h3>
+<p>Aplicar en comparaciones binarias limpias o cuando existe especificación dominante clara.</p>
+<p>Casos validados:</p>
+<ul>
+<li><code>T1</code> (2 estimaciones)</li>
+<li><code>T5</code> (1 estimación)</li>
+<li><code>T11</code> (2 estimaciones)</li>
+<li><code>T13</code> (2 estimaciones)</li>
+<li><code>T14</code> (2 estimaciones)</li>
+</ul>
+<p>Estándar visual:</p>
+<ul>
+<li>pequeño, horizontal y sobrio</li>
+<li>sin leyenda ni nota al pie</li>
+<li>máximo 1-2 estimaciones</li>
+<li>línea vertical en 0</li>
+</ul>
 </section>
-<section id="resultados-principales" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>La lectura final no descansa en un coeficiente puntual, sino en la evidencia conjunta sobre los subsidios y en una interpretación prudente de su magnitud económica.</p>
-<p>En términos aplicados, los signos estimados son compatibles con una reduccion de <code>lscrap</code> asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precisión estadística se debilita.</p>
-<p>Por eso, la lectura profesional para desempeño productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion concluyente.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Bloque</th>
-<th style="text-align: right;">Evidencia</th>
-<th>Lectura</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FE clásico</td>
-<td style="text-align: right;">grant=-0.252 (EE=0.151; IC95% [-0.551, 0.046]), grant_1=-0.422 (EE=0.210; IC95% [-0.838, -0.005])</td>
-<td>Señal inicial en clásico, sujeta a supuestos fuertes de FE</td>
-</tr>
-<tr class="even">
-<td>FE + cluster (operativo)</td>
-<td style="text-align: right;">grant=-0.252 (EE=0.143; IC95% [-0.540, 0.035]), grant_1=-0.422 (EE=0.282; IC95% [-0.988, 0.145])</td>
-<td>Cambia la precisión; la evidencia individual se debilita</td>
-</tr>
-<tr class="odd">
-<td>Test conjunto robusto grant=grant_1=0</td>
-<td style="text-align: right;">F(2,53)=1.56, p=0.2198</td>
-<td>Sin evidencia conjunta robusta al 5%</td>
-</tr>
-<tr class="even">
-<td>Restriccion grant + grant_1 = 0</td>
-<td style="text-align: right;">F(1,53)=2.63, p=0.1105</td>
-<td>No rechazo en inferencia robusta</td>
-</tr>
-<tr class="odd">
-<td>Estructura panel</td>
-<td style="text-align: right;">rho=0.893, F all u_i=0 p=0.0000</td>
-<td>La heterogeneidad fija de firma es econométricamente relevante</td>
-</tr>
-</tbody>
-</table>
+<section id="familia-2-síntesis-de-trayectoria-metodológica-decisión-secuencial" class="level3">
+<h3 class="anchored" data-anchor-id="familia-2-síntesis-de-trayectoria-metodológica-decisión-secuencial">Familia 2: síntesis de trayectoria metodológica / decisión secuencial</h3>
+<p>Aplicar cuando la pieza depende de transición metodológica y no de un coeficiente único.</p>
+<p>Casos consolidados:</p>
+<ul>
+<li>implementados/validados: <code>T9</code>, <code>T15</code></li>
+<li>explorados para simplificación: <code>T2</code>, <code>T4</code>, <code>T6</code>, <code>T7</code></li>
+</ul>
+<p>Estándar visual:</p>
+<ul>
+<li>SVG simple, liviano y horizontal</li>
+<li>texto corto en lenguaje externo</li>
+<li>foco en comparación, cambio y decisión</li>
+<li>evitar jerga interna de taller</li>
+</ul>
 </section>
-<section id="hallazgos-secundarios-y-validación" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-validación">Hallazgos secundarios y validación</h2>
-<p>Los contrastes siguientes son útiles para auditar consistencia del caso, pero quedan subordinados al modelo operativo FE+cluster:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Chequeo secundario</th>
-<th style="text-align: right;">Resultado</th>
-<th>Lectura</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FE vs within manual</td>
-<td style="text-align: right;">Coeficientes coinciden</td>
-<td>FE no opera como caja negra; replica la transformacion within</td>
-</tr>
-<tr class="even">
-<td>FE vs LSDV (i.fcode)</td>
-<td style="text-align: right;">Misma lógica de ajuste within</td>
-<td>Validacion algebraica adicional del estimador</td>
-</tr>
-<tr class="odd">
-<td>Serial correlation en residuos FE</td>
-<td style="text-align: right;">u_fe_L1=-0.206; test = -0.5 rechaza (p=0.0000)</td>
-<td>Patron compatible con dependencia serial adicional; refuerza uso de inferencia robusta</td>
-</tr>
-<tr class="even">
-<td>FE-AR(1) (xtregar)</td>
-<td style="text-align: right;">Resultados sensibles en panel corto</td>
-<td>Se reporta solo como contraste metodologico auxiliar</td>
-</tr>
-</tbody>
-</table>
+<section id="familia-3-desplazamientos-de-probabilidad-categorías" class="level3">
+<h3 class="anchored" data-anchor-id="familia-3-desplazamientos-de-probabilidad-categorías">Familia 3: desplazamientos de probabilidad / categorías</h3>
+<p>Aplicar cuando el foco está en probabilidades, outcomes ordinales o redistribución entre categorías.</p>
+<p>Subfamilias y orden auditado:</p>
+<ul>
+<li>Subfamilia A (multiclase/ordinal): <code>T19</code> primer piloto, <code>T18</code> segundo, <code>T16</code> después</li>
+<li>Subfamilia B (caso puente binario): <code>T12</code> al final</li>
+</ul>
+<p>Regla clave:</p>
+<ul>
+<li>no imponer formato único; elegir subfamilia según el objeto de decisión</li>
+</ul>
 </section>
-<p><img src="../assets/t07_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T7: FE con inferencia robusta, contraste conjunto y cierre operativo prudente" width="780" style="display:block; max-width:100%; height:auto;"></p>
-<section id="lectura-profesional-del-caso" class="level2">
-<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
-<p>T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitación y desperdicio productivo, después elegir una estrategia de identificación coherente (FE within), y finalmente comunicar inferencia con estándar robusto (cluster y tests conjuntos).</p>
-<p>Esta secuencia evita dos excesos frecuentes: tratar la significancia convencional como veredicto final y presentar técnicas de panel como un fin en sí mismo.</p>
+<section id="casos-especiales-fuera-de-familia-principal" class="level3">
+<h3 class="anchored" data-anchor-id="casos-especiales-fuera-de-familia-principal">Casos especiales fuera de familia principal</h3>
+<ul>
+<li><code>T3</code>: no linealidad (familia propia)</li>
+<li><code>T8</code>: bloque dinámico / rezagos (familia propia)</li>
+<li><code>T10</code>, <code>T17</code>, <code>T20</code>: no públicos por ahora / notas técnicas</li>
+</ul>
 </section>
-<section id="cierre" class="level2">
-<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>La contribución de T7 no es establecer una conclusión definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.</p>
+<section id="regla-de-expansión-del-módulo" class="level3">
+<h3 class="anchored" data-anchor-id="regla-de-expansión-del-módulo">Regla de expansión del módulo</h3>
+<ul>
+<li>No asumir cobertura universal de una familia visual.</li>
+<li>Si un taller no entra limpio en familia 1, 2 o 3, no forzarlo.</li>
+<li>Auditar legibilidad antes de escalar una tanda de piezas.</li>
+</ul>
+</section>
+<section id="categorías-públicas-vs-códigos-internos" class="level3">
+<h3 class="anchored" data-anchor-id="categorías-públicas-vs-códigos-internos">Categorías públicas vs códigos internos</h3>
+<ul>
+<li>Mostrar primero el significado conceptual de la categoría en tablas y visuales.</li>
+<li>No usar códigos internos como etiqueta pública principal (<code>0/1</code>, <code>choice=1</code>, <code>prftshr=1</code>, etc.).</li>
+<li>Si el número tiene significado sustantivo, acompañarlo con nombre conceptual.</li>
+<li>Prioridad de control en econometría: alta en <code>T16</code>, <code>T18</code>, <code>T19</code>; media en <code>T12</code>, <code>T13</code>, <code>T14</code>, <code>T15</code>.</li>
+</ul>
+</section>
+<section id="lenguaje-codificación-y-formato-de-assets" class="level3">
+<h3 class="anchored" data-anchor-id="lenguaje-codificación-y-formato-de-assets">Lenguaje, codificación y formato de assets</h3>
+<ul>
+<li>Revisar tildes/eñes del texto dentro de SVG o tarjetas.</li>
+<li>Corregir cualquier señal de mojibake (<code>Ã</code>, <code>Â</code>, <code>â€™</code>, etc.) antes de cerrar.</li>
+<li>Preferir SVG liviano para visuales editoriales simples.</li>
+<li>Si la exportación de Stata produce SVG pesado, reemplazar por PNG.</li>
+<li><code>.gph</code> no se publica en web.</li>
+<li>Para familia 2, controlar lenguaje público en SVG: <code>T9</code> como referencia, con revisión fina adicional en <code>T2</code>, <code>T4</code>, <code>T6</code>, <code>T7</code>, <code>T15</code>.</li>
+</ul>
+</section>
+</section>
+<section id="sincronización-operativa-entre-árboles-econometría" class="level2">
+<h2 class="anchored" data-anchor-id="sincronización-operativa-entre-árboles-econometría">Sincronización operativa entre árboles (econometría)</h2>
+<p>Cuando la pieza existe en <code>portfolio-site</code> y en <code>econometria-clasica</code>:</p>
+<ul>
+<li>replicar asset visual en ambos árboles cuando corresponda</li>
+<li>mantener sincronía entre <code>portfolio-site/econometria/piezas/*.qmd</code> y <code>econometria-clasica/01_portfolio/qmd/*.qmd</code></li>
+<li>renderizar HTML de ambos árboles</li>
+<li>verificar que el portal actualizado refleje el cambio real</li>
+</ul>
+</section>
+<section id="tono-y-control-editorial" class="level2">
+<h2 class="anchored" data-anchor-id="tono-y-control-editorial">Tono y control editorial</h2>
+<ul>
+<li>Tono profesional, sobrio y externo.</li>
+<li>Evitar metadiscurso interno y lenguaje coloquial.</li>
+<li>Evitar afirmaciones más fuertes que la evidencia.</li>
+<li>Antes de cerrar, verificar que la pieza responda en una línea: qué se estimó, qué lectura domina y bajo qué alcance.</li>
+</ul>
+</section>
+<section id="control-técnico-mínimo" class="level2">
+<h2 class="anchored" data-anchor-id="control-técnico-mínimo">Control técnico mínimo</h2>
+<ul>
+<li>Mantener UTF-8 sin BOM.</li>
+<li>Si se toca estructura/base del <code>.qmd</code>, verificar metadata antes de render.</li>
+<li>Después de render, revisar HTML real (TOC/layout/CSS/bloques principales); compilar no equivale a curar.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -813,5 +737,5 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

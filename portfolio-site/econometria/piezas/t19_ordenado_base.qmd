@@ -46,7 +46,7 @@ Ordered probit con APEs
 :::
 
 ::: {.metric-note}
-Resultado ordinal explícito (`pctstck`: `0`, `50`, `100`)
+Resultado ordinal explícito (`pctstck`: cartera conservadora 0% en acciones, cartera mixta 50% en acciones y cartera más expuesta a acciones 100% en acciones)
 :::
 :::
 
@@ -74,7 +74,7 @@ Probabilidades bien repartidas
 :::
 
 ::: {.metric-note}
-`Pr(0)=0.331`, `Pr(50)=0.370`, `Pr(100)=0.298`
+`Pr(cartera conservadora)=0.331`, `Pr(cartera mixta)=0.370`, `Pr(cartera más expuesta a acciones)=0.298`
 :::
 :::
 
@@ -84,7 +84,7 @@ Señales narrables
 :::
 
 ::: {.metric-value}
-`choice`, `age`, `prftshr`
+Elección de método, edad y profit sharing
 :::
 
 ::: {.metric-note}
@@ -96,7 +96,7 @@ Reasignan probabilidad entre cartera conservadora y cartera más expuesta a acci
 
 ## Resumen
 
-Esta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (`pctstck`) toma tres categorías ordenadas (`0`, `50`, `100`). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.
+Esta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (`pctstck`) toma tres categorías ordenadas (0% en acciones, 50% en acciones y 100% en acciones). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.
 
 El valor del caso está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin sobreinterpretaciones.
 
@@ -108,7 +108,7 @@ El valor del caso está en el criterio de lectura: usar un modelo ordenado para 
 En esta muestra de hogares, ¿qué variables se asocian con mayor o menor probabilidad de ubicarse en carteras previsionales conservadoras, mixtas o más expuestas a acciones?
 
 ::: {.small-note}
-Resultado: `pctstck` (`0`, `50`, `100`). Variables clave: `choice` (puede elegir método de inversión), `age` (edad en años), `prftshr` (plan con profit sharing), con controles demográficos y de ingreso.
+Resultado: `pctstck` con tres categorías ordenadas de cartera: conservadora (0% en acciones), mixta (50% en acciones) y más expuesta a acciones (100% en acciones). Variables clave: `choice` (puede elegir método de inversión: sí/no), `age` (edad en años), `prftshr` (plan con profit sharing: sí/no), con controles demográficos y de ingreso.
 :::
 :::
 
@@ -134,16 +134,16 @@ Se utiliza `pension.dta` en corte transversal.
 
 - Unidad de observación: familia/hogar (`id`)
 - Tamaño muestral: `N=194`
-- Variable de resultado: `pctstck` (`0` mayormente bonos, `50` cartera mixta, `100` mayormente acciones)
-- Distribución observada: `0` = `64` casos (`32.99%`), `50` = `72` (`37.11%`), `100` = `58` (`29.90%`)
-- Regresores de mayor interés para la lectura: `choice` (`=1` si puede elegir método de inversión), `age` (edad en años), `prftshr` (`=1` si el plan incluye profit sharing)
+- Variable de resultado: `pctstck` (0% en acciones: cartera conservadora; 50% en acciones: cartera mixta; 100% en acciones: cartera más expuesta a acciones)
+- Distribución observada: 0% en acciones (cartera conservadora) = `64` casos (`32.99%`), 50% en acciones (cartera mixta) = `72` (`37.11%`), 100% en acciones (cartera más expuesta a acciones) = `58` (`29.90%`)
+- Regresores de mayor interés para la lectura: `choice` (puede elegir método de inversión: sí/no), `age` (edad en años), `prftshr` (plan con profit sharing: sí/no)
 - Controles: `educ`, `wealth89`, `female`, `married`, `black`, tramos de ingreso familiar (`finc*`)
 - Alcance: al ser corte transversal, la lectura se mantiene en asociaciones probabilísticas contemporáneas
 
 ## Estrategia empírica
 
 1. Estimar un modelo ordenado como referencia principal para respetar la jerarquía de `pctstck`.
-2. Traducir resultados a probabilidades por categoría (`0`, `50`, `100`) para lectura directa del caso.
+2. Traducir resultados a probabilidades por categoría de cartera (conservadora, mixta y más expuesta a acciones) para lectura directa del caso.
 3. Reportar APEs por outcome en variables narrables (`choice`, `age`, `prftshr`).
 4. Mantener la comparación de enlace (`ologit`/`oprobit`) como respaldo breve, sin desplazar la historia aplicada.
 5. Dejar métricas de clasificación in-sample y bloques técnicos equivalentes en segundo plano.
@@ -153,31 +153,35 @@ Se utiliza `pension.dta` en corte transversal.
 La lectura aplicada se organiza en cuatro mensajes:
 
 1. La masa de probabilidad está distribuida entre los tres niveles de cartera, con mayor concentración en la categoría mixta.
-2. `choice=1` se asocia con menor probabilidad de cartera conservadora y mayor probabilidad de cartera más expuesta a acciones.
+2. Poder elegir método de inversión (sí vs no) se asocia con menor probabilidad de cartera conservadora y mayor probabilidad de cartera más expuesta a acciones.
 3. `age` muestra una reasignación hacia el perfil conservador y una caída en la probabilidad del perfil más expuesto a acciones.
 4. `prftshr` muestra una reasignación en sentido opuesto (desde perfil conservador hacia perfil más expuesto a acciones), con precisión más acotada en parte de los outcomes.
 
 ::: {.table-box}
 ## APEs narrables (ordered probit)
 
-| Variable | dPr(pctstck=0) | dPr(pctstck=50) | dPr(pctstck=100) | Lectura profesional |
+| Variable | dPr(cartera conservadora: 0% en acciones) | dPr(cartera mixta: 50% en acciones) | dPr(cartera más expuesta a acciones: 100% en acciones) | Lectura profesional |
 |---|---:|---:|---:|---|
-| `choice=1` (puede elegir método) vs 0 | -0.1281 (0.0621) | +0.0104 (0.0119) | +0.1178 (0.0547) | Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones |
+| Puede elegir método de inversión (sí vs no) | -0.1281 (0.0621) | +0.0104 (0.0119) | +0.1178 (0.0547) | Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones |
 | `age` (+1 año) | +0.0169 (0.0081) | -0.0007 (0.0013) | -0.0162 (0.0078) | En promedio, la edad se asocia con mayor peso en la categoría conservadora |
-| `prftshr=1` vs 0 | -0.1521 (0.0692) | -0.0137 (0.0219) | +0.1658 (0.0877) | Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones |
+| Plan con profit sharing (sí vs no) | -0.1521 (0.0692) | -0.0137 (0.0219) | +0.1658 (0.0877) | Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones |
 :::
+
+El siguiente perfil resume hacia dónde se desplaza la probabilidad entre cartera conservadora, cartera mixta y cartera más expuesta a acciones para la posibilidad de elegir método de inversión, la edad y el profit sharing.
+
+<img src="../assets/t19_desplazamiento_ordinal.svg" alt="Perfil de desplazamiento ordinal en T19: poder elegir método de inversión y tener profit sharing reducen probabilidad en cartera conservadora y la aumentan en cartera más expuesta a acciones; la edad desplaza en sentido inverso; la cartera mixta cambia poco." width="780" style="display:block; max-width:100%; height:auto;" />
 
 ::: {.table-box}
 ## Probabilidades predichas por categoría (contexto secundario)
 
 | Categoría de cartera (pctstck) | Probabilidad promedio estimada | Lectura aplicada |
 |---|---:|---|
-| 0 (más conservadora) | 0.331 | Aproximadamente un tercio de la muestra se ubica en perfil conservador |
-| 50 (mixta) | 0.370 | Es la categoría con mayor peso promedio |
-| 100 (más expuesta a acciones) | 0.298 | Cerca de tres de cada diez casos se ubican en el perfil más accionario |
+| 0% en acciones (cartera conservadora) | 0.331 | Aproximadamente un tercio de la muestra se ubica en perfil conservador |
+| 50% en acciones (cartera mixta) | 0.370 | Es la categoría con mayor peso promedio |
+| 100% en acciones (cartera más expuesta a acciones) | 0.298 | Cerca de tres de cada diez casos se ubican en el perfil más accionario |
 :::
 
-Como objeto final de decisión, la pieza prioriza tres covariables protagonistas (`choice`, `age`, `prftshr`): en esta muestra, allí se concentra la señal narrable de reasignación de probabilidades.
+Como objeto final de decisión, la pieza prioriza tres covariables protagonistas (posibilidad de elegir método de inversión, edad y profit sharing): en esta muestra, allí se concentra la señal narrable de reasignación de probabilidades.
 
 Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente.
 
@@ -201,7 +205,7 @@ El aporte de T19 es mostrar criterio econométrico aplicado: cuando el resultado
 
 En esta aplicación previsional, la lectura útil para un tercero no está en presentar una técnica como superior, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación.
 
-Para evitar dispersión, la lectura dominante se concentra en `choice`, `age` y `prftshr`, mientras el resto de covariables cumple un rol de control y contexto.
+Para evitar dispersión, la lectura dominante se concentra en la posibilidad de elegir método de inversión, la edad y el profit sharing, mientras el resto de covariables cumple un rol de control y contexto.
 
 ## Cierre
 

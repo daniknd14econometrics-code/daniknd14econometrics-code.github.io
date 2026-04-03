@@ -192,6 +192,8 @@ En FE con `c.educ##i.year`, las interacciones aparecen sin evidencia estadístic
 | FE + educ#year | R2 within = 0.1814 | - | Interacciones sin aporte robusto; contraste didactico |
 :::
 
+<img src="../assets/t06_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T6: transición a FE within, absorción de invariantes y cierre prudente del taller" width="780" style="display:block; max-width:100%; height:auto;" />
+
 ## Lectura profesional del caso
 
 T6 consolida una regla aplicada de panel:
@@ -207,7 +209,6 @@ La conclusión metodológica es deliberadamente prudente: FE organiza mejor la i
 Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
 
 Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.
-
 
 
 

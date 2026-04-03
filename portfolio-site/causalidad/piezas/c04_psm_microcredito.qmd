@@ -47,8 +47,6 @@ Bajo ese marco, la especificación preferida en esta aplicación es `kernel biwe
 
 ¿Cuál es el efecto de la participación femenina en microcrédito sobre el gasto del hogar cuando el contrafactual se construye con PSM y la decisión de diseño prioriza comparabilidad?
 
-Respuesta corta: para hogares tratados comparables en soporte común, la participación femenina en microcrédito se asocia con un gasto total esperado aproximadamente 11%-12% mayor que el de su contrafactual no tratado comparable.
-
 ## Datos y variables
 
 ::: {.small-note}
@@ -77,7 +75,21 @@ PSM permite construir un contrafactual más creíble al combinar tres capas: est
 
 Aunque `trim(10)` recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable.
 
-## Comparación de especificaciones PSM en soporte común
+## Especificación preferida y criterio de elección
+
+La especificación preferida en esta aplicación es:
+
+`kernel biweight bw = 0.40*SD(LPS) + common`.
+
+La lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. La regla operativa fija umbrales de diseño (`max|SMD| <= 0.10`, `maxvr <= 2`, `share1 >= 0.80`) y, entre candidatas que cumplen, prioriza mayor retención de tratados y mayor ESS de controles antes que un ATET más alto.
+
+Como respaldo visual del balance post-matching, se muestra el love plot de la especificación seleccionada.
+
+![Love plot de balance (selector T5)](../../../../causalidad/insumos/5_graficos/5_PSM_selector/5_loveplot.svg)
+
+Con el diseño validado y la especificación ya elegida, el bloque siguiente resume los efectos estimados.
+
+## Resultado principal: comparación de ATET y contrastes
 
 ::: {.table-box}
 | Especificación PSM (`common`) | ATET estimado | Lectura breve |
@@ -89,9 +101,34 @@ Aunque `trim(10)` recorta más soporte, esa poda no domina la decisión: en esta
 | Kernel epanechnikov (`h = 0.06`, bootstrap) | 0.1070 | Magnitud consistente con el rango principal |
 :::
 
-La comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11 para diseños razonables en soporte común. Esa estabilidad es más informativa que la búsqueda del valor más alto.
+La comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11 para diseños razonables en soporte común.
 
-Esa estabilidad descriptiva no reemplaza el criterio de elección: la especificación preferida se presenta más adelante, a partir de una regla basada en comparabilidad, soporte y precisión.
+::: {.table-box}
+| Opción de contraste | ATET | Precisión / inferencia | Rol en la decisión |
+|---|---:|---|---|
+| PSM `common` + NN(1) | 0.1108 | EE `psmatch2` (aprox.) 0.0428 | Referencia metodológica base |
+| PSM `trim(10)` + NN(1) | 0.1279 | EE `psmatch2` (aprox.) 0.0441 | Contraste con menor soporte y mayor poda |
+| **PSM `common` + kernel biweight `bw = 0.40*SD(LPS)`** | **0.1099** | EE bootstrap 0.0273 | **Especificación preferida** |
+| `teffects psmatch` (ATET, probit, NN(1)) | 0.1099 | EE robusta de Abadie–Imbens 0.0362 | Contraste secundario de estabilidad |
+:::
+
+<div style="max-width:420px;margin:0.4rem 0 0.6rem 0;">
+<svg viewBox="0 0 420 96" width="100%" role="img" aria-label="ATET de la especificación preferida con IC 95 bootstrap">
+  <line x1="170" y1="14" x2="170" y2="60" stroke="#8a8f93" stroke-width="1.1"></line>
+  <line x1="241" y1="36" x2="374" y2="36" stroke="#2f3a3d" stroke-width="2"></line>
+  <line x1="241" y1="31" x2="241" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line>
+  <line x1="374" y1="31" x2="374" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line>
+  <circle cx="307" cy="36" r="3.7" fill="#2f3a3d"></circle>
+  <text x="8" y="40" font-size="12.5" fill="#2f3a3d">Preferida por diseño</text>
+  <line x1="170" y1="64" x2="420" y2="64" stroke="#c6ccd2" stroke-width="1"></line>
+  <line x1="170" y1="61" x2="170" y2="67" stroke="#7f8c8d" stroke-width="1"></line>
+  <line x1="295" y1="61" x2="295" y2="67" stroke="#7f8c8d" stroke-width="1"></line>
+  <line x1="420" y1="61" x2="420" y2="67" stroke="#7f8c8d" stroke-width="1"></line>
+  <text x="163" y="79" font-size="10.5" fill="#6c757d">0.00</text>
+  <text x="288" y="79" font-size="10.5" fill="#6c757d">0.10</text>
+  <text x="413" y="79" font-size="10.5" fill="#6c757d">0.20</text>
+  <text x="295" y="92" font-size="10.8" fill="#6c757d" text-anchor="middle">Efecto estimado (ATET)</text>
+</svg></div>
 
 ## Lectura sustantiva del ATET: población objetivo y alcance
 
@@ -119,29 +156,10 @@ Interpretación válida bajo selección en observables y `overlap`; no extrapola
 
 En términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el gasto total esperado es mayor que su contrafactual no tratado comparable.
 
-## Especificación preferida y criterio de elección
-
-La especificación preferida en esta aplicación es:
-
-`kernel biweight bw = 0.40*SD(LPS) + common`.
-
-La lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. Por diseño, ese criterio evita elegir la alternativa solo por reportar el ATET más alto.
-
-::: {.table-box}
-| Opción de contraste | ATET | Precisión / inferencia | Rol en la decisión |
-|---|---:|---|---|
-| PSM `common` + NN(1) | 0.1108 | EE `psmatch2` (aprox.) 0.0428 | Referencia metodológica base |
-| PSM `trim(10)` + NN(1) | 0.1279 | EE `psmatch2` (aprox.) 0.0441 | Contraste con menor soporte y mayor poda |
-| **PSM `common` + kernel biweight `bw = 0.40*SD(LPS)`** | **0.1099** | EE bootstrap 0.0273 | **Especificación preferida** |
-| `teffects psmatch` (ATET, probit, NN(1)) | 0.1099 | EE robusta de Abadie–Imbens 0.0362 | Contraste secundario de estabilidad |
-:::
-
-La especificación preferida se respalda en una regla de selección predefinida, basada en comparabilidad, soporte y precisión; en esta pieza se presenta su lectura empírica y sustantiva.
-
 ## Cierre: qué se concluye y qué no
 
 La pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un gasto total esperado **11%-12%** mayor frente a su contrafactual comparable.
 
 Dentro de las reglas de soporte evaluadas, `common` resulta más defendible que `trim(10)`; ese contraste funciona como un insumo del criterio general de diseño, no como fundamento único de la elección final.
 
-Esta evidencia no autoriza una afirmación causal absoluta para toda la población. Su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables.
+Esta evidencia no autoriza una afirmación causal absoluta para toda la población. La conclusión preferida aplica a hogares tratados que quedan dentro del soporte común efectivo; su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables.

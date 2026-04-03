@@ -1,16 +1,73 @@
 ---
 title: "Causalidad"
+format:
+  html:
+    title-block-style: none
 ---
+
+::: {.hero-banner .hero-banner--causalidad}
+::: {.hero-banner__content}
+<span class="hero-banner__kicker">Portal de sección</span>
+
+# Causalidad aplicada con foco en identificación válida
+
+::: {.hero-banner__lead}
+La sección organiza piezas de inferencia causal observacional con criterios de comparabilidad, soporte común y chequeo de supuestos para una lectura robusta de efectos.
+:::
+
+::: {.hero-banner__actions}
+<a class="button-primary" href="../index.qmd">Volver al inicio</a>
+:::
+:::
+
+::: {.hero-banner__media}
+:::
+:::
 
 ## Índice de piezas aplicadas
 
-Esta sección reúne piezas aplicadas de identificación causal ya publicadas y curadas bajo revisión técnica y editorial.
-
-::: {.section-status}
-Piezas publicadas actualmente:
+::: {.section-lead}
+Piezas publicadas y curadas bajo un formato común para navegar diseño, método y alcance empírico.
 :::
 
-- [Por qué una diferencia de medias no equivale a efecto causal](piezas/c01_diferencia-medias-no-causal.qmd)
-- [Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito](piezas/c02_matching-exacto-microcredito.qmd)
-- [Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad](piezas/c04_psm_microcredito.qmd)
-- [Innovación de producto/proceso y mejora ambiental en firmas innovadoras](piezas/c06_ipwra_innovacion_ambiental.qmd)
+::: {.piece-grid}
+::: {.piece-card}
+### [Por qué una diferencia de medias no equivale a efecto causal](piezas/c01_diferencia-medias-no-causal.qmd)
+Diferencias observadas no identifican causalidad sin una estrategia válida de comparación.
+
+**Método principal:** Diagnóstico de sesgo de selección y comparación naive  
+**Tipo de datos:** Microdatos observacionales  
+:::
+
+::: {.piece-card}
+### [Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito](piezas/c02_matching-exacto-microcredito.qmd)
+Construcción del grupo de comparación con matching exacto y verificación de balance.
+
+**Método principal:** Matching exacto y chequeo de balance  
+**Tipo de datos:** Microdatos de hogares  
+:::
+
+::: {.piece-card}
+### [Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad](piezas/c04_psm_microcredito.qmd)
+Estimación de efectos con ponderación por puntaje de propensión bajo soporte común.
+
+**Método principal:** Propensity Score Matching (PSM)  
+**Tipo de datos:** Microdatos de hogares  
+:::
+
+::: {.piece-card}
+### [Innovación de producto/proceso y mejora ambiental en firmas innovadoras](piezas/c06_ipwra_innovacion_ambiental.qmd)
+Efecto de innovación sobre desempeño ambiental combinando modelos de resultado y tratamiento.
+
+**Método principal:** IPWRA (ponderación inversa + regresión ajustada)  
+**Tipo de datos:** Panel/corte de firmas innovadoras  
+:::
+
+::: {.piece-card}
+### [Retorno de la educación con variable instrumental](piezas/c08_vi_retorno_educacion.qmd)
+Aplicación de variables instrumentales para corregir endogeneidad en el retorno educativo.
+
+**Método principal:** Variables instrumentales (2SLS)  
+**Tipo de datos:** Microdatos laborales  
+:::
+:::

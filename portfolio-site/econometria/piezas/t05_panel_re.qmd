@@ -170,6 +170,8 @@ En lectura aplicada, ese coeficiente resume una asociación salarial estimada po
 | Pooled OLS + cluster `nr` (referencia) | 0.0988 | 0.0089 | [0.0812, 0.1163] | Referencia previa sin estructura RE |
 :::
 
+<img src="../assets/t05_mini_ic95.svg" alt="Comparacion visual minima de la estimacion operativa RE robusto/cluster para educ con IC 95%" width="590" style="display:block; max-width:100%; height:auto;" />
+
 ::: {.table-box}
 ## Hallazgos secundarios y especificación
 

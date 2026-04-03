@@ -235,7 +235,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participación laboral femenina (<code>lfp</code>) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.</p>
+<p>Esta pieza estudia participación laboral femenina (<code>lfp</code>: participa/no participa en la fuerza laboral) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.</p>
 <p>La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.</p>
 </section>
 <div class="quick-grid">
@@ -243,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>¿Cómo cambia un modelo binario de panel al pasar de pooled probit a RE-probit y CRE-probit, y qué indica eso sobre heterogeneidad inobservable?</p>
 <div class="small-note">
-<p>Resultado: <code>lfp</code> (1 participa, 0 no). Variables clave: <code>kids</code> (número de hijos &lt;18) y <code>lhinc</code> (log del ingreso del esposo). Controles: <code>educ</code>, <code>black</code>, <code>age</code>, <code>agesq</code>, dummies de periodo.</p>
+<p>Resultado binario de participación laboral femenina (<code>lfp</code>): participa / no participa en la fuerza laboral. Variables clave: <code>kids</code> (número de hijos &lt;18) y <code>lhinc</code> (log del ingreso del esposo). Controles: <code>educ</code>, <code>black</code>, <code>age</code>, <code>agesq</code>, dummies de periodo.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -265,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Tamano muestral: <code>N=28,315</code></li>
 <li>Unidades de panel: <code>5,663</code> mujeres</li>
 <li>Rango temporal: <code>period=1..5</code> (5 periodos de 4 meses)</li>
-<li>Variable de resultado: <code>lfp</code> (<code>1</code> participa en fuerza laboral)</li>
+<li>Variable de resultado: <code>lfp</code> (participa / no participa en la fuerza laboral)</li>
 <li>Variables clave: <code>kids</code>, <code>lhinc</code></li>
 <li>Controles: <code>educ</code>, <code>i.black</code>, <code>age</code>, <code>agesq</code>, <code>per2</code>-<code>per5</code></li>
 </ul>
@@ -345,6 +345,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Leads como robustez secundaria:</strong> los test con adelantados se reportan como chequeo auxiliar de robustez (con señal concentrada en <code>F1_kids</code>) y no como eje principal de interpretación.</li>
 </ul>
 <p>Como nota técnica menor, incluir promedios individuales de variables con variación temporal limitada puede ampliar incertidumbre en algunos parámetros, sin alterar la dirección sustantiva principal.</p>
+<p><img src="../assets/t15_decision_secuencial.svg" alt="Sintesis secuencial de decision metodologica en T15: trayectoria pooled-RE-CRE, atenuacion de APEs de kids y lhinc, y respaldo Mundlak en CRE-pooled y CRE-probit" width="780" style="display:block; max-width:100%; height:auto;"></p>
 </section>
 <section id="lectura-profesional" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>

@@ -1,25 +1,56 @@
-﻿---
+---
 title: "Sobre mí"
+format:
+  html:
+    title-block-style: none
 ---
 
-## Daniel Méndez
+::: {.hero-banner .hero-banner--sobre-mi}
+::: {.hero-banner__content}
+<span class="hero-banner__kicker">Perfil profesional</span>
 
-**Perfil profesional**
+# Daniel Méndez
 
-Economista especializado en econometría aplicada, inferencia causal y análisis cuantitativo en problemas económicos.
+::: {.hero-banner__lead}
+Economista enfocado en econometría aplicada, inferencia causal y analítica cuantitativa para decisiones de política pública, estrategia y negocio.
+:::
 
-**Áreas de interés**
+::: {.hero-banner__actions}
+<a class="button-primary" href="index.qmd">Volver al inicio</a>
+<a class="button-secondary" href="econometria/index.qmd">Ver piezas de Econometría</a>
+:::
+:::
 
-- Econometría aplicada y datos de panel
-- Métodos de identificación causal
-- Modelos de respuesta discreta, multinomial y ordinal
-- Síntesis y comunicación de resultados empíricos
+::: {.hero-banner__media}
+:::
+:::
 
-**Enfoque de trabajo**
+## Enfoque de trabajo
 
-Trabajo con foco en consistencia metodológica, claridad expositiva y lectura sustantiva de resultados.
+::: {.profile-grid}
+::: {.profile-card}
+### Especialización técnica
+- Econometría aplicada y datos de panel.
+- Modelos de respuesta discreta, multinomial y ordinal.
+- Estrategias de identificación causal.
+:::
 
-**Contacto**
+::: {.profile-card}
+### Principios de entrega
+- Consistencia metodológica y trazabilidad de supuestos.
+- Presentación clara para equipos técnicos y de decisión.
+- Reproducibilidad y documentación ordenada.
+:::
+
+::: {.profile-card}
+### Colaboración
+- Diseño de piezas aplicadas para portfolio institucional o académico.
+- Revisión metodológica de análisis empíricos.
+- Mentoría para estructurar narrativa cuantitativa.
+:::
+:::
+
+## Contacto
 
 - LinkedIn: [danielméndez-ec](https://www.linkedin.com/in/danielm%C3%A9ndez-ec/)
 - Email: [daniknd14@gmail.com](mailto:daniknd14@gmail.com)

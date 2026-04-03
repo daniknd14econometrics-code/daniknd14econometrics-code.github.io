@@ -1,13 +1,57 @@
 ---
 title: "Machine Learning"
+format:
+  html:
+    title-block-style: none
 ---
 
-## Índice de piezas aplicadas
+::: {.hero-banner .hero-banner--ml}
+::: {.hero-banner__content}
+<span class="hero-banner__kicker">Portal de sección</span>
 
-Esta sección está preparada para documentar aplicaciones de machine learning orientadas a uso profesional. Las piezas se publicarán gradualmente tras su curación metodológica.
+# Machine Learning aplicado a problemas económicos
 
-::: {.section-status}
-Actualmente no hay piezas publicadas en esta sección.
+::: {.hero-banner__lead}
+Esta sección funciona hoy como una maqueta visual del módulo de machine learning. El contenido definitivo se incorporará de forma progresiva, manteniendo el mismo estándar editorial del sitio.
 :::
 
-Convención de nombres prevista para nuevas piezas: `ml01_slug-tema.qmd`, `ml02_slug-tema.qmd`.
+::: {.hero-banner__actions}
+<a class="button-primary" href="../index.qmd">Volver al inicio</a>
+:::
+:::
+
+::: {.hero-banner__media}
+:::
+:::
+
+## Módulo en desarrollo
+
+::: {.section-status}
+Sección en estado de prototipo visual. Las tarjetas siguientes muestran la estructura prevista y no deben leerse como piezas finales publicadas.
+:::
+
+::: {.piece-grid}
+::: {.piece-card}
+### Prototipo de línea temática: series temporales y pronóstico
+Borrador de estructura para futuras piezas sobre demanda, actividad e indicadores con validación temporal.
+
+**Estado actual:** Maqueta editorial  
+**Publicación definitiva:** Pendiente  
+:::
+
+::: {.piece-card}
+### Prototipo de línea temática: clasificación y scoring
+Borrador de estructura para casos de clasificación en riesgo, adopción y segmentación con métricas de negocio.
+
+**Estado actual:** Maqueta editorial  
+**Publicación definitiva:** Pendiente  
+:::
+
+::: {.piece-card}
+### Prototipo de línea temática: causal ML
+Borrador de estructura para combinar aprendizaje automático e inferencia de efectos heterogéneos.
+
+**Estado actual:** Maqueta editorial  
+**Publicación definitiva:** Pendiente  
+:::
+:::

@@ -196,6 +196,8 @@ Como objeto final de decisión en T4, la lectura queda en dos niveles:
 | Contraste en diferencias | Capacidad limitada (`D.educ` y `D.exper` omitidas) | Aporta diagnóstico, pero no reemplaza el cierre del subbloque pooled |
 :::
 
+<img src="../assets/t04_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T4: cierre del subbloque pooled, límite por heterogeneidad inobservable y transición metodológica" width="780" style="display:block; max-width:100%; height:auto;" />
+
 ## Lectura profesional del caso
 
 T4 deja un criterio aplicado claro:
@@ -213,6 +215,5 @@ Este taller consolida una idea central de trabajo profesional en panel: corregir
 El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled.
 
 La decisión final del taller queda explícita: cierre operativo dentro del subbloque pooled y, al mismo tiempo, reconocimiento de que el problema general requiere estrategias adicionales para tratar `c_i`.
-
 
 

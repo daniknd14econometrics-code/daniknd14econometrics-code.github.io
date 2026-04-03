@@ -58,12 +58,6 @@ En esta aplicación, ¿cuál es el efecto de la participación femenina en micro
 :::
 :::
 
-::: {.section-box}
-## Regla de decisión
-
-La selección de diseño se hizo sin usar la variable de resultado para ordenar candidatos. Primero se exigió balance (`max|SMD| <= 0.10` en covariables clave) y luego se priorizó soporte (`ESS` y muestra retenida).
-:::
-
 ::::
 
 ## Por qué la comparación simple no alcanza
@@ -76,30 +70,26 @@ Comparar tratados y controles sin construir soporte común mezcla diferencias de
 
 Por eso, la lectura profesional no puede depender solo del tamaño del coeficiente.
 
+## Regla de decisión
+
+La selección de diseño se hizo sin usar la variable de resultado para ordenar candidatos. Primero se exigió balance (`max|SMD| <= 0.10` en covariables clave) y luego se priorizó soporte (`ESS` y muestra retenida).
+
+Como apoyo visual del criterio de balance, se muestra el love plot del diseño seleccionado.
+
+![Love plot del diseño ganador (selector T3)](../../../../causalidad/insumos/5_graficos/3_ME_selector/3_smd.svg)
+
 ::: {.table-box}
 ## Contraste central de diseño
 
 La tabla resume la compensación relevante para decidir entre estrategias de emparejamiento en esta base.
 
-| Especificación | max\|SMD\| (clave) | Cumple regla base (`max|SMD| <= 0.10`) | ESS controles | Soporte retenido (`N1` / `N0`) | ATET reportado | Lectura |
-|---|---:|---|---:|---:|---:|---|
-| Matching exacto - especificación base (Exact / S1) | 0.0839 | Pasa regla base | 164.3 | 409 / 325 | 0.1063 (EE bootstrap 0.0397) | Preferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo |
-| CEM - regla Scott (CEM / scott) | 0.0184 | Pasa regla base | 63.6 | 192 / 157 | Referencia comparativa | Balance más estricto, con pérdida marcada de muestra efectiva |
-| Matching exacto - especificación ampliada (Exact / S2) | 0.1697 | No pasa regla base | 269.0 | 505 / 431 | Referencia de sensibilidad | Se vuelve opción relevante si el umbral se relaja a 0.20 |
-| CEM - regla FD (CEM / fd) | 0.2114 | No pasa regla base | 86.1 | 201 / 156 | 0.2249 (EE bootstrap 0.0643) | Reporta ATET más alto, pero no cumple la regla base de balance |
+| Especificación | max\|SMD\| (clave) | Cumple regla base (`max|SMD| <= 0.10`) | ESS controles | Soporte retenido (`N1` / `N0`) | Lectura de diseño |
+|---|---:|---|---:|---:|---|
+| Matching exacto - especificación base (Exact / S1) | 0.0839 | Pasa regla base | 164.3 | 409 / 325 | Preferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo |
+| CEM - regla Scott (CEM / scott) | 0.0184 | Pasa regla base | 63.6 | 192 / 157 | Balance más estricto, con pérdida marcada de muestra efectiva |
+| Matching exacto - especificación ampliada (Exact / S2) | 0.1697 | No pasa regla base | 269.0 | 505 / 431 | Se vuelve opción relevante si el umbral se relaja a 0.20 |
+| CEM - regla FD (CEM / fd) | 0.2114 | No pasa regla base | 86.1 | 201 / 156 | No cumple la regla base aunque conserva una muestra intermedia |
 :::
-
-::: {.section-box}
-## Lectura sustantiva del efecto
-
-Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en **0.1063 log-puntos** frente a su contrafactual no tratado comparable.
-
-Traducido a una escala más comunicable, ese valor implica aproximadamente **11.2%** más en `1 + gasto total del hogar` (porque `exp(0.1063) - 1 ≈ 0.112`).
-
-Esta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares.
-:::
-
-El contraste dominante es claro: un ATET mayor (`CEM - regla FD`) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.
 
 ## Decisión metodológica y alcance
 
@@ -110,6 +100,27 @@ Bajo la regla de diseño adoptada para esta comparación, la preferencia queda e
 3. La frontera no dominada incluye alternativas con distintos compromisos entre balance y soporte.
 
 Entonces, la conclusión correcta no es "hay un ganador absoluto", sino "hay una decisión defendible bajo una regla explícita de diseño".
+
+Con la decisión metodológica ya cerrada, el bloque siguiente interpreta el efecto estimado bajo la especificación preferida.
+
+::: {.section-box}
+## Lectura sustantiva del efecto
+
+::: {.table-box}
+| Especificación | ATET reportado | Precisión | Rol en la lectura |
+|---|---:|---:|---|
+| Matching exacto - especificación base (Exact / S1) | 0.1063 | EE bootstrap 0.0397 | Efecto principal bajo la regla de diseño adoptada |
+| CEM - regla FD (CEM / fd) | 0.2249 | EE bootstrap 0.0643 | Contraste de magnitud no preferido por la regla de balance |
+:::
+
+Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en **0.1063 log-puntos** frente a su contrafactual no tratado comparable.
+
+Traducido a una escala más comunicable, ese valor implica aproximadamente **11.2%** más en `1 + gasto total del hogar` (porque `exp(0.1063) - 1 ≈ 0.112`).
+
+Esta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares.
+:::
+
+El contraste dominante es claro: un ATET mayor (`CEM - regla FD`) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.
 
 ## Cierre
 

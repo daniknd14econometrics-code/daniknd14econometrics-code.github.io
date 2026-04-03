@@ -189,6 +189,8 @@ Los contrastes siguientes son útiles para auditar consistencia del caso, pero q
 | FE-AR(1) (xtregar) | Resultados sensibles en panel corto | Se reporta solo como contraste metodologico auxiliar |
 :::
 
+<img src="../assets/t07_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T7: FE con inferencia robusta, contraste conjunto y cierre operativo prudente" width="780" style="display:block; max-width:100%; height:auto;" />
+
 ## Lectura profesional del caso
 
 T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitación y desperdicio productivo, después elegir una estrategia de identificación coherente (FE within), y finalmente comunicar inferencia con estándar robusto (cluster y tests conjuntos).

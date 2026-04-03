@@ -191,6 +191,8 @@ Por lo tanto, la inferencia clásica no es adecuada para este caso; la especific
 
 Con esta evidencia, la decisión aplicada no es "cambiar de historia económica", sino cambiar el estándar de reporte: conservar pooled como benchmark y comunicar resultados con inferencia robusta a la estructura real del panel.
 
+<img src="../assets/t02_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T2: benchmark pooled, diagnóstico de errores y decisión operativa con transición a modelos de panel" width="780" style="display:block; max-width:100%; height:auto;" />
+
 ## Lectura profesional del caso
 
 La conclusión aplicada es directa: pooled OLS en panel puede ser un benchmark útil, siempre que la inferencia se ajuste a la estructura del error.
@@ -206,7 +208,6 @@ Este caso muestra una práctica clave de econometría aplicada en panel: antes d
 El pooled OLS corregido por cluster no es el destino final, pero si un punto de partida profesionalmente útil cuando se comunica evidencia con criterio.
 
 Para un analista aplicado, la leccion práctica es concreta: en panel salarial, no alcanza con "tener coeficientes"; hay que reportarlos con una estrategia de inferencia coherente con el tipo de datos para que la decisión técnica también sea una decisión profesional defendible.
-
 
 
 

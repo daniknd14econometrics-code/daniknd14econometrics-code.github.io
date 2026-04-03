@@ -37,15 +37,19 @@ Esta pieza estima, en firmas innovadoras comparables, cómo cambia la probabilid
 
 ## Resumen ejecutivo
 
-Esta ficha presenta esta estimación principal sobre una muestra de firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. La lectura central no es metodológica ni abierta: los tres efectos estimados frente al grupo base son positivos y muestran una gradación clara.
+Esta ficha presenta una estimación principal sobre firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. El foco narrativo es explícito: primero se hace visible la arquitectura de diseño causal y recién después se reportan los efectos.
 
-En términos sustantivos, la probabilidad de reportar mejora ambiental media/alta aumenta en los tres estados de tratamiento, con mayor magnitud cuando la firma combina innovación de producto y proceso.
+La lectura metodológica central es que la credibilidad de la comparación depende de soporte, balance y estabilidad de ponderación, no de buscar de antemano la magnitud más alta.
 
 ## Pregunta central
 
 ¿Cómo cambia la probabilidad de mejora ambiental media/alta entre firmas innovadoras cuando se compara cada estado de innovación de producto/proceso frente al grupo sin innovación de producto/proceso, bajo un diseño de comparabilidad previamente definido?
 
-Respuesta corta: frente al grupo sin innovación de producto/proceso, se estiman aumentos de 11.8, 18.0 y 27.1 puntos porcentuales en la probabilidad de mejora ambiental media/alta (`ATET_3 > ATET_2 > ATET_1 > 0`).
+## Por qué importa la comparabilidad
+
+En este caso, la comparación directa entre estados de innovación puede confundir diferencias de composición con diferencias asociadas al tratamiento. Por eso, la interpretación se apoya en un diseño que restringe la comparación a observaciones con soporte útil y pesos estables.
+
+Esta decisión permite que la lectura final se concentre en una pregunta sustantiva: cuánto cambia la probabilidad de mejora ambiental cuando el estado de innovación pasa de `0` a cada uno de los estados tratados.
 
 ## Datos y variables
 
@@ -61,13 +65,37 @@ Respuesta corta: frente al grupo sin innovación de producto/proceso, se estiman
 - **Población objetivo de los efectos:** subpoblaciones tratadas comparables de cada estado (`D=1`, `D=2`, `D=3`) frente a su contrafactual en el grupo base (`D=0`) dentro del soporte común operativo.
 :::
 
-La estimación reporta tres ATET diagonales (`1 vs 0`, `2 vs 0`, `3 vs 0`) sobre un diseño ya seleccionado con criterio de comparabilidad, soporte y estabilidad de pesos.
+La estimación se organiza en tres contrastes diagonales (`1 vs 0`, `2 vs 0`, `3 vs 0`) definidos para subpoblaciones tratadas comparables dentro del soporte común operativo.
 
-## Por qué importa la comparabilidad
+## Diseño seleccionado y por qué
 
-En este caso, la comparación directa entre estados de innovación puede confundir diferencias de composición con diferencias asociadas al tratamiento. Por eso, la interpretación se apoya en un diseño que restringe la comparación a observaciones con soporte útil y pesos estables.
+La estimación principal se apoya en una configuración de diseño fijada antes de leer magnitudes de efecto. Esa configuración se adopta porque preserva soporte efectivo amplio, mantiene balance ponderado en rangos aceptables y evita alternativas más restrictivas que reducen en exceso la muestra utilizable.
 
-Esta decisión permite que la lectura final se concentre en una pregunta sustantiva: cuánto cambia la probabilidad de mejora ambiental cuando el estado de innovación pasa de `0` a cada uno de los estados tratados.
+La decisión metodológica es deliberada: primero asegurar comparabilidad, soporte y estabilidad de pesos; después interpretar resultados. La especificación no se elige por el efecto más alto, sino por la credibilidad del contrafactual.
+
+## Soporte y balance
+
+Los diagnósticos de la estimación principal no muestran señales de ruptura severa:
+
+- en los tres contrastes (`t=1,2,3`) no se observan violaciones de soporte en los indicadores `os_t#` de `teffects`;
+- el balance ponderado mejora de forma marcada respecto del balance crudo;
+- el contraste `ambas vs 0` es el más exigente en términos de reponderación, pero permanece dentro de una zona de balance aceptable.
+
+Estos chequeos respaldan la credibilidad del diseño y ordenan la lectura del resultado principal.
+
+Para el contraste más exigente (`3 vs 0`), se muestra el overlap antes y después de ponderar.
+
+::: {.columns}
+::: {.column width="50%"}
+![Overlap antes de ponderar (`3 vs 0`): Pr(D=3)](../../../../causalidad/insumos/5_graficos/6_%20IPWRA/6_overlap_manual_t3.png)
+:::
+
+::: {.column width="50%"}
+![Overlap después de ponderar (IPW, `3 vs 0`): Pr(D=3)](../../../../causalidad/insumos/5_graficos/6_%20IPWRA/6_overlap_weighted_manual_t3.png)
+:::
+:::
+
+Con estas condiciones de comparabilidad y soporte, el bloque siguiente resume los tres efectos ATET principales.
 
 ::: {.table-box}
 ## Resultado principal
@@ -81,15 +109,9 @@ Esta decisión permite que la lectura final se concentre en una pregunta sustant
 
 El patrón central es nítido y consistente: `ATET_3 > ATET_2 > ATET_1 > 0` (producto y proceso > solo proceso > solo producto, siempre frente al grupo base).
 
-## Soporte y balance
+Como síntesis visual del resultado principal, se muestra un mini coefplot horizontal con los tres ATET diagonales y sus IC 95%.
 
-Los diagnósticos de la estimación principal no muestran señales de ruptura severa:
-
-- en los tres contrastes (`t=1,2,3`) no se observan violaciones de soporte en los indicadores `os_t#` de `teffects`;
-- el balance ponderado mejora de forma marcada respecto del balance crudo;
-- el contraste `ambas vs 0` es el más exigente en términos de reponderación, pero permanece dentro de una zona de balance aceptable.
-
-Estos chequeos funcionan como respaldo del resultado principal y no cambian la lectura sustantiva dominante.
+![Mini coefplot horizontal de ATET diagonales (IC 95%)](../../../../causalidad/insumos/5_graficos/6_%20IPWRA/6_mini_coefplot_atet_diagonales.svg)
 
 ## Lectura sustantiva y alcance
 

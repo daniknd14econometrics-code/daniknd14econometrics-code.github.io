@@ -134,9 +134,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
   <li><a href="#por-qué-la-comparación-simple-no-alcanza" id="toc-por-qué-la-comparación-simple-no-alcanza" class="nav-link" data-scroll-target="#por-qué-la-comparación-simple-no-alcanza">Por qué la comparación simple no alcanza</a></li>
+  <li><a href="#regla-de-decisión" id="toc-regla-de-decisión" class="nav-link" data-scroll-target="#regla-de-decisión">Regla de decisión</a></li>
   <li><a href="#contraste-central-de-diseño" id="toc-contraste-central-de-diseño" class="nav-link" data-scroll-target="#contraste-central-de-diseño">Contraste central de diseño</a></li>
-  <li><a href="#lectura-sustantiva-del-efecto" id="toc-lectura-sustantiva-del-efecto" class="nav-link" data-scroll-target="#lectura-sustantiva-del-efecto">Lectura sustantiva del efecto</a></li>
   <li><a href="#decisión-metodológica-y-alcance" id="toc-decisión-metodológica-y-alcance" class="nav-link" data-scroll-target="#decisión-metodológica-y-alcance">Decisión metodológica y alcance</a></li>
+  <li><a href="#lectura-sustantiva-del-efecto" id="toc-lectura-sustantiva-del-efecto" class="nav-link" data-scroll-target="#lectura-sustantiva-del-efecto">Lectura sustantiva del efecto</a></li>
   <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
   </ul>
 </nav>
@@ -205,10 +206,6 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </div>
 </section>
-<section id="regla-de-decisión" class="level2 section-box">
-<h2 class="anchored" data-anchor-id="regla-de-decisión">Regla de decisión</h2>
-<p>La selección de diseño se hizo sin usar la variable de resultado para ordenar candidatos. Primero se exigió balance (<code>max|SMD| &lt;= 0.10</code> en covariables clave) y luego se priorizó soporte (<code>ESS</code> y muestra retenida).</p>
-</section>
 </div>
 <section id="por-qué-la-comparación-simple-no-alcanza" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-la-comparación-simple-no-alcanza">Por qué la comparación simple no alcanza</h2>
@@ -220,18 +217,28 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Por eso, la lectura profesional no puede depender solo del tamaño del coeficiente.</p>
 </section>
+<section id="regla-de-decisión" class="level2">
+<h2 class="anchored" data-anchor-id="regla-de-decisión">Regla de decisión</h2>
+<p>La selección de diseño se hizo sin usar la variable de resultado para ordenar candidatos. Primero se exigió balance (<code>max|SMD| &lt;= 0.10</code> en covariables clave) y luego se priorizó soporte (<code>ESS</code> y muestra retenida).</p>
+<p>Como apoyo visual del criterio de balance, se muestra el love plot del diseño seleccionado.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../causalidad/insumos/5_graficos/3_ME_selector/3_smd.svg" class="img-fluid figure-img"></p>
+<figcaption>Love plot del diseño ganador (selector T3)</figcaption>
+</figure>
+</div>
+</section>
 <section id="contraste-central-de-diseño" class="level2 table-box">
 <h2 class="anchored" data-anchor-id="contraste-central-de-diseño">Contraste central de diseño</h2>
 <p>La tabla resume la compensación relevante para decidir entre estrategias de emparejamiento en esta base.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 16%">
-<col style="width: 12%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -240,8 +247,7 @@ ul.task-list li input[type="checkbox"] {
 <th>Cumple regla base (<code>max|SMD| &lt;= 0.10</code>)</th>
 <th style="text-align: right;">ESS controles</th>
 <th style="text-align: right;">Soporte retenido (<code>N1</code> / <code>N0</code>)</th>
-<th style="text-align: right;">ATET reportado</th>
-<th>Lectura</th>
+<th>Lectura de diseño</th>
 </tr>
 </thead>
 <tbody>
@@ -251,7 +257,6 @@ ul.task-list li input[type="checkbox"] {
 <td>Pasa regla base</td>
 <td style="text-align: right;">164.3</td>
 <td style="text-align: right;">409 / 325</td>
-<td style="text-align: right;">0.1063 (EE bootstrap 0.0397)</td>
 <td>Preferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo</td>
 </tr>
 <tr class="even">
@@ -260,7 +265,6 @@ ul.task-list li input[type="checkbox"] {
 <td>Pasa regla base</td>
 <td style="text-align: right;">63.6</td>
 <td style="text-align: right;">192 / 157</td>
-<td style="text-align: right;">Referencia comparativa</td>
 <td>Balance más estricto, con pérdida marcada de muestra efectiva</td>
 </tr>
 <tr class="odd">
@@ -269,7 +273,6 @@ ul.task-list li input[type="checkbox"] {
 <td>No pasa regla base</td>
 <td style="text-align: right;">269.0</td>
 <td style="text-align: right;">505 / 431</td>
-<td style="text-align: right;">Referencia de sensibilidad</td>
 <td>Se vuelve opción relevante si el umbral se relaja a 0.20</td>
 </tr>
 <tr class="even">
@@ -278,19 +281,11 @@ ul.task-list li input[type="checkbox"] {
 <td>No pasa regla base</td>
 <td style="text-align: right;">86.1</td>
 <td style="text-align: right;">201 / 156</td>
-<td style="text-align: right;">0.2249 (EE bootstrap 0.0643)</td>
-<td>Reporta ATET más alto, pero no cumple la regla base de balance</td>
+<td>No cumple la regla base aunque conserva una muestra intermedia</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="lectura-sustantiva-del-efecto" class="level2 section-box">
-<h2 class="anchored" data-anchor-id="lectura-sustantiva-del-efecto">Lectura sustantiva del efecto</h2>
-<p>Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en <strong>0.1063 log-puntos</strong> frente a su contrafactual no tratado comparable.</p>
-<p>Traducido a una escala más comunicable, ese valor implica aproximadamente <strong>11.2%</strong> más en <code>1 + gasto total del hogar</code> (porque <code>exp(0.1063) - 1 ≈ 0.112</code>).</p>
-<p>Esta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares.</p>
-</section>
-<p>El contraste dominante es claro: un ATET mayor (<code>CEM - regla FD</code>) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.</p>
 <section id="decisión-metodológica-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="decisión-metodológica-y-alcance">Decisión metodológica y alcance</h2>
 <p>Bajo la regla de diseño adoptada para esta comparación, la preferencia queda en <code>Matching exacto - especificación base (Exact / S1)</code>. Esa preferencia no es universal:</p>
@@ -300,7 +295,47 @@ ul.task-list li input[type="checkbox"] {
 <li>La frontera no dominada incluye alternativas con distintos compromisos entre balance y soporte.</li>
 </ol>
 <p>Entonces, la conclusión correcta no es “hay un ganador absoluto”, sino “hay una decisión defendible bajo una regla explícita de diseño”.</p>
+<p>Con la decisión metodológica ya cerrada, el bloque siguiente interpreta el efecto estimado bajo la especificación preferida.</p>
 </section>
+<section id="lectura-sustantiva-del-efecto" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="lectura-sustantiva-del-efecto">Lectura sustantiva del efecto</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Especificación</th>
+<th style="text-align: right;">ATET reportado</th>
+<th style="text-align: right;">Precisión</th>
+<th>Rol en la lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Matching exacto - especificación base (Exact / S1)</td>
+<td style="text-align: right;">0.1063</td>
+<td style="text-align: right;">EE bootstrap 0.0397</td>
+<td>Efecto principal bajo la regla de diseño adoptada</td>
+</tr>
+<tr class="even">
+<td>CEM - regla FD (CEM / fd)</td>
+<td style="text-align: right;">0.2249</td>
+<td style="text-align: right;">EE bootstrap 0.0643</td>
+<td>Contraste de magnitud no preferido por la regla de balance</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en <strong>0.1063 log-puntos</strong> frente a su contrafactual no tratado comparable.</p>
+<p>Traducido a una escala más comunicable, ese valor implica aproximadamente <strong>11.2%</strong> más en <code>1 + gasto total del hogar</code> (porque <code>exp(0.1063) - 1 ≈ 0.112</code>).</p>
+<p>Esta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares.</p>
+</section>
+<p>El contraste dominante es claro: un ATET mayor (<code>CEM - regla FD</code>) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.</p>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>En términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: el ATET de 0.1063 bajo la regla base (<code>max|SMD| &lt;= 0.10</code>) equivale aproximadamente a <strong>11.2%</strong> más en <code>1 + gasto total del hogar</code> frente a su contrafactual no tratado comparable.</p>

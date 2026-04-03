@@ -171,6 +171,10 @@ No es evidencia definitiva por sí sola, pero sí una señal fuerte de que trata
 | IV/2SLS | 0.1457 | 0.0196 | [0.1072, 0.1842] | 722 |
 | IV/2SLS robusto | 0.1457 | 0.0183 | [0.1099, 0.1815] | 722 |
 
+<div style="margin: 10px 0 8px 0;">
+<img src="../assets/t01_mini_ic95.svg" alt="Comparacion visual minima de MCO robusto e IV/2SLS robusto con IC 95%" width="590" style="display:block; max-width:100%; height:auto;" />
+</div>
+
 La diferencia de muestra (`N = 935` en MCO frente a `N = 722` en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV.
 Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional.
 :::

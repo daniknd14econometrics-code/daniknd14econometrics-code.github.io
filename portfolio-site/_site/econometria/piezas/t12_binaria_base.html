@@ -184,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
 <p>¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?</p>
 </div>
 <div class="hero-sub">
-<p>La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal donde la respuesta observada es 0/1.</p>
+<p>La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal cuando la respuesta observada es binaria: participa o no participa en la fuerza laboral.</p>
 </div>
 </div>
 <div class="metric-grid">
@@ -207,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Mujeres y hogares</p>
 </div>
 <div class="metric-note">
-<p><code>N=753</code> observaciones; <code>inlf=1</code> en <code>56.84%</code> de la muestra</p>
+<p><code>N=753</code> observaciones; participación en fuerza laboral en <code>56.84%</code> de la muestra (<code>428</code> casos)</p>
 </div>
 </div>
 <div class="metric-card">
@@ -243,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?</p>
 <div class="small-note">
-<p>Resultado: <code>inlf</code> (0/1). Regresores clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
+<p>Resultado binario de participación laboral femenina (<code>inlf</code>): participa / no participa en la fuerza laboral. Regresores clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -263,9 +263,9 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Unidad de observacion: mujer/hogar</li>
 <li>Tamano de muestra: <code>N=753</code></li>
-<li>Variable de resultado: <code>inlf</code> (<code>1</code> participa, <code>0</code> no participa)</li>
-<li>Proporcion en <code>inlf=1</code>: <code>56.84%</code> (<code>428</code> casos)</li>
-<li>Proporcion en <code>inlf=0</code>: <code>43.16%</code> (<code>325</code> casos)</li>
+<li>Variable de resultado: <code>inlf</code> (participa / no participa en la fuerza laboral)</li>
+<li>Proporción que participa en la fuerza laboral: <code>56.84%</code> (<code>428</code> casos)</li>
+<li>Proporción que no participa en la fuerza laboral: <code>43.16%</code> (<code>325</code> casos)</li>
 <li>Regresores clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code></li>
 </ul>
 </section>
@@ -282,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La lectura combina anclaje aplicado con comparacion metodologica:</p>
 <ul>
-<li><code>kidslt6</code> muestra una asociación negativa fuerte con <code>inlf</code>: APE alrededor de <code>-0.26</code>, consistente en probit y logit.</li>
+<li><code>kidslt6</code> muestra una asociación negativa fuerte con la participación laboral femenina: APE alrededor de <code>-0.26</code>, consistente en probit y logit.</li>
 <li><code>educ</code> y <code>exper</code> muestran asociaciones positivas y estables con la participación laboral.</li>
 <li><code>nwifeinc</code> aparece con asociación negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.</li>
 <li><code>kidsge6</code> no muestra una asociación robusta de magnitud comparable.</li>

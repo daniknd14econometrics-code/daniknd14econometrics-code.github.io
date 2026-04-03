@@ -137,9 +137,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
   <li><a href="#por-qué-la-comparabilidad-importa" id="toc-por-qué-la-comparabilidad-importa" class="nav-link" data-scroll-target="#por-qué-la-comparabilidad-importa">Por qué la comparabilidad importa</a></li>
   <li><a href="#soporte-y-comparabilidad-common-frente-a-trim10" id="toc-soporte-y-comparabilidad-common-frente-a-trim10" class="nav-link" data-scroll-target="#soporte-y-comparabilidad-common-frente-a-trim10">Soporte y comparabilidad: <code>common</code> frente a <code>trim(10)</code></a></li>
-  <li><a href="#comparación-de-especificaciones-psm-en-soporte-común" id="toc-comparación-de-especificaciones-psm-en-soporte-común" class="nav-link" data-scroll-target="#comparación-de-especificaciones-psm-en-soporte-común">Comparación de especificaciones PSM en soporte común</a></li>
-  <li><a href="#lectura-sustantiva-del-atet-población-objetivo-y-alcance" id="toc-lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="nav-link" data-scroll-target="#lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</a></li>
   <li><a href="#especificación-preferida-y-criterio-de-elección" id="toc-especificación-preferida-y-criterio-de-elección" class="nav-link" data-scroll-target="#especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</a></li>
+  <li><a href="#resultado-principal-comparación-de-atet-y-contrastes" id="toc-resultado-principal-comparación-de-atet-y-contrastes" class="nav-link" data-scroll-target="#resultado-principal-comparación-de-atet-y-contrastes">Resultado principal: comparación de ATET y contrastes</a></li>
+  <li><a href="#lectura-sustantiva-del-atet-población-objetivo-y-alcance" id="toc-lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="nav-link" data-scroll-target="#lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</a></li>
   <li><a href="#cierre-qué-se-concluye-y-qué-no" id="toc-cierre-qué-se-concluye-y-qué-no" class="nav-link" data-scroll-target="#cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</a></li>
   </ul>
 </nav>
@@ -197,7 +197,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="pregunta-central" class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
 <p>¿Cuál es el efecto de la participación femenina en microcrédito sobre el gasto del hogar cuando el contrafactual se construye con PSM y la decisión de diseño prioriza comparabilidad?</p>
-<p>Respuesta corta: para hogares tratados comparables en soporte común, la participación femenina en microcrédito se asocia con un gasto total esperado aproximadamente 11%-12% mayor que el de su contrafactual no tratado comparable.</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -256,8 +255,22 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Aunque <code>trim(10)</code> recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable.</p>
 </section>
-<section id="comparación-de-especificaciones-psm-en-soporte-común" class="level2">
-<h2 class="anchored" data-anchor-id="comparación-de-especificaciones-psm-en-soporte-común">Comparación de especificaciones PSM en soporte común</h2>
+<section id="especificación-preferida-y-criterio-de-elección" class="level2">
+<h2 class="anchored" data-anchor-id="especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</h2>
+<p>La especificación preferida en esta aplicación es:</p>
+<p><code>kernel biweight bw = 0.40*SD(LPS) + common</code>.</p>
+<p>La lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. La regla operativa fija umbrales de diseño (<code>max|SMD| &lt;= 0.10</code>, <code>maxvr &lt;= 2</code>, <code>share1 &gt;= 0.80</code>) y, entre candidatas que cumplen, prioriza mayor retención de tratados y mayor ESS de controles antes que un ATET más alto.</p>
+<p>Como respaldo visual del balance post-matching, se muestra el love plot de la especificación seleccionada.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../causalidad/insumos/5_graficos/5_PSM_selector/5_loveplot.svg" class="img-fluid figure-img"></p>
+<figcaption>Love plot de balance (selector T5)</figcaption>
+</figure>
+</div>
+<p>Con el diseño validado y la especificación ya elegida, el bloque siguiente resume los efectos estimados.</p>
+</section>
+<section id="resultado-principal-comparación-de-atet-y-contrastes" class="level2">
+<h2 class="anchored" data-anchor-id="resultado-principal-comparación-de-atet-y-contrastes">Resultado principal: comparación de ATET y contrastes</h2>
 <div class="table-box">
 <table class="caption-top table">
 <colgroup>
@@ -301,32 +314,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<p>La comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11 para diseños razonables en soporte común. Esa estabilidad es más informativa que la búsqueda del valor más alto.</p>
-<p>Esa estabilidad descriptiva no reemplaza el criterio de elección: la especificación preferida se presenta más adelante, a partir de una regla basada en comparabilidad, soporte y precisión.</p>
-</section>
-<section id="lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="level2">
-<h2 class="anchored" data-anchor-id="lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</h2>
-<div class="quick-grid">
-<div class="section-box">
-<p><strong>Estimando reportado</strong></p>
-<p>ATET para hogares tratados comparables en soporte común, con valor de referencia de <strong>0.11</strong> en log del gasto, equivalente aproximadamente a <strong>11%-12%</strong>.</p>
-</div>
-<div class="section-box">
-<p><strong>Población objetivo</strong></p>
-<p>Hogares tratados que permanecen en la región de soporte común y pueden compararse con controles observacionalmente similares.</p>
-</div>
-<div class="section-box">
-<p><strong>Alcance</strong></p>
-<p>Interpretación válida bajo selección en observables y <code>overlap</code>; no extrapolable automáticamente al total de hogares.</p>
-</div>
-</div>
-<p>En términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el gasto total esperado es mayor que su contrafactual no tratado comparable.</p>
-</section>
-<section id="especificación-preferida-y-criterio-de-elección" class="level2">
-<h2 class="anchored" data-anchor-id="especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</h2>
-<p>La especificación preferida en esta aplicación es:</p>
-<p><code>kernel biweight bw = 0.40*SD(LPS) + common</code>.</p>
-<p>La lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. Por diseño, ese criterio evita elegir la alternativa solo por reportar el ATET más alto.</p>
+<p>La comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11 para diseños razonables en soporte común.</p>
 <div class="table-box">
 <table class="caption-top table">
 <colgroup>
@@ -371,13 +359,35 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<p>La especificación preferida se respalda en una regla de selección predefinida, basada en comparabilidad, soporte y precisión; en esta pieza se presenta su lectura empírica y sustantiva.</p>
+<div style="max-width:420px;margin:0.4rem 0 0.6rem 0;">
+<svg viewbox="0 0 420 96" width="100%" role="img" aria-label="ATET de la especificación preferida con IC 95 bootstrap">
+<line x1="170" y1="14" x2="170" y2="60" stroke="#8a8f93" stroke-width="1.1"></line> <line x1="241" y1="36" x2="374" y2="36" stroke="#2f3a3d" stroke-width="2"></line> <line x1="241" y1="31" x2="241" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line> <line x1="374" y1="31" x2="374" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line> <circle cx="307" cy="36" r="3.7" fill="#2f3a3d"></circle> <text x="8" y="40" font-size="12.5" fill="#2f3a3d">Preferida por diseño</text> <line x1="170" y1="64" x2="420" y2="64" stroke="#c6ccd2" stroke-width="1"></line> <line x1="170" y1="61" x2="170" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <line x1="295" y1="61" x2="295" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <line x1="420" y1="61" x2="420" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <text x="163" y="79" font-size="10.5" fill="#6c757d">0.00</text> <text x="288" y="79" font-size="10.5" fill="#6c757d">0.10</text> <text x="413" y="79" font-size="10.5" fill="#6c757d">0.20</text> <text x="295" y="92" font-size="10.8" fill="#6c757d" text-anchor="middle">Efecto estimado (ATET)</text>
+</svg>
+</div>
+</section>
+<section id="lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</h2>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Estimando reportado</strong></p>
+<p>ATET para hogares tratados comparables en soporte común, con valor de referencia de <strong>0.11</strong> en log del gasto, equivalente aproximadamente a <strong>11%-12%</strong>.</p>
+</div>
+<div class="section-box">
+<p><strong>Población objetivo</strong></p>
+<p>Hogares tratados que permanecen en la región de soporte común y pueden compararse con controles observacionalmente similares.</p>
+</div>
+<div class="section-box">
+<p><strong>Alcance</strong></p>
+<p>Interpretación válida bajo selección en observables y <code>overlap</code>; no extrapolable automáticamente al total de hogares.</p>
+</div>
+</div>
+<p>En términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el gasto total esperado es mayor que su contrafactual no tratado comparable.</p>
 </section>
 <section id="cierre-qué-se-concluye-y-qué-no" class="level2">
 <h2 class="anchored" data-anchor-id="cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</h2>
 <p>La pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un gasto total esperado <strong>11%-12%</strong> mayor frente a su contrafactual comparable.</p>
 <p>Dentro de las reglas de soporte evaluadas, <code>common</code> resulta más defendible que <code>trim(10)</code>; ese contraste funciona como un insumo del criterio general de diseño, no como fundamento único de la elección final.</p>
-<p>Esta evidencia no autoriza una afirmación causal absoluta para toda la población. Su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables.</p>
+<p>Esta evidencia no autoriza una afirmación causal absoluta para toda la población. La conclusión preferida aplica a hogares tratados que quedan dentro del soporte común efectivo; su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables.</p>
 
 
 </section>

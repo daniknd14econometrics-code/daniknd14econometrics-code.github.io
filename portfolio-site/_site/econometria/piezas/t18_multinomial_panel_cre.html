@@ -247,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>En este panel laboral, ¿la asociación entre educación, experiencia y estado de actividad cambia de forma relevante al pasar de multinomial pooled a multinomial-CRE?</p>
 <div class="small-note">
-<p>Resultado: <code>status</code> (<code>1</code> escuela, <code>2</code> hogar, <code>3</code> trabajo). Variables clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>black</code>, dummies anuales, y medias temporales en CRE.</p>
+<p>Resultado: <code>status</code> con tres categorías de actividad: Escuela, Hogar y Trabajo. Variables clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>black</code>, dummies anuales, y medias temporales en CRE.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -268,7 +268,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Unidad de observación: persona-año (<code>id</code>, <code>year</code>)</li>
 <li>Período: <code>1981-1987</code></li>
 <li>Muestra operativa: <code>N=12,665</code>, <code>1,881</code> personas, panel no balanceado</li>
-<li>Resultado: <code>status</code> (<code>1</code> escuela, <code>2</code> hogar, <code>3</code> trabajo)</li>
+<li>Resultado: <code>status</code> con tres categorías de actividad: Escuela, Hogar y Trabajo</li>
 <li>Regresores clave: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>i.black</code>, <code>y82-y87</code></li>
 <li>En CRE (Mundlak): <code>educ_bar</code>, <code>exper_bar</code>, <code>expersq_bar</code></li>
 <li>Nota de muestra: la base original contiene <code>12,723</code> observaciones; la estimación operativa usa <code>12,665</code> con <code>status</code> observado</li>
@@ -353,6 +353,8 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
+<p>El comparador visual siguiente resume, por outcome, cuánto se mueve la lectura aplicada al pasar de pooled a CRE para educación y experiencia.</p>
+<p><img src="../assets/t18_desplazamiento_pooled_cre.svg" alt="Comparación pooled versus CRE en T18: para Educación y Experiencia, los cambios de probabilidad por categoría en Escuela, Hogar y Trabajo muestran que el cambio de especificación altera materialmente la lectura aplicada." width="780" style="display:block; max-width:100%; height:auto;"></p>
 <p>Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.<br>
 <code>expersq</code> y <code>black</code> se mantienen como evidencia complementaria en el respaldo técnico, sin desplazar las variables protagonistas.</p>
 <section id="diagnósticos-de-respaldo" class="level2">

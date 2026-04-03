@@ -108,7 +108,7 @@ La comparación entre multinomial pooled y multinomial-CRE (Mundlak) muestra dif
 En este panel laboral, ¿la asociación entre educación, experiencia y estado de actividad cambia de forma relevante al pasar de multinomial pooled a multinomial-CRE?
 
 ::: {.small-note}
-Resultado: `status` (`1` escuela, `2` hogar, `3` trabajo). Variables clave: `educ`, `exper`, `expersq`, `black`, dummies anuales, y medias temporales en CRE.
+Resultado: `status` con tres categorías de actividad: Escuela, Hogar y Trabajo. Variables clave: `educ`, `exper`, `expersq`, `black`, dummies anuales, y medias temporales en CRE.
 :::
 :::
 
@@ -135,7 +135,7 @@ Se usa `keane.dta` en formato panel.
 - Unidad de observación: persona-año (`id`, `year`)
 - Período: `1981-1987`
 - Muestra operativa: `N=12,665`, `1,881` personas, panel no balanceado
-- Resultado: `status` (`1` escuela, `2` hogar, `3` trabajo)
+- Resultado: `status` con tres categorías de actividad: Escuela, Hogar y Trabajo
 - Regresores clave: `educ`, `exper`, `expersq`, `i.black`, `y82-y87`
 - En CRE (Mundlak): `educ_bar`, `exper_bar`, `expersq_bar`
 - Nota de muestra: la base original contiene `12,723` observaciones; la estimación operativa usa `12,665` con `status` observado
@@ -176,6 +176,10 @@ La comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:
 | `educ` | +0.0418 (0.0017) | -0.1220 (0.0055) | -0.0570 (0.0020) | +0.0823 (0.0076) | +0.0152 (0.0020) | +0.0397 (0.0090) | Cambia signo en escuela y hogar al incorporar heterogeneidad persistente |
 | `exper` | -0.1493 (0.0062) | -0.0335 (0.0069) | -0.0756 (0.0060) | +0.0817 (0.0095) | +0.2249 (0.0050) | -0.0482 (0.0101) | La lectura pooled sobre trabajo no se sostiene en CRE |
 :::
+
+El comparador visual siguiente resume, por outcome, cuánto se mueve la lectura aplicada al pasar de pooled a CRE para educación y experiencia.
+
+<img src="../assets/t18_desplazamiento_pooled_cre.svg" alt="Comparación pooled versus CRE en T18: para Educación y Experiencia, los cambios de probabilidad por categoría en Escuela, Hogar y Trabajo muestran que el cambio de especificación altera materialmente la lectura aplicada." width="780" style="display:block; max-width:100%; height:auto;" />
 
 Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.  
 `expersq` y `black` se mantienen como evidencia complementaria en el respaldo técnico, sin desplazar las variables protagonistas.

@@ -108,7 +108,7 @@ El orden de lectura es deliberado: probit exógeno como benchmark inicial, contr
 ¿Cómo se estima una respuesta binaria cuando una covariable continua central (`nwifeinc`) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?
 
 ::: {.small-note}
-Resultado: `inlf` (0/1). Variable clave: `nwifeinc`. Controles: `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
+Resultado binario de participación laboral femenina (`inlf`): participa / no participa en la fuerza laboral. Variable clave: `nwifeinc`. Controles: `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
 :::
 :::
 
@@ -135,7 +135,7 @@ Se usa `mroz.dta` en corte transversal.
 - Unidad de observacion: mujer/hogar
 - Tamano de muestra: `N=753`
 - Contexto temporal: información de referencia para 1975
-- Variable de resultado: `inlf` (`1` participa, `0` no participa)
+- Variable de resultado: `inlf` (participa / no participa en la fuerza laboral)
 - Variables clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`
 - Instrumentos para auditoría de endogeneidad: `huseduc` (principal), `motheduc`, `fatheduc`
 
@@ -167,6 +167,8 @@ En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como 
 | IVprobit MLE bivariado | Contraste paralelo de robustez | -0.0108 | 0.0057 | [-0.0220, 0.0004] | Magnitud cercana a CF con mayor incertidumbre |
 | MPL-IV | Benchmark lineal secundario | -0.0116 | 0.0058 | [-0.0230, -0.0002] | Chequeo lineal complementario |
 :::
+
+<img src="../assets/t13_mini_ic95.svg" alt="Comparacion visual minima de Probit exogeno y CF sobre-ID con IC 95% para APE de nwifeinc" width="590" style="display:block; max-width:100%; height:auto;" />
 
 ## Diagnosticos de respaldo
 

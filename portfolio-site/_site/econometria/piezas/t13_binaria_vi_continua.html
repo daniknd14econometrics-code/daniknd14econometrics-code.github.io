@@ -243,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
 <p>¿Cómo se estima una respuesta binaria cuando una covariable continua central (<code>nwifeinc</code>) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?</p>
 <div class="small-note">
-<p>Resultado: <code>inlf</code> (0/1). Variable clave: <code>nwifeinc</code>. Controles: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
+<p>Resultado binario de participación laboral femenina (<code>inlf</code>): participa / no participa en la fuerza laboral. Variable clave: <code>nwifeinc</code>. Controles: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -264,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Unidad de observacion: mujer/hogar</li>
 <li>Tamano de muestra: <code>N=753</code></li>
 <li>Contexto temporal: información de referencia para 1975</li>
-<li>Variable de resultado: <code>inlf</code> (<code>1</code> participa, <code>0</code> no participa)</li>
+<li>Variable de resultado: <code>inlf</code> (participa / no participa en la fuerza laboral)</li>
 <li>Variables clave: <code>nwifeinc</code>, <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>age</code>, <code>kidslt6</code>, <code>kidsge6</code></li>
 <li>Instrumentos para auditoría de endogeneidad: <code>huseduc</code> (principal), <code>motheduc</code>, <code>fatheduc</code></li>
 </ul>
@@ -346,6 +346,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
+<p><img src="../assets/t13_mini_ic95.svg" alt="Comparacion visual minima de Probit exogeno y CF sobre-ID con IC 95% para APE de nwifeinc" width="590" style="display:block; max-width:100%; height:auto;"></p>
 <section id="diagnosticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnosticos-de-respaldo">Diagnosticos de respaldo</h2>
 <p>Los diagnósticos se mantienen deliberadamente subordinados al caso aplicado:</p>

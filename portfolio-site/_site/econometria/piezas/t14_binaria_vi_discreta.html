@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Fecundidad y participación laboral materna</h1>
-<p class="subtitle lead">Una lectura binaria sobre cómo cambia la asociación al admitir endogeneidad de morekids</p>
+<p class="subtitle lead">Una lectura binaria sobre cómo cambia la asociación al admitir endogeneidad de tener más de dos hijos</p>
 </div>
 
 
@@ -181,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="hero-box">
 <div class="hero-title">
-<p>¿Qué cambia cuando <code>worked</code> es binaria y <code>morekids</code> también es binaria y endógena, y qué modelo es correcto en esa estructura?</p>
+<p>¿Qué cambia cuando la madre trabaja/no trabaja y la fecundidad (más de dos hijos: sí/no) también es endógena, y qué modelo es correcto en esa estructura?</p>
 </div>
 <div class="hero-sub">
 <p>Aquí la diferencia relevante no es solo corregir endogeneidad, sino reconocer que cuando la variable endógena también es binaria cambia el modelo correcto.</p>
@@ -215,10 +215,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Señal sustantiva</p>
 </div>
 <div class="metric-value">
-<p>Asociación negativa de <code>morekids</code></p>
+<p>Asociación negativa de tener más de dos hijos</p>
 </div>
 <div class="metric-note">
-<p>La participación laboral materna cae cuando <code>morekids=1</code></p>
+<p>La participación laboral materna cae cuando la madre tuvo más de dos hijos (sí vs no)</p>
 </div>
 </div>
 <div class="metric-card">
@@ -235,15 +235,15 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Esta pieza estudia participación laboral materna (<code>worked</code>) en relación con fecundidad (<code>morekids</code>) y características del hogar. El foco principal es metodológico con anclaje aplicado: identificar el modelo correcto para una estructura con dependiente binaria y regresor endógeno binario.</p>
+<p>Esta pieza estudia participación laboral materna (<code>worked</code>: trabaja/no trabaja) en relación con fecundidad (<code>morekids</code>: tuvo más de dos hijos, sí/no) y características del hogar. El foco principal es metodológico con anclaje aplicado: identificar el modelo correcto para una estructura con dependiente binaria y regresor endógeno binario.</p>
 <p>A diferencia de T13, donde la covariable problemática era continua, aquí ya no corresponde trasladar mecánicamente <code>cfprobit</code> o <code>ivprobit</code> del caso continuo. En esta estructura, <code>biprobit</code> funciona como modelo principal y <code>eprobit</code> como contraste de robustez, mientras <code>MPL</code>, probit y <code>MPL-IV</code> quedan como benchmarks de referencia.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
 <h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>¿Qué cambia cuando <code>worked</code> es binaria y <code>morekids</code> también es binaria y endógena, y qué modelo es correcto en esa estructura?</p>
+<p>¿Qué cambia cuando la madre trabaja/no trabaja y la fecundidad (más de dos hijos: sí/no) también es endógena, y qué modelo es correcto en esa estructura?</p>
 <div class="small-note">
-<p>Resultado: <code>worked</code> (0/1). Variable clave: <code>morekids</code>. Controles: <code>nonmomi</code>, <code>educ</code>, <code>age</code>, <code>age2</code>, <code>black</code>, <code>hispan</code>.</p>
+<p>Resultado binario de trabajo materno (<code>worked</code>): trabaja / no trabaja. Variable clave: <code>morekids</code> (tuvo más de dos hijos: sí/no). Controles: <code>nonmomi</code>, <code>educ</code>, <code>age</code>, <code>age2</code>, <code>black</code>, <code>hispan</code>.</p>
 </div>
 </section>
 <section id="idea-central" class="level2 section-box">
@@ -263,8 +263,8 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Unidad de observación: madre/hogar</li>
 <li>Tamaño de muestra: <code>N=31,857</code></li>
-<li>Variable de resultado: <code>worked</code> (<code>1</code> trabaja, <code>0</code> no trabaja)</li>
-<li>Regresor clave: <code>morekids</code> (<code>1</code> tuvo más de dos hijos)</li>
+<li>Variable de resultado: <code>worked</code> (trabaja / no trabaja)</li>
+<li>Regresor clave: <code>morekids</code> (tuvo más de dos hijos: sí/no)</li>
 <li>Controles: <code>nonmomi</code>, <code>educ</code>, <code>age</code>, <code>age2</code>, <code>black</code>, <code>hispan</code></li>
 <li>Instrumento excluido para <code>morekids</code>: <code>samesex</code> (mismo sexo en los dos primeros hijos)</li>
 </ul>
@@ -282,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
 <p>La lectura se ordena en cuatro pasos:</p>
 <ol type="1">
-<li>Aparece una asociación negativa entre <code>morekids</code> y <code>worked</code>.</li>
+<li>Aparece una asociación negativa entre tener más de dos hijos y la probabilidad de trabajar.</li>
 <li>Esa asociación se vuelve más negativa cuando se modela endogeneidad binaria.</li>
 <li>La diferencia debe leerse con prudencia porque cambian los supuestos y el encuadre econométrico.</li>
 <li>El foco de la pieza es distinguir modelo correcto vs modelo incorrecto según la estructura del problema, manteniendo anclaje aplicado.</li>
@@ -301,7 +301,7 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="header">
 <th>Enfoque</th>
-<th style="text-align: right;">APE <code>morekids</code></th>
+<th style="text-align: right;">APE (tuvo más de dos hijos: sí vs no)</th>
 <th style="text-align: right;">Error estándar</th>
 <th style="text-align: right;">IC 95%</th>
 <th>Lectura aplicada</th>
@@ -339,13 +339,14 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
+<p><img src="../assets/t14_mini_ic95.svg" alt="Comparación visual mínima de Probit exógeno y Biprobit endógeno con IC 95% para el efecto de haber tenido más de dos hijos sobre la probabilidad de trabajar" width="590" style="display:block; max-width:100%; height:auto;"></p>
 <section id="diagnósticos-de-respaldo" class="level2">
 <h2 class="anchored" data-anchor-id="diagnósticos-de-respaldo">Diagnósticos de respaldo</h2>
 <p>Este bloque se mantiene subordinado al caso aplicado:</p>
 <ul>
 <li><strong>Instrumento relevante:</strong> primera etapa con señal fuerte (<code>F(1,31849)=103.81</code>, <code>p&lt;0.001</code>).</li>
 <li><strong>Dependencia de errores (señal prudente):</strong> aparece una señal compatible con correlación en especificaciones endógenas (<code>p</code> alrededor de <code>0.056</code> y <code>0.045</code>), a leer con cautela.</li>
-<li><strong>Interpretación de efectos en <code>biprobit</code>:</strong> la interpretación relevante debe centrarse en <code>Pr(worked=1)</code> o en el contraste de tratamiento correspondiente, no en la probabilidad conjunta por defecto.</li>
+<li><strong>Interpretación de efectos en <code>biprobit</code>:</strong> la interpretación relevante debe centrarse en la probabilidad de trabajar o en el contraste de tratamiento correspondiente, no en la probabilidad conjunta por defecto.</li>
 <li><strong>Unidad de interpretación:</strong> los efectos reportados se leen como cambios en probabilidad de trabajar, no como parámetros latentes en abstracto.</li>
 </ul>
 </section>

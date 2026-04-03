@@ -96,7 +96,7 @@ Parte de la lectura pooled absorbia heterogeneidad persistente no modelada
 
 ## Resumen
 
-Esta pieza estudia participación laboral femenina (`lfp`) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.
+Esta pieza estudia participación laboral femenina (`lfp`: participa/no participa en la fuerza laboral) en relación con estructura del hogar y características individuales en un panel corto. El foco principal es metodológico: cómo cambia la lectura al pasar de pooled probit a RE-probit y CRE-probit en un panel binario con heterogeneidad persistente entre mujeres.
 
 La econometría se usa para mejorar lectura aplicada, no para forzar una competencia de metodos. La comparación pooled, RE y CRE se interpreta como criterio profesional para no sobrerreaccionar a una especificación unica.
 
@@ -108,7 +108,7 @@ La econometría se usa para mejorar lectura aplicada, no para forzar una compete
 ¿Cómo cambia un modelo binario de panel al pasar de pooled probit a RE-probit y CRE-probit, y qué indica eso sobre heterogeneidad inobservable?
 
 ::: {.small-note}
-Resultado: `lfp` (1 participa, 0 no). Variables clave: `kids` (número de hijos <18) y `lhinc` (log del ingreso del esposo). Controles: `educ`, `black`, `age`, `agesq`, dummies de periodo.
+Resultado binario de participación laboral femenina (`lfp`): participa / no participa en la fuerza laboral. Variables clave: `kids` (número de hijos <18) y `lhinc` (log del ingreso del esposo). Controles: `educ`, `black`, `age`, `agesq`, dummies de periodo.
 :::
 :::
 
@@ -136,7 +136,7 @@ Se usa `lfp.dta` en panel corto balanceado.
 - Tamano muestral: `N=28,315`
 - Unidades de panel: `5,663` mujeres
 - Rango temporal: `period=1..5` (5 periodos de 4 meses)
-- Variable de resultado: `lfp` (`1` participa en fuerza laboral)
+- Variable de resultado: `lfp` (participa / no participa en la fuerza laboral)
 - Variables clave: `kids`, `lhinc`
 - Controles: `educ`, `i.black`, `age`, `agesq`, `per2`-`per5`
 
@@ -180,6 +180,8 @@ Como respaldo de la lectura aplicada, la evidencia de diagnóstico deja tres men
 - **Leads como robustez secundaria:** los test con adelantados se reportan como chequeo auxiliar de robustez (con señal concentrada en `F1_kids`) y no como eje principal de interpretación.
 
 Como nota técnica menor, incluir promedios individuales de variables con variación temporal limitada puede ampliar incertidumbre en algunos parámetros, sin alterar la dirección sustantiva principal.
+
+<img src="../assets/t15_decision_secuencial.svg" alt="Sintesis secuencial de decision metodologica en T15: trayectoria pooled-RE-CRE, atenuacion de APEs de kids y lhinc, y respaldo Mundlak en CRE-pooled y CRE-probit" width="780" style="display:block; max-width:100%; height:auto;" />
 
 ## Lectura profesional
 

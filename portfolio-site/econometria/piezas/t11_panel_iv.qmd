@@ -164,6 +164,8 @@ Al pasar a IV, la precisión cae y los coeficientes de `lfare` dejan de ser esta
 | FE-IV (cluster) | `lfare=-0.302` (EE 0.613; IC 95% [-1.503, 0.900]) | Alta incertidumbre en especificación IV |
 :::
 
+<img src="../assets/t11_mini_ic95.svg" alt="Comparacion visual minima de RE no IV y RE-IV con IC 95% para lfare" width="590" style="display:block; max-width:100%; height:auto;" />
+
 ::: {.table-box}
 ## Diagnosticos de respaldo
 

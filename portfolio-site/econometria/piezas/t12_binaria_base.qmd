@@ -30,7 +30,7 @@ execute:
 :::
 
 ::: {.hero-sub}
-La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal donde la respuesta observada es 0/1.
+La estrategia usa modelos binarios para leer relaciones en probabilidades de forma clara y prudente, evitando forzar una interpretación lineal cuando la respuesta observada es binaria: participa o no participa en la fuerza laboral.
 :::
 :::
 
@@ -60,7 +60,7 @@ Mujeres y hogares
 :::
 
 ::: {.metric-note}
-`N=753` observaciones; `inlf=1` en `56.84%` de la muestra
+`N=753` observaciones; participación en fuerza laboral en `56.84%` de la muestra (`428` casos)
 :::
 :::
 
@@ -108,7 +108,7 @@ El valor econométrico del caso no es competir entre técnicas, sino mostrar cri
 ¿Cómo cambia la lectura empírica cuando una variable binaria deja de modelarse linealmente y pasa a probit/logit?
 
 ::: {.small-note}
-Resultado: `inlf` (0/1). Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
+Resultado binario de participación laboral femenina (`inlf`): participa / no participa en la fuerza laboral. Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
 :::
 :::
 
@@ -134,9 +134,9 @@ Se trabaja con `mroz.dta`, un corte transversal clásico de economia laboral.
 
 - Unidad de observacion: mujer/hogar
 - Tamano de muestra: `N=753`
-- Variable de resultado: `inlf` (`1` participa, `0` no participa)
-- Proporcion en `inlf=1`: `56.84%` (`428` casos)
-- Proporcion en `inlf=0`: `43.16%` (`325` casos)
+- Variable de resultado: `inlf` (participa / no participa en la fuerza laboral)
+- Proporción que participa en la fuerza laboral: `56.84%` (`428` casos)
+- Proporción que no participa en la fuerza laboral: `43.16%` (`325` casos)
 - Regresores clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`
 
 ## Estrategia empírica
@@ -150,7 +150,7 @@ Se trabaja con `mroz.dta`, un corte transversal clásico de economia laboral.
 
 La lectura combina anclaje aplicado con comparacion metodologica:
 
-- `kidslt6` muestra una asociación negativa fuerte con `inlf`: APE alrededor de `-0.26`, consistente en probit y logit.
+- `kidslt6` muestra una asociación negativa fuerte con la participación laboral femenina: APE alrededor de `-0.26`, consistente en probit y logit.
 - `educ` y `exper` muestran asociaciones positivas y estables con la participación laboral.
 - `nwifeinc` aparece con asociación negativa de baja magnitud, coherente con menor presion de oferta laboral cuando sube el ingreso no laboral del hogar.
 - `kidsge6` no muestra una asociación robusta de magnitud comparable.
@@ -187,4 +187,3 @@ El aporte profesional de T12 no es plantear una competencia entre MPL, probit y 
 La diferencia relevante del taller no es probit vs logit, sino pasar de una lectura lineal a una lectura no lineal en probabilidades.
 
 El valor profesional de la pieza es ese criterio: elegir una especificación coherente con una respuesta binaria y traducir los hallazgos a probabilidades de forma clara y prudente.
-
