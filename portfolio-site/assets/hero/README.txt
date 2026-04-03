@@ -1,10 +1,10 @@
-﻿Coloca aqui los archivos hero en formato webp:
+Coloca aqui los archivos hero en formato png:
 
-- home-hero.webp
-- econometria-hero.webp
-- causalidad-hero.webp
-- ml-hero.webp
-- sobre-mi-hero.webp
+- home-hero.png
+- econometria-hero.png
+- causalidad-hero.png
+- ml-hero.png
+- sobre-mi-hero.png
 
 Estas rutas ya estan cableadas en styles.css mediante clases:
 - .hero-banner--home

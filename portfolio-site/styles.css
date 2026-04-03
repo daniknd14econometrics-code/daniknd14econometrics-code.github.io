@@ -197,23 +197,23 @@ body:has(.hero-banner) .hero-banner__media {
 }
 
 body:has(.hero-banner) .hero-banner--home {
-  --hero-image: url("assets/hero/home-hero.webp");
+  --hero-image: url("assets/hero/home-hero.png");
 }
 
 body:has(.hero-banner) .hero-banner--econometria {
-  --hero-image: url("assets/hero/econometria-hero.webp");
+  --hero-image: url("assets/hero/econometria-hero.png");
 }
 
 body:has(.hero-banner) .hero-banner--causalidad {
-  --hero-image: url("assets/hero/causalidad-hero.webp");
+  --hero-image: url("assets/hero/causalidad-hero.png");
 }
 
 body:has(.hero-banner) .hero-banner--ml {
-  --hero-image: url("assets/hero/ml-hero.webp");
+  --hero-image: url("assets/hero/ml-hero.png");
 }
 
 body:has(.hero-banner) .hero-banner--sobre-mi {
-  --hero-image: url("assets/hero/sobre-mi-hero.webp");
+  --hero-image: url("assets/hero/sobre-mi-hero.png");
 }
 
 body:has(.hero-banner) .section-lead {
