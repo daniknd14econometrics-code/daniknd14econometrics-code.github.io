@@ -1,0 +1,267 @@
+---
+title: "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta"
+subtitle: "Relacion estimada entre q e inversión con pooled OLS, controles temporales y lectura econométrica prudente"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t03_panel_qtobin_pooled"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t03_panel_qtobin_pooled_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+En este panel de firmas, q y la inversión se mueven en una relación positiva pero decreciente
+:::
+
+::: {.hero-sub}
+El pooled OLS con errores cluster por firma permite una inferencia más creíble para el benchmark, pero no elimina por sí solo los riesgos de sesgo por heterogeneidad inobservable.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo operativo
+:::
+
+::: {.metric-value}
+Pooled + cluster
+:::
+
+::: {.metric-note}
+`reg ikb qb qb_sq i.year, vce(cluster cusip)`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Forma estimada
+:::
+
+::: {.metric-value}
+q(+) y q^2(-)
+:::
+
+::: {.metric-note}
+Pendiente positiva y decreciente en casi toda la muestra
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+AR(1) en residuos
+:::
+
+::: {.metric-value}
+p < 0.001
+:::
+
+::: {.metric-note}
+`uhat_L1` significativo en regresion auxiliar
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+LM heterocedasticidad
+:::
+
+::: {.metric-value}
+p = 0.0005
+:::
+
+::: {.metric-note}
+Se rechaza homocedasticidad en prueba LM
+:::
+:::
+
+::::
+
+## Resumen
+
+Esta pieza evalúa la relación entre la tasa de inversión de la firma (`ikb`) y la q de Tobin en un panel. El mensaje econométrico central separa dos planos que no conviene mezclar: (i) inferencia estadística mejor calibrada con errores cluster por firma y diagnósticos de error, y (ii) limitaciones de identificación de pooled OLS frente a heterogeneidad inobservable.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?
+
+::: {.small-note}
+Variable dependiente: `ikb` (I/K). Variables de interés: `qb` y `qb_sq` (q de Tobin y su cuadrado); en especificaciones dinámicas también se usa `qb_1`. Controles de tiempo: `i.year`. Unidad de cluster: `cusip`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+En este caso, la inferencia y la identificación no son lo mismo.  
+Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por `c_i` no observado y no resuelve por sí solo el problema de identificación.
+
+<span class="badge">Portfolio econométrico</span>
+:::
+
+::::
+
+## Por qué este problema importa
+
+En decisiones de inversión, la q de Tobin suele leerse como señal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser útil como benchmark, pero solo si la inferencia respeta la estructura del error.
+
+La relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.
+
+Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia concluyente.
+
+## Datos y variables
+
+Se trabaja con un panel de firmas (`N = 2,068` observaciones; `188` firmas) para el periodo 1975-1985.
+
+Sustantivamente, este panel representa decisiones de inversión observadas repetidamente para las mismas firmas a lo largo de once años. Ese seguimiento temporal permite evaluar si el patrón entre q e inversión se sostiene al controlar shocks comunes por año, en lugar de depender de una sola foto de corte transversal.
+
+- Variable dependiente: `ikb` (tasa de inversión sobre capital)
+- Regresores de interés: `qb` y `qb_sq`
+- Controles temporales: `i.year`
+- Inferencia principal: `vce(cluster cusip)`
+
+## Estrategia empírica
+
+La secuencia aplicada en T3 fue:
+
+1. Estimar pooled OLS base (lineal) y su versión robusta/cluster.
+2. Incorporar controles temporales (`i.year`).
+3. Ejecutar diagnósticos de dependencia serial y heterocedasticidad.
+4. Comparar forma lineal vs cuadratica en `qb`.
+5. Mantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.
+
+Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del ejercicio.
+Como las especificaciones con `qb_1` usan una muestra menor (`N = 1,880`) que la muestra completa (`N = 2,068`), la comparación se interpreta con criterio de comparabilidad muestral.
+
+## Qué pasa con un análisis ingenuo
+
+Hay dos riesgos distintos:
+
+1. Riesgo de inferencia: errores estándar mal calibrados si se ignoran dependencia intra-firma y heterocedasticidad.
+2. Riesgo de sesgo/identificación: pooled OLS puede seguir sesgado si la heterogeneidad inobservable de firma (`c_i`) está correlacionada con los regresores.
+
+Separar ambos problemas es clave: corregir varianzas mejora inferencia, pero no resuelve por sí mismo el problema de identificación.
+
+::: {.table-box}
+## Resultados principales
+
+El modelo operativo (`ikb` sobre `qb`, `qb_sq` e indicadores de año, con cluster por firma) muestra una relación estimada positiva pero decreciente entre q e inversión en casi toda la muestra.
+
+El punto de giro implicito cae en una zona muy alta de la distribucion de `qb` (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decisión.
+
+En términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de `qb`, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.
+
+| Modelo | Coeficiente clave | Error estándar | IC 95% | Muestra | Lectura |
+|---|---:|---:|---:|---|---|
+| Benchmark lineal (`qb`) | 0.0156 | 0.0028 | [0.0102, 0.0210] | `N = 2,068` | Asociación positiva promedio |
+| Modelo operativo cuadrático (`qb`) | 0.0280 | 0.0030 | [0.0221, 0.0340] | `N = 2,068` | Efecto positivo en rangos habituales de q |
+| Modelo operativo cuadrático (`qb_sq`) | -0.0025 | 0.0004 | [-0.0033, -0.0018] | `N = 2,068` | Curvatura decreciente estadísticamente clara |
+| Contraste con rezago (`qb_1`) | 0.0141 | 0.0027 | [0.0088, 0.0194] | `N = 1,880` | Sensible a especificación y a omitir `qb_t` |
+
+Para evitar una lectura más fuerte de lo que permite comparar muestras no equivalentes, la decisión se valida también en muestra común (`if !missing(qb_1)`). En esa muestra, la especificación contemporánea cuadrática mantiene el mismo patrón sustantivo (q positiva y curvatura decreciente), por lo que la lectura dominante no depende solo del cambio de `N`.
+:::
+
+::: {.table-box}
+**Curvatura estimada de la relación entre q e inversión**
+
+La forma funcional del modelo operativo se resume en una curva única: la inversión estimada aumenta con `qb`, pero lo hace a una tasa decreciente en el rango principal observado de la muestra.
+
+```{=html}
+<div style="max-width:760px; margin:0.5rem auto 0.25rem auto;">
+  <svg viewBox="0 0 760 360" role="img" aria-label="Curva cuadrática estimada entre q de Tobin e inversión">
+    <rect x="0" y="0" width="760" height="360" fill="white"></rect>
+
+    <line x1="90" y1="271.8" x2="700" y2="271.8" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="215.3" x2="700" y2="215.3" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="158.8" x2="700" y2="158.8" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="102.4" x2="700" y2="102.4" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="74.1" x2="700" y2="74.1" stroke="#e6e9ee" stroke-width="1"></line>
+
+    <line x1="90" y1="300" x2="700" y2="300" stroke="#2f2f2f" stroke-width="1.2"></line>
+    <line x1="90" y1="300" x2="90" y2="60" stroke="#2f2f2f" stroke-width="1.2"></line>
+
+    <polyline
+      points="90.0,289.8 140.8,252.1 191.7,217.9 242.5,187.4 293.3,160.4 344.2,137.0 395.0,117.2 445.8,101.0 496.7,88.3 547.5,79.3 598.3,73.8 649.2,72.0 700.0,73.7"
+      fill="none"
+      stroke="#2f4858"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"></polyline>
+
+    <line x1="650.4" y1="300" x2="650.4" y2="72.0" stroke="#6c757d" stroke-width="1.4" stroke-dasharray="4 4"></line>
+    <circle cx="650.4" cy="72.0" r="4" fill="#2f4858"></circle>
+    <text x="505" y="48" font-size="13" fill="#495057">Punto de giro aprox.: qb* = 5.5</text>
+
+    <text x="82" y="304" font-size="12" fill="#4f4f4f" text-anchor="end">0.09</text>
+    <text x="82" y="275.8" font-size="12" fill="#4f4f4f" text-anchor="end">0.10</text>
+    <text x="82" y="219.3" font-size="12" fill="#4f4f4f" text-anchor="end">0.12</text>
+    <text x="82" y="162.8" font-size="12" fill="#4f4f4f" text-anchor="end">0.14</text>
+    <text x="82" y="106.4" font-size="12" fill="#4f4f4f" text-anchor="end">0.16</text>
+    <text x="82" y="78.1" font-size="12" fill="#4f4f4f" text-anchor="end">0.17</text>
+
+    <text x="90" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">0</text>
+    <text x="191.7" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">1</text>
+    <text x="293.3" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">2</text>
+    <text x="395.0" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">3</text>
+    <text x="496.7" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">4</text>
+    <text x="598.3" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">5</text>
+    <text x="700" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">6</text>
+
+    <text x="395" y="346" font-size="13" fill="#2f2f2f" text-anchor="middle">q de Tobin (qb)</text>
+    <text x="24" y="180" font-size="13" fill="#2f2f2f" text-anchor="middle" transform="rotate(-90 24 180)">Inversión estimada</text>
+  </svg>
+</div>
+```
+
+::: {.small-note}
+Visual de apoyo construido con la especificación operativa reportada (`ikb_hat = 0.0936 + 0.0280*qb - 0.0025*qb^2`). El punto de giro (`qb* ~= 5.5`) cae en la cola alta de `qb`, por lo que se interpreta como referencia descriptiva y no como umbral operativo rígido.
+:::
+:::
+
+::: {.table-box}
+## Diagnosticos clave
+
+La evidencia del taller respalda inferencia robusta como minimo operativo:
+
+| Diagnostico | Resultado | Lectura |
+|---|---:|---|
+| AR(1) auxiliar con residuos | `uhat_L1` p < 0.001 | Evidencia compatible con dependencia serial intra-firma |
+| LM heterocedasticidad | p = 0.0005 | Evidencia compatible con heterocedasticidad |
+| Test conjunto dummies temporales | p = 0.0000 | Los efectos de año son relevantes en el benchmark |
+:::
+
+## Lectura profesional del caso
+
+La lectura aplicada es sobria:
+
+- Como benchmark, pooled con `i.year` y errores cluster por firma entrega una base de reporte defendible en términos de inferencia.
+- Como identificación, el resultado sigue siendo limitado: no elimina sesgo potencial por heterogeneidad inobservable.
+- En especificaciones dinamicas pooled (con rezago de dependiente), el riesgo de sesgo es aun mayor, por lo que no se toma como modelo operativo del caso.
+
+Esta separacion entre inferencia valida y limitaciones de identificación es el aporte principal para una comunicacion profesional del resultado.
+
+## Cierre
+
+T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.
+
+Para un analista aplicado, esta pieza sí permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q, siempre leyendo el contraste con rezagos bajo criterio de comparabilidad muestral. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.

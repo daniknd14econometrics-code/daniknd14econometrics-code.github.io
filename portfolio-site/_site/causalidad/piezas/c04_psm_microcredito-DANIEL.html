@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Portfolio de Econometría Aplicada — Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen-ejecutivo" id="toc-resumen-ejecutivo" class="nav-link active" data-scroll-target="#resumen-ejecutivo">Resumen ejecutivo</a></li>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#por-qué-la-comparabilidad-importa" id="toc-por-qué-la-comparabilidad-importa" class="nav-link" data-scroll-target="#por-qué-la-comparabilidad-importa">Por qué la comparabilidad importa</a></li>
+  <li><a href="#soporte-y-comparabilidad-common-frente-a-trim10" id="toc-soporte-y-comparabilidad-common-frente-a-trim10" class="nav-link" data-scroll-target="#soporte-y-comparabilidad-common-frente-a-trim10">Soporte y comparabilidad: <code>common</code> frente a <code>trim(10)</code></a></li>
+  <li><a href="#especificación-preferida-y-criterio-de-elección" id="toc-especificación-preferida-y-criterio-de-elección" class="nav-link" data-scroll-target="#especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</a></li>
+  <li><a href="#resultado-principal-comparación-de-atet-y-contrastes" id="toc-resultado-principal-comparación-de-atet-y-contrastes" class="nav-link" data-scroll-target="#resultado-principal-comparación-de-atet-y-contrastes">Resultado principal: comparación de ATET y contrastes</a></li>
+  <li><a href="#lectura-sustantiva-del-atet-población-objetivo-y-alcance" id="toc-lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="nav-link" data-scroll-target="#lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</a></li>
+  <li><a href="#cierre-qué-se-concluye-y-qué-no" id="toc-cierre-qué-se-concluye-y-qué-no" class="nav-link" data-scroll-target="#cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad</h1>
+<p class="subtitle lead">Estimación del efecto sobre hogares tratados comparables en soporte común</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">30 de marzo de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../causalidad/index.html">&lt;- Volver al índice de Causalidad</a></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>En PSM, la decisión relevante no es el efecto más alto, sino el contrafactual más creíble</p>
+</div>
+<div class="hero-sub">
+<p>Esta aplicación estima el efecto de la participación femenina en microcrédito sobre el gasto del hogar comparando alternativas de soporte y emparejamiento bajo un criterio explícito de comparabilidad.</p>
+</div>
+</div>
+<section id="resumen-ejecutivo" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-ejecutivo">Resumen ejecutivo</h2>
+<p>Esta pieza evalúa el efecto de la participación femenina en microcrédito sobre el gasto del hogar con Propensity Score Matching (PSM) en una muestra de 1.129 hogares. El punto central no es maximizar el ATET, sino elegir un diseño que combine soporte, balance y precisión.</p>
+<p>La comparación entre reglas de soporte muestra que <code>common</code> ofrece, en esta aplicación, un compromiso más defendible entre cobertura y comparabilidad que <code>trim(10)</code>.</p>
+<p>Bajo ese marco, la especificación preferida en esta aplicación es <code>kernel biweight bw = 0.40*SD(LPS) + common</code>, con respaldo en una regla de selección predefinida.</p>
+</section>
+<section id="pregunta-central" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
+<p>¿Cuál es el efecto de la participación femenina en microcrédito sobre el gasto del hogar cuando el contrafactual se construye con PSM y la decisión de diseño prioriza comparabilidad?</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<div class="small-note">
+<ul>
+<li><strong>Unidad de análisis:</strong> hogares (<code>N = 1129</code>).</li>
+<li><strong>Tratamiento:</strong> participación femenina en microcrédito (<code>dfmfd</code>).</li>
+<li><strong>Resultado:</strong> logaritmo del gasto total del hogar (<code>lexptot</code>).</li>
+<li><strong>Covariables de comparabilidad:</strong> sexo, edad y educación de la jefatura del hogar; tierra; acceso vial; riego per cápita; e indicadores de producción/consumo alimentario.</li>
+</ul>
+</div>
+<p>La lectura causal descansa en selección en observables y soporte común. Por eso, el diseño se evalúa por comparabilidad ex ante entre tratados y controles antes de convertir los resultados en afirmaciones sustantivas.</p>
+</section>
+<section id="por-qué-la-comparabilidad-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-la-comparabilidad-importa">Por qué la comparabilidad importa</h2>
+<p>En este caso, tratados y controles no son intercambiables sin ajuste: difieren en covariables que también se asocian con el gasto. Si esa diferencia no se corrige, la comparación mezcla efecto del tratamiento con composición inicial de grupos.</p>
+<p>PSM permite construir un contrafactual más creíble al combinar tres capas: estimación del propensity score, decisión de soporte y chequeo de balance. La decisión metodológica relevante surge de esa secuencia, no del tamaño aislado del coeficiente final.</p>
+</section>
+<section id="soporte-y-comparabilidad-common-frente-a-trim10" class="level2">
+<h2 class="anchored" data-anchor-id="soporte-y-comparabilidad-common-frente-a-trim10">Soporte y comparabilidad: <code>common</code> frente a <code>trim(10)</code></h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Regla de soporte</th>
+<th style="text-align: right;">Soporte retenido (<code>N1/N0</code>)</th>
+<th style="text-align: right;">Observaciones fuera de soporte</th>
+<th>Balance global (post-matching)</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>common</code></td>
+<td style="text-align: right;">591 / 530</td>
+<td style="text-align: right;">8</td>
+<td><code>MeanBias = 4.7</code>, <code>B = 20.2</code>, <code>R = 0.93</code></td>
+<td>Mayor cobertura con mejora global clara de comparabilidad</td>
+</tr>
+<tr class="even">
+<td><code>trim(10)</code></td>
+<td style="text-align: right;">536 / 481</td>
+<td style="text-align: right;">112</td>
+<td><code>MeanBias = 4.9</code>, <code>B = 21.8</code>, <code>R = 0.95</code></td>
+<td>Podado más agresivo sin mejora concluyente en desbalances residuales clave</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Aunque <code>trim(10)</code> recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable.</p>
+</section>
+<section id="especificación-preferida-y-criterio-de-elección" class="level2">
+<h2 class="anchored" data-anchor-id="especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</h2>
+<p>La especificación preferida en esta aplicación es:</p>
+<p><code>kernel biweight bw = 0.40*SD(LPS) + common</code>.</p>
+<p>La lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. La regla operativa fija umbrales de diseño (<code>max|SMD| &lt;= 0.10</code>, <code>maxvr &lt;= 2</code>, <code>share1 &gt;= 0.80</code>) y, entre candidatas que cumplen, prioriza mayor retención de tratados y mayor ESS de controles antes que un ATET más alto.</p>
+<p>Como respaldo visual del balance post-matching, se muestra el love plot de la especificación seleccionada.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../causalidad/insumos/5_graficos/5_PSM_selector/5_loveplot.svg" class="img-fluid figure-img"></p>
+<figcaption>Love plot de balance (selector T5)</figcaption>
+</figure>
+</div>
+<p>Con el diseño validado y la especificación ya elegida, el bloque siguiente resume los efectos estimados.</p>
+</section>
+<section id="resultado-principal-comparación-de-atet-y-contrastes" class="level2">
+<h2 class="anchored" data-anchor-id="resultado-principal-comparación-de-atet-y-contrastes">Resultado principal: comparación de ATET y contrastes</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Especificación PSM (<code>common</code>)</th>
+<th style="text-align: right;">ATET estimado</th>
+<th>Lectura breve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NN(1)</td>
+<td style="text-align: right;">0.1108</td>
+<td>Referencia comparativa</td>
+</tr>
+<tr class="even">
+<td>NN(2)</td>
+<td style="text-align: right;">0.1135</td>
+<td>Resultado cercano a la referencia</td>
+</tr>
+<tr class="odd">
+<td>NN(8)</td>
+<td style="text-align: right;">0.1119</td>
+<td>Estabilidad en el rango central</td>
+</tr>
+<tr class="even">
+<td>Radius (caliper 0.01)</td>
+<td style="text-align: right;">0.1008</td>
+<td>Magnitud algo menor, misma señal positiva</td>
+</tr>
+<tr class="odd">
+<td>Kernel epanechnikov (<code>h = 0.06</code>, bootstrap)</td>
+<td style="text-align: right;">0.1070</td>
+<td>Magnitud consistente con el rango principal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11 para diseños razonables en soporte común.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Opción de contraste</th>
+<th style="text-align: right;">ATET</th>
+<th>Precisión / inferencia</th>
+<th>Rol en la decisión</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PSM <code>common</code> + NN(1)</td>
+<td style="text-align: right;">0.1108</td>
+<td>EE <code>psmatch2</code> (aprox.) 0.0428</td>
+<td>Referencia metodológica base</td>
+</tr>
+<tr class="even">
+<td>PSM <code>trim(10)</code> + NN(1)</td>
+<td style="text-align: right;">0.1279</td>
+<td>EE <code>psmatch2</code> (aprox.) 0.0441</td>
+<td>Contraste con menor soporte y mayor poda</td>
+</tr>
+<tr class="odd">
+<td><strong>PSM <code>common</code> + kernel biweight <code>bw = 0.40*SD(LPS)</code></strong></td>
+<td style="text-align: right;"><strong>0.1099</strong></td>
+<td>EE bootstrap 0.0273</td>
+<td><strong>Especificación preferida</strong></td>
+</tr>
+<tr class="even">
+<td><code>teffects psmatch</code> (ATET, probit, NN(1))</td>
+<td style="text-align: right;">0.1099</td>
+<td>EE robusta de Abadie–Imbens 0.0362</td>
+<td>Contraste secundario de estabilidad</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="max-width:420px;margin:0.4rem 0 0.6rem 0;">
+<svg viewbox="0 0 420 96" width="100%" role="img" aria-label="ATET de la especificación preferida con IC 95 bootstrap">
+<line x1="170" y1="14" x2="170" y2="60" stroke="#8a8f93" stroke-width="1.1"></line> <line x1="241" y1="36" x2="374" y2="36" stroke="#2f3a3d" stroke-width="2"></line> <line x1="241" y1="31" x2="241" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line> <line x1="374" y1="31" x2="374" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line> <circle cx="307" cy="36" r="3.7" fill="#2f3a3d"></circle> <text x="8" y="40" font-size="12.5" fill="#2f3a3d">Preferida por diseño</text> <line x1="170" y1="64" x2="420" y2="64" stroke="#c6ccd2" stroke-width="1"></line> <line x1="170" y1="61" x2="170" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <line x1="295" y1="61" x2="295" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <line x1="420" y1="61" x2="420" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <text x="163" y="79" font-size="10.5" fill="#6c757d">0.00</text> <text x="288" y="79" font-size="10.5" fill="#6c757d">0.10</text> <text x="413" y="79" font-size="10.5" fill="#6c757d">0.20</text> <text x="295" y="92" font-size="10.8" fill="#6c757d" text-anchor="middle">Efecto estimado (ATET)</text>
+</svg>
+</div>
+</section>
+<section id="lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</h2>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Estimando reportado</strong></p>
+<p>ATET para hogares tratados comparables en soporte común, con valor de referencia de <strong>0.11</strong> en log del gasto, equivalente aproximadamente a <strong>11%-12%</strong>.</p>
+</div>
+<div class="section-box">
+<p><strong>Población objetivo</strong></p>
+<p>Hogares tratados que permanecen en la región de soporte común y pueden compararse con controles observacionalmente similares.</p>
+</div>
+<div class="section-box">
+<p><strong>Alcance</strong></p>
+<p>Interpretación válida bajo selección en observables y <code>overlap</code>; no extrapolable automáticamente al total de hogares.</p>
+</div>
+</div>
+<p>En términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el gasto total esperado es mayor que su contrafactual no tratado comparable.</p>
+</section>
+<section id="cierre-qué-se-concluye-y-qué-no" class="level2">
+<h2 class="anchored" data-anchor-id="cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</h2>
+<p>La pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un gasto total esperado <strong>11%-12%</strong> mayor frente a su contrafactual comparable.</p>
+<p>Dentro de las reglas de soporte evaluadas, <code>common</code> resulta más defendible que <code>trim(10)</code>; ese contraste funciona como un insumo del criterio general de diseño, no como fundamento único de la elección final.</p>
+<p>Esta evidencia no autoriza una afirmación causal absoluta para toda la población. La conclusión preferida aplica a hogares tratados que quedan dentro del soporte común efectivo; su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Sitio de portfolio profesional</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Actualización periódica</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

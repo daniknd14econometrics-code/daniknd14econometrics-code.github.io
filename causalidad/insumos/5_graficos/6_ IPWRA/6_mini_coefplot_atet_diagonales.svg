@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="230" viewBox="0 0 760 230" role="img" aria-labelledby="title desc">
+  <title id="title">ATET diagonales e IC 95% (IPWRA, control=0)</title>
+  <desc id="desc">Mini coefplot horizontal con tres ATET diagonales y sus intervalos de confianza al 95 por ciento para los contrastes 1 vs 0, 2 vs 0 y 3 vs 0.</desc>
+
+  <style>
+    .axis { stroke: #9ca3af; stroke-width: 1; }
+    .tick { stroke: #9ca3af; stroke-width: 1; }
+    .zero { stroke: #6b7280; stroke-width: 1; stroke-dasharray: 4 4; }
+    .ci { stroke: #4b5563; stroke-width: 2; stroke-linecap: round; }
+    .pt { fill: #1f2937; }
+    .label { font: 13px "Segoe UI", Arial, sans-serif; fill: #1f2937; }
+    .small { font: 12px "Segoe UI", Arial, sans-serif; fill: #374151; }
+    .title { font: 13px "Segoe UI", Arial, sans-serif; fill: #111827; font-weight: 600; }
+  </style>
+
+  <!-- Plot area: x in [-0.02, 0.35] mapped to [250, 590] -->
+  <text x="250" y="24" class="title">ATET diagonales e IC 95% (IPWRA, control=0)</text>
+
+  <!-- x axis and ticks -->
+  <line x1="250" y1="190" x2="590" y2="190" class="axis" />
+  <line x1="268.38" y1="45" x2="268.38" y2="190" class="zero" />
+
+  <line x1="268.38" y1="190" x2="268.38" y2="196" class="tick" />
+  <text x="268.38" y="212" text-anchor="middle" class="small">0.0</text>
+
+  <line x1="360.27" y1="190" x2="360.27" y2="196" class="tick" />
+  <text x="360.27" y="212" text-anchor="middle" class="small">0.1</text>
+
+  <line x1="452.16" y1="190" x2="452.16" y2="196" class="tick" />
+  <text x="452.16" y="212" text-anchor="middle" class="small">0.2</text>
+
+  <line x1="544.05" y1="190" x2="544.05" y2="196" class="tick" />
+  <text x="544.05" y="212" text-anchor="middle" class="small">0.3</text>
+
+  <!-- Row 1 -->
+  <text x="22" y="73" class="label">Solo producto (1) vs base (0)</text>
+  <line x1="316.58" y1="68" x2="436.97" y2="68" class="ci" />
+  <circle cx="376.72" cy="68" r="4" class="pt" />
+  <text x="604" y="72" class="small">0.118 [0.052, 0.183]</text>
+
+  <!-- Row 2 -->
+  <text x="26" y="118" class="label">Solo proceso (2) vs base (0)</text>
+  <line x1="374.54" y1="113" x2="493.82" y2="113" class="ci" />
+  <circle cx="434.18" cy="113" r="4" class="pt" />
+  <text x="604" y="117" class="small">0.180 [0.116, 0.245]</text>
+
+  <!-- Row 3 -->
+  <text x="5" y="163" class="label">Producto y proceso (3) vs base (0)</text>
+  <line x1="460.13" y1="158" x2="573.50" y2="158" class="ci" />
+  <circle cx="516.95" cy="158" r="4" class="pt" />
+  <text x="604" y="162" class="small">0.271 [0.209, 0.332]</text>
+
+  <text x="250" y="228" class="small">Escala: cambio en probabilidad (proporcion; 0.10 = 10 puntos porcentuales).</text>
+</svg>

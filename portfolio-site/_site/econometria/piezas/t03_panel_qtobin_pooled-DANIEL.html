@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta – Portfolio de Econometría Aplicada — Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Portfolio de Econometría Aplicada — Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#diagnosticos-clave" id="toc-diagnosticos-clave" class="nav-link" data-scroll-target="#diagnosticos-clave">Diagnosticos clave</a></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Inversion y q de Tobin en panel: un benchmark pooled con inferencia robusta</h1>
+<p class="subtitle lead">Relacion estimada entre q e inversión con pooled OLS, controles temporales y lectura econométrica prudente</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>En este panel de firmas, q y la inversión se mueven en una relación positiva pero decreciente</p>
+</div>
+<div class="hero-sub">
+<p>El pooled OLS con errores cluster por firma permite una inferencia más creíble para el benchmark, pero no elimina por sí solo los riesgos de sesgo por heterogeneidad inobservable.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Pooled + cluster</p>
+</div>
+<div class="metric-note">
+<p><code>reg ikb qb qb_sq i.year, vce(cluster cusip)</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Forma estimada</p>
+</div>
+<div class="metric-value">
+<p>q(+) y q^2(-)</p>
+</div>
+<div class="metric-note">
+<p>Pendiente positiva y decreciente en casi toda la muestra</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>AR(1) en residuos</p>
+</div>
+<div class="metric-value">
+<p>p &lt; 0.001</p>
+</div>
+<div class="metric-note">
+<p><code>uhat_L1</code> significativo en regresion auxiliar</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>LM heterocedasticidad</p>
+</div>
+<div class="metric-value">
+<p>p = 0.0005</p>
+</div>
+<div class="metric-note">
+<p>Se rechaza homocedasticidad en prueba LM</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza evalúa la relación entre la tasa de inversión de la firma (<code>ikb</code>) y la q de Tobin en un panel. El mensaje econométrico central separa dos planos que no conviene mezclar: (i) inferencia estadística mejor calibrada con errores cluster por firma y diagnósticos de error, y (ii) limitaciones de identificación de pooled OLS frente a heterogeneidad inobservable.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Qué patrón empírico aparece entre inversión y q de Tobin cuando usamos un benchmark pooled en panel con controles temporales e inferencia robusta?</p>
+<div class="small-note">
+<p>Variable dependiente: <code>ikb</code> (I/K). Variables de interés: <code>qb</code> y <code>qb_sq</code> (q de Tobin y su cuadrado); en especificaciones dinámicas también se usa <code>qb_1</code>. Controles de tiempo: <code>i.year</code>. Unidad de cluster: <code>cusip</code>.</p>
+</div>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>En este caso, la inferencia y la identificación no son lo mismo.<br>
+Cluster por firma, evidencia de AR(1) y heterocedasticidad ayudan a corregir incertidumbre; pero el pooled sigue expuesto a sesgo potencial por <code>c_i</code> no observado y no resuelve por sí solo el problema de identificación.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En decisiones de inversión, la q de Tobin suele leerse como señal de oportunidades de valorizacion. En datos de panel, una regresion pooled puede ser útil como benchmark, pero solo si la inferencia respeta la estructura del error.</p>
+<p>La relación económica que se explora es directa: si una firma enfrenta una q más alta, tiende a observarse mayor inversión, aunque no necesariamente al mismo ritmo en todo el rango de q. Por eso, además de preguntar si la asociación existe, importa leer su forma y su magnitud económica.</p>
+<p>Al mismo tiempo, una inferencia mejor calibrada no equivale automáticamente a identificación limpia. Esa distinción evita sobreinterpretar resultados estadisticamente significativos como evidencia concluyente.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con un panel de firmas (<code>N = 2,068</code> observaciones; <code>188</code> firmas) para el periodo 1975-1985.</p>
+<p>Sustantivamente, este panel representa decisiones de inversión observadas repetidamente para las mismas firmas a lo largo de once años. Ese seguimiento temporal permite evaluar si el patrón entre q e inversión se sostiene al controlar shocks comunes por año, en lugar de depender de una sola foto de corte transversal.</p>
+<ul>
+<li>Variable dependiente: <code>ikb</code> (tasa de inversión sobre capital)</li>
+<li>Regresores de interés: <code>qb</code> y <code>qb_sq</code></li>
+<li>Controles temporales: <code>i.year</code></li>
+<li>Inferencia principal: <code>vce(cluster cusip)</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia aplicada en T3 fue:</p>
+<ol type="1">
+<li>Estimar pooled OLS base (lineal) y su versión robusta/cluster.</li>
+<li>Incorporar controles temporales (<code>i.year</code>).</li>
+<li>Ejecutar diagnósticos de dependencia serial y heterocedasticidad.</li>
+<li>Comparar forma lineal vs cuadratica en <code>qb</code>.</li>
+<li>Mantener como modelo operativo una especificación parsimoniosa y coherente con la lectura económica.</li>
+</ol>
+<p>Modelos con rezagos y extensiones adicionales se usan como contraste técnico, no como especificación principal del ejercicio. Como las especificaciones con <code>qb_1</code> usan una muestra menor (<code>N = 1,880</code>) que la muestra completa (<code>N = 2,068</code>), la comparación se interpreta con criterio de comparabilidad muestral.</p>
+</section>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Hay dos riesgos distintos:</p>
+<ol type="1">
+<li>Riesgo de inferencia: errores estándar mal calibrados si se ignoran dependencia intra-firma y heterocedasticidad.</li>
+<li>Riesgo de sesgo/identificación: pooled OLS puede seguir sesgado si la heterogeneidad inobservable de firma (<code>c_i</code>) está correlacionada con los regresores.</li>
+</ol>
+<p>Separar ambos problemas es clave: corregir varianzas mejora inferencia, pero no resuelve por sí mismo el problema de identificación.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>El modelo operativo (<code>ikb</code> sobre <code>qb</code>, <code>qb_sq</code> e indicadores de año, con cluster por firma) muestra una relación estimada positiva pero decreciente entre q e inversión en casi toda la muestra.</p>
+<p>El punto de giro implicito cae en una zona muy alta de la distribucion de <code>qb</code> (cercana a la cola superior), por lo que debe leerse con prudencia y no como un umbral fuerte de politica o decisión.</p>
+<p>En términos de magnitud, la lectura es consistente con un efecto marginal positivo en rangos habituales de <code>qb</code>, que se va atenuando a medida que q aumenta: en percentiles intermedios el impacto estimado es mayor, mientras que en la cola alta se vuelve bastante más chico. Esto refuerza un mensaje aplicado simple: pasar de lineal a cuadratico no cambia la dirección general del vínculo, pero si cambia de forma relevante como se interpreta su intensidad a lo largo de la distribucion.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Coeficiente clave</th>
+<th style="text-align: right;">Error estándar</th>
+<th style="text-align: right;">IC 95%</th>
+<th>Muestra</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Benchmark lineal (<code>qb</code>)</td>
+<td style="text-align: right;">0.0156</td>
+<td style="text-align: right;">0.0028</td>
+<td style="text-align: right;">[0.0102, 0.0210]</td>
+<td><code>N = 2,068</code></td>
+<td>Asociación positiva promedio</td>
+</tr>
+<tr class="even">
+<td>Modelo operativo cuadrático (<code>qb</code>)</td>
+<td style="text-align: right;">0.0280</td>
+<td style="text-align: right;">0.0030</td>
+<td style="text-align: right;">[0.0221, 0.0340]</td>
+<td><code>N = 2,068</code></td>
+<td>Efecto positivo en rangos habituales de q</td>
+</tr>
+<tr class="odd">
+<td>Modelo operativo cuadrático (<code>qb_sq</code>)</td>
+<td style="text-align: right;">-0.0025</td>
+<td style="text-align: right;">0.0004</td>
+<td style="text-align: right;">[-0.0033, -0.0018]</td>
+<td><code>N = 2,068</code></td>
+<td>Curvatura decreciente estadísticamente clara</td>
+</tr>
+<tr class="even">
+<td>Contraste con rezago (<code>qb_1</code>)</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">0.0027</td>
+<td style="text-align: right;">[0.0088, 0.0194]</td>
+<td><code>N = 1,880</code></td>
+<td>Sensible a especificación y a omitir <code>qb_t</code></td>
+</tr>
+</tbody>
+</table>
+<p>Para evitar una lectura más fuerte de lo que permite comparar muestras no equivalentes, la decisión se valida también en muestra común (<code>if !missing(qb_1)</code>). En esa muestra, la especificación contemporánea cuadrática mantiene el mismo patrón sustantivo (q positiva y curvatura decreciente), por lo que la lectura dominante no depende solo del cambio de <code>N</code>.</p>
+</section>
+<div class="table-box">
+<p><strong>Curvatura estimada de la relación entre q e inversión</strong></p>
+<p>La forma funcional del modelo operativo se resume en una curva única: la inversión estimada aumenta con <code>qb</code>, pero lo hace a una tasa decreciente en el rango principal observado de la muestra.</p>
+<div style="max-width:760px; margin:0.5rem auto 0.25rem auto;">
+  <svg viewbox="0 0 760 360" role="img" aria-label="Curva cuadrática estimada entre q de Tobin e inversión">
+    <rect x="0" y="0" width="760" height="360" fill="white"></rect>
+
+    <line x1="90" y1="271.8" x2="700" y2="271.8" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="215.3" x2="700" y2="215.3" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="158.8" x2="700" y2="158.8" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="102.4" x2="700" y2="102.4" stroke="#e6e9ee" stroke-width="1"></line>
+    <line x1="90" y1="74.1" x2="700" y2="74.1" stroke="#e6e9ee" stroke-width="1"></line>
+
+    <line x1="90" y1="300" x2="700" y2="300" stroke="#2f2f2f" stroke-width="1.2"></line>
+    <line x1="90" y1="300" x2="90" y2="60" stroke="#2f2f2f" stroke-width="1.2"></line>
+
+    <polyline points="90.0,289.8 140.8,252.1 191.7,217.9 242.5,187.4 293.3,160.4 344.2,137.0 395.0,117.2 445.8,101.0 496.7,88.3 547.5,79.3 598.3,73.8 649.2,72.0 700.0,73.7" fill="none" stroke="#2f4858" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+
+    <line x1="650.4" y1="300" x2="650.4" y2="72.0" stroke="#6c757d" stroke-width="1.4" stroke-dasharray="4 4"></line>
+    <circle cx="650.4" cy="72.0" r="4" fill="#2f4858"></circle>
+    <text x="505" y="48" font-size="13" fill="#495057">Punto de giro aprox.: qb* = 5.5</text>
+
+    <text x="82" y="304" font-size="12" fill="#4f4f4f" text-anchor="end">0.09</text>
+    <text x="82" y="275.8" font-size="12" fill="#4f4f4f" text-anchor="end">0.10</text>
+    <text x="82" y="219.3" font-size="12" fill="#4f4f4f" text-anchor="end">0.12</text>
+    <text x="82" y="162.8" font-size="12" fill="#4f4f4f" text-anchor="end">0.14</text>
+    <text x="82" y="106.4" font-size="12" fill="#4f4f4f" text-anchor="end">0.16</text>
+    <text x="82" y="78.1" font-size="12" fill="#4f4f4f" text-anchor="end">0.17</text>
+
+    <text x="90" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">0</text>
+    <text x="191.7" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">1</text>
+    <text x="293.3" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">2</text>
+    <text x="395.0" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">3</text>
+    <text x="496.7" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">4</text>
+    <text x="598.3" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">5</text>
+    <text x="700" y="320" font-size="12" fill="#4f4f4f" text-anchor="middle">6</text>
+
+    <text x="395" y="346" font-size="13" fill="#2f2f2f" text-anchor="middle">q de Tobin (qb)</text>
+    <text x="24" y="180" font-size="13" fill="#2f2f2f" text-anchor="middle" transform="rotate(-90 24 180)">Inversión estimada</text>
+  </svg>
+</div>
+<div class="small-note">
+<p>Visual de apoyo construido con la especificación operativa reportada (<code>ikb_hat = 0.0936 + 0.0280*qb - 0.0025*qb^2</code>). El punto de giro (<code>qb* ~= 5.5</code>) cae en la cola alta de <code>qb</code>, por lo que se interpreta como referencia descriptiva y no como umbral operativo rígido.</p>
+</div>
+</div>
+<section id="diagnosticos-clave" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="diagnosticos-clave">Diagnosticos clave</h2>
+<p>La evidencia del taller respalda inferencia robusta como minimo operativo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnostico</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AR(1) auxiliar con residuos</td>
+<td style="text-align: right;"><code>uhat_L1</code> p &lt; 0.001</td>
+<td>Evidencia compatible con dependencia serial intra-firma</td>
+</tr>
+<tr class="even">
+<td>LM heterocedasticidad</td>
+<td style="text-align: right;">p = 0.0005</td>
+<td>Evidencia compatible con heterocedasticidad</td>
+</tr>
+<tr class="odd">
+<td>Test conjunto dummies temporales</td>
+<td style="text-align: right;">p = 0.0000</td>
+<td>Los efectos de año son relevantes en el benchmark</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>La lectura aplicada es sobria:</p>
+<ul>
+<li>Como benchmark, pooled con <code>i.year</code> y errores cluster por firma entrega una base de reporte defendible en términos de inferencia.</li>
+<li>Como identificación, el resultado sigue siendo limitado: no elimina sesgo potencial por heterogeneidad inobservable.</li>
+<li>En especificaciones dinamicas pooled (con rezago de dependiente), el riesgo de sesgo es aun mayor, por lo que no se toma como modelo operativo del caso.</li>
+</ul>
+<p>Esta separacion entre inferencia valida y limitaciones de identificación es el aporte principal para una comunicacion profesional del resultado.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>T3 deja un mensaje claro para trabajo aplicado: la relación entre q e inversión aparece positiva pero decreciente en la mayor parte de la muestra bajo un benchmark pooled robusto.</p>
+<p>Para un analista aplicado, esta pieza sí permite concluir que la asociación promedio entre valorizacion e inversión no es plana y que la curvatura importa para interpretar magnitudes en distintos rangos de q, siempre leyendo el contraste con rezagos bajo criterio de comparabilidad muestral. Al mismo tiempo, ese hallazgo es un punto de partida empírico, no una conclusión cerrada: el siguiente paso natural para una agenda de identificación más exigente es avanzar hacia estrategias de panel que traten de forma explícita la heterogeneidad no observada.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Sitio de portfolio profesional</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Actualización periódica</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

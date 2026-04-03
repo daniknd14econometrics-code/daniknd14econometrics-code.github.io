@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="250" viewBox="0 0 800 250" role="img" aria-labelledby="title desc">
+  <title id="title">T4 síntesis de trayectoria metodológica</title>
+  <desc id="desc">Secuencia metodológica en T4: pooled como benchmark, límite por factores no observados y transición hacia FE o RE.</desc>
+
+  <rect x="0" y="0" width="800" height="250" fill="#ffffff"/>
+
+  <g font-family="Arial, Helvetica, sans-serif" fill="#24313f">
+    <text x="24" y="28" font-size="15" font-weight="700">T4 - Síntesis de trayectoria metodológica</text>
+    <text x="24" y="46" font-size="12" fill="#5a6a79">Benchmark pooled, límite por factores no observados y paso hacia FE o RE</text>
+  </g>
+
+  <g>
+    <rect x="24" y="62" width="232" height="160" rx="8" fill="#f5f7fa" stroke="#cfd7df"/>
+    <rect x="284" y="62" width="232" height="160" rx="8" fill="#f5f7fa" stroke="#cfd7df"/>
+    <rect x="544" y="62" width="232" height="160" rx="8" fill="#f5f7fa" stroke="#cfd7df"/>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" fill="#24313f">
+    <text x="38" y="86" font-size="13" font-weight="700">1) Benchmark pooled</text>
+    <text x="38" y="106" font-size="12">Pooled + cluster para comparar</text>
+    <text x="38" y="124" font-size="12">En esta base, los efectos de tiempo</text>
+    <text x="38" y="142" font-size="12" fill="#4e5f6f">no cambian la lectura central</text>
+    <text x="38" y="160" font-size="12" fill="#4e5f6f">del benchmark</text>
+
+    <text x="298" y="86" font-size="13" font-weight="700">2) Límite del enfoque</text>
+    <text x="298" y="106" font-size="12">Si hay factores no observados</text>
+    <text x="298" y="124" font-size="12">ligados a las variables,</text>
+    <text x="298" y="142" font-size="12" fill="#4e5f6f">el pooled puede sesgarse</text>
+    <text x="298" y="160" font-size="12" fill="#4e5f6f">aunque la inferencia mejore</text>
+
+    <text x="558" y="86" font-size="13" font-weight="700">3) Paso siguiente</text>
+    <text x="558" y="106" font-size="12">El contraste en diferencias</text>
+    <text x="558" y="124" font-size="12">aporta, pero aquí es limitado</text>
+    <text x="558" y="142" font-size="12" fill="#4e5f6f">Por eso, la transición natural</text>
+    <text x="558" y="160" font-size="12" fill="#4e5f6f">es hacia FE o RE</text>
+  </g>
+
+  <g stroke="#9aa8b5" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M258 142 L278 142"/>
+    <path d="M272 138 L278 142 L272 146"/>
+    <path d="M518 142 L538 142"/>
+    <path d="M532 138 L538 142 L532 146"/>
+  </g>
+</svg>

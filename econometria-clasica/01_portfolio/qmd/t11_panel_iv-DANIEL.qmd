@@ -1,0 +1,199 @@
+---
+title: "Tarifas y demanda de pasajeros en rutas aéreas"
+subtitle: "Una lectura en panel sobre cuándo tratar el precio como endógeno"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t11_panel_iv"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t11_panel_iv_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+¿Cómo responde la demanda de pasajeros cuando cambian las tarifas en rutas aéreas comparables a lo largo del tiempo?
+:::
+
+::: {.hero-sub}
+La estrategia econométrica ordena una decisión práctica: evaluar si tratar precio como potencialmente endógeno cambia materialmente la lectura del caso o si la referencia no instrumentada sigue siendo suficiente para una interpretación profesional.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Modelo de referencia
+:::
+
+::: {.metric-value}
+Panel no IV + cluster
+:::
+
+::: {.metric-note}
+`xtreg ... , re/fe vce(cluster id)` como lectura principal
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Contexto aplicado
+:::
+
+::: {.metric-value}
+Rutas aéreas (panel)
+:::
+
+::: {.metric-note}
+`N=4596`, `1149` rutas, `1997-2000` (panel balanceado)
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Senal de demanda
+:::
+
+::: {.metric-value}
+Relacion precio-cantidad negativa
+:::
+
+::: {.metric-note}
+`lfare`: RE `-1.102` y FE `-1.155` (ambos con cluster)
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Chequeo de endogeneidad
+:::
+
+::: {.metric-value}
+Sin evidencia robusta fuerte
+:::
+
+::: {.metric-note}
+Control function: RE `p=0.1878`; FE robusto `p=0.1026`
+:::
+:::
+
+::::
+
+## Resumen
+
+Esta pieza estudia demanda de pasajeros en rutas aéreas usando panel por ruta y año. La pregunta aplicada es si la lectura de la relación entre tarifa y pasajeros cambia de forma material cuando precio se trata como potencialmente endógeno.
+
+El mensaje central es deliberadamente prudente: IV se mantiene como contraste relevante, pero la lectura de referencia permanece en modelos no instrumentados con inferencia robusta.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+¿En rutas aéreas comparables, la asociación entre tarifas y pasajeros cambia de forma sustantiva cuando precio se trata como potencialmente endógeno en panel?
+
+::: {.small-note}
+Resultado: `lpassen`. Regresor clave: `lfare`. Controles: `ldist`, `ldistsq`, dummies de año. Instrumento principal: `concen`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+La econometría no se presenta como fin en sí mismo: se usa para decidir, con evidencia y prudencia, cuando una estrategia más compleja mejora realmente la lectura aplicada del mercado aéreo.
+
+<span class="badge">Portfolio econométrico</span>
+:::
+
+::::
+
+## Por qué este problema importa
+
+En ecuaciones de demanda, precio puede reaccionar a factores no observados que también afectan cantidad. Si eso ocurre, una lectura no instrumentada puede mezclar variación de demanda con ajuste de oferta o estructura competitiva.
+
+En este caso, el valor aplicado es distinguir si ese riesgo potencial amerita pasar a IV en panel como marco principal o si conviene mantener una referencia más simple y transparente para la lectura de negocio.
+
+## Datos y variables
+
+Se trabaja con `airfare.dta` en estructura panel.
+
+- Unidad de observacion: ruta-año (`id`, `year`)
+- Cobertura temporal: `1997-2000`
+- Muestra operativa: `N=4596`, `1149` rutas, panel balanceado (`4` periodos por ruta)
+- Variable de resultado: `lpassen` (log de pasajeros promedio diarios)
+- Variable clave: `lfare` (log de tarifa promedio)
+- Controles: `ldist`, `ldistsq`, `y98`, `y99`, `y00`
+- Instrumentos explorados: `concen` y, en ejercicios de sobreidentificacion, `origin_id`
+
+## Estrategia empírica
+
+La secuencia se organiza para mantener primacia del caso aplicado:
+
+1. Estimar panel no instrumentado (RE y FE con inferencia cluster) como referencia sustantiva.
+2. Estimar RE-IV y FE-IV para evaluar sensibilidad cuando `lfare` se trata como endógena.
+3. Usar chequeos de control function, relevancia y validez de instrumentos como respaldo de decisión.
+4. Interpretar resultados en clave de criterio profesional: priorizar especificación compleja solo si cambia de forma material la lectura aplicada.
+
+::: {.table-box}
+## Resultados principales
+
+La lectura de base del caso es estable en modelos no instrumentados: la relación entre tarifa y pasajeros es negativa y de magnitud económica relevante en FE y RE con errores clusterizados.
+
+Al pasar a IV, la precisión cae y los coeficientes de `lfare` dejan de ser estadisticamente precisos en las especificaciones robustas reportadas. En este contexto, la evidencia diagnostica robusta no muestra una necesidad clara de abandonar la lectura no instrumentada como referencia principal, aunque el problema potencial de endogeneidad siga siendo parte del análisis.
+
+| Bloque | Evidencia | Lectura aplicada |
+|---|---:|---|
+| RE no IV (cluster) | `lfare=-1.102` (EE 0.102; IC 95% [-1.302, -0.903]) | Relación negativa clara entre tarifa y pasajeros |
+| FE no IV (cluster) | `lfare=-1.155` (EE 0.109; IC 95% [-1.368, -0.942]) | Patrón sustantivo similar bajo comparación within |
+| RE-IV (cluster) | `lfare=-0.508` (EE 0.498; IC 95% [-1.485, 0.469]) | Magnitud menor y baja precisión en IV |
+| FE-IV (cluster) | `lfare=-0.302` (EE 0.613; IC 95% [-1.503, 0.900]) | Alta incertidumbre en especificación IV |
+:::
+
+<img src="../assets/t11_mini_ic95.svg" alt="Comparacion visual minima de RE no IV y RE-IV con IC 95% para lfare" width="590" style="display:block; max-width:100%; height:auto;" />
+
+::: {.table-box}
+## Diagnosticos de respaldo
+
+Estos diagnósticos se presentan de forma breve para respaldar la lectura del caso; no reemplazan la historia aplicada ni conducen la narrativa principal.
+
+| Diagnostico | Resultado | Uso en la pieza |
+|---|---:|---|
+| Exogeneidad (control function, RE) | chi2(1)=1.73, p=0.1878 | No aporta evidencia robusta fuerte para exigir IV como base |
+| Exogeneidad (control function, FE robusto) | chi2(1)=2.66, p=0.1026 | Resultado en misma dirección, con cautela |
+| Relevancia IV (RE, 2 IV excluidos) | KP rk Wald F =33.05; Hansen J p=0.8361 | Instrumentos aceptables en ese entorno de especificación; con `origin_id`, el uso es principalmente didáctico de diagnóstico y no define el cierre aplicado |
+| Relevancia IV (FE) | KP rk Wald F =11.66 | Fuerza más justa; refuerza prudencia al interpretar FE-IV |
+:::
+
+## Lectura profesional
+
+El aporte de T11 es mostrar criterio de decisión econométrica aplicada. La pregunta no es plantear FE, RE e IV como una competencia, sino evaluar si una estrategia más compleja cambia materialmente la lectura del caso y mejora su credibilidad para un lector externo.
+
+En esta aplicación, IV se mantiene como contraste relevante de sensibilidad; la lectura operativa que gana con evidencia robusta vuelve al bloque no IV para decidir entre FE y RE.
+
+## Cierre
+
+La pieza deja una práctica replicable para trabajo profesional en panel: partir del problema aplicado, abrir la puerta a endogeneidad cuando corresponde, y escalar complejidad solo cuando la evidencia muestra que esa complejidad cambia de forma sustantiva la conclusión.
+
+Dado que los tests robustos de exogeneidad no rechazan al 5% (RE `p=0.1878`; FE robusto `p=0.1026`), en este caso no conviene instrumentar `lfare` por rutina; la decisión aplicada final vuelve a RE vs FE sin IV, donde el Hausman no IV favorece FE (`chi2(1)=49.15`, `p=0.0000`).
+
+Ese es el valor central del caso: no maximizar tecnicismo, sino tomar mejores decisiones econometricas para leer mejor un fenomeno real.
+
+
+
+
+

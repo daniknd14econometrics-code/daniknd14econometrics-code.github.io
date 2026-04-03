@@ -1,0 +1,388 @@
+# AGENTS.md
+
+## Alcance de este AGENT
+
+Este archivo regula la producción de piezas públicas de la sección `causalidad` dentro de `portfolio-site/causalidad`.
+
+Seguir obligatoriamente `docs/qmd-curation-playbook.md` como protocolo maestro de construcción de piezas públicas `.qmd`.
+Si hay conflicto entre improvisación narrativa y el playbook, prevalece el playbook.
+Si una regla general del playbook entra en tensión con una regla específica de `causalidad`, prevalece la regla específica de `causalidad`.
+
+Debe leerse junto con el `causalidad/AGENTS.md` ubicado más arriba en el repo.
+Ese archivo define la jerarquía editorial general de la sección.
+Este archivo define cómo debe verse, estructurarse y redactarse una pieza pública `.qmd`.
+Estas reglas son específicas de `causalidad` y no deben extrapolarse automáticamente a `econometria-clasica` ni a futuros bloques de `ML`.
+
+## Regla principal
+
+No empezar desde cero.
+
+Las piezas públicas de `causalidad` deben heredar el estándar ya logrado en las piezas curadas de `econometria-clasica`.
+No crear una nueva estética, una nueva lógica narrativa ni una nueva forma de presentar resultados.
+Ese benchmark aplica como estándar de curaduría formal; no obliga a copiar el mismo lenguaje sustantivo de otras secciones.
+
+La referencia obligatoria es
+- el estándar visual y narrativo de `econometria-clasica`
+- la jerarquía editorial fijada en `causalidad/AGENTS.md`
+- los diagnósticos privados ya validados de cada taller
+
+## Qué tipo de pieza se construye aquí
+
+Las piezas públicas de `causalidad` no son
+- apuntes de clase
+- resúmenes de logs
+- guías pedagógicas crudas
+- transcripciones técnicas del do-file
+
+Las piezas públicas sí deben ser
+- piezas profesionales de portfolio
+- sobrias
+- narrativas
+- visualmente limpias
+- conceptualmente claras
+- técnicamente serias, pero no abrumadoras
+
+## Estructura esperada de una ficha pública
+
+Cada `.qmd` debe tener una estructura narrativa clara y contenida.
+
+Orden preferido
+
+1. Apertura breve con la pregunta central
+2. Contexto empírico mínimo pero suficiente
+3. Qué problema econométrico o causal organiza la pieza
+4. Qué comparación o decisión domina la lectura
+5. Resultado principal, en una tabla o bloque central
+6. Lectura final profesional y sobria
+7. Diagnósticos o detalles técnicos solo como apoyo secundario
+
+## Regla de jerarquía narrativa
+
+La historia empírica debe ir primero.
+La técnica debe sostener la historia, no reemplazarla.
+
+No abrir una pieza con una cascada de comandos, supuestos o pruebas.
+No enterrar la pregunta central bajo jerga econométrica desde el primer bloque.
+
+Primero debe quedar claro
+- qué se quiere estimar o decidir
+- por qué la comparación es problemática o interesante
+- qué aporta el método usado
+
+## Regla sobre el tono
+
+Usar tono profesional, claro y sobrio.
+
+Evitar
+- tono de clase
+- tono coloquial
+- tono celebratorio
+- afirmaciones rimbombantes
+- frases tipo “demuestra definitivamente”, “corrige por completo”, “prueba que”
+
+Preferir
+- formulaciones precisas
+- cierres cautos
+- lenguaje de evidencia y diseño
+- distinción entre resultado, identificación y límite interpretativo
+
+## Refuerzos de curaduría pública (obligatorios)
+
+- TOC por defecto en piezas públicas; omitir solo en notas extremadamente breves donde no aporte navegación.
+- Registro para lector externo; no redactar como conversación interna, diagnóstico privado ni nota de trabajo.
+- Evitar lenguaje meta-editorial en la cara pública (por ejemplo: “pieza aplicada fuerte”, “en términos editoriales”, “apertura conceptual de la sección”, “respaldo metodológico”).
+- Evitar también fórmulas internas como "en lectura pública", "en la cara pública", "bloque PSM", "bloque IPWRA", "caso aplicado fuerte", "apertura conceptual" o equivalentes metaeditoriales.
+- Evaluar si conviene mostrar prefijos internos (`T1`, `T2`, etc.) en títulos visibles; si debilitan la presentación profesional, omitirlos.
+- No alcanza con compilar o estar “correcto”: la pieza debe sentirse tan curada como las mejores piezas de `econometria-clasica`.
+- Cuando haya pregunta empírica, causal o metodológica reconocible, debe abrir la pieza y encontrar respuesta clara y sobria al cierre.
+- La pregunta principal debe dejar explícito el efecto de qué sobre qué, en formulación humana y sustantiva.
+- Evaluar una "respuesta corta" debajo de la pregunta cuando ayude a orientar la lectura.
+- Si el material permite una historia narrativa clara, conservarla; la técnica la sostiene, no la reemplaza.
+- Incluir orientación temprana para lector externo: unidad de análisis, resultado, variable principal/tratamiento, covariables relevantes y población objetivo cuando corresponda.
+- Si los nombres de variables no son autoexplicativos, incluir bloque breve de “Datos y variables” con traducción a lenguaje humano y sin estilo de log crudo.
+- Cuando la pieza compare contra un análisis ingenuo, explicitar por qué esa comparación falla antes o alrededor del resultado principal.
+- Elegir bloque visual según función: `metric-grid` para métricas headline; en piezas introductorias, preferir `quick-grid` o equivalente (pregunta, diseño del caso, variables clave).
+- La brevedad no habilita vacíos: incluso piezas introductorias deben tener densidad empírica o metodológica suficiente para lector externo.
+- Evitar redacción que asuma conocimiento previo del taller; la pieza debe ser legible para quien entra por primera vez.
+- Los nombres internos de especificación (`S1`, `S2`, `spec_1`, `modelo_a`, etc.) pueden quedar para trabajo interno, pero no como etiqueta principal en la pieza pública.
+- Traducir especificaciones opacas a rótulos públicos claros; si se requiere trazabilidad, dejar el nombre interno en segundo plano (paréntesis o nota breve).
+- Si la lección principal es metodológica, título y hero deben distinguir entre la lección general del método y el caso empírico donde se ilustra.
+- Título y hero deben evitar fórmulas que suenen a etiqueta de taller o dependan de nomenclatura interna no intuitiva.
+- En tablas públicas, usar rótulos comprensibles como etiqueta principal; reservar nomenclatura interna para segundo plano cuando sea necesaria.
+- Guardar cada `.qmd` público en UTF-8 sin BOM para evitar fallas silenciosas en lectura de front matter.
+- Si se toca front matter o estructura base (`format`, `toc`, `page-layout`, `css`, título), correr `quarto inspect` antes de render y confirmar metadata leída.
+- Un render con `exit code 0` no alcanza: verificar en HTML TOC, layout, CSS de pieza y bloques principales.
+- Si hay regresión de TOC/layout/CSS/metadata, restaurar primero la baseline técnica sana y recién después reaplicar ajustes editoriales.
+- Antes de cerrar pieza, chequear explícitamente: codificación, front matter leído, TOC (si corresponde), `page-layout`, CSS, hero, bloques y tabla principal.
+- Priorizar notación pública sobre sintaxis interna: si internamente se usa `ln(1+exptot)`, en cara pública preferir formulaciones como “log del gasto total del hogar” y dejar la sintaxis exacta en segundo plano si hace falta.
+- Todo estimando principal debe incluir interpretación sustantiva explícita: qué cambia, sobre qué variable, para quiénes, respecto de qué contrafactual/comparación y con qué alcance.
+- Declarar explícitamente la población objetivo del parámetro (muestra completa, tratados, soporte común, muestra matched, cohorte, etc.) cerca del resultado central o en el cierre.
+- No confundir número con interpretación: la pieza debe atar número, estimando, población y significado sustantivo.
+- Antes de cerrar, debe poder responderse en una línea: qué efecto/relación se encontró, sobre qué variable, para quiénes y bajo qué diseño.
+- Los nombres de variables y fórmulas pueden aparecer, pero no deben dominar la lectura pública ni asumir conocimiento interno del taller.
+- Antes de cerrar, hacer revisión final de lenguaje público: tildes, ortografía, microestilo, frases internas, coloquialismos y anglicismos evitables.
+- La pieza pública final debe quedar en español profesional limpio, salvo términos técnicos necesarios.
+- Eliminar o traducir formulaciones que suenen a conversación interna, auditoría o cocina del proyecto.
+- Si hay un resultado central interpretable, su lectura sustantiva debe tener entidad visual suficiente (caja, bloque o sección breve destacada), con sobriedad.
+- En “Datos y variables”, priorizar legibilidad: evitar texto corrido excesivo y separar unidad de análisis, resultado, tratamiento y covariables en líneas o lista breve cuando convenga.
+- En el cierre visual-editorial, verificar explícitamente limpieza del español, ausencia de lenguaje interno, visibilidad de la interpretación sustantiva y legibilidad de cajas informativas.
+- Antes de renderizar piezas nuevas o muy editadas, auditar el `.qmd` real y separar problemas narrativos, sustantivos y técnicos.
+- Después de renderizar, revisar HTML real (TOC, hero, CSS, layout, tablas, bloques visuales y lectura pública final); compilar no equivale a curar.
+
+## Regla sobre causalidad
+
+El objetivo central de esta sección es comunicar efectos causales interpretables dentro del diseño y para la población objetivo.
+
+No sobreactuar causalidad.
+
+Siempre distinguir entre
+- resultado empírico
+- estrategia de identificación
+- fortaleza del diseño
+- límites de interpretación
+
+Nunca transformar automáticamente un coeficiente en afirmación causal fuerte.
+Nunca usar un no-rechazo de sobreidentificación como “prueba” de validez.
+Nunca presentar una especificación débil como evidencia concluyente.
+Cuando el diseño causal observacional ya está fijado y el estimando es interpretable causalmente dentro de ese marco, no degradar innecesariamente la redacción a "asociación".
+No usar fórmulas débiles del tipo "no implica causalidad absoluta fuera de ese marco"; comunicar con firmeza sobria el alcance causal dentro del diseño y la población objetivo.
+La interpretación del efecto debe depender de Y, del tratamiento y del estimando concreto; no de fórmulas repetidas por reflejo.
+Si el resultado es binario, comunicar en puntos porcentuales cuando corresponda.
+Si Y está en log y el tratamiento es binario, revisar la forma más comunicable y correcta de interpretar el efecto.
+La sección de alcance debe enfatizar población/subpoblación, diseño y prudencia, sin degradarse en una lista defensiva de negaciones.
+
+## Regla sobre tablas
+
+Toda pieza debe tener una tabla o bloque central que organice la lectura.
+
+La tabla principal debe ser
+- corta
+- limpia
+- comparativa
+- interpretable sin leer el log
+
+No volcar tablas enormes del taller.
+No mostrar salidas crudas de Stata como pieza central.
+No acumular variantes sin función de decisión/lectura clara.
+
+La tabla principal debe ayudar al lector a responder
+- qué métodos o especificaciones se comparan
+- qué decisión o resultado domina
+- qué lectura final se sostiene
+- usar rótulos de filas/columnas públicos, no internos (evitar etiquetas tipo "Referencia base del taller"; preferir "Referencia comparativa" o "Especificación de referencia")
+- aclarar o expandir siglas ambiguas para lector externo (por ejemplo, "AI" -> "Abadie-Imbens")
+- mantener convención de inferencia consistente (si corresponde bootstrap, reportar bootstrap y no mezclar versiones de forma confusa)
+- no sobredimensionar contrastes metodológicos auxiliares cuando no son núcleo del mensaje
+- al resumir patrones de estimandos, usar formulaciones precisas (por ejemplo, `ATET_3 > ATET_2 > ATET_1 > 0` cuando corresponda)
+
+## Regla sobre gráficos
+
+No incluir gráficos por decoración.
+
+Solo incluir gráficos si agregan valor real a
+- soporte
+- overlap
+- balance
+- pesos
+- primera etapa
+- forma reducida
+- lectura causal
+
+Si un gráfico no mejora la comprensión, omitirlo.
+
+Preferencias por bloque
+- matching / PSM: overlap, balance, soporte
+- IPWRA love plots, overlap ponderado, pesos
+- IV: gráficos descriptivos solo si ayudan a leer primera etapa o forma reducida
+
+No saturar la ficha con demasiados gráficos.
+
+Regla de sobriedad visual común:
+
+- recursos chicos o medianos; no hero graphics
+- sin estética de infografía escolar/marketinera
+- sin leyendas o notas al pie innecesarias
+- paleta contenida (1-2 tonos neutros del portfolio)
+
+## Lenguaje visual y categorías públicas
+
+- El texto dentro de SVG/tarjetas debe ser público y legible para lector externo.
+- Evitar jerga técnica o código interno como capa principal (`AR(1)`, `LM`, `0/1`, `choice=1`, etc.).
+- Mostrar primero significado conceptual de categorías y outcomes; usar códigos internos solo en segundo plano si hacen falta.
+- Regla práctica: cada visual debe dejar claro qué se compara, qué cambia y qué decisión queda.
+
+## Codificación y formato de assets
+
+- Revisar tildes/eñes y ortografía en todo texto visible de SVG.
+- Mantener `.qmd` en UTF-8 correcto (sin BOM cuando corresponda).
+- Corregir mojibake (`Ã`, `Â`, `â€™`, etc.) antes de cerrar.
+- `.gph` no es formato de publicación web.
+- Para web: SVG solo si es liviano; si un SVG de Stata es pesado, reemplazar por PNG.
+
+## Reglas visuales consolidadas por caso (causalidad)
+
+### c02 / T2
+
+- Mantener un solo gráfico de balance (`3_smd.svg`) como apoyo visual al criterio de selección.
+- No inflar la pieza con gráficos redundantes.
+
+### c04 / T4
+
+- El recurso visual central es el love plot.
+- No forzar overlap base cuando no aporta a la discusión dominante.
+
+### c06 / T6
+
+- Usar el par before/after del contraste `3 vs 0` para mostrar efecto de ponderación.
+- Evitar saturación de visuales secundarios.
+
+### c08 / T8 (IV)
+
+- Tratarlo como pieza de causalidad, no como excepción ajena al módulo.
+- Mantener narrativa causal sobria cuando la estrategia de identificación lo justifica.
+- Debilidad de instrumentos limita fuerza empírica, pero no elimina el carácter causal de la estrategia.
+- Evitar que la pieza se convierta en una sucesión de tests.
+- Si exportaciones SVG de Stata son pesadas, reemplazar por PNG para web.
+
+## Regla sobre diagnósticos técnicos
+
+Los diagnósticos técnicos deben existir, pero no dominar visualmente la pieza.
+
+Ubicarlos
+- después del resultado principal
+- en cajas breves
+- en notas secundarias
+- o en subsecciones compactas
+
+No construir la pieza alrededor de tests y comandos.
+La pregunta central debe seguir siendo visible.
+
+## Regla sobre selectores
+
+Los talleres tipo selector no deben convertirse automáticamente en fichas públicas autónomas aquí.
+
+Su función normal es respaldar técnicamente una pieza principal.
+
+Aplicación actual
+- T3 respalda T2
+- T5 respalda T4
+- T7 respalda T6
+
+Si una pieza principal depende de un selector, debe mencionarlo brevemente como capa de decisión, sin convertir la ficha pública en una auditoría del selector.
+Si el selector no es público, no remitir al lector como si pudiera abrir una pieza inexistente; usar formulaciones impersonales de regla/diseño preseleccionado.
+
+Diferencia operativa entre bloques:
+- en T2/T3 y T4/T5, la ficha principal compara varias especificaciones y el selector posterior ayuda a cerrar la preferida.
+- en T6/T7, la ficha principal ya incorpora la especificación ganadora y el selector opera como justificación interna.
+
+## Mapa editorial actual de producción
+
+### Apertura breve conceptual
+- T1
+
+### Fichas públicas principales
+- T2
+- T4
+- T6
+- T8
+
+### Respaldos metodológicos
+- T3 para T2
+- T5 para T4
+- T7 para T6
+
+## Orden preferido de construcción
+
+1. T1
+2. T2
+3. T4
+4. T6
+5. T8
+
+No producir T3, T5 o T7 como primeras fichas públicas autónomas salvo instrucción explícita.
+
+## Reglas específicas por pieza
+
+### T1
+Debe ser breve.
+No tratarlo como caso aplicado fuerte.
+Su función es abrir la sección con una idea clara
+por qué una diferencia de medias no equivale a efecto causal.
+
+### T2
+Es pieza principal del bloque matching.
+Debe incorporar la decisión final respaldada por T3.
+No dejarlo como comparación metodológica abierta.
+
+### T4
+Es pieza principal del bloque PSM.
+Debe salir ya cerrada con la regla de diseño respaldada por T5.
+No dejar formulaciones provisionales.
+
+### T6
+Es pieza principal del bloque IPWRA.
+Debe quedar explícito que corre sobre el diseño ganador elegido en T7.
+La pieza visible es T6; T7 queda subordinado.
+
+### T8
+Debe escribirse como pieza metodológica cauta.
+No presentarlo como triunfo limpio de IV.
+La enseñanza central es que una estrategia IV rica puede volverse frágil.
+No evitar lenguaje causal por reflejo cuando el diseño lo respalda; matizar con alcance y fortaleza empírica.
+
+## Qué evitar al redactar
+
+Evitar
+- copiar la secuencia del do-file
+- citar demasiados tests en cadena
+- duplicar resultados equivalentes
+- usar jerga innecesaria
+- hacer conclusiones más fuertes que el diagnóstico privado
+- repetir bloques o títulos redundantes
+- llenar la página con tablas secundarias
+
+## Qué sí hacer al redactar
+
+Hacer
+- una apertura con una pregunta clara
+- una narrativa que priorice la decisión central
+- una tabla principal limpia
+- uno o pocos gráficos con función real
+- una conclusión breve, seria y recordable
+- una conexión visible entre método y problema empírico
+
+## Regla operativa
+
+Antes de crear o editar un `.qmd` aquí
+
+1. leer el diagnóstico privado correspondiente
+2. verificar su rol editorial en `causalidadAGENTS.md`
+3. confirmar si es ficha principal, apertura breve o respaldo
+4. recién después producir la pieza pública
+
+Si hay conflicto entre
+- lo que sugiere el log
+- lo que parece tentador narrativamente
+- y lo que fija el diagnóstico privado
+
+debe prevalecer el diagnóstico privado ya validado.
+
+## Sincronización operativa entre árboles (causalidad)
+
+Cuando la pieza también existe en `causalidad/`:
+
+1. replicar assets visuales en ambos árboles cuando corresponda
+2. mantener coherencia entre `.qmd` espejo
+3. renderizar HTML en ambos árboles
+4. verificar que la versión del portal refleje el cambio real
+
+## Definición de “hecho”
+
+Una pieza pública se considera bien hecha cuando
+- se parece en calidad y tono a `econometria-clasica`
+- no parece apunte de clase
+- tiene una pregunta central clara
+- tiene una lectura dominante clara
+- usa técnica sin perder sobriedad
+- no sobreactúa causalidad
+- y puede mostrarse como pieza profesional de portfolio

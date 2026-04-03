@@ -1,0 +1,221 @@
+---
+title: "Retorno salarial de la educación: MCO frente a IV/2SLS"
+subtitle: "Educación endógena y salario con variables instrumentales"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t01_vi"
+date: "2026-03-26"
+fuente_brief: "../../00_private/briefs/t01_vi_brief.txt"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+::: {.hero-box}
+::: {.hero-title}
+La estimación cambia de forma importante cuando `educ` se trata como endógena
+:::
+
+::: {.hero-sub}
+En este caso, pasar de MCO a IV/2SLS no es un detalle técnico: cambia la magnitud del retorno estimado de la educación y mejora la credibilidad de la interpretación.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+MCO robusto
+:::
+
+::: {.metric-value}
+0.078
+:::
+
+::: {.metric-note}
+Coeficiente de `educ`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+IV/2SLS robusto
+:::
+
+::: {.metric-value}
+0.146
+:::
+
+::: {.metric-note}
+Coeficiente de `educ`
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Test de endogeneidad
+:::
+
+::: {.metric-value}
+p = 0.0000
+:::
+
+::: {.metric-note}
+Se rechaza exogeneidad
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Primera etapa / Hansen
+:::
+
+::: {.metric-value}
+70.1 / 0.877
+:::
+
+::: {.metric-note}
+KP F fuerte, Hansen no rechaza
+:::
+:::
+
+::::
+
+## Resumen
+
+Este caso analiza cómo cambia la estimación del retorno de la educación sobre el salario cuando la educación se trata como potencialmente endógena. La comparación entre MCO e IV/2SLS muestra que, cuando hay evidencia de endogeneidad, el análisis ingenuo puede subestimar o distorsionar la magnitud del efecto.
+
+:::: {.quick-grid}
+
+::: {.section-box}
+## Pregunta
+
+¿Cambia de forma sustantiva la estimación del retorno salarial asociado a la educación cuando `educ` se trata como endógena y se estima con IV/2SLS, instrumentando con `meduc` y `feduc`, en lugar de MCO?
+
+::: {.small-note}
+Variable dependiente: `lwage` (log del salario por hora). Variable endógena: `educ`. Controles: `exper`, `expersq`. Instrumentos: `meduc`, `feduc`.
+:::
+:::
+
+::: {.section-box}
+## Idea central
+
+Un MCO simple puede mezclar el efecto de la educación con habilidad u otros factores no observados. La estrategia IV usa la variación exógena inducida por la educación de los padres para identificar un parámetro más creíble.
+
+<span class="badge">Ejercicio econométrico</span>
+:::
+
+::::
+
+## Por qué este problema importa
+
+En una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO queda sesgado por endogeneidad.
+
+Ese es el problema central del caso: distinguir entre una simple asociación y un efecto estimado con una estrategia más creíble de identificación.
+
+## Datos y variables
+
+Se trabaja con datos de corte transversal a nivel de individuos.
+La base corresponde a un ejercicio clásico de economía laboral con microdatos de salarios y educación.
+Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados.
+En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.
+
+- Variable dependiente: `lwage` (log del salario por hora)
+- Variable endógena de interés: `educ`
+- Controles: `exper`, `expersq`
+- Instrumentos excluidos: `meduc`, `feduc`
+
+## Estrategia empírica
+
+La secuencia del análisis es la siguiente:
+
+1. Estimar una ecuación salarial por MCO.
+2. Reestimar el modelo usando IV/2SLS, tratando a `educ` como endógena.
+3. Evaluar si la endogeneidad es empíricamente relevante.
+4. Revisar la fortaleza de la primera etapa.
+5. Verificar si los instrumentos superan los tests de sobreidentificación.
+
+## Qué pasa con un análisis ingenuo
+
+Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno de la educación libre de sesgo.
+
+La lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.
+
+**Hallazgo principal:** al instrumentar `educ` con `meduc` y `feduc`, el coeficiente estimado para la educación aumenta de forma importante respecto de MCO, en línea con la presencia de sesgo cuando `educ` se trata como exógena.
+
+::: {.table-box}
+## Resultados principales
+
+En MCO, el coeficiente estimado de `educ` es aproximadamente 0.078. Cuando se instrumenta la educación con la educación de la madre y del padre, el coeficiente IV/2SLS robusto sube a aproximadamente 0.146.
+
+Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV.
+En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV.
+No es evidencia definitiva por sí sola, pero sí una señal fuerte de que tratar `educ` como exógena puede subestimar de manera relevante el efecto de interés.
+
+| Modelo | Coeficiente de `educ` | Error estándar | IC 95% | N |
+|---|---:|---:|---:|---:|
+| MCO estándar | 0.0780 | 0.0066 | [0.0650, 0.0910] | 935 |
+| MCO robusto | 0.0780 | 0.0068 | [0.0646, 0.0913] | 935 |
+| IV/2SLS | 0.1457 | 0.0196 | [0.1072, 0.1842] | 722 |
+| IV/2SLS robusto | 0.1457 | 0.0183 | [0.1099, 0.1815] | 722 |
+
+<div style="margin: 10px 0 8px 0;">
+<img src="../assets/t01_mini_ic95.svg" alt="Comparacion visual minima de MCO robusto e IV/2SLS robusto con IC 95%" width="590" style="display:block; max-width:100%; height:auto;" />
+</div>
+
+La diferencia de muestra (`N = 935` en MCO frente a `N = 722` en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV.
+Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional.
+:::
+
+::: {.table-box}
+## Diagnósticos clave
+
+### 1. Endogeneidad
+
+El test de endogeneidad rechaza la hipótesis nula de exogeneidad de `educ`. Por lo tanto, no hay una buena base empírica para quedarse con MCO como especificación principal.
+
+### 2. Relevancia de instrumentos
+
+La primera etapa muestra que `meduc` y `feduc` tienen poder explicativo sobre `educ`. Los estadísticos reportados para relevancia son altos, lo que reduce la preocupación por instrumentos débiles.
+
+### 3. Sobreidentificación
+
+Los tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta.
+En este contexto, `meduc` y `feduc` se usan como instrumentos plausibles porque están correlacionados con la escolaridad de la persona y aportan variación relevante en primera etapa.
+Esa plausibilidad sigue siendo una hipótesis económica sustantiva: los tests estadísticos ayudan a evaluarla, pero no reemplazan la discusión de mecanismo y contexto.
+
+| Diagnóstico | Resultado | Lectura |
+|---|---:|---|
+| Test de endogeneidad | chi2 = 17.2702, p = 0.0000 | Se rechaza exogeneidad de `educ` |
+| Primera etapa | KP rk Wald F = 70.135 | Instrumentos fuertes |
+| Sobreidentificación (Hansen J) | p = 0.8767 | No hay evidencia contra la validez conjunta |
+:::
+
+## Lectura profesional del caso
+
+La conclusión principal no es simplemente estimar por 2SLS. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:
+
+- justificar por qué MCO puede estar sesgado;
+- demostrar que la primera etapa es suficientemente fuerte;
+- no sobreinterpretar los tests de sobreidentificación.
+
+En otras palabras, el valor del caso no está solo en la técnica, sino en el criterio econométrico con el que se decide cuándo abandonar una estimación ingenua.
+
+## Cierre
+
+Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
+En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.
+
+**Conclusión:** en este ejercicio, la evidencia favorece IV/2SLS como estrategia para estimar el efecto de la educación sobre el salario.

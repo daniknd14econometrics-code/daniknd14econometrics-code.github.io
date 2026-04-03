@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+<meta name="dcterms.date" content="2026-03-26">
+
+<title>Asignación previsional con resultado ordinal: una lectura aplicada</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="t19_ordenado_base_files/libs/clipboard/clipboard.min.js"></script>
+<script src="t19_ordenado_base_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="t19_ordenado_base_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="t19_ordenado_base_files/libs/quarto-html/popper.min.js"></script>
+<script src="t19_ordenado_base_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="t19_ordenado_base_files/libs/quarto-html/anchor.min.js"></script>
+<link href="t19_ordenado_base_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="t19_ordenado_base_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="t19_ordenado_base_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="t19_ordenado_base_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="t19_ordenado_base_files/libs/bootstrap/bootstrap-293cc809d15782442e9b1098eedb6797.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#apes-narrables-ordered-probit" id="toc-apes-narrables-ordered-probit" class="nav-link" data-scroll-target="#apes-narrables-ordered-probit">APEs narrables (ordered probit)</a></li>
+  <li><a href="#probabilidades-predichas-por-categoría-contexto-secundario" id="toc-probabilidades-predichas-por-categoría-contexto-secundario" class="nav-link" data-scroll-target="#probabilidades-predichas-por-categoría-contexto-secundario">Probabilidades predichas por categoría (contexto secundario)</a></li>
+  <li><a href="#diagnósticos-de-respaldo" id="toc-diagnósticos-de-respaldo" class="nav-link" data-scroll-target="#diagnósticos-de-respaldo">Diagnósticos de respaldo</a>
+  <ul class="collapse">
+  <li><a href="#resumen-de-diagnósticos" id="toc-resumen-de-diagnósticos" class="nav-link" data-scroll-target="#resumen-de-diagnósticos">Resumen de diagnósticos</a></li>
+  </ul></li>
+  <li><a href="#lectura-profesional" id="toc-lectura-profesional" class="nav-link" data-scroll-target="#lectura-profesional">Lectura profesional</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Asignación previsional con resultado ordinal: una lectura aplicada</h1>
+<p class="subtitle lead">Probabilidades por categoría y efectos marginales en carteras conservadoras, mixtas y más expuestas a acciones</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>¿Cómo cambia la lectura aplicada de una decisión previsional cuando el resultado tiene jerarquía natural?</p>
+</div>
+<div class="hero-sub">
+<p>Esta pieza estudia asignación de cartera previsional en tres niveles ordenados de exposición a acciones y prioriza una interpretación profesional en probabilidades: qué perfiles se asocian con carteras conservadoras, mixtas o más expuestas a acciones.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>Ordered probit con APEs</p>
+</div>
+<div class="metric-note">
+<p>Resultado ordinal explícito (<code>pctstck</code>: cartera conservadora 0% en acciones, cartera mixta 50% en acciones y cartera más expuesta a acciones 100% en acciones)</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Asignación previsional de hogares</p>
+</div>
+<div class="metric-note">
+<p><code>N=194</code>, unidad familia/hogar (<code>id</code>), corte transversal</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Distribución estimada</p>
+</div>
+<div class="metric-value">
+<p>Probabilidades bien repartidas</p>
+</div>
+<div class="metric-note">
+<p><code>Pr(cartera conservadora)=0.331</code>, <code>Pr(cartera mixta)=0.370</code>, <code>Pr(cartera más expuesta a acciones)=0.298</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Señales narrables</p>
+</div>
+<div class="metric-value">
+<p>Elección de método, edad y profit sharing</p>
+</div>
+<div class="metric-note">
+<p>Reasignan probabilidad entre cartera conservadora y cartera más expuesta a acciones</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Esta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (<code>pctstck</code>) toma tres categorías ordenadas (0% en acciones, 50% en acciones y 100% en acciones). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.</p>
+<p>El valor del caso está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin sobreinterpretaciones.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>En esta muestra de hogares, ¿qué variables se asocian con mayor o menor probabilidad de ubicarse en carteras previsionales conservadoras, mixtas o más expuestas a acciones?</p>
+<div class="small-note">
+<p>Resultado: <code>pctstck</code> con tres categorías ordenadas de cartera: conservadora (0% en acciones), mixta (50% en acciones) y más expuesta a acciones (100% en acciones). Variables clave: <code>choice</code> (puede elegir método de inversión: sí/no), <code>age</code> (edad en años), <code>prftshr</code> (plan con profit sharing: sí/no), con controles demográficos y de ingreso.</p>
+</div>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>Cuando el resultado tiene orden natural, la lectura aplicada mejora si la econometría modela explícitamente esa jerarquía y comunica resultados en probabilidades por categoría y APEs, no en coeficientes latentes aislados.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>En decisiones previsionales, no solo importa invertir o no invertir en acciones: importa el grado de exposición. Esa escala ordenada contiene información práctica para lectura de riesgo y composición de cartera.</p>
+<p>Si se ignora esa jerarquía, la interpretación puede perder claridad. En cambio, una especificación ordinal permite organizar la evidencia como reasignación de probabilidades entre perfiles de cartera, en un lenguaje más útil para un lector profesional.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se utiliza <code>pension.dta</code> en corte transversal.</p>
+<ul>
+<li>Unidad de observación: familia/hogar (<code>id</code>)</li>
+<li>Tamaño muestral: <code>N=194</code></li>
+<li>Variable de resultado: <code>pctstck</code> (0% en acciones: cartera conservadora; 50% en acciones: cartera mixta; 100% en acciones: cartera más expuesta a acciones)</li>
+<li>Distribución observada: 0% en acciones (cartera conservadora) = <code>64</code> casos (<code>32.99%</code>), 50% en acciones (cartera mixta) = <code>72</code> (<code>37.11%</code>), 100% en acciones (cartera más expuesta a acciones) = <code>58</code> (<code>29.90%</code>)</li>
+<li>Regresores de mayor interés para la lectura: <code>choice</code> (puede elegir método de inversión: sí/no), <code>age</code> (edad en años), <code>prftshr</code> (plan con profit sharing: sí/no)</li>
+<li>Controles: <code>educ</code>, <code>wealth89</code>, <code>female</code>, <code>married</code>, <code>black</code>, tramos de ingreso familiar (<code>finc*</code>)</li>
+<li>Alcance: al ser corte transversal, la lectura se mantiene en asociaciones probabilísticas contemporáneas</li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<ol type="1">
+<li>Estimar un modelo ordenado como referencia principal para respetar la jerarquía de <code>pctstck</code>.</li>
+<li>Traducir resultados a probabilidades por categoría de cartera (conservadora, mixta y más expuesta a acciones) para lectura directa del caso.</li>
+<li>Reportar APEs por outcome en variables narrables (<code>choice</code>, <code>age</code>, <code>prftshr</code>).</li>
+<li>Mantener la comparación de enlace (<code>ologit</code>/<code>oprobit</code>) como respaldo breve, sin desplazar la historia aplicada.</li>
+<li>Dejar métricas de clasificación in-sample y bloques técnicos equivalentes en segundo plano.</li>
+</ol>
+</section>
+<section id="resultados-principales" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La lectura aplicada se organiza en cuatro mensajes:</p>
+<ol type="1">
+<li>La masa de probabilidad está distribuida entre los tres niveles de cartera, con mayor concentración en la categoría mixta.</li>
+<li>Poder elegir método de inversión (sí vs no) se asocia con menor probabilidad de cartera conservadora y mayor probabilidad de cartera más expuesta a acciones.</li>
+<li><code>age</code> muestra una reasignación hacia el perfil conservador y una caída en la probabilidad del perfil más expuesto a acciones.</li>
+<li><code>prftshr</code> muestra una reasignación en sentido opuesto (desde perfil conservador hacia perfil más expuesto a acciones), con precisión más acotada en parte de los outcomes.</li>
+</ol>
+</section>
+<section id="apes-narrables-ordered-probit" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="apes-narrables-ordered-probit">APEs narrables (ordered probit)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: right;">dPr(cartera conservadora: 0% en acciones)</th>
+<th style="text-align: right;">dPr(cartera mixta: 50% en acciones)</th>
+<th style="text-align: right;">dPr(cartera más expuesta a acciones: 100% en acciones)</th>
+<th>Lectura profesional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Puede elegir método de inversión (sí vs no)</td>
+<td style="text-align: right;">-0.1281 (0.0621)</td>
+<td style="text-align: right;">+0.0104 (0.0119)</td>
+<td style="text-align: right;">+0.1178 (0.0547)</td>
+<td>Reasigna probabilidad desde cartera conservadora hacia cartera más expuesta a acciones</td>
+</tr>
+<tr class="even">
+<td><code>age</code> (+1 año)</td>
+<td style="text-align: right;">+0.0169 (0.0081)</td>
+<td style="text-align: right;">-0.0007 (0.0013)</td>
+<td style="text-align: right;">-0.0162 (0.0078)</td>
+<td>En promedio, la edad se asocia con mayor peso en la categoría conservadora</td>
+</tr>
+<tr class="odd">
+<td>Plan con profit sharing (sí vs no)</td>
+<td style="text-align: right;">-0.1521 (0.0692)</td>
+<td style="text-align: right;">-0.0137 (0.0219)</td>
+<td style="text-align: right;">+0.1658 (0.0877)</td>
+<td>Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones</td>
+</tr>
+</tbody>
+</table>
+</section>
+<p>El siguiente perfil resume hacia dónde se desplaza la probabilidad entre cartera conservadora, cartera mixta y cartera más expuesta a acciones para la posibilidad de elegir método de inversión, la edad y el profit sharing.</p>
+<p><img src="../assets/t19_desplazamiento_ordinal.svg" alt="Perfil de desplazamiento ordinal en T19: poder elegir método de inversión y tener profit sharing reducen probabilidad en cartera conservadora y la aumentan en cartera más expuesta a acciones; la edad desplaza en sentido inverso; la cartera mixta cambia poco." width="780" style="display:block; max-width:100%; height:auto;"></p>
+<section id="probabilidades-predichas-por-categoría-contexto-secundario" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="probabilidades-predichas-por-categoría-contexto-secundario">Probabilidades predichas por categoría (contexto secundario)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Categoría de cartera (pctstck)</th>
+<th style="text-align: right;">Probabilidad promedio estimada</th>
+<th>Lectura aplicada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0% en acciones (cartera conservadora)</td>
+<td style="text-align: right;">0.331</td>
+<td>Aproximadamente un tercio de la muestra se ubica en perfil conservador</td>
+</tr>
+<tr class="even">
+<td>50% en acciones (cartera mixta)</td>
+<td style="text-align: right;">0.370</td>
+<td>Es la categoría con mayor peso promedio</td>
+</tr>
+<tr class="odd">
+<td>100% en acciones (cartera más expuesta a acciones)</td>
+<td style="text-align: right;">0.298</td>
+<td>Cerca de tres de cada diez casos se ubican en el perfil más accionario</td>
+</tr>
+</tbody>
+</table>
+</section>
+<p>Como objeto final de decisión, la pieza prioriza tres covariables protagonistas (posibilidad de elegir método de inversión, edad y profit sharing): en esta muestra, allí se concentra la señal narrable de reasignación de probabilidades.</p>
+<p>Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente.</p>
+<section id="diagnósticos-de-respaldo" class="level2">
+<h2 class="anchored" data-anchor-id="diagnósticos-de-respaldo">Diagnósticos de respaldo</h2>
+<p>El respaldo técnico se mantiene acotado y funcional a la historia aplicada.</p>
+<section id="resumen-de-diagnósticos" class="level3 table-box">
+<h3 class="anchored" data-anchor-id="resumen-de-diagnósticos">Resumen de diagnósticos</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnóstico</th>
+<th style="text-align: right;">Evidencia</th>
+<th>Uso en la pieza</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Relevancia conjunta del bloque explicativo</td>
+<td style="text-align: right;">Wald chi2(14)=25.32, p=0.0315</td>
+<td>Respalda que el modelo capta señal empírica en esta muestra</td>
+</tr>
+<tr class="even">
+<td>Sensibilidad de enlace</td>
+<td style="text-align: right;">Patrón cualitativo similar en ologit y oprobit</td>
+<td>Evita que la narrativa dependa de una elección de enlace puntual</td>
+</tr>
+<tr class="odd">
+<td>Clasificación in-sample (secundaria)</td>
+<td style="text-align: right;">PCP aprox. 44.33%</td>
+<td>Se reporta solo como referencia descriptiva, no como objetivo predictivo</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="lectura-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional">Lectura profesional</h2>
+<p>El aporte de T19 es mostrar criterio econométrico aplicado: cuando el resultado tiene jerarquía natural, conviene preservar ese orden y comunicar resultados como probabilidades y reasignaciones de probabilidad entre categorías.</p>
+<p>En esta aplicación previsional, la lectura útil para un tercero no está en presentar una técnica como superior, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación.</p>
+<p>Para evitar dispersión, la lectura dominante se concentra en la posibilidad de elegir método de inversión, la edad y el profit sharing, mientras el resto de covariables cumple un rol de control y contexto.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Esta pieza traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APEs comparables, con foco en decisión aplicada y sin exagerar el alcance metodológico.</p>
+<p>El valor del caso queda en esa combinación: jerarquía del resultado bien modelada, foco en covariables protagonistas narrables y prudencia interpretativa en un contexto de corte transversal.</p>
+<p>Dado el tamaño muestral (<code>N=194</code>) y la naturaleza transversal del caso, la pieza se presenta como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="t19_ordenado_base_files/libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

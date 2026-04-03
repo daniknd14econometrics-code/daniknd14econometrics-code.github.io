@@ -1,0 +1,44 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="260" viewBox="0 0 800 260" role="img" aria-labelledby="title desc">
+  <title id="title">T9 decisión secuencial FE RE CRE</title>
+  <desc id="desc">Síntesis metodológica en tres etapas: comparar magnitudes, contrastar supuestos y decisión operativa con cautela.</desc>
+
+  <rect x="0" y="0" width="800" height="260" fill="#ffffff"/>
+
+  <g font-family="Arial, Helvetica, sans-serif" fill="#24313f">
+    <text x="24" y="28" font-size="15" font-weight="700">T9 - Síntesis de decisión metodológica</text>
+    <text x="24" y="46" font-size="12" fill="#5a6a79">Comparación FE / RE / CRE con respaldo Hausman y Mundlak</text>
+  </g>
+
+  <g>
+    <rect x="24" y="64" width="232" height="166" rx="8" fill="#f5f7fa" stroke="#cfd7df"/>
+    <rect x="284" y="64" width="232" height="166" rx="8" fill="#f5f7fa" stroke="#cfd7df"/>
+    <rect x="544" y="64" width="232" height="166" rx="8" fill="#f5f7fa" stroke="#cfd7df"/>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" fill="#24313f">
+    <text x="38" y="88" font-size="13" font-weight="700">1) Comparar magnitudes</text>
+    <text x="38" y="109" font-size="12">FE / RE / CRE</text>
+    <text x="38" y="127" font-size="12">Foco: grant y grant_1</text>
+    <text x="38" y="145" font-size="12" fill="#4e5f6f">Patrón estable en signo</text>
+    <text x="38" y="163" font-size="12" fill="#4e5f6f">y orden de magnitud</text>
+
+    <text x="298" y="88" font-size="13" font-weight="700">2) Contrastar supuestos</text>
+    <text x="298" y="109" font-size="12">Hausman p=0.2425</text>
+    <text x="298" y="127" font-size="12">Mundlak clásico p=0.3591</text>
+    <text x="298" y="145" font-size="12">Mundlak robusto p=0.3965</text>
+    <text x="298" y="163" font-size="12" fill="#4e5f6f">No evidencia fuerte contra RE</text>
+
+    <text x="558" y="88" font-size="13" font-weight="700">3) Decisión operativa</text>
+    <text x="558" y="109" font-size="12">RE + cluster como marco</text>
+    <text x="558" y="127" font-size="12">de reporte en T9</text>
+    <text x="558" y="145" font-size="12" fill="#4e5f6f">Decisión por evidencia combinada,</text>
+    <text x="558" y="163" font-size="12" fill="#4e5f6f">no por un test aislado</text>
+  </g>
+
+  <g stroke="#9aa8b5" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M258 147 L278 147"/>
+    <path d="M272 143 L278 147 L272 151"/>
+    <path d="M518 147 L538 147"/>
+    <path d="M532 143 L538 147 L532 151"/>
+  </g>
+</svg>
