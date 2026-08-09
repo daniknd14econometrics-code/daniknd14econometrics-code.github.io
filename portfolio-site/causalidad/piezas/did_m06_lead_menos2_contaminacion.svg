@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">El lead menos dos recibe pesos de efectos pos-tratamiento</title>
+  <desc id="desc">El coeficiente lead menos dos conecta con celdas de las cohortes 8, 9 y 10 en los tiempos relativos cero y uno. Los pesos tienen signos positivos y negativos y generan una contribución pos-tratamiento neta de menos 116 dólares en ingresos.</desc>
+  <rect width="1200" height="650" fill="#ffffff"/>
+  <text x="600" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#15324a">El “lead −2” también utiliza efectos posteriores al tratamiento</text>
+  <text x="600" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Pesos pos-tratamiento del coeficiente TWFE de ingresos laborales</text>
+
+  <rect x="48" y="116" width="300" height="398" rx="16" fill="#eef5f8" stroke="#c8dae3"/>
+  <text x="198" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#526575">Coeficiente visible</text>
+  <text x="198" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="62" font-weight="700" fill="#15324a">μ<tspan baseline-shift="sub" font-size="32">−2</tspan></text>
+  <text x="198" y="312" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#314858">etiquetado como</text>
+  <text x="198" y="343" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#15324a">pretratamiento</text>
+  <text x="198" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#526575">Pero la etiqueta no determina</text>
+  <text x="198" y="434" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#526575">qué CATT recibe peso.</text>
+
+  <path d="M348 315 C410 315 420 240 476 240" fill="none" stroke="#91a1ad" stroke-width="3"/>
+  <path d="M348 315 C410 315 420 370 476 370" fill="none" stroke="#91a1ad" stroke-width="3"/>
+
+  <rect x="456" y="108" width="696" height="420" rx="16" fill="#f8fafc" stroke="#dce5eb"/>
+  <text x="804" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#15324a">Celdas pos-tratamiento que reciben peso</text>
+  <g font-family="Arial, sans-serif" font-size="17" fill="#314858" text-anchor="middle">
+    <text x="608" y="188">Cohorte 8</text><text x="804" y="188">Cohorte 9</text><text x="1000" y="188">Cohorte 10</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="17" fill="#526575" text-anchor="end">
+    <text x="540" y="255">Tiempo 0</text><text x="540" y="385">Tiempo 1</text>
+  </g>
+
+  <g stroke="#dce5eb" stroke-width="1">
+    <line x1="564" y1="212" x2="1080" y2="212"/><line x1="564" y1="330" x2="1080" y2="330"/><line x1="564" y1="448" x2="1080" y2="448"/>
+    <line x1="706" y1="170" x2="706" y2="448"/><line x1="902" y1="170" x2="902" y2="448"/>
+  </g>
+
+  <rect x="574" y="224" width="68" height="68" rx="12" fill="#277da1"/>
+  <text x="608" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">+0,062</text>
+  <text x="608" y="276" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">peso</text>
+
+  <rect x="770" y="224" width="68" height="68" rx="12" fill="#d95f76"/>
+  <text x="804" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">−0,075</text>
+  <text x="804" y="276" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">peso</text>
+
+  <rect x="966" y="232" width="68" height="52" rx="12" fill="#6aa6c2"/>
+  <text x="1000" y="254" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">+0,013</text>
+  <text x="1000" y="274" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#ffffff">peso</text>
+
+  <rect x="574" y="354" width="68" height="68" rx="12" fill="#277da1"/>
+  <text x="608" y="382" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">+0,060</text>
+  <text x="608" y="406" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">peso</text>
+
+  <rect x="770" y="354" width="68" height="68" rx="12" fill="#d95f76"/>
+  <text x="804" y="382" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">−0,060</text>
+  <text x="804" y="406" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">peso</text>
+
+  <text x="1000" y="392" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#91a1ad">sin celda estimable</text>
+
+  <rect x="84" y="552" width="1032" height="68" rx="12" fill="#fff5f6" stroke="#e7b9c3"/>
+  <text x="600" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#9f3049">Con CATT pretratamiento fijados en cero, estas celdas aportan ≈ −116 al lead −2</text>
+  <text x="600" y="606" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#526575">El coeficiente etiquetado como −2 no utiliza exclusivamente información del período −2.</text>
+</svg>

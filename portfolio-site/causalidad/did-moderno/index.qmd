@@ -70,4 +70,18 @@ Esta primera línea examina por qué una regresión TWFE puede perder una interp
 
 **Estado de evidencia:** Pieza técnica
 :::
+
+::: {.piece-card}
+### [Cuando los leads mezclan efectos pos-tratamiento: contaminación dinámica en event studies TWFE](../piezas/did_m06_event_study_contaminacion.qmd)
+
+¿Los coeficientes de un event study TWFE miden realmente el efecto causal de cada período relativo?
+
+**Método principal:** Pesos dinámicos e interaction-weighted de Sun–Abraham
+
+**Tipo de diseño:** Panel desbalanceado con cohortes de primera hospitalización
+
+**Enseñanza principal:** Leads y lags TWFE pueden mezclar cohortes y tiempos relativos; incluso un lead puede incorporar efectos pos-tratamiento
+
+**Estado de evidencia:** Pieza técnica
+:::
 :::

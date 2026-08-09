@@ -73,6 +73,10 @@ El subportal organiza la transición DiD canónico → problemas de TWFE bajo ad
 - DID-M05 continúa con `Cuando TWFE cambia el signo: pesos negativos y heterogeneidad en Difference-in-Differences`.
 - Su objeto central es la agregación de efectos grupo-período con pesos que pueden ser negativos y, bajo heterogeneidad, producir estimaciones fuera del rango de los efectos verdaderos.
 - La aplicación WAGEPAN debe mantener una lectura cauta: la masa negativa es pequeña, WAS reduce la estimación y el primer placebo limita una interpretación causal fuerte.
+- DID-M06 cierra la crisis moderna con `Cuando los leads mezclan efectos pos-tratamiento: contaminación dinámica en event studies TWFE`.
+- Su objeto central es mostrar que una etiqueta de tiempo relativo no define por sí sola el estimando: leads y lags TWFE pueden mezclar cohortes y otros momentos de exposición.
+- El contraste interaction-weighted se utiliza para precisar la propiedad que se desea recuperar, sin convertir la pieza en una revisión general de soluciones modernas.
+- Con DID-M04, DID-M05 y DID-M06, el bloque de crisis moderna queda conceptualmente completo; el bloque de soluciones modernas continúa pendiente.
 
 ## Econometría
 

@@ -8,10 +8,11 @@
 | 4 | DID-MOD | Crisis TWFE y estimadores modernos | Causalidad / DiD moderno | activo |
 | 5 | DID-M04 | Módulo 4 — Goodman-Bacon y descomposición TWFE | Causalidad / DiD moderno | cerrado / implementado |
 | 6 | DID-M05 | Módulo 5 — pesos negativos y heterogeneidad en TWFE | Causalidad / DiD moderno | cerrado / implementado |
-| 7 | DID-M06 | Módulo 6 — event studies TWFE y efectos dinámicos | Causalidad / DiD moderno | activo: diagnóstico/propuesta |
-| 8 | ECON-ADV | Talleres propios de econometría avanzada | Econometría | pendiente de desagregación |
-| 9 | RESEARCH-TIC | Proyecto TIC-productividad / shift-share | Investigación | pendiente |
+| 7 | DID-M06 | Módulo 6 — event studies TWFE y efectos dinámicos | Causalidad / DiD moderno | cerrado / implementado |
+| 8 | DID-M07 | Módulo 7 — primera solución moderna | Causalidad / DiD moderno | activo: diagnóstico/propuesta |
+| 9 | ECON-ADV | Talleres propios de econometría avanzada | Econometría | pendiente de desagregación |
+| 10 | RESEARCH-TIC | Proyecto TIC-productividad / shift-share | Investigación | pendiente |
 
-El bloque DID permanece activo. La próxima unidad corresponde a la crisis de TWFE y los estimadores modernos.
+El bloque `Crisis moderna de Difference-in-Differences` está completo. El bloque DID permanece activo con DID-M07, primera unidad de `Soluciones modernas`, en diagnóstico/propuesta.
 
 La navegación pública de Causalidad queda organizada en dos bloques: fundamentos y diseños de inferencia causal, y Difference-in-Differences moderno.
