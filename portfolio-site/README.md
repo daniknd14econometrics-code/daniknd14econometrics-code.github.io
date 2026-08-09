@@ -1,6 +1,6 @@
 ﻿# Portfolio Site (local)
 
-Este directorio contiene un sitio Quarto nuevo e independiente para portfolio profesional.
+Este directorio contiene el sitio Quarto público y la fuente canónica del portfolio profesional.
 
 ## Estructura creada
 
@@ -19,8 +19,8 @@ Este directorio contiene un sitio Quarto nuevo e independiente para portfolio pr
 ## Estado
 
 - Preparado para render local.
-- Sin deploy, sin publicación y sin configuración de GitHub Pages.
-- No se modificó contenido fuera de `portfolio-site/`.
+- Sin configuración de deploy o GitHub Pages en el repositorio.
+- La salida `_site/` es regenerable y no se versiona.
 
 ## Convenciones de nombres (futuro)
 
@@ -41,6 +41,4 @@ El contrato maestro sigue siendo `docs/qmd-curation-playbook.md`.
 - si hay conflicto entre rediseño global y pieza individual consolidada, priorizar la pieza.
 - cuando exista versión canónica/original consolidada, usarla como fuente de verdad ante regresiones visuales.
 
-## Próximo paso sugerido
-
-Revisar textos y metadatos de las 17 fichas, y luego decidir si los HTML curados se integran por enlace (actual) o por copia controlada de artefactos públicos al propio `portfolio-site/`.
+Las nuevas piezas públicas deben incorporarse directamente a esta estructura, sin crear portfolios paralelos.
