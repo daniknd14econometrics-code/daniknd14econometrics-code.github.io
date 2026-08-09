@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="720" viewBox="0 0 1320 720" role="img" aria-labelledby="title desc">
+  <title id="title">Del resultado no tratado aprendido a la brecha causal imputada</title>
+  <desc id="desc">Flujo de tres pasos que aprende el resultado potencial no tratado con observaciones sin tratamiento, lo imputa para observaciones tratadas y compara el resultado observado con el contrafactual en los horizontes cero y uno.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2f607d"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#16354a" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title{font:700 28px Arial,sans-serif;fill:#17384d}.sub{font:15px Arial,sans-serif;fill:#5b6b76}.stepTitle{font:700 17px Arial,sans-serif;fill:#17384d}.stepText{font:14px Arial,sans-serif;fill:#425d6d}.number{font:700 15px Arial,sans-serif;fill:#fff}.panelTitle{font:700 18px Arial,sans-serif;fill:#17384d}.label{font:14px Arial,sans-serif;fill:#354f5f}.value{font:700 15px Arial,sans-serif;fill:#17384d}.gap{font:700 15px Arial,sans-serif;fill:#a13f55}.note{font:13px Arial,sans-serif;fill:#617481}
+    </style>
+  </defs>
+  <rect width="1320" height="720" fill="#f7f9fa"/>
+  <text x="660" y="46" text-anchor="middle" class="title">Aprender Y(0) → imputar → medir la brecha tratada</text>
+  <text x="660" y="72" text-anchor="middle" class="sub">Las observaciones ya tratadas no intervienen en el ajuste del contrafactual no tratado</text>
+
+  <rect x="42" y="104" width="1236" height="166" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <circle cx="105" cy="166" r="25" fill="#2f607d"/><text x="105" y="171" text-anchor="middle" class="number">1</text>
+  <text x="148" y="151" class="stepTitle">Aprender Y(0)</text>
+  <text x="148" y="177" class="stepText">Estimar la trayectoria no tratada con condados nunca tratados</text>
+  <text x="148" y="199" class="stepText">y con unidades todavía no tratadas.</text>
+
+  <path d="M430 166 L505 166" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="556" cy="166" r="25" fill="#17839a"/><text x="556" y="171" text-anchor="middle" class="number">2</text>
+  <text x="599" y="151" class="stepTitle">Imputar Ŷ(0)</text>
+  <text x="599" y="177" class="stepText">Proyectar ese resultado potencial sobre cada observación</text>
+  <text x="599" y="199" class="stepText">tratada para la que el contrafactual es identificable.</text>
+
+  <path d="M880 166 L955 166" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="1006" cy="166" r="25" fill="#c4556c"/><text x="1006" y="171" text-anchor="middle" class="number">3</text>
+  <text x="1049" y="151" class="stepTitle">Medir la brecha</text>
+  <text x="1049" y="177" class="stepText">Comparar el resultado observado con Ŷ(0):</text>
+  <text x="1049" y="202" class="value">τ̂ᵢₜ = Yᵢₜ − Ŷᵢₜ(0)</text>
+
+  <rect x="42" y="298" width="597" height="332" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <text x="340" y="338" text-anchor="middle" class="panelTitle">Año de adopción · K = 0</text>
+  <text x="340" y="365" text-anchor="middle" class="sub">Promedios entre observaciones tratadas imputables</text>
+  <line x1="165" y1="426" x2="515" y2="426" stroke="#d8e2e7" stroke-width="4" stroke-linecap="round"/>
+  <line x1="340" y1="415" x2="340" y2="534" stroke="#c4556c" stroke-width="3" stroke-dasharray="7 5"/>
+  <circle cx="340" cy="414" r="11" fill="#f08a5d"/><text x="365" y="419" class="value">Ŷ(0) = 6,036</text>
+  <circle cx="340" cy="534" r="11" fill="#17839a"/><text x="365" y="539" class="value">Y observado = 6,004</text>
+  <path d="M309 425 L309 523" stroke="#a13f55" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="289" y="478" text-anchor="end" class="gap">brecha −0,031</text>
+  <text x="340" y="592" text-anchor="middle" class="note">El resultado observado queda por debajo del contrafactual imputado.</text>
+
+  <rect x="681" y="298" width="597" height="332" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <text x="979" y="338" text-anchor="middle" class="panelTitle">Un año después · K = 1</text>
+  <text x="979" y="365" text-anchor="middle" class="sub">La misma operación produce un efecto dinámico distinto</text>
+  <line x1="804" y1="426" x2="1154" y2="426" stroke="#d8e2e7" stroke-width="4" stroke-linecap="round"/>
+  <line x1="979" y1="402" x2="979" y2="548" stroke="#c4556c" stroke-width="3" stroke-dasharray="7 5"/>
+  <circle cx="979" cy="402" r="11" fill="#f08a5d"/><text x="1004" y="407" class="value">Ŷ(0) = 6,434</text>
+  <circle cx="979" cy="548" r="11" fill="#17839a"/><text x="1004" y="553" class="value">Y observado = 6,382</text>
+  <path d="M948 413 L948 537" stroke="#a13f55" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="928" y="482" text-anchor="end" class="gap">brecha −0,052</text>
+  <text x="979" y="592" text-anchor="middle" class="note">La brecha aumenta en magnitud en el primer año posterior.</text>
+
+  <rect x="42" y="654" width="1236" height="42" rx="10" fill="#17384d"/>
+  <text x="660" y="680" text-anchor="middle" style="font:700 15px Arial,sans-serif;fill:#fff">Primero se construye el contrafactual; la regla de agregación se elige después</text>
+</svg>

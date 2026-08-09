@@ -106,4 +106,18 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 
 **Estado de evidencia:** Pieza técnica aplicada
 :::
+
+::: {.piece-card}
+### [Imputar el contrafactual: Borusyak–Jaravel–Spiess en Difference-in-Differences](../piezas/did_m08_bjs_imputacion.qmd)
+
+¿Cómo estimar efectos dinámicos bajo adopción escalonada sin utilizar resultados ya tratados para construir el contrafactual?
+
+**Método principal:** Imputación del resultado potencial no tratado con Borusyak–Jaravel–Spiess
+
+**Tipo de diseño:** Panel con adopción escalonada, nunca tratados y unidades todavía no tratadas
+
+**Enseñanza principal:** El contrafactual se aprende únicamente con observaciones sin tratamiento; las brechas tratadas se agregan después según la pregunta causal
+
+**Estado de evidencia:** Pieza técnica aplicada
+:::
 :::

@@ -84,6 +84,10 @@ El subportal organiza la transición DiD canónico → problemas de TWFE bajo ad
 - Su objeto central es `ATT(g,t)`: identificar efectos por cohorte y período mediante controles válidos y agregarlos después con ponderaciones explícitas.
 - La especificación principal utiliza DR-IPW y condados nunca tratados; las unidades todavía no tratadas funcionan como sensibilidad.
 - Los promedios global simple y por cohorte se presentan como estimandos legítimos diferentes, no como una competencia con ganador automático.
+- DID-M08 continúa con `Imputar el contrafactual: Borusyak–Jaravel–Spiess en Difference-in-Differences`.
+- Su objeto central es la brecha tratada imputable: estimar `Y(0)` exclusivamente con observaciones no tratadas, imputarlo para las tratadas y agregar después los efectos según la pregunta causal.
+- La pieza distingue imputabilidad de información efectiva; los horizontes `K=2` y `K=3` no se publican como resultados inferenciales ni se representan como efectos cero.
+- Los visuales públicos muestran el flujo observado–contrafactual–brecha y un event study compacto con dos períodos previos, `K=0` y `K=1`.
 
 ## Econometría
 
