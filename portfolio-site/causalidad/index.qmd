@@ -24,10 +24,10 @@ La sección organiza piezas de inferencia causal observacional con criterios de 
 :::
 :::
 
-## Índice de piezas aplicadas
+## Fundamentos y diseños de inferencia causal
 
 ::: {.section-lead}
-Piezas publicadas y curadas bajo un formato común para navegar diseño, método y alcance empírico.
+Fundamentos conceptuales, diseños de identificación y estrategias de inferencia para construir comparaciones causales creíbles.
 :::
 
 ::: {.piece-grid}
@@ -96,5 +96,21 @@ Tratamientos placebo para mostrar cómo la persistencia temporal puede producir 
 **Método principal:** Monte Carlo empírico e inferencia agrupada en DiD
 
 **Tipo de datos:** Panel estado-año con tratamientos placebo
+:::
+:::
+
+## Difference-in-Differences moderno
+
+::: {.section-lead}
+De la crisis de las regresiones con efectos fijos bidireccionales a los diagnósticos y estimadores modernos para diseños con adopción escalonada, heterogeneidad de efectos y dinámica del tratamiento.
+:::
+
+::: {.portal-grid}
+::: {.portal-card}
+### [Difference-in-Differences moderno](did-moderno/index.qmd)
+
+Una línea de profundización que conecta el diseño canónico con los problemas de TWFE y las herramientas desarrolladas para diseños con múltiples cohortes y períodos.
+
+[Explorar Difference-in-Differences moderno →](did-moderno/index.qmd){.cta-link}
 :::
 :::

@@ -10,3 +10,5 @@
 | 6 | RESEARCH-TIC | Proyecto TIC-productividad / shift-share | Investigación | pendiente |
 
 El bloque DID permanece activo. La próxima unidad corresponde a la crisis de TWFE y los estimadores modernos.
+
+La navegación pública de Causalidad queda organizada en dos bloques: fundamentos y diseños de inferencia causal, y Difference-in-Differences moderno.

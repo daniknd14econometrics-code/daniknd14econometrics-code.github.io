@@ -46,7 +46,7 @@ Incluye:
 - Aplicación principal: Nueva Jersey / Pensilvania, con DiD 2×2 sobre empleo FTE.
 - Extensión metodológica: NSW, tendencias paralelas condicionales, ponderación de Abadie y soporte común.
 - La progresión del bloque será: DiD canónico → comparabilidad condicional → inferencia clásica / BDM → crisis moderna de TWFE → soluciones modernas.
-- Estado de la primera pieza: cerrada e implementada. BDM01 queda activa como siguiente pieza autónoma del bloque clásico.
+- Estado: DID01 y BDM01 cerradas e implementadas; la expansión continúa en el bloque DiD moderno.
 
 #### BDM01
 
@@ -59,9 +59,9 @@ Incluye:
 
 ### Difference-in-Differences moderno
 
-Debe tener un subportal propio dentro de Causalidad.
+El portal de Causalidad se organiza en dos bloques: `Fundamentos y diseños de inferencia causal`, que conserva las ocho piezas publicadas, y `Difference-in-Differences moderno`, con subportal propio.
 
-Debe poder organizar la transición: DiD clásico → problemas del TWFE → crisis moderna → diagnósticos → soluciones/estimadores modernos.
+El subportal organiza la transición DiD canónico → problemas de TWFE bajo adopción escalonada y heterogeneidad → diagnósticos → estimadores modernos, sin anticipar piezas todavía no curadas.
 
 ## Econometría
 

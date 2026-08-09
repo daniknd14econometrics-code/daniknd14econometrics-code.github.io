@@ -1,0 +1,43 @@
+---
+title: "Difference-in-Differences moderno"
+format:
+  html:
+    title-block-style: none
+---
+
+::: {.hero-banner .hero-banner--causalidad}
+::: {.hero-banner__content}
+<span class="hero-banner__kicker">Causalidad · Línea de profundización</span>
+
+# Difference-in-Differences moderno
+
+::: {.hero-banner__lead}
+Este espacio organiza la transición desde el diseño canónico hacia los problemas que aparecen cuando la adopción ocurre en momentos distintos y los efectos varían entre grupos y períodos.
+:::
+
+::: {.hero-banner__actions}
+<a class="button-primary" href="../index.qmd">Volver a Causalidad</a>
+:::
+:::
+
+::: {.hero-banner__media}
+:::
+:::
+
+## Del diseño canónico a las herramientas modernas
+
+::: {.section-lead}
+El DiD canónico ofrece un punto de partida transparente. La extensión a múltiples cohortes y períodos exige examinar qué compara una regresión TWFE, cómo inciden la adopción escalonada y la heterogeneidad de efectos, y qué diagnósticos y estimadores permiten recuperar parámetros causales bien definidos.
+:::
+
+::: {.section-status}
+**Ruta conceptual del bloque**
+
+DiD canónico → problemas de TWFE bajo adopción escalonada y heterogeneidad → diagnósticos → estimadores modernos.
+:::
+
+## Próximas piezas
+
+::: {.section-lead}
+Las piezas se incorporarán aquí a medida que cada unidad quede reproducida, curada y validada. El subportal prepara la secuencia conceptual sin anticipar un catálogo cerrado.
+:::
