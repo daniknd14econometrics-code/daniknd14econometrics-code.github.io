@@ -36,8 +36,24 @@ El DiD canónico ofrece un punto de partida transparente. La extensión a múlti
 DiD canónico → problemas de TWFE bajo adopción escalonada y heterogeneidad → diagnósticos → estimadores modernos.
 :::
 
-## Próximas piezas
+## Crisis moderna de Difference-in-Differences
 
 ::: {.section-lead}
-Las piezas se incorporarán aquí a medida que cada unidad quede reproducida, curada y validada. El subportal prepara la secuencia conceptual sin anticipar un catálogo cerrado.
+Esta primera línea examina por qué una regresión TWFE puede perder una interpretación causal transparente cuando las cohortes adoptan en momentos distintos y los efectos varían con el tiempo o la exposición.
+:::
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Cuando los tratados se vuelven controles: adopción escalonada y la descomposición de TWFE](../piezas/did_m04_twfe_goodman_bacon.qmd)
+
+¿Qué comparaciones construyen el coeficiente cuando distintas cohortes adoptan el tratamiento en años diferentes?
+
+**Método principal:** Descomposición de Goodman–Bacon y simulación pedagógica
+
+**Tipo de diseño:** Panel con adopción escalonada y múltiples cohortes
+
+**Enseñanza principal:** TWFE puede usar cohortes ya tratadas como controles y mezclar comparaciones con distinto contenido causal
+
+**Estado de evidencia:** Pieza técnica
+:::
 :::

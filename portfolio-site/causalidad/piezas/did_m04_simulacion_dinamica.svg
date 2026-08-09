@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Efectos dinámicos y contaminación de una comparación DiD</title>
+  <desc id="desc">Los efectos verdaderos de ambas cohortes crecen con la exposición y nunca son negativos. Sin embargo, el estimador que compara la cohorte tardía contra la temprana ya tratada es menos 0,80.</desc>
+  <rect width="1200" height="640" fill="#ffffff"/>
+  <text x="600" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#15324a">Un control ya tratado puede invertir una comparación elemental</text>
+  <text x="600" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Simulación documentada: los efectos verdaderos crecen con la exposición y nunca son negativos</text>
+
+  <rect x="42" y="100" width="520" height="430" rx="14" fill="#f8fafc" stroke="#dce5eb"/>
+  <rect x="584" y="100" width="574" height="430" rx="14" fill="#f8fafc" stroke="#dce5eb"/>
+  <text x="302" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#15324a">Efecto causal verdadero</text>
+  <text x="871" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#15324a">Estimadores DiD 2×2 con efectos dinámicos</text>
+
+  <g stroke="#dce5eb" stroke-width="1">
+    <line x1="105" y1="410" x2="535" y2="410"/><line x1="105" y1="324" x2="535" y2="324"/>
+    <line x1="105" y1="238" x2="535" y2="238"/><line x1="105" y1="152" x2="535" y2="152"/>
+  </g>
+  <line x1="105" y1="145" x2="105" y2="410" stroke="#8293a1" stroke-width="2"/>
+  <line x1="105" y1="410" x2="535" y2="410" stroke="#8293a1" stroke-width="2"/>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#526575" text-anchor="end">
+    <text x="94" y="416">0</text><text x="94" y="330">1,6</text><text x="94" y="244">3,2</text><text x="94" y="158">4,8</text>
+  </g>
+  <g stroke="#91a1ad" stroke-width="2" stroke-dasharray="6 6">
+    <line x1="274" y1="145" x2="274" y2="410"/><line x1="403" y1="145" x2="403" y2="410"/>
+  </g>
+  <text x="274" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#526575">adopta temprana</text>
+  <text x="403" y="458" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#526575">adopta tardía</text>
+  <path d="M145 410 L188 410 L231 410 L274 367 L317 324 L360 281 L403 238 L446 195 L489 152 L532 109" fill="none" stroke="#277da1" stroke-width="6"/>
+  <path d="M145 410 L188 410 L231 410 L274 410 L317 410 L360 410 L403 367 L446 324 L489 281 L532 238" fill="none" stroke="#d95f76" stroke-width="6" stroke-dasharray="12 8"/>
+  <g font-family="Arial, sans-serif" font-size="16" fill="#314858">
+    <line x1="145" y1="490" x2="180" y2="490" stroke="#277da1" stroke-width="5"/><text x="190" y="496">Cohorte temprana</text>
+    <line x1="342" y1="490" x2="377" y2="490" stroke="#d95f76" stroke-width="5" stroke-dasharray="9 6"/><text x="387" y="496">Cohorte tardía</text>
+  </g>
+
+  <g stroke="#dce5eb" stroke-width="1">
+    <line x1="630" y1="410" x2="1120" y2="410"/><line x1="630" y1="350" x2="1120" y2="350"/>
+    <line x1="630" y1="290" x2="1120" y2="290"/><line x1="630" y1="230" x2="1120" y2="230"/>
+  </g>
+  <line x1="630" y1="170" x2="630" y2="470" stroke="#8293a1" stroke-width="2"/>
+  <line x1="630" y1="410" x2="1120" y2="410" stroke="#8293a1" stroke-width="2"/>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#526575" text-anchor="end">
+    <text x="620" y="476">−1</text><text x="620" y="416">0</text><text x="620" y="356">1</text><text x="620" y="296">2</text><text x="620" y="236">3</text>
+  </g>
+  <g fill="#277da1">
+    <rect x="675" y="218" width="76" height="192" rx="4"/><rect x="795" y="290" width="76" height="120" rx="4"/><rect x="915" y="314" width="76" height="96" rx="4"/>
+  </g>
+  <rect x="1035" y="410" width="76" height="48" rx="4" fill="#d95f76"/>
+  <g font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">
+    <text x="713" y="205" fill="#15324a">3,20</text><text x="833" y="277" fill="#15324a">2,00</text>
+    <text x="953" y="301" fill="#15324a">1,60</text><text x="1073" y="484" fill="#9f3049">−0,80</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#314858" text-anchor="middle">
+    <text x="713" y="500"><tspan x="713">Temprana</tspan><tspan x="713" dy="18">vs. nunca</tspan></text>
+    <text x="833" y="500"><tspan x="833">Tardía</tspan><tspan x="833" dy="18">vs. nunca</tspan></text>
+    <text x="953" y="500"><tspan x="953">Temprana vs.</tspan><tspan x="953" dy="18">tardía no tratada</tspan></text>
+    <text x="1073" y="500"><tspan x="1073">Tardía vs.</tspan><tspan x="1073" dy="18">temprana tratada</tspan></text>
+  </g>
+
+  <rect x="80" y="558" width="1040" height="54" rx="12" fill="#eef5f8" stroke="#c8dae3"/>
+  <text x="600" y="581" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#15324a">Con efecto homogéneo = 2: todos los DiD 2×2 = 2 y TWFE = 2</text>
+  <text x="600" y="603" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#526575">Con efectos dinámicos: TWFE = 1,8182 y la comparación con el control ya tratado cambia de signo.</text>
+</svg>

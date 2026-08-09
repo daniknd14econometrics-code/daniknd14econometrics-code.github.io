@@ -63,6 +63,14 @@ El portal de Causalidad se organiza en dos bloques: `Fundamentos y diseños de i
 
 El subportal organiza la transición DiD canónico → problemas de TWFE bajo adopción escalonada y heterogeneidad → diagnósticos → estimadores modernos, sin anticipar piezas todavía no curadas.
 
+#### Crisis moderna de Difference-in-Differences
+
+- Los Módulos 4, 5 y 6 tendrán piezas públicas autónomas dentro de este bloque.
+- DID-M04 abre la secuencia con `Cuando los tratados se vuelven controles: adopción escalonada y la descomposición de TWFE`.
+- Su objeto central es mostrar que TWFE combina múltiples DiD 2×2 y puede utilizar cohortes ya tratadas como controles bajo adopción escalonada.
+- La descomposición de Goodman–Bacon funciona como diagnóstico del coeficiente; no se presenta como estimador alternativo ni como solución a la heterogeneidad dinámica.
+- La distinción con BDM01 es sustantiva: clustering trata la inferencia, pero no corrige comparaciones causales contaminadas.
+
 ## Econometría
 
 Organización conceptual objetivo:
