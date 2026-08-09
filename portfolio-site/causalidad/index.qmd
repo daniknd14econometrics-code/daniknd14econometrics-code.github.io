@@ -24,93 +24,26 @@ La sección organiza piezas de inferencia causal observacional con criterios de 
 :::
 :::
 
-## Fundamentos y diseños de inferencia causal
+## Líneas de trabajo
 
 ::: {.section-lead}
-Fundamentos conceptuales, diseños de identificación y estrategias de inferencia para construir comparaciones causales creíbles.
-:::
-
-::: {.piece-grid}
-::: {.piece-card}
-### [Por qué una diferencia de medias no equivale a efecto causal](piezas/c01_diferencia-medias-no-causal.qmd)
-Diferencias observadas no identifican causalidad sin una estrategia válida de comparación.
-
-**Método principal:** Diagnóstico de sesgo de selección y comparación naive  
-**Tipo de datos:** Microdatos observacionales  
-:::
-
-::: {.piece-card}
-### [Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito](piezas/c02_matching-exacto-microcredito.qmd)
-Construcción del grupo de comparación con matching exacto y verificación de balance.
-
-**Método principal:** Matching exacto y chequeo de balance  
-**Tipo de datos:** Microdatos de hogares  
-:::
-
-::: {.piece-card}
-### [Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad](piezas/c04_psm_microcredito.qmd)
-Estimación de efectos con ponderación por puntaje de propensión bajo soporte común.
-
-**Método principal:** Propensity Score Matching (PSM)  
-**Tipo de datos:** Microdatos de hogares  
-:::
-
-::: {.piece-card}
-### [Innovación de producto/proceso y mejora ambiental en firmas innovadoras](piezas/c06_ipwra_innovacion_ambiental.qmd)
-Efecto de innovación sobre desempeño ambiental combinando modelos de resultado y tratamiento.
-
-**Método principal:** IPWRA (ponderación inversa + regresión ajustada)  
-**Tipo de datos:** Panel/corte de firmas innovadoras  
-:::
-
-::: {.piece-card}
-### [Retorno de la educación con variable instrumental](piezas/c08_vi_retorno_educacion.qmd)
-Aplicación de variables instrumentales para corregir endogeneidad en el retorno educativo.
-
-**Método principal:** Variables instrumentales (2SLS)  
-**Tipo de datos:** Microdatos laborales  
-:::
-
-::: {.piece-card}
-### [Elecciones reñidas y escolarización femenina: evidencia local con RDD](piezas/rdd01_elecciones_escolarizacion.qmd)
-Efecto local del control municipal islámico en elecciones decididas alrededor del umbral de victoria.
-
-**Método principal:** Regresión discontinua sharp con inferencia robusta
-
-**Tipo de datos:** Corte transversal de municipios
-:::
-
-::: {.piece-card}
-### [Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional](piezas/did01_did_clasico.qmd)
-Comparación de cambios bajo tendencias paralelas y extensión condicional mediante ponderación de Abadie.
-
-**Método principal:** Difference-in-Differences 2×2 y DiD condicional
-
-**Tipo de datos:** Panel de dos períodos y resultados repetidos
-:::
-
-::: {.piece-card}
-### [Cuando DiD encuentra efectos que no existen: correlación serial e inferencia](piezas/bdm01_inferencia_did.qmd)
-Tratamientos placebo para mostrar cómo la persistencia temporal puede producir falsos positivos.
-
-**Método principal:** Monte Carlo empírico e inferencia agrupada en DiD
-
-**Tipo de datos:** Panel estado-año con tratamientos placebo
-:::
-:::
-
-## Difference-in-Differences moderno
-
-::: {.section-lead}
-De la crisis de las regresiones con efectos fijos bidireccionales a los diagnósticos y estimadores modernos para diseños con adopción escalonada, heterogeneidad de efectos y dinámica del tratamiento.
+Dos recorridos complementarios para avanzar desde los fundamentos de identificación hasta los desarrollos contemporáneos de Difference-in-Differences.
 :::
 
 ::: {.portal-grid}
 ::: {.portal-card}
+### [Fundamentos y diseños de inferencia causal](fundamentos/index.qmd)
+
+Diseños y herramientas para construir comparaciones causales creíbles: selección en observables, variables instrumentales, RDD, Difference-in-Differences canónico e inferencia.
+
+[Explorar fundamentos →](fundamentos/index.qmd){.cta-link}
+:::
+
+::: {.portal-card}
 ### [Difference-in-Differences moderno](did-moderno/index.qmd)
 
-Una línea de profundización que conecta el diseño canónico con los problemas de TWFE y las herramientas desarrolladas para diseños con múltiples cohortes y períodos.
+De los problemas del TWFE bajo adopción escalonada y heterogeneidad de efectos a los diagnósticos y estimadores contemporáneos.
 
-[Explorar Difference-in-Differences moderno →](did-moderno/index.qmd){.cta-link}
+[Explorar DiD moderno →](did-moderno/index.qmd){.cta-link}
 :::
 :::
