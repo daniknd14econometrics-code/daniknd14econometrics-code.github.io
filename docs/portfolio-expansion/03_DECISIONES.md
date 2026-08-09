@@ -48,6 +48,15 @@ Incluye:
 - La progresión del bloque será: DiD canónico → comparabilidad condicional → inferencia clásica / BDM → crisis moderna de TWFE → soluciones modernas.
 - Estado de la primera pieza: cerrada e implementada. BDM01 queda activa como siguiente pieza autónoma del bloque clásico.
 
+#### BDM01
+
+- Pieza autónoma: `Cuando DiD encuentra efectos que no existen: correlación serial e inferencia`.
+- Objeto central: calibración de la inferencia bajo tratamientos placebo persistentes y correlación serial del outcome.
+- Comparación dominante: 44% de rechazo con OLS convencional frente a un nivel nominal de 5%; no establecer rankings finos entre tasas cercanas al nominal con solo 100 repeticiones.
+- Visuales públicos: persistencia residual en los primeros tres rezagos y tasas de rechazo bajo el nulo por método.
+- Distinción metodológica obligatoria: BDM trata un problema de inferencia; la crisis moderna de TWFE agrega problemas de identificación e interpretación bajo adopción escalonada y heterogeneidad.
+- Estado: cerrada e implementada.
+
 ### Difference-in-Differences moderno
 
 Debe tener un subportal propio dentro de Causalidad.

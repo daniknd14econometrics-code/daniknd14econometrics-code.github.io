@@ -88,4 +88,13 @@ Comparación de cambios bajo tendencias paralelas y extensión condicional media
 
 **Tipo de datos:** Panel de dos períodos y resultados repetidos
 :::
+
+::: {.piece-card}
+### [Cuando DiD encuentra efectos que no existen: correlación serial e inferencia](piezas/bdm01_inferencia_did.qmd)
+Tratamientos placebo para mostrar cómo la persistencia temporal puede producir falsos positivos.
+
+**Método principal:** Monte Carlo empírico e inferencia agrupada en DiD
+
+**Tipo de datos:** Panel estado-año con tratamientos placebo
+:::
 :::
