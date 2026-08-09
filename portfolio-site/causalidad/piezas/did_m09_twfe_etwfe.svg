@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="720" viewBox="0 0 1320 720" role="img" aria-labelledby="title desc">
+  <title id="title">Del efecto común de TWFE a los efectos por cohorte y período de ETWFE</title>
+  <desc id="desc">Contraste entre una regresión TWFE restrictiva que impone un beta común y ETWFE, que representa una matriz de efectos por cohorte y período y los agrega después de forma explícita.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#2f607d"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#16354a" flood-opacity="0.12"/></filter>
+    <style>
+      .title{font:700 28px Arial,sans-serif;fill:#17384d}.sub{font:15px Arial,sans-serif;fill:#5b6b76}.panel{font:700 21px Arial,sans-serif;fill:#17384d}.head{font:700 14px Arial,sans-serif;fill:#274b61}.text{font:14px Arial,sans-serif;fill:#425d6d}.cell{font:700 13px Arial,sans-serif;fill:#fff}.chip{font:700 13px Arial,sans-serif;fill:#17384d}.note{font:13px Arial,sans-serif;fill:#617481}.beta{font:700 24px Arial,sans-serif;fill:#fff}
+    </style>
+  </defs>
+  <rect width="1320" height="720" fill="#f7f9fa"/>
+  <text x="660" y="46" text-anchor="middle" class="title">La regresión cambia cuando cambia el objeto causal</text>
+  <text x="660" y="73" text-anchor="middle" class="sub">ETWFE no rehabilita el modelo restrictivo: reemplaza el efecto común por una estructura cohorte × período</text>
+
+  <rect x="42" y="108" width="420" height="500" rx="18" fill="#fff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <text x="252" y="148" text-anchor="middle" class="panel">TWFE restrictivo</text>
+  <text x="252" y="176" text-anchor="middle" class="sub">Un único efecto para todas las celdas tratadas</text>
+  <g>
+    <rect x="92" y="222" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="184" y="222" width="82" height="58" rx="9" fill="#c4556c"/><rect x="276" y="222" width="82" height="58" rx="9" fill="#c4556c"/>
+    <rect x="92" y="290" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="184" y="290" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="276" y="290" width="82" height="58" rx="9" fill="#c4556c"/>
+    <rect x="92" y="358" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="184" y="358" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="276" y="358" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/>
+    <text x="225" y="260" text-anchor="middle" class="cell">β</text><text x="317" y="260" text-anchor="middle" class="cell">β</text><text x="317" y="328" text-anchor="middle" class="cell">β</text>
+  </g>
+  <circle cx="252" cy="480" r="48" fill="#a13f55"/><text x="252" y="489" text-anchor="middle" class="beta">β común</text>
+  <text x="252" y="552" text-anchor="middle" class="text">Heterogeneidad y agregación quedan</text>
+  <text x="252" y="574" text-anchor="middle" class="text">impuestas dentro de una sola ecuación.</text>
+
+  <path d="M477 356 L535 356" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="548" y="108" width="730" height="500" rx="18" fill="#fff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <text x="913" y="148" text-anchor="middle" class="panel">ETWFE · regresión flexible</text>
+  <text x="913" y="176" text-anchor="middle" class="sub">Primero estima ATT(g,t); después decide cómo resumirlos</text>
+
+  <text x="600" y="220" class="head">Cohorte</text><text x="708" y="220" text-anchor="middle" class="head">t₁</text><text x="800" y="220" text-anchor="middle" class="head">t₂</text><text x="892" y="220" text-anchor="middle" class="head">t₃</text>
+  <text x="600" y="263" class="head">g₁</text><text x="600" y="331" class="head">g₂</text><text x="600" y="399" class="head">g₃</text>
+  <rect x="667" y="232" width="82" height="58" rx="9" fill="#17839a"/><rect x="759" y="232" width="82" height="58" rx="9" fill="#2d7892"/><rect x="851" y="232" width="82" height="58" rx="9" fill="#3b6d87"/>
+  <rect x="667" y="300" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="759" y="300" width="82" height="58" rx="9" fill="#17839a"/><rect x="851" y="300" width="82" height="58" rx="9" fill="#2d7892"/>
+  <rect x="667" y="368" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="759" y="368" width="82" height="58" rx="9" fill="#eef2f4" stroke="#cbd5da"/><rect x="851" y="368" width="82" height="58" rx="9" fill="#17839a"/>
+  <text x="708" y="266" text-anchor="middle" class="cell">τ(g₁,t₁)</text><text x="800" y="266" text-anchor="middle" class="cell">τ(g₁,t₂)</text><text x="892" y="266" text-anchor="middle" class="cell">τ(g₁,t₃)</text>
+  <text x="800" y="334" text-anchor="middle" class="cell">τ(g₂,t₂)</text><text x="892" y="334" text-anchor="middle" class="cell">τ(g₂,t₃)</text><text x="892" y="402" text-anchor="middle" class="cell">τ(g₃,t₃)</text>
+
+  <path d="M954 328 L1010 328" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1116" y="224" text-anchor="middle" class="head">Agregación explícita</text>
+  <rect x="1030" y="245" width="172" height="42" rx="10" fill="#edf7f8" stroke="#a7d1d8"/><text x="1116" y="271" text-anchor="middle" class="chip">ATT global</text>
+  <rect x="1030" y="299" width="172" height="42" rx="10" fill="#edf7f8" stroke="#a7d1d8"/><text x="1116" y="325" text-anchor="middle" class="chip">Por cohorte</text>
+  <rect x="1030" y="353" width="172" height="42" rx="10" fill="#edf7f8" stroke="#a7d1d8"/><text x="1116" y="379" text-anchor="middle" class="chip">Por calendario</text>
+  <rect x="1030" y="407" width="172" height="42" rx="10" fill="#edf7f8" stroke="#a7d1d8"/><text x="1116" y="433" text-anchor="middle" class="chip">Tiempo relativo</text>
+
+  <rect x="596" y="474" width="630" height="88" rx="12" fill="#f1f6f8" stroke="#c7d7df"/>
+  <text x="911" y="505" text-anchor="middle" class="head">Mismo lenguaje regresivo, otra arquitectura causal</text>
+  <text x="911" y="531" text-anchor="middle" class="text">Las interacciones cohorte × período preservan la heterogeneidad;</text>
+  <text x="911" y="552" text-anchor="middle" class="text">los pesos del resumen final dejan de quedar ocultos.</text>
+
+  <rect x="42" y="640" width="1236" height="46" rx="10" fill="#17384d"/>
+  <text x="660" y="669" text-anchor="middle" style="font:700 15px Arial,sans-serif;fill:#fff">ATT(g,t) → regresión flexible cohorte × período → agregación transparente</text>
+</svg>

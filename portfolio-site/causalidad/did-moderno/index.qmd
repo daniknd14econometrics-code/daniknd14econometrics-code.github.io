@@ -120,4 +120,18 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 
 **Estado de evidencia:** Pieza técnica aplicada
 :::
+
+::: {.piece-card}
+### [Cuando la regresión respeta la heterogeneidad: Wooldridge y ETWFE en Difference-in-Differences](../piezas/did_m09_wooldridge_etwfe.qmd)
+
+¿Cómo recuperar efectos por cohorte y período mediante una regresión sin volver a las restricciones del TWFE convencional?
+
+**Método principal:** ETWFE con interacciones flexibles de cohorte y período
+
+**Tipo de diseño:** Panel con adopción escalonada, controles nunca y todavía no tratados y covariables predeterminadas
+
+**Enseñanza principal:** La regresión puede recuperar `ATT(g,t)` modernos cuando la especificación admite la heterogeneidad relevante y la agregación se hace explícita
+
+**Estado de evidencia:** Pieza técnica aplicada con evidencia condicionada
+:::
 :::

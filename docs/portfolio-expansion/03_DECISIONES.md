@@ -88,6 +88,10 @@ El subportal organiza la transición DiD canónico → problemas de TWFE bajo ad
 - Su objeto central es la brecha tratada imputable: estimar `Y(0)` exclusivamente con observaciones no tratadas, imputarlo para las tratadas y agregar después los efectos según la pregunta causal.
 - La pieza distingue imputabilidad de información efectiva; los horizontes `K=2` y `K=3` no se publican como resultados inferenciales ni se representan como efectos cero.
 - Los visuales públicos muestran el flujo observado–contrafactual–brecha y un event study compacto con dos períodos previos, `K=0` y `K=1`.
+- DID-M09 continúa con `Cuando la regresión respeta la heterogeneidad: Wooldridge y ETWFE en Difference-in-Differences`.
+- Su objeto central es mostrar que una regresión flexible puede recuperar `ATT(g,t)` al admitir heterogeneidad por cohorte y período; la equivalencia con TWM es secundaria y no rehabilita el TWFE restrictivo.
+- La aplicación Walmart presenta como estimación central `0,0898`, pero la interpreta de forma condicionada: los pretrends se rechazan y la inclusión de tendencias por cohorte reduce el agregado a `0,0352`.
+- Los visuales públicos comparan la restricción común de TWFE con la matriz flexible de ETWFE y muestran un event study compacto construido coherentemente con el grupo nunca tratado.
 
 ## Econometría
 
