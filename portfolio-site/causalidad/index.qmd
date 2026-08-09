@@ -70,4 +70,13 @@ Aplicación de variables instrumentales para corregir endogeneidad en el retorno
 **Método principal:** Variables instrumentales (2SLS)  
 **Tipo de datos:** Microdatos laborales  
 :::
+
+::: {.piece-card}
+### [Elecciones reñidas y escolarización femenina: evidencia local con RDD](piezas/rdd01_elecciones_escolarizacion.qmd)
+Efecto local del control municipal islámico en elecciones decididas alrededor del umbral de victoria.
+
+**Método principal:** Regresión discontinua sharp con inferencia robusta
+
+**Tipo de datos:** Corte transversal de municipios
+:::
 :::
