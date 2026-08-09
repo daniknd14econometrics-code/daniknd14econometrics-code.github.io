@@ -85,3 +85,25 @@ Esta primera línea examina por qué una regresión TWFE puede perder una interp
 **Estado de evidencia:** Pieza técnica
 :::
 :::
+
+## Soluciones modernas
+
+::: {.section-lead}
+Esta segunda línea parte de efectos causales definidos por cohorte y período, selecciona grupos de comparación todavía válidos y hace explícitas las decisiones de agregación.
+:::
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Efectos por cohorte y período: Callaway–Sant’Anna para adopción escalonada](../piezas/did_m07_callaway_santanna.qmd)
+
+¿Cómo recuperar efectos causales interpretables cuando distintas cohortes adoptan el tratamiento en momentos diferentes?
+
+**Método principal:** ATT por cohorte y período con estimación doblemente robusta
+
+**Tipo de diseño:** Panel con adopción escalonada, nunca tratados y controles todavía no tratados
+
+**Enseñanza principal:** Primero se identifican comparaciones causales válidas; después se agregan los efectos heterogéneos con ponderaciones explícitas
+
+**Estado de evidencia:** Pieza técnica aplicada
+:::
+:::

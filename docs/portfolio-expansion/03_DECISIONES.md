@@ -78,6 +78,13 @@ El subportal organiza la transición DiD canónico → problemas de TWFE bajo ad
 - El contraste interaction-weighted se utiliza para precisar la propiedad que se desea recuperar, sin convertir la pieza en una revisión general de soluciones modernas.
 - Con DID-M04, DID-M05 y DID-M06, el bloque de crisis moderna queda conceptualmente completo; el bloque de soluciones modernas continúa pendiente.
 
+#### Soluciones modernas
+
+- DID-M07 inaugura el bloque con `Efectos por cohorte y período: Callaway–Sant’Anna para adopción escalonada`.
+- Su objeto central es `ATT(g,t)`: identificar efectos por cohorte y período mediante controles válidos y agregarlos después con ponderaciones explícitas.
+- La especificación principal utiliza DR-IPW y condados nunca tratados; las unidades todavía no tratadas funcionan como sensibilidad.
+- Los promedios global simple y por cohorte se presentan como estimandos legítimos diferentes, no como una competencia con ganador automático.
+
 ## Econometría
 
 Organización conceptual objetivo:

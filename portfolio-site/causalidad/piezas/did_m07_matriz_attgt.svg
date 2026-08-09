@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="720" viewBox="0 0 1320 720" role="img" aria-labelledby="title desc">
+  <title id="title">De comparaciones válidas a efectos por cohorte y período</title>
+  <desc id="desc">Matriz de cohortes y años que conecta cada celda posterior a la adopción con una comparación DiD frente a los nunca tratados, un efecto ATT por cohorte y período y agregaciones explícitas.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2f607d"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#16354a" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title{font:700 28px Arial,sans-serif;fill:#17384d}.sub{font:15px Arial,sans-serif;fill:#5b6b76}.head{font:700 15px Arial,sans-serif;fill:#274b61}.label{font:14px Arial,sans-serif;fill:#354f5f}.small{font:12px Arial,sans-serif;fill:#617481}.cell{font:700 13px Arial,sans-serif;fill:#fff}.flowTitle{font:700 18px Arial,sans-serif;fill:#17384d}.flowText{font:14px Arial,sans-serif;fill:#425d6d}.step{font:700 13px Arial,sans-serif;fill:#fff}.legend{font:12px Arial,sans-serif;fill:#526978}
+    </style>
+  </defs>
+  <rect width="1320" height="720" fill="#f7f9fa"/>
+  <text x="660" y="46" text-anchor="middle" class="title">De comparaciones válidas a agregados transparentes</text>
+  <text x="660" y="72" text-anchor="middle" class="sub">La unidad causal es ATT(g,t); la ponderación se decide después</text>
+
+  <rect x="42" y="105" width="695" height="485" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <text x="70" y="140" class="flowTitle">1 · Mapa cohorte × período</text>
+  <text x="70" y="163" class="sub">Cada fila sigue una cohorte desde antes de adoptar hasta sus períodos tratados</text>
+
+  <text x="82" y="211" class="head">Cohorte</text>
+  <text x="200" y="211" text-anchor="middle" class="head">2003</text>
+  <text x="302" y="211" text-anchor="middle" class="head">2004</text>
+  <text x="404" y="211" text-anchor="middle" class="head">2005</text>
+  <text x="506" y="211" text-anchor="middle" class="head">2006</text>
+  <text x="608" y="211" text-anchor="middle" class="head">2007</text>
+
+  <text x="82" y="265" class="head">g = 2004</text>
+  <text x="82" y="357" class="head">g = 2006</text>
+  <text x="82" y="449" class="head">g = 2007</text>
+
+  <rect x="159" y="228" width="82" height="56" rx="10" fill="#244e68"/><text x="200" y="252" text-anchor="middle" class="cell">base g−1</text><text x="200" y="270" text-anchor="middle" class="cell">sin tratar</text>
+  <rect x="261" y="228" width="82" height="56" rx="10" fill="#17839a"/><text x="302" y="252" text-anchor="middle" class="cell">ATT</text><text x="302" y="270" text-anchor="middle" class="cell">(2004,04)</text>
+  <rect x="363" y="228" width="82" height="56" rx="10" fill="#17839a"/><text x="404" y="252" text-anchor="middle" class="cell">ATT</text><text x="404" y="270" text-anchor="middle" class="cell">(2004,05)</text>
+  <rect x="465" y="228" width="82" height="56" rx="10" fill="#17839a"/><text x="506" y="252" text-anchor="middle" class="cell">ATT</text><text x="506" y="270" text-anchor="middle" class="cell">(2004,06)</text>
+  <rect x="567" y="228" width="82" height="56" rx="10" fill="#17839a"/><text x="608" y="252" text-anchor="middle" class="cell">ATT</text><text x="608" y="270" text-anchor="middle" class="cell">(2004,07)</text>
+
+  <rect x="159" y="320" width="82" height="56" rx="10" fill="#eef2f4" stroke="#cbd5da"/><text x="200" y="353" text-anchor="middle" class="label">pre</text>
+  <rect x="261" y="320" width="82" height="56" rx="10" fill="#eef2f4" stroke="#cbd5da"/><text x="302" y="353" text-anchor="middle" class="label">pre</text>
+  <rect x="363" y="320" width="82" height="56" rx="10" fill="#244e68"/><text x="404" y="344" text-anchor="middle" class="cell">base g−1</text><text x="404" y="362" text-anchor="middle" class="cell">sin tratar</text>
+  <rect x="465" y="320" width="82" height="56" rx="10" fill="#17839a"/><text x="506" y="344" text-anchor="middle" class="cell">ATT</text><text x="506" y="362" text-anchor="middle" class="cell">(2006,06)</text>
+  <rect x="567" y="320" width="82" height="56" rx="10" fill="#17839a"/><text x="608" y="344" text-anchor="middle" class="cell">ATT</text><text x="608" y="362" text-anchor="middle" class="cell">(2006,07)</text>
+
+  <rect x="159" y="412" width="82" height="56" rx="10" fill="#eef2f4" stroke="#cbd5da"/><text x="200" y="445" text-anchor="middle" class="label">pre</text>
+  <rect x="261" y="412" width="82" height="56" rx="10" fill="#eef2f4" stroke="#cbd5da"/><text x="302" y="445" text-anchor="middle" class="label">pre</text>
+  <rect x="363" y="412" width="82" height="56" rx="10" fill="#eef2f4" stroke="#cbd5da"/><text x="404" y="445" text-anchor="middle" class="label">pre</text>
+  <rect x="465" y="412" width="82" height="56" rx="10" fill="#244e68"/><text x="506" y="436" text-anchor="middle" class="cell">base g−1</text><text x="506" y="454" text-anchor="middle" class="cell">sin tratar</text>
+  <rect x="567" y="412" width="82" height="56" rx="10" fill="#17839a"/><text x="608" y="436" text-anchor="middle" class="cell">ATT</text><text x="608" y="454" text-anchor="middle" class="cell">(2007,07)</text>
+
+  <rect x="70" y="500" width="635" height="62" rx="12" fill="#edf7f8" stroke="#a7d1d8"/>
+  <text x="91" y="526" class="head">Control común: 309 condados nunca tratados</text>
+  <text x="91" y="549" class="small">Disponibles en todos los años; no reciben tratamiento durante la ventana observada.</text>
+
+  <rect x="70" y="610" width="18" height="18" rx="4" fill="#244e68"/><text x="98" y="624" class="legend">período base g−1</text>
+  <rect x="246" y="610" width="18" height="18" rx="4" fill="#17839a"/><text x="274" y="624" class="legend">ATT(g,t) pos-tratamiento</text>
+  <rect x="480" y="610" width="18" height="18" rx="4" fill="#eef2f4" stroke="#cbd5da"/><text x="508" y="624" class="legend">período previo</text>
+
+  <path d="M738 347 C780 347, 786 347, 818 347" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="825" y="105" width="453" height="485" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
+  <text x="856" y="140" class="flowTitle">2 · Estimar y agregar</text>
+  <text x="856" y="163" class="sub">Las decisiones quedan separadas y pueden auditarse</text>
+
+  <circle cx="869" cy="218" r="22" fill="#2f607d"/><text x="869" y="223" text-anchor="middle" class="step">A</text>
+  <text x="908" y="207" class="head">Comparación DiD 2×2 válida</text>
+  <text x="908" y="230" class="flowText">Cambio de la cohorte g menos cambio</text>
+  <text x="908" y="250" class="flowText">de los controles en el mismo intervalo.</text>
+
+  <path d="M869 251 L869 292" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="869" cy="323" r="22" fill="#17839a"/><text x="869" y="328" text-anchor="middle" class="step">B</text>
+  <text x="908" y="313" class="head">ATT(g,t)</text>
+  <text x="908" y="336" class="flowText">Efecto para una cohorte concreta</text>
+  <text x="908" y="356" class="flowText">en un período concreto.</text>
+
+  <path d="M869 356 L869 397" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="869" cy="428" r="22" fill="#c4556c"/><text x="869" y="433" text-anchor="middle" class="step">C</text>
+  <text x="908" y="417" class="head">Agregación explícita</text>
+  <text x="908" y="440" class="flowText">Por cohorte · calendario · tiempo relativo</text>
+  <text x="908" y="460" class="flowText">o promedio global, según la pregunta.</text>
+
+  <rect x="856" y="497" width="390" height="64" rx="12" fill="#fbf2f4" stroke="#e6bcc6"/>
+  <text x="1051" y="523" text-anchor="middle" class="head">La heterogeneidad permanece visible</text>
+  <text x="1051" y="547" text-anchor="middle" class="small">La ponderación deja de quedar implícita dentro de TWFE.</text>
+
+  <rect x="42" y="656" width="1236" height="42" rx="10" fill="#17384d"/>
+  <text x="660" y="682" text-anchor="middle" style="font:700 15px Arial,sans-serif;fill:#fff">Definir → comparar → estimar → agregar: el orden es parte del diseño causal</text>
+</svg>
