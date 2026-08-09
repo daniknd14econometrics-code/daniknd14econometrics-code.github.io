@@ -70,6 +70,9 @@ El subportal organiza la transición DiD canónico → problemas de TWFE bajo ad
 - Su objeto central es mostrar que TWFE combina múltiples DiD 2×2 y puede utilizar cohortes ya tratadas como controles bajo adopción escalonada.
 - La descomposición de Goodman–Bacon funciona como diagnóstico del coeficiente; no se presenta como estimador alternativo ni como solución a la heterogeneidad dinámica.
 - La distinción con BDM01 es sustantiva: clustering trata la inferencia, pero no corrige comparaciones causales contaminadas.
+- DID-M05 continúa con `Cuando TWFE cambia el signo: pesos negativos y heterogeneidad en Difference-in-Differences`.
+- Su objeto central es la agregación de efectos grupo-período con pesos que pueden ser negativos y, bajo heterogeneidad, producir estimaciones fuera del rango de los efectos verdaderos.
+- La aplicación WAGEPAN debe mantener una lectura cauta: la masa negativa es pequeña, WAS reduce la estimación y el primer placebo limita una interpretación causal fuerte.
 
 ## Econometría
 

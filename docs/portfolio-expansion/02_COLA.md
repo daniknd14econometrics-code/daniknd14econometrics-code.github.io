@@ -7,9 +7,10 @@
 | 3 | BDM01 | Taller 3 — inferencia en DiD / BDM | Causalidad | cerrado / implementado |
 | 4 | DID-MOD | Crisis TWFE y estimadores modernos | Causalidad / DiD moderno | activo |
 | 5 | DID-M04 | Módulo 4 — Goodman-Bacon y descomposición TWFE | Causalidad / DiD moderno | cerrado / implementado |
-| 6 | DID-M05 | Módulo 5 — crisis moderna de TWFE | Causalidad / DiD moderno | activo: diagnóstico/propuesta |
-| 7 | ECON-ADV | Talleres propios de econometría avanzada | Econometría | pendiente de desagregación |
-| 8 | RESEARCH-TIC | Proyecto TIC-productividad / shift-share | Investigación | pendiente |
+| 6 | DID-M05 | Módulo 5 — pesos negativos y heterogeneidad en TWFE | Causalidad / DiD moderno | cerrado / implementado |
+| 7 | DID-M06 | Módulo 6 — event studies TWFE y efectos dinámicos | Causalidad / DiD moderno | activo: diagnóstico/propuesta |
+| 8 | ECON-ADV | Talleres propios de econometría avanzada | Econometría | pendiente de desagregación |
+| 9 | RESEARCH-TIC | Proyecto TIC-productividad / shift-share | Investigación | pendiente |
 
 El bloque DID permanece activo. La próxima unidad corresponde a la crisis de TWFE y los estimadores modernos.
 

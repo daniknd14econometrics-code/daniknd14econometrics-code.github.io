@@ -56,4 +56,18 @@ Esta primera línea examina por qué una regresión TWFE puede perder una interp
 
 **Estado de evidencia:** Pieza técnica
 :::
+
+::: {.piece-card}
+### [Cuando TWFE cambia el signo: pesos negativos y heterogeneidad en Difference-in-Differences](../piezas/did_m05_twfe_pesos_negativos.qmd)
+
+¿Cómo puede TWFE estimar un efecto negativo cuando todos los efectos causales del tratamiento son positivos?
+
+**Método principal:** Pesos sobre efectos grupo-período y estimador WAS
+
+**Tipo de diseño:** Panel con tratamiento variable y efectos heterogéneos
+
+**Enseñanza principal:** Los pesos negativos pueden sacar a TWFE del rango de los efectos verdaderos; una alternativa requiere igualmente comparaciones creíbles
+
+**Estado de evidencia:** Pieza técnica
+:::
 :::
