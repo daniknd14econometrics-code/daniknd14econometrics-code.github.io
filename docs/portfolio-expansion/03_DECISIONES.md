@@ -37,7 +37,16 @@ Incluye:
 - Lectura del resultado: efecto local positivo de magnitud sustantiva, con evidencia sugestiva bajo inferencia robusta (`p ≈ 0,076`) y sin conclusión definitiva al 5%.
 - Objeto central: tabla que contrasta la reconstrucción lineal local con la estimación MSE-óptima y corrección robusta de sesgo.
 - Visuales públicos: `rdplot` local y diagnóstico compacto de densidad; la condición sharp se comunica como métrica, no como gráfico separado.
-- Estado: implementada y pendiente de revisión visual antes de commit.
+- Estado: cerrada, implementada y comprometida en el repositorio.
+
+#### DiD clásico e inferencia
+
+- Arquitectura aprobada: dos piezas. Talleres 1 + 2 forman una pieza integrada de DiD clásico; Taller 3 queda reservado para una pieza autónoma posterior sobre inferencia y BDM.
+- Primera pieza: `Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional`.
+- Aplicación principal: Nueva Jersey / Pensilvania, con DiD 2×2 sobre empleo FTE.
+- Extensión metodológica: NSW, tendencias paralelas condicionales, ponderación de Abadie y soporte común.
+- La progresión del bloque será: DiD canónico → comparabilidad condicional → inferencia clásica / BDM → crisis moderna de TWFE → soluciones modernas.
+- Estado de la primera pieza: cerrada e implementada. BDM01 queda activa como siguiente pieza autónoma del bloque clásico.
 
 ### Difference-in-Differences moderno
 

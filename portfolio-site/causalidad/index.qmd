@@ -79,4 +79,13 @@ Efecto local del control municipal islámico en elecciones decididas alrededor d
 
 **Tipo de datos:** Corte transversal de municipios
 :::
+
+::: {.piece-card}
+### [Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional](piezas/did01_did_clasico.qmd)
+Comparación de cambios bajo tendencias paralelas y extensión condicional mediante ponderación de Abadie.
+
+**Método principal:** Difference-in-Differences 2×2 y DiD condicional
+
+**Tipo de datos:** Panel de dos períodos y resultados repetidos
+:::
 :::
