@@ -134,4 +134,18 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 
 **Estado de evidencia:** Pieza técnica aplicada con evidencia condicionada
 :::
+
+::: {.piece-card}
+### [Más que el último período pre: Lee–Wooldridge y transformaciones rolling en Difference-in-Differences](../piezas/did_m09b_lee_wooldridge_rolling.qmd)
+
+¿Cómo aprovechar la historia pretratamiento para construir comparaciones DiD limpias sin imponer una regresión global?
+
+**Método principal:** Transformaciones rolling del outcome y estimación de ATT por cohorte y período
+
+**Tipo de diseño:** Panel con adopción escalonada, controles nunca y todavía no tratados y covariables predeterminadas
+
+**Enseñanza principal:** La referencia pretratamiento puede redefinirse por cohorte antes de estimar comparaciones limpias; la elección entre nivel y tendencia cambia sustantivamente el contrafactual
+
+**Estado de evidencia:** Comparación metodológica aplicada con evidencia condicionada
+:::
 :::

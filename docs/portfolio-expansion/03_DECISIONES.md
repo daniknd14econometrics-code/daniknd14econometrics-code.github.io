@@ -92,6 +92,11 @@ El subportal organiza la transición DiD canónico → problemas de TWFE bajo ad
 - Su objeto central es mostrar que una regresión flexible puede recuperar `ATT(g,t)` al admitir heterogeneidad por cohorte y período; la equivalencia con TWM es secundaria y no rehabilita el TWFE restrictivo.
 - La aplicación Walmart presenta como estimación central `0,0898`, pero la interpreta de forma condicionada: los pretrends se rechazan y la inclusión de tendencias por cohorte reduce el agregado a `0,0352`.
 - Los visuales públicos comparan la restricción común de TWFE con la matriz flexible de ETWFE y muestran un event study compacto construido coherentemente con el grupo nunca tratado.
+- DID-M09b cierra el bloque actual con `Más que el último período pre: Lee–Wooldridge y transformaciones rolling en Difference-in-Differences`.
+- Su objeto central es la arquitectura transformar–comparar–agregar: la referencia pretratamiento cambia con la cohorte, los efectos se estiman con controles válidos y luego se agregan como `WATT(k)`.
+- La comparación dominante es `demean` frente a `detrend`: en Walmart, el post promedio cambia de `0,0944` a `0,0317`; esta sensibilidad no convierte detrending en la especificación verdadera y el diagnóstico previo permanece.
+- La sensibilidad E1 sobrescrita queda fuera de la pieza pública; el log conserva `0,1149`, pero esa fila no afecta la evidencia seleccionada y no se reejecuta.
+- Con DID-M07, DID-M08, DID-M09 y DID-M09b queda completo el bloque actual de `Soluciones modernas`.
 
 ## Econometría
 
