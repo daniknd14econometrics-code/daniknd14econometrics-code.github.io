@@ -66,6 +66,10 @@ PSM permite construir un contrafactual más creíble al combinar tres capas: est
 
 ## Soporte y comparabilidad: `common` frente a `trim(10)`
 
+![Overlap del propensity score antes del matching](psm_overlap_propensity.svg){fig-alt="Histogramas porcentuales superpuestos del propensity score para hogares tratados y controles. Existe una región amplia de soporte compartido, aunque los controles tienen mayor presencia en valores bajos y los tratados se concentran algo más en valores altos."}
+
+La superposición es relevante, pero las distribuciones no son idénticas: definir soporte y comparabilidad sigue siendo necesario antes de construir el contrafactual mediante matching.
+
 ::: {.table-box}
 | Regla de soporte | Soporte retenido (`N1/N0`) | Observaciones fuera de soporte | Balance global (post-matching) | Lectura |
 |---|---:|---:|---|---|

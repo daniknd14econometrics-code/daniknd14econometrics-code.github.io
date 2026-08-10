@@ -165,6 +165,10 @@ TWFE y primeras diferencias frente a WAS, que compara switchers con stayers pert
 
 La especificación TWFE base genera **1.024 pesos de celdas**. De ellos, **144 son negativos** —14,1%—, pero su masa agregada es solo **−0,0107**. La presencia de pesos negativos confirma que el coeficiente merece ser abierto y diagnosticado; la masa pequeña impide atribuirles mecánicamente toda la distancia entre estimadores.
 
+![Masa agregada de pesos negativos en las especificaciones empíricas](did_m05_masa_pesos_negativos.svg){fig-alt="Comparación horizontal de la masa agregada de pesos negativos en WAGEPAN: menos 0,0107 en TWFE base, menos 0,0440 en primeras diferencias y menos 0,0130 en TWFE con covariables. También se informa la cantidad de pesos negativos de cada especificación."}
+
+Las tres masas son pequeñas en valor absoluto; aun la mayor, correspondiente a primeras diferencias, alcanza **−0,0440** y no explica automáticamente la distancia entre TWFE y WAS.
+
 ::: {.small-note}
 **Lectura disciplinada.** WAGEPAN no reproduce la paradoja extrema de la simulación. El coeficiente TWFE permanece positivo y el peso negativo agregado es reducido. El diagnóstico identifica una vulnerabilidad del estimando, no una explicación automática de cada diferencia empírica.
 :::

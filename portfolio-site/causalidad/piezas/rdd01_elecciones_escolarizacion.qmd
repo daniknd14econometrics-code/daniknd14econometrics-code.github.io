@@ -173,6 +173,8 @@ El signo positivo y el orden de magnitud no dependen de una única variante. Sin
 
 Los tests locales sobre siete covariables predeterminadas no detectan saltos estadísticamente significativos. Sus p-values robustos se ubican entre `0,275` y `0,910`. Es una señal favorable para la continuidad local de características observables, aunque no prueba por sí sola continuidad de factores no observados.
 
+![Continuidad visual de covariables predeterminadas alrededor del umbral](rdd01_covariables_continuidad.svg){fig-alt="Tres paneles muestran promedios por intervalos y ajustes lineales locales a ambos lados del cutoff para población previa, número de partidos y categoría administrativa. Son diagnósticos visuales representativos; los tests formales cubren siete covariables predeterminadas."}
+
 ![Diagnóstico local de densidad del margen electoral alrededor del umbral](rdd01_densidad_local.svg){fig-alt="Estimaciones de densidad del margen electoral a ambos lados de cero dentro de las ventanas seleccionadas por el test de densidad."}
 
 El diagnóstico de densidad requiere una lectura mixta. La versión convencional rechaza continuidad (`p = 0,0145`), mientras que el test robusto no la rechaza (`p = 0,1634`). Además, los conteos son compatibles con equilibrio en las ventanas más estrechas y la asimetría aparece al ampliar la vecindad.

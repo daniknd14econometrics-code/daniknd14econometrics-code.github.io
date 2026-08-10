@@ -139,6 +139,8 @@ Una vez estimadas las celdas elementales, la heterogeneidad puede mostrarse en l
 | **Promedio global simple** | **−0,0418** | **0,0115** | **[−0,0643; −0,0192]** |
 :::
 
+![Efectos estimados por cohorte y promedio GAverage](did_m07_efectos_por_cohorte.svg){fig-alt="Gráfico de coeficientes con intervalos de confianza del 95 por ciento. La cohorte 2004 presenta un efecto de menos 0,0846; las cohortes 2006 y 2007, efectos menores cuyos intervalos incluyen cero; y GAverage resume un efecto de menos 0,0328 con intervalo completamente negativo."}
+
 Las estimaciones corresponden al efecto sobre el log del empleo adolescente para las cohortes tratadas del panel, bajo las comparaciones y los supuestos del diseño. La cohorte de 2004 presenta una reducción estimada mayor que las cohortes posteriores; esa diferencia se conserva como información sustantiva.
 
 ## Cómo agregar efectos heterogéneos

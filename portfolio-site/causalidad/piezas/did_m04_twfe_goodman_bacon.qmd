@@ -159,6 +159,10 @@ Los pesos reflejan cuánta variación residual del tratamiento aporta cada compa
 | **Reconstrucción** | **1,0000** | — | **−3,07992578** | Reproduce el TWFE directo: **−3,07992577** |
 :::
 
+![Contribución de cada familia de comparaciones a la estimación TWFE](did_m04_bacon_contribuciones.svg){fig-alt="Gráfico de barras divergentes de las cuatro contribuciones Goodman–Bacon. Siempre tratadas versus cohortes aporta menos 2,7078; tempranas versus tardías aún no tratadas, menos 0,0207; tardías versus tempranas ya tratadas, 0,9294; y cohortes versus nunca tratadas, menos 1,2809. La suma es menos 3,0799."}
+
+El componente más cercano al DiD canónico es también el de menor peso; las comparaciones con estados siempre tratados o con controles ya tratados ocupan buena parte de la composición.
+
 La familia más cercana a comparar una cohorte temprana con otra tardía todavía no tratada recibe solo **11,1%** del peso. En cambio, **26,5%** corresponde a comparaciones donde una cohorte temprana ya tratada funciona como control, y **38,4%** involucra estados tratados antes del inicio del panel.
 
 Las contribuciones reconstruyen el coeficiente con una diferencia numérica prácticamente nula. La descomposición no es una especificación alternativa: muestra de dónde proviene el TWFE observado.
