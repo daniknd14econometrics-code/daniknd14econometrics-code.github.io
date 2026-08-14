@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Heterogeneidad no observada en panel: cuándo cambia la conclusión – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#caso-1-plantas-industriales-una-lectura-robusta-a-la-especificación" id="toc-caso-1-plantas-industriales-una-lectura-robusta-a-la-especificación" class="nav-link" data-scroll-target="#caso-1-plantas-industriales-una-lectura-robusta-a-la-especificación">Caso 1 · Plantas industriales: una lectura robusta a la especificación</a></li>
+  <li><a href="#caso-2-participación-laboral-la-magnitud-sí-depende-del-tratamiento-de-la-heterogeneidad" id="toc-caso-2-participación-laboral-la-magnitud-sí-depende-del-tratamiento-de-la-heterogeneidad" class="nav-link" data-scroll-target="#caso-2-participación-laboral-la-magnitud-sí-depende-del-tratamiento-de-la-heterogeneidad">Caso 2 · Participación laboral: la magnitud sí depende del tratamiento de la heterogeneidad</a></li>
+  <li><a href="#lo-que-enseña-el-contraste" id="toc-lo-que-enseña-el-contraste" class="nav-link" data-scroll-target="#lo-que-enseña-el-contraste">Lo que enseña el contraste</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Heterogeneidad no observada en panel: cuándo cambia la conclusión</h1>
+<p class="subtitle lead">Dos aplicaciones muestran por qué FE, RE y CRE deben evaluarse por su sensibilidad empírica, no como una competencia abstracta</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">13 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>¿Cuándo cambia realmente la conclusión al modelar la heterogeneidad no observada?</p>
+</div>
+<div class="hero-sub">
+<p>La respuesta depende de la evidencia. En un panel lineal de plantas, FE, RE y CRE-Mundlak cuentan una historia muy parecida. En un probit de panel sobre participación laboral, controlar heterogeneidad correlacionada reduce materialmente los efectos parciales.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Pregunta común</p>
+</div>
+<div class="metric-value">
+<p>¿La especificación altera el mensaje?</p>
+</div>
+<div class="metric-note">
+<p>Se comparan magnitudes antes de usar los tests como respaldo.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Panel lineal</p>
+</div>
+<div class="metric-value">
+<p>Lectura estable</p>
+</div>
+<div class="metric-note">
+<p>FE, RE y CRE producen coeficientes cercanos para los subsidios.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Panel binario</p>
+</div>
+<div class="metric-value">
+<p>Atenuación sustantiva</p>
+</div>
+<div class="metric-note">
+<p>Los APE disminuyen al incorporar RE y heterogeneidad correlacionada.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Regla de decisión</p>
+</div>
+<div class="metric-value">
+<p>Diagnóstico + sensibilidad</p>
+</div>
+<div class="metric-note">
+<p>Ningún estimador es un ganador universal.</p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Los datos de panel permiten reconocer diferencias persistentes entre unidades, pero no garantizan que tratarlas de una manera u otra cambie la conclusión aplicada. Este análisis contrasta dos situaciones deliberadamente distintas.</p>
+<p>En plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo resulta estable bajo efectos fijos (FE), efectos aleatorios (RE) y efectos aleatorios correlacionados (CRE-Mundlak). En un panel de mujeres, en cambio, los efectos parciales de la estructura del hogar sobre la participación laboral se reducen de forma sostenida al pasar de pooled probit a RE y CRE.</p>
+<p>El aprendizaje no es elegir siempre FE, RE o CRE. Es comprobar cuánto depende la lectura del supuesto sobre la heterogeneidad y cerrar la especificación con evidencia sustantiva y diagnóstica combinada.</p>
+</section>
+<div class="quick-grid">
+<section id="problema-econométrico" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="problema-econométrico">Problema econométrico</h2>
+<p>Si el componente individual persistente, <span class="math inline">\(c_i\)</span>, está correlacionado con los regresores, una especificación pooled o RE convencional puede mezclar diferencias estructurales entre unidades con cambios dentro de cada unidad.</p>
+</section>
+<section id="criterio-de-comparación" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="criterio-de-comparación">Criterio de comparación</h2>
+<p>Primero se comparan signos, magnitudes e incertidumbre. Después se usan Hausman o Mundlak para evaluar si la independencia entre <span class="math inline">\(c_i\)</span> y los regresores es compatible con los datos.</p>
+<p><span class="badge">Panel y heterogeneidad</span></p>
+</section>
+</div>
+<section id="caso-1-plantas-industriales-una-lectura-robusta-a-la-especificación" class="level2">
+<h2 class="anchored" data-anchor-id="caso-1-plantas-industriales-una-lectura-robusta-a-la-especificación">Caso 1 · Plantas industriales: una lectura robusta a la especificación</h2>
+<p>La primera aplicación usa <code>jtrain1.dta</code>, con 162 observaciones de 54 plantas entre 1987 y 1989. El resultado es el log del desperdicio productivo (<code>lscrap</code>); las variables centrales indican subsidio de capacitación actual (<code>grant</code>) y rezagado (<code>grant_1</code>).</p>
+<p>Las plantas pueden diferir persistentemente en tecnología, gestión o calidad operativa. La comparación FE/RE/CRE pregunta si esas diferencias alteran la lectura de los subsidios.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Especificación</th>
+<th style="text-align: right;">Subsidio actual</th>
+<th style="text-align: right;">Subsidio rezagado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FE + cluster</td>
+<td style="text-align: right;">-0,252 (EE 0,143)</td>
+<td style="text-align: right;">-0,422 (EE 0,282)</td>
+<td>Magnitudes negativas con incertidumbre amplia</td>
+</tr>
+<tr class="even">
+<td>RE + cluster</td>
+<td style="text-align: right;">-0,214 (EE 0,131)</td>
+<td style="text-align: right;">-0,373 (EE 0,268)</td>
+<td>Patrón muy cercano a FE</td>
+</tr>
+<tr class="odd">
+<td>CRE-Mundlak + cluster</td>
+<td style="text-align: right;">-0,252 (EE 0,144)</td>
+<td style="text-align: right;">-0,422 (EE 0,284)</td>
+<td>Prácticamente coincide con FE</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../assets/t09_coef_fe_re_cre.svg" alt="Coeficientes e intervalos de confianza para subsidio actual y rezagado bajo efectos aleatorios, efectos fijos y CRE-Mundlak; las estimaciones son muy similares." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;"></p>
+<p>La estabilidad visual es el hallazgo principal. El test de relevancia del panel rechaza pooling simple (<code>F(53,104)=24,66</code>; <code>p&lt;0,001</code>), pero los contrastes que distinguen RE de FE/CRE no aportan evidencia fuerte contra RE: Hausman <code>p=0,2425</code>, Mundlak clásico <code>p=0,3591</code> y Mundlak robusto <code>p=0,3965</code>.</p>
+<p>RE puede usarse aquí como referencia operativa parsimoniosa. Eso no prueba que su supuesto sea verdadero: indica que, en esta muestra, cambiar el tratamiento de la heterogeneidad no cambia materialmente la historia empírica.</p>
+</section>
+<section id="caso-2-participación-laboral-la-magnitud-sí-depende-del-tratamiento-de-la-heterogeneidad" class="level2">
+<h2 class="anchored" data-anchor-id="caso-2-participación-laboral-la-magnitud-sí-depende-del-tratamiento-de-la-heterogeneidad">Caso 2 · Participación laboral: la magnitud sí depende del tratamiento de la heterogeneidad</h2>
+<p>La segunda aplicación utiliza un panel balanceado de 28.315 observaciones: 5.663 mujeres seguidas durante cinco períodos. El resultado es la participación en la fuerza laboral. Las variables protagonistas son el número de hijos menores de 18 años y el log del ingreso del esposo.</p>
+<p>Aquí una lectura pooled puede confundir restricciones persistentes del hogar, preferencias o condiciones individuales no observadas con asociaciones contemporáneas. Por eso se comparan pooled probit, RE probit, CRE pooled y CRE-RE probit mediante efectos parciales promedio (APE).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">APE: hijos menores de 18</th>
+<th style="text-align: right;">APE: ingreso del esposo (log)</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pooled probit</td>
+<td style="text-align: right;">-0,0660 (0,0049)</td>
+<td style="text-align: right;">-0,0701 (0,0080)</td>
+<td>Referencia sin modelar persistencia individual</td>
+</tr>
+<tr class="even">
+<td>RE probit</td>
+<td style="text-align: right;">-0,0516 (0,0050)</td>
+<td style="text-align: right;">-0,0190 (0,0042)</td>
+<td>Atenuación al incorporar efecto aleatorio</td>
+</tr>
+<tr class="odd">
+<td>CRE pooled</td>
+<td style="text-align: right;">-0,0389 (0,0089)</td>
+<td style="text-align: right;">-0,0095 (0,0047)</td>
+<td>Menor magnitud al admitir correlación tipo Mundlak</td>
+</tr>
+<tr class="even">
+<td>CRE-RE probit</td>
+<td style="text-align: right;">-0,0322 (0,0085)</td>
+<td style="text-align: right;">-0,0081 (0,0043)</td>
+<td>Cierre operativo con heterogeneidad correlacionada</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../assets/t15_ape_pooled_re_cre.svg" alt="Efectos parciales promedio e intervalos de confianza para hijos menores de 18 años e ingreso del esposo bajo pooled probit, RE probit, CRE pooled y CRE-RE probit." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;"></p>
+<p>Los signos negativos se mantienen, pero su magnitud cae de forma marcada. El test conjunto de las medias individuales rechaza independencia entre heterogeneidad y regresores tanto en CRE pooled (<code>χ²(2)=57,50</code>) como en CRE-RE (<code>χ²(2)=61,34</code>), con <code>p&lt;0,001</code>.</p>
+<p>La baja variación temporal del número de hijos aconseja prudencia sobre cuánto puede separarse el componente dentro de la mujer del componente entre mujeres. Aun con ese límite, la trayectoria pooled → RE → CRE muestra que la especificación sí afecta la lectura en probabilidades.</p>
+</section>
+<section id="lo-que-enseña-el-contraste" class="level2">
+<h2 class="anchored" data-anchor-id="lo-que-enseña-el-contraste">Lo que enseña el contraste</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Panel lineal de plantas</th>
+<th>Probit de panel laboral</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qué se compara</td>
+<td>Coeficientes FE, RE y CRE</td>
+<td>APE pooled, RE y CRE</td>
+</tr>
+<tr class="even">
+<td>Sensibilidad empírica</td>
+<td>Baja</td>
+<td>Alta</td>
+</tr>
+<tr class="odd">
+<td>Evidencia Mundlak</td>
+<td>No rechaza independencia</td>
+<td>Rechaza con fuerza</td>
+</tr>
+<tr class="even">
+<td>Cierre operativo</td>
+<td>RE con FE/CRE como auditoría</td>
+<td>CRE con pooled/RE como referencias</td>
+</tr>
+</tbody>
+</table>
+<p>CRE cumple el mismo papel conceptual en ambos casos: permite hacer visible la posible correlación entre heterogeneidad persistente y regresores. Lo que cambia es la respuesta de los datos. En una aplicación confirma que la conclusión es robusta; en la otra revela que parte de la magnitud pooled estaba asociada con heterogeneidad no modelada.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>Modelar heterogeneidad no observada no es un ritual ni una regla automática de selección. La decisión útil combina tres elementos: una pregunta aplicada clara, comparaciones en una escala interpretable y diagnósticos coherentes con el supuesto que se está evaluando.</p>
+<p>Cuando FE, RE y CRE cuentan una historia semejante, conviene decirlo sin sobreactuar diferencias técnicas. Cuando los APE cambian materialmente y Mundlak rechaza independencia, esa sensibilidad pasa a formar parte de la conclusión.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

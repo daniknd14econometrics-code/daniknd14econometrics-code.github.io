@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 510" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia simulada para IV-GMM</title>
+  <desc id="desc">Coeficientes en una realización y distribuciones Monte Carlo de MCO, MC2 e IV-GMM.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 15px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.axis{stroke:#9aabba;stroke-width:1.2}.truth{stroke:#17324d;stroke-width:2;stroke-dasharray:6 5}.ci{stroke:#0b7285;stroke-width:4;stroke-linecap:round}.dot{fill:#0b7285}.ci2{stroke:#d97706;stroke-width:4;stroke-linecap:round}.dot2{fill:#d97706}.ci3{stroke:#536b82;stroke-width:4;stroke-linecap:round}.dot3{fill:#536b82}.bad{stroke:#b23a48;stroke-width:4;stroke-linecap:round}.badDot{fill:#b23a48}.value{font:700 12px system-ui,sans-serif;fill:#17324d}.curve{stroke:#0b7285;stroke-width:4;fill:none}.curve2{stroke:#d97706;stroke-width:4;fill:none}.curve3{stroke:#536b82;stroke-width:3;stroke-dasharray:6 4;fill:none}.shade{fill:#0b7285;opacity:.07}.pill{fill:#fff7e6;stroke:#f0cf91}.warn{font:700 12px system-ui,sans-serif;fill:#9a5204}
+  </style>
+  <rect class="bg" width="960" height="510" rx="18"/>
+  <text class="head" x="48" y="45">Validez antes que cantidad</text>
+  <text class="sub" x="48" y="70">Una realización de la simulación y 750 repeticiones con β verdadero = 0,80</text>
+  <rect class="panel" x="40" y="95" width="425" height="360" rx="15"/>
+  <rect class="panel" x="495" y="95" width="425" height="360" rx="15"/>
+  <text class="label" x="65" y="130">A. Estimación puntual e IC95%</text>
+  <line class="truth" x1="195" y1="151" x2="195" y2="362"/>
+  <text class="small" x="65" y="184">MCO</text><line class="ci" x1="342" y1="180" x2="385" y2="180"/><circle class="dot" cx="364" cy="180" r="6"/><text class="value" x="393" y="184">1,213</text>
+  <text class="small" x="65" y="229">MC2 / 2SLS</text><line class="ci2" x1="185" y1="225" x2="257" y2="225"/><circle class="dot2" cx="221" cy="225" r="6"/><text class="value" x="265" y="229">0,836</text>
+  <text class="small" x="65" y="274">IV-GMM válido</text><line class="ci3" x1="186" y1="270" x2="258" y2="270"/><circle class="dot3" cx="222" cy="270" r="6"/><text class="value" x="266" y="274">0,837</text>
+  <text class="small" x="65" y="319">GMM + momento inválido</text><line class="bad" x1="292" y1="315" x2="356" y2="315"/><circle class="badDot" cx="324" cy="315" r="6"/><text class="value" x="364" y="319">1,037</text>
+  <line class="axis" x1="120" y1="362" x2="410" y2="362"/>
+  <text class="small" x="115" y="382">0,6</text><text class="small" x="188" y="382">0,8</text><text class="small" x="260" y="382">1,0</text><text class="small" x="332" y="382">1,2</text><text class="small" x="401" y="382">1,4</text>
+  <rect class="pill" x="67" y="405" width="370" height="31" rx="10"/><text class="warn" x="84" y="425">J válido: p=0,353 · con momento inválido: p&lt;0,001</text>
+  <text class="label" x="520" y="130">B. Distribución Monte Carlo</text>
+  <text class="sub" x="520" y="151">750 réplicas · n = 1.000 por réplica</text>
+  <line class="truth" x1="647" y1="174" x2="647" y2="366"/><text class="small" x="631" y="386">0,80</text>
+  <path class="shade" d="M522 366 C555 364 585 329 608 249 C627 185 654 184 674 251 C697 326 723 363 753 366 Z"/>
+  <path class="curve2" d="M522 366 C555 364 585 329 608 249 C627 185 654 184 674 251 C697 326 723 363 753 366"/>
+  <path class="curve3" d="M522 366 C556 364 585 331 609 252 C628 188 655 187 675 253 C697 327 724 363 754 366"/>
+  <path class="curve" d="M741 366 C775 364 796 315 815 230 C828 171 850 172 864 233 C882 315 894 362 909 366"/>
+  <line class="axis" x1="520" y1="366" x2="909" y2="366"/>
+  <text class="small" x="516" y="386">0,6</text><text class="small" x="708" y="386">1,0</text><text class="small" x="898" y="386">1,4</text>
+  <line class="curve" x1="528" y1="416" x2="557" y2="416"/><text class="small" x="565" y="420">MCO · media 1,175</text>
+  <line class="curve2" x1="528" y1="441" x2="557" y2="441"/><text class="small" x="565" y="445">MC2 · media 0,802</text>
+  <line class="curve3" x1="720" y1="441" x2="749" y2="441"/><text class="small" x="757" y="445">IV-GMM · 0,802</text>
+  <text class="small" x="520" y="479">MC2 e IV-GMM se superponen casi por completo.</text>
+</svg>

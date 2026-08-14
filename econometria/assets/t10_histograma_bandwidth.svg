@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Histograma, densidad kernel y ancho de banda</title>
+  <desc id="desc">Histograma del log ingreso con curva kernel y comparación de densidades con tres anchos de banda.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 15px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.axis{stroke:#9aabba;stroke-width:1.3}.grid{stroke:#e6edf2;stroke-width:1}.bar{fill:#87c5cf;opacity:.8}.kde{stroke:#0b7285;stroke-width:4;fill:none}.hsmall{stroke:#b23a48;stroke-width:3;fill:none}.hbase{stroke:#0b7285;stroke-width:4;fill:none}.hlarge{stroke:#d97706;stroke-width:3;fill:none}.pill{fill:#edf8f8;stroke:#b8dddd}.note{font:700 12px system-ui,sans-serif;fill:#0b5964}
+  </style>
+  <rect class="bg" width="960" height="520" rx="18"/>
+  <text class="head" x="42" y="44">Suavizar elimina bins, no decisiones</text>
+  <text class="sub" x="42" y="69">Log ingreso per cápita familiar real · Montevideo 2015 · distribución ponderada</text>
+  <rect class="panel" x="38" y="94" width="430" height="374" rx="15"/><rect class="panel" x="488" y="94" width="434" height="374" rx="15"/>
+  <text class="label" x="62" y="126">A. Histograma y kernel</text><text class="small" x="62" y="147">Mismo objeto, reglas locales distintas</text>
+  <line class="axis" x1="76" y1="408" x2="444" y2="408"/><line class="axis" x1="76" y1="174" x2="76" y2="408"/>
+  <line class="grid" x1="76" y1="330" x2="444" y2="330"/><line class="grid" x1="76" y1="252" x2="444" y2="252"/>
+  <rect class="bar" x="111" y="400" width="21" height="8"/><rect class="bar" x="133" y="394" width="21" height="14"/><rect class="bar" x="155" y="380" width="21" height="28"/><rect class="bar" x="177" y="348" width="21" height="60"/><rect class="bar" x="199" y="302" width="21" height="106"/><rect class="bar" x="221" y="254" width="21" height="154"/><rect class="bar" x="243" y="208" width="21" height="200"/><rect class="bar" x="265" y="184" width="21" height="224"/><rect class="bar" x="287" y="177" width="21" height="231"/><rect class="bar" x="309" y="211" width="21" height="197"/><rect class="bar" x="331" y="276" width="21" height="132"/><rect class="bar" x="353" y="339" width="21" height="69"/><rect class="bar" x="375" y="378" width="21" height="30"/><rect class="bar" x="397" y="397" width="21" height="11"/>
+  <path class="kde" d="M96 407 C134 407 159 398 180 371 C205 338 220 283 242 223 C256 185 273 170 291 180 C313 193 323 241 340 298 C357 353 379 392 422 405"/>
+  <text class="small" x="72" y="429">7</text><text class="small" x="255" y="429">10</text><text class="small" x="431" y="429">13</text>
+  <line class="kde" x1="90" y1="452" x2="119" y2="452"/><text class="small" x="127" y="456">kernel · h=0,20</text>
+  <text class="label" x="512" y="126">B. La decisión clave: h</text><text class="small" x="512" y="147">Menor h: detalle · mayor h: suavizado</text>
+  <line class="axis" x1="526" y1="408" x2="895" y2="408"/><line class="axis" x1="526" y1="174" x2="526" y2="408"/>
+  <line class="grid" x1="526" y1="330" x2="895" y2="330"/><line class="grid" x1="526" y1="252" x2="895" y2="252"/>
+  <path class="hsmall" d="M541 407 C581 407 610 396 633 365 C651 340 658 298 673 266 C683 244 691 225 702 193 C708 174 718 168 725 187 C733 209 736 234 745 254 C761 288 768 342 793 374 C815 401 843 407 883 407"/>
+  <path class="hbase" d="M541 407 C584 407 612 397 635 369 C660 338 673 284 695 223 C709 185 726 170 744 180 C766 193 776 241 793 298 C810 353 832 392 883 405"/>
+  <path class="hlarge" d="M541 407 C578 405 606 391 632 355 C659 318 676 259 704 211 C721 182 741 177 758 195 C783 221 794 282 814 328 C832 369 851 398 883 406"/>
+  <line class="hsmall" x1="759" y1="204" x2="785" y2="204"/><text class="small" x="792" y="208">0,10</text><line class="hbase" x1="759" y1="225" x2="785" y2="225"/><text class="small" x="792" y="229">0,20</text><line class="hlarge" x1="759" y1="246" x2="785" y2="246"/><text class="small" x="792" y="250">0,40</text>
+  <rect class="pill" x="540" y="352" width="214" height="42" rx="10"/><text class="note" x="556" y="377">h gobierna el sesgo–varianza</text>
+  <text class="small" x="42" y="500">La forma unimodal sobrevive; el pico y el detalle local cambian con el ancho de banda.</text>
+</svg>

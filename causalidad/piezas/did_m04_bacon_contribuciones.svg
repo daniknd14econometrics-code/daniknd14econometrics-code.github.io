@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Contribuciones de las familias Goodman–Bacon al TWFE empírico</title>
+  <desc id="desc">Gráfico divergente con cuatro contribuciones. Siempre tratadas versus cohortes aporta menos 2,7078; tempranas versus tardías aún no tratadas menos 0,0207; tardías versus tempranas ya tratadas 0,9294; cohortes versus nunca tratadas menos 1,2809.</desc>
+  <style>
+    .title{font:700 27px system-ui,sans-serif;fill:#18344d}.sub{font:400 15px system-ui,sans-serif;fill:#5a6e7c}
+    .label{font:600 15px system-ui,sans-serif;fill:#263f52}.small{font:400 13px system-ui,sans-serif;fill:#657985}
+    .value{font:700 15px system-ui,sans-serif;fill:#18344d}.axis{stroke:#768993;stroke-width:1.5}.grid{stroke:#dce5e9;stroke-width:1}
+    .neg{fill:#b84a67}.pos{fill:#2b718f}.canonical{fill:#7895a6}.pill{fill:#edf3f5;stroke:#cad8df}
+  </style>
+  <rect width="1200" height="650" rx="24" fill="#f7fafb"/>
+  <text x="600" y="46" text-anchor="middle" class="title">Qué comparaciones construyen el TWFE empírico</text>
+  <text x="600" y="73" text-anchor="middle" class="sub">Contribución = peso × estimador DiD 2×2 · divorcio unilateral y suicidio femenino</text>
+
+  <line x1="455" y1="105" x2="455" y2="555" class="grid"/><line x1="607" y1="105" x2="607" y2="555" class="grid"/><line x1="759" y1="105" x2="759" y2="555" class="grid"/><line x1="910" y1="98" x2="910" y2="565" stroke="#536b79" stroke-width="2.2"/>
+  <line x1="1062" y1="105" x2="1062" y2="555" class="grid"/>
+  <text x="455" y="584" text-anchor="middle" class="small">−3</text><text x="607" y="584" text-anchor="middle" class="small">−2</text><text x="759" y="584" text-anchor="middle" class="small">−1</text><text x="910" y="584" text-anchor="middle" class="small">0</text><text x="1062" y="584" text-anchor="middle" class="small">1</text>
+  <text x="759" y="618" text-anchor="middle" class="label">Contribución al coeficiente TWFE</text>
+
+  <text x="52" y="151" class="label">Siempre tratadas vs. cohortes</text><text x="52" y="174" class="small">sin contrafactual no tratado observado</text>
+  <rect x="108" y="188" width="118" height="30" rx="15" class="pill"/><text x="167" y="208" text-anchor="middle" class="small">peso 38,4%</text>
+  <rect x="499" y="131" width="411" height="48" rx="8" class="neg"/><text x="487" y="161" text-anchor="end" class="value">−2,7078</text>
+
+  <text x="52" y="263" class="label">Tempranas vs. tardías aún no tratadas</text><text x="52" y="286" class="small">comparación más cercana al DiD canónico</text>
+  <rect x="108" y="300" width="118" height="30" rx="15" class="pill"/><text x="167" y="320" text-anchor="middle" class="small">peso 11,1%</text>
+  <rect x="907" y="243" width="3" height="48" rx="2" class="canonical"/><text x="897" y="273" text-anchor="end" class="value">−0,0207</text>
+
+  <text x="52" y="375" class="label">Tardías vs. tempranas ya tratadas</text><text x="52" y="398" class="small">la cohorte temprana funciona como control</text>
+  <rect x="108" y="412" width="118" height="30" rx="15" class="pill"/><text x="167" y="432" text-anchor="middle" class="small">peso 26,5%</text>
+  <rect x="910" y="355" width="141" height="48" rx="8" class="pos"/><text x="1062" y="385" class="value">0,9294</text>
+
+  <text x="52" y="487" class="label">Cohortes vs. nunca tratadas</text><text x="52" y="510" class="small">control sin exposición durante la ventana</text>
+  <rect x="108" y="524" width="118" height="30" rx="15" class="pill"/><text x="167" y="544" text-anchor="middle" class="small">peso 24,0%</text>
+  <rect x="716" y="467" width="194" height="48" rx="8" class="neg"/><text x="704" y="497" text-anchor="end" class="value">−1,2809</text>
+
+  <rect x="874" y="596" width="262" height="36" rx="12" fill="#fff" stroke="#cbd8df"/><text x="1005" y="619" text-anchor="middle" class="label">Suma de contribuciones: −3,0799</text>
+</svg>

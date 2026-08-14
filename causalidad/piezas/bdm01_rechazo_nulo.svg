@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Tasas de rechazo bajo un efecto placebo verdadero igual a cero</title>
+  <desc id="desc">OLS convencional rechaza el nulo en 44 por ciento de las repeticiones. Cluster por estado, agregación pre-post y matriz empírica común rechazan 5 por ciento; AR uno estimado, 24 por ciento; AR uno con rho 0,8, 3 por ciento. La referencia nominal es 5 por ciento.</desc>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text x="600" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#15324a">Falsos positivos bajo un tratamiento placebo</text>
+  <text x="600" y="86" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Monte Carlo empírico con 100 repeticiones; el efecto verdadero es cero</text>
+
+  <g stroke="#dce5eb" stroke-width="1">
+    <line x1="130" y1="550" x2="1110" y2="550"/><line x1="130" y1="458" x2="1110" y2="458"/>
+    <line x1="130" y1="366" x2="1110" y2="366"/><line x1="130" y1="274" x2="1110" y2="274"/>
+    <line x1="130" y1="182" x2="1110" y2="182"/><line x1="130" y1="90" x2="1110" y2="90"/>
+  </g>
+  <line x1="130" y1="90" x2="130" y2="550" stroke="#8293a1" stroke-width="2"/>
+  <line x1="130" y1="550" x2="1110" y2="550" stroke="#8293a1" stroke-width="2"/>
+  <line x1="130" y1="504" x2="1110" y2="504" stroke="#3e6b59" stroke-width="3" stroke-dasharray="10 7"/>
+  <rect x="930" y="106" width="165" height="28" rx="6" fill="#e9f3ef"/>
+  <text x="1012" y="126" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#3e6b59">Nivel nominal: 5%</text>
+
+  <g font-family="Arial, sans-serif" font-size="16" fill="#526575" text-anchor="end">
+    <text x="115" y="556">0%</text><text x="115" y="464">10%</text><text x="115" y="372">20%</text>
+    <text x="115" y="280">30%</text><text x="115" y="188">40%</text><text x="115" y="96">50%</text>
+  </g>
+  <text x="42" y="320" transform="rotate(-90 42 320)" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#314858">Rechazos del nulo</text>
+
+  <rect x="175" y="145.2" width="110" height="404.8" rx="6" fill="#c36b65"/>
+  <rect x="335" y="504" width="110" height="46" rx="6" fill="#277da1"/>
+  <rect x="495" y="504" width="110" height="46" rx="6" fill="#277da1"/>
+  <rect x="655" y="329.2" width="110" height="220.8" rx="6" fill="#7894a6"/>
+  <rect x="815" y="522.4" width="110" height="27.6" rx="6" fill="#277da1"/>
+  <rect x="975" y="504" width="110" height="46" rx="6" fill="#277da1"/>
+
+  <g font-family="Arial, sans-serif" font-size="23" font-weight="700" text-anchor="middle">
+    <text x="230" y="132" fill="#8e4641">44%</text><text x="390" y="491" fill="#15324a">5%</text>
+    <text x="550" y="491" fill="#15324a">5%</text><text x="710" y="316" fill="#526575">24%</text>
+    <text x="870" y="494" fill="#15324a">3%</text><text x="1030" y="491" fill="#15324a">5%</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="16" fill="#314858" text-anchor="middle">
+    <text x="230" y="585"><tspan x="230">OLS</tspan><tspan x="230" dy="20">convencional</tspan></text>
+    <text x="390" y="585"><tspan x="390">Cluster</tspan><tspan x="390" dy="20">por estado</tspan></text>
+    <text x="550" y="585"><tspan x="550">Agregación</tspan><tspan x="550" dy="20">pre-post</tspan></text>
+    <text x="710" y="585"><tspan x="710">AR(1)</tspan><tspan x="710" dy="20">estimado</tspan></text>
+    <text x="870" y="585"><tspan x="870">AR(1)</tspan><tspan x="870" dy="20">ρ = 0,8</tspan></text>
+    <text x="1030" y="585"><tspan x="1030">Covarianza</tspan><tspan x="1030" dy="20">empírica</tspan></text>
+  </g>
+  <text x="600" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#526575">Con 100 repeticiones, diferencias pequeñas alrededor de 5% contienen ruido Monte Carlo; la brecha 44%–5% es la comparación central.</text>
+</svg>

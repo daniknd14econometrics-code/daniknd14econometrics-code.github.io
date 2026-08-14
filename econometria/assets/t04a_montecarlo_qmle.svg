@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Monte Carlo e inferencia QMLE</title>
+  <desc id="desc">El panel izquierdo compara distribuciones simuladas del estadístico estandarizado para dos tamaños muestrales con la normal estándar. El derecho compara errores estándar nominales y robustos para dos coeficientes.</desc>
+  <rect width="1200" height="620" rx="22" fill="#f7f4ee"/>
+  <style>text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#24313a}.title{font-size:25px;font-weight:700}.sub{font-size:15px;fill:#59656d}.panel{font-size:17px;font-weight:700}.axis{stroke:#9aa4aa;stroke-width:1.2}.grid{stroke:#dfdbd2;stroke-width:1}.tick{font-size:13px;fill:#68737a}.normal{fill:none;stroke:#839097;stroke-width:3;stroke-dasharray:8 6}.n50{fill:none;stroke:#c96d48;stroke-width:4}.n750{fill:none;stroke:#176b68;stroke-width:4}.nom{fill:#d7a083}.rob{fill:#176b68}.label{font-size:14px}.value{font-size:15px;font-weight:700}.note{font-size:14px;fill:#59656d}</style>
+  <text x="54" y="48" class="title">La estimación puede sobrevivir; la inferencia debe adaptarse</text>
+  <text x="54" y="75" class="sub">Monte Carlo no normal y lectura QMLE de una media lineal</text>
+  <rect x="42" y="100" width="615" height="450" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <rect x="677" y="100" width="481" height="450" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <text x="68" y="132" class="panel">A · La aproximación mejora con n</text>
+  <text x="703" y="132" class="panel">B · Mismo β, distinta incertidumbre</text>
+  <line x1="96" y1="444" x2="625" y2="444" class="axis"/><line x1="96" y1="174" x2="96" y2="444" class="axis"/>
+  <g class="grid"><line x1="96" y1="376" x2="625" y2="376"/><line x1="96" y1="309" x2="625" y2="309"/><line x1="96" y1="241" x2="625" y2="241"/></g>
+  <path d="M112 441 C177 437 221 407 264 340 C300 284 329 218 360 199 C391 218 420 284 456 340 C499 407 543 437 608 441" class="normal"/>
+  <path d="M112 441 C171 439 211 421 251 369 C285 324 315 233 350 191 C379 183 403 262 430 327 C467 396 519 432 608 440" class="n50"/>
+  <path d="M112 441 C174 438 218 410 261 343 C298 283 329 226 359 203 C390 217 420 280 454 338 C495 405 542 436 608 441" class="n750"/>
+  <g class="tick"><text x="104" y="466">−4</text><text x="351" y="466">0</text><text x="600" y="466">4</text><text x="338" y="494">estadístico z</text></g>
+  <line x1="122" y1="518" x2="153" y2="518" class="n50"/><text x="162" y="523" class="label">n = 50</text><line x1="245" y1="518" x2="276" y2="518" class="n750"/><text x="285" y="523" class="label">n = 750</text><line x1="389" y1="518" x2="420" y2="518" class="normal"/><text x="429" y="523" class="label">Normal(0,1)</text>
+  <text x="707" y="175" class="label">x₁ · β̂ = 0,7688</text>
+  <rect x="707" y="198" width="151" height="34" rx="5" class="nom"/><text x="869" y="221" class="value">SE nominal 0,0468</text>
+  <rect x="707" y="247" width="222" height="34" rx="5" class="rob"/><text x="940" y="270" class="value">SE robusto 0,0689</text>
+  <text x="707" y="332" class="label">x₂ · β̂ = −0,6833</text>
+  <rect x="707" y="355" width="251" height="34" rx="5" class="nom"/><text x="969" y="378" class="value">0,1603</text>
+  <rect x="707" y="404" width="239" height="34" rx="5" class="rob"/><text x="957" y="427" class="value">0,1525</text>
+  <rect x="703" y="472" width="431" height="54" rx="10" fill="#edf5f3"/>
+  <text x="720" y="495" class="note">El sandwich no “infla” mecánicamente:</text><text x="720" y="516" class="note">reconstruye la varianza bajo supuestos más débiles.</text>
+  <text x="68" y="588" class="note">Fuente: resultados existentes del Taller 4A; no se ejecutaron nuevas simulaciones.</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" role="img" aria-labelledby="title desc">
+  <title id="title">Persistencia temporal del resultado agregado</title>
+  <desc id="desc">Las autocorrelaciones de los residuos estado-año son 0,468 en el primer rezago, 0,403 en el segundo y 0,309 en el tercero.</desc>
+  <rect width="1200" height="470" fill="#ffffff"/>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#15324a">El resultado conserva memoria temporal</text>
+  <text x="600" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Autocorrelación de residuos netos de efectos fijos de estado y año</text>
+
+  <g stroke="#dce5eb" stroke-width="1">
+    <line x1="145" y1="370" x2="1050" y2="370"/>
+    <line x1="145" y1="315" x2="1050" y2="315"/>
+    <line x1="145" y1="260" x2="1050" y2="260"/>
+    <line x1="145" y1="205" x2="1050" y2="205"/>
+    <line x1="145" y1="150" x2="1050" y2="150"/>
+    <line x1="145" y1="95" x2="1050" y2="95"/>
+  </g>
+  <line x1="145" y1="95" x2="145" y2="370" stroke="#8293a1" stroke-width="2"/>
+  <line x1="145" y1="370" x2="1050" y2="370" stroke="#8293a1" stroke-width="2"/>
+  <g font-family="Arial, sans-serif" font-size="16" fill="#526575" text-anchor="end">
+    <text x="130" y="376">0,0</text><text x="130" y="321">0,1</text><text x="130" y="266">0,2</text>
+    <text x="130" y="211">0,3</text><text x="130" y="156">0,4</text><text x="130" y="101">0,5</text>
+  </g>
+  <text x="42" y="230" transform="rotate(-90 42 230)" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#314858">Autocorrelación residual</text>
+
+  <path d="M300 112.6 L600 148.3 L900 200.0" fill="none" stroke="#277da1" stroke-width="6"/>
+  <g fill="#277da1" stroke="#ffffff" stroke-width="3">
+    <circle cx="300" cy="112.6" r="11"/><circle cx="600" cy="148.3" r="11"/><circle cx="900" cy="200.0" r="11"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#15324a" text-anchor="middle">
+    <text x="300" y="100">0,468</text><text x="600" y="135">0,403</text><text x="900" y="187">0,309</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="19" fill="#314858" text-anchor="middle">
+    <text x="300" y="408">Rezago 1</text><text x="600" y="408">Rezago 2</text><text x="900" y="408">Rezago 3</text>
+  </g>
+  <text x="600" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#526575">Los años de una misma unidad no se comportan como observaciones independientes.</text>
+</svg>

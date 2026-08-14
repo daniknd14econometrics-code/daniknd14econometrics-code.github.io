@@ -1,0 +1,82 @@
+/* Layout compartido para fichas públicas individuales de análisis. */
+#quarto-document-content > p:not(:has(> img)),
+#quarto-document-content > section.level2 > p:not(:has(> img)),
+#quarto-document-content > section.level2 > section.level3 > p:not(:has(> img)) {
+  max-width: 80ch;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: none;
+}
+
+@media (min-width: 1200px) {
+  #quarto-content.page-columns {
+    grid-template-columns:
+      [screen-start] minmax(16px, 1fr)
+      [screen-start-inset page-start page-start-inset body-start-outset body-start body-content-start] minmax(0, 1000px)
+      [body-content-end] 24px
+      [body-end body-end-outset page-end-inset] minmax(210px, 240px)
+      [page-end] minmax(16px, 1fr) [screen-end-inset screen-end];
+  }
+
+  #quarto-document-content > p,
+  #quarto-document-content > ul,
+  #quarto-document-content > ol,
+  #quarto-document-content section.level2 > p,
+  #quarto-document-content section.level2 > ul,
+  #quarto-document-content section.level2 > ol {
+    max-width: 80ch;
+  }
+
+  #quarto-document-content > p:has(> img),
+  #quarto-document-content section.level2 > p:has(> img),
+  #quarto-document-content section.level3 > p:has(> img) {
+    max-width: none;
+  }
+
+  #quarto-document-content table {
+    width: 100%;
+  }
+
+  /* Excepción aprobada: el diagnóstico doble de T13 comparte el ancho visual. */
+  #quarto-document-content img[src$="t13_residuo_primera_etapa.svg"] {
+    width: min(100%, 900px) !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  #quarto-document-content .quick-grid > *,
+  #quarto-document-content .metric-grid > * {
+    min-width: 0;
+  }
+
+  #quarto-document-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #quarto-document-content mjx-container[display="true"] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #quarto-document-content :not(pre) > code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 600px) {
+  #title-block-header .quarto-title-meta {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  #title-block-header .quarto-title-meta > div {
+    min-width: 0;
+    width: auto;
+  }
+}

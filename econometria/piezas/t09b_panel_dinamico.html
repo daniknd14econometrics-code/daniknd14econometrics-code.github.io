@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Producción con memoria: por qué un panel dinámico necesita instrumentos internos – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-aplicada" id="toc-pregunta-aplicada" class="nav-link active" data-scroll-target="#pregunta-aplicada">Pregunta aplicada</a></li>
+  <li><a href="#la-persistencia-visible-no-es-todavía-dinámica" id="toc-la-persistencia-visible-no-es-todavía-dinámica" class="nav-link" data-scroll-target="#la-persistencia-visible-no-es-todavía-dinámica">La persistencia visible no es todavía dinámica</a></li>
+  <li><a href="#por-qué-primeras-diferencias-no-resuelven-todo" id="toc-por-qué-primeras-diferencias-no-resuelven-todo" class="nav-link" data-scroll-target="#por-qué-primeras-diferencias-no-resuelven-todo">Por qué primeras diferencias no resuelven todo</a></li>
+  <li><a href="#de-andersonhsiao-a-arellanobond" id="toc-de-andersonhsiao-a-arellanobond" class="nav-link" data-scroll-target="#de-andersonhsiao-a-arellanobond">De Anderson–Hsiao a Arellano–Bond</a></li>
+  <li><a href="#qué-cambia-entre-estimadores" id="toc-qué-cambia-entre-estimadores" class="nav-link" data-scroll-target="#qué-cambia-entre-estimadores">Qué cambia entre estimadores</a></li>
+  <li><a href="#diagnóstico-los-tests-no-eligen-solos" id="toc-diagnóstico-los-tests-no-eligen-solos" class="nav-link" data-scroll-target="#diagnóstico-los-tests-no-eligen-solos">Diagnóstico: los tests no eligen solos</a></li>
+  <li><a href="#controles-capital-y-alcance" id="toc-controles-capital-y-alcance" class="nav-link" data-scroll-target="#controles-capital-y-alcance">Controles, capital y alcance</a></li>
+  <li><a href="#límites" id="toc-límites" class="nav-link" data-scroll-target="#límites">Límites</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Producción con memoria: por qué un panel dinámico necesita instrumentos internos</h1>
+<p class="subtitle lead">Persistencia del valor bruto de producción, sesgo dinámico y disciplina instrumental en un panel corto de firmas uruguayas</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">10 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>Agregar memoria al modelo cambia el problema econométrico: efectos fijos ya no bastan.</p>
+</div>
+<div class="hero-sub">
+<p>Este estudio examina la persistencia del valor bruto de producción en un panel corto de firmas uruguayas. El rezago del resultado ayuda a representar la dinámica, pero queda correlacionado con el error después de remover la heterogeneidad de la firma. Anderson–Hsiao y Arellano–Bond responden con instrumentos internos; su credibilidad depende de qué rezagos son válidos, informativos y manejables.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Ventana de análisis</p>
+</div>
+<div class="metric-value">
+<p>2012–2021</p>
+</div>
+<div class="metric-note">
+<p>38.480 observaciones y 7.932 firmas antes de exigir rezagos</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Persistencia bruta</p>
+</div>
+<div class="metric-value">
+<p>0,964</p>
+</div>
+<div class="metric-note">
+<p>Combina memoria con diferencias permanentes entre firmas</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Persistencia within</p>
+</div>
+<div class="metric-value">
+<p>0,480</p>
+</div>
+<div class="metric-note">
+<p>Correlación tras centrar cada firma en su propio promedio</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Difference GMM + X</p>
+</div>
+<div class="metric-value">
+<p>ρ = 0,324</p>
+</div>
+<div class="metric-note">
+<p>IC95% [0,227; 0,422] en 25.502 observaciones</p>
+</div>
+</div>
+</div>
+<section id="pregunta-aplicada" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-aplicada">Pregunta aplicada</h2>
+<p>¿Cuánto de la escala productiva actual de una firma está asociado con su propia escala pasada, una vez que se separan las diferencias permanentes entre empresas? El resultado es el logaritmo del valor bruto de producción real. La especificación incorpora empleo, capital, condición exportadora y efectos de año, pero el foco es el coeficiente del resultado rezagado, <span class="math inline">\(\rho\)</span>.</p>
+<p>La base es un panel no balanceado de firmas uruguayas. La ventana 2012–2021 contiene 38.480 observaciones de 7.932 firmas; exigir un rezago deja 33.857 observaciones y exigir dos rezagos —necesarios para instrumentar— reduce la muestra a 28.678 observaciones de 4.872 firmas. Esa pérdida no es administrativa: define qué historias empresariales identifican la dinámica.</p>
+</section>
+<section id="la-persistencia-visible-no-es-todavía-dinámica" class="level2">
+<h2 class="anchored" data-anchor-id="la-persistencia-visible-no-es-todavía-dinámica">La persistencia visible no es todavía dinámica</h2>
+<p>La correlación entre producción actual y rezagada es 0,964. Sin embargo, al sustraer el promedio de cada firma cae a 0,480. La diferencia revela que una gran parte de la alineación bruta proviene de heterogeneidad persistente: empresas estructuralmente grandes siguen siendo grandes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/t09b_instrumentos_internos.svg" class="img-fluid figure-img" style="width:100.0%" alt="Persistencia bruta y within junto con una línea de tiempo que explica la instrumentación interna de un panel dinámico"></p>
+<figcaption>El panel izquierdo contrasta la correlación bruta entre producción actual y rezagada con la correlación within. El panel derecho muestra por qué, después de diferenciar, el rezago del resultado es endógeno y cómo el nivel observado dos períodos atrás puede funcionar como instrumento interno.</figcaption>
+</figure>
+</div>
+<p>Un pooled dinámico interpreta buena parte de esas diferencias permanentes como memoria y estima <span class="math inline">\(\widehat\rho=0,964\)</span>. Efectos fijos separa la heterogeneidad invariante y reduce la estimación a 0,462, pero crea otro problema: con pocos períodos, el resultado rezagado transformado queda correlacionado con el error transformado. Es el sesgo dinámico de Nickell.</p>
+</section>
+<section id="por-qué-primeras-diferencias-no-resuelven-todo" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-primeras-diferencias-no-resuelven-todo">Por qué primeras diferencias no resuelven todo</h2>
+<p>Considérese el modelo</p>
+<p><span class="math display">\[
+y_{it}=\rho y_{i,t-1}+X_{it}'\beta+\alpha_i+\lambda_t+u_{it}.
+\]</span></p>
+<p>Tomar primeras diferencias elimina el efecto fijo <span class="math inline">\(\alpha_i\)</span>, pero produce <span class="math inline">\(\Delta y_{i,t-1}\)</span> como regresor. Este término contiene <span class="math inline">\(u_{i,t-1}\)</span>, mientras <span class="math inline">\(\Delta u_{it}=u_{it}-u_{i,t-1}\)</span> también lo contiene. Por eso la estimación ingenua en diferencias no es exógena: en la aplicación entrega incluso <span class="math inline">\(\widehat\rho=-0,161\)</span>.</p>
+<p>La dinámica obliga a repensar la instrumentación. Bajo ausencia de correlación serial relevante en los errores de nivel y condiciones apropiadas de timing, <span class="math inline">\(y_{i,t-2}\)</span> está correlacionado con <span class="math inline">\(\Delta y_{i,t-1}\)</span> pero no con <span class="math inline">\(\Delta u_{it}\)</span>.</p>
+</section>
+<section id="de-andersonhsiao-a-arellanobond" class="level2">
+<h2 class="anchored" data-anchor-id="de-andersonhsiao-a-arellanobond">De Anderson–Hsiao a Arellano–Bond</h2>
+<p>Anderson–Hsiao usa un rezago válido por ecuación. Es transparente y recupera una persistencia positiva de 0,168, aunque puede desaprovechar información. Arellano–Bond organiza todas las condiciones de momento disponibles: para cada período utiliza niveles suficientemente rezagados como instrumentos de la ecuación en diferencias.</p>
+<p>Difference GMM no convierte automáticamente los rezagos en buenos instrumentos. La distancia temporal debe ser compatible con el proceso del error; además, instrumentos muy profundos pueden ser poco informativos cuando la serie es persistente. La elección entre ampliar, acotar o colapsar la matriz de instrumentos es parte de la especificación, no una opción de presentación.</p>
+</section>
+<section id="qué-cambia-entre-estimadores" class="level2">
+<h2 class="anchored" data-anchor-id="qué-cambia-entre-estimadores">Qué cambia entre estimadores</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/t09b_persistencia_estimadores.svg" class="img-fluid figure-img" style="width:100.0%" alt="Coeficientes de persistencia e intervalos de confianza para pooled, efectos fijos, primeras diferencias, Anderson-Hsiao y Difference GMM"></p>
+<figcaption>El gráfico compara el coeficiente de persistencia y sus intervalos de confianza en pooled dinámico, efectos fijos, primeras diferencias, Anderson–Hsiao y variantes de Arellano–Bond. Las especificaciones no comparten siempre muestra ni conjunto de controles y se presentan como secuencia diagnóstica, no como ranking.</figcaption>
+</figure>
+</div>
+<p>La secuencia es informativa. Pooled queda cerca de uno porque mezcla dinámica y heterogeneidad; FE dinámico corrige esa mezcla, pero conserva sesgo de panel corto; primeras diferencias sin instrumento falla por construcción. Anderson–Hsiao y las variantes Arellano–Bond vuelven a una persistencia positiva y moderada.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Especificación</th>
+<th style="text-align: right;"><span class="math inline">\(\widehat\rho\)</span></th>
+<th style="text-align: right;">EE</th>
+<th style="text-align: right;">IC95%</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pooled dinámico</td>
+<td style="text-align: right;">0,964</td>
+<td style="text-align: right;">0,006</td>
+<td style="text-align: right;">[0,953; 0,975]</td>
+<td>Mezcla memoria y heterogeneidad permanente</td>
+</tr>
+<tr class="even">
+<td>FE dinámico</td>
+<td style="text-align: right;">0,462</td>
+<td style="text-align: right;">0,023</td>
+<td style="text-align: right;">[0,416; 0,507]</td>
+<td>Remueve heterogeneidad, no el sesgo dinámico</td>
+</tr>
+<tr class="odd">
+<td>Anderson–Hsiao</td>
+<td style="text-align: right;">0,168</td>
+<td style="text-align: right;">0,053</td>
+<td style="text-align: right;">[0,063; 0,273]</td>
+<td>Instrumentación parsimoniosa</td>
+</tr>
+<tr class="even">
+<td>Arellano–Bond</td>
+<td style="text-align: right;">0,261</td>
+<td style="text-align: right;">0,054</td>
+<td style="text-align: right;">[0,155; 0,367]</td>
+<td>Rezagos internos del resultado</td>
+</tr>
+<tr class="odd">
+<td>Arellano–Bond + controles</td>
+<td style="text-align: right;">0,324</td>
+<td style="text-align: right;">0,050</td>
+<td style="text-align: right;">[0,227; 0,422]</td>
+<td>Incluye empleo, capital y exportación</td>
+</tr>
+<tr class="even">
+<td>Arellano–Bond colapsado</td>
+<td style="text-align: right;">0,295</td>
+<td style="text-align: right;">0,123</td>
+<td style="text-align: right;">[0,053; 0,536]</td>
+<td>Menos instrumentos, más incertidumbre</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La especificación con controles sugiere una persistencia moderada: mecánicamente, un impulso inicial deja menos de 12% de su magnitud después de dos períodos si <span class="math inline">\(\rho\)</span> está entre 0,26 y 0,34. Esto no es una función impulso–respuesta causal; resume únicamente la propagación implícita en el modelo autorregresivo.</p>
+</section>
+<section id="diagnóstico-los-tests-no-eligen-solos" class="level2">
+<h2 class="anchored" data-anchor-id="diagnóstico-los-tests-no-eligen-solos">Diagnóstico: los tests no eligen solos</h2>
+<p>En residuos diferenciados, rechazar AR(1) es esperable porque <span class="math inline">\(\Delta u_{it}\)</span> comparte componentes entre períodos consecutivos. El diagnóstico decisivo es AR(2): si se rechaza, <span class="math inline">\(y_{i,t-2}\)</span> deja de ser un instrumento defendible para la ecuación diferenciada.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variante Difference GMM</th>
+<th style="text-align: right;">Instrumentos</th>
+<th style="text-align: right;"><span class="math inline">\(\widehat\rho\)</span></th>
+<th style="text-align: right;">AR(2), p</th>
+<th>Qué aporta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AB mínimo, rezagos 2+</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: right;">0,261</td>
+<td style="text-align: right;">0,200</td>
+<td>Referencia amplia; matriz grande</td>
+</tr>
+<tr class="even">
+<td>AB mínimo, rezagos 2–5</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0,236</td>
+<td style="text-align: right;">0,258</td>
+<td>Acota profundidad y cantidad</td>
+</tr>
+<tr class="odd">
+<td>AB + X, ventanas acotadas</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">0,324</td>
+<td style="text-align: right;">0,389</td>
+<td>Dinámica condicionada; más momentos</td>
+</tr>
+<tr class="even">
+<td>AB colapsado, rezagos 2–4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0,295</td>
+<td style="text-align: right;">0,278</td>
+<td>Reduce proliferación; IC más ancho</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Los cuatro diseños no rechazan AR(2), pero eso no prueba validez. Sargan no es robusto a heterocedasticidad; Hansen sí lo es, aunque puede perder potencia cuando proliferan instrumentos. En variantes con controles, varias configuraciones generan tensión en los tests de sobreidentificación. Usar rezagos más profundos mejora algunos <em>p-values</em>, pero eleva <span class="math inline">\(\widehat\rho\)</span> hasta alrededor de 0,76 y vuelve imprecisa la asociación con capital: una advertencia de instrumentos más débiles o de un objeto identificado por otra porción de la variación.</p>
+<p>Por eso no se selecciona el modelo que simplemente “pasa” más tests. Se evalúan conjuntamente timing económico, correlación serial, fuerza informativa, número de instrumentos y estabilidad de resultados.</p>
+</section>
+<section id="controles-capital-y-alcance" class="level2">
+<h2 class="anchored" data-anchor-id="controles-capital-y-alcance">Controles, capital y alcance</h2>
+<p>En la referencia Arellano–Bond con controles acotados, la asociación de corto plazo con capital es 0,221 (EE 0,047). Otras decisiones sobre el estatus endógeno o predeterminado del capital la reducen y amplían su incertidumbre. No debe leerse como elasticidad estructural: la especificación ilustra cuánto depende la interpretación económica de las condiciones de momento impuestas.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Objeto de decisión
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En un panel dinámico corto, la pregunta no es solo si existen rezagos disponibles. Es cuáles pueden defenderse como instrumentos, cuánta información aportan y si la matriz resultante permite diagnósticos útiles sin dominar la muestra.</p>
+</div>
+</div>
+</section>
+<section id="límites" class="level2">
+<h2 class="anchored" data-anchor-id="límites">Límites</h2>
+<ul>
+<li>El panel es no balanceado y exigir rezagos cambia la composición de firmas observadas.</li>
+<li>Difference GMM elimina efectos fijos, pero no protege frente a instrumentos internos inválidos o débiles.</li>
+<li>Los tests de correlación serial y sobreidentificación son diagnósticos complementarios, no certificados automáticos.</li>
+<li>System GMM exigiría condiciones de momento adicionales en niveles y queda fuera del alcance de este análisis.</li>
+<li>Los coeficientes describen asociaciones dinámicas condicionadas; no identifican por sí solos efectos causales de empleo, capital o exportación.</li>
+</ul>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>Introducir el resultado rezagado permite representar memoria, pero rompe la solución habitual de efectos fijos en panel corto. Pooled confunde persistencia con heterogeneidad; FE dinámico y primeras diferencias dejan al rezago correlacionado con el error. Anderson–Hsiao hace visible la solución mínima y Arellano–Bond amplía las condiciones de momento mediante instrumentos internos.</p>
+<p>El avance metodológico no elimina la fragilidad. En esta aplicación, las estimaciones defendibles se concentran en una persistencia positiva y moderada, mientras la profundidad y cantidad de instrumentos cambian precisión, diagnósticos y lectura económica. Difference GMM es útil cuando la instrumentación interna se diseña y se somete a estrés; no cuando los rezagos se tratan como información exógena gratuita.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

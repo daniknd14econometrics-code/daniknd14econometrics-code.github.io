@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Cuando DiD encuentra efectos que no existen: correlación serial e inferencia – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link active" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#significancia-espuria-en-paneles-did" id="toc-significancia-espuria-en-paneles-did" class="nav-link" data-scroll-target="#significancia-espuria-en-paneles-did">Significancia espuria en paneles DiD</a></li>
+  <li><a href="#por-qué-importa-la-correlación-serial" id="toc-por-qué-importa-la-correlación-serial" class="nav-link" data-scroll-target="#por-qué-importa-la-correlación-serial">Por qué importa la correlación serial</a></li>
+  <li><a href="#diseño-placebo-inspirado-en-bdm" id="toc-diseño-placebo-inspirado-en-bdm" class="nav-link" data-scroll-target="#diseño-placebo-inspirado-en-bdm">Diseño placebo inspirado en BDM</a></li>
+  <li><a href="#datos-y-construcción-del-resultado" id="toc-datos-y-construcción-del-resultado" class="nav-link" data-scroll-target="#datos-y-construcción-del-resultado">Datos y construcción del resultado</a></li>
+  <li><a href="#persistencia-temporal" id="toc-persistencia-temporal" class="nav-link" data-scroll-target="#persistencia-temporal">Persistencia temporal</a></li>
+  <li><a href="#monte-carlo-con-un-efecto-verdadero-igual-a-cero" id="toc-monte-carlo-con-un-efecto-verdadero-igual-a-cero" class="nav-link" data-scroll-target="#monte-carlo-con-un-efecto-verdadero-igual-a-cero">Monte Carlo con un efecto verdadero igual a cero</a></li>
+  <li><a href="#qué-ocurre-con-distintos-métodos-de-inferencia" id="toc-qué-ocurre-con-distintos-métodos-de-inferencia" class="nav-link" data-scroll-target="#qué-ocurre-con-distintos-métodos-de-inferencia">Qué ocurre con distintos métodos de inferencia</a></li>
+  <li><a href="#qué-estrategias-corrigen-el-problema" id="toc-qué-estrategias-corrigen-el-problema" class="nav-link" data-scroll-target="#qué-estrategias-corrigen-el-problema">Qué estrategias corrigen el problema</a></li>
+  <li><a href="#alcance-y-límites" id="toc-alcance-y-límites" class="nav-link" data-scroll-target="#alcance-y-límites">Alcance y límites</a></li>
+  <li><a href="#qué-resuelve-bdm-y-qué-no" id="toc-qué-resuelve-bdm-y-qué-no" class="nav-link" data-scroll-target="#qué-resuelve-bdm-y-qué-no">Qué resuelve BDM y qué no</a></li>
+  <li><a href="#puente-hacia-la-crisis-moderna-de-twfe" id="toc-puente-hacia-la-crisis-moderna-de-twfe" class="nav-link" data-scroll-target="#puente-hacia-la-crisis-moderna-de-twfe">Puente hacia la crisis moderna de TWFE</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cuando DiD encuentra efectos que no existen: correlación serial e inferencia</h1>
+<p class="subtitle lead">Tratamientos placebo para mostrar por qué la persistencia temporal puede producir falsos positivos</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../causalidad/index.html">← Volver al índice de Causalidad</a></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>La significancia puede aparecer aun cuando el efecto verdadero sea cero</p>
+</div>
+<div class="hero-sub">
+<p>Este ejercicio reproduce la lógica de Bertrand, Duflo y Mullainathan: tratamientos persistentes combinados con resultados serialmente correlacionados pueden hacer que la inferencia convencional reporte demasiados efectos estadísticamente significativos.</p>
+</div>
+</div>
+<section id="pregunta-central" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
+<p>¿Por qué una especificación Difference-in-Differences puede producir una tasa muy alta de falsos positivos cuando los resultados y errores presentan persistencia temporal?</p>
+<p><strong>Respuesta corta:</strong> en el Monte Carlo empírico, OLS convencional rechaza un efecto placebo verdadero igual a cero en <strong>44%</strong> de las repeticiones, frente a un nivel nominal de <strong>5%</strong>. El coeficiente no es el protagonista: el problema es que la incertidumbre se subestima cuando se trata como independiente información que permanece correlacionada dentro de cada estado.</p>
+</section>
+<section id="significancia-espuria-en-paneles-did" class="level2">
+<h2 class="anchored" data-anchor-id="significancia-espuria-en-paneles-did">Significancia espuria en paneles DiD</h2>
+<p>Un diseño DiD con muchos años suele parecer más informativo que uno de dos períodos. Sin embargo, observar repetidamente a un mismo estado no equivale a obtener nuevas unidades independientes. Salarios, empleo y otras variables agregadas pueden permanecer altos o bajos durante varios años por shocks persistentes.</p>
+<p>Si el tratamiento también es persistente —una ley permanece activa después de adoptarse—, el regresor DiD y el error comparten una estructura temporal prolongada. Una regresión con errores estándar convencionales puede interpretar esa persistencia como precisión adicional y producir estadísticos <code>t</code> demasiado grandes.</p>
+</section>
+<section id="por-qué-importa-la-correlación-serial" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-importa-la-correlación-serial">Por qué importa la correlación serial</h2>
+<p>La estimación con efectos fijos puede remover diferencias permanentes entre estados y shocks comunes de cada año. Eso no garantiza que el residuo restante sea independiente en el tiempo dentro de un estado.</p>
+<p>La consecuencia es inferencial: el coeficiente puede calcularse correctamente para la especificación propuesta, pero su error estándar convencional puede ser demasiado pequeño. En ese caso, el test rechaza el nulo con mucha más frecuencia que la tasa declarada.</p>
+</section>
+<section id="diseño-placebo-inspirado-en-bdm" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-placebo-inspirado-en-bdm">Diseño placebo inspirado en BDM</h2>
+<p>El ejercicio asigna tratamientos que no corresponden a una política real. En cada repetición se remuestrean trayectorias estatales completas, se selecciona aleatoriamente un conjunto tratado y se fija un año placebo entre 1985 y 1995. Desde ese año, el indicador permanece activo para los estados ficticiamente tratados.</p>
+<p>El outcome original no se modifica bajo el nulo. Por construcción, el efecto verdadero del placebo es <strong>cero</strong>. Por tanto, cada rechazo al 5% es un falso positivo y la frecuencia de rechazos mide directamente la calibración del método de inferencia.</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Unidad de asignación</strong></p>
+<p>El tratamiento placebo se asigna a nivel de estado y persiste desde el año ficticio de adopción.</p>
+</div>
+<div class="section-box">
+<p><strong>Hipótesis verdadera</strong></p>
+<p>El efecto bajo el nulo es cero. Una inferencia bien calibrada debería rechazar aproximadamente 5% de las veces.</p>
+</div>
+<div class="section-box">
+<p><strong>Objeto de comparación</strong></p>
+<p>La tasa de falsos positivos producida por seis formas de calcular la incertidumbre.</p>
+</div>
+</div>
+</section>
+<section id="datos-y-construcción-del-resultado" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-construcción-del-resultado">Datos y construcción del resultado</h2>
+<p>La base utiliza microdatos CPS/CEPR ORG de 1979 a 1999. La muestra se restringe a mujeres de 25 a 50 años con remuneración semanal y ponderador muestral válidos. El logaritmo del ingreso semanal se residualiza por educación y un polinomio de cuarto grado en edad; luego se promedia por estado y año.</p>
+<div class="small-note">
+<ul>
+<li><strong>Muestra efectiva de residualización:</strong> 538.506 observaciones individuales.</li>
+<li><strong>Cobertura:</strong> 51 estados y 21 años.</li>
+<li><strong>Panel agregado:</strong> 1.071 celdas estado-año, balanceado.</li>
+<li><strong>Outcome del ejercicio:</strong> media estado-año del residuo del logaritmo del ingreso semanal.</li>
+<li><strong>Tratamiento:</strong> adopción placebo persistente, asignada aleatoriamente.</li>
+<li><strong>Repeticiones:</strong> 100, con seed fijado en el material fuente.</li>
+</ul>
+</div>
+<p>La base filtrada previa contiene 538.999 registros; 538.506 integran la regresión de residualización y constituyen la muestra analítica relevante.</p>
+</section>
+<section id="persistencia-temporal" class="level2">
+<h2 class="anchored" data-anchor-id="persistencia-temporal">Persistencia temporal</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="bdm01_persistencia.svg" class="img-fluid figure-img" alt="Las autocorrelaciones residuales son 0,468, 0,403 y 0,309 en los primeros tres rezagos, mostrando persistencia positiva dentro de los estados."></p>
+<figcaption>Autocorrelación de los residuos estado-año</figcaption>
+</figure>
+</div>
+<p>La autocorrelación permanece positiva durante al menos tres años. El primer rezago alcanza <strong>0,468</strong>; incluso en el tercero conserva un valor de <strong>0,309</strong>. Por ello, tres observaciones anuales consecutivas de un estado no aportan la misma información que tres estados independientes.</p>
+</section>
+<section id="monte-carlo-con-un-efecto-verdadero-igual-a-cero" class="level2">
+<h2 class="anchored" data-anchor-id="monte-carlo-con-un-efecto-verdadero-igual-a-cero">Monte Carlo con un efecto verdadero igual a cero</h2>
+<p>El Monte Carlo empírico remuestrea estados completos con reemplazo. Esta decisión conserva la trayectoria temporal interna de cada estado y evita destruir precisamente la dependencia que se quiere estudiar.</p>
+<p>En cada una de las 100 repeticiones se estima la misma especificación DiD con efectos fijos de estado y año. Solo cambia el tratamiento placebo y la forma de calcular la incertidumbre.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="bdm01_rechazo_nulo.svg" class="img-fluid figure-img" alt="OLS convencional rechaza falsamente el nulo en 44 por ciento de las repeticiones, mientras varios métodos que reconocen la dependencia se acercan al nivel nominal de 5 por ciento."></p>
+<figcaption>Tasas de rechazo bajo el nulo por método de inferencia</figcaption>
+</figure>
+</div>
+<p>La comparación dominante es inmediata: <strong>44% de falsos positivos con OLS convencional frente a un tamaño nominal de 5%</strong>. El procedimiento rechaza casi nueve veces más de lo previsto aun cuando no existe ningún efecto.</p>
+</section>
+<section id="qué-ocurre-con-distintos-métodos-de-inferencia" class="level2">
+<h2 class="anchored" data-anchor-id="qué-ocurre-con-distintos-métodos-de-inferencia">Qué ocurre con distintos métodos de inferencia</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Método</th>
+<th style="text-align: right;">Rechazos bajo el nulo</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OLS convencional</td>
+<td style="text-align: right;"><strong>44%</strong></td>
+<td>Sobre-rechazo muy marcado</td>
+</tr>
+<tr class="even">
+<td>Cluster por estado</td>
+<td style="text-align: right;"><strong>5%</strong></td>
+<td>Cercano al tamaño nominal</td>
+</tr>
+<tr class="odd">
+<td>Agregación pre-post</td>
+<td style="text-align: right;"><strong>5%</strong></td>
+<td>Cercano al tamaño nominal</td>
+</tr>
+<tr class="even">
+<td>AR(1) con persistencia estimada</td>
+<td style="text-align: right;"><strong>24%</strong></td>
+<td>Corrige solo parcialmente</td>
+</tr>
+<tr class="odd">
+<td>AR(1) con <code>ρ = 0,8</code></td>
+<td style="text-align: right;"><strong>3%</strong></td>
+<td>Cercano al nominal; diferencia no interpretable como ranking</td>
+</tr>
+<tr class="even">
+<td>Matriz de covarianza empírica común</td>
+<td style="text-align: right;"><strong>5%</strong></td>
+<td>Cercano al tamaño nominal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Con solo 100 repeticiones, tasas como 3% y 5% contienen ruido Monte Carlo. No corresponde concluir que un método “gana” por dos puntos porcentuales. La evidencia sustantiva es que varios procedimientos reducen drásticamente el sobre-rechazo de OLS convencional.</p>
+</section>
+<section id="qué-estrategias-corrigen-el-problema" class="level2">
+<h2 class="anchored" data-anchor-id="qué-estrategias-corrigen-el-problema">Qué estrategias corrigen el problema</h2>
+<p><strong>Cluster por estado</strong> permite dependencia arbitraria dentro de la unidad donde se asigna el tratamiento. En este ejercicio recupera una tasa de rechazo cercana al nivel nominal y constituye la corrección más directamente alineada con el diseño.</p>
+<p><strong>Agregación pre-post</strong> comprime cada trayectoria a un cambio previo y posterior. Reduce la falsa multiplicación de información temporal, aunque sacrifica detalle dinámico.</p>
+<p>Las correcciones <strong>AR(1)</strong> imponen una forma paramétrica para la dependencia. El contraste entre 24% con persistencia estimada y 3% con un valor impuesto muestra que sus resultados pueden depender de cómo se especifique el proceso temporal. La matriz empírica común también se acerca al nominal en este ejercicio, pero requiere estimar una estructura de covarianza compartida.</p>
+<p>El mensaje no es que exista una corrección universal. La inferencia debe responder al nivel de asignación, el número de grupos y la dependencia temporal plausible en cada aplicación.</p>
+</section>
+<section id="alcance-y-límites" class="level2">
+<h2 class="anchored" data-anchor-id="alcance-y-límites">Alcance y límites</h2>
+<p>El ejercicio estudia calibración inferencial, no el efecto de una política sustantiva. Las leyes son placebo y el parámetro verdadero se fija en cero para observar directamente cuántas veces cada método declara un efecto inexistente.</p>
+<p>Las tasas provienen de 100 repeticiones y deben leerse como evidencia ilustrativa, no como estimaciones de precisión Monte Carlo extrema. El patrón grande —44% frente a 5%— es informativo; las diferencias pequeñas alrededor del nivel nominal no sostienen rankings finos.</p>
+</section>
+<section id="qué-resuelve-bdm-y-qué-no" class="level2">
+<h2 class="anchored" data-anchor-id="qué-resuelve-bdm-y-qué-no">Qué resuelve BDM y qué no</h2>
+<p>BDM identifica un problema de <strong>inferencia</strong>: errores estándar mal calibrados cuando tratamiento y outcome presentan persistencia temporal. Clustering y otras estrategias pueden mejorar la frecuencia con que los tests respetan su nivel nominal.</p>
+<p>Esto no resuelve un problema diferente: qué parámetro recupera una regresión con efectos fijos bidireccionales cuando distintos grupos adoptan el tratamiento en momentos distintos y los efectos son heterogéneos. Esa cuestión posterior afecta la <strong>identificación e interpretación del estimando</strong>, aun si los errores estándar estuvieran bien calculados.</p>
+</section>
+<section id="puente-hacia-la-crisis-moderna-de-twfe" class="level2">
+<h2 class="anchored" data-anchor-id="puente-hacia-la-crisis-moderna-de-twfe">Puente hacia la crisis moderna de TWFE</h2>
+<p>La progresión conceptual queda separada en dos etapas. Primero, la literatura clásica advierte que la dependencia serial puede convertir persistencia en significancia espuria. Después, la literatura moderna examina cómo las comparaciones implícitas de TWFE pueden combinar cohortes y períodos de manera problemática bajo adopción escalonada.</p>
+<p>Mantener la distinción evita atribuir a clustering una capacidad que no tiene: corregir la inferencia no redefine las comparaciones causales incorporadas en el estimador.</p>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>En este ejercicio, OLS convencional rechaza un efecto placebo verdadero igual a cero en <strong>44%</strong> de las repeticiones, aunque el test declara trabajar al 5%. La persistencia residual —0,468 en el primer rezago— explica por qué los años de un mismo estado no pueden tratarse como información independiente.</p>
+<p>Cluster por estado, agregación pre-post y una matriz de covarianza empírica reducen sustancialmente el sobre-rechazo y se acercan al tamaño nominal. La enseñanza central es metodológica: en Difference-in-Differences, una especificación plausible no alcanza si la inferencia ignora la estructura temporal y el nivel de asignación. Resolver ese problema prepara, pero no sustituye, el análisis posterior de la crisis moderna de TWFE.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

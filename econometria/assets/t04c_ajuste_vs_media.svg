@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Ajuste distribucional frente a estabilidad de la media</title>
+  <desc id="desc">Comparación de BIC, medias predichas y RMSE para modelos lognormales, Gamma y MCO log con smearing.</desc>
+  <style>.bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 14px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.tiny{font:500 11px system-ui,sans-serif;fill:#52677a}.value{font:800 20px system-ui,sans-serif;fill:#0b7285}.warn{font:800 20px system-ui,sans-serif;fill:#b85c00}.axis{stroke:#9aabba;stroke-width:1.2}.grid{stroke:#e5ebf0;stroke-width:1}.fit{fill:#0b7285}.stable{fill:#79bdc6}.unstable{fill:#d97706}.call{fill:#fff7e6;stroke:#f0cf91}.pill{fill:#edf8f8;stroke:#b8dde2}</style>
+  <rect class="bg" width="960" height="560" rx="18"/>
+  <text class="head" x="42" y="44">Mejor BIC no garantiza una media bien comportada</text>
+  <text class="sub" x="42" y="69">El ajuste evalúa toda la densidad; la media en niveles puede responder de forma muy distinta</text>
+  <rect class="panel" x="42" y="94" width="395" height="392" rx="15"/>
+  <text class="label" x="66" y="125">A. Ajuste distribucional · menor BIC es mejor</text>
+  <text class="tiny" x="66" y="146">Distancia respecto de BIC 21.900</text>
+  <line class="axis" x1="190" y1="430" x2="405" y2="430"/><text class="tiny" x="185" y="449">0</text><text class="tiny" x="284" y="449">350</text><text class="tiny" x="389" y="449">700</text>
+  <text class="small" x="66" y="192">Lognormal het.</text><rect class="fit" x="190" y="176" width="6" height="22" rx="4"/><text class="label" x="206" y="192">21.918,5</text>
+  <text class="small" x="66" y="250">Gamma disp. variable</text><rect class="fit" x="190" y="234" width="26" height="22" rx="4"/><text class="label" x="226" y="250">21.984,3</text>
+  <text class="small" x="66" y="308">Gamma estándar</text><rect class="stable" x="190" y="292" width="201" height="22" rx="4"/><text class="label" x="280" y="338">22.554,0</text>
+  <text class="small" x="66" y="376">Lognormal estándar</text><rect class="stable" x="190" y="360" width="209" height="22" rx="4"/><text class="label" x="280" y="407">≈22.581,8</text>
+  <rect class="panel" x="461" y="94" width="457" height="392" rx="15"/>
+  <text class="label" x="485" y="125">B. Momento relevante · media observada 196,65</text>
+  <text class="tiny" x="485" y="146">Media predicha y RMSE en niveles</text>
+  <rect class="pill" x="485" y="166" width="409" height="55" rx="11"/><text class="small" x="503" y="189">MCO-log + smearing</text><text class="value" x="680" y="190">195,46</text><text class="small" x="804" y="190">RMSE 116,36</text><text class="tiny" x="503" y="209">Referencia de media, no distribución completa</text>
+  <rect class="pill" x="485" y="232" width="409" height="55" rx="11"/><text class="small" x="503" y="255">Lognormal estándar</text><text class="value" x="680" y="256">195,58</text><text class="small" x="804" y="256">RMSE 116,37</text>
+  <rect class="panel" x="485" y="298" width="409" height="55" rx="11"/><text class="small" x="503" y="321">Gamma estándar</text><text class="value" x="680" y="322">204,95</text><text class="small" x="804" y="322">RMSE 169,55</text><text class="tiny" x="503" y="342">Error medio +8,30</text>
+  <rect class="call" x="485" y="364" width="409" height="55" rx="11"/><text class="small" x="503" y="387">Gamma disp. variable</text><text class="warn" x="680" y="388">582,22</text><text class="small" x="804" y="388">RMSE 4.733,73</text><text class="tiny" x="503" y="408">Error medio +385,57</text>
+  <rect class="call" x="485" y="430" width="409" height="39" rx="11"/><text class="small" x="503" y="454">Lognormal heterocedástica</text><text class="warn" x="719" y="455">media ≈ 1,54×10²⁸</text>
+  <rect class="call" x="42" y="504" width="876" height="34" rx="14"/><text class="label" x="202" y="527">La flexibilidad mejora la función objetivo, pero puede desestabilizar el momento que importa.</text>
+</svg>

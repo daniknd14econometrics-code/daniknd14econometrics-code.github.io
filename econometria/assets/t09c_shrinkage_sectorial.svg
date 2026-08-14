@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Shrinkage de efectos sectoriales</title>
+  <desc id="desc">Medias sectoriales brutas centradas frente a interceptos aleatorios predichos, con contracción hacia cero.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.axis{stroke:#9aabba;stroke-width:1.4}.grid{stroke:#e6edf2;stroke-width:1}.zero{stroke:#52677a;stroke-width:1.5;stroke-dasharray:5 5}.diag{stroke:#b23a48;stroke-width:2.5;stroke-dasharray:8 6}.pt{fill:#fff;stroke:#0b7285;stroke-width:2.2;opacity:.92}.label{font:700 14px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.pill{fill:#edf8f8;stroke:#b8dddd}.note{font:700 12px system-ui,sans-serif;fill:#0b5964}.arrow{stroke:#0b7285;stroke-width:2;marker-end:url(#arrow)}
+  </style>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0b7285"/></marker></defs>
+  <rect class="bg" width="960" height="540" rx="18"/>
+  <text class="head" x="42" y="44">El modelo no confunde una media extrema con una señal precisa</text>
+  <text class="sub" x="42" y="69">Sectores con al menos 10 firmas · tamaño del círculo proporcional a información del grupo</text>
+  <rect class="panel" x="38" y="92" width="884" height="402" rx="15"/>
+  <line class="grid" x1="120" y1="135" x2="120" y2="430"/><line class="grid" x1="295" y1="135" x2="295" y2="430"/><line class="grid" x1="470" y1="135" x2="470" y2="430"/><line class="grid" x1="645" y1="135" x2="645" y2="430"/><line class="grid" x1="820" y1="135" x2="820" y2="430"/>
+  <line class="grid" x1="120" y1="175" x2="855" y2="175"/><line class="grid" x1="120" y1="285" x2="855" y2="285"/><line class="grid" x1="120" y1="395" x2="855" y2="395"/>
+  <line class="zero" x1="470" y1="135" x2="470" y2="430"/><line class="zero" x1="120" y1="285" x2="855" y2="285"/>
+  <line class="diag" x1="155" y1="417" x2="810" y2="151"/>
+  <circle class="pt" cx="196" cy="371" r="8"/><circle class="pt" cx="230" cy="358" r="12"/><circle class="pt" cx="263" cy="341" r="15"/><circle class="pt" cx="288" cy="354" r="9"/><circle class="pt" cx="315" cy="325" r="18"/><circle class="pt" cx="337" cy="337" r="10"/><circle class="pt" cx="355" cy="309" r="13"/><circle class="pt" cx="377" cy="322" r="20"/><circle class="pt" cx="398" cy="296" r="9"/><circle class="pt" cx="416" cy="306" r="12"/><circle class="pt" cx="436" cy="278" r="15"/><circle class="pt" cx="451" cy="300" r="8"/><circle class="pt" cx="482" cy="269" r="20"/><circle class="pt" cx="503" cy="281" r="10"/><circle class="pt" cx="523" cy="253" r="15"/><circle class="pt" cx="548" cy="263" r="9"/><circle class="pt" cx="572" cy="237" r="17"/><circle class="pt" cx="601" cy="247" r="11"/><circle class="pt" cx="628" cy="218" r="14"/><circle class="pt" cx="661" cy="230" r="10"/><circle class="pt" cx="700" cy="203" r="18"/><circle class="pt" cx="752" cy="217" r="13"/><circle class="pt" cx="805" cy="198" r="21"/>
+  <path class="arrow" d="M802 158 C768 166 746 185 724 206"/><text class="note" x="698" y="145">contracción</text>
+  <text class="small" x="108" y="451">−2</text><text class="small" x="286" y="451">−1</text><text class="small" x="466" y="451">0</text><text class="small" x="641" y="451">1</text><text class="small" x="816" y="451">2</text>
+  <text class="small" x="78" y="399">−1</text><text class="small" x="85" y="289">0</text><text class="small" x="85" y="179">1</text>
+  <text class="label" x="335" y="478">Media sectorial bruta − media global</text>
+  <text class="label" x="52" y="315" transform="rotate(-90 52 315)">Intercepto aleatorio predicho</text>
+  <rect class="pill" x="560" y="350" width="271" height="66" rx="11"/><text class="note" x="578" y="375">Línea diagonal:</text><text class="small" x="681" y="375">sin shrinkage</text><text class="small" x="578" y="398">Puntos hacia cero: señal regularizada</text>
+  <text class="small" x="44" y="524">Visualización curada a partir de la salida sectorial existente del Taller 9C.</text>
+</svg>

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Más que el último período pre: Lee–Wooldridge y transformaciones rolling en Difference-in-Differences – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link active" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#la-dificultad-pendiente-después-de-etwfe" id="toc-la-dificultad-pendiente-después-de-etwfe" class="nav-link" data-scroll-target="#la-dificultad-pendiente-después-de-etwfe">La dificultad pendiente después de ETWFE</a></li>
+  <li><a href="#qué-significa-rolling" id="toc-qué-significa-rolling" class="nav-link" data-scroll-target="#qué-significa-rolling">Qué significa rolling</a></li>
+  <li><a href="#transformar-comparar-y-agregar" id="toc-transformar-comparar-y-agregar" class="nav-link" data-scroll-target="#transformar-comparar-y-agregar">Transformar, comparar y agregar</a></li>
+  <li><a href="#demean-y-detrend-cambian-el-contrafactual" id="toc-demean-y-detrend-cambian-el-contrafactual" class="nav-link" data-scroll-target="#demean-y-detrend-cambian-el-contrafactual">Demean y detrend cambian el contrafactual</a></li>
+  <li><a href="#aplicación-aperturas-de-walmart" id="toc-aplicación-aperturas-de-walmart" class="nav-link" data-scroll-target="#aplicación-aperturas-de-walmart">Aplicación: aperturas de Walmart</a></li>
+  <li><a href="#cuánto-importa-la-transformación" id="toc-cuánto-importa-la-transformación" class="nav-link" data-scroll-target="#cuánto-importa-la-transformación">Cuánto importa la transformación</a></li>
+  <li><a href="#event-study-y-trayectorias-previas" id="toc-event-study-y-trayectorias-previas" class="nav-link" data-scroll-target="#event-study-y-trayectorias-previas">Event study y trayectorias previas</a></li>
+  <li><a href="#ventana-pre-y-grupo-de-comparación" id="toc-ventana-pre-y-grupo-de-comparación" class="nav-link" data-scroll-target="#ventana-pre-y-grupo-de-comparación">Ventana pre y grupo de comparación</a></li>
+  <li><a href="#watt-y-dinámica" id="toc-watt-y-dinámica" class="nav-link" data-scroll-target="#watt-y-dinámica">WATT y dinámica</a></li>
+  <li><a href="#cs-bjs-etwfe-y-rolling" id="toc-cs-bjs-etwfe-y-rolling" class="nav-link" data-scroll-target="#cs-bjs-etwfe-y-rolling">C&amp;S, BJS, ETWFE y rolling</a></li>
+  <li><a href="#qué-mejora-y-qué-supuestos-permanecen" id="toc-qué-mejora-y-qué-supuestos-permanecen" class="nav-link" data-scroll-target="#qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Más que el último período pre: Lee–Wooldridge y transformaciones rolling en Difference-in-Differences</h1>
+<p class="subtitle lead">Cómo transformar la historia pretratamiento, conservar comparaciones limpias y agregar efectos por cohorte y período</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../causalidad/did-moderno/index.html">← Volver a Difference-in-Differences moderno</a></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>La referencia pretratamiento también es una decisión causal</p>
+</div>
+<div class="hero-sub">
+<p>Lee–Wooldridge transforma el resultado con la historia previa relevante de cada cohorte, construye después comparaciones limpias y recién entonces agrega los efectos estimados.</p>
+</div>
+</div>
+<section id="pregunta-central" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
+<p>¿Cómo aprovechar la historia pretratamiento para construir comparaciones DiD limpias sin imponer una regresión global?</p>
+<p><strong>Respuesta corta:</strong> transformar el resultado para cada cohorte, comparar su outcome transformado con unidades todavía válidas como controles y estimar primero cada <span class="math inline">\(ATT(g,r)\)</span> antes de resumir la dinámica.</p>
+</section>
+<section id="la-dificultad-pendiente-después-de-etwfe" class="level2">
+<h2 class="anchored" data-anchor-id="la-dificultad-pendiente-después-de-etwfe">La dificultad pendiente después de ETWFE</h2>
+<p>ETWFE mostró que una regresión suficientemente flexible puede representar efectos heterogéneos por cohorte y período. Queda, sin embargo, una decisión anterior: <strong>qué parte de la historia previa debe construir la referencia contrafactual</strong>.</p>
+<p>Una comparación local puede utilizar solamente el último período antes de la adopción. Una regresión global puede explotar una estructura más amplia del panel. Lee–Wooldridge propone una tercera arquitectura: usar la historia pretratamiento relevante para transformar el outcome y convertir cada celda cohorte × período en un problema estándar de efecto sobre los tratados.</p>
+<p>La contribución no es una nueva media móvil ni una variante menor de ETWFE. El orden es distinto:</p>
+<p><span class="math display">\[
+\text{transformar }Y
+\longrightarrow
+\text{comparar con controles válidos}
+\longrightarrow
+ATT(g,r)
+\longrightarrow
+\text{agregar}.
+\]</span></p>
+</section>
+<section id="qué-significa-rolling" class="level2">
+<h2 class="anchored" data-anchor-id="qué-significa-rolling">Qué significa rolling</h2>
+<p>Para una cohorte que adopta en <span class="math inline">\(g\)</span> y un período calendario <span class="math inline">\(r\)</span>, la transformación <em>demean</em> puede escribirse de forma compacta como:</p>
+<p><span class="math display">\[
+\dot Y_{irg}
+=
+Y_{ir}-\frac{1}{|\mathcal P_g|}\sum_{s\in\mathcal P_g}Y_{is},
+\qquad \mathcal P_g\subset\{s:s&lt;g\}.
+\]</span></p>
+<p>Es el resultado actual menos el promedio de la historia pretratamiento elegida para esa cohorte. La referencia “rueda” porque <span class="math inline">\(\mathcal P_g\)</span> cambia con su fecha de adopción: una cohorte temprana dispone de menos períodos pre que una tardía. También puede restringirse la ventana, por ejemplo al último período con <code>pre(1)</code>.</p>
+<p><strong>Rolling no significa promediar outcomes pos-tratamiento en una ventana móvil.</strong> Toda la información que construye la referencia debe ser anterior a la adopción de la cohorte correspondiente.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m09b_rolling_esquema.svg" class="img-fluid figure-img" alt="Esquema de dos cohortes con fechas de adopción distintas. Cada una utiliza una historia pretratamiento diferente para transformar el outcome; luego se compara con controles válidos, se estima ATT por cohorte y período y se agrega por tiempo relativo."></p>
+<figcaption>La referencia pretratamiento cambia con el timing de cada cohorte antes de estimar ATT por celda y agregarlos</figcaption>
+</figure>
+</div>
+</section>
+<section id="transformar-comparar-y-agregar" class="level2">
+<h2 class="anchored" data-anchor-id="transformar-comparar-y-agregar">Transformar, comparar y agregar</h2>
+<p>El objeto elemental permanece visible:</p>
+<p><span class="math display">\[
+ATT(g,r)=E\left[Y_r(g)-Y_r(\infty)\mid G=g\right].
+\]</span></p>
+<p>Es el efecto medio para la cohorte que adopta en <span class="math inline">\(g\)</span>, evaluada en el calendario <span class="math inline">\(r\)</span>, respecto de permanecer sin tratamiento. Para estimarlo, cada celda reúne cuatro componentes:</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Cohorte tratada</strong></p>
+<p>Unidades cuya primera adopción ocurre en <span class="math inline">\(g\)</span>.</p>
+</div>
+<div class="section-box">
+<p><strong>Resultado transformado</strong></p>
+<p>Outcome neto de la referencia pretratamiento elegida.</p>
+</div>
+<div class="section-box">
+<p><strong>Controles válidos en r</strong></p>
+<p>Nunca tratados y unidades que todavía no fueron tratadas.</p>
+</div>
+<div class="section-box">
+<p><strong>Efecto de celda</strong></p>
+<p>ATT para una cohorte y un calendario concretos.</p>
+</div>
+</div>
+<p>Una unidad puede ser control mientras permanece sin tratamiento y dejar de serlo después de adoptar. Las unidades ya tratadas nunca funcionan como controles de otra cohorte. Sobre cada sección cruzada transformada pueden aplicarse ajuste por regresión, ponderación, IPWRA o matching; esa elección es posterior a la definición de la comparación causal.</p>
+</section>
+<section id="demean-y-detrend-cambian-el-contrafactual" class="level2">
+<h2 class="anchored" data-anchor-id="demean-y-detrend-cambian-el-contrafactual">Demean y detrend cambian el contrafactual</h2>
+<p>La decisión central no es qué comando ejecutar, sino qué componente previo remover.</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Demean · nivel previo</strong></p>
+<p>Centra el outcome en la media de la historia pretratamiento relevante. Aprovecha más información previa bajo tendencias paralelas condicionales para el resultado transformado.</p>
+</div>
+<div class="section-box">
+<p><strong>Detrend · nivel y pendiente</strong></p>
+<p>Resta además una tendencia lineal estimada con períodos pretratamiento. Admite pendientes diferentes, pero exige que su extrapolación al post sea un contrafactual creíble.</p>
+</div>
+</div>
+<p>Detrending no “soluciona” automáticamente los pretrends. Cambia el supuesto: en lugar de requerir trayectorias paralelas después de remover niveles, supone que las diferencias sistemáticas de pendiente son aproximadamente lineales, estables y extrapolables.</p>
+</section>
+<section id="aplicación-aperturas-de-walmart" class="level2">
+<h2 class="anchored" data-anchor-id="aplicación-aperturas-de-walmart">Aplicación: aperturas de Walmart</h2>
+<p>La aplicación sigue la primera apertura de Walmart y el empleo minorista local en un panel balanceado de condados estadounidenses.</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Muestra</strong></p>
+<p>1.280 condados, 1977–1999: 23 períodos y 29.440 observaciones.</p>
+</div>
+<div class="section-box">
+<p><strong>Tratamiento y timing</strong></p>
+<p>Primera apertura de Walmart; adopción absorbente en cohortes 1986–1999.</p>
+</div>
+<div class="section-box">
+<p><strong>Comparación</strong></p>
+<p>886 condados tratados y 394 nunca tratados, más cohortes todavía no tratadas cuando son válidas.</p>
+</div>
+<div class="section-box">
+<p><strong>Resultado y covariables</strong></p>
+<p>Log del empleo minorista; pobreza, manufactura y educación secundaria medidas en baseline.</p>
+</div>
+</div>
+<p>El parámetro agregado resume las celdas tratadas identificables bajo la transformación, las covariables y el conjunto de controles especificados. No es un efecto homogéneo impuesto a todos los condados y años.</p>
+</section>
+<section id="cuánto-importa-la-transformación" class="level2">
+<h2 class="anchored" data-anchor-id="cuánto-importa-la-transformación">Cuánto importa la transformación</h2>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Demean + IPWRA</p>
+</div>
+<div class="metric-value">
+<p>0,0944</p>
+</div>
+<div class="metric-note">
+<p>EE 0,0105 · referencia basada en la media pre</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Detrend + IPWRA</p>
+</div>
+<div class="metric-value">
+<p>0,0317</p>
+</div>
+<div class="metric-note">
+<p>EE 0,0102 · IC95% [0,0117; 0,0517]</p>
+</div>
+</div>
+</div>
+<p>El post promedio cae de <code>0,0944</code> a <code>0,0317</code> cuando la transformación deja de remover únicamente el nivel previo y pasa a remover también una tendencia lineal. En términos aproximados, las magnitudes equivalen a 9,9% y 3,2% en empleo minorista, respectivamente.</p>
+<p>La segunda cifra <strong>no es automáticamente el efecto verdadero</strong>. La comparación demuestra que la magnitud depende fuertemente de cómo se construye la trayectoria contrafactual con la historia pretratamiento.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Transformación / especificación</th>
+<th style="text-align: right;">Post promedio</th>
+<th style="text-align: right;">EE</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Demean + ajuste por regresión, sin covariables</td>
+<td style="text-align: right;">0,1027</td>
+<td style="text-align: right;">0,0101</td>
+<td>Referencia amplia; muestra el punto de partida sin ajuste observable</td>
+</tr>
+<tr class="even">
+<td><strong>Demean + IPWRA, con covariables</strong></td>
+<td style="text-align: right;"><strong>0,0944</strong></td>
+<td style="text-align: right;"><strong>0,0105</strong></td>
+<td>Cambia el estimador auxiliar y condiciona en características baseline</td>
+</tr>
+<tr class="odd">
+<td>Demean <code>pre(1)</code> + IPWRA</td>
+<td style="text-align: right;">0,0707</td>
+<td style="text-align: right;">0,0068</td>
+<td>Usa solamente el último período pre; aproxima una referencia local</td>
+</tr>
+<tr class="even">
+<td><strong>Detrend + IPWRA, con covariables</strong></td>
+<td style="text-align: right;"><strong>0,0317</strong></td>
+<td style="text-align: right;"><strong>0,0102</strong></td>
+<td>Remueve nivel y pendiente lineal pretratamiento</td>
+</tr>
+<tr class="odd">
+<td>Detrend + IPWRA, solo nunca tratados</td>
+<td style="text-align: right;">0,0250</td>
+<td style="text-align: right;">0,0114</td>
+<td>Restringe el grupo de comparación sin cambiar la transformación</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La tabla no establece un ranking. Dentro de una misma transformación, ajuste por regresión e IPWRA producen resultados relativamente cercanos. Las diferencias sustantivas aparecen al cambiar la referencia pre y, sobre todo, al pasar de <em>demean</em> a <em>detrend</em>.</p>
+</section>
+<section id="event-study-y-trayectorias-previas" class="level2">
+<h2 class="anchored" data-anchor-id="event-study-y-trayectorias-previas">Event study y trayectorias previas</h2>
+<p>El event study agrega por tiempo relativo los efectos de celda estimados después de transformar el outcome. El contraste se restringe a <span class="math inline">\(k=-8,\dots,8\)</span>; incluso en el último horizonte participan seis cohortes, evitando extremos sostenidos por una o dos.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m09b_event_demean_detrend.svg" class="img-fluid figure-img" alt="Event study comparativo entre rolling demean y rolling detrend con IPWRA y covariables. Demeaning conserva una trayectoria previa ascendente y efectos posteriores mayores; detrending acerca el pre a cero y reduce los efectos posteriores."></p>
+<figcaption>Comparación de la trayectoria WATT entre demeaning y detrending</figcaption>
+</figure>
+</div>
+<p>Con <em>demean</em>, los puntos previos muestran una trayectoria ascendente marcada antes de la apertura. Con <em>detrend</em>, los pretratamientos quedan mucho más cerca de cero y la dinámica posterior se reduce. El diagnóstico, sin embargo, no desaparece:</p>
+<div class="section-status">
+<p><strong>Promedio pre bajo detrending</strong></p>
+<p><code>0,00122</code> · <code>p &lt; 0,001</code></p>
+<p>La magnitud previa remanente es pequeña, pero estadísticamente distinta de cero. La credibilidad causal continúa dependiendo de que la tendencia lineal removida sea una aproximación razonable del contrafactual.</p>
+</div>
+</section>
+<section id="ventana-pre-y-grupo-de-comparación" class="level2">
+<h2 class="anchored" data-anchor-id="ventana-pre-y-grupo-de-comparación">Ventana pre y grupo de comparación</h2>
+<p>Usar solo el último período pre reduce el post promedio de <code>0,0944</code> a <code>0,0707</code>. La ventana no es una elección inocua: determina qué historia se considera informativa para construir el contrafactual. Una referencia amplia puede mejorar precisión si el pre lejano es comparable; <code>pre(1)</code> es más local y puede ser preferible si esa comparabilidad se debilita con la distancia.</p>
+<p>Restringir la especificación detrended a nunca tratados reduce el agregado de <code>0,0317</code> a <code>0,0250</code>. El cambio es menor que el producido por la transformación, pero recuerda que el grupo de comparación también define el estimando.</p>
+</section>
+<section id="watt-y-dinámica" class="level2">
+<h2 class="anchored" data-anchor-id="watt-y-dinámica">WATT y dinámica</h2>
+<p>Para <span class="math inline">\(k=r-g\)</span>, la trayectoria dinámica combina las celdas disponibles mediante ponderaciones por tamaño de cohorte:</p>
+<p><span class="math display">\[
+WATT(k)=\sum_{g\in\mathcal G_k}w(g,k)ATT(g,g+k).
+\]</span></p>
+<p>En la especificación detrended central, un año después de la apertura:</p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>WATT(1)</p>
+</div>
+<div class="metric-value">
+<p>0,0354</p>
+</div>
+<div class="metric-note">
+<p>EE 0,0051 · trece cohortes contribuyen al horizonte</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Lectura</p>
+</div>
+<div class="metric-value">
+<p>≈ 3,6%</p>
+</div>
+<div class="metric-note">
+<p>aumento estimado del empleo minorista al primer año, bajo el contrafactual detrended</p>
+</div>
+</div>
+</div>
+<p>WATT es una agregación posterior, no un coeficiente primitivo de una regresión TWFE con leads y lags. Su composición cambia con el horizonte porque no todas las cohortes aportan a todos los valores de <span class="math inline">\(k\)</span>.</p>
+</section>
+<section id="cs-bjs-etwfe-y-rolling" class="level2">
+<h2 class="anchored" data-anchor-id="cs-bjs-etwfe-y-rolling">C&amp;S, BJS, ETWFE y rolling</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Arquitectura</th>
+<th>Construcción del contrafactual</th>
+<th>Aporte distintivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Callaway–Sant’Anna</td>
+<td>Comparación cohorte × período, típicamente contra <span class="math inline">\(g-1\)</span></td>
+<td>Organiza <span class="math inline">\(ATT(g,t)\)</span> y controles válidos</td>
+</tr>
+<tr class="even">
+<td>BJS</td>
+<td>Modela <span class="math inline">\(Y(0)\)</span> con observaciones no tratadas e imputa</td>
+<td>Separa explícitamente outcome observado y contrafactual</td>
+</tr>
+<tr class="odd">
+<td>Wooldridge / ETWFE</td>
+<td>Regresión global flexible cohorte × período</td>
+<td>Recupera heterogeneidad moderna mediante una especificación regresiva</td>
+</tr>
+<tr class="even">
+<td><strong>Lee–Wooldridge rolling</strong></td>
+<td>Transforma <span class="math inline">\(Y\)</span> con historia pre y estima después por celda</td>
+<td>Hace explícita la referencia pretratamiento y admite estimadores de tratamiento modulares</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>pre(1)</code> acerca rolling a la referencia local de C&amp;S. Con ajuste por regresión lineal existen equivalencias parciales con POLS en contextos específicos, pero no una equivalencia general con ETWFE para toda la dinámica bajo adopción escalonada. BJS y rolling también difieren en el orden: <strong>modelar <span class="math inline">\(Y(0)\)</span> e imputar</strong> frente a <strong>transformar <span class="math inline">\(Y\)</span> y estimar ATT por celda</strong>.</p>
+</section>
+<section id="qué-mejora-y-qué-supuestos-permanecen" class="level2">
+<h2 class="anchored" data-anchor-id="qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</h2>
+<p>Rolling utiliza información previa sin introducir controles ya tratados y mantiene visibles los efectos cohorte × período. La interpretación causal requiere todavía:</p>
+<ul>
+<li>tratamiento absorbente y correctamente fechado;</li>
+<li>ausencia de anticipación en la ventana usada;</li>
+<li>tendencias paralelas condicionales para el outcome transformado;</li>
+<li>soporte suficiente dentro de cada comparación;</li>
+<li>covariables predeterminadas y no afectadas por Walmart;</li>
+<li>para <em>detrend</em>, pendientes lineales estables y extrapolables;</li>
+<li>una regla explícita de agregación y atención a la composición por horizonte.</li>
+</ul>
+<p>La transformación puede reducir patrones previos visibles. No convierte por sí sola una comparación frágil en un diseño creíble.</p>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>Lee–Wooldridge muestra que la historia pretratamiento puede incorporarse de manera explícita antes de estimar los efectos. La referencia se redefine con cada cohorte, el outcome transformado se compara solo con controles todavía válidos y los <span class="math inline">\(ATT(g,r)\)</span> se agregan después según la pregunta causal.</p>
+<p>En Walmart, la sensibilidad dominante es <code>0,0944 → 0,0317</code> al pasar de <em>demean</em> a <em>detrend</em>. La evidencia continúa siendo positiva, pero su magnitud depende de aceptar una extrapolación lineal de las trayectorias previas y el diagnóstico pretratamiento no desaparece. La conclusión correcta no es que detrending encuentre “el verdadero efecto”, sino que <strong>la construcción del contrafactual es parte del estimando empírico</strong>.</p>
+<p>La secuencia de soluciones modernas queda así cerrada: Callaway–Sant’Anna organiza comparaciones <span class="math inline">\(ATT(g,t)\)</span>; BJS imputa <span class="math inline">\(Y(0)\)</span>; Wooldridge flexibiliza la regresión; Lee–Wooldridge hace explícita la referencia pre mediante transformaciones rolling. Difference-in-Differences moderno no es una colección de comandos: es un conjunto de decisiones sobre estimando, controles, contrafactual, heterogeneidad, timing y agregación.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

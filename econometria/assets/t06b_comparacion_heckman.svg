@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Comparación de MCO y correcciones Heckman</title>
+  <desc id="desc">Coeficientes e intervalos al 95 por ciento para educación y experiencia, más parámetros de selección.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 15px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.axis{stroke:#9aabba;stroke-width:1.2}.zero{stroke:#a9b6c2;stroke-width:1.4;stroke-dasharray:5 5}.ci{stroke:#0b7285;stroke-width:4;stroke-linecap:round}.dot{fill:#0b7285}.ci2{stroke:#d97706;stroke-width:4;stroke-linecap:round}.dot2{fill:#d97706}.ci3{stroke:#536b82;stroke-width:4;stroke-linecap:round}.dot3{fill:#536b82}.value{font:700 12px system-ui,sans-serif;fill:#17324d}.card{fill:#eef6f7;stroke:#c4e0e4}.card2{fill:#fff7e6;stroke:#f1d29a}.big{font:800 25px system-ui,sans-serif;fill:#0b7285}.muted{font:700 13px system-ui,sans-serif;fill:#52677a}
+  </style>
+  <rect class="bg" width="960" height="480" rx="18"/>
+  <text class="head" x="48" y="45">La corrección apenas mueve la ecuación salarial</text>
+  <text class="sub" x="48" y="70">Coeficientes sobre log salario e intervalos de confianza del 95%</text>
+  <rect class="panel" x="40" y="95" width="555" height="330" rx="15"/>
+  <rect class="panel" x="620" y="95" width="300" height="330" rx="15"/>
+  <text class="label" x="65" y="130">Asociaciones salariales</text>
+  <text class="small" x="65" y="165">Educación</text>
+  <text class="small" x="65" y="194">MCO</text><line class="ci" x1="333" y1="190" x2="450" y2="190"/><circle class="dot" cx="391" cy="190" r="6"/><text class="value" x="460" y="194">0,107</text>
+  <text class="small" x="65" y="224">Heckman 2 etapas</text><line class="ci2" x1="320" y1="220" x2="478" y2="220"/><circle class="dot2" cx="399" cy="220" r="6"/><text class="value" x="488" y="224">0,109</text>
+  <text class="small" x="65" y="254">Heckman ML</text><line class="ci3" x1="334" y1="250" x2="457" y2="250"/><circle class="dot3" cx="395" cy="250" r="6"/><text class="value" x="467" y="254">0,108</text>
+  <text class="small" x="65" y="294">Experiencia</text>
+  <text class="small" x="65" y="323">MCO</text><line class="ci" x1="176" y1="319" x2="311" y2="319"/><circle class="dot" cx="244" cy="319" r="6"/><text class="value" x="321" y="323">0,042</text>
+  <text class="small" x="65" y="353">Heckman 2 etapas</text><line class="ci2" x1="178" y1="349" x2="322" y2="349"/><circle class="dot2" cx="250" cy="349" r="6"/><text class="value" x="332" y="353">0,044</text>
+  <text class="small" x="65" y="383">Heckman ML</text><line class="ci3" x1="190" y1="379" x2="300" y2="379"/><circle class="dot3" cx="245" cy="379" r="6"/><text class="value" x="310" y="383">0,043</text>
+  <line class="zero" x1="125" y1="150" x2="125" y2="393"/>
+  <line class="axis" x1="125" y1="401" x2="540" y2="401"/>
+  <text class="small" x="121" y="418">0</text><text class="small" x="261" y="418">0,05</text><text class="small" x="396" y="418">0,10</text><text class="small" x="526" y="418">0,15</text>
+  <text class="label" x="645" y="130">Selección sobre inobservables</text>
+  <rect class="card" x="645" y="155" width="250" height="105" rx="11"/>
+  <text class="muted" x="665" y="181">Dos etapas</text><text class="big" x="665" y="216">λ = 0,032</text><text class="small" x="665" y="240">EE 0,134 · p = 0,809</text>
+  <rect class="card2" x="645" y="278" width="250" height="105" rx="11"/>
+  <text class="muted" x="665" y="304">Máxima verosimilitud</text><text class="big" x="665" y="339">ρ = 0,027</text><text class="small" x="665" y="363">EE 0,130 · p = 0,838</text>
+  <text class="small" x="645" y="407">Ambos parámetros son pequeños</text><text class="small" x="645" y="424">y están estimados con alta incertidumbre.</text>
+  <circle class="dot" cx="50" cy="453" r="5"/><text class="small" x="61" y="457">MCO</text><circle class="dot2" cx="113" cy="453" r="5"/><text class="small" x="124" y="457">Heckman 2 etapas</text><circle class="dot3" cx="253" cy="453" r="5"/><text class="small" x="264" y="457">Heckman ML</text>
+</svg>

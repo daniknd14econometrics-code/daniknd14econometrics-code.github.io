@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Ingreso del solicitante y distintos objetos de interés</title>
+  <desc id="desc">Cambios asociados con diez mil dólares adicionales de ingreso sobre la media logarítmica, la media retransformada y media y cuantiles Gamma.</desc>
+  <style>.bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 14px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.tiny{font:500 11px system-ui,sans-serif;fill:#52677a}.value{font:800 21px system-ui,sans-serif;fill:#0b7285}.bar{fill:#79bdc6}.focus{fill:#0b7285}.point{fill:#d97706}.pill{fill:#edf8f8;stroke:#b8dde2}.note{fill:#fff7e6;stroke:#f0cf91}.axis{stroke:#9aabba;stroke-width:1.2}</style>
+  <rect class="bg" width="960" height="540" rx="18"/>
+  <text class="head" x="42" y="44">Un mismo cambio de ingreso, distintos objetos econométricos</text>
+  <text class="sub" x="42" y="69">Cambio asociado con USD 10.000 adicionales de ingreso del solicitante</text>
+  <rect class="note" x="42" y="94" width="260" height="104" rx="14"/>
+  <text class="label" x="64" y="122">Media logarítmica</text><text class="value" x="64" y="157">+2,179%</text><text class="small" x="64" y="180">MCO sobre log(price)</text>
+  <text class="tiny" x="326" y="112">CAMBIO ESTIMADO EN EL PRECIO · MILES DE USD</text>
+  <line class="axis" x1="326" y1="200" x2="900" y2="200"/><text class="small" x="322" y="218">0</text><text class="small" x="441" y="218">2</text><text class="small" x="560" y="218">4</text><text class="small" x="679" y="218">6</text><text class="small" x="798" y="218">8</text>
+  <text class="label" x="42" y="244">MCO-log + smearing</text><rect class="bar" x="326" y="225" width="251" height="26" rx="6"/><text class="value" x="589" y="247">+4,214</text><text class="tiny" x="713" y="245">punto estimado</text>
+  <text class="label" x="42" y="302">Gamma · Q25</text><rect class="bar" x="326" y="283" width="288" height="26" rx="6"/><text class="value" x="626" y="305">+4,835</text><text class="tiny" x="750" y="303">punto estimado</text>
+  <text class="label" x="42" y="360">Gamma · mediana</text><rect class="bar" x="326" y="341" width="363" height="26" rx="6"/><text class="value" x="701" y="363">+6,103</text><text class="tiny" x="825" y="361">punto estimado</text>
+  <text class="label" x="42" y="418">Gamma · media</text><rect class="focus" x="326" y="399" width="409" height="26" rx="6"/><text class="value" x="747" y="421">+6,872</text><text class="tiny" x="747" y="441">EE 0,388 · p&lt;0,001</text>
+  <text class="label" x="42" y="476">Gamma · Q75</text><rect class="point" x="326" y="457" width="506" height="26" rx="6"/><text class="value" x="844" y="479">+8,499</text>
+  <rect class="pill" x="42" y="503" width="876" height="25" rx="12"/><text class="small" x="116" y="520">Solo el APE Gamma sobre la media tiene inferencia específica reportada; smearing y cuantiles son magnitudes puntuales.</text>
+</svg>

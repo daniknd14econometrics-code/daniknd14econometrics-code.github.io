@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="600" viewBox="0 0 1100 600" role="img" aria-labelledby="title desc">
+  <title id="title">Overlap del propensity score antes del matching</title>
+  <desc id="desc">Histogramas porcentuales superpuestos para hogares tratados y controles. Ambos grupos comparten una región amplia del propensity score, aunque los controles tienen mayor presencia en valores bajos y los tratados se concentran algo más entre 0,55 y 0,70.</desc>
+  <style>
+    .title{font:700 27px system-ui,sans-serif;fill:#18344d}.sub{font:400 15px system-ui,sans-serif;fill:#5d7180}
+    .axis{stroke:#71848e;stroke-width:1.4}.grid{stroke:#dfe7eb;stroke-width:1}.tick{font:400 14px system-ui,sans-serif;fill:#657985}
+    .label{font:600 16px system-ui,sans-serif;fill:#263f52}.legend{font:600 15px system-ui,sans-serif;fill:#263f52}
+    .treated{fill:#3f7895;fill-opacity:.38;stroke:#225f7d;stroke-width:2}.control{fill:#c86678;fill-opacity:.30;stroke:#a23f57;stroke-width:2}
+  </style>
+  <rect width="1100" height="600" rx="24" fill="#f7fafb"/>
+  <text x="550" y="45" text-anchor="middle" class="title">Overlap antes del matching</text>
+  <text x="550" y="71" text-anchor="middle" class="sub">Distribución porcentual del propensity score estimado por grupo</text>
+
+  <line x1="120" y1="480" x2="900" y2="480" class="axis"/>
+  <line x1="120" y1="120" x2="120" y2="480" class="axis"/>
+  <line x1="120" y1="300" x2="900" y2="300" class="grid"/>
+  <line x1="120" y1="120" x2="900" y2="120" class="grid"/>
+  <text x="100" y="485" text-anchor="end" class="tick">0</text>
+  <text x="100" y="305" text-anchor="end" class="tick">5</text>
+  <text x="100" y="125" text-anchor="end" class="tick">10</text>
+  <text x="48" y="304" text-anchor="middle" class="label" transform="rotate(-90 48 304)">Porcentaje</text>
+
+  <!-- Controles -->
+  <rect x="143" y="469" width="30" height="11" class="control"/><rect x="181" y="469" width="30" height="11" class="control"/>
+  <rect x="219" y="455" width="30" height="25" class="control"/><rect x="257" y="455" width="30" height="25" class="control"/>
+  <rect x="295" y="419" width="30" height="61" class="control"/><rect x="333" y="401" width="30" height="79" class="control"/>
+  <rect x="371" y="401" width="30" height="79" class="control"/><rect x="409" y="415" width="30" height="65" class="control"/>
+  <rect x="447" y="401" width="30" height="79" class="control"/><rect x="485" y="379" width="30" height="101" class="control"/>
+  <rect x="523" y="311" width="30" height="169" class="control"/><rect x="561" y="340" width="30" height="140" class="control"/>
+  <rect x="599" y="286" width="30" height="194" class="control"/><rect x="637" y="340" width="30" height="140" class="control"/>
+  <rect x="675" y="185" width="30" height="295" class="control"/><rect x="713" y="264" width="30" height="216" class="control"/>
+  <rect x="751" y="318" width="30" height="162" class="control"/><rect x="789" y="448" width="30" height="32" class="control"/>
+
+  <!-- Tratados -->
+  <rect x="219" y="473" width="30" height="7" class="treated"/><rect x="257" y="462" width="30" height="18" class="treated"/>
+  <rect x="295" y="469" width="30" height="11" class="treated"/><rect x="333" y="455" width="30" height="25" class="treated"/>
+  <rect x="371" y="462" width="30" height="18" class="treated"/><rect x="409" y="444" width="30" height="36" class="treated"/>
+  <rect x="447" y="426" width="30" height="54" class="treated"/><rect x="485" y="397" width="30" height="83" class="treated"/>
+  <rect x="523" y="408" width="30" height="72" class="treated"/><rect x="561" y="358" width="30" height="122" class="treated"/>
+  <rect x="599" y="282" width="30" height="198" class="treated"/><rect x="637" y="206" width="30" height="274" class="treated"/>
+  <rect x="675" y="178" width="30" height="302" class="treated"/><rect x="713" y="232" width="30" height="248" class="treated"/>
+  <rect x="751" y="214" width="30" height="266" class="treated"/><rect x="789" y="397" width="30" height="83" class="treated"/>
+  <rect x="827" y="458" width="30" height="22" class="treated"/><rect x="865" y="469" width="30" height="11" class="treated"/>
+
+  <g class="tick" text-anchor="middle">
+    <text x="120" y="507">0</text><text x="315" y="507">0,2</text><text x="510" y="507">0,4</text><text x="705" y="507">0,6</text><text x="900" y="507">0,8</text>
+  </g>
+  <text x="510" y="548" text-anchor="middle" class="label">Propensity score</text>
+
+  <rect x="935" y="202" width="28" height="18" class="treated"/><text x="976" y="217" class="legend">Tratados</text>
+  <rect x="935" y="242" width="28" height="18" class="control"/><text x="976" y="257" class="legend">Controles</text>
+  <text x="935" y="303" class="sub">Región compartida</text><text x="935" y="324" class="sub">amplia, no idéntica</text>
+</svg>

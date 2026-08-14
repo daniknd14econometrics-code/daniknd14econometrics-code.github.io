@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" role="img" aria-labelledby="title desc">
+  <title id="title">Efectos comparables entre modelos</title>
+  <desc id="desc">Intervalos de confianza al 95 por ciento para efectos marginales promedio en las aplicaciones de manzanas e ingresos.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 15px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.axis{stroke:#9aabba;stroke-width:1.2}.zero{stroke:#a9b6c2;stroke-width:1.4;stroke-dasharray:5 5}.ci{stroke:#0b7285;stroke-width:4;stroke-linecap:round}.dot{fill:#0b7285}.ci2{stroke:#d97706;stroke-width:4;stroke-linecap:round}.dot2{fill:#d97706}.value{font:700 12px system-ui,sans-serif;fill:#17324d}.foot{font:500 12px system-ui,sans-serif;fill:#52677a}
+  </style>
+  <rect class="bg" width="960" height="470" rx="18"/>
+  <text class="head" x="48" y="45">La comparación exige una escala común</text>
+  <text class="sub" x="48" y="70">Efectos sobre la media observada; puntos e intervalos de confianza del 95%</text>
+  <rect class="panel" x="40" y="95" width="425" height="315" rx="15"/>
+  <rect class="panel" x="495" y="95" width="425" height="315" rx="15"/>
+  <text class="label" x="65" y="130">Demanda: precio de la manzana ecológica</text>
+  <text class="sub" x="65" y="152">Cambio en libras compradas · N = 660</text>
+  <line class="zero" x1="415" y1="173" x2="415" y2="327"/>
+  <text class="small" x="70" y="202">MCO</text>
+  <line class="ci" x1="211" y1="198" x2="328" y2="198"/><circle class="dot" cx="270" cy="198" r="7"/><text class="value" x="336" y="202">−2,902</text>
+  <text class="small" x="70" y="251">Tobit · APE</text>
+  <line class="ci" x1="200" y1="247" x2="314" y2="247"/><circle class="dot" cx="257" cy="247" r="7"/><text class="value" x="322" y="251">−3,169</text>
+  <text class="small" x="70" y="300">Poisson QMLE · APE</text>
+  <line class="ci" x1="205" y1="296" x2="326" y2="296"/><circle class="dot" cx="265" cy="296" r="7"/><text class="value" x="334" y="300">−2,992</text>
+  <line class="axis" x1="190" y1="337" x2="415" y2="337"/>
+  <text class="small" x="183" y="357">−4,5</text><text class="small" x="258" y="357">−3</text><text class="small" x="333" y="357">−1,5</text><text class="small" x="411" y="357">0</text>
+  <text class="label" x="520" y="130">Ingreso: asociaciones seleccionadas</text>
+  <text class="sub" x="520" y="152">Miles de dólares · N = 5.634</text>
+  <line class="zero" x1="770" y1="173" x2="770" y2="332"/>
+  <text class="small" x="520" y="184">Educación</text>
+  <text class="small" x="520" y="207">MCO</text><line class="ci" x1="804" y1="203" x2="818" y2="203"/><circle class="dot" cx="811" cy="203" r="6"/><text class="value" x="829" y="207">2,246</text>
+  <text class="small" x="520" y="235">Tobit · APE</text><line class="ci2" x1="802" y1="231" x2="817" y2="231"/><circle class="dot2" cx="810" cy="231" r="6"/><text class="value" x="828" y="235">2,156</text>
+  <text class="small" x="520" y="274">Hijos menores de 6</text>
+  <text class="small" x="520" y="297">MCO</text><line class="ci" x1="678" y1="293" x2="753" y2="293"/><circle class="dot" cx="715" cy="293" r="6"/><text class="value" x="758" y="297">−2,989</text>
+  <text class="small" x="520" y="325">Tobit · APE</text><line class="ci2" x1="690" y1="321" x2="765" y2="321"/><circle class="dot2" cx="727" cy="321" r="6"/><text class="value" x="772" y="325">−2,319</text>
+  <line class="axis" x1="660" y1="346" x2="880" y2="346"/>
+  <text class="small" x="654" y="366">−6</text><text class="small" x="711" y="366">−3</text><text class="small" x="766" y="366">0</text><text class="small" x="821" y="366">3</text><text class="small" x="875" y="366">6</text>
+  <circle class="dot" cx="530" cy="392" r="5"/><text class="foot" x="542" y="396">MCO</text><circle class="dot2" cx="599" cy="392" r="5"/><text class="foot" x="611" y="396">Modelo limitado: APE sobre media observada</text>
+  <text class="foot" x="48" y="442">Nota: la proximidad de los efectos en estas muestras no implica equivalencia entre supuestos ni estimandos.</text>
+</svg>

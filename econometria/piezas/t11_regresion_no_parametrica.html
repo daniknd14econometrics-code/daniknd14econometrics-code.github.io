@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Ingreso y consumo sin una forma impuesta: regresión local, ancho de banda e inferencia – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-aplicada" id="toc-pregunta-aplicada" class="nav-link active" data-scroll-target="#pregunta-aplicada">Pregunta aplicada</a></li>
+  <li><a href="#de-una-pendiente-global-a-promedios-locales" id="toc-de-una-pendiente-global-a-promedios-locales" class="nav-link" data-scroll-target="#de-una-pendiente-global-a-promedios-locales">De una pendiente global a promedios locales</a>
+  <ul class="collapse">
+  <li><a href="#nadarayawatson" id="toc-nadarayawatson" class="nav-link" data-scroll-target="#nadarayawatson">Nadaraya–Watson</a></li>
+  <li><a href="#regresión-local-lineal" id="toc-regresión-local-lineal" class="nav-link" data-scroll-target="#regresión-local-lineal">Regresión local lineal</a></li>
+  </ul></li>
+  <li><a href="#el-ancho-de-banda-es-la-decisión-central" id="toc-el-ancho-de-banda-es-la-decisión-central" class="nav-link" data-scroll-target="#el-ancho-de-banda-es-la-decisión-central">El ancho de banda es la decisión central</a></li>
+  <li><a href="#inferencia-precisión-local-no-una-banda-uniforme" id="toc-inferencia-precisión-local-no-una-banda-uniforme" class="nav-link" data-scroll-target="#inferencia-precisión-local-no-una-banda-uniforme">Inferencia: precisión local, no una banda uniforme</a></li>
+  <li><a href="#extensión-multivariada-flexibilidad-y-pérdida-de-localidad" id="toc-extensión-multivariada-flexibilidad-y-pérdida-de-localidad" class="nav-link" data-scroll-target="#extensión-multivariada-flexibilidad-y-pérdida-de-localidad">Extensión multivariada: flexibilidad y pérdida de localidad</a></li>
+  <li><a href="#y-en-datos-de-panel" id="toc-y-en-datos-de-panel" class="nav-link" data-scroll-target="#y-en-datos-de-panel">¿Y en datos de panel?</a></li>
+  <li><a href="#alcance-y-límites" id="toc-alcance-y-límites" class="nav-link" data-scroll-target="#alcance-y-límites">Alcance y límites</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ingreso y consumo sin una forma impuesta: regresión local, ancho de banda e inferencia</h1>
+<p class="subtitle lead">Nadaraya–Watson y regresión local lineal en una curva de Engel flexible</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">10 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>Una relación condicional puede aprenderse localmente; la flexibilidad depende de cuánto vecindario dejamos entrar.</p>
+</div>
+<div class="hero-sub">
+<p>Este análisis estima una curva de Engel entre ingreso y consumo per cápita sin imponer que sea lineal o cuadrática. Nadaraya–Watson y la regresión local lineal convierten observaciones cercanas en predicciones; el ancho de banda decide qué significa “cerca” y, con ello, cuánto detalle conserva la curva.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Hogares</p>
+</div>
+<div class="metric-value">
+<p>5.507</p>
+</div>
+<div class="metric-note">
+<p>Corte transversal con ingreso y consumo positivos</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Pendiente MCO</p>
+</div>
+<div class="metric-value">
+<p>0,520</p>
+</div>
+<div class="metric-note">
+<p>Referencia global log–log; no es un efecto causal</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Derivada media local</p>
+</div>
+<div class="metric-value">
+<p>0,514</p>
+</div>
+<div class="metric-note">
+<p>IC bootstrap 95%: [0,497; 0,534]</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Bandwidth local lineal</p>
+</div>
+<div class="metric-value">
+<p>0,153–0,543</p>
+</div>
+<div class="metric-note">
+<p>CV, ROT y plug-in responden a criterios distintos</p>
+</div>
+</div>
+</div>
+<section id="pregunta-aplicada" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-aplicada">Pregunta aplicada</h2>
+<p>¿Cómo cambia el consumo per cápita cuando aumenta el ingreso per cápita de un hogar? Una recta resume la asociación mediante una pendiente común; un polinomio agrega curvatura global. La regresión no paramétrica formula otra pregunta: ¿qué promedio de consumo observamos entre hogares con ingresos próximos a cada punto del soporte?</p>
+<p>La aplicación usa logaritmos de ingreso y consumo en 5.507 hogares. El ingreso logarítmico tiene media 5,378 y desvío 0,859; el análisis gráfico central se concentra entre sus percentiles 10 y 90, de 4,326 a 6,466. Es una curva condicional descriptiva: flexibilidad funcional no equivale a identificación causal.</p>
+</section>
+<section id="de-una-pendiente-global-a-promedios-locales" class="level2">
+<h2 class="anchored" data-anchor-id="de-una-pendiente-global-a-promedios-locales">De una pendiente global a promedios locales</h2>
+<p>La referencia lineal estima una pendiente de 0,5196 y explica 36,7% de la variación del consumo. La especificación cuadrática apenas cambia el ajuste. Eso no demuestra que la recta sea verdadera; proporciona un benchmark contra el cual evaluar cuánto agrega una curva aprendida desde los datos.</p>
+<section id="nadarayawatson" class="level3">
+<h3 class="anchored" data-anchor-id="nadarayawatson">Nadaraya–Watson</h3>
+<p>El estimador Nadaraya–Watson es un promedio ponderado. Para un ingreso objetivo <span class="math inline">\(x_0\)</span>, asigna más peso a hogares cuyo ingreso está cerca de <span class="math inline">\(x_0\)</span> y peso nulo o pequeño a los lejanos:</p>
+<p><span class="math display">\[
+\widehat m(x_0)=\frac{\sum_i K\!\left((x_i-x_0)/h\right)y_i}{\sum_i K\!\left((x_i-x_0)/h\right)}.
+\]</span></p>
+<p>En la mediana del ingreso (<span class="math inline">\(x_0=5,342\)</span>), un kernel Epanechnikov con <span class="math inline">\(h=0,35\)</span> usa 1.811 observaciones con peso positivo y estima un consumo logarítmico de 4,376. El cálculo hace visible la lógica: la predicción no proviene de una forma global, sino de un vecindario ponderado.</p>
+</section>
+<section id="regresión-local-lineal" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-local-lineal">Regresión local lineal</h3>
+<p>Nadaraya–Watson ajusta una constante en cada vecindario. La regresión local lineal agrega una pendiente local y suele reducir el sesgo en bordes o zonas con densidad desigual. En el centro del soporte ambas curvas son próximas; las diferencias aparecen principalmente donde hay menos información a un lado del punto de evaluación.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/t11_regresion_local_bandwidth.svg" class="img-fluid figure-img" style="width:100.0%" alt="Comparación entre regresión global, Nadaraya–Watson, regresión local lineal y tres selectores de ancho de banda"></p>
+<figcaption>El panel izquierdo contrasta la referencia lineal global con Nadaraya–Watson y regresión local lineal. El panel derecho muestra que cross-validation conserva más detalle con un ancho de banda menor, mientras el selector plug-in produce una curva más suave.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="el-ancho-de-banda-es-la-decisión-central" class="level2">
+<h2 class="anchored" data-anchor-id="el-ancho-de-banda-es-la-decisión-central">El ancho de banda es la decisión central</h2>
+<p>El kernel determina cómo cae el peso con la distancia; el ancho de banda <span class="math inline">\(h\)</span> determina qué observaciones cuentan como cercanas. Un <span class="math inline">\(h\)</span> pequeño sigue rasgos locales y también ruido. Un <span class="math inline">\(h\)</span> grande estabiliza la estimación, pero puede borrar estructura sustantiva.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Selector</th>
+<th style="text-align: right;">Local constante</th>
+<th style="text-align: right;">Local lineal</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ROT</td>
+<td style="text-align: right;">0,279</td>
+<td style="text-align: right;">0,279</td>
+<td>Referencia rápida basada en una regla regular</td>
+</tr>
+<tr class="even">
+<td>Plug-in</td>
+<td style="text-align: right;">0,316</td>
+<td style="text-align: right;">0,543</td>
+<td>Orientado al error integrado de una función suave</td>
+</tr>
+<tr class="odd">
+<td>Cross-validation</td>
+<td style="text-align: right;">0,153</td>
+<td style="text-align: right;">0,153</td>
+<td>Prioriza predicción fuera de muestra y retiene más detalle</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Las curvas coinciden ampliamente en la región central y divergen más en los extremos. La sensibilidad relevante no es elegir mecánicamente un ganador, sino distinguir rasgos persistentes de ondulaciones que solo aparecen con un vecindario muy estrecho. En esta aplicación, cambiar el método local altera menos la historia que cambiar cuánto se suaviza.</p>
+</section>
+<section id="inferencia-precisión-local-no-una-banda-uniforme" class="level2">
+<h2 class="anchored" data-anchor-id="inferencia-precisión-local-no-una-banda-uniforme">Inferencia: precisión local, no una banda uniforme</h2>
+<p>La incertidumbre también depende de dónde se evalúa la curva. La estimación local lineal usa <span class="math inline">\(h=0,543\)</span> para la media y un ancho piloto de 0,814 para la varianza. Sus intervalos son <strong>pointwise</strong>: cubren cada punto por separado, no toda la función simultáneamente.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/t11_inferencia_local.svg" class="img-fluid figure-img" style="width:100.0%" alt="Curva de consumo condicional con intervalos pointwise y comparación de la derivada media local con la pendiente lineal"></p>
+<figcaption>La curva local aumenta a lo largo del rango central y la banda pointwise se ensancha en los extremos. El recuadro compara la derivada media local con la pendiente MCO global.</figcaption>
+</figure>
+</div>
+<p>El bootstrap documentado entrega una derivada media de 0,5144, con error estándar 0,0094 e IC95% [0,4974; 0,5338]. Es muy próxima a la pendiente lineal de 0,5196: la flexibilidad confirma una relación positiva y casi lineal en el centro, en lugar de descubrir una forma radicalmente distinta.</p>
+<p>La derivada es la pendiente promedio de <span class="math inline">\(E[\log(consumo)\mid\log(ingreso)]\)</span>. No debe interpretarse automáticamente como la elasticidad de <span class="math inline">\(E[consumo\mid ingreso]\)</span> en niveles. Además, el bootstrap usa 80 réplicas —y 40 en la grilla de predicción—: suficiente para ilustrar el procedimiento disponible, pero modesto para una inferencia definitiva.</p>
+</section>
+<section id="extensión-multivariada-flexibilidad-y-pérdida-de-localidad" class="level2">
+<h2 class="anchored" data-anchor-id="extensión-multivariada-flexibilidad-y-pérdida-de-localidad">Extensión multivariada: flexibilidad y pérdida de localidad</h2>
+<p>La regresión kernel puede incorporar educación, área urbana y departamento junto con ingreso. Para variables continuas se usa Epanechnikov; para discretas, un kernel de Li–Racine. Las predicciones se promedian sobre la distribución observada de los demás regresores, de modo que la curva sigue siendo legible como una función del ingreso.</p>
+<p>El costo aparece de inmediato: cross-validation selecciona ventanas muy amplias y, en la especificación mayor, el vecindario esperado alcanza las 5.507 observaciones. La curva sigue aumentando, pero la estimación deja de ser muy local. Esta es la maldición de la dimensionalidad en términos operativos: cada covariable fragmenta el soporte y exige más suavizado para conservar información.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Qué agrega la extensión
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La versión multivariada no constituye otra aplicación. Muestra el límite interno del método: agregar controles puede reducir rigidez funcional y, al mismo tiempo, debilitar la comparación verdaderamente local.</p>
+</div>
+</div>
+</section>
+<section id="y-en-datos-de-panel" class="level2">
+<h2 class="anchored" data-anchor-id="y-en-datos-de-panel">¿Y en datos de panel?</h2>
+<p>El material plantea dos rutas conceptuales: retirar medias dentro de cada unidad y estimar <span class="math inline">\(E(\widetilde y\mid\widetilde x)\)</span>, o usar un modelo parcialmente lineal de panel. No se estiman aquí porque la base es transversal. Tampoco existe, en general, una equivalencia FWL exacta cuando la relación es no lineal y no paramétrica.</p>
+<p>Una aplicación de panel requeriría definir el objeto within, preservar la dependencia temporal y remuestrear por unidad —no por observación—. Por eso queda como extensión metodológica y no como una segunda aplicación empírica.</p>
+</section>
+<section id="alcance-y-límites" class="level2">
+<h2 class="anchored" data-anchor-id="alcance-y-límites">Alcance y límites</h2>
+<ul>
+<li>La curva describe una asociación condicional; no elimina endogeneidad ni confusión no observada.</li>
+<li>La inferencia pointwise no autoriza una afirmación simultánea sobre toda la función.</li>
+<li>Los bordes combinan menos soporte, mayor sesgo y mayor incertidumbre.</li>
+<li>ROT, plug-in y cross-validation optimizan criterios distintos; su diferencia es información diagnóstica.</li>
+<li>Incorporar muchas dimensiones puede convertir una estimación nominalmente local en un promedio muy amplio.</li>
+</ul>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>La regresión no paramétrica reemplaza una forma funcional rígida por una secuencia de ajustes locales. Nadaraya–Watson muestra la intuición de promediar vecinos; la regresión local lineal mejora el comportamiento en zonas difíciles; la inferencia recuerda que precisión y soporte varían a lo largo de la curva.</p>
+<p>En esta curva de Engel, la flexibilidad no contradice la referencia lineal: la disciplina. La conclusión sustantiva es estable en el centro y más frágil en los extremos. El resultado metodológico es más general: el bandwidth no es un detalle de implementación, sino la decisión que gobierna el compromiso entre ajuste local, suavizado e incertidumbre.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

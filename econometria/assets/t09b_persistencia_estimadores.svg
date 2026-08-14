@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Persistencia estimada en panel dinámico</title>
+  <desc id="desc">Coeficientes e intervalos de confianza para pooled, efectos fijos, primeras diferencias, Anderson-Hsiao y variantes Arellano-Bond.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:600 13px system-ui,sans-serif;fill:#17324d}.axis{stroke:#9aabba;stroke-width:1.2}.grid{stroke:#e5ebf0;stroke-width:1}.zero{stroke:#b23a48;stroke-width:1.5;stroke-dasharray:5 5}.ci{stroke:#0b7285;stroke-width:4;stroke-linecap:round}.ciAlt{stroke:#d97706;stroke-width:4;stroke-linecap:round}.ciBad{stroke:#b23a48;stroke-width:4;stroke-linecap:round}.dot{fill:#0b7285}.dotAlt{fill:#d97706}.dotBad{fill:#b23a48}.value{font:700 12px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.pill{fill:#fff7e6;stroke:#f0cf91}.warn{font:700 12px system-ui,sans-serif;fill:#9a5204}
+  </style>
+  <rect class="bg" width="960" height="560" rx="18"/>
+  <text class="head" x="42" y="44">El estimador cambia qué parte de la persistencia interpreta</text>
+  <text class="sub" x="42" y="68">Coeficiente de y<tspan baseline-shift="sub" font-size="9">t−1</tspan> e IC95% · secuencia diagnóstica, no ranking</text>
+  <rect class="panel" x="38" y="92" width="884" height="420" rx="15"/>
+  <line class="grid" x1="280" y1="125" x2="280" y2="451"/><line class="grid" x1="410" y1="125" x2="410" y2="451"/><line class="grid" x1="540" y1="125" x2="540" y2="451"/><line class="grid" x1="670" y1="125" x2="670" y2="451"/><line class="grid" x1="800" y1="125" x2="800" y2="451"/>
+  <line class="zero" x1="280" y1="125" x2="280" y2="451"/>
+  <text class="small" x="269" y="477">0</text><text class="small" x="398" y="477">0,25</text><text class="small" x="528" y="477">0,50</text><text class="small" x="658" y="477">0,75</text><text class="small" x="790" y="477">1,00</text>
+  <text class="label" x="65" y="151">Pooled dinámico</text><line class="ciBad" x1="776" y1="147" x2="787" y2="147"/><circle class="dotBad" cx="781" cy="147" r="6"/><text class="value" x="804" y="151">0,964</text>
+  <text class="label" x="65" y="200">FE dinámico</text><line class="ciAlt" x1="496" y1="196" x2="544" y2="196"/><circle class="dotAlt" cx="520" cy="196" r="6"/><text class="value" x="555" y="200">0,462</text>
+  <text class="label" x="65" y="249">FD sin instrumento</text><line class="ciBad" x1="168" y1="245" x2="225" y2="245"/><circle class="dotBad" cx="196" cy="245" r="6"/><text class="value" x="232" y="249">−0,161</text>
+  <text class="label" x="65" y="298">Anderson–Hsiao</text><line class="ci" x1="313" y1="294" x2="422" y2="294"/><circle class="dot" cx="367" cy="294" r="6"/><text class="value" x="432" y="298">0,168</text>
+  <text class="label" x="65" y="347">Arellano–Bond</text><line class="ci" x1="361" y1="343" x2="471" y2="343"/><circle class="dot" cx="416" cy="343" r="6"/><text class="value" x="481" y="347">0,261</text>
+  <text class="label" x="65" y="396">Arellano–Bond + X</text><line class="ci" x1="398" y1="392" x2="499" y2="392"/><circle class="dot" cx="449" cy="392" r="6"/><text class="value" x="510" y="396">0,324</text>
+  <text class="label" x="65" y="445">AB colapsado</text><line class="ciAlt" x1="308" y1="441" x2="559" y2="441"/><circle class="dotAlt" cx="433" cy="441" r="6"/><text class="value" x="569" y="445">0,295</text>
+  <rect class="pill" x="615" y="247" width="270" height="82" rx="12"/><text class="warn" x="632" y="272">Lectura del contraste</text><text class="small" x="632" y="294">Pooled sobrecarga memoria; FD falla.</text><text class="small" x="632" y="313">Instrumentar recupera ρ positivo,</text><text class="small" x="632" y="328">pero su precisión depende de la matriz.</text>
+  <text class="small" x="42" y="540">Muestras: 33.857 observaciones en pooled/FE; 28.678 en FD/AH/AB; 25.502 en AB + controles.</text>
+</svg>

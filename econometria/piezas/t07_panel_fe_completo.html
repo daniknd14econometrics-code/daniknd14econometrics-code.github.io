@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Efectos fijos en panel de firmas: identificación within e inferencia robusta – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
+  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
+  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
+  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
+  <li><a href="#hallazgos-secundarios-y-validación" id="toc-hallazgos-secundarios-y-validación" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-validación">Hallazgos secundarios y validación</a></li>
+  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
+  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Efectos fijos en panel de firmas: identificación within e inferencia robusta</h1>
+<p class="subtitle lead">Subsidios de capacitación (<code>grant</code>, <code>grant_1</code>) y desperdicio productivo (<code>lscrap</code>) en un panel corto de plantas</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de marzo de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>En este panel corto de firmas, la pregunta aplicada es como cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo al seguir a las mismas plantas en el tiempo</p>
+</div>
+<div class="hero-sub">
+<p>El modelo FE con inferencia clusterizada organiza una lectura más creíble de <code>lscrap</code>: controla heterogeneidad fija no observada de planta y evita sobrerreaccionar a significancia convencional.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Modelo operativo</p>
+</div>
+<div class="metric-value">
+<p>FE + cluster</p>
+</div>
+<div class="metric-note">
+<p><code>xtreg lscrap d88 d89 grant grant_1, fe vce(cluster fcode)</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Contexto aplicado</p>
+</div>
+<div class="metric-value">
+<p>Panel corto</p>
+</div>
+<div class="metric-note">
+<p>54 firmas, 3 periodos (1987-1989), <code>N=162</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Evidencia conjunta de subsidios</p>
+</div>
+<div class="metric-value">
+<p>Inferencia robusta/cluster</p>
+</div>
+<div class="metric-note">
+<p><code>F(2,53)=1.56</code>, <code>p=0.2198</code> para <code>grant</code> y <code>grant_1</code></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Heterogeneidad fija</p>
+</div>
+<div class="metric-value">
+<p>rho = 0.893</p>
+</div>
+<div class="metric-note">
+<p><code>F test all u_i=0</code>: <code>F(53,104)=24.66</code>, <code>p=0.0000</code></p>
+</div>
+</div>
+</div>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
+<p>Este taller analiza un panel corto de plantas para estudiar la relación empírica entre subsidios de capacitación (<code>grant</code>, <code>grant_1</code>) y desempeño productivo medido por <code>lscrap</code>. La motivacion aplicada es concreta: comparar firmas entre si puede mezclar diferencias estructurales persistentes con la asociación de interés.</p>
+<p>Por eso, la pieza usa FE como modelo operativo para concentrarse en variación within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadística.</p>
+</section>
+<div class="quick-grid">
+<section id="pregunta" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
+<p>¿Cómo cambia la lectura del vínculo entre subsidios de capacitación y desperdicio productivo cuando seguimos a las mismas plantas en el tiempo y controlamos heterogeneidad fija no observada?</p>
+<div class="small-note">
+<p>Resultado: <code>lscrap</code> (log del desperdicio/scrap rate). Regresores de interés: <code>grant</code>, <code>grant_1</code>. Controles de periodo: <code>d88</code>, <code>d89</code>. Unidad de panel: <code>fcode</code>.</p>
+</div>
+</section>
+<section id="idea-central" class="level2 section-box">
+<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
+<p>En este caso, la econometría está al servicio de la historia aplicada: FE se usa para tratar sesgo por heterogeneidad fija no observada entre plantas, mientras que cluster se usa para no sobredimensionar precisión inferencial.</p>
+<p><span class="badge">Portfolio econométrico</span></p>
+</section>
+</div>
+<section id="por-qué-este-problema-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
+<p>El interés sustantivo del ejemplo es si plantas con subsidios de capacitación muestran menor desperdicio productivo en el tiempo. Esa lectura puede distorsionarse si algunas firmas tienen rasgos persistentes no observados (gestión, tecnología, cultura operativa) que afectan <code>lscrap</code> y también se asocian con la recepción de subsidios.</p>
+<p>En ese contexto, pasar de pooled a FE es razonable: cambia la comparación desde “entre plantas” hacia “dentro de la misma planta a lo largo del tiempo”, que es la escala relevante para leer desempeño productivo en este caso.</p>
+</section>
+<section id="datos-y-variables" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
+<p>Se trabaja con <code>jtrain1</code>, un panel corto de plantas.</p>
+<ul>
+<li>Unidad de observacion: planta/firma (<code>fcode</code>)</li>
+<li>Estructura: 54 firmas, 3 periodos (1987-1989), <code>N=162</code> en FE</li>
+<li>Variable de resultado: <code>lscrap</code> (log del desperdicio/scrap rate)</li>
+<li>Regresores clave: <code>grant</code> (subsidio actual), <code>grant_1</code> (subsidio rezagado)</li>
+<li>Controles temporales: <code>d88</code>, <code>d89</code></li>
+<li>Variable absorbida en FE por invarianza temporal: <code>union</code></li>
+</ul>
+</section>
+<section id="estrategia-empírica" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
+<p>La secuencia del taller prioriza decisiones metodológicas para responder mejor la pregunta aplicada:</p>
+<ol type="1">
+<li>Estimar FE (<code>xtreg ..., fe</code>) como modelo operativo frente al riesgo de heterogeneidad fija no observada.</li>
+<li>Reestimar FE con <code>vce(cluster fcode)</code> como inferencia principal.</li>
+<li>Evaluar evidencia conjunta de subsidios con tests robustos sobre <code>grant</code> y <code>grant_1</code>.</li>
+<li>Dejar equivalencia FE / within manual / LSDV como validación técnica secundaria.</li>
+<li>Tratar serial correlation como diagnóstico de apoyo, no como mensaje central.</li>
+</ol>
+</section>
+<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
+<p>Un análisis ingenuo puede mezclar dos planos distintos:</p>
+<ol type="1">
+<li>Inferencia: usar solo errores clásicos puede sobreconfiar en significancia.</li>
+<li>Identificacion: aun con inferencia robusta, pooled no corrige sesgo por heterogeneidad fija no observada.</li>
+</ol>
+<p>La lectura profesional separa ambos temas: FE atiende el problema de sesgo por <code>c_i</code> fijo; cluster mejora la credibilidad inferencial.</p>
+</section>
+<section id="resultados-principales" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
+<p>La lectura final no descansa en un coeficiente puntual, sino en la evidencia conjunta sobre los subsidios y en una interpretación prudente de su magnitud económica.</p>
+<p>En términos aplicados, los signos estimados son compatibles con una reduccion de <code>lscrap</code> asociada a subsidios, pero al pasar de inferencia convencional a inferencia cluster por planta la precisión estadística se debilita.</p>
+<p>Por eso, la lectura profesional para desempeño productivo es de evidencia sugestiva pero no concluyente: no conviene sobrerreaccionar a la significancia convencional ni convertir este resultado en una afirmacion concluyente.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bloque</th>
+<th style="text-align: right;">Evidencia</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FE clásico</td>
+<td style="text-align: right;">grant=-0.252 (EE=0.151; IC95% [-0.551, 0.046]), grant_1=-0.422 (EE=0.210; IC95% [-0.838, -0.005])</td>
+<td>Señal inicial en clásico, sujeta a supuestos fuertes de FE</td>
+</tr>
+<tr class="even">
+<td>FE + cluster (operativo)</td>
+<td style="text-align: right;">grant=-0.252 (EE=0.143; IC95% [-0.540, 0.035]), grant_1=-0.422 (EE=0.282; IC95% [-0.988, 0.145])</td>
+<td>Cambia la precisión; la evidencia individual se debilita</td>
+</tr>
+<tr class="odd">
+<td>Test conjunto robusto grant=grant_1=0</td>
+<td style="text-align: right;">F(2,53)=1.56, p=0.2198</td>
+<td>Sin evidencia conjunta robusta al 5%</td>
+</tr>
+<tr class="even">
+<td>Restriccion grant + grant_1 = 0</td>
+<td style="text-align: right;">F(1,53)=2.63, p=0.1105</td>
+<td>No rechazo en inferencia robusta</td>
+</tr>
+<tr class="odd">
+<td>Estructura panel</td>
+<td style="text-align: right;">rho=0.893, F all u_i=0 p=0.0000</td>
+<td>La heterogeneidad fija de firma es econométricamente relevante</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hallazgos-secundarios-y-validación" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-validación">Hallazgos secundarios y validación</h2>
+<p>Los contrastes siguientes son útiles para auditar consistencia del caso, pero quedan subordinados al modelo operativo FE+cluster:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chequeo secundario</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FE vs within manual</td>
+<td style="text-align: right;">Coeficientes coinciden</td>
+<td>FE no opera como caja negra; replica la transformacion within</td>
+</tr>
+<tr class="even">
+<td>FE vs LSDV (i.fcode)</td>
+<td style="text-align: right;">Misma lógica de ajuste within</td>
+<td>Validacion algebraica adicional del estimador</td>
+</tr>
+<tr class="odd">
+<td>Serial correlation en residuos FE</td>
+<td style="text-align: right;">u_fe_L1=-0.206; test = -0.5 rechaza (p=0.0000)</td>
+<td>Patron compatible con dependencia serial adicional; refuerza uso de inferencia robusta</td>
+</tr>
+<tr class="even">
+<td>FE-AR(1) (xtregar)</td>
+<td style="text-align: right;">Resultados sensibles en panel corto</td>
+<td>Se reporta solo como contraste metodologico auxiliar</td>
+</tr>
+</tbody>
+</table>
+</section>
+<p><img src="../assets/t07_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T7: FE con inferencia robusta, contraste conjunto y cierre operativo prudente" width="780" style="display:block; max-width:100%; height:auto;"></p>
+<section id="lectura-profesional-del-caso" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
+<p>T7 muestra una forma aplicada de reportar panel: primero fijar la pregunta sustantiva sobre subsidios de capacitación y desperdicio productivo, después elegir una estrategia de identificación coherente (FE within), y finalmente comunicar inferencia con estándar robusto (cluster y tests conjuntos).</p>
+<p>Esta secuencia evita dos excesos frecuentes: tratar la significancia convencional como veredicto final y presentar técnicas de panel como un fin en sí mismo.</p>
+</section>
+<section id="cierre" class="level2">
+<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
+<p>La contribución de T7 no es establecer una conclusión definitiva, sino ofrecer una lectura empírica más creíble del vínculo entre subsidios de capacitación y desperdicio productivo: variación within para tratar heterogeneidad fija no observada e inferencia robusta para no sobrerreaccionar a la significancia convencional.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

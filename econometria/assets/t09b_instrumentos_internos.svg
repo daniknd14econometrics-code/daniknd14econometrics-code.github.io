@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+  <title id="title">Persistencia e instrumentos internos</title>
+  <desc id="desc">Contraste entre persistencia bruta y within y línea de tiempo de la instrumentación interna en primeras diferencias.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 15px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.value{font:800 25px system-ui,sans-serif;fill:#0b7285}.barbg{fill:#e8eef3}.bar{fill:#0b7285}.bar2{fill:#d97706}.axis{stroke:#9aabba;stroke-width:2}.node{fill:#fff;stroke:#0b7285;stroke-width:2}.node2{fill:#fff7e6;stroke:#d97706;stroke-width:2}.time{font:700 13px system-ui,sans-serif;fill:#17324d}.formula{font:600 14px system-ui,sans-serif;fill:#17324d}.ok{stroke:#0b7285;stroke-width:3;fill:none;marker-end:url(#arrow)}.bad{stroke:#b23a48;stroke-width:2.5;stroke-dasharray:5 4;fill:none;marker-end:url(#arrowBad)}.pill{fill:#edf8f8;stroke:#b8dddd}.pill2{fill:#fff5f5;stroke:#edc4c8}.note{font:700 12px system-ui,sans-serif;fill:#0b5964}.warn{font:700 12px system-ui,sans-serif;fill:#9b2f3b}
+  </style>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0b7285"/></marker><marker id="arrowBad" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#b23a48"/></marker></defs>
+  <rect class="bg" width="960" height="500" rx="18"/>
+  <text class="head" x="42" y="44">De la persistencia visible a una fuente válida de variación</text>
+  <text class="sub" x="42" y="68">La transformación within separa firmas; las primeras diferencias exigen instrumentar el rezago</text>
+  <rect class="panel" x="38" y="92" width="352" height="365" rx="15"/>
+  <rect class="panel" x="410" y="92" width="512" height="365" rx="15"/>
+  <text class="label" x="64" y="126">A. La misma nube, dos lecturas</text>
+  <text class="small" x="64" y="151">Correlación de y<tspan baseline-shift="sub" font-size="9">t</tspan> con y<tspan baseline-shift="sub" font-size="9">t−1</tspan></text>
+  <text class="small" x="64" y="195">Bruta</text><rect class="barbg" x="129" y="179" width="213" height="21" rx="10"/><rect class="bar" x="129" y="179" width="205" height="21" rx="10"/><text class="value" x="255" y="232">0,964</text>
+  <text class="small" x="64" y="285">Within</text><rect class="barbg" x="129" y="269" width="213" height="21" rx="10"/><rect class="bar2" x="129" y="269" width="102" height="21" rx="10"/><text class="value" x="255" y="322" style="fill:#d97706">0,480</text>
+  <rect class="pill" x="61" y="361" width="306" height="70" rx="12"/><text class="note" x="78" y="387">La diferencia no es “menos memoria” sin más:</text><text class="small" x="78" y="408">pooled mezcla dinámica con tamaño permanente;</text><text class="small" x="78" y="425">within compara cada firma consigo misma.</text>
+  <text class="label" x="438" y="126">B. Instrumentación después de diferenciar</text>
+  <text class="formula" x="438" y="154">Δy<tspan baseline-shift="sub" font-size="10">t</tspan> = ρΔy<tspan baseline-shift="sub" font-size="10">t−1</tspan> + ΔX<tspan baseline-shift="sub" font-size="10">t</tspan>′β + Δu<tspan baseline-shift="sub" font-size="10">t</tspan></text>
+  <line class="axis" x1="463" y1="240" x2="872" y2="240"/>
+  <circle class="node" cx="492" cy="240" r="24"/><circle class="node" cx="610" cy="240" r="24"/><circle class="node2" cx="728" cy="240" r="24"/><circle class="node2" cx="846" cy="240" r="24"/>
+  <text class="time" x="476" y="245">t−3</text><text class="time" x="594" y="245">t−2</text><text class="time" x="712" y="245">t−1</text><text class="time" x="841" y="245">t</text>
+  <text class="small" x="567" y="287">y<tspan baseline-shift="sub" font-size="9">t−2</tspan> en niveles</text><text class="small" x="691" y="287">Δy<tspan baseline-shift="sub" font-size="9">t−1</tspan></text><text class="small" x="820" y="287">Δu<tspan baseline-shift="sub" font-size="9">t</tspan></text>
+  <path class="ok" d="M610 214 C638 167 697 167 724 214"/><text class="note" x="626" y="177">relevancia</text>
+  <path class="bad" d="M746 265 C766 315 811 315 833 265"/><text class="warn" x="731" y="334">comparten u<tspan baseline-shift="sub" font-size="9">t−1</tspan></text>
+  <rect class="pill" x="437" y="359" width="456" height="72" rx="12"/><text class="note" x="454" y="384">Anderson–Hsiao:</text><text class="small" x="579" y="384">usa un rezago válido por ecuación.</text><text class="note" x="454" y="407">Arellano–Bond:</text><text class="small" x="570" y="407">organiza todos los niveles suficientemente rezagados.</text>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="450" viewBox="0 0 1040 450" role="img" aria-labelledby="title desc">
+  <title id="title">Masa agregada de pesos negativos en WAGEPAN</title>
+  <desc id="desc">Tres barras horizontales muestran masas negativas pequeñas: menos 0,0107 para TWFE base, menos 0,0440 para primeras diferencias y menos 0,0130 para TWFE con covariables.</desc>
+  <style>
+    .title{font:700 24px system-ui,sans-serif;fill:#18344d}.sub{font:400 14px system-ui,sans-serif;fill:#5d7180}
+    .label{font:600 15px system-ui,sans-serif;fill:#263f52}.value{font:700 15px system-ui,sans-serif;fill:#18344d}
+    .small{font:400 12px system-ui,sans-serif;fill:#687b87}.grid{stroke:#dfe7eb;stroke-width:1}.axis{stroke:#697f8b;stroke-width:1.6}
+    .base{fill:#355f78}.other{fill:#91a9b6}.note{fill:#eef4f6;stroke:#cad8df}
+  </style>
+  <rect width="1040" height="450" rx="22" fill="#f8fafb"/>
+  <text x="520" y="42" text-anchor="middle" class="title">Los pesos negativos existen, pero su masa es pequeña</text>
+  <text x="520" y="67" text-anchor="middle" class="sub">Suma de pesos por debajo de cero · aplicación WAGEPAN</text>
+
+  <line x1="270" y1="100" x2="270" y2="340" class="grid"/><line x1="445" y1="100" x2="445" y2="340" class="grid"/><line x1="620" y1="100" x2="620" y2="340" class="grid"/><line x1="795" y1="100" x2="795" y2="340" class="grid"/><line x1="970" y1="94" x2="970" y2="350" class="axis"/>
+  <text x="270" y="370" text-anchor="middle" class="small">−0,05</text><text x="445" y="370" text-anchor="middle" class="small">−0,04</text><text x="620" y="370" text-anchor="middle" class="small">−0,03</text><text x="795" y="370" text-anchor="middle" class="small">−0,02</text><text x="970" y="370" text-anchor="middle" class="small">0</text>
+
+  <text x="44" y="139" class="label">TWFE base</text><text x="44" y="159" class="small">144 de 1.024 celdas</text>
+  <rect x="820" y="116" width="150" height="45" rx="8" class="base"/><text x="808" y="144" text-anchor="end" class="value">−0,0107</text>
+
+  <text x="44" y="232" class="label">Primeras diferencias</text><text x="44" y="252" class="small">307 pesos negativos</text>
+  <rect x="354" y="209" width="616" height="45" rx="8" class="other"/><text x="342" y="237" text-anchor="end" class="value">−0,0440</text>
+
+  <text x="44" y="325" class="label">TWFE con covariables</text><text x="44" y="345" class="small">183 pesos negativos</text>
+  <rect x="788" y="302" width="182" height="45" rx="8" class="other"/><text x="776" y="330" text-anchor="end" class="value">−0,0130</text>
+
+  <rect x="245" y="393" width="550" height="38" rx="12" class="note"/><text x="520" y="417" text-anchor="middle" class="label">Diagnóstico relevante ≠ explicación mecánica de toda la brecha TWFE–WAS</text>
+</svg>

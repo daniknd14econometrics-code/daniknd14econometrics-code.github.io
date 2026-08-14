@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Mismos coeficientes pooled, distinta inferencia</title>
+  <desc id="desc">Para margen extensivo, intensidad de I+D y ventas se comparan los intervalos de confianza nominales, con escala Pearson y con cluster por firma. Los coeficientes permanecen iguales y cambia su incertidumbre.</desc>
+  <style>.bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 25px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 14px system-ui,sans-serif;fill:#17324d}.tiny{font:600 11px system-ui,sans-serif;fill:#52677a}.axis{stroke:#afbdc8}.nom{stroke:#9fb1be;stroke-width:5;stroke-linecap:round}.pear{stroke:#79bdc6;stroke-width:5;stroke-linecap:round}.clus{stroke:#0b7285;stroke-width:6;stroke-linecap:round}.dot{fill:#17324d}.zero{stroke:#d97706;stroke-width:1.5;stroke-dasharray:5 5}.pill{fill:#eef8f8;stroke:#b8dcdf}.divider{stroke:#e5ebf0}</style>
+  <rect class="bg" width="960" height="540" rx="18"/>
+  <text class="head" x="42" y="44">Mismos coeficientes pooled, distinta inferencia</text>
+  <text class="sub" x="42" y="69">IC95% calculados con los EE nominales, Pearson y cluster por firma</text>
+  <rect class="panel" x="42" y="92" width="876" height="386" rx="16"/>
+  <line class="zero" x1="503" y1="112" x2="503" y2="462"/><text class="tiny" x="495" y="474">0</text>
+
+  <text class="label" x="68" y="122">Margen extensivo · b=0,309</text>
+  <text class="tiny" x="68" y="150">Nominal · EE 0,063</text><line class="nom" x1="560" y1="146" x2="635" y2="146"/><circle class="dot" cx="598" cy="146" r="6"/>
+  <text class="tiny" x="68" y="177">Pearson · EE 0,254</text><line class="pear" x1="446" y1="173" x2="750" y2="173"/><circle class="dot" cx="598" cy="173" r="6"/>
+  <text class="tiny" x="68" y="204">Cluster · EE 0,452</text><line class="clus" x1="327" y1="200" x2="868" y2="200"/><circle class="dot" cx="598" cy="200" r="6"/>
+  <line class="divider" x1="68" y1="220" x2="892" y2="220"/>
+
+  <text class="label" x="68" y="246">Intensidad de I+D · b=0,611</text>
+  <text class="tiny" x="68" y="274">Nominal · EE 0,005</text><line class="nom" x1="687" y1="270" x2="693" y2="270"/><circle class="dot" cx="690" cy="270" r="6"/>
+  <text class="tiny" x="68" y="301">Pearson · EE 0,022</text><line class="pear" x1="677" y1="297" x2="703" y2="297"/><circle class="dot" cx="690" cy="297" r="6"/>
+  <text class="tiny" x="68" y="328">Cluster · EE 0,062</text><line class="clus" x1="653" y1="324" x2="727" y2="324"/><circle class="dot" cx="690" cy="324" r="6"/>
+  <line class="divider" x1="68" y1="344" x2="892" y2="344"/>
+
+  <text class="label" x="68" y="370">Ventas · b=0,127</text>
+  <text class="tiny" x="68" y="398">Nominal · EE 0,006</text><line class="nom" x1="538" y1="394" x2="546" y2="394"/><circle class="dot" cx="542" cy="394" r="6"/>
+  <text class="tiny" x="68" y="425">Pearson · EE 0,025</text><line class="pear" x1="527" y1="421" x2="557" y2="421"/><circle class="dot" cx="542" cy="421" r="6"/>
+  <text class="tiny" x="68" y="452">Cluster · EE 0,100</text><line class="clus" x1="482" y1="448" x2="602" y2="448"/><circle class="dot" cx="542" cy="448" r="6"/>
+
+  <rect class="pill" x="42" y="492" width="876" height="34" rx="12"/>
+  <text class="sub" x="96" y="514">La función objetivo fija cada coeficiente; la matriz de varianza determina el ancho de su intervalo.</text>
+</svg>

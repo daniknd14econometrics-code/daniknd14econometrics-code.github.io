@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Rechazo hipotecario: probabilidades, efectos marginales y diagnóstico en modelos binarios – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-aplicada" id="toc-pregunta-aplicada" class="nav-link active" data-scroll-target="#pregunta-aplicada">Pregunta aplicada</a></li>
+  <li><a href="#mlp-un-punto-de-partida-con-límites-visibles" id="toc-mlp-un-punto-de-partida-con-límites-visibles" class="nav-link" data-scroll-target="#mlp-un-punto-de-partida-con-límites-visibles">MLP: un punto de partida con límites visibles</a></li>
+  <li><a href="#logit-odds-y-cambios-en-probabilidad" id="toc-logit-odds-y-cambios-en-probabilidad" class="nav-link" data-scroll-target="#logit-odds-y-cambios-en-probabilidad">Logit: odds y cambios en probabilidad</a></li>
+  <li><a href="#probit-como-contraste-funcional" id="toc-probit-como-contraste-funcional" class="nav-link" data-scroll-target="#probit-como-contraste-funcional">Probit como contraste funcional</a></li>
+  <li><a href="#comparación-compacta" id="toc-comparación-compacta" class="nav-link" data-scroll-target="#comparación-compacta">Comparación compacta</a></li>
+  <li><a href="#probabilidades-ajustadas" id="toc-probabilidades-ajustadas" class="nav-link" data-scroll-target="#probabilidades-ajustadas">Probabilidades ajustadas</a></li>
+  <li><a href="#clasificación-umbral-y-roc" id="toc-clasificación-umbral-y-roc" class="nav-link" data-scroll-target="#clasificación-umbral-y-roc">Clasificación, umbral y ROC</a></li>
+  <li><a href="#diagnósticos-esenciales" id="toc-diagnósticos-esenciales" class="nav-link" data-scroll-target="#diagnósticos-esenciales">Diagnósticos esenciales</a></li>
+  <li><a href="#probit-bivariado-una-extensión-no-otro-caso" id="toc-probit-bivariado-una-extensión-no-otro-caso" class="nav-link" data-scroll-target="#probit-bivariado-una-extensión-no-otro-caso">Probit bivariado: una extensión, no otro caso</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rechazo hipotecario: probabilidades, efectos marginales y diagnóstico en modelos binarios</h1>
+<p class="subtitle lead">MLP, logit y probit ante un evento poco frecuente</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-box">
+<div class="hero-title">
+<p>Una tasa alta de aciertos puede esconder un modelo que casi no detecta rechazos.</p>
+</div>
+<div class="hero-sub">
+<p>Esta aplicación compara MLP, logit y probit para explicar el rechazo de solicitudes hipotecarias. El foco no está en elegir una función por costumbre, sino en traducir sus resultados a probabilidades, evaluar su capacidad de discriminación y entender qué cambia cuando el evento es poco frecuente.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Muestra común</p>
+</div>
+<div class="metric-value">
+<p>1.969 solicitudes</p>
+</div>
+<div class="metric-note">
+<p>242 fueron rechazadas: una prevalencia de 12,29%</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Límite del MLP</p>
+</div>
+<div class="metric-value">
+<p>11,88% inválidas</p>
+</div>
+<div class="metric-note">
+<p>234 probabilidades predichas quedaron fuera de [0, 1]</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Efecto parcial promedio</p>
+</div>
+<div class="metric-value">
+<p>+0,148</p>
+</div>
+<div class="metric-note">
+<p>APE logit de <code>loanprc</code>; el probit entrega +0,145</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Discriminación</p>
+</div>
+<div class="metric-value">
+<p>AUC = 0,796</p>
+</div>
+<div class="metric-note">
+<p>Buen ordenamiento relativo, pero el umbral define qué errores se priorizan</p>
+</div>
+</div>
+</div>
+<section id="pregunta-aplicada" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-aplicada">Pregunta aplicada</h2>
+<p>¿Cómo cambia la probabilidad de rechazo hipotecario con las características de la solicitud y del solicitante? El resultado <code>reject</code> distingue solicitudes aprobadas y rechazadas; la variable central, <code>loanprc</code>, mide el préstamo solicitado en relación con el precio de la propiedad.</p>
+<p>La aplicación usa 1.969 observaciones comunes de <code>loanapp</code>. Como solo 12,29% de las solicitudes fueron rechazadas, el problema exige separar dos preguntas: qué variables se asocian con la probabilidad de rechazo y cuán útil es el modelo para detectar efectivamente esos casos.</p>
+</section>
+<section id="mlp-un-punto-de-partida-con-límites-visibles" class="level2">
+<h2 class="anchored" data-anchor-id="mlp-un-punto-de-partida-con-límites-visibles">MLP: un punto de partida con límites visibles</h2>
+<p>El modelo lineal de probabilidad ofrece una referencia inmediata: un aumento unitario de <code>loanprc</code> se asocia con 0,122 puntos adicionales en la probabilidad de rechazo (EE robusto 0,038; <em>p</em>=0,001). Pero esa sencillez impone una relación lineal y constante sobre todo el rango.</p>
+<p>El costo aparece en las predicciones: 234 de 1.969 quedan fuera del intervalo admisible [0, 1]. El MLP sigue siendo un benchmark útil, pero no una representación completa de una probabilidad condicional binaria.</p>
+</section>
+<section id="logit-odds-y-cambios-en-probabilidad" class="level2">
+<h2 class="anchored" data-anchor-id="logit-odds-y-cambios-en-probabilidad">Logit: odds y cambios en probabilidad</h2>
+<p>En logit, el coeficiente de <code>loanprc</code> es 1,699 y su <em>odds ratio</em> es 5,47. Esto no significa que la probabilidad se multiplique por 5,47: son los <em>odds</em> de rechazo los que cambian en esa proporción ante un aumento unitario, manteniendo constantes las demás covariables.</p>
+<p>Para volver a una escala aplicada, el efecto parcial promedio es más transparente. El APE de <code>loanprc</code> es 0,148 (EE 0,043; IC95% [0,063; 0,233]): en promedio, una variación unitaria del ratio se asocia con 14,8 puntos porcentuales adicionales de probabilidad de rechazo. Es una asociación condicional, no una estimación causal.</p>
+</section>
+<section id="probit-como-contraste-funcional" class="level2">
+<h2 class="anchored" data-anchor-id="probit-como-contraste-funcional">Probit como contraste funcional</h2>
+<p>Logit y probit usan enlaces diferentes, por lo que sus coeficientes latentes no son comparables en magnitud directa. En cambio, sus APE sí ofrecen una escala común.</p>
+</section>
+<section id="comparación-compacta" class="level2 table-box">
+<h2 class="anchored" data-anchor-id="comparación-compacta">Comparación compacta</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Resultado para <code>loanprc</code></th>
+<th style="text-align: right;">Incertidumbre</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MLP robusto</td>
+<td style="text-align: right;">Coef. 0,122</td>
+<td style="text-align: right;">EE 0,038</td>
+<td>Cambio lineal constante; 11,88% de predicciones inválidas</td>
+</tr>
+<tr class="even">
+<td>Logit</td>
+<td style="text-align: right;">APE 0,148</td>
+<td style="text-align: right;">EE 0,043</td>
+<td>Cambio promedio en probabilidad</td>
+</tr>
+<tr class="odd">
+<td>Probit</td>
+<td style="text-align: right;">APE 0,145</td>
+<td style="text-align: right;">EE 0,040</td>
+<td>Cambio promedio en probabilidad</td>
+</tr>
+</tbody>
+</table>
+<p>Los APE logit y probit son casi idénticos y sus probabilidades predichas resultan muy próximas. La elección del enlace no altera aquí la conclusión sustantiva, aunque sí cambia la parametrización y exige interpretar cada escala correctamente.</p>
+</section>
+<section id="probabilidades-ajustadas" class="level2">
+<h2 class="anchored" data-anchor-id="probabilidades-ajustadas">Probabilidades ajustadas</h2>
+<p>La asociación se vuelve más tangible al variar <code>loanprc</code> y promediar sobre las demás características observadas. La probabilidad ajustada logit pasa de 7,2% cuando el ratio es 0,4 a 19,4% cuando alcanza 1,2. La incertidumbre se amplía en la parte alta, donde hay menos información efectiva.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/t12_rechazo_loanprc.svg" class="img-fluid figure-img" style="width:100.0%" alt="Tasas observadas de rechazo por deciles de loanprc y trayectoria de probabilidad ajustada con intervalo de confianza"></p>
+<figcaption>El panel izquierdo resume tasas observadas de rechazo por grupos de <code>loanprc</code>; el derecho muestra probabilidades promedio ajustadas por logit e IC95%. Ambos describen asociación, no causalidad.</figcaption>
+</figure>
+</div>
+</section>
+<section id="clasificación-umbral-y-roc" class="level2">
+<h2 class="anchored" data-anchor-id="clasificación-umbral-y-roc">Clasificación, umbral y ROC</h2>
+<p>Con el umbral convencional de 0,50, el modelo clasifica correctamente 88,78% de las solicitudes. Esa cifra parece excelente, pero detecta solo 18,60% de los rechazos: la baja prevalencia permite acertar mucho prediciendo casi siempre aprobación.</p>
+<p>Usar como referencia un umbral cercano a la tasa observada de rechazo (0,123) cambia el compromiso: la sensibilidad sube a 70,66%, la especificidad queda en 77,01% y la exactitud global baja a 76,23%. No existe un umbral universalmente óptimo; depende del costo relativo de omitir un rechazo frente a marcar erróneamente una aprobación.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/t12_roc_umbral.svg" class="img-fluid figure-img" style="width:100.0%" alt="Curva ROC con AUC 0,796 y comparación de sensibilidad y exactitud para dos umbrales"></p>
+<figcaption>La curva ROC resume la discriminación del logit a través de todos los umbrales. Las tarjetas comparan el umbral 0,50 con uno cercano a la prevalencia del evento.</figcaption>
+</figure>
+</div>
+</section>
+<section id="diagnósticos-esenciales" class="level2">
+<h2 class="anchored" data-anchor-id="diagnósticos-esenciales">Diagnósticos esenciales</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnóstico</th>
+<th style="text-align: right;">Resultado</th>
+<th>Lectura prudente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hosmer–Lemeshow</td>
+<td style="text-align: right;"><em>p</em>=0,260</td>
+<td>No rechaza el ajuste por grupos de riesgo</td>
+</tr>
+<tr class="even">
+<td>Linktest logit</td>
+<td style="text-align: right;"><code>_hatsq</code> <em>p</em>=0,486</td>
+<td>No ofrece evidencia clara de mala especificación del enlace</td>
+</tr>
+<tr class="odd">
+<td>Linktest probit</td>
+<td style="text-align: right;"><code>_hatsq</code> <em>p</em>=0,793</td>
+<td>Conclusión equivalente para probit</td>
+</tr>
+<tr class="even">
+<td>Pregibon auxiliar</td>
+<td style="text-align: right;"><em>p</em>=0,023</td>
+<td>Señal de tensión que aconseja revisar forma funcional y observaciones influyentes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Los diagnósticos no se reducen a un voto mecánico. En conjunto, logit y probit producen resultados centrales estables, mientras el test auxiliar de Pregibon recuerda que un buen AUC o un test favorable no garantizan que toda la especificación sea incuestionable.</p>
+</section>
+<section id="probit-bivariado-una-extensión-no-otro-caso" class="level2">
+<h2 class="anchored" data-anchor-id="probit-bivariado-una-extensión-no-otro-caso">Probit bivariado: una extensión, no otro caso</h2>
+<p>El análisis se extiende a una decisión relacionada: la solicitud de seguro hipotecario privado (<code>inss</code>). El probit bivariado estima una correlación de errores de -0,149 y rechaza <code>rho=0</code> (<em>p</em>=0,020), señal de dependencia no observada entre ambas ecuaciones.</p>
+<p>La extensión muestra por qué modelar conjuntamente dos resultados binarios puede ser informativo. No identifica por sí sola un mecanismo causal ni desplaza el objetivo central del análisis: interpretar y diagnosticar adecuadamente una probabilidad de rechazo.</p>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>MLP, logit y probit cuentan una historia sustantiva parecida sobre <code>loanprc</code>, y logit y probit entregan APE casi iguales. Sin embargo, esa coincidencia no vuelve intercambiables sus coeficientes ni elimina la necesidad de revisar rango, calibración, forma funcional y capacidad predictiva.</p>
+<p>La lección más importante aparece al clasificar: 88,78% de aciertos convive con apenas 18,60% de sensibilidad bajo el umbral 0,50. En eventos poco frecuentes, una cifra global puede ocultar justamente los casos que interesa detectar. Modelar una respuesta binaria exige combinar interpretación económica, probabilidades ajustadas y diagnósticos alineados con la decisión.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

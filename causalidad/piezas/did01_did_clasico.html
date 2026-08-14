@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link active" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#por-qué-niveles-y-antes-después-pueden-ser-engañosos" id="toc-por-qué-niveles-y-antes-después-pueden-ser-engañosos" class="nav-link" data-scroll-target="#por-qué-niveles-y-antes-después-pueden-ser-engañosos">Por qué niveles y antes-después pueden ser engañosos</a></li>
+  <li><a href="#la-lógica-de-la-doble-diferencia" id="toc-la-lógica-de-la-doble-diferencia" class="nav-link" data-scroll-target="#la-lógica-de-la-doble-diferencia">La lógica de la doble diferencia</a></li>
+  <li><a href="#aplicación-canónica-nueva-jersey-y-pensilvania" id="toc-aplicación-canónica-nueva-jersey-y-pensilvania" class="nav-link" data-scroll-target="#aplicación-canónica-nueva-jersey-y-pensilvania">Aplicación canónica: Nueva Jersey y Pensilvania</a></li>
+  <li><a href="#qué-identifica-el-did-22" id="toc-qué-identifica-el-did-22" class="nav-link" data-scroll-target="#qué-identifica-el-did-22">Qué identifica el DiD 2×2</a></li>
+  <li><a href="#de-tendencias-paralelas-incondicionales-a-condicionales" id="toc-de-tendencias-paralelas-incondicionales-a-condicionales" class="nav-link" data-scroll-target="#de-tendencias-paralelas-incondicionales-a-condicionales">De tendencias paralelas incondicionales a condicionales</a></li>
+  <li><a href="#ponderación-de-abadie-y-soporte-común" id="toc-ponderación-de-abadie-y-soporte-común" class="nav-link" data-scroll-target="#ponderación-de-abadie-y-soporte-común">Ponderación de Abadie y soporte común</a></li>
+  <li><a href="#aplicación-nsw" id="toc-aplicación-nsw" class="nav-link" data-scroll-target="#aplicación-nsw">Aplicación NSW</a></li>
+  <li><a href="#qué-cambia-entre-las-dos-estrategias" id="toc-qué-cambia-entre-las-dos-estrategias" class="nav-link" data-scroll-target="#qué-cambia-entre-las-dos-estrategias">Qué cambia entre las dos estrategias</a></li>
+  <li><a href="#alcance-y-límites" id="toc-alcance-y-límites" class="nav-link" data-scroll-target="#alcance-y-límites">Alcance y límites</a></li>
+  <li><a href="#puente-hacia-diseños-did-con-más-períodos" id="toc-puente-hacia-diseños-did-con-más-períodos" class="nav-link" data-scroll-target="#puente-hacia-diseños-did-con-más-períodos">Puente hacia diseños DiD con más períodos</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional</h1>
+<p class="subtitle lead">Dos aplicaciones para entender cómo cambia el contrafactual cuando la comparabilidad depende de observables</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../causalidad/index.html">← Volver al índice de Causalidad</a></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>El efecto se identifica comparando cambios, no niveles aislados</p>
+</div>
+<div class="hero-sub">
+<p>Este análisis parte del diseño canónico de dos grupos y dos períodos y avanza hacia una versión condicional que reconstruye la población de comparación mediante propensity scores y soporte común.</p>
+</div>
+</div>
+<section id="pregunta-central" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
+<p>¿Cómo puede Difference-in-Differences aislar el efecto de una intervención cuando los grupos parten de niveles distintos y, además, su comparabilidad puede depender de características observables?</p>
+<p><strong>Respuesta corta:</strong> el DiD canónico combina la diferencia temporal de cada grupo con la diferencia entre grupos. En Nueva Jersey, esa comparación estima un aumento de <strong>2,750 empleos equivalentes a tiempo completo por restaurante</strong>. La extensión condicional muestra que la misma lógica puede sostenerse reponderando controles comparables: en la aplicación NSW, el ATT de Abadie es cercano a <strong>1.469 unidades monetarias de ingreso</strong>.</p>
+</section>
+<section id="por-qué-niveles-y-antes-después-pueden-ser-engañosos" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-niveles-y-antes-después-pueden-ser-engañosos">Por qué niveles y antes-después pueden ser engañosos</h2>
+<p>Una comparación transversal posterior al tratamiento mezcla el efecto buscado con diferencias permanentes entre los grupos. Si Nueva Jersey y Pensilvania ya tenían niveles de empleo distintos antes del aumento salarial, la brecha posterior no puede atribuirse directamente a la política.</p>
+<p>El antes-después de Nueva Jersey evita esa brecha inicial, pero introduce otro problema: cualquier shock temporal que hubiera afectado el empleo aun sin el aumento salarial quedaría confundido con el tratamiento. El grupo de control permite aproximar ese cambio contrafactual.</p>
+</section>
+<section id="la-lógica-de-la-doble-diferencia" class="level2">
+<h2 class="anchored" data-anchor-id="la-lógica-de-la-doble-diferencia">La lógica de la doble diferencia</h2>
+<p>El estimando de dos grupos y dos períodos puede escribirse como:</p>
+<p><span class="math display">\[
+\widehat{\tau}_{DiD}=
+(\overline{Y}_{T,post}-\overline{Y}_{T,pre})
+-(\overline{Y}_{C,post}-\overline{Y}_{C,pre}).
+\]</span></p>
+<p>La primera diferencia elimina componentes permanentes propios del grupo tratado. La segunda descuenta el cambio temporal observado en el control. Bajo tendencias paralelas, este último cambio aproxima lo que habría ocurrido entre los tratados en ausencia de tratamiento.</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Tratamiento y comparación</strong></p>
+<p>El tratamiento comienza entre los dos períodos para Nueva Jersey. Pensilvania no recibe la intervención y aporta el cambio contrafactual.</p>
+</div>
+<div class="section-box">
+<p><strong>Supuesto de identificación</strong></p>
+<p>Sin el aumento salarial, el empleo medio de ambos grupos habría evolucionado en paralelo, aunque sus niveles iniciales fueran distintos.</p>
+</div>
+<div class="section-box">
+<p><strong>Población objetivo</strong></p>
+<p>Restaurantes de Nueva Jersey observados antes y después, usando los restaurantes de Pensilvania como grupo de comparación.</p>
+</div>
+</div>
+</section>
+<section id="aplicación-canónica-nueva-jersey-y-pensilvania" class="level2">
+<h2 class="anchored" data-anchor-id="aplicación-canónica-nueva-jersey-y-pensilvania">Aplicación canónica: Nueva Jersey y Pensilvania</h2>
+<p>La aplicación utiliza un panel balanceado de <strong>384 restaurantes</strong> observados antes y después del aumento del salario mínimo de Nueva Jersey. El resultado es el empleo equivalente a tiempo completo (<code>FTE</code>), que combina trabajadores de tiempo completo, gerentes y la mitad de los trabajadores de tiempo parcial.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did01_trayectorias_nj_pa.svg" class="img-fluid figure-img" alt="Nueva Jersey presenta un pequeño aumento del empleo FTE, mientras Pensilvania registra una caída. La distancia entre el valor observado de Nueva Jersey y su contrafactual paralelo equivale a 2,750 FTE."></p>
+<figcaption>Trayectorias medias de empleo FTE en Nueva Jersey y Pensilvania</figcaption>
+</figure>
+</div>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Grupo</th>
+<th style="text-align: right;">Antes</th>
+<th style="text-align: right;">Después</th>
+<th style="text-align: right;">Cambio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pensilvania — control</td>
+<td style="text-align: right;">23,380</td>
+<td style="text-align: right;">21,097</td>
+<td style="text-align: right;">−2,283</td>
+</tr>
+<tr class="even">
+<td>Nueva Jersey — tratado</td>
+<td style="text-align: right;">20,431</td>
+<td style="text-align: right;">20,897</td>
+<td style="text-align: right;">+0,467</td>
+</tr>
+<tr class="odd">
+<td><strong>Diferencia de cambios</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>+2,750</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>El cálculo es directo: <code>0,467 − (−2,283) = 2,750</code>. La regresión saturada con indicadores de grupo, período y su interacción recupera exactamente el mismo coeficiente. No se presentan como resultados diferentes porque son dos representaciones del mismo estimando.</p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Efecto DiD</p>
+</div>
+<div class="metric-value">
+<p>+2,750</p>
+</div>
+<div class="metric-note">
+<p>empleos FTE por restaurante</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Error estándar</p>
+</div>
+<div class="metric-value">
+<p>1,339</p>
+</div>
+<div class="metric-note">
+<p>agrupado por restaurante</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>p-value</p>
+</div>
+<div class="metric-value">
+<p>0,041</p>
+</div>
+<div class="metric-note">
+<p>contraste bilateral</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Intervalo 95%</p>
+</div>
+<div class="metric-value">
+<p>[0,118; 5,382]</p>
+</div>
+<div class="metric-note">
+<p>FTE por restaurante</p>
+</div>
+</div>
+</div>
+<p>Dentro de este diseño, la estimación indica que el aumento salarial elevó el empleo medio en Nueva Jersey en <strong>2,75 FTE por restaurante</strong> respecto de la trayectoria contrafactual aproximada por Pensilvania.</p>
+</section>
+<section id="qué-identifica-el-did-22" class="level2">
+<h2 class="anchored" data-anchor-id="qué-identifica-el-did-22">Qué identifica el DiD 2×2</h2>
+<p>El resultado no requiere que ambos estados tengan el mismo nivel de empleo antes del tratamiento. Requiere que, sin la política, sus <strong>cambios medios</strong> hubieran sido comparables. Esa condición es contrafactual y no puede observarse directamente.</p>
+<p>Con un único período pretratamiento tampoco puede realizarse un diagnóstico serio de pretrends. El gráfico permite ver las cuatro medias que forman el estimador, pero no valida tendencias paralelas: la credibilidad del supuesto depende de la elección del grupo de control, del contexto institucional y de la ausencia de shocks diferenciales coincidentes con el tratamiento.</p>
+</section>
+<section id="de-tendencias-paralelas-incondicionales-a-condicionales" class="level2">
+<h2 class="anchored" data-anchor-id="de-tendencias-paralelas-incondicionales-a-condicionales">De tendencias paralelas incondicionales a condicionales</h2>
+<p>El diseño anterior supone que el cambio contrafactual medio es comparable sin ajustar por composición. Una formulación más flexible permite que ese cambio dependa de características previas al tratamiento:</p>
+<p><span class="math display">\[
+E[\Delta Y(0)\mid D=1,X]
+=
+E[\Delta Y(0)\mid D=0,X].
+\]</span></p>
+<p>Ahora los controles relevantes son aquellos con covariables <code>X</code> semejantes a las de los tratados. La identificación exige, además, <strong>overlap</strong>: para los perfiles observados entre los tratados debe existir una probabilidad positiva de encontrar controles comparables.</p>
+</section>
+<section id="ponderación-de-abadie-y-soporte-común" class="level2">
+<h2 class="anchored" data-anchor-id="ponderación-de-abadie-y-soporte-común">Ponderación de Abadie y soporte común</h2>
+<p>La ponderación de Abadie utiliza el propensity score, <span class="math inline">\(p(X)=P(D=1\mid X)\)</span>, para cambiar la composición del grupo de control. Los controles que representan mejor a la población tratada reciben mayor peso; los perfiles con escasa comparabilidad reciben menos influencia.</p>
+<p>La lógica no consiste en buscar grupos con idéntico ingreso observado después del programa. Se utilizan covariables predeterminadas para construir el contrafactual: edad, educación, raza y etnia, estado civil, finalización secundaria e ingresos de 1974.</p>
+</section>
+<section id="aplicación-nsw" class="level2">
+<h2 class="anchored" data-anchor-id="aplicación-nsw">Aplicación NSW</h2>
+<p>La extensión utiliza una muestra NSW/Dehejia-Wahba de <strong>445 personas</strong>: 185 participantes de un programa de capacitación laboral y 260 controles. El resultado es el cambio de ingresos entre 1975 y 1978. Los ingresos de 1974 se incorporan como covariable previa adicional para capturar diferencias de trayectoria antes del período base.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did01_overlap_nsw.svg" class="img-fluid figure-img" alt="Histogramas superpuestos del propensity score para tratados y controles. La mayor parte de ambas distribuciones se encuentra dentro de la intersección de soporte entre 0,239 y 0,629."></p>
+<figcaption>Distribución del propensity score para participantes y controles NSW</figcaption>
+</figure>
+</div>
+<p>Los propensity scores presentan una intersección amplia. La versión operativa del gráfico, estimada mediante logit con las covariables predeterminadas, ubica el rango común aproximadamente entre <code>0,239</code> y <code>0,629</code>. El diagnóstico original con probit arroja una conclusión prácticamente idéntica. La estabilidad del ATT al restringir el soporte indica que el resultado no depende materialmente de unas pocas observaciones sin comparación adecuada.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th style="text-align: right;">Efecto estimado sobre el cambio de ingresos</th>
+<th style="text-align: right;">EE</th>
+<th style="text-align: right;">p-value</th>
+<th style="text-align: right;">IC 95%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diferencia no ajustada de cambios</td>
+<td style="text-align: right;">1.529</td>
+<td style="text-align: right;">715</td>
+<td style="text-align: right;">0,033</td>
+<td style="text-align: right;">[124; 2.934]</td>
+</tr>
+<tr class="even">
+<td>Ajuste lineal por covariables</td>
+<td style="text-align: right;">1.375</td>
+<td style="text-align: right;">713</td>
+<td style="text-align: right;">0,054</td>
+<td style="text-align: right;">[−26; 2.776]</td>
+</tr>
+<tr class="odd">
+<td>Abadie, construcción manual</td>
+<td style="text-align: right;">1.471</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td><strong>Abadie, inferencia de <code>absdid</code></strong></td>
+<td style="text-align: right;"><strong>1.469</strong></td>
+<td style="text-align: right;"><strong>705</strong></td>
+<td style="text-align: right;"><strong>0,037</strong></td>
+<td style="text-align: right;"><strong>[86; 2.851]</strong></td>
+</tr>
+<tr class="odd">
+<td>Abadie restringido al soporte común</td>
+<td style="text-align: right;">1.448</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>El parámetro principal es un <strong>ATT</strong>: el efecto promedio del programa para la población tratada representada por el diseño. La estimación con <code>absdid</code> indica un aumento de ingresos cercano a <strong>1.469 unidades monetarias</strong> respecto del cambio contrafactual reconstruido con controles reponderados.</p>
+<p>La construcción manual y el comando especializado recuperan efectos puntuales muy próximos. La inferencia principal se toma de <code>absdid</code>, que incorpora el error asociado con estimar el propensity score; por eso no se asigna a la versión manual una precisión que esa reconstrucción pedagógica no reporta.</p>
+</section>
+<section id="qué-cambia-entre-las-dos-estrategias" class="level2">
+<h2 class="anchored" data-anchor-id="qué-cambia-entre-las-dos-estrategias">Qué cambia entre las dos estrategias</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>DiD canónico NJ–PA</th>
+<th>DiD condicional NSW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fuente de comparabilidad</td>
+<td>Cambio medio del grupo de control</td>
+<td>Cambio de controles reponderados por <code>X</code></td>
+</tr>
+<tr class="even">
+<td>Tendencias paralelas</td>
+<td>Incondicionales</td>
+<td>Condicionales en observables</td>
+</tr>
+<tr class="odd">
+<td>Diagnóstico central</td>
+<td>Plausibilidad del control y contexto</td>
+<td>Overlap y soporte común</td>
+</tr>
+<tr class="even">
+<td>Estimando</td>
+<td>Efecto sobre restaurantes tratados de NJ</td>
+<td>ATT para participantes comparables del programa</td>
+</tr>
+<tr class="odd">
+<td>Riesgo principal</td>
+<td>Shock diferencial entre estados</td>
+<td>Falta de soporte o covariables insuficientes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La extensión condicional no abandona Difference-in-Differences. Conserva la comparación de cambios y modifica la forma de construir el grupo de control relevante. Esta es la continuidad metodológica que une ambas aplicaciones.</p>
+</section>
+<section id="alcance-y-límites" class="level2">
+<h2 class="anchored" data-anchor-id="alcance-y-límites">Alcance y límites</h2>
+<p>En NJ–PA, la lectura causal se sostiene para los restaurantes observados bajo la hipótesis de que Pensilvania aproxima la trayectoria contrafactual de Nueva Jersey. La presencia de un solo período previo impide evaluar empíricamente la dinámica pretratamiento.</p>
+<p>En NSW, el ATT se refiere a participantes comparables dentro del soporte observado. Tendencias paralelas condicionales permiten diferencias sistemáticas de cambio explicadas por las covariables incluidas, pero siguen requiriendo que no queden factores no observados capaces de generar trayectorias diferenciales.</p>
+<p>Las dos aplicaciones tienen dos períodos principales. Por ello no abordan todavía tratamientos escalonados, efectos dinámicos ni problemas derivados de combinar múltiples cohortes y períodos en una única regresión.</p>
+</section>
+<section id="puente-hacia-diseños-did-con-más-períodos" class="level2">
+<h2 class="anchored" data-anchor-id="puente-hacia-diseños-did-con-más-períodos">Puente hacia diseños DiD con más períodos</h2>
+<p>El DiD canónico establece la idea fundamental: identificar mediante una diferencia de cambios bajo tendencias paralelas. La versión condicional muestra que esa comparabilidad puede construirse con observables, weighting y soporte común.</p>
+<p>El paso siguiente es estudiar qué ocurre cuando se dispone de muchos períodos. Antes de reconsiderar el estimando, aparece un problema clásico de inferencia: los outcomes y los tratamientos pueden persistir en el tiempo, de modo que errores estándar ingenuos tratan como independiente información que no lo es. Esa cuestión requiere un análisis propio.</p>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>Difference-in-Differences sustituye comparaciones aisladas de niveles o de tiempo por una comparación de cambios con un contrafactual explícito. En la aplicación NJ–PA, el efecto estimado es <strong>+2,750 FTE por restaurante</strong>; en NSW, la extensión de Abadie estima un ATT cercano a <strong>1.469 unidades monetarias de ingreso</strong> para los participantes comparables.</p>
+<p>La contribución central no se reduce a esos dos números. El análisis muestra una progresión: tendencias paralelas incondicionales en el diseño canónico, tendencias paralelas condicionales cuando la composición importa y ponderación con soporte común para construir una comparación más pertinente. Esa arquitectura es el punto de partida para estudiar después la inferencia en paneles largos y, más adelante, los problemas de los diseños DiD con adopción escalonada.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

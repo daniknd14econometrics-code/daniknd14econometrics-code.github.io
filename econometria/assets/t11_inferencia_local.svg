@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590" role="img" aria-labelledby="title desc">
+  <title id="title">Inferencia pointwise para la curva local</title>
+  <desc id="desc">Curva de consumo condicional con banda pointwise y comparación entre la derivada media local y la pendiente lineal global.</desc>
+  <rect width="1200" height="590" rx="22" fill="#f7f4ee"/>
+  <style>text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#24313a}.title{font-size:25px;font-weight:700}.sub{font-size:15px;fill:#59656d}.panel{font-size:17px;font-weight:700}.axis{stroke:#9aa4aa;stroke-width:1.2}.grid{stroke:#dfdbd2;stroke-width:1}.tick{font-size:13px;fill:#68737a}.band{fill:#77aaa5;opacity:.26}.curve{fill:none;stroke:#176b68;stroke-width:4}.ci{stroke:#446b6a;stroke-width:7}.point{fill:#176b68}.ref{stroke:#8d6755;stroke-width:7}.refpoint{fill:#8d6755}.label{font-size:14px}.value{font-size:17px;font-weight:700}.note{font-size:14px;fill:#59656d}</style>
+  <text x="54" y="48" class="title">La precisión también es local</text>
+  <text x="54" y="75" class="sub">Intervalos pointwise al 95% · el soporte central es más informativo que los extremos</text>
+  <rect x="42" y="100" width="765" height="425" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <rect x="827" y="100" width="331" height="425" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <text x="68" y="132" class="panel">Curva local lineal e incertidumbre</text><text x="853" y="132" class="panel">Pendiente promedio</text>
+  <line x1="102" y1="448" x2="770" y2="448" class="axis"/><line x1="102" y1="165" x2="102" y2="448" class="axis"/>
+  <g class="grid"><line x1="102" y1="377" x2="770" y2="377"/><line x1="102" y1="306" x2="770" y2="306"/><line x1="102" y1="235" x2="770" y2="235"/></g>
+  <path class="band" d="M117 407 L197 389 L278 360 L358 330 L439 302 L520 273 L600 243 L681 211 L755 173 L755 213 L681 241 L600 267 L520 295 L439 322 L358 350 L278 382 L197 411 L117 437 Z"/>
+  <path class="curve" d="M117 422 C190 399 229 383 278 371 S390 319 439 312 S551 272 600 255 S709 214 755 193"/>
+  <g class="tick"><text x="96" y="468">4,3</text><text x="421" y="468">5,4</text><text x="746" y="468">6,5</text><text x="61" y="425">3,9</text><text x="61" y="314">4,4</text><text x="61" y="204">4,9</text><text x="365" y="497">Log ingreso per cápita</text></g>
+  <rect x="121" y="183" width="154" height="51" rx="9" fill="#edf5f3"/><line x1="137" y1="203" x2="168" y2="203" class="curve"/><text x="178" y="208" class="label">Estimación local</text><rect x="137" y="215" width="31" height="10" class="band"/><text x="178" y="225" class="label">IC pointwise</text>
+  <text x="853" y="178" class="label">Regresión local</text><text x="853" y="205" class="value">0,514</text>
+  <line x1="874" y1="265" x2="1104" y2="265" stroke="#c7c1b8" stroke-width="2"/>
+  <line x1="927" y1="265" x2="1083" y2="265" class="ci"/><circle cx="1009" cy="265" r="8" class="point"/><text x="852" y="292" class="note">IC95% [0,497; 0,534]</text>
+  <text x="853" y="350" class="label">MCO global</text><text x="853" y="377" class="value">0,520</text>
+  <line x1="874" y1="420" x2="1104" y2="420" stroke="#c7c1b8" stroke-width="2"/><circle cx="1027" cy="420" r="8" class="refpoint"/>
+  <text x="853" y="477" class="note">La flexibilidad disciplina</text><text x="853" y="498" class="note">la recta; no la contradice.</text>
+  <text x="68" y="553" class="note">La banda es pointwise, no simultánea. Se ensancha donde disminuye el soporte.</text>
+</svg>

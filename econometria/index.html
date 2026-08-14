@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Econometría – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f1567f6532da11e0b3c9d7d9c23d1e21.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="assets/econometria-explorer.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../econometria/index.html" aria-current="page"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Econometría</h1></header>
+
+<header id="title-block-header">
+
+
+</header>
+
+
+<div class="hero-banner hero-banner--econometria">
+<div class="hero-banner__content">
+<p><span class="hero-banner__kicker">Portal de sección</span></p>
+<section id="econometría-aplicada-para-diagnóstico-y-decisión" class="level1">
+<h1>Econometría aplicada para diagnóstico y decisión</h1>
+<div class="hero-banner__lead">
+<p>Este portal reúne análisis con estructura comparable: pregunta, estrategia de identificación, estimación y lectura sustantiva de resultados.</p>
+</div>
+<div class="hero-banner__actions">
+<p><a class="button-primary" href="../index.html">Volver al inicio</a></p>
+</div>
+</section>
+</div>
+<div class="hero-banner__media">
+
+</div>
+</div>
+<div class="econometria-summary">
+<p>22 análisis · 7 áreas</p>
+</div>
+<div class="econometria-explorer js-econometria-explorer">
+<nav class="econometria-sidebar" aria-label="Áreas de Econometría">
+<p class="econometria-sidebar__title">
+EXPLORAR ECONOMETRÍA
+</p>
+<div class="econometria-tabs" role="tablist" aria-orientation="vertical">
+<button id="tab-lineales" class="econometria-tab" type="button" role="tab" aria-controls="area-lineales">
+Modelos lineales, endogeneidad e instrumentos
+</button>
+<button id="tab-panel" class="econometria-tab" type="button" role="tab" aria-controls="area-panel">
+Panel: heterogeneidad, endogeneidad y dinámica
+</button>
+<button id="tab-discreta" class="econometria-tab" type="button" role="tab" aria-controls="area-discreta">
+Elección discreta y respuestas categóricas
+</button>
+<button id="tab-resultados" class="econometria-tab" type="button" role="tab" aria-controls="area-resultados">
+Conteos, proporciones y resultados positivos
+</button>
+<button id="tab-censura" class="econometria-tab" type="button" role="tab" aria-controls="area-censura">
+Censura, soluciones de esquina y selección
+</button>
+<button id="tab-inferencia" class="econometria-tab" type="button" role="tab" aria-controls="area-inferencia">
+Inferencia y métodos de estimación
+</button>
+<button id="tab-no-parametricos" class="econometria-tab" type="button" role="tab" aria-controls="area-no-parametricos">
+Métodos no paramétricos y semiparamétricos
+</button>
+</div>
+</nav>
+<div class="econometria-mobile-control">
+<p><label for="econometria-area-select">Explorar área</label> <select id="econometria-area-select"> <option value="area-lineales">Modelos lineales, endogeneidad e instrumentos</option> <option value="area-panel">Panel: heterogeneidad, endogeneidad y dinámica</option> <option value="area-discreta">Elección discreta y respuestas categóricas</option> <option value="area-resultados">Conteos, proporciones y resultados positivos</option> <option value="area-censura">Censura, soluciones de esquina y selección</option> <option value="area-inferencia">Inferencia y métodos de estimación</option> <option value="area-no-parametricos">Métodos no paramétricos y semiparamétricos</option> </select></p>
+</div>
+<div class="econometria-panels">
+<div id="area-lineales" class="econometria-panel" role="tabpanel" aria-labelledby="tab-lineales">
+<section id="modelos-lineales-endogeneidad-e-instrumentos" class="level2">
+<h2 class="anchored" data-anchor-id="modelos-lineales-endogeneidad-e-instrumentos">Modelos lineales, endogeneidad e instrumentos</h2>
+<div class="section-lead">
+<p>De la interpretación de asociaciones parciales a los problemas de endogeneidad y la estimación mediante variables instrumentales.</p>
+</div>
+<div class="piece-grid">
+<section id="educación-e-ingresos-qué-significa-controlar-en-una-regresión-lineal" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="educación-e-ingresos-qué-significa-controlar-en-una-regresión-lineal"><a href="../econometria/piezas/t00_mco_ingresos.html">Educación e ingresos: qué significa controlar en una regresión lineal</a></h3>
+<p>MCO simple y múltiple, FWL e inferencia robusta en una aplicación laboral.</p>
+<p><strong>Método principal:</strong> Regresión lineal, FWL y errores robustos</p>
+<p><strong>Tipo de datos:</strong> Corte transversal de personas</p>
+</section>
+<section id="instituciones-y-desarrollo-qué-puede-y-qué-no-puede-resolver-una-variable-instrumental" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="instituciones-y-desarrollo-qué-puede-y-qué-no-puede-resolver-una-variable-instrumental"><a href="../econometria/piezas/t01_vi.html">Instituciones y desarrollo: qué puede —y qué no puede— resolver una variable instrumental</a></h3>
+<p>Mortalidad histórica, primera etapa frágil y límites de la identificación instrumental.</p>
+<p><strong>Método principal:</strong> Variables instrumentales / 2SLS</p>
+<p><strong>Tipo de datos:</strong> Corte transversal de países</p>
+</section>
+</div>
+</section>
+</div>
+<div id="area-panel" class="econometria-panel" role="tabpanel" aria-labelledby="tab-panel">
+<section id="panel-heterogeneidad-endogeneidad-y-dinámica" class="level2">
+<h2 class="anchored" data-anchor-id="panel-heterogeneidad-endogeneidad-y-dinámica">Panel: heterogeneidad, endogeneidad y dinámica</h2>
+<div class="section-lead">
+<p>Qué cambia al explotar variación temporal dentro de las mismas unidades y modelar heterogeneidad persistente, endogeneidad o dinámica.</p>
+</div>
+<div class="piece-grid">
+<section id="impuestos-a-la-cerveza-y-accidentes-por-qué-between-y-within-cuentan-historias-distintas" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="impuestos-a-la-cerveza-y-accidentes-por-qué-between-y-within-cuentan-historias-distintas"><a href="../econometria/piezas/t02_panel_pooled_salarios.html">Impuestos a la cerveza y accidentes: por qué between y within cuentan historias distintas</a></h3>
+<p>Cómo cambia la lectura al comparar diferencias entre estados con variación dentro de cada estado.</p>
+<p><strong>Método principal:</strong> Pooled OLS, between, efectos aleatorios y efectos fijos</p>
+<p><strong>Tipo de datos:</strong> Panel balanceado de estados</p>
+</section>
+<section id="heterogeneidad-no-observada-en-panel-cuándo-cambia-la-conclusión" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="heterogeneidad-no-observada-en-panel-cuándo-cambia-la-conclusión"><a href="../econometria/piezas/t09_panel_re_fe_cre.html">Heterogeneidad no observada en panel: cuándo cambia la conclusión</a></h3>
+<p>Dos aplicaciones contrastan una lectura estable en panel lineal con efectos parciales sensibles en probit de panel.</p>
+<p><strong>Método principal:</strong> FE, RE y CRE-Mundlak en modelos lineales y binarios</p>
+<p><strong>Tipo de datos:</strong> Paneles cortos de plantas y mujeres</p>
+</section>
+<section id="crimen-arrestos-y-policía-dentro-del-panel" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="crimen-arrestos-y-policía-dentro-del-panel"><a href="../econometria/piezas/t11_panel_iv.html">Crimen, arrestos y policía dentro del panel</a></h3>
+<p>Qué exige identificar con instrumentos usando variación within.</p>
+<p><strong>Método principal:</strong> FE-IV, pooled-IV y between-IV <strong>Tipo de datos:</strong> Panel de condados</p>
+</section>
+<section id="producción-con-memoria-panel-dinámico-e-instrumentos-internos" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="producción-con-memoria-panel-dinámico-e-instrumentos-internos"><a href="../econometria/piezas/t09b_panel_dinamico.html">Producción con memoria: panel dinámico e instrumentos internos</a></h3>
+<p>Por qué la dinámica vuelve endógeno el rezago y exige disciplinar la matriz de instrumentos.</p>
+<p><strong>Método principal:</strong> Anderson–Hsiao y Arellano–Bond / Difference GMM <strong>Tipo de datos:</strong> Panel corto no balanceado de firmas</p>
+</section>
+<section id="empresas-dentro-de-sectores-panel-multinivel-y-shrinkage" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="empresas-dentro-de-sectores-panel-multinivel-y-shrinkage"><a href="../econometria/piezas/t09c_panel_multinivel.html">Empresas dentro de sectores: panel multinivel y shrinkage</a></h3>
+<p>Qué se aprende al separar heterogeneidad sectorial, de firma y firma–año.</p>
+<p><strong>Método principal:</strong> Modelos lineales mixtos, ICC y efectos aleatorios <strong>Tipo de datos:</strong> Panel jerárquico firma–año–sector</p>
+</section>
+</div>
+</section>
+</div>
+<div id="area-discreta" class="econometria-panel" role="tabpanel" aria-labelledby="tab-discreta">
+<section id="elección-discreta-y-respuestas-categóricas" class="level2">
+<h2 class="anchored" data-anchor-id="elección-discreta-y-respuestas-categóricas">Elección discreta y respuestas categóricas</h2>
+<div class="section-lead">
+<p>Modelos para probabilidades y resultados binarios, multinomiales y ordenados, tanto en corte transversal como en panel.</p>
+</div>
+<div class="piece-grid">
+<section id="rechazo-hipotecario-probabilidades-y-diagnóstico" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="rechazo-hipotecario-probabilidades-y-diagnóstico"><a href="../econometria/piezas/t12_binaria_base.html">Rechazo hipotecario: probabilidades y diagnóstico</a></h3>
+<p>MLP, logit y probit ante un evento poco frecuente.</p>
+<p><strong>Método principal:</strong> Modelos binarios, APE y ROC <strong>Tipo de datos:</strong> Solicitudes hipotecarias</p>
+</section>
+<section id="endogeneidad-en-modelos-binarios-la-estrategia-depende-de-la-variable-endógena" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="endogeneidad-en-modelos-binarios-la-estrategia-depende-de-la-variable-endógena"><a href="../econometria/piezas/t13_binaria_vi_continua.html">Endogeneidad en modelos binarios: la estrategia depende de la variable endógena</a></h3>
+<p>Función de control e IV-probit para una endógena continua; biprobit cuando la variable problemática también es binaria.</p>
+<p><strong>Método principal:</strong> Función de control, IV-probit y biprobit<br> <strong>Tipo de datos:</strong> Microdatos de hogares</p>
+</section>
+<section id="estados-de-actividad-en-panel-qué-cambia-entre-multinomial-pooled-y-cre" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="estados-de-actividad-en-panel-qué-cambia-entre-multinomial-pooled-y-cre"><a href="../econometria/piezas/t18_multinomial_panel_cre.html">Estados de actividad en panel: qué cambia entre multinomial pooled y CRE</a></h3>
+<p>Heterogeneidad persistente en escuela, hogar y trabajo.</p>
+<p><strong>Método principal:</strong> Multinomial agrupado + CRE<br> <strong>Tipo de datos:</strong> Panel laboral</p>
+</section>
+<section id="asignación-previsional-con-resultado-ordinal-una-lectura-aplicada" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="asignación-previsional-con-resultado-ordinal-una-lectura-aplicada"><a href="../econometria/piezas/t19_ordenado_base.html">Asignación previsional con resultado ordinal: una lectura aplicada</a></h3>
+<p>Probabilidades por categoría y efectos marginales.</p>
+<p><strong>Método principal:</strong> Logit/Probit ordenado<br> <strong>Tipo de datos:</strong> Microdatos individuales</p>
+</section>
+</div>
+</section>
+</div>
+<div id="area-resultados" class="econometria-panel" role="tabpanel" aria-labelledby="tab-resultados">
+<section id="conteos-proporciones-y-resultados-positivos" class="level2">
+<h2 class="anchored" data-anchor-id="conteos-proporciones-y-resultados-positivos">Conteos, proporciones y resultados positivos</h2>
+<div class="section-lead">
+<p>Modelos para respuestas no negativas y acotadas, distinguiendo entre especificar la media condicional y modelar una distribución completa.</p>
+</div>
+<div class="piece-grid">
+<section id="cuando-la-varianza-desborda-la-media-poisson-binomial-negativa-y-pml" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="cuando-la-varianza-desborda-la-media-poisson-binomial-negativa-y-pml"><a href="../econometria/piezas/t04b_conteos_poisson_pml.html">Cuando la varianza desborda la media: Poisson, binomial negativa y PML</a></h3>
+<p>Tres aplicaciones muestran cuándo interpretar probabilidades de conteo y cuándo conservar solo una media exponencial.</p>
+<p><strong>Método principal:</strong> Poisson, binomial negativa NB2 y Poisson PML/QMLE</p>
+<p><strong>Tipo de datos:</strong> Cortes transversales y panel firma-año</p>
+</section>
+<section id="modelar-precios-positivos-ajuste-distribucional-y-estabilidad-de-la-media" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="modelar-precios-positivos-ajuste-distribucional-y-estabilidad-de-la-media"><a href="../econometria/piezas/t04c_precios_positivos.html">Modelar precios positivos: ajuste distribucional y estabilidad de la media</a></h3>
+<p>Por qué mejorar el ajuste de una distribución positiva no garantiza una media en niveles bien comportada.</p>
+<p><strong>Método principal:</strong> Lognormal, Gamma, máxima verosimilitud y smearing</p>
+<p><strong>Tipo de datos:</strong> Corte transversal de operaciones hipotecarias</p>
+</section>
+<section id="id-y-patentes-en-panel-cómo-cambia-la-asociación-al-controlar-heterogeneidad-de-firma" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="id-y-patentes-en-panel-cómo-cambia-la-asociación-al-controlar-heterogeneidad-de-firma"><a href="../econometria/piezas/t04d_poisson_panel_heterogeneidad.html">I+D y patentes en panel: cómo cambia la asociación al controlar heterogeneidad de firma</a></h3>
+<p>La intensidad de I+D permanece asociada con más patentes, pero su magnitud cae al explotar variación dentro de firma.</p>
+<p><strong>Método principal:</strong> Poisson QMLE pooled, RE, CRE/Mundlak y FE condicional</p>
+<p><strong>Tipo de datos:</strong> Panel firma-año</p>
+</section>
+<section id="modelar-proporciones-misma-asociación-distintos-supuestos" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="modelar-proporciones-misma-asociación-distintos-supuestos"><a href="../econometria/piezas/t04f_proporciones_beta.html">Modelar proporciones: misma asociación, distintos supuestos</a></h3>
+<p>Cuatro modelos producen casi el mismo efecto marginal del gasto electoral, aunque difieren en soporte y estructura distribucional.</p>
+<p><strong>Método principal:</strong> Modelo lineal, Bernoulli QMLE y beta MLE</p>
+<p><strong>Tipo de datos:</strong> Corte transversal de distritos electorales</p>
+</section>
+</div>
+</section>
+</div>
+<div id="area-censura" class="econometria-panel" role="tabpanel" aria-labelledby="tab-censura">
+<section id="censura-soluciones-de-esquina-y-selección" class="level2">
+<h2 class="anchored" data-anchor-id="censura-soluciones-de-esquina-y-selección">Censura, soluciones de esquina y selección</h2>
+<div class="section-lead">
+<p>Problemas en los que los límites observados, las masas en cero o la selección de la muestra modifican la interpretación y la estrategia de estimación.</p>
+</div>
+<div class="piece-grid">
+<section id="ceros-reales-y-datos-censurados-dos-límites-observados" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="ceros-reales-y-datos-censurados-dos-límites-observados"><a href="../econometria/piezas/t06a_esquina_censura.html">Ceros reales y datos censurados: dos límites observados</a></h3>
+<p>Demanda con solución de esquina y top-coding de ingresos en dos aplicaciones complementarias.</p>
+<p><strong>Método principal:</strong> MCO, Tobit y Poisson QMLE <strong>Tipo de datos:</strong> Cortes transversales de hogares</p>
+</section>
+<section id="salarios-observados-solo-para-quienes-trabajan" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="salarios-observados-solo-para-quienes-trabajan"><a href="../econometria/piezas/t06b_seleccion_heckman.html">Salarios observados solo para quienes trabajan</a></h3>
+<p>Participación laboral, resultados ausentes y corrección por selección sobre inobservables.</p>
+<p><strong>Método principal:</strong> MCO y selección de Heckman <strong>Tipo de datos:</strong> Corte transversal de mujeres casadas</p>
+</section>
+</div>
+</section>
+</div>
+<div id="area-inferencia" class="econometria-panel" role="tabpanel" aria-labelledby="tab-inferencia">
+<section id="inferencia-y-métodos-de-estimación" class="level2">
+<h2 class="anchored" data-anchor-id="inferencia-y-métodos-de-estimación">Inferencia y métodos de estimación</h2>
+<div class="section-lead">
+<p>Fundamentos que sostienen la estimación y la inferencia: comportamiento asintótico, máxima verosimilitud y condiciones de momento.</p>
+</div>
+<div class="piece-grid">
+<section id="de-promedios-a-estimadores-por-qué-las-muestras-grandes-sostienen-la-inferencia" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="de-promedios-a-estimadores-por-qué-las-muestras-grandes-sostienen-la-inferencia"><a href="../econometria/piezas/t00b_teoria_asintotica.html">De promedios a estimadores: por qué las muestras grandes sostienen la inferencia</a></h3>
+<p>LGN, TCL, consistencia y normalidad asintótica de MCO mediante simulación.</p>
+<p><strong>Método principal:</strong> Teoría asintótica y simulación Monte Carlo</p>
+<p><strong>Tipo de datos:</strong> Procesos simulados</p>
+</section>
+<section id="máxima-verosimilitud-bajo-la-lupa-función-objetivo-inferencia-y-qmle" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="máxima-verosimilitud-bajo-la-lupa-función-objetivo-inferencia-y-qmle"><a href="../econometria/piezas/t04a_maxima_verosimilitud.html">Máxima verosimilitud bajo la lupa: función objetivo, inferencia y QMLE</a></h3>
+<p>Qué exige estimar con una distribución completa y qué puede conservarse bajo una lectura quasi-MV con inferencia robusta.</p>
+<p><strong>Método principal:</strong> Máxima verosimilitud, contrastes clásicos y QMLE</p>
+<p><strong>Tipo de datos:</strong> Procesos simulados</p>
+</section>
+<section id="de-condiciones-de-momento-a-iv-gmm" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="de-condiciones-de-momento-a-iv-gmm"><a href="../econometria/piezas/t07_gmm_momentos.html">De condiciones de momento a IV-GMM</a></h3>
+<p>Qué aporta pensar mediante momentos y por qué una restricción inválida puede dominar el resultado.</p>
+<p><strong>Método principal:</strong> GMM, IV-GMM y test de Hansen <strong>Tipo de datos:</strong> Procesos simulados y Monte Carlo</p>
+</section>
+</div>
+</section>
+</div>
+<div id="area-no-parametricos" class="econometria-panel" role="tabpanel" aria-labelledby="tab-no-parametricos">
+<section id="métodos-no-paramétricos-y-semiparamétricos" class="level2">
+<h2 class="anchored" data-anchor-id="métodos-no-paramétricos-y-semiparamétricos">Métodos no paramétricos y semiparamétricos</h2>
+<div class="section-lead">
+<p>Estimación flexible de distribuciones y relaciones condicionales sin imponer una forma funcional global.</p>
+</div>
+<div class="piece-grid">
+<section id="ingresos-sin-bins-densidad-kernel-y-ancho-de-banda" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="ingresos-sin-bins-densidad-kernel-y-ancho-de-banda"><a href="../econometria/piezas/t10_densidad_marginal.html">Ingresos sin bins: densidad kernel y ancho de banda</a></h3>
+<p>Cómo el suavizado cambia la lectura de una distribución y por qué el bandwidth es decisivo.</p>
+<p><strong>Método principal:</strong> Histogramas y estimación de densidad kernel</p>
+<p><strong>Tipo de datos:</strong> Cortes transversales repetidos ponderados</p>
+</section>
+<section id="ingreso-y-consumo-sin-una-forma-impuesta-regresión-local" class="level3 piece-card">
+<h3 class="anchored" data-anchor-id="ingreso-y-consumo-sin-una-forma-impuesta-regresión-local"><a href="../econometria/piezas/t11_regresion_no_parametrica.html">Ingreso y consumo sin una forma impuesta: regresión local</a></h3>
+<p>Cómo Nadaraya–Watson y la regresión local lineal aprenden una curva condicional y por qué el ancho de banda gobierna su flexibilidad.</p>
+<p><strong>Método principal:</strong> Regresión kernel, local lineal e inferencia bootstrap</p>
+<p><strong>Tipo de datos:</strong> Corte transversal de hogares</p>
+</section>
+</div>
+</section>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const explorer = document.querySelector(".js-econometria-explorer");
+
+  if (!explorer) return;
+
+  const tabs = Array.from(explorer.querySelectorAll('[role="tab"]'));
+  const panels = Array.from(explorer.querySelectorAll('[role="tabpanel"]'));
+  const select = explorer.querySelector("#econometria-area-select");
+
+  if (!tabs.length || !panels.length || !select) return;
+
+  const slugForPanel = (panel) => panel.id.replace(/^area-/, "");
+
+  const panelFromHash = () => {
+    let slug;
+
+    try {
+      slug = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      return null;
+    }
+
+    return panels.find((panel) => slugForPanel(panel) === slug) || null;
+  };
+
+  const replaceHash = (panel) => {
+    const url = new URL(window.location.href);
+    url.hash = slugForPanel(panel);
+    history.replaceState(history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  };
+
+  const clearInvalidHash = () => {
+    if (!window.location.hash) return;
+
+    const url = new URL(window.location.href);
+    url.hash = "";
+    history.replaceState(history.state, "", `${url.pathname}${url.search}`);
+  };
+
+  const activate = (panelId, updateUrl = false) => {
+    const target = panels.find((panel) => panel.id === panelId) || panels[0];
+
+    panels.forEach((panel) => {
+      const isActive = panel === target;
+      panel.hidden = !isActive;
+      panel.classList.toggle("is-active", isActive);
+    });
+
+    tabs.forEach((tab) => {
+      const isActive = tab.getAttribute("aria-controls") === target.id;
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    select.value = target.id;
+
+    if (updateUrl) replaceHash(target);
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activate(tab.getAttribute("aria-controls"), true));
+    tab.addEventListener("keydown", (event) => {
+      let nextIndex;
+
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = tabs.length - 1;
+      if (nextIndex === undefined) return;
+
+      event.preventDefault();
+      const nextTab = tabs[nextIndex];
+      activate(nextTab.getAttribute("aria-controls"), true);
+      nextTab.focus();
+    });
+  });
+
+  select.addEventListener("change", () => activate(select.value, true));
+
+  const restoreFromUrl = () => {
+    const target = panelFromHash();
+    if (!target) clearInvalidHash();
+    activate(target ? target.id : panels[0].id);
+  };
+
+  window.addEventListener("hashchange", restoreFromUrl);
+  window.addEventListener("pageshow", restoreFromUrl);
+  explorer.classList.add("is-enhanced");
+  restoreFromUrl();
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Cuando la regresión respeta la heterogeneidad: Wooldridge y ETWFE en Difference-in-Differences – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link active" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#el-problema-no-es-la-regresión-sino-la-restricción" id="toc-el-problema-no-es-la-regresión-sino-la-restricción" class="nav-link" data-scroll-target="#el-problema-no-es-la-regresión-sino-la-restricción">El problema no es la regresión, sino la restricción</a></li>
+  <li><a href="#de-attgt-a-una-regresión-flexible" id="toc-de-attgt-a-una-regresión-flexible" class="nav-link" data-scroll-target="#de-attgt-a-una-regresión-flexible">De ATT(g,t) a una regresión flexible</a></li>
+  <li><a href="#continuidad-con-callawaysantanna-y-bjs" id="toc-continuidad-con-callawaysantanna-y-bjs" class="nav-link" data-scroll-target="#continuidad-con-callawaysantanna-y-bjs">Continuidad con Callaway–Sant’Anna y BJS</a></li>
+  <li><a href="#twm-e-imputación-como-representaciones-relacionadas" id="toc-twm-e-imputación-como-representaciones-relacionadas" class="nav-link" data-scroll-target="#twm-e-imputación-como-representaciones-relacionadas">TWM e imputación como representaciones relacionadas</a></li>
+  <li><a href="#aplicación-aperturas-de-walmart-y-empleo-minorista" id="toc-aplicación-aperturas-de-walmart-y-empleo-minorista" class="nav-link" data-scroll-target="#aplicación-aperturas-de-walmart-y-empleo-minorista">Aplicación: aperturas de Walmart y empleo minorista</a></li>
+  <li><a href="#covariables-y-comparación" id="toc-covariables-y-comparación" class="nav-link" data-scroll-target="#covariables-y-comparación">Covariables y comparación</a></li>
+  <li><a href="#resultado-agregado" id="toc-resultado-agregado" class="nav-link" data-scroll-target="#resultado-agregado">Resultado agregado</a></li>
+  <li><a href="#qué-cambia-entre-especificaciones" id="toc-qué-cambia-entre-especificaciones" class="nav-link" data-scroll-target="#qué-cambia-entre-especificaciones">Qué cambia entre especificaciones</a></li>
+  <li><a href="#cómo-se-agregan-los-attgt" id="toc-cómo-se-agregan-los-attgt" class="nav-link" data-scroll-target="#cómo-se-agregan-los-attgt">Cómo se agregan los ATT(g,t)</a></li>
+  <li><a href="#event-study-y-dinámica" id="toc-event-study-y-dinámica" class="nav-link" data-scroll-target="#event-study-y-dinámica">Event study y dinámica</a></li>
+  <li><a href="#qué-revelan-los-pretrends" id="toc-qué-revelan-los-pretrends" class="nav-link" data-scroll-target="#qué-revelan-los-pretrends">Qué revelan los pretrends</a></li>
+  <li><a href="#sensibilidad-a-tendencias-por-cohorte" id="toc-sensibilidad-a-tendencias-por-cohorte" class="nav-link" data-scroll-target="#sensibilidad-a-tendencias-por-cohorte">Sensibilidad a tendencias por cohorte</a></li>
+  <li><a href="#etwfe-frente-a-twfe-cs-y-bjs" id="toc-etwfe-frente-a-twfe-cs-y-bjs" class="nav-link" data-scroll-target="#etwfe-frente-a-twfe-cs-y-bjs">ETWFE frente a TWFE, C&amp;S y BJS</a></li>
+  <li><a href="#qué-mejora-y-qué-supuestos-permanecen" id="toc-qué-mejora-y-qué-supuestos-permanecen" class="nav-link" data-scroll-target="#qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cuando la regresión respeta la heterogeneidad: Wooldridge y ETWFE en Difference-in-Differences</h1>
+<p class="subtitle lead">De los efectos por cohorte y período a una formulación regresiva flexible y agregados transparentes</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../causalidad/did-moderno/index.html">← Volver a Difference-in-Differences moderno</a></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>La regresión no es el problema; la restricción sí</p>
+</div>
+<div class="hero-sub">
+<p>Wooldridge muestra cómo una especificación suficientemente flexible puede recuperar efectos por cohorte y período sin volver a comprimir la heterogeneidad dentro del coeficiente único del TWFE convencional.</p>
+</div>
+</div>
+<section id="pregunta-central" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
+<p>¿Cómo recuperar efectos por cohorte y período mediante una regresión sin volver a las restricciones del TWFE convencional?</p>
+<p><strong>Respuesta corta:</strong> reemplazar el tratamiento único por interacciones que permitan un efecto para cada cohorte y período, estimar primero esos objetos causales y agregarlos después mediante una regla explícita.</p>
+</section>
+<section id="el-problema-no-es-la-regresión-sino-la-restricción" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema-no-es-la-regresión-sino-la-restricción">El problema no es la regresión, sino la restricción</h2>
+<p>La crisis moderna de Difference-in-Differences no implica abandonar el lenguaje regresivo. Implica abandonar una ecuación demasiado rígida para un diseño con adopción escalonada y efectos heterogéneos.</p>
+<p>El TWFE convencional resume toda la exposición mediante un único parámetro:</p>
+<p><span class="math display">\[
+Y_{it}=\alpha_i+\lambda_t+\beta D_{it}+u_{it}.
+\]</span></p>
+<p>Esa especificación trata como si el efecto fuera el mismo para todas las cohortes y en todos los períodos. ETWFE —<em>Extended Two-Way Fixed Effects</em>— cambia la ecuación: permite que cada celda tratada tenga su propio efecto <span class="math inline">\(\tau_{g,t}\)</span>.</p>
+<p>La afirmación relevante no es que “TWFE vuelve a estar bien”. ETWFE conserva herramientas regresivas familiares, pero deja atrás la restricción que originó el problema.</p>
+</section>
+<section id="de-attgt-a-una-regresión-flexible" class="level2">
+<h2 class="anchored" data-anchor-id="de-attgt-a-una-regresión-flexible">De ATT(g,t) a una regresión flexible</h2>
+<p>El objeto causal continúa siendo:</p>
+<p><span class="math display">\[
+ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
+\]</span></p>
+<p>Describe el efecto medio para la cohorte que adopta en <span class="math inline">\(g\)</span>, observada en el período <span class="math inline">\(t\)</span>. La especificación flexible incluye interacciones entre cohorte, calendario y estado tratado para recuperar esos efectos de celda.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m09_twfe_etwfe.svg" class="img-fluid figure-img" alt="Comparación entre TWFE restrictivo, que asigna un beta común a todas las celdas tratadas, y ETWFE, que representa efectos distintos por cohorte y período y luego los agrega globalmente, por cohorte, calendario o tiempo relativo."></p>
+<figcaption>Del efecto común del TWFE restrictivo a los efectos por cohorte y período y su agregación explícita</figcaption>
+</figure>
+</div>
+<p>El orden importa: el agregado no se impone desde el comienzo. Primero se estima la colección <span class="math inline">\(ATT(g,t)\)</span>; después se decide qué cohortes, años u horizontes deben pesar en el resumen.</p>
+</section>
+<section id="continuidad-con-callawaysantanna-y-bjs" class="level2">
+<h2 class="anchored" data-anchor-id="continuidad-con-callawaysantanna-y-bjs">Continuidad con Callaway–Sant’Anna y BJS</h2>
+<p>La secuencia de soluciones modernas puede resumirse sin convertirlas en métodos rivales:</p>
+<ul>
+<li><strong>Callaway–Sant’Anna:</strong> organiza la identificación directamente alrededor de comparaciones <span class="math inline">\(ATT(g,t)\)</span>.</li>
+<li><strong>Borusyak–Jaravel–Spiess:</strong> aprende <span class="math inline">\(Y(0)\)</span> con observaciones sin tratamiento e imputa el contrafactual para las tratadas.</li>
+<li><strong>Wooldridge:</strong> demuestra cuándo esos objetos modernos pueden recuperarse mediante una regresión flexible.</li>
+</ul>
+<p>M09 funciona así como puente entre los estimandos del DiD moderno y la práctica regresiva aplicada.</p>
+</section>
+<section id="twm-e-imputación-como-representaciones-relacionadas" class="level2">
+<h2 class="anchored" data-anchor-id="twm-e-imputación-como-representaciones-relacionadas">TWM e imputación como representaciones relacionadas</h2>
+<p>Two-Way Mundlak representa la heterogeneidad de unidad y los shocks temporales mediante promedios de los regresores, en lugar de absorberlos como efectos fijos. Bajo las condiciones correspondientes, TWFE y TWM pueden ser representaciones algebraicamente equivalentes de una misma ecuación.</p>
+<p>Esa equivalencia, por sí sola, no resuelve la heterogeneidad del tratamiento. El paso sustantivo aparece cuando la ecuación también incorpora los efectos cohorte × período.</p>
+<p>La misma regresión flexible puede interpretarse como un modelo del resultado no tratado. Pooled OLS flexible, ETWFE, TWM extendido y ciertas representaciones por imputación pueden coincidir en los <strong>ATT medios de celda</strong>. Esto no exige que Wooldridge y BJS produzcan idénticas predicciones contrafactuales para cada observación individual.</p>
+</section>
+<section id="aplicación-aperturas-de-walmart-y-empleo-minorista" class="level2">
+<h2 class="anchored" data-anchor-id="aplicación-aperturas-de-walmart-y-empleo-minorista">Aplicación: aperturas de Walmart y empleo minorista</h2>
+<p>La aplicación sigue aperturas de Walmart en condados de Estados Unidos y la evolución del empleo minorista local.</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Panel</strong></p>
+<p>1.280 condados entre 1977 y 1999: 23 períodos y 29.440 observaciones.</p>
+</div>
+<div class="section-box">
+<p><strong>Tratamiento</strong></p>
+<p>Primera apertura de Walmart. El indicador permanece activo desde el año de entrada.</p>
+</div>
+<div class="section-box">
+<p><strong>Resultado</strong></p>
+<p>Logaritmo del empleo minorista a nivel de condado.</p>
+</div>
+<div class="section-box">
+<p><strong>Timing</strong></p>
+<p>Cohortes tratadas entre 1986 y 1999; 886 condados están tratados al final del panel.</p>
+</div>
+</div>
+<p>Otros <strong>394 condados nunca reciben una apertura</strong> durante la ventana observada. En la especificación principal, estos condados y las cohortes todavía no tratadas construyen el grupo de comparación mientras permanecen sin exposición.</p>
+</section>
+<section id="covariables-y-comparación" class="level2">
+<h2 class="anchored" data-anchor-id="covariables-y-comparación">Covariables y comparación</h2>
+<p>La especificación central incorpora características pretratamiento relacionadas con estructura manufacturera, pobreza y educación secundaria, medidas alrededor de 1980. Al ser anteriores a las aperturas analizadas, pueden utilizarse para permitir trayectorias contrafactuales condicionales sin controlar por variables potencialmente afectadas por Walmart.</p>
+<p>Las covariables no entran como simples controles aditivos. Se centran e interactúan con la estructura de heterogeneidad para preservar la interpretación de los coeficientes principales como promedios de cohorte y período.</p>
+<p>Para estudiar leads y pretrends se utiliza un comparador estable formado únicamente por los 394 condados nunca tratados. Cambiar el grupo de comparación cambia también el parámetro agregado y no constituye una mera opción computacional.</p>
+</section>
+<section id="resultado-agregado" class="level2">
+<h2 class="anchored" data-anchor-id="resultado-agregado">Resultado agregado</h2>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>ETWFE con covariables</p>
+</div>
+<div class="metric-value">
+<p>0,0898</p>
+</div>
+<div class="metric-note">
+<p>ATT agregado sobre observaciones tratadas bajo la especificación flexible central</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Inferencia</p>
+</div>
+<div class="metric-value">
+<p>EE 0,0103</p>
+</div>
+<div class="metric-note">
+<p>IC95% [0,0696; 0,1099]</p>
+</div>
+</div>
+</div>
+<p>La estimación sugiere un aumento medio del log del empleo minorista de aproximadamente 0,090 entre las observaciones tratadas que integran el agregado. La precisión estadística del coeficiente no resuelve la credibilidad del diseño: las trayectorias previas y la sensibilidad del contrafactual deben evaluarse antes de sostener una interpretación causal fuerte.</p>
+</section>
+<section id="qué-cambia-entre-especificaciones" class="level2">
+<h2 class="anchored" data-anchor-id="qué-cambia-entre-especificaciones">Qué cambia entre especificaciones</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Especificación</th>
+<th style="text-align: right;">ATT agregado</th>
+<th style="text-align: right;">EE</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TWFE restrictivo</td>
+<td style="text-align: right;">0,0810</td>
+<td style="text-align: right;">0,0081</td>
+<td>Impone un efecto común para todas las cohortes y períodos</td>
+</tr>
+<tr class="even">
+<td>ETWFE sin covariables</td>
+<td style="text-align: right;">0,0978</td>
+<td style="text-align: right;">0,0099</td>
+<td>Permite heterogeneidad completa cohorte × período</td>
+</tr>
+<tr class="odd">
+<td><strong>ETWFE con covariables pretratamiento</strong></td>
+<td style="text-align: right;"><strong>0,0898</strong></td>
+<td style="text-align: right;"><strong>0,0103</strong></td>
+<td>Flexibiliza los efectos y condiciona el contrafactual en características de 1980</td>
+</tr>
+<tr class="even">
+<td>ETWFE con solo nunca tratados</td>
+<td style="text-align: right;">0,0740</td>
+<td style="text-align: right;">0,0078</td>
+<td>Cambia el comparador y habilita leads frente a un grupo estable</td>
+</tr>
+<tr class="odd">
+<td>ETWFE con tendencias por cohorte</td>
+<td style="text-align: right;">0,0352</td>
+<td style="text-align: right;">0,0092</td>
+<td>Permite trayectorias lineales distintas entre cohortes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La tabla no establece un ranking. Cada fila modifica restricciones, comparadores o trayectorias contrafactuales. La cercanía entre TWFE (<code>0,0810</code>) y ETWFE central (<code>0,0898</code>) tampoco implica que ambos estimen el mismo objeto.</p>
+</section>
+<section id="cómo-se-agregan-los-attgt" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-se-agregan-los-attgt">Cómo se agregan los ATT(g,t)</h2>
+<p>Una vez estimadas las celdas elementales, la misma especificación puede responder preguntas diferentes:</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Global</strong></p>
+<p>Promedia los efectos sobre las observaciones tratadas incluidas.</p>
+</div>
+<div class="section-box">
+<p><strong>Por cohorte</strong></p>
+<p>Resume la experiencia media de cada año de primera apertura.</p>
+</div>
+<div class="section-box">
+<p><strong>Por calendario</strong></p>
+<p>Combina cohortes ya tratadas dentro de cada año observado.</p>
+</div>
+<div class="section-box">
+<p><strong>Por exposición</strong></p>
+<p>Agrupa celdas con igual distancia temporal desde la apertura.</p>
+</div>
+</div>
+<p>Estas reglas no son nombres alternativos para un mismo coeficiente. Cambian qué población y qué horizonte dominan el resumen. En horizontes largos participan menos cohortes, por lo que también cambia la composición del estimando.</p>
+</section>
+<section id="event-study-y-dinámica" class="level2">
+<h2 class="anchored" data-anchor-id="event-study-y-dinámica">Event study y dinámica</h2>
+<p>El event study con nunca tratados organiza los efectos alrededor de la primera apertura y utiliza K=−1 como período base.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m09_event_study_never.svg" class="img-fluid figure-img" alt="Event study ETWFE con estimaciones negativas entre ocho y cinco años antes de la apertura y efectos positivos seleccionados después. El test conjunto de pretrends rechaza con chi cuadrado 40,16 y p menor a 0,001."></p>
+<figcaption>Event study ETWFE frente a condados nunca tratados</figcaption>
+</figure>
+</div>
+<p>Con este comparador estable, los efectos posteriores seleccionados son <code>0,0234</code> en K=0, <code>0,0554</code> en K=1, <code>0,0686</code> en K=5 y <code>0,1359</code> en K=10. La trayectoria creciente no puede leerse aisladamente de las diferencias previas.</p>
+</section>
+<section id="qué-revelan-los-pretrends" class="level2">
+<h2 class="anchored" data-anchor-id="qué-revelan-los-pretrends">Qué revelan los pretrends</h2>
+<p>Antes de la apertura, las estimaciones alcanzan <code>−0,0452</code> en K=−8, <code>−0,0343</code> en K=−7, <code>−0,0282</code> en K=−6 y <code>−0,0172</code> en K=−5. El test conjunto rechaza:</p>
+<div class="section-status">
+<p><strong>Diagnóstico de pretrends</strong></p>
+<p><span class="math inline">\(\chi^2(7)=40{,}16\)</span> · <code>p &lt; 0,001</code></p>
+<p>Los condados que posteriormente reciben Walmart ya presentan diferencias sistemáticas respecto de los nunca tratados. Incorporar leads permite observar el problema; no lo corrige.</p>
+</div>
+<p>Este diagnóstico limita una lectura causal limpia de los efectos posteriores. Una especificación moderna puede evitar las restricciones del TWFE tradicional y, al mismo tiempo, descansar en una comparación empírica poco creíble.</p>
+</section>
+<section id="sensibilidad-a-tendencias-por-cohorte" class="level2">
+<h2 class="anchored" data-anchor-id="sensibilidad-a-tendencias-por-cohorte">Sensibilidad a tendencias por cohorte</h2>
+<p>La especificación central estima <code>0,0898</code>. Cuando se permiten tendencias lineales específicas por cohorte, el agregado cae a <code>0,0352</code>.</p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>ETWFE central</p>
+</div>
+<div class="metric-value">
+<p>0,0898</p>
+</div>
+<div class="metric-note">
+<p>trayectorias comunes condicionales</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Tendencias por cohorte</p>
+</div>
+<div class="metric-value">
+<p>0,0352</p>
+</div>
+<div class="metric-note">
+<p>EE 0,0092 · IC95% [0,0171; 0,0533]</p>
+</div>
+</div>
+</div>
+<p>La segunda cifra no debe declararse automáticamente como “el efecto verdadero”. La comparación muestra que el resultado depende de cómo se modelan las trayectorias contrafactuales. Junto con los pretrends, esa sensibilidad impide presentar la aplicación como una estimación causal definitiva del efecto de Walmart.</p>
+</section>
+<section id="etwfe-frente-a-twfe-cs-y-bjs" class="level2">
+<h2 class="anchored" data-anchor-id="etwfe-frente-a-twfe-cs-y-bjs">ETWFE frente a TWFE, C&amp;S y BJS</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Arquitectura</th>
+<th>Punto de partida</th>
+<th>Construcción principal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TWFE restrictivo</td>
+<td>Un efecto común</td>
+<td>Regresión única con heterogeneidad limitada</td>
+</tr>
+<tr class="even">
+<td>Callaway–Sant’Anna</td>
+<td><span class="math inline">\(ATT(g,t)\)</span></td>
+<td>Comparaciones explícitas por cohorte y período</td>
+</tr>
+<tr class="odd">
+<td>BJS</td>
+<td><span class="math inline">\(Y(0)\)</span></td>
+<td>Imputación con observaciones no tratadas</td>
+</tr>
+<tr class="even">
+<td><strong>Wooldridge / ETWFE</strong></td>
+<td><span class="math inline">\(ATT(g,t)\)</span></td>
+<td>Regresión flexible que recupera efectos cohorte × período</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Las tres soluciones modernas comparten el objetivo de mantener visibles el estimando, el contrafactual y la agregación. Wooldridge aporta una formulación especialmente cercana a la práctica regresiva, no un retorno al coeficiente único.</p>
+</section>
+<section id="qué-mejora-y-qué-supuestos-permanecen" class="level2">
+<h2 class="anchored" data-anchor-id="qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</h2>
+<p>ETWFE admite heterogeneidad por cohorte y período, vuelve explícita la agregación y permite incorporar covariables pretratamiento dentro de una estructura coherente. La interpretación causal continúa requiriendo:</p>
+<ul>
+<li>SUTVA y tratamiento correctamente medido;</li>
+<li>ausencia de anticipación;</li>
+<li>tendencias paralelas condicionales creíbles;</li>
+<li>covariables no afectadas por el tratamiento;</li>
+<li>soporte suficiente para las celdas y horizontes reportados;</li>
+<li>inferencia agrupada que reconozca la dependencia serial;</li>
+<li>una decisión explícita sobre comparador y regla de agregación.</li>
+</ul>
+<p>La equivalencia algebraica entre estimadores no reemplaza ninguno de estos supuestos de identificación.</p>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>Wooldridge demuestra que la regresión sigue siendo una herramienta válida para Difference-in-Differences moderno cuando la especificación conserva la heterogeneidad causal relevante y la agregación permanece explícita. ETWFE no rehabilita el TWFE restrictivo: estima una ecuación distinta, alineada con los efectos por cohorte y período.</p>
+<p>En la aplicación Walmart, ETWFE produce agregados positivos y una dinámica creciente. Pero los pretrends son sistemáticos y permitir tendencias por cohorte reduce el agregado de <code>0,0898</code> a <code>0,0352</code>. La lección final es metodológica y empírica a la vez: <strong>flexibilizar el estimador no sustituye la credibilidad del diseño</strong>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Cuando los tratados se vuelven controles: adopción escalonada y la descomposición de TWFE – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link active" data-scroll-target="#pregunta-central">Pregunta central</a></li>
+  <li><a href="#del-did-canónico-a-la-adopción-escalonada" id="toc-del-did-canónico-a-la-adopción-escalonada" class="nav-link" data-scroll-target="#del-did-canónico-a-la-adopción-escalonada">Del DiD canónico a la adopción escalonada</a></li>
+  <li><a href="#la-aplicación-divorcio-unilateral-y-cohortes-de-adopción" id="toc-la-aplicación-divorcio-unilateral-y-cohortes-de-adopción" class="nav-link" data-scroll-target="#la-aplicación-divorcio-unilateral-y-cohortes-de-adopción">La aplicación: divorcio unilateral y cohortes de adopción</a></li>
+  <li><a href="#un-coeficiente-twfe-aparentemente-familiar" id="toc-un-coeficiente-twfe-aparentemente-familiar" class="nav-link" data-scroll-target="#un-coeficiente-twfe-aparentemente-familiar">Un coeficiente TWFE aparentemente familiar</a></li>
+  <li><a href="#qué-comparaciones-esconde-el-coeficiente" id="toc-qué-comparaciones-esconde-el-coeficiente" class="nav-link" data-scroll-target="#qué-comparaciones-esconde-el-coeficiente">Qué comparaciones esconde el coeficiente</a></li>
+  <li><a href="#descomposición-goodmanbacon" id="toc-descomposición-goodmanbacon" class="nav-link" data-scroll-target="#descomposición-goodmanbacon">Descomposición Goodman–Bacon</a></li>
+  <li><a href="#cuando-los-tratados-funcionan-como-controles" id="toc-cuando-los-tratados-funcionan-como-controles" class="nav-link" data-scroll-target="#cuando-los-tratados-funcionan-como-controles">Cuando los tratados funcionan como controles</a></li>
+  <li><a href="#efectos-homogéneos-y-efectos-dinámicos" id="toc-efectos-homogéneos-y-efectos-dinámicos" class="nav-link" data-scroll-target="#efectos-homogéneos-y-efectos-dinámicos">Efectos homogéneos y efectos dinámicos</a></li>
+  <li><a href="#inferencia-correcta-no-implica-interpretación-correcta" id="toc-inferencia-correcta-no-implica-interpretación-correcta" class="nav-link" data-scroll-target="#inferencia-correcta-no-implica-interpretación-correcta">Inferencia correcta no implica interpretación correcta</a></li>
+  <li><a href="#alcance-y-límites" id="toc-alcance-y-límites" class="nav-link" data-scroll-target="#alcance-y-límites">Alcance y límites</a></li>
+  <li><a href="#puente-hacia-el-siguiente-problema-moderno" id="toc-puente-hacia-el-siguiente-problema-moderno" class="nav-link" data-scroll-target="#puente-hacia-el-siguiente-problema-moderno">Puente hacia el siguiente problema moderno</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cuando los tratados se vuelven controles: adopción escalonada y la descomposición de TWFE</h1>
+<p class="subtitle lead">Qué comparaciones construyen el coeficiente cuando las unidades adoptan el tratamiento en momentos distintos</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../causalidad/did-moderno/index.html">← Volver a Difference-in-Differences moderno</a></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>Una regresión TWFE puede combinar comparaciones con significados causales diferentes</p>
+</div>
+<div class="hero-sub">
+<p>Cuando los estados adoptan una política en años distintos, el coeficiente deja de representar necesariamente un único DiD tratado-control. La descomposición de Goodman–Bacon muestra qué comparaciones lo construyen y cuándo una cohorte ya tratada termina funcionando como control.</p>
+</div>
+</div>
+<section id="pregunta-central" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
+<p>¿Qué está promediando realmente una regresión con efectos fijos de unidad y tiempo cuando las unidades adoptan el tratamiento en momentos distintos?</p>
+<p><strong>Respuesta corta:</strong> el coeficiente TWFE es una combinación ponderada de múltiples estimadores DiD 2×2. Algunas comparaciones usan unidades nunca tratadas o todavía no tratadas; otras utilizan como control a cohortes cuyo tratamiento ya comenzó. Bajo efectos dinámicos o heterogéneos, estas últimas pueden perder una interpretación causal limpia.</p>
+</section>
+<section id="del-did-canónico-a-la-adopción-escalonada" class="level2">
+<h2 class="anchored" data-anchor-id="del-did-canónico-a-la-adopción-escalonada">Del DiD canónico a la adopción escalonada</h2>
+<p>En un DiD canónico, la comparación es transparente: un grupo tratado, un grupo de control y un cambio antes-después. Con múltiples cohortes y períodos, esa arquitectura se multiplica. Cada par de cohortes puede aportar más de una comparación y sus roles pueden invertirse a lo largo del panel.</p>
+<p>Una cohorte tratada más tarde puede ser un control pertinente mientras todavía no recibió la política. Después de su adopción, la regresión también puede comparar su cambio con el de una cohorte tratada antes. En ese segundo caso, el supuesto implícito ya no es solo que las tendencias contrafactuales sean paralelas: también importa que los efectos acumulados en el grupo usado como control no estén cambiando.</p>
+</section>
+<section id="la-aplicación-divorcio-unilateral-y-cohortes-de-adopción" class="level2">
+<h2 class="anchored" data-anchor-id="la-aplicación-divorcio-unilateral-y-cohortes-de-adopción">La aplicación: divorcio unilateral y cohortes de adopción</h2>
+<p>La aplicación utiliza un panel balanceado de estados de Estados Unidos para estudiar legislación de divorcio unilateral y suicidio femenino. Su valor aquí no es establecer un efecto causal definitivo, sino hacer visible la estructura de comparaciones contenida en TWFE.</p>
+<div class="quick-grid">
+<div class="section-box">
+<p><strong>Panel</strong></p>
+<p>49 estados observados entre 1964 y 1996: 33 años y 1.617 observaciones estado-año.</p>
+</div>
+<div class="section-box">
+<p><strong>Tratamiento</strong></p>
+<p>Indicador que se activa desde la adopción de la legislación de divorcio unilateral.</p>
+</div>
+<div class="section-box">
+<p><strong>Resultado</strong></p>
+<p>Tasa de suicidio femenino a nivel estatal.</p>
+</div>
+<div class="section-box">
+<p><strong>Timing</strong></p>
+<p>8 estados siempre tratados, 5 nunca tratados y 36 adoptantes; 14 grupos de timing.</p>
+</div>
+</div>
+</section>
+<section id="un-coeficiente-twfe-aparentemente-familiar" class="level2">
+<h2 class="anchored" data-anchor-id="un-coeficiente-twfe-aparentemente-familiar">Un coeficiente TWFE aparentemente familiar</h2>
+<p>La regresión incluye efectos fijos de estado y año y agrupa la inferencia por estado.</p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Coeficiente TWFE</p>
+</div>
+<div class="metric-value">
+<p>−3,0799</p>
+</div>
+<div class="metric-note">
+<p>tasa de suicidio femenino</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>EE cluster</p>
+</div>
+<div class="metric-value">
+<p>2,4558</p>
+</div>
+<div class="metric-note">
+<p>agrupado por estado</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>p-value</p>
+</div>
+<div class="metric-value">
+<p>0,216</p>
+</div>
+<div class="metric-note">
+<p>contraste bilateral</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Intervalo 95%</p>
+</div>
+<div class="metric-value">
+<p>[−8,018; 1,858]</p>
+</div>
+<div class="metric-note">
+<p>referencia t clusterizada</p>
+</div>
+</div>
+</div>
+<p>La estimación puntual es negativa, pero el intervalo incluye cero. Más importante para el objetivo del análisis, el número <code>−3,0799</code> no identifica por sí solo qué grupos están siendo comparados ni qué interpretación causal admite esa combinación.</p>
+</section>
+<section id="qué-comparaciones-esconde-el-coeficiente" class="level2">
+<h2 class="anchored" data-anchor-id="qué-comparaciones-esconde-el-coeficiente">Qué comparaciones esconde el coeficiente</h2>
+<p>La descomposición de Goodman–Bacon expresa el TWFE como un promedio ponderado de estimadores DiD 2×2:</p>
+<p><span class="math display">\[
+\widehat\beta_{TWFE}=\sum_j \omega_j\widehat\beta_j^{2\times2}.
+\]</span></p>
+<p>Los pesos reflejan cuánta variación residual del tratamiento aporta cada comparación. La identidad es algebraica: permite abrir el coeficiente, pero no convierte automáticamente todos sus componentes en efectos causales válidos.</p>
+</section>
+<section id="descomposición-goodmanbacon" class="level2">
+<h2 class="anchored" data-anchor-id="descomposición-goodmanbacon">Descomposición Goodman–Bacon</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Familia de comparación</th>
+<th style="text-align: right;">Peso</th>
+<th style="text-align: right;">Estimador</th>
+<th style="text-align: right;">Contribución</th>
+<th>Lectura causal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Siempre tratadas vs.&nbsp;cohortes</td>
+<td style="text-align: right;">0,3844</td>
+<td style="text-align: right;">−7,0437</td>
+<td style="text-align: right;">−2,7078</td>
+<td>Sin contrafactual no tratado observado</td>
+</tr>
+<tr class="even">
+<td>Tempranas vs.&nbsp;tardías no tratadas</td>
+<td style="text-align: right;">0,1107</td>
+<td style="text-align: right;">−0,1868</td>
+<td style="text-align: right;">−0,0207</td>
+<td>Control aún no tratado</td>
+</tr>
+<tr class="odd">
+<td>Tardías vs.&nbsp;tempranas tratadas</td>
+<td style="text-align: right;">0,2646</td>
+<td style="text-align: right;">3,5120</td>
+<td style="text-align: right;">0,9294</td>
+<td>Control ya tratado; efecto dinámico</td>
+</tr>
+<tr class="even">
+<td>Cohortes vs.&nbsp;nunca tratadas</td>
+<td style="text-align: right;">0,2403</td>
+<td style="text-align: right;">−5,3309</td>
+<td style="text-align: right;">−1,2809</td>
+<td>Control nunca tratado</td>
+</tr>
+<tr class="odd">
+<td><strong>Reconstrucción</strong></td>
+<td style="text-align: right;"><strong>1,0000</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>−3,07992578</strong></td>
+<td>Reproduce el TWFE directo: <strong>−3,07992577</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m04_bacon_contribuciones.svg" class="img-fluid figure-img" alt="Gráfico de barras divergentes de las cuatro contribuciones Goodman–Bacon. Siempre tratadas versus cohortes aporta menos 2,7078; tempranas versus tardías aún no tratadas, menos 0,0207; tardías versus tempranas ya tratadas, 0,9294; y cohortes versus nunca tratadas, menos 1,2809. La suma es menos 3,0799."></p>
+<figcaption>Contribución de cada familia de comparaciones a la estimación TWFE</figcaption>
+</figure>
+</div>
+<p>El componente más cercano al DiD canónico es también el de menor peso; las comparaciones con estados siempre tratados o con controles ya tratados ocupan buena parte de la composición.</p>
+<p>La familia más cercana a comparar una cohorte temprana con otra tardía todavía no tratada recibe solo <strong>11,1%</strong> del peso. En cambio, <strong>26,5%</strong> corresponde a comparaciones donde una cohorte temprana ya tratada funciona como control, y <strong>38,4%</strong> involucra estados tratados antes del inicio del panel.</p>
+<p>Las contribuciones reconstruyen el coeficiente con una diferencia numérica prácticamente nula. La descomposición no es una especificación alternativa: muestra de dónde proviene el TWFE observado.</p>
+</section>
+<section id="cuando-los-tratados-funcionan-como-controles" class="level2">
+<h2 class="anchored" data-anchor-id="cuando-los-tratados-funcionan-como-controles">Cuando los tratados funcionan como controles</h2>
+<p>Considérese una cohorte temprana y otra tardía. Antes de que la segunda adopte, puede aproximar la trayectoria contrafactual de la primera. Después de la adopción tardía, TWFE también utiliza a la cohorte temprana como referencia, aunque ya lleva varios períodos expuesta.</p>
+<p>Si el efecto es constante, restar el cambio de la cohorte temprana no altera sustantivamente la comparación. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.</p>
+</section>
+<section id="efectos-homogéneos-y-efectos-dinámicos" class="level2">
+<h2 class="anchored" data-anchor-id="efectos-homogéneos-y-efectos-dinámicos">Efectos homogéneos y efectos dinámicos</h2>
+<p>La simulación documentada utiliza 60 unidades, tres grupos de igual tamaño y 10 períodos. Una cohorte adopta en el período 4, otra en el 7 y la tercera nunca adopta.</p>
+<p>Con un efecto homogéneo igual a 2, los cuatro DiD 2×2 recuperan exactamente 2 y el TWFE también es 2. La agregación es inocua porque cambiar los roles de las cohortes no cambia el efecto que se resta.</p>
+<p>Con un efecto que crece con la exposición, el TWFE pasa a <strong>1,8182</strong>. Las comparaciones recuperan <code>3,20</code>, <code>2,00</code>, <code>1,60</code> y <code>−0,80</code>, respectivamente.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m04_simulacion_dinamica.svg" class="img-fluid figure-img" alt="A la izquierda, los efectos verdaderos de las cohortes temprana y tardía crecen con la exposición y nunca son negativos. A la derecha, tres estimadores 2 por 2 son positivos, pero la comparación que usa a la cohorte temprana ya tratada como control toma el valor menos 0,80."></p>
+<figcaption>Efectos dinámicos verdaderos y estimadores DiD 2×2</figcaption>
+</figure>
+</div>
+<p>La comparación tardía contra temprana ya tratada se vuelve negativa aunque todos los efectos verdaderos sean no negativos. No se trata de ruido muestral: es el resultado mecánico de restar el crecimiento del efecto acumulado en la cohorte utilizada como control.</p>
+</section>
+<section id="inferencia-correcta-no-implica-interpretación-correcta" class="level2">
+<h2 class="anchored" data-anchor-id="inferencia-correcta-no-implica-interpretación-correcta">Inferencia correcta no implica interpretación correcta</h2>
+<p>BDM muestra que la correlación serial puede hacer que los errores estándar convencionales subestimen la incertidumbre. Por eso, en esta aplicación la inferencia se agrupa por estado.</p>
+<p>Aquí aparece un problema adicional. <strong>Una inferencia correctamente clusterizada no corrige una comparación causal contaminada.</strong> El clustering modifica la estimación de la varianza; no redefine qué comparaciones forman el coeficiente ni elimina el uso de unidades ya tratadas como controles.</p>
+</section>
+<section id="alcance-y-límites" class="level2">
+<h2 class="anchored" data-anchor-id="alcance-y-límites">Alcance y límites</h2>
+<p>La aplicación empírica ilustra la composición de TWFE; no debe leerse como una estimación causal definitiva del efecto del divorcio unilateral sobre el suicidio femenino. El coeficiente no es estadísticamente concluyente y una parte importante de su peso proviene de comparaciones delicadas.</p>
+<p>La descomposición diagnostica el origen del coeficiente, pero no ofrece por sí misma un estimador alternativo. Tampoco implica que toda regresión TWFE sea inválida: con efectos homogéneos, o bajo estructuras que preserven una interpretación común de las comparaciones, la agregación puede ser adecuada.</p>
+</section>
+<section id="puente-hacia-el-siguiente-problema-moderno" class="level2">
+<h2 class="anchored" data-anchor-id="puente-hacia-el-siguiente-problema-moderno">Puente hacia el siguiente problema moderno</h2>
+<p>Este primer análisis de la crisis moderna establece el vocabulario necesario: cohortes, timing de adopción, controles todavía no tratados, controles ya tratados y heterogeneidad dinámica. El paso siguiente será estudiar otra dimensión de la crisis sin volver a tratar TWFE como una única comparación transparente.</p>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>Con adopción escalonada, TWFE combina múltiples DiD 2×2. En la aplicación, solo 11,1% del peso proviene de comparaciones entre cohortes tempranas y tardías todavía no tratadas; 26,5% utiliza cohortes tempranas ya tratadas como controles y 38,4% involucra unidades siempre tratadas.</p>
+<p>La simulación muestra la consecuencia con claridad: una comparación elemental alcanza <strong>−0,80</strong> aunque los efectos verdaderos nunca sean negativos. La literatura moderna de DiD surge de este problema econométrico concreto. Antes de interpretar un coeficiente agregado, es necesario saber qué comparaciones lo construyen y si esas comparaciones conservan un contrafactual causal defendible.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

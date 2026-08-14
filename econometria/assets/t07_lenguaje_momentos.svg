@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+  <title id="title">GMM como lenguaje de condiciones de momento</title>
+  <desc id="desc">Flujo desde una afirmación econométrica hasta momentos, identificación, ponderación y diagnóstico.</desc>
+  <style>
+    .bg{fill:#f8fafc}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 15px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.box{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.accent{fill:#eef6f7;stroke:#bcdde2;stroke-width:1.5}.warn{fill:#fff7e6;stroke:#f0cf91;stroke-width:1.5}.arrow{stroke:#71879a;stroke-width:2.2;fill:none;marker-end:url(#a)}.formula{font:700 18px Georgia,serif;fill:#0b7285}.pill{fill:#17324d}.white{font:700 12px system-ui,sans-serif;fill:#fff}.line{stroke:#dbe4ec;stroke-width:1.2}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#71879a"/></marker></defs>
+  <rect class="bg" width="960" height="500" rx="18"/>
+  <text class="head" x="48" y="45">Del supuesto al estimador</text>
+  <text class="sub" x="48" y="70">GMM hace visible qué restricciones producen identificación y qué ocurre cuando sobran momentos</text>
+  <rect class="box" x="42" y="108" width="180" height="105" rx="13"/>
+  <text class="label" x="62" y="139">1. Afirmación</text><text class="small" x="62" y="166">Exogeneidad, media</text><text class="small" x="62" y="185">condicional o instrumento</text>
+  <rect class="accent" x="271" y="108" width="190" height="105" rx="13"/>
+  <text class="label" x="291" y="139">2. Momento</text><text class="formula" x="291" y="174">E[g(W, θ₀)] = 0</text><text class="small" x="291" y="196">Restricción poblacional</text>
+  <rect class="box" x="510" y="108" width="180" height="105" rx="13"/>
+  <text class="label" x="530" y="139">3. Identificación</text><text class="small" x="530" y="166">¿Cuántos momentos?</text><text class="small" x="530" y="185">¿Cuántos parámetros?</text>
+  <rect class="warn" x="739" y="108" width="180" height="105" rx="13"/>
+  <text class="label" x="759" y="139">4. Ponderación</text><text class="small" x="759" y="166">Combinar restricciones</text><text class="small" x="759" y="185">cuando hay excedentes</text>
+  <path class="arrow" d="M222 160 L270 160"/><path class="arrow" d="M461 160 L509 160"/><path class="arrow" d="M690 160 L738 160"/>
+  <rect class="pill" x="245" y="238" width="230" height="29" rx="14"/><text class="white" x="267" y="257">Momentos = parámetros · exacto</text>
+  <rect class="pill" x="490" y="238" width="250" height="29" rx="14"/><text class="white" x="517" y="257">Momentos &gt; parámetros · test J</text>
+  <text class="label" x="48" y="307">Un mismo lenguaje para estimadores distintos</text>
+  <rect class="box" x="42" y="329" width="205" height="112" rx="12"/>
+  <text class="label" x="62" y="357">MCO</text><text class="formula" x="62" y="390">E[Xu] = 0</text><text class="small" x="62" y="418">Ortogonalidad con regresores</text>
+  <rect class="box" x="266" y="329" width="205" height="112" rx="12"/>
+  <text class="label" x="286" y="357">Poisson PML</text><text class="formula" x="286" y="390">E[X(y−μ)] = 0</text><text class="small" x="286" y="418">Media no negativa</text>
+  <rect class="box" x="490" y="329" width="205" height="112" rx="12"/>
+  <text class="label" x="510" y="357">Gamma quasi-score</text><text class="formula" x="510" y="390">E[X(y−μ)/μ] = 0</text><text class="small" x="510" y="418">Otra ponderación del residuo</text>
+  <rect class="box" x="714" y="329" width="205" height="112" rx="12"/>
+  <text class="label" x="734" y="357">Media tipo Tobit</text><text class="formula" x="734" y="390">E[∂m/∂θ·(y−m)] = 0</text><text class="small" x="734" y="418">Media sin verosimilitud plena</text>
+  <line class="line" x1="48" y1="465" x2="912" y2="465"/><text class="small" x="48" y="484">El método cambia de forma; la pregunta permanece: ¿por qué debería cumplirse cada momento?</text>
+</svg>

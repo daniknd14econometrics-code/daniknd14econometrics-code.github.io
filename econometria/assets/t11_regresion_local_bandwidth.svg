@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="610" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+  <title id="title">Regresión local y elección del ancho de banda</title>
+  <desc id="desc">Dos paneles comparan regresión global y métodos locales, y muestran el efecto de tres selectores de ancho de banda.</desc>
+  <rect width="1200" height="610" rx="22" fill="#f7f4ee"/>
+  <style>
+    text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#24313a}.title{font-size:25px;font-weight:700}.sub{font-size:15px;fill:#59656d}.panel{font-size:17px;font-weight:700}.axis{stroke:#9aa4aa;stroke-width:1.2}.grid{stroke:#dcd8cf;stroke-width:1}.tick{font-size:13px;fill:#68737a}.legend{font-size:13px}.note{font-size:14px;font-weight:600}.dot{fill:#7b8790;opacity:.19}.global{fill:none;stroke:#7b8790;stroke-width:3;stroke-dasharray:8 7}.nw{fill:none;stroke:#d2764b;stroke-width:4}.ll{fill:none;stroke:#176b68;stroke-width:4}.cv{fill:none;stroke:#b65c45;stroke-width:3.5}.rot{fill:none;stroke:#287c78;stroke-width:3.5}.plug{fill:none;stroke:#253f58;stroke-width:3.5}
+  </style>
+  <text x="54" y="48" class="title">La forma se aprende localmente; h decide cuánto suavizar</text>
+  <text x="54" y="75" class="sub">Curva de Engel en logaritmos · 5.507 hogares · rango central p10–p90</text>
+  <rect x="42" y="100" width="548" height="442" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <rect x="610" y="100" width="548" height="442" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <text x="68" y="132" class="panel">A · Recta global frente a ajustes locales</text>
+  <text x="636" y="132" class="panel">B · Tres decisiones sobre el vecindario</text>
+  <line x1="96" y1="458" x2="554" y2="458" class="axis"/><line x1="96" y1="168" x2="96" y2="458" class="axis"/>
+  <line x1="662" y1="458" x2="1122" y2="458" class="axis"/><line x1="662" y1="168" x2="662" y2="458" class="axis"/>
+  <g class="grid"><line x1="96" y1="385" x2="554" y2="385"/><line x1="96" y1="313" x2="554" y2="313"/><line x1="96" y1="240" x2="554" y2="240"/><line x1="662" y1="385" x2="1122" y2="385"/><line x1="662" y1="313" x2="1122" y2="313"/><line x1="662" y1="240" x2="1122" y2="240"/></g>
+  <g class="dot"><circle cx="119" cy="411" r="4"/><circle cx="139" cy="396" r="4"/><circle cx="156" cy="422" r="4"/><circle cx="174" cy="368" r="4"/><circle cx="196" cy="386" r="4"/><circle cx="216" cy="346" r="4"/><circle cx="235" cy="371" r="4"/><circle cx="253" cy="329" r="4"/><circle cx="274" cy="344" r="4"/><circle cx="294" cy="303" r="4"/><circle cx="315" cy="322" r="4"/><circle cx="334" cy="285" r="4"/><circle cx="356" cy="301" r="4"/><circle cx="375" cy="260" r="4"/><circle cx="395" cy="279" r="4"/><circle cx="417" cy="235" r="4"/><circle cx="438" cy="255" r="4"/><circle cx="458" cy="211" r="4"/><circle cx="479" cy="225" r="4"/><circle cx="501" cy="186" r="4"/><circle cx="526" cy="208" r="4"/></g>
+  <path d="M104 416 L543 188" class="global"/>
+  <path d="M104 408 C147 401 175 379 216 357 S282 326 324 304 S393 270 435 240 S505 202 543 194" class="nw"/>
+  <path d="M104 414 C145 398 179 381 217 360 S283 328 325 305 S391 269 437 243 S503 211 543 184" class="ll"/>
+  <g class="legend"><line x1="116" y1="490" x2="145" y2="490" class="global"/><text x="153" y="495">MCO global</text><line x1="255" y1="490" x2="284" y2="490" class="nw"/><text x="292" y="495">Nadaraya–Watson</text><line x1="435" y1="490" x2="464" y2="490" class="ll"/><text x="472" y="495">Local lineal</text></g>
+  <path d="M671 414 C698 398 714 404 736 382 S769 374 790 351 S825 345 847 320 S881 318 902 286 S939 294 960 259 S998 267 1018 231 S1058 240 1081 204 S1107 201 1117 186" class="cv"/>
+  <path d="M671 412 C716 393 753 374 790 353 S862 313 902 286 S978 248 1018 225 S1084 198 1117 187" class="rot"/>
+  <path d="M671 409 C717 392 754 374 792 352 S863 311 904 286 S978 247 1019 224 S1084 199 1117 190" class="plug"/>
+  <g class="legend"><line x1="682" y1="490" x2="711" y2="490" class="cv"/><text x="719" y="495">CV · h 0,153</text><line x1="822" y1="490" x2="851" y2="490" class="rot"/><text x="859" y="495">ROT · h 0,279</text><line x1="967" y1="490" x2="996" y2="490" class="plug"/><text x="1004" y="495">Plug-in · h 0,543</text></g>
+  <text x="92" y="522" class="note" fill="#176b68">Los métodos coinciden en el centro y divergen más en los bordes.</text>
+  <text x="662" y="522" class="note" fill="#253f58">Menor h: más detalle · Mayor h: más estabilidad</text>
+  <g class="tick"><text x="91" y="478">4,3</text><text x="310" y="478">5,4</text><text x="532" y="478">6,5</text><text x="657" y="478">4,3</text><text x="877" y="478">5,4</text><text x="1100" y="478">6,5</text><text x="268" y="570">Log ingreso per cápita</text><text x="837" y="570">Log ingreso per cápita</text></g>
+</svg>

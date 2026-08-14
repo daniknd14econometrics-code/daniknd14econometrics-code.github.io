@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+  <title id="title">Curva ROC y comparación de umbrales</title>
+  <desc id="desc">Curva ROC del modelo logit con AUC 0,796 y comparación entre el umbral 0,50 y el umbral 0,123 cercano a la prevalencia del rechazo.</desc>
+  <rect width="1100" height="620" rx="22" fill="#f7fafb"/>
+  <text x="55" y="52" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#18344d">Clasificar bien no es lo mismo que detectar rechazos</text>
+  <text x="55" y="82" font-family="Arial, sans-serif" font-size="16" fill="#5d7180">La curva resume discriminación; el umbral decide qué errores acepta la aplicación.</text>
+  <rect x="45" y="110" width="650" height="445" rx="16" fill="#ffffff" stroke="#dfe7eb"/>
+  <rect x="725" y="110" width="330" height="205" rx="16" fill="#ffffff" stroke="#dfe7eb"/>
+  <rect x="725" y="335" width="330" height="220" rx="16" fill="#ffffff" stroke="#dfe7eb"/>
+  <g stroke="#e6edf0" stroke-width="1"><line x1="90" y1="500" x2="650" y2="500"/><line x1="90" y1="325" x2="650" y2="325"/><line x1="90" y1="150" x2="650" y2="150"/><line x1="90" y1="150" x2="90" y2="500"/><line x1="370" y1="150" x2="370" y2="500"/><line x1="650" y1="150" x2="650" y2="500"/></g>
+  <line x1="90" y1="500" x2="650" y2="150" stroke="#9cafb9" stroke-width="2" stroke-dasharray="7 7"/>
+  <polyline points="90,500 90,498.6 94.5,446.5 103.3,413.2 112.7,382.9 122.4,353.9 133.1,329.3 146.4,316.3 161.3,310.5 174.3,296.1 186.6,278.7 199.6,264.3 213.9,255.6 227.5,244 243.1,241.1 258,235.3 273.9,233.9 288.4,226.7 303.4,220.9 318,213.6 334.2,213.6 348.8,206.4 364,202.1 379.9,200.6 395.1,196.3 410,190.5 425,184.7 440.9,183.3 456.4,180.4 472.6,180.4 488.2,177.5 502.5,168.8 518.7,168.8 533.9,164.5 549.5,161.6 565.7,161.6 581.6,160.1 597.5,158.7 613,155.8 628.3,151.4 644.2,150 650,150" fill="none" stroke="#225f7d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#667b89"><text x="82" y="522">0</text><text x="362" y="522">0,5</text><text x="644" y="522">1</text><text x="66" y="505">0</text><text x="54" y="330">0,5</text><text x="66" y="155">1</text><text x="280" y="548">1 − especificidad</text><text transform="translate(25 385) rotate(-90)">Sensibilidad</text></g>
+  <rect x="485" y="445" width="135" height="42" rx="21" fill="#e8f1f5"/><text x="552" y="472" font-family="Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle" fill="#225f7d">AUC = 0,796</text>
+  <text x="750" y="145" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#263f52">Umbral 0,50</text>
+  <text x="750" y="183" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#b34a66">18,60%</text><text x="750" y="205" font-family="Arial, sans-serif" font-size="13" fill="#667b89">sensibilidad</text>
+  <text x="750" y="244" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#263f52">88,78%</text><text x="750" y="266" font-family="Arial, sans-serif" font-size="13" fill="#667b89">clasificación correcta</text>
+  <text x="750" y="294" font-family="Arial, sans-serif" font-size="13" fill="#b34a66">La exactitud oculta rechazos omitidos.</text>
+  <text x="750" y="370" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#263f52">Umbral 0,123 · prevalencia</text>
+  <text x="750" y="408" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#225f7d">70,66%</text><text x="750" y="430" font-family="Arial, sans-serif" font-size="13" fill="#667b89">sensibilidad</text>
+  <text x="750" y="468" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#263f52">77,01% especificidad</text><text x="750" y="496" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#263f52">76,23% exactitud</text>
+  <text x="750" y="527" font-family="Arial, sans-serif" font-size="13" fill="#225f7d">Más detección, con más falsos positivos.</text>
+  <text x="55" y="592" font-family="Arial, sans-serif" font-size="13" fill="#667b89">Fuente: Taller 5. Curva calculada a partir de las predicciones logit ya producidas sobre la muestra común.</text>
+</svg>
