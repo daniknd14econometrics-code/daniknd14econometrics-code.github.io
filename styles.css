@@ -239,6 +239,32 @@ body:has(.hero-banner) .hero-banner__media {
 
 body:has(.hero-banner) .hero-banner--home {
   --hero-image: url("assets/hero/home-hero.png");
+  grid-template-areas:
+    "hero-content hero-media"
+    "hero-content hero-note";
+  row-gap: 0.75rem;
+  align-items: start;
+}
+
+body:has(.hero-banner--home) .hero-banner__content {
+  grid-area: hero-content;
+}
+
+body:has(.hero-banner--home) .hero-banner__media {
+  grid-area: hero-media;
+}
+
+body:has(.hero-banner--home) .hero-profile-note {
+  grid-area: hero-note;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+body:has(.hero-banner--home) .hero-profile-note p {
+  margin: 0;
 }
 
 body:has(.hero-banner) .hero-banner--econometria {
@@ -292,30 +318,6 @@ body:has(.hero-banner) .hero-banner--sobre-mi .hero-banner__media {
 body:has(.hero-banner) .section-lead {
   margin: 0 0 1.2rem;
   color: var(--muted);
-}
-
-body:has(.hero-banner--home) .positioning-strip {
-  margin: -0.35rem 0 2.25rem;
-  padding: 1rem 1.15rem;
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--brand);
-  border-radius: 12px;
-  background: var(--surface-soft);
-  color: var(--muted);
-}
-
-body:has(.hero-banner--home) .positioning-strip p {
-  margin: 0;
-}
-
-body:has(.hero-banner--home) .positioning-strip p + p {
-  margin-top: 0.4rem;
-}
-
-body:has(.hero-banner--home) .positioning-strip__areas {
-  color: var(--text);
-  font-size: 0.92rem;
-  font-weight: 650;
 }
 
 body:has(.hero-banner--home) .work-grid {
@@ -528,6 +530,13 @@ body:has(.hero-banner) .profile-card h3 {
     grid-template-columns: 1fr;
   }
 
+  body:has(.hero-banner--home) .hero-banner--home {
+    grid-template-areas:
+      "hero-content"
+      "hero-media"
+      "hero-note";
+  }
+
   body:has(.hero-banner) .hero-banner__media {
     min-height: 210px;
   }
@@ -557,7 +566,4 @@ body:has(.hero-banner) .profile-card h3 {
     border-bottom: 0;
   }
 
-  body:has(.hero-banner--home) .positioning-strip__areas {
-    line-height: 1.55;
-  }
 }
