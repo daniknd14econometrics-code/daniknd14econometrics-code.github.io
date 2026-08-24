@@ -150,6 +150,14 @@ body:has(.hero-banner--home) .hero-banner__lead {
   max-width: none;
 }
 
+body:has(.hero-banner--home) .hero-banner__specialization {
+  margin: 0 0 0.65rem;
+  color: var(--brand);
+  font-size: clamp(0.92rem, 1.2vw, 1.04rem);
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
 body:has(.hero-banner) .hero-banner__actions {
   display: flex;
   flex-wrap: wrap;
@@ -286,6 +294,110 @@ body:has(.hero-banner) .section-lead {
   color: var(--muted);
 }
 
+body:has(.hero-banner--home) .positioning-strip {
+  margin: -0.35rem 0 2.25rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brand);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: var(--muted);
+}
+
+body:has(.hero-banner--home) .positioning-strip p {
+  margin: 0;
+}
+
+body:has(.hero-banner--home) .positioning-strip p + p {
+  margin-top: 0.4rem;
+}
+
+body:has(.hero-banner--home) .positioning-strip__areas {
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+body:has(.hero-banner--home) .work-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 2.5rem;
+}
+
+body:has(.hero-banner--home) .work-step {
+  min-width: 0;
+  padding: 0.95rem;
+  border-top: 3px solid var(--brand);
+  border-radius: 0 0 12px 12px;
+  background: var(--surface-soft);
+}
+
+body:has(.hero-banner--home) .work-step__number {
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+body:has(.hero-banner--home) .work-step h3 {
+  margin: 0.28rem 0 0.45rem;
+  font-size: 1rem;
+}
+
+body:has(.hero-banner--home) .work-step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+body:has(.hero-banner--home) .problem-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0 2.5rem;
+}
+
+body:has(.hero-banner--home) .problem-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 58px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+body:has(.hero-banner--home) .problem-item p {
+  margin: 0;
+}
+
+body:has(.hero-banner--home) .portfolio-note {
+  margin-top: 2.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: var(--muted);
+}
+
+body:has(.hero-banner--home) .portfolio-note h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.03rem;
+}
+
+body:has(.hero-banner--home) .portfolio-note p {
+  max-width: 100ch;
+  margin: 0;
+  font-size: 0.93rem;
+}
+
 body:has(.hero-banner) .portal-grid,
 body:has(.hero-banner) .piece-grid {
   display: grid;
@@ -374,5 +486,21 @@ body:has(.hero-banner) .profile-card h3 {
 
   body:has(.hero-banner--home) .portal-grid {
     grid-template-columns: 1fr;
+  }
+
+  body:has(.hero-banner--home) .work-grid,
+  body:has(.hero-banner--home) .problem-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  body:has(.hero-banner--home) .work-grid,
+  body:has(.hero-banner--home) .problem-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body:has(.hero-banner--home) .positioning-strip__areas {
+    line-height: 1.55;
   }
 }

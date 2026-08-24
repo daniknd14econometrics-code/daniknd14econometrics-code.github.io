@@ -7,18 +7,18 @@
     "text": "Recorrido y formación\nMi interés por la Economía surgió hacia el final de la secundaria. No fue una vocación definida de antemano, sino una elección que fue adquiriendo sentido a medida que avanzaba en la carrera. Con el tiempo fui orientándome cada vez más hacia el análisis cuantitativo y aplicado: entender qué problemas permiten abordar los distintos métodos, qué supuestos requieren y qué puede concluirse a partir de sus resultados.\nDurante más de seis años trabajé en Conaprole, empresa líder de la industria láctea uruguaya y una de las principales exportadoras de Uruguay. Mi función se desarrollaba en Auditoría Interna; cuando los problemas lo permitían, buscaba incorporar análisis de datos y desarrollar enfoques propios para abordarlos. Esa experiencia acompañó buena parte de mi formación universitaria y reforzó mi interés por el trabajo cuantitativo.\nCompleté la Licenciatura y posteriormente la Maestría en Economía en la Facultad de Ciencias Económicas y de Administración (FCEA) de la Universidad de la República, Uruguay. Durante la etapa final de la maestría y después de su defensa también trabajé en el Departamento de Economía de la FCEA, dentro de un proyecto financiado por la Agencia Nacional de Investigación e Innovación (ANII) sobre comercio, inversión extranjera y ambiente. La autonomía que tuve en esa experiencia me permitió profundizar distintas herramientas cuantitativas y ganar independencia para abordar problemas empíricos.\nLa tesis de maestría fue un punto especialmente importante en ese recorrido. Estudió las relaciones entre adopción de tecnologías de información y comunicación, productividad y exportaciones en empresas uruguayas, y requirió trabajar sobre datos, medición de TIC, estimación de productividad y estrategias econométricas frente a problemas de endogeneidad. La tesis fue distinguida como una de las tres tesis de maestría premiadas ese año en la FCEA, reconocimiento que incluyó su presentación en las XIII Jornadas Académicas de la Facultad.\nLa investigación continuó después de la defensa. Junto con Adriana Peluffo elaboramos una versión revisada que se convirtió en un working paper disponible en SSRN y posteriormente enviamos a International Economics. La evaluación valoró la relevancia del problema, el cuidado de la implementación empírica y la transparencia de los diagnósticos y ejercicios de robustez, aunque planteó una reserva central sobre la plausibilidad económica de algunas restricciones de exclusión.\nEsa observación me llevó a profundizar en problemas de identificación y a estudiar diseños shift-share. La nueva estrategia requirió integrar fuentes adicionales de información, construir exposiciones predeterminadas, pesos y shocks externos con contenido económico, e incorporar inferencia al nivel de los shocks, procedimientos robustos frente a instrumentos potencialmente débiles y análisis de pesos de Rotemberg.\nEl proceso terminó dando lugar a una investigación diferente de la tesis original, centrada en la relación causal entre productividad y adopción de TIC en empresas uruguayas. El nuevo trabajo identifica por separado ambas direcciones mediante distintas familias de instrumentos shift-share y combina microdatos empresariales con fuentes externas de información para construir la variación utilizada en la identificación."
   },
   {
-    "objectID": "sobre-mi.html#cómo-trabajo",
-    "href": "sobre-mi.html#cómo-trabajo",
+    "objectID": "sobre-mi.html#criterio-de-trabajo",
+    "href": "sobre-mi.html#criterio-de-trabajo",
     "title": "Sobre mí",
-    "section": "Cómo trabajo",
-    "text": "Cómo trabajo\nSuelo hacer muchas preguntas antes de considerar cerrado un análisis. Me interesa entender qué mecanismo puede estar detrás de un resultado, contrastar alternativas cuando existe margen para hacerlo y tener claro qué supuestos sostienen cada conclusión.\nTambién presto atención a lo que los resultados no permiten afirmar. Prefiero una conclusión más acotada pero defendible a una historia atractiva que dependa de evidencia frágil.\nDisfruto el proceso completo de trabajar con datos: entender el problema, construir y organizar la información, elegir una estrategia, evaluar qué aporta y qué limita cada método e interpretar los resultados. Para mí, la sofisticación técnica tiene valor cuando ayuda a responder mejor una pregunta, no como un objetivo en sí mismo."
+    "section": "Criterio de trabajo",
+    "text": "Criterio de trabajo\nSuelo hacer muchas preguntas antes de considerar cerrado un análisis. Me interesa entender qué mecanismo puede estar detrás de un resultado, contrastar alternativas cuando existe margen para hacerlo y tener claro qué supuestos sostienen cada conclusión.\nTambién presto atención a lo que los resultados no permiten afirmar. Prefiero una conclusión más acotada pero defendible a una historia atractiva que dependa de evidencia frágil.\nLa sofisticación técnica tiene valor cuando ayuda a responder mejor una pregunta, no como un objetivo en sí mismo. Por eso procuro que el método, la evidencia y el alcance de la conclusión permanezcan alineados durante todo el análisis."
   },
   {
     "objectID": "sobre-mi.html#intereses-profesionales",
     "href": "sobre-mi.html#intereses-profesionales",
     "title": "Sobre mí",
     "section": "Intereses profesionales",
-    "text": "Intereses profesionales\nMe interesan especialmente dos grandes tipos de problemas: inferencia y predicción.\nDel lado de la inferencia, trabajo principalmente con econometría aplicada e inferencia causal: identificación y estimación de relaciones económicas, diseño de estrategias empíricas y evaluación de la robustez de los resultados.\nDel lado de la predicción, trabajo con técnicas de machine learning y series temporales, tanto para construir modelos predictivos como para estudiar la dinámica de variables económicas.\nMás allá del método específico, me interesa abordar problemas en los que el análisis cuantitativo permita aprender algo relevante a partir de los datos y donde la elección de las herramientas responda al problema, y no al revés."
+    "text": "Intereses profesionales\nMe interesan los problemas en los que inferencia, predicción y decisión se conectan: comprender mecanismos y efectos, anticipar resultados y evaluar qué curso de acción resulta defendible con la información disponible.\nEn causalidad y evaluación, me atraen la identificación de relaciones económicas, el diseño de estrategias empíricas, la experimentación y el análisis de robustez. En predicción, el forecasting, la modelización estadística y el aprendizaje automático ofrecen herramientas para planificación y seguimiento.\nTambién me interesan aplicaciones vinculadas con demanda y pricing, riesgo, validación de modelos y decisiones bajo incertidumbre. Son ámbitos en los que mi formación y toolkit resultan pertinentes; el punto de partida sigue siendo siempre el problema, no una técnica elegida de antemano."
   },
   {
     "objectID": "sobre-mi.html#contacto",
@@ -28,11 +28,32 @@
     "text": "Contacto\n\n\nLinkedIn: danielméndez-ec\nGitHub: daniknd14econometrics-code\nEmail: daniknd14@gmail.com"
   },
   {
+    "objectID": "index.html#cómo-trabajo",
+    "href": "index.html#cómo-trabajo",
+    "title": "Inicio",
+    "section": "Cómo trabajo",
+    "text": "Cómo trabajo\n\nUn proceso cuantitativo completo, organizado alrededor de la pregunta y de la decisión que debe informar.\n\n\n\n01\n\nProblema\nTraducir una pregunta económica o empresarial a un objeto cuantitativo bien definido.\n\n\n\n02\n\nDiseño\nDeterminar qué puede identificarse o predecirse, qué supuestos son necesarios y qué estrategia metodológica corresponde.\n\n\n\n03\n\nEvaluación\nEstimar, diagnosticar, validar, estudiar sensibilidad e incertidumbre y comparar alternativas.\n\n\n\n04\n\nDecisión\nInterpretar los resultados en función del problema real, sus costos, restricciones y consecuencias."
+  },
+  {
+    "objectID": "index.html#problemas-en-los-que-puedo-aportar",
+    "href": "index.html#problemas-en-los-que-puedo-aportar",
+    "title": "Inicio",
+    "section": "Problemas en los que puedo aportar",
+    "text": "Problemas en los que puedo aportar\n\nCapacidades metodológicas aplicables a preguntas económicas y empresariales concretas.\n\n\n\nEvaluación de impacto y causalidad\n\n\nForecasting y planificación\n\n\nPricing y demanda\n\n\nRiesgo y scoring\n\n\nExperimentación\n\n\nValidación de modelos\n\n\nAnálisis de procesos y productividad\n\n\nDecisiones bajo incertidumbre y costos asimétricos"
+  },
+  {
     "objectID": "index.html#areas-de-trabajo",
     "href": "index.html#areas-de-trabajo",
     "title": "Inicio",
     "section": "Áreas de trabajo",
-    "text": "Áreas de trabajo\n\n\nEconometría\nAplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.\nExplorar Econometría\n\n\nInferencia causal\nDiseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.\nExplorar Causalidad\n\n\nMachine Learning\nMétodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.\nExplorar Machine Learning"
+    "text": "Áreas de trabajo\n\nTres áreas complementarias desde las que abordo problemas de inferencia, predicción, evaluación y decisión.\n\n\n\nEconometría\nAplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.\nExplorar Econometría\n\n\nInferencia causal\nDiseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.\nExplorar Causalidad\n\n\nMachine Learning\nMétodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.\nExplorar Machine Learning"
+  },
+  {
+    "objectID": "index.html#sobre-las-piezas-del-portfolio",
+    "href": "index.html#sobre-las-piezas-del-portfolio",
+    "title": "Inicio",
+    "section": "Sobre las piezas del portfolio",
+    "text": "Sobre las piezas del portfolio\nLas piezas presentadas aquí son síntesis profesionales de trabajos técnicos considerablemente más extensos. Los trabajos completos incluyen desarrollo metodológico, código, diagnósticos, validaciones y análisis de sensibilidad que deliberadamente no se reproducen íntegramente en el sitio. Los materiales originales pueden discutirse o compartirse cuando resulte pertinente en un proceso profesional."
   },
   {
     "objectID": "econometria/piezas/t18_multinomial_panel_cre.html",
