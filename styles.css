@@ -449,7 +449,8 @@ body:has(.hero-banner) .piece-card:has(.piece-card__cta):focus-within {
   border-color: var(--brand);
 }
 
-body:has(.hero-banner) .piece-card__cta {
+body:has(.hero-banner) .piece-grid .piece-card a.piece-card__cta,
+body:has(.hero-banner) .piece-grid .piece-card a.piece-card__cta:visited {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -467,18 +468,14 @@ body:has(.hero-banner) .piece-card__cta {
   text-decoration: none;
 }
 
-body:has(.hero-banner) .piece-card__cta:visited {
-  color: var(--brand) !important;
-}
-
-body:has(.hero-banner) .piece-card__cta:hover,
-body:has(.hero-banner) .piece-card__cta:focus {
+body:has(.hero-banner) .piece-grid .piece-card a.piece-card__cta:hover,
+body:has(.hero-banner) .piece-grid .piece-card a.piece-card__cta:focus-visible {
   border-color: var(--brand);
   background: var(--brand);
   color: #ffffff !important;
 }
 
-body:has(.hero-banner) .piece-card__cta:focus-visible {
+body:has(.hero-banner) .piece-grid .piece-card a.piece-card__cta:focus-visible {
   outline: 2px solid #0b1a2c;
   outline-offset: 2px;
 }
