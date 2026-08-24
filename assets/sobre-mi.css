@@ -1,13 +1,16 @@
 .sobre-mi-columns,
-#recorrido-y-formación > p {
+#recorrido-profesional > p,
+#investigación > p {
   min-width: 0;
 }
 
-#recorrido-y-formación > p {
+#recorrido-profesional > p,
+#investigación > p {
   max-width: 92ch;
 }
 
-#recorrido-y-formación > p,
+#recorrido-profesional > p,
+#investigación > p,
 .sobre-mi-column > p,
 .sobre-mi-column > section > p,
 .sobre-mi-human-close > p {

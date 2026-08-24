@@ -436,6 +436,53 @@ body:has(.hero-banner) .piece-card strong {
   color: var(--text);
 }
 
+body:has(.hero-banner) .piece-card:has(.piece-card__cta) {
+  display: flex;
+  flex-direction: column;
+}
+
+body:has(.hero-banner) .piece-card:has(.piece-card__cta):hover {
+  border-color: var(--line-strong);
+}
+
+body:has(.hero-banner) .piece-card:has(.piece-card__cta):focus-within {
+  border-color: var(--brand);
+}
+
+body:has(.hero-banner) .piece-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-height: 36px;
+  margin-top: auto;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--brand) !important;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+body:has(.hero-banner) .piece-card__cta:visited {
+  color: var(--brand) !important;
+}
+
+body:has(.hero-banner) .piece-card__cta:hover,
+body:has(.hero-banner) .piece-card__cta:focus {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #ffffff !important;
+}
+
+body:has(.hero-banner) .piece-card__cta:focus-visible {
+  outline: 2px solid #0b1a2c;
+  outline-offset: 2px;
+}
+
 body:has(.hero-banner) .section-status {
   background: var(--surface-soft);
   border: 1px solid var(--line);
