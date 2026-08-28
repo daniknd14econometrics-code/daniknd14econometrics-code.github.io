@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Méndez">
 
-<title>Cuando la varianza desborda la media: Poisson, binomial negativa y PML – Daniel Méndez</title>
+<title>Problemas de negocio – Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -27,23 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f1567f6532da11e0b3c9d7d9c23d1e21.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,83 +72,20 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 <meta name="robots" content="noindex, nofollow">
-<style>
-@media (max-width: 700px) {
-  #title-block-header .quarto-title-meta {
-    grid-template-columns: minmax(0, 1fr) !important;
-    width: 100% !important;
-  }
-  #title-block-header .quarto-title-meta > div {
-    min-width: 0 !important;
-    width: auto !important;
-  }
-  .navbar-title {
-    display: block;
-    max-width: calc(100vw - 9rem);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .quarto-figure:has(img[src*="t04b_"]) {
-    max-width: 100%;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-  }
-  .quarto-figure:has(img[src*="t04b_"]) figure {
-    width: 720px;
-    max-width: none;
-  }
-  img[src*="t04b_"] {
-    width: 720px !important;
-    max-width: none !important;
-  }
-}
-</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../../styles.css">
-<link rel="stylesheet" href="../assets/portfolio.css">
-<link rel="stylesheet" href="../assets/t01_palette.css">
-<link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="assets/problemas-negocio.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Daniel Méndez</span>
     </a>
   </div>
@@ -160,27 +96,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../problemas-negocio.html"> 
+    <a class="nav-link active" href="./problemas-negocio.html" aria-current="page"> 
 <span class="menu-text">Problemas de negocio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../econometria/index.html"> 
+    <a class="nav-link" href="./econometria/index.html"> 
 <span class="menu-text">Econometría</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../causalidad/index.html"> 
+    <a class="nav-link" href="./causalidad/index.html"> 
 <span class="menu-text">Causalidad</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../machine-learning/index.html"> 
+    <a class="nav-link" href="./machine-learning/index.html"> 
 <span class="menu-text">Machine Learning</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../sobre-mi.html"> 
+    <a class="nav-link" href="./sobre-mi.html"> 
 <span class="menu-text">Sobre mí</span></a>
   </li>  
 </ul>
@@ -191,233 +127,214 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En esta página</h2>
-   
-  <ul>
-  <li><a href="#la-pregunta-cuánto-necesitamos-especificar" id="toc-la-pregunta-cuánto-necesitamos-especificar" class="nav-link active" data-scroll-target="#la-pregunta-cuánto-necesitamos-especificar">La pregunta: ¿cuánto necesitamos especificar?</a></li>
-  <li><a href="#nivel-1-poisson-completo-de-la-media-a-las-probabilidades" id="toc-nivel-1-poisson-completo-de-la-media-a-las-probabilidades" class="nav-link" data-scroll-target="#nivel-1-poisson-completo-de-la-media-a-las-probabilidades">Nivel 1 — Poisson completo: de la media a las probabilidades</a></li>
-  <li><a href="#nivel-2-nb2-flexibilizar-la-distribución" id="toc-nivel-2-nb2-flexibilizar-la-distribución" class="nav-link" data-scroll-target="#nivel-2-nb2-flexibilizar-la-distribución">Nivel 2 — NB2: flexibilizar la distribución</a></li>
-  <li><a href="#nivel-3-pmlqmle-conservar-la-media" id="toc-nivel-3-pmlqmle-conservar-la-media" class="nav-link" data-scroll-target="#nivel-3-pmlqmle-conservar-la-media">Nivel 3 — PML/QMLE: conservar la media</a></li>
-  <li><a href="#objeto-de-decisión" id="toc-objeto-de-decisión" class="nav-link" data-scroll-target="#objeto-de-decisión">Objeto de decisión</a></li>
-  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Problemas de negocio</h1></header>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Cuando la varianza desborda la media: Poisson, binomial negativa y PML</h1>
-<p class="subtitle lead">Qué se puede interpretar cuando un conteo exige distinguir distribución completa y media condicional</p>
-</div>
-
-
-
-<div class="quarto-title-meta column-page-left">
-
-    <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
-    <div class="quarto-title-meta-contents">
-             <p>Daniel Méndez </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Fecha de publicación</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">12 de agosto de 2026</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
+<header id="title-block-header">
 
 
 </header>
 
 
-<div class="hero-box">
-<div class="hero-title">
-<p>La decisión no empieza por el comando: empieza por cuánto de la distribución necesitamos defender para responder la pregunta.</p>
-</div>
-<div class="hero-sub">
-<p>T4B avanza por tres niveles de compromiso. Poisson completo permite interpretar probabilidades; NB2 flexibiliza la distribución cuando aparece sobredispersión; Poisson PML/QMLE abandona la pretensión distribucional y conserva una media condicional exponencial con inferencia robusta.</p>
-</div>
-</div>
-<div class="metric-grid">
-<div class="metric-card">
-<div class="metric-label">
-<p>Nivel 1</p>
-</div>
-<div class="metric-value">
-<p>Poisson completo</p>
-</div>
-<div class="metric-note">
-<p>Distribución condicional y probabilidades de conteos.</p>
-</div>
-</div>
-<div class="metric-card">
-<div class="metric-label">
-<p>Nivel 2</p>
-</div>
-<div class="metric-value">
-<p>Binomial negativa NB2</p>
-</div>
-<div class="metric-note">
-<p>Sobredispersión y una distribución con colas más flexibles.</p>
-</div>
-</div>
-<div class="metric-card">
-<div class="metric-label">
-<p>Nivel 3</p>
-</div>
-<div class="metric-value">
-<p>Poisson PML/QMLE</p>
-</div>
-<div class="metric-note">
-<p>Media condicional sin defender toda la distribución.</p>
-</div>
-</div>
-</div>
-<section id="la-pregunta-cuánto-necesitamos-especificar" class="level2">
-<h2 class="anchored" data-anchor-id="la-pregunta-cuánto-necesitamos-especificar">La pregunta: ¿cuánto necesitamos especificar?</h2>
-<p>En los tres casos el resultado es un conteo y la media se representa mediante</p>
-<p><span class="math display">\[
-E(Y_i\mid X_i)=\mu_i=\exp(X_i'\beta).
-\]</span></p>
-<p>Compartir esa media no vuelve equivalentes a los modelos. La pregunta distribucional exige sostener mucho más que la pregunta sobre <span class="math inline">\(E(Y\mid X)\)</span>. Por eso, el análisis sigue una dirección deliberada:</p>
-<ul>
-<li><strong>distribución completa:</strong> media, varianza y probabilidades Poisson;</li>
-<li><strong>distribución más flexible:</strong> misma media exponencial, pero sobredispersión bajo NB2;</li>
-<li><strong>media condicional:</strong> función exponencial e inferencia robusta, sin interpretar probabilidades Poisson.</li>
-</ul>
-<p>El criterio no es elegir el modelo más flexible por reflejo. Es usar el compromiso mínimo que permita responder la pregunta y que resulte defendible frente a los datos.</p>
-</section>
-<section id="nivel-1-poisson-completo-de-la-media-a-las-probabilidades" class="level2">
-<h2 class="anchored" data-anchor-id="nivel-1-poisson-completo-de-la-media-a-las-probabilidades">Nivel 1 — Poisson completo: de la media a las probabilidades</h2>
-<p>La aplicación de fecundidad funciona como punto de partida. Para 4.361 mujeres se modela el número de hijos vivos según edad, educación, residencia, servicios y afiliación religiosa. Los diagnósticos globales no detectan una incompatibilidad condicional fuerte con Poisson. Ese no rechazo no prueba que la distribución sea verdadera, pero permite mostrar qué se gana al defenderla cautelosamente.</p>
-<p>Una especificación completa transforma la media estimada en probabilidades de conteos. Al promediar sobre los perfiles observados, la probabilidad predicha de cero hijos es 27,0%, la de exactamente tres es 11,2% y la de cuatro o más es 25,5%. También hace visible una distinción no lineal: evaluar <span class="math inline">\(P(Y=0\mid X)\)</span> en el perfil promedio produce 11,7%, muy lejos del promedio de probabilidades individuales.</p>
-<div class="t4b-visual">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../assets/t04b_poisson_completo_fertil.svg" class="t4b-visual-img img-fluid figure-img" style="width:100.0%" alt="Diagrama de una distribución Poisson completa aplicada al número de hijos, con media predicha y probabilidades de cero, tres y cuatro o más hijos"></p>
-<figcaption>Defender una distribución Poisson completa permite pasar de la media a probabilidades de conteos. El gráfico muestra promedios sobre perfiles observados y contrasta la probabilidad de cero hijos en el perfil promedio con el promedio de probabilidades individuales.</figcaption>
-</figure>
-</div>
-</div>
-<p>Este bloque es deliberadamente breve: establece el punto de partida. Si la aplicación necesitara probabilidades o colas, no bastaría con que la media estuviera bien representada; la forma distribucional también tendría que ser defendible.</p>
-</section>
-<section id="nivel-2-nb2-flexibilizar-la-distribución" class="level2">
-<h2 class="anchored" data-anchor-id="nivel-2-nb2-flexibilizar-la-distribución">Nivel 2 — NB2: flexibilizar la distribución</h2>
-<p>La segunda aplicación es el primer bloque empírico central. En 680 estudiantes, el número medio de clases salteadas es 5,853 y la varianza 29,757. Los diagnósticos rechazan el Poisson de referencia y NB2 estima <span class="math inline">\(\widehat\alpha=0{,}275\)</span> (p &lt; 0,001). La igualdad Poisson entre media y varianza condicional resulta demasiado restrictiva.</p>
-<p>NB2 conserva la media exponencial, pero permite</p>
-<p><span class="math display">\[
-Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
-\]</span></p>
-<p>La diferencia importa aunque algunos resúmenes de media sean próximos. Un punto adicional de promedio previo se asocia con 3,63 clases menos bajo Poisson y 3,87 bajo NB2. Para un perfil representativo, las medias predichas son 4,89 y 4,76. Sin embargo, NB2 asigna mucha más probabilidad al cero y aproximadamente triplica la masa predicha entre 10 y 30 ausencias.</p>
-<div class="t4b-visual">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../assets/t04b_nb2_colas_attend.svg" class="t4b-visual-img img-fluid figure-img" style="width:100.0%" alt="Comparación editorial de las distribuciones predichas Poisson y NB2 para clases salteadas, con medias próximas y colas diferentes"></p>
-<figcaption>Poisson y NB2 producen medias y efectos marginales próximos para un perfil académico, pero NB2 reduce el pico central y aumenta la masa en cero y en la cola derecha.</figcaption>
-</figure>
-</div>
-</div>
-<p>La cercanía de los efectos medios no rehabilita Poisson como distribución. <span class="math inline">\(\alpha\)</span> cambia la forma condicional y, con ella, las preguntas de riesgo y cola. NB2 tampoco es una elección universal: las ausencias están acotadas por el total de clases y otra aplicación podría modelar explícitamente ese denominador.</p>
-</section>
-<section id="nivel-3-pmlqmle-conservar-la-media" class="level2">
-<h2 class="anchored" data-anchor-id="nivel-3-pmlqmle-conservar-la-media">Nivel 3 — PML/QMLE: conservar la media</h2>
-<p>La tercera aplicación da el paso final: abandonar la defensa de una distribución completa. En 2.260 observaciones firma-año, el número medio de patentes es 22,9, la varianza alcanza 4.868,7 y el máximo es 906. La sobredispersión extrema vuelve poco creíble interpretar probabilidades Poisson.</p>
-<p>Poisson se usa aquí como PML/QMLE para modelar <span class="math inline">\(E(Y\mid X)\)</span> y la inferencia se clusteriza por firma. Esto habilita razones de medias, elasticidades y efectos sobre la media; no habilita <span class="math inline">\(P(Y=k\mid X)\)</span> ni colas Poisson.</p>
-<p>La especificación separa dos márgenes de I+D:</p>
-<ul>
-<li>el <strong>margen extensivo</strong> compara no realizar I+D con realizar un monto positivo bajo de referencia;</li>
-<li>el <strong>margen intensivo</strong> compara niveles de gasto entre firmas que ya realizan I+D.</li>
-</ul>
-<div class="quick-grid">
-<section id="margen-extensivo" class="level3 section-box">
-<h3 class="anchored" data-anchor-id="margen-extensivo">Margen extensivo</h3>
-<p>Pasar de no realizar I+D a un monto positivo bajo se asocia con <strong>0,841 patentes adicionales</strong> al promediar cambios individuales, pero la estimación es imprecisa (<strong>p = 0,447</strong>).</p>
-</section>
-<section id="margen-intensivo" class="level3 section-box">
-<h3 class="anchored" data-anchor-id="margen-intensivo">Margen intensivo</h3>
-<p>Entre firmas con I+D positiva, la elasticidad de la media es <strong>0,611</strong> (<strong>p &lt; 0,001</strong>). Un aumento de 1% en I+D se asocia aproximadamente con 0,611% más patentes esperadas.</p>
-</section>
-</div>
-<div class="t4b-visual">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../assets/t04b_pml_media_patentes.svg" class="t4b-visual-img img-fluid figure-img" style="width:100.0%" alt="Medias observadas y predichas de patentes por deciles bajo Poisson PML, con escalas separadas para los deciles bajos y altos"></p>
-<figcaption>La calibración de la media se presenta con una escala ampliada para los deciles 1 a 8 y otra para los deciles 9 y 10. Esto evita que el último decil oculte el ajuste del resto y mantiene visibles los valores observados y predichos originales.</figcaption>
-</figure>
-</div>
-</div>
-<p>La calibración agrupada evalúa únicamente la media. La coincidencia estrecha en varios deciles —incluido el décimo— no autoriza a reconstruir una distribución Poisson ni prueba que la forma exponencial sea correcta en todos los perfiles. Es evidencia alineada con el objeto PML, no una validación distribucional.</p>
-</section>
-<section id="objeto-de-decisión" class="level2">
-<h2 class="anchored" data-anchor-id="objeto-de-decisión">Objeto de decisión</h2>
-<div class="table-box">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Compromiso</th>
-<th>Cuándo se justifica</th>
-<th>Lectura que T4B conserva</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Poisson completo</td>
-<td>La pregunta requiere probabilidades y la forma distribucional es defendible</td>
-<td>En fecundidad, permite pasar de la media a probabilidades de conteos</td>
-</tr>
-<tr class="even">
-<td>Binomial negativa NB2</td>
-<td>La sobredispersión exige flexibilizar la distribución</td>
-<td>En ausencias, medias próximas ocultan diferencias sustantivas en las colas</td>
-</tr>
-<tr class="odd">
-<td>Poisson PML/QMLE</td>
-<td>Interesa la media condicional, no toda la distribución</td>
-<td>En patentes, se retiene la elasticidad intensiva de I+D de 0,611 con inferencia clusterizada</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>La progresión es <strong>distribución completa → distribución más flexible → media condicional</strong>. No constituye una receta automática: NB2 sigue imponiendo una familia distribucional y PML depende de que la media exponencial esté correctamente especificada.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>La frontera de la robustez
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La matriz robusta o clusterizada corrige la inferencia frente a una varianza mal especificada. No repara una media condicional equivocada.</p>
-</div>
+<div class="hero-banner hero-banner--business-problems">
+<div class="hero-banner__content">
+<p><span class="hero-banner__kicker">Preguntas para decidir</span></p>
+<section id="problemas-de-negocio" class="level1">
+<h1>Problemas de negocio</h1>
+<div class="hero-banner__lead">
+<p>Estos son ejemplos de preguntas reales en las que los datos pueden ayudar a comprender una situación, anticipar escenarios y evaluar alternativas. Cada caso parte de una decisión empresarial concreta y de la incertidumbre que es necesario reducir para tomarla mejor.</p>
 </div>
 </section>
-<section id="conclusión" class="level2">
-<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
-<p>Los modelos de conteo no se eligen solo porque el resultado tome enteros no negativos. La decisión relevante es cuánto de la distribución necesita la pregunta y cuánto puede sostener la evidencia.</p>
-<p>Poisson completo es útil cuando importan probabilidades y la forma distribucional resulta defendible. NB2 permite conservar una lectura distribucional cuando la equidispersión es demasiado rígida. PML/QMLE es la opción más austera cuando el interés está en la media condicional: en patentes preserva una elasticidad intensiva de I+D de 0,611, pero deja fuera probabilidades Poisson y mantiene impreciso el margen extensivo. El análisis no corona un estimador universal; ordena qué afirmación corresponde a cada nivel de compromiso.</p>
+</div>
+</div>
+<div class="business-problems-grid">
+<section id="cuánto-stock-deberíamos-tener-si-quedarse-cortos-cuesta-más-que-excedernos" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="cuánto-stock-deberíamos-tener-si-quedarse-cortos-cuesta-más-que-excedernos">¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?</h2>
+<p class="business-card__context">
+La empresa enfrenta quiebres de stock en algunos productos y acumulación en otros. Al planificar cada reposición, debe equilibrar el costo de perder ventas o clientes frente al costo de almacenar, financiar o liquidar excedentes.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> cantidad a pedir por producto y período, dadas las restricciones operativas.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--timeseries">Series temporales</span> <span class="method-chip method-chip--econometrics">Econometría</span> <span class="method-chip method-chip--optimization">Optimización</span></p>
+</div>
+</section>
+<section id="la-automatización-aumentó-realmente-la-productividad-en-las-plantas" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="la-automatización-aumentó-realmente-la-productividad-en-las-plantas">¿La automatización aumentó realmente la productividad en las plantas?</h2>
+<p class="business-card__context">
+La tecnología se incorporó en distintas plantas y en momentos diferentes, mientras la productividad también pudo cambiar por otras razones. La empresa necesita distinguir el efecto de la automatización de las diferencias previas y de los cambios generales del período.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> continuar, ampliar o revisar el despliegue de la automatización.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--causal">Inferencia causal</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="qué-clientes-tienen-mayor-riesgo-de-mora" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="qué-clientes-tienen-mayor-riesgo-de-mora">¿Qué clientes tienen mayor riesgo de mora?</h2>
+<p class="business-card__context">
+La empresa debe anticipar qué nuevos clientes podrían incumplir, sabiendo que aprobar un caso de alto riesgo y rechazar a un buen cliente generan pérdidas diferentes. Además de ordenar riesgos, necesita estimaciones confiables para los perfiles que evaluará en el futuro.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> criterios de aprobación, límites y acciones preventivas según el nivel de riesgo.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--ml">Machine Learning</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="a-qué-precio-deberíamos-lanzar-un-producto-nuevo" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="a-qué-precio-deberíamos-lanzar-un-producto-nuevo">¿A qué precio deberíamos lanzar un producto nuevo?</h2>
+<p class="business-card__context">
+La empresa conoce sus costos, el posicionamiento buscado y algunos productos comparables, pero todavía no tiene un historial propio de ventas. Necesita fijar un precio inicial defendible y aprender con rapidez de la respuesta del mercado.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> precio de lanzamiento y estrategia de actualización.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--econometrics">Econometría</span> <span class="method-chip method-chip--optimization">Optimización</span></p>
+</div>
+</section>
+<section id="qué-plantas-son-realmente-menos-productivas-o-eficientes" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="qué-plantas-son-realmente-menos-productivas-o-eficientes">¿Qué plantas son realmente menos productivas o eficientes?</h2>
+<p class="business-card__context">
+Algunas plantas producen menos por trabajador, pero también difieren en escala, capital, insumos y condiciones de operación. Antes de comparar desempeños, la empresa necesita separar esas diferencias y precisar qué significa, en su contexto, “funcionar peor”.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> dónde profundizar el diagnóstico y priorizar acciones de mejora.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="existen-grupos-de-clientes-suficientemente-distintos-como-para-tratarlos-de-forma-diferente" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="existen-grupos-de-clientes-suficientemente-distintos-como-para-tratarlos-de-forma-diferente">¿Existen grupos de clientes suficientemente distintos como para tratarlos de forma diferente?</h2>
+<p class="business-card__context">
+La empresa observa comportamientos de compra, canales, antigüedad y niveles de gasto, pero no dispone de categorías naturales de clientes. Quiere saber si hay segmentos estables, comprensibles y útiles, no solamente agrupaciones estadísticas.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> diseñar propuestas, comunicaciones o niveles de servicio diferenciados.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--ml">Machine Learning</span></p>
+</div>
+</section>
+<section id="si-subimos-el-precio-cuánto-caerán-realmente-las-ventas" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="si-subimos-el-precio-cuánto-caerán-realmente-las-ventas">Si subimos el precio, ¿cuánto caerán realmente las ventas?</h2>
+<p class="business-card__context">
+Los precios, las promociones, la competencia y la demanda cambian al mismo tiempo, por lo que una caída observada en ventas no revela por sí sola qué la causó. La empresa necesita aislar la respuesta atribuible al precio antes de proyectar ingresos y márgenes.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> ajuste de precio para un producto existente y margen objetivo.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--econometrics">Econometría</span> <span class="method-chip method-chip--causal">Inferencia causal</span> <span class="method-chip method-chip--optimization">Optimización</span></p>
+</div>
+</section>
+<section id="qué-clientes-tienen-mayor-riesgo-de-irse-y-cuánto-tiempo-podrían-permanecer" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="qué-clientes-tienen-mayor-riesgo-de-irse-y-cuánto-tiempo-podrían-permanecer">¿Qué clientes tienen mayor riesgo de irse y cuánto tiempo podrían permanecer?</h2>
+<p class="business-card__context">
+Algunos clientes ya abandonaron y otros continúan activos cuando se cierra la información disponible. La empresa quiere reconocer señales tempranas de salida sin perder de vista que el momento probable del abandono también importa.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> a quién contactar, cuándo hacerlo y cómo priorizar las acciones de retención.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--ml">Machine Learning</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="en-qué-centros-logísticos-conviene-ampliar-la-capacidad" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="en-qué-centros-logísticos-conviene-ampliar-la-capacidad">¿En qué centros logísticos conviene ampliar la capacidad?</h2>
+<p class="business-card__context">
+Algunos centros concentran retrasos, pero no necesariamente son aquellos donde una ampliación produciría la mayor mejora. Con un presupuesto limitado, la empresa debe combinar riesgo operativo, efecto esperable de la inversión, costos y restricciones.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> cartera de ampliaciones y asignación del presupuesto entre centros.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--ml">Machine Learning</span> <span class="method-chip method-chip--causal">Inferencia causal</span> <span class="method-chip method-chip--optimization">Optimización</span></p>
+</div>
+</section>
+<section id="qué-proveedores-ofrecen-mejor-desempeño-si-solo-observamos-resultados-de-los-que-contratamos" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="qué-proveedores-ofrecen-mejor-desempeño-si-solo-observamos-resultados-de-los-que-contratamos">¿Qué proveedores ofrecen mejor desempeño si solo observamos resultados de los que contratamos?</h2>
+<p class="business-card__context">
+La empresa conoce las ofertas y características de todos los candidatos, pero solo ve la calidad posterior de quienes recibieron contratos. Esa selección puede hacer que el desempeño observado no represente al conjunto de proveedores disponibles.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> criterios de adjudicación y conformación de una cartera de proveedores.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="cómo-pueden-evolucionar-nuestras-ventas-durante-los-próximos-1224-meses" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="cómo-pueden-evolucionar-nuestras-ventas-durante-los-próximos-1224-meses">¿Cómo pueden evolucionar nuestras ventas durante los próximos 12–24 meses?</h2>
+<p class="business-card__context">
+Las ventas se mueven con su propia historia y con variables como la actividad, el crédito, las tasas o los precios. Finanzas necesita escenarios que reconozcan esas relaciones y hagan visible la incertidumbre del horizonte.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> metas, presupuesto, compras y capacidad para el próximo año o dos.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--timeseries">Series temporales</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="la-campaña-funcionó-o-elegimos-clientes-que-ya-iban-a-comprar-más" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="la-campaña-funcionó-o-elegimos-clientes-que-ya-iban-a-comprar-más">¿La campaña funcionó o elegimos clientes que ya iban a comprar más?</h2>
+<p class="business-card__context">
+Marketing dirigió la acción a los clientes que parecían más prometedores y luego observó que compraron más. El desafío es distinguir el aporte de la campaña de las características que motivaron esa selección inicial.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> mantener, escalar o rediseñar la campaña y su público objetivo.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--causal">Inferencia causal</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="cuánta-demanda-estamos-perdiendo-cuando-un-producto-se-queda-sin-stock" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="cuánta-demanda-estamos-perdiendo-cuando-un-producto-se-queda-sin-stock">¿Cuánta demanda estamos perdiendo cuando un producto se queda sin stock?</h2>
+<p class="business-card__context">
+Cuando el inventario se agota, las ventas registradas dejan de mostrar cuánto habrían comprado los clientes con disponibilidad normal. Esa demanda no observada puede llevar a subestimar el mercado y a repetir el faltante en la siguiente planificación.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> corregir la previsión de demanda y ajustar la reposición de los productos afectados.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--econometrics">Econometría</span> <span class="method-chip method-chip--timeseries">Series temporales</span></p>
+</div>
+</section>
+<section id="funcionó-el-programa-que-se-asignó-a-partir-de-un-determinado-puntaje" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="funcionó-el-programa-que-se-asignó-a-partir-de-un-determinado-puntaje">¿Funcionó el programa que se asignó a partir de un determinado puntaje?</h2>
+<p class="business-card__context">
+La empresa aplicó un programa a quienes quedaron de un lado de un umbral de elegibilidad. Las personas o unidades con puntajes muy próximos al límite pueden ofrecer una comparación especialmente informativa, aunque sus conclusiones no necesariamente representan a todos los participantes.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> sostener o ajustar el programa y revisar su regla de acceso.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--causal">Inferencia causal</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+<section id="cuánto-gastará-cada-cliente-en-los-próximos-meses" class="level2 business-card">
+<h2 class="anchored" data-anchor-id="cuánto-gastará-cada-cliente-en-los-próximos-meses">¿Cuánto gastará cada cliente en los próximos meses?</h2>
+<p class="business-card__context">
+El historial de compras, la frecuencia, el canal y la antigüedad ofrecen señales sobre el gasto futuro, pero los patrones varían mucho entre clientes. La empresa necesita anticipar ese gasto de forma confiable también en períodos futuros y ante cambios de comportamiento.
+</p>
+<p class="business-card__decision">
+<strong>Decisión:</strong> priorización comercial, presupuesto de atención y acciones según el valor esperado.
+</p>
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<p><span class="method-chip method-chip--ml">Machine Learning</span> <span class="method-chip method-chip--econometrics">Econometría</span></p>
+</div>
+</section>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -835,7 +752,7 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+<p><a href="./creditos-imagenes.html">Créditos de imágenes</a></p>
 </div>
   </div>
 </footer>
@@ -843,5 +760,5 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
 
 
 
-<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

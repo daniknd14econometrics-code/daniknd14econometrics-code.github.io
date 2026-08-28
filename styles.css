@@ -41,6 +41,7 @@ body:has(.hero-banner--home) main.content {
 
 body:has(.hero-banner--causalidad-general) main.content,
 body:has(.hero-banner--ml) main.content,
+body:has(.hero-banner--business-problems) main.content,
 body:has(.hero-banner--sobre-mi) main.content {
   grid-column: screen-start / screen-end;
   justify-self: center;
@@ -163,6 +164,13 @@ body:has(.hero-banner) .hero-banner__actions {
   flex-wrap: wrap;
   gap: 0.65rem;
   margin-top: 0.4rem;
+}
+
+body:has(.hero-banner--home) .hero-banner__actions > p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0;
 }
 
 .button-primary,
@@ -354,36 +362,6 @@ body:has(.hero-banner--home) .work-step p {
   line-height: 1.5;
 }
 
-body:has(.hero-banner--home) .problem-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(4, auto);
-  grid-auto-flow: column;
-  column-gap: clamp(2rem, 5vw, 5rem);
-  margin: 1rem 0 2.5rem;
-}
-
-body:has(.hero-banner--home) .problem-item {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  padding: 0.8rem 0;
-  border-top: 1px solid var(--line);
-  color: var(--text);
-  font-size: 0.92rem;
-  font-weight: 650;
-  line-height: 1.35;
-}
-
-body:has(.hero-banner--home) .problem-item:nth-child(4),
-body:has(.hero-banner--home) .problem-item:last-child {
-  border-bottom: 1px solid var(--line);
-}
-
-body:has(.hero-banner--home) .problem-item p {
-  margin: 0;
-}
-
 body:has(.hero-banner--home) .portfolio-note {
   margin-top: 2.25rem;
   padding: 1rem 1.1rem;
@@ -545,25 +523,13 @@ body:has(.hero-banner) .profile-card h3 {
     grid-template-columns: 1fr;
   }
 
-  body:has(.hero-banner--home) .work-grid,
-  body:has(.hero-banner--home) .problem-grid {
+  body:has(.hero-banner--home) .work-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 560px) {
-  body:has(.hero-banner--home) .work-grid,
-  body:has(.hero-banner--home) .problem-grid {
+  body:has(.hero-banner--home) .work-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-
-  body:has(.hero-banner--home) .problem-grid {
-    grid-template-rows: none;
-    grid-auto-flow: row;
-  }
-
-  body:has(.hero-banner--home) .problem-item:nth-child(4) {
-    border-bottom: 0;
-  }
-
 }

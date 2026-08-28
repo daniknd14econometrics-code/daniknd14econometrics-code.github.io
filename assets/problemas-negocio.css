@@ -1,0 +1,192 @@
+body:has(.hero-banner--business-problems),
+body:has(.business-teaser) {
+  --chip-econometrics-bg: #e7eff9;
+  --chip-econometrics-border: #c7d8ec;
+  --chip-econometrics-text: #244f7d;
+  --chip-causal-bg: #fae9e7;
+  --chip-causal-border: #efc9c5;
+  --chip-causal-text: #853f3b;
+  --chip-ml-bg: #e1f2ee;
+  --chip-ml-border: #bddfd7;
+  --chip-ml-text: #24665f;
+  --chip-timeseries-bg: #eeeafb;
+  --chip-timeseries-border: #d5cef0;
+  --chip-timeseries-text: #594c83;
+  --chip-optimization-bg: #f7edda;
+  --chip-optimization-border: #e7d3aa;
+  --chip-optimization-text: #74531d;
+}
+
+body:has(.hero-banner--business-problems) .hero-banner--business-problems {
+  grid-template-columns: minmax(0, 1fr);
+  border-left: 4px solid var(--accent);
+  background:
+    linear-gradient(135deg, rgba(234, 241, 250, 0.88), rgba(255, 255, 255, 0.96) 62%),
+    var(--surface);
+}
+
+body:has(.hero-banner--business-problems) .hero-banner--business-problems .hero-banner__lead {
+  max-width: 78ch;
+}
+
+.business-problems-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.business-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1rem, 1.5vw, 1.25rem);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--surface), #fbfcfe);
+}
+
+body:has(.hero-banner--business-problems) .business-card h2 {
+  margin: 0 0 0.75rem;
+  color: var(--text) !important;
+  font-size: clamp(1.12rem, 1.4vw, 1.32rem);
+  line-height: 1.28;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.business-card__context {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.58;
+}
+
+.business-card__decision {
+  margin: auto 0 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  color: var(--text);
+  font-size: 0.93rem;
+  line-height: 1.48;
+}
+
+.business-card__decision strong {
+  color: var(--brand);
+}
+
+.method-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  align-items: center;
+}
+
+.method-chips > p {
+  display: contents;
+}
+
+.method-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0.24rem 0.58rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.method-chip--econometrics {
+  border-color: var(--chip-econometrics-border);
+  background: var(--chip-econometrics-bg);
+  color: var(--chip-econometrics-text);
+}
+
+.method-chip--causal {
+  border-color: var(--chip-causal-border);
+  background: var(--chip-causal-bg);
+  color: var(--chip-causal-text);
+}
+
+.method-chip--ml {
+  border-color: var(--chip-ml-border);
+  background: var(--chip-ml-bg);
+  color: var(--chip-ml-text);
+}
+
+.method-chip--timeseries {
+  border-color: var(--chip-timeseries-border);
+  background: var(--chip-timeseries-bg);
+  color: var(--chip-timeseries-text);
+}
+
+.method-chip--optimization {
+  border-color: var(--chip-optimization-border);
+  background: var(--chip-optimization-bg);
+  color: var(--chip-optimization-text);
+}
+
+.business-teaser {
+  margin: 1rem 0 2.5rem;
+}
+
+.business-teaser-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.business-teaser-card {
+  display: flex;
+  min-width: 0;
+  min-height: 142px;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--surface), #fbfcfe);
+}
+
+body:has(.hero-banner--home) .business-teaser-card h3 {
+  margin: 0 0 0.9rem;
+  color: var(--text) !important;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.business-teaser-card .method-chips {
+  margin-top: auto;
+}
+
+@media (max-width: 900px) {
+  .business-teaser-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .business-teaser-card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .business-problems-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .business-card {
+    padding: 0.95rem;
+  }
+
+  .method-chip {
+    white-space: normal;
+  }
+}
