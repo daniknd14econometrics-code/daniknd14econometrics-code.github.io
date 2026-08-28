@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+
 :root {
   --piece-page: #f2f4f7;
   --piece-surface: #ffffff;
@@ -375,4 +377,74 @@ body,
     grid-template-columns: 1fr;
     gap: 0.45rem;
   }
+}
+
+/* Definitive typography for portfolio pieces.
+   This stylesheet is loaded only by substantive pages under piezas/. */
+#title-block-header,
+#quarto-document-content,
+#quarto-margin-sidebar #TOC {
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-synthesis: none;
+}
+
+#quarto-document-content {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+#title-block-header .title,
+#quarto-document-content h1,
+#quarto-document-content h2,
+#quarto-document-content h3 {
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+}
+
+#title-block-header .subtitle {
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+}
+
+#title-block-header .quarto-title-meta-heading,
+#title-block-header .quarto-title-meta-contents,
+#quarto-document-content .metric-label,
+#quarto-document-content .badge {
+  font-weight: 500;
+}
+
+#title-block-header .quarto-title-meta-heading,
+#title-block-header .quarto-title-meta-contents,
+#title-block-header .quarto-title-meta-contents p {
+  font-weight: 500 !important;
+}
+
+#quarto-document-content .hero-title,
+#quarto-document-content .metric-value,
+#quarto-document-content strong,
+#quarto-document-content b,
+#quarto-document-content table th,
+#quarto-document-content .callout-title,
+#quarto-margin-sidebar #TOC #toc-title {
+  font-weight: 600;
+}
+
+#quarto-document-content .hero-sub,
+#quarto-document-content .metric-note,
+#quarto-document-content .small-note,
+#quarto-document-content .callout-body,
+#quarto-document-content table td,
+#quarto-document-content figcaption,
+#quarto-margin-sidebar #TOC .nav-link {
+  font-weight: 400;
+}
+
+#quarto-document-content .hero-sub,
+#quarto-document-content .metric-note,
+#quarto-document-content .small-note,
+#quarto-document-content .callout-body,
+#quarto-document-content table th,
+#quarto-document-content table td,
+#quarto-document-content figcaption {
+  line-height: 1.5;
 }
