@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 570" role="img" aria-labelledby="title desc">
+  <title id="title">Coeficientes estimados del impuesto a la cerveza según estimador de panel</title>
+  <desc id="desc">Gráfico de coeficientes e intervalos de confianza del 95 por ciento para modelos pooled con efectos de año, between, efectos aleatorios con efectos de año y efectos fijos de estado y año.</desc>
+  <rect width="1100" height="570" rx="24" fill="#f7fafb"/>
+  <text x="54" y="55" fill="#18344d" font-family="Arial, sans-serif" font-size="27" font-weight="700">Una variable, cuatro comparaciones econométricas</text>
+  <text x="54" y="85" fill="#5d7180" font-family="Arial, sans-serif" font-size="16">Coeficiente de impuesto a la cerveza e intervalo de confianza del 95%</text>
+
+  <g stroke="#dfe7eb" stroke-width="1">
+    <line x1="330" y1="120" x2="330" y2="455"/><line x1="483" y1="120" x2="483" y2="455"/><line x1="636" y1="120" x2="636" y2="455"/><line x1="789" y1="120" x2="789" y2="455"/><line x1="942" y1="120" x2="942" y2="455"/>
+    <line x1="330" y1="170" x2="942" y2="170"/><line x1="330" y1="255" x2="942" y2="255"/><line x1="330" y1="340" x2="942" y2="340"/><line x1="330" y1="425" x2="942" y2="425"/>
+  </g>
+  <line x1="789" y1="112" x2="789" y2="465" stroke="#718694" stroke-width="2" stroke-dasharray="6 6"/>
+
+  <g fill="#263f52" font-family="Arial, sans-serif" font-size="16">
+    <text x="302" y="176" text-anchor="end">Pooled + año</text>
+    <text x="302" y="261" text-anchor="end">Between</text>
+    <text x="302" y="346" text-anchor="end">Efectos aleatorios + año</text>
+    <text x="302" y="431" text-anchor="end" font-weight="700">Efectos fijos: estado + año</text>
+  </g>
+
+  <g stroke="#225f7d" stroke-width="4" stroke-linecap="round" fill="#225f7d">
+    <line x1="741" y1="170" x2="890" y2="170"/><line x1="695" y1="255" x2="888" y2="255"/><line x1="732" y1="340" x2="908" y2="340"/>
+    <circle cx="815" cy="170" r="7"/><circle cx="791" cy="255" r="7"/><circle cx="820" cy="340" r="7"/>
+  </g>
+  <g stroke="#b34a66" stroke-width="5" stroke-linecap="round" fill="#b34a66">
+    <line x1="339" y1="425" x2="868" y2="425"/><circle cx="604" cy="425" r="8"/>
+  </g>
+
+  <g fill="#5d7180" font-family="Arial, sans-serif" font-size="13">
+    <text x="330" y="490" text-anchor="middle">−1,2</text><text x="483" y="490" text-anchor="middle">−0,8</text><text x="636" y="490" text-anchor="middle">−0,4</text><text x="789" y="490" text-anchor="middle">0</text><text x="942" y="490" text-anchor="middle">0,4</text>
+    <text x="636" y="520" text-anchor="middle">Cambio estimado en la tasa de accidentes</text>
+  </g>
+  <g fill="#263f52" font-family="Arial, sans-serif" font-size="14" font-weight="700">
+    <text x="965" y="176">0,069</text><text x="965" y="261">0,006</text><text x="965" y="346">0,081</text><text x="965" y="431" fill="#9e3854">−0,485</text>
+  </g>
+  <text x="54" y="552" fill="#5d7180" font-family="Arial, sans-serif" font-size="13">El signo cambia con efectos fijos, pero todos los intervalos incluyen cero.</text>
+</svg>

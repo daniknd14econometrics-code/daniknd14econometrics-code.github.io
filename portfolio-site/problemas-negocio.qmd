@@ -1,0 +1,216 @@
+---
+title: "Problemas de negocio"
+format:
+  html:
+    title-block-style: none
+    css: assets/problemas-negocio.css
+---
+
+::: {.hero-banner .hero-banner--business-problems}
+::: {.hero-banner__content}
+<span class="hero-banner__kicker">Preguntas para decidir</span>
+
+# Problemas de negocio
+
+::: {.hero-banner__lead}
+Estos son ejemplos de preguntas reales en las que los datos pueden ayudar a comprender una situación, anticipar escenarios y evaluar alternativas. Cada caso parte de una decisión empresarial concreta y de la incertidumbre que es necesario reducir para tomarla mejor.
+:::
+:::
+:::
+
+::: {.business-problems-grid}
+::: {.business-card}
+## ¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?
+
+<p class="business-card__context">La empresa enfrenta quiebres de stock en algunos productos y acumulación en otros. Al planificar cada reposición, debe equilibrar el costo de perder ventas o clientes frente al costo de almacenar, financiar o liquidar excedentes.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> cantidad a pedir por producto y período, dadas las restricciones operativas.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--timeseries">Series temporales</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+<span class="method-chip method-chip--optimization">Optimización</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿La automatización aumentó realmente la productividad en las plantas?
+
+<p class="business-card__context">La tecnología se incorporó en distintas plantas y en momentos diferentes, mientras la productividad también pudo cambiar por otras razones. La empresa necesita distinguir el efecto de la automatización de las diferencias previas y de los cambios generales del período.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> continuar, ampliar o revisar el despliegue de la automatización.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--causal">Inferencia causal</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Qué clientes tienen mayor riesgo de mora?
+
+<p class="business-card__context">La empresa debe anticipar qué nuevos clientes podrían incumplir, sabiendo que aprobar un caso de alto riesgo y rechazar a un buen cliente generan pérdidas diferentes. Además de ordenar riesgos, necesita estimaciones confiables para los perfiles que evaluará en el futuro.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> criterios de aprobación, límites y acciones preventivas según el nivel de riesgo.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--ml">Machine Learning</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿A qué precio deberíamos lanzar un producto nuevo?
+
+<p class="business-card__context">La empresa conoce sus costos, el posicionamiento buscado y algunos productos comparables, pero todavía no tiene un historial propio de ventas. Necesita fijar un precio inicial defendible y aprender con rapidez de la respuesta del mercado.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> precio de lanzamiento y estrategia de actualización.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--econometrics">Econometría</span>
+<span class="method-chip method-chip--optimization">Optimización</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Qué plantas son realmente menos productivas o eficientes?
+
+<p class="business-card__context">Algunas plantas producen menos por trabajador, pero también difieren en escala, capital, insumos y condiciones de operación. Antes de comparar desempeños, la empresa necesita separar esas diferencias y precisar qué significa, en su contexto, “funcionar peor”.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> dónde profundizar el diagnóstico y priorizar acciones de mejora.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Existen grupos de clientes suficientemente distintos como para tratarlos de forma diferente?
+
+<p class="business-card__context">La empresa observa comportamientos de compra, canales, antigüedad y niveles de gasto, pero no dispone de categorías naturales de clientes. Quiere saber si hay segmentos estables, comprensibles y útiles, no solamente agrupaciones estadísticas.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> diseñar propuestas, comunicaciones o niveles de servicio diferenciados.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--ml">Machine Learning</span>
+</div>
+:::
+
+::: {.business-card}
+## Si subimos el precio, ¿cuánto caerán realmente las ventas?
+
+<p class="business-card__context">Los precios, las promociones, la competencia y la demanda cambian al mismo tiempo, por lo que una caída observada en ventas no revela por sí sola qué la causó. La empresa necesita aislar la respuesta atribuible al precio antes de proyectar ingresos y márgenes.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> ajuste de precio para un producto existente y margen objetivo.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--econometrics">Econometría</span>
+<span class="method-chip method-chip--causal">Inferencia causal</span>
+<span class="method-chip method-chip--optimization">Optimización</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Qué clientes tienen mayor riesgo de irse y cuánto tiempo podrían permanecer?
+
+<p class="business-card__context">Algunos clientes ya abandonaron y otros continúan activos cuando se cierra la información disponible. La empresa quiere reconocer señales tempranas de salida sin perder de vista que el momento probable del abandono también importa.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> a quién contactar, cuándo hacerlo y cómo priorizar las acciones de retención.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--ml">Machine Learning</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿En qué centros logísticos conviene ampliar la capacidad?
+
+<p class="business-card__context">Algunos centros concentran retrasos, pero no necesariamente son aquellos donde una ampliación produciría la mayor mejora. Con un presupuesto limitado, la empresa debe combinar riesgo operativo, efecto esperable de la inversión, costos y restricciones.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> cartera de ampliaciones y asignación del presupuesto entre centros.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--ml">Machine Learning</span>
+<span class="method-chip method-chip--causal">Inferencia causal</span>
+<span class="method-chip method-chip--optimization">Optimización</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Qué proveedores ofrecen mejor desempeño si solo observamos resultados de los que contratamos?
+
+<p class="business-card__context">La empresa conoce las ofertas y características de todos los candidatos, pero solo ve la calidad posterior de quienes recibieron contratos. Esa selección puede hacer que el desempeño observado no represente al conjunto de proveedores disponibles.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> criterios de adjudicación y conformación de una cartera de proveedores.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Cómo pueden evolucionar nuestras ventas durante los próximos 12–24 meses?
+
+<p class="business-card__context">Las ventas se mueven con su propia historia y con variables como la actividad, el crédito, las tasas o los precios. Finanzas necesita escenarios que reconozcan esas relaciones y hagan visible la incertidumbre del horizonte.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> metas, presupuesto, compras y capacidad para el próximo año o dos.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--timeseries">Series temporales</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿La campaña funcionó o elegimos clientes que ya iban a comprar más?
+
+<p class="business-card__context">Marketing dirigió la acción a los clientes que parecían más prometedores y luego observó que compraron más. El desafío es distinguir el aporte de la campaña de las características que motivaron esa selección inicial.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> mantener, escalar o rediseñar la campaña y su público objetivo.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--causal">Inferencia causal</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Cuánta demanda estamos perdiendo cuando un producto se queda sin stock?
+
+<p class="business-card__context">Cuando el inventario se agota, las ventas registradas dejan de mostrar cuánto habrían comprado los clientes con disponibilidad normal. Esa demanda no observada puede llevar a subestimar el mercado y a repetir el faltante en la siguiente planificación.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> corregir la previsión de demanda y ajustar la reposición de los productos afectados.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--econometrics">Econometría</span>
+<span class="method-chip method-chip--timeseries">Series temporales</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Funcionó el programa que se asignó a partir de un determinado puntaje?
+
+<p class="business-card__context">La empresa aplicó un programa a quienes quedaron de un lado de un umbral de elegibilidad. Las personas o unidades con puntajes muy próximos al límite pueden ofrecer una comparación especialmente informativa, aunque sus conclusiones no necesariamente representan a todos los participantes.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> sostener o ajustar el programa y revisar su regla de acceso.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--causal">Inferencia causal</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-card}
+## ¿Cuánto gastará cada cliente en los próximos meses?
+
+<p class="business-card__context">El historial de compras, la frecuencia, el canal y la antigüedad ofrecen señales sobre el gasto futuro, pero los patrones varían mucho entre clientes. La empresa necesita anticipar ese gasto de forma confiable también en períodos futuros y ante cambios de comportamiento.</p>
+
+<p class="business-card__decision"><strong>Decisión:</strong> priorización comercial, presupuesto de atención y acciones según el valor esperado.</p>
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--ml">Machine Learning</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+:::

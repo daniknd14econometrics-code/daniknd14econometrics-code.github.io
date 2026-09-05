@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Densidad del log ingreso por año</title>
+  <desc id="desc">Densidades marginales ponderadas del log ingreso real en Montevideo para 2000, 2005, 2010 y 2015.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 14px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.axis{stroke:#9aabba;stroke-width:1.3}.grid{stroke:#e6edf2;stroke-width:1}.y00{stroke:#536b82;stroke-width:3;fill:none}.y05{stroke:#b23a48;stroke-width:4;fill:none}.y10{stroke:#0b7285;stroke-width:3;fill:none}.y15{stroke:#d97706;stroke-width:4;fill:none}.mark05{stroke:#b23a48;stroke-width:1.5;stroke-dasharray:5 5}.mark15{stroke:#d97706;stroke-width:1.5;stroke-dasharray:5 5}.pill{fill:#fff7e6;stroke:#f0cf91}.note{font:700 12px system-ui,sans-serif;fill:#9a5204}
+  </style>
+  <rect class="bg" width="960" height="520" rx="18"/>
+  <text class="head" x="42" y="44">La curva completa muestra caída y recuperación distributiva</text>
+  <text class="sub" x="42" y="69">Montevideo · ingresos reales · cortes transversales repetidos · h=0,20</text>
+  <rect class="panel" x="38" y="94" width="884" height="374" rx="15"/>
+  <line class="axis" x1="90" y1="407" x2="874" y2="407"/><line class="axis" x1="90" y1="137" x2="90" y2="407"/>
+  <line class="grid" x1="90" y1="317" x2="874" y2="317"/><line class="grid" x1="90" y1="227" x2="874" y2="227"/>
+  <path class="y00" d="M112 407 C220 407 290 397 339 349 C382 307 405 230 447 177 C473 144 501 135 523 156 C555 187 564 264 595 326 C624 382 666 405 760 407"/>
+  <path class="y05" d="M112 407 C202 407 263 390 315 337 C362 289 383 207 421 164 C445 137 470 141 491 174 C519 217 525 293 552 347 C578 397 618 407 725 407"/>
+  <path class="y10" d="M112 407 C218 407 286 395 336 347 C378 307 408 244 448 196 C478 160 509 151 535 172 C565 196 577 267 607 329 C633 381 676 404 770 407"/>
+  <path class="y15" d="M112 407 C224 407 300 397 350 354 C398 313 429 244 470 187 C499 147 529 126 552 145 C583 171 594 250 624 317 C650 375 693 404 785 407"/>
+  <line class="mark05" x1="454" y1="145" x2="454" y2="407"/><line class="mark15" x1="552" y1="145" x2="552" y2="407"/>
+  <text class="small" x="433" y="431">9,167</text><text class="small" x="534" y="431">9,685</text>
+  <text class="small" x="85" y="430">7</text><text class="small" x="470" y="450">Log ingreso real</text><text class="small" x="856" y="430">13</text>
+  <line class="y00" x1="700" y1="160" x2="730" y2="160"/><text class="small" x="740" y="164">2000</text><line class="y05" x1="700" y1="184" x2="730" y2="184"/><text class="small" x="740" y="188">2005</text><line class="y10" x1="700" y1="208" x2="730" y2="208"/><text class="small" x="740" y="212">2010</text><line class="y15" x1="700" y1="232" x2="730" y2="232"/><text class="small" x="740" y="236">2015</text>
+  <rect class="pill" x="115" y="157" width="228" height="70" rx="11"/><text class="note" x="132" y="182">2005 se desplaza a la izquierda</text><text class="small" x="132" y="203">2015 supera la mediana de 2000</text>
+  <text class="small" x="42" y="499">Las curvas describen distribuciones poblacionales distintas; no siguen hogares individuales.</text>
+</svg>

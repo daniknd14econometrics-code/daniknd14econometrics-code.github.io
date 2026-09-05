@@ -3,65 +3,150 @@ title: "Inicio"
 format:
   html:
     title-block-style: none
+    css: assets/problemas-negocio.css
 ---
 
 ::: {.hero-banner .hero-banner--home}
 ::: {.hero-banner__content}
-<span class="hero-banner__kicker">Portfolio profesional</span>
+<span class="hero-banner__kicker">Daniel Méndez</span>
 
-# Econometría aplicada con enfoque riguroso y lectura ejecutiva
+# Economista cuantitativo
 
 ::: {.hero-banner__lead}
-Este sitio organiza piezas de econometría, causalidad y machine learning para presentar preguntas económicas reales, estrategia empírica y conclusiones accionables con una narrativa clara.
+<p class="hero-banner__specialization">Econometría · Inferencia causal · Statistical Machine Learning</p>
+
+Abordo problemas cuantitativos desde la formulación de la pregunta y el diseño metodológico hasta la estimación, validación, inferencia e interpretación de resultados para la toma de decisiones.
 :::
 
 ::: {.hero-banner__actions}
-<a class="button-primary" href="econometria/index.qmd">Explorar Econometría</a>
-<a class="button-secondary" href="causalidad/index.qmd">Explorar Causalidad</a>
-<a class="button-secondary" href="machine-learning/index.qmd">Explorar Machine Learning</a>
+<a class="button-primary" href="#areas-de-trabajo">Explorar análisis</a>
+<a class="button-secondary" href="problemas-negocio.qmd">Problemas de negocio</a>
+<a class="button-secondary" href="sobre-mi.qmd">Sobre mí</a>
 :::
 :::
 
 ::: {.hero-banner__media}
 :::
+
+::: {.hero-profile-note}
+Casi siete años de trayectoria profesional, combinando experiencia empresarial e investigación aplicada autónoma.
+:::
 :::
 
-## Mapa del sitio
+## Cómo trabajo
+
+::: {.section-lead}
+Cuando abordo un problema cuantitativo, intento mantener alineadas la pregunta, la estrategia metodológica y la decisión que el análisis debe informar.
+:::
+
+::: {.work-grid}
+::: {.work-step}
+<span class="work-step__number">01</span>
+
+### Problema
+
+Traducir una pregunta económica o empresarial a un objeto cuantitativo bien definido.
+:::
+
+::: {.work-step}
+<span class="work-step__number">02</span>
+
+### Diseño
+
+Determinar qué puede identificarse o predecirse, qué supuestos son necesarios y qué estrategia metodológica corresponde.
+:::
+
+::: {.work-step}
+<span class="work-step__number">03</span>
+
+### Evaluación
+
+Estimar, diagnosticar, validar, estudiar sensibilidad e incertidumbre y comparar alternativas.
+:::
+
+::: {.work-step}
+<span class="work-step__number">04</span>
+
+### Decisión
+
+Interpretar los resultados en función del problema real, sus costos, restricciones y consecuencias.
+:::
+:::
+
+## Problemas de negocio
+
+::: {.section-lead}
+El análisis cuantitativo cobra valor cuando ayuda a responder una pregunta concreta y a tomar una decisión. Estos son algunos ejemplos de problemas empresariales que pueden abordarse desde distintas herramientas cuantitativas.
+:::
+
+::: {.business-teaser}
+::: {.business-teaser-grid}
+::: {.business-teaser-card}
+### ¿A qué precio deberíamos lanzar un producto nuevo?
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--econometrics">Econometría</span>
+<span class="method-chip method-chip--optimization">Optimización</span>
+</div>
+:::
+
+::: {.business-teaser-card}
+### ¿La campaña realmente aumentó las ventas?
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--causal">Inferencia causal</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+</div>
+:::
+
+::: {.business-teaser-card}
+### ¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?
+
+<div class="method-chips" aria-label="Etiquetas metodológicas">
+<span class="method-chip method-chip--timeseries">Series temporales</span>
+<span class="method-chip method-chip--econometrics">Econometría</span>
+<span class="method-chip method-chip--optimization">Optimización</span>
+</div>
+:::
+:::
+
+<a class="cta-link" href="problemas-negocio.qmd">Explorar problemas de negocio</a>
+:::
+
+## Áreas de trabajo {#areas-de-trabajo}
+
+::: {.section-lead}
+Tres áreas complementarias desde las que abordo problemas de inferencia, predicción, evaluación y decisión.
+:::
 
 ::: {.portal-grid}
 ::: {.portal-card}
 ### [Econometría](econometria/index.qmd)
 
-Piezas aplicadas sobre panel, variables instrumentales y modelos de respuesta discreta con foco en interpretación económica.
+Aplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.
 
-<a class="cta-link" href="econometria/index.qmd">Ver índice de piezas</a>
+<a class="cta-link" href="econometria/index.qmd">Explorar Econometría</a>
 :::
 
 ::: {.portal-card}
-### [Causalidad](causalidad/index.qmd)
+### [Inferencia causal](causalidad/index.qmd)
 
-Aplicaciones de identificación causal con diseños observacionales, comparabilidad y validación de supuestos.
+Diseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.
 
-<a class="cta-link" href="causalidad/index.qmd">Ver índice de piezas</a>
+<a class="cta-link" href="causalidad/index.qmd">Explorar Causalidad</a>
 :::
 
 ::: {.portal-card}
 ### [Machine Learning](machine-learning/index.qmd)
 
-Espacio para modelos predictivos y pipelines reproducibles orientados a problemas económicos y de negocio.
+Métodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.
 
-<a class="cta-link" href="machine-learning/index.qmd">Ver hoja de ruta</a>
-:::
-
-::: {.portal-card}
-### [Sobre mí](sobre-mi.qmd)
-
-Perfil profesional, enfoque de trabajo y canales de contacto para proyectos, colaboraciones y consultoría aplicada.
-
-<a class="cta-link" href="sobre-mi.qmd">Ver perfil</a>
+<a class="cta-link" href="machine-learning/index.qmd">Explorar Machine Learning</a>
 :::
 :::
 
-## Propósito
+::: {.portfolio-note}
+## Sobre las piezas del portfolio
 
-El objetivo es mantener un repositorio de piezas técnicas bien curadas, con estructura consistente, lectura limpia y utilidad práctica para la toma de decisiones.
+Las piezas presentadas aquí son síntesis profesionales de trabajos técnicos considerablemente más extensos. Los trabajos completos incluyen desarrollo metodológico, código, diagnósticos, validaciones y análisis de sensibilidad que deliberadamente no se reproducen íntegramente en el sitio. Los materiales originales pueden discutirse o compartirse cuando resulte pertinente en un proceso profesional.
+:::

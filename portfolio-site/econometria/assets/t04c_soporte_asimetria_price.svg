@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Soporte positivo y cola derecha del precio de vivienda</title>
+  <desc id="desc">Resumen editorial de la distribución del precio: media 196,65, mediana 163, percentiles altos y masa negativa que implican dos modelos normales.</desc>
+  <style>.bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 14px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.value{font:800 22px system-ui,sans-serif;fill:#0b7285}.axis{stroke:#9aabba;stroke-width:1.2}.bar{fill:#cce8eb}.bar2{fill:#79bdc6}.tail{fill:#d97706}.pill{fill:#fff7e6;stroke:#f0cf91}.bad{fill:#d97706}.good{fill:#0b7285}</style>
+  <rect class="bg" width="960" height="520" rx="18"/>
+  <text class="head" x="42" y="44">Un precio positivo con una cola que domina los momentos</text>
+  <text class="sub" x="42" y="69">1.971 viviendas · price en miles · 32 intervalos iguales, frecuencias observadas</text>
+  <rect class="panel" x="42" y="94" width="580" height="355" rx="15"/>
+  <line class="axis" x1="78" y1="391" x2="590" y2="391"/>
+  <rect class="bar" x="90.000" y="370.99" width="14.6" height="20.01" rx="2"/><rect class="bar2" x="105.625" y="288.53" width="14.6" height="102.47" rx="2"/><rect class="bar2" x="121.250" y="157.09" width="14.6" height="233.91" rx="2"/><rect class="bar2" x="136.875" y="258.52" width="14.6" height="132.48" rx="2"/><rect class="bar" x="152.500" y="319.93" width="14.6" height="71.07" rx="2"/><rect class="bar" x="168.125" y="346.84" width="14.6" height="44.16" rx="2"/><rect class="bar" x="183.750" y="364.09" width="14.6" height="26.91" rx="2"/><rect class="bar" x="199.375" y="376.16" width="14.6" height="14.84" rx="2"/><rect class="tail" x="215.000" y="381.68" width="14.6" height="9.32" rx="2"/><rect class="tail" x="230.625" y="385.13" width="14.6" height="5.87" rx="2"/><rect class="tail" x="246.250" y="386.86" width="14.6" height="4.14" rx="2"/><rect class="tail" x="261.875" y="388.58" width="14.6" height="2.42" rx="2"/><rect class="tail" x="277.500" y="387.55" width="14.6" height="3.45" rx="2"/><rect class="tail" x="293.125" y="389.27" width="14.6" height="1.73" rx="2"/><rect class="tail" x="308.750" y="390.31" width="14.6" height="0.69" rx="2"/><rect class="tail" x="324.375" y="388.93" width="14.6" height="2.07" rx="2"/><rect class="tail" x="340.000" y="390.31" width="14.6" height="0.69" rx="2"/><rect class="tail" x="402.500" y="389.96" width="14.6" height="1.04" rx="2"/><rect class="tail" x="418.125" y="390.65" width="14.6" height="0.35" rx="2"/><rect class="tail" x="449.375" y="390.65" width="14.6" height="0.35" rx="2"/><rect class="tail" x="465.000" y="390.31" width="14.6" height="0.69" rx="2"/><rect class="tail" x="511.875" y="390.31" width="14.6" height="0.69" rx="2"/><rect class="tail" x="558.750" y="390.65" width="14.6" height="0.35" rx="2"/><rect class="tail" x="574.375" y="390.65" width="14.6" height="0.35" rx="2"/>
+  <text class="small" x="76" y="414">25</text><text class="small" x="188" y="414">405 (p95)</text><text class="small" x="294" y="414">730 (p99)</text><text class="small" x="555" y="414">1.535</text>
+  <line x1="135.7" y1="143" x2="135.7" y2="391" stroke="#17324d" stroke-width="2" stroke-dasharray="5 5"/><text class="label" x="78" y="128">Mediana 163</text>
+  <line x1="146.8" y1="180" x2="146.8" y2="391" stroke="#0b7285" stroke-width="2" stroke-dasharray="5 5"/><text class="label" x="155" y="178">Media 196,65</text>
+  <text class="small" x="78" y="438">Asimetría 3,98 · curtosis 29,11</text>
+  <rect class="panel" x="646" y="94" width="272" height="165" rx="15"/>
+  <text class="label" x="670" y="124">La Normal cruza el cero</text>
+  <text class="small" x="670" y="148">Probabilidad promedio de price &lt; 0</text>
+  <rect x="670" y="171" width="210" height="16" rx="8" fill="#e8edf1"/><rect class="bad" x="670" y="171" width="184" height="16" rx="8"/><text class="small" x="670" y="207">Normal homocedástica</text><text class="label" x="840" y="207">5,28%</text>
+  <rect x="670" y="222" width="210" height="16" rx="8" fill="#e8edf1"/><rect class="good" x="670" y="222" width="40" height="16" rx="8"/><text class="small" x="670" y="252">Normal heterocedástica</text><text class="label" x="840" y="252">1,15%</text>
+  <rect class="pill" x="646" y="282" width="272" height="167" rx="15"/>
+  <text class="label" x="670" y="315">El soporte es parte del modelo</text>
+  <text class="small" x="670" y="344">Permitir que cambie la varianza</text><text class="small" x="670" y="364">reduce la masa negativa, pero no</text><text class="small" x="670" y="384">elimina la contradicción básica:</text>
+  <text class="value" x="670" y="421">price &gt; 0</text>
+  <text class="small" x="42" y="487">La cola derecha separa media, mediana y cuantiles; una sola medida de centro no resume la distribución.</text>
+</svg>

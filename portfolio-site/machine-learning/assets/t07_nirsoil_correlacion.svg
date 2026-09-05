@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" role="img" aria-labelledby="title desc">
+  <title id="title">NIRsoil: correlación entre bandas</title>
+  <desc id="desc">La mediana de correlación es 0,999999 a 2 nanómetros, 0,998570 a 100 nanómetros y aproximadamente 0,996 a 200 nanómetros.</desc>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect width="880" height="480" rx="18" fill="#f8fafc"/>
+    <text x="28" y="42" font-size="25" font-weight="700" fill="#17324d">Las bandas siguen siendo casi redundantes</text>
+    <text x="28" y="72" font-size="17" fill="#5d6b78">NIRsoil · mediana de correlación según separación espectral</text>
+    <rect x="22" y="96" width="836" height="280" rx="14" fill="#fff"/>
+    <rect x="42" y="128" width="176" height="184" rx="10" fill="#f5f8fb" stroke="#dce3e9"/>
+    <text x="58" y="153" font-size="13" font-weight="700" fill="#5d6b78">DISTANCIA</text><text x="148" y="153" font-size="13" font-weight="700" fill="#5d6b78">CORRELACIÓN</text>
+    <path d="M58 166H202M58 214H202M58 262H202" stroke="#dce3e9"/>
+    <g font-size="16"><text x="58" y="186" font-weight="700" fill="#17324d">2 nm</text><text x="58" y="234" font-weight="700" fill="#17324d">100 nm</text><text x="58" y="282" font-weight="700" fill="#17324d">200 nm</text><text x="148" y="186" fill="#5d6b78">0,999999</text><text x="148" y="234" fill="#5d6b78">0,998570</text><text x="148" y="282" fill="#5d6b78">≈ 0,996</text></g>
+    <g stroke="#dce3e9" stroke-width="1.5"><path d="M260 145V315M430 145V315M600 145V315M770 145V315"/></g>
+    <g font-size="15" fill="#5d6b78" text-anchor="middle"><text x="260" y="338">0 nm</text><text x="430" y="338">100</text><text x="600" y="338">200</text><text x="770" y="338">300</text></g>
+    <path d="M260 165 C350 168 392 178 430 185 C510 191 563 199 600 208 C678 220 731 231 770 242" fill="none" stroke="#0b7285" stroke-width="5"/>
+    <g fill="#0b7285"><circle cx="260" cy="165" r="7"/><circle cx="430" cy="185" r="7"/><circle cx="600" cy="208" r="7"/></g>
+    <text x="28" y="417" font-size="18" font-weight="700" fill="#17324d">Alta dimensión y correlación extrema ocurren juntas.</text>
+    <text x="28" y="447" font-size="15" fill="#5d6b78">La separación física entre bandas no crea independencia estadística.</text>
+  </g>
+</svg>

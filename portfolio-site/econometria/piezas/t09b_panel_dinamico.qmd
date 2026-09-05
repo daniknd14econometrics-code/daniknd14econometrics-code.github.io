@@ -1,0 +1,179 @@
+---
+title: "Producción con memoria: por qué un panel dinámico necesita instrumentos internos"
+subtitle: "Persistencia del valor bruto de producción, sesgo dinámico y disciplina instrumental en un panel corto de firmas uruguayas"
+author: "Daniel Méndez"
+profile: "Economista | Econometría aplicada, causalidad y machine learning"
+linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+email: "daniknd14@gmail.com"
+id_taller: "t09b_panel_dinamico"
+date: "2026-08-10"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    smooth-scroll: true
+    page-layout: full
+    css:
+      - ../assets/portfolio.css
+      - ../assets/t01_palette.css
+      - ../../assets/analysis-layout.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: {.hero-box}
+::: {.hero-title}
+Agregar memoria al modelo cambia el problema econométrico: efectos fijos ya no bastan.
+:::
+
+::: {.hero-sub}
+Este estudio examina la persistencia del valor bruto de producción en un panel corto de firmas uruguayas. El rezago del resultado ayuda a representar la dinámica, pero queda correlacionado con el error después de remover la heterogeneidad de la firma. Anderson–Hsiao y Arellano–Bond responden con instrumentos internos; su credibilidad depende de qué rezagos son válidos, informativos y manejables.
+:::
+:::
+
+:::: {.metric-grid}
+
+::: {.metric-card}
+::: {.metric-label}
+Ventana de análisis
+:::
+::: {.metric-value}
+2012–2021
+:::
+::: {.metric-note}
+38.480 observaciones y 7.932 firmas antes de exigir rezagos
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Persistencia bruta
+:::
+::: {.metric-value}
+0,964
+:::
+::: {.metric-note}
+Combina memoria con diferencias permanentes entre firmas
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Persistencia within
+:::
+::: {.metric-value}
+0,480
+:::
+::: {.metric-note}
+Correlación tras centrar cada firma en su propio promedio
+:::
+:::
+
+::: {.metric-card}
+::: {.metric-label}
+Difference GMM + X
+:::
+::: {.metric-value}
+ρ = 0,324
+:::
+::: {.metric-note}
+IC95% [0,227; 0,422] en 25.502 observaciones
+:::
+:::
+
+::::
+
+## Pregunta aplicada
+
+¿Cuánto de la escala productiva actual de una firma está asociado con su propia escala pasada, una vez que se separan las diferencias permanentes entre empresas? El resultado es el logaritmo del valor bruto de producción real. La especificación incorpora empleo, capital, condición exportadora y efectos de año, pero el foco es el coeficiente del resultado rezagado, $\rho$.
+
+La base es un panel no balanceado de firmas uruguayas. La ventana 2012–2021 contiene 38.480 observaciones de 7.932 firmas; exigir un rezago deja 33.857 observaciones y exigir dos rezagos —necesarios para instrumentar— reduce la muestra a 28.678 observaciones de 4.872 firmas. Esa pérdida no es administrativa: define qué historias empresariales identifican la dinámica.
+
+## La persistencia visible no es todavía dinámica
+
+La correlación entre producción actual y rezagada es 0,964. Sin embargo, al sustraer el promedio de cada firma cae a 0,480. La diferencia revela que una gran parte de la alineación bruta proviene de heterogeneidad persistente: empresas estructuralmente grandes siguen siendo grandes.
+
+![El panel izquierdo contrasta la correlación bruta entre producción actual y rezagada con la correlación within. El panel derecho muestra por qué, después de diferenciar, el rezago del resultado es endógeno y cómo el nivel observado dos períodos atrás puede funcionar como instrumento interno.](../assets/t09b_instrumentos_internos.svg){fig-alt="Persistencia bruta y within junto con una línea de tiempo que explica la instrumentación interna de un panel dinámico" width="100%"}
+
+Un pooled dinámico interpreta buena parte de esas diferencias permanentes como memoria y estima $\widehat\rho=0,964$. Efectos fijos separa la heterogeneidad invariante y reduce la estimación a 0,462, pero crea otro problema: con pocos períodos, el resultado rezagado transformado queda correlacionado con el error transformado. Es el sesgo dinámico de Nickell.
+
+## Por qué primeras diferencias no resuelven todo
+
+Considérese el modelo
+
+$$
+y_{it}=\rho y_{i,t-1}+X_{it}'\beta+\alpha_i+\lambda_t+u_{it}.
+$$
+
+Tomar primeras diferencias elimina el efecto fijo $\alpha_i$, pero produce $\Delta y_{i,t-1}$ como regresor. Este término contiene $u_{i,t-1}$, mientras $\Delta u_{it}=u_{it}-u_{i,t-1}$ también lo contiene. Por eso la estimación ingenua en diferencias no es exógena: en la aplicación entrega incluso $\widehat\rho=-0,161$.
+
+La dinámica obliga a repensar la instrumentación. Bajo ausencia de correlación serial relevante en los errores de nivel y condiciones apropiadas de timing, $y_{i,t-2}$ está correlacionado con $\Delta y_{i,t-1}$ pero no con $\Delta u_{it}$.
+
+## De Anderson–Hsiao a Arellano–Bond
+
+Anderson–Hsiao usa un rezago válido por ecuación. Es transparente y recupera una persistencia positiva de 0,168, aunque puede desaprovechar información. Arellano–Bond organiza todas las condiciones de momento disponibles: para cada período utiliza niveles suficientemente rezagados como instrumentos de la ecuación en diferencias.
+
+Difference GMM no convierte automáticamente los rezagos en buenos instrumentos. La distancia temporal debe ser compatible con el proceso del error; además, instrumentos muy profundos pueden ser poco informativos cuando la serie es persistente. La elección entre ampliar, acotar o colapsar la matriz de instrumentos es parte de la especificación, no una opción de presentación.
+
+## Qué cambia entre estimadores
+
+![El gráfico compara el coeficiente de persistencia y sus intervalos de confianza en pooled dinámico, efectos fijos, primeras diferencias, Anderson–Hsiao y variantes de Arellano–Bond. Las especificaciones no comparten siempre muestra ni conjunto de controles y se presentan como secuencia diagnóstica, no como ranking.](../assets/t09b_persistencia_estimadores.svg){fig-alt="Coeficientes de persistencia e intervalos de confianza para pooled, efectos fijos, primeras diferencias, Anderson-Hsiao y Difference GMM" width="100%"}
+
+La secuencia es informativa. Pooled queda cerca de uno porque mezcla dinámica y heterogeneidad; FE dinámico corrige esa mezcla, pero conserva sesgo de panel corto; primeras diferencias sin instrumento falla por construcción. Anderson–Hsiao y las variantes Arellano–Bond vuelven a una persistencia positiva y moderada.
+
+::: {.table-box}
+| Especificación | $\widehat\rho$ | EE | IC95% | Lectura |
+|---|---:|---:|---:|---|
+| Pooled dinámico | 0,964 | 0,006 | [0,953; 0,975] | Mezcla memoria y heterogeneidad permanente |
+| FE dinámico | 0,462 | 0,023 | [0,416; 0,507] | Remueve heterogeneidad, no el sesgo dinámico |
+| Anderson–Hsiao | 0,168 | 0,053 | [0,063; 0,273] | Instrumentación parsimoniosa |
+| Arellano–Bond | 0,261 | 0,054 | [0,155; 0,367] | Rezagos internos del resultado |
+| Arellano–Bond + controles | 0,324 | 0,050 | [0,227; 0,422] | Incluye empleo, capital y exportación |
+| Arellano–Bond colapsado | 0,295 | 0,123 | [0,053; 0,536] | Menos instrumentos, más incertidumbre |
+:::
+
+La especificación con controles sugiere una persistencia moderada: mecánicamente, un impulso inicial deja menos de 12% de su magnitud después de dos períodos si $\rho$ está entre 0,26 y 0,34. Esto no es una función impulso–respuesta causal; resume únicamente la propagación implícita en el modelo autorregresivo.
+
+## Diagnóstico: los tests no eligen solos
+
+En residuos diferenciados, rechazar AR(1) es esperable porque $\Delta u_{it}$ comparte componentes entre períodos consecutivos. El diagnóstico decisivo es AR(2): si se rechaza, $y_{i,t-2}$ deja de ser un instrumento defendible para la ecuación diferenciada.
+
+::: {.table-box}
+| Variante Difference GMM | Instrumentos | $\widehat\rho$ | AR(2), p | Qué aporta |
+|---|---:|---:|---:|---|
+| AB mínimo, rezagos 2+ | 185 | 0,261 | 0,200 | Referencia amplia; matriz grande |
+| AB mínimo, rezagos 2–5 | 50 | 0,236 | 0,258 | Acota profundidad y cantidad |
+| AB + X, ventanas acotadas | 112 | 0,324 | 0,389 | Dinámica condicionada; más momentos |
+| AB colapsado, rezagos 2–4 | 12 | 0,295 | 0,278 | Reduce proliferación; IC más ancho |
+:::
+
+Los cuatro diseños no rechazan AR(2), pero eso no prueba validez. Sargan no es robusto a heterocedasticidad; Hansen sí lo es, aunque puede perder potencia cuando proliferan instrumentos. En variantes con controles, varias configuraciones generan tensión en los tests de sobreidentificación. Usar rezagos más profundos mejora algunos *p-values*, pero eleva $\widehat\rho$ hasta alrededor de 0,76 y vuelve imprecisa la asociación con capital: una advertencia de instrumentos más débiles o de un objeto identificado por otra porción de la variación.
+
+Por eso no se selecciona el modelo que simplemente “pasa” más tests. Se evalúan conjuntamente timing económico, correlación serial, fuerza informativa, número de instrumentos y estabilidad de resultados.
+
+## Controles, capital y alcance
+
+En la referencia Arellano–Bond con controles acotados, la asociación de corto plazo con capital es 0,221 (EE 0,047). Otras decisiones sobre el estatus endógeno o predeterminado del capital la reducen y amplían su incertidumbre. No debe leerse como elasticidad estructural: la especificación ilustra cuánto depende la interpretación económica de las condiciones de momento impuestas.
+
+::: {.callout-note}
+## Objeto de decisión
+
+En un panel dinámico corto, la pregunta no es solo si existen rezagos disponibles. Es cuáles pueden defenderse como instrumentos, cuánta información aportan y si la matriz resultante permite diagnósticos útiles sin dominar la muestra.
+:::
+
+## Límites
+
+- El panel es no balanceado y exigir rezagos cambia la composición de firmas observadas.
+- Difference GMM elimina efectos fijos, pero no protege frente a instrumentos internos inválidos o débiles.
+- Los tests de correlación serial y sobreidentificación son diagnósticos complementarios, no certificados automáticos.
+- System GMM exigiría condiciones de momento adicionales en niveles y queda fuera del alcance de este análisis.
+- Los coeficientes describen asociaciones dinámicas condicionadas; no identifican por sí solos efectos causales de empleo, capital o exportación.
+
+## Conclusión
+
+Introducir el resultado rezagado permite representar memoria, pero rompe la solución habitual de efectos fijos en panel corto. Pooled confunde persistencia con heterogeneidad; FE dinámico y primeras diferencias dejan al rezago correlacionado con el error. Anderson–Hsiao hace visible la solución mínima y Arellano–Bond amplía las condiciones de momento mediante instrumentos internos.
+
+El avance metodológico no elimina la fragilidad. En esta aplicación, las estimaciones defendibles se concentran en una persistencia positiva y moderada, mientras la profundidad y cantidad de instrumentos cambian precisión, diagnósticos y lectura económica. Difference GMM es útil cuando la instrumentación interna se diseña y se somete a estrés; no cuando los rezagos se tratan como información exógena gratuita.

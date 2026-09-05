@@ -3,21 +3,22 @@ title: "Sobre mí"
 format:
   html:
     title-block-style: none
+    css: assets/sobre-mi.css
 ---
 
 ::: {.hero-banner .hero-banner--sobre-mi}
 ::: {.hero-banner__content}
-<span class="hero-banner__kicker">Perfil profesional</span>
+<span class="hero-banner__kicker">Trayectoria y enfoque</span>
 
-# Daniel Méndez
+# Economista cuantitativo
 
 ::: {.hero-banner__lead}
-Economista enfocado en econometría aplicada, inferencia causal y analítica cuantitativa para decisiones de política pública, estrategia y negocio.
+Soy economista, con Maestría en Economía. Mi recorrido reúne casi siete años de trayectoria profesional: más de seis en una gran empresa, junto con experiencia universitaria e investigación aplicada autónoma. Me especializo en econometría, inferencia causal y Statistical Machine Learning para abordar problemas de modelización, evaluación, predicción y decisión.
 :::
 
 ::: {.hero-banner__actions}
-<a class="button-primary" href="index.qmd">Volver al inicio</a>
-<a class="button-secondary" href="econometria/index.qmd">Ver piezas de Econometría</a>
+<a class="button-primary" href="index.qmd#areas-de-trabajo">Explorar análisis</a>
+<a class="button-secondary" href="#contacto">Contacto</a>
 :::
 :::
 
@@ -25,32 +26,54 @@ Economista enfocado en econometría aplicada, inferencia causal y analítica cua
 :::
 :::
 
-## Enfoque de trabajo
+## Recorrido profesional
 
-::: {.profile-grid}
-::: {.profile-card}
-### Especialización técnica
-- Econometría aplicada y datos de panel.
-- Modelos de respuesta discreta, multinomial y ordinal.
-- Estrategias de identificación causal.
+Durante más de seis años trabajé en Conaprole, empresa líder de la industria láctea uruguaya y una de las principales exportadoras del país. Mi función se desarrollaba en Auditoría Interna, con foco en procesos, riesgos y controles. Paralelamente fui incorporando por iniciativa propia análisis de datos a problemas concretos de la empresa: integración y depuración de información operativa, construcción de indicadores, evaluación de pronósticos y, cuando el problema lo justificaba, modelización estadística y econométrica. Esa etapa me dio una base empresarial que hoy complementa mi especialización cuantitativa.
+
+Completé la Licenciatura y posteriormente la Maestría en Economía en la Facultad de Ciencias Económicas y de Administración (FCEA) de la Universidad de la República, Uruguay.
+
+Durante la etapa final de la Maestría y posteriormente trabajé como asistente de investigación en el Departamento de Economía de FCEA, dentro de un proyecto financiado por la Agencia Nacional de Investigación e Innovación (ANII) sobre comercio, inversión extranjera y ambiente. Allí desarrollé con alta autonomía análisis cuantitativos a partir de preguntas abiertas: construcción y armonización de paneles empresariales, selección de estrategias empíricas, modelización, diagnóstico, inferencia causal, análisis de robustez e interpretación de resultados. Entre otros trabajos, reformulé parte del proyecto mediante un diseño causal con tratamientos múltiples y reconstruí desde el diseño una aplicación de *event studies* y diferencias en diferencias modernas a partir de una implementación heredada.
+
+## Investigación
+
+La tesis de Maestría estudió la relación entre adopción de TIC, productividad y exportaciones utilizando microdatos de empresas uruguayas. Fue calificada **Excelente** y seleccionada entre las tres tesis destacadas de la Maestría en Economía de FCEA, con presentación en las XIII Jornadas Académicas de 2025.
+
+El trabajo dio lugar posteriormente, junto con [Adriana Peluffo](https://orcid.org/0000-0002-2291-8192), al working paper [*ICTs, Productivity and Exports: A Firm-Level Study of Uruguayan Companies*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5921662), disponible en SSRN.
+
+Una evaluación externa de esa versión señaló como principal desafío la plausibilidad económica de algunas restricciones de exclusión. Esa objeción se convirtió en el punto de partida de una nueva investigación centrada específicamente en identificación causal.
+
+La investigación actual reformula el problema para estudiar separadamente ambas direcciones causales entre productividad y adopción de TIC mediante instrumentos *shift-share*, combinando microdatos empresariales con shocks externos, diagnóstico de instrumentos, inferencia robusta frente a instrumentos potencialmente débiles y análisis de la contribución de los shocks.
+
+::: {.sobre-mi-columns}
+::: {.sobre-mi-column}
+## Criterio de trabajo
+
+Suelo hacer muchas preguntas antes de considerar cerrado un análisis. Me interesa entender qué mecanismo puede estar detrás de un resultado, contrastar alternativas cuando existe margen para hacerlo y tener claro qué supuestos sostienen cada conclusión.
+
+También presto atención a lo que los resultados no permiten afirmar. Prefiero una conclusión más acotada pero defendible a una historia atractiva que dependa de evidencia frágil.
+
+La sofisticación técnica tiene valor cuando ayuda a responder mejor una pregunta, no como un objetivo en sí mismo. Por eso procuro que el método, la evidencia y el alcance de la conclusión permanezcan alineados durante todo el análisis.
 :::
 
-::: {.profile-card}
-### Principios de entrega
-- Consistencia metodológica y trazabilidad de supuestos.
-- Presentación clara para equipos técnicos y de decisión.
-- Reproducibilidad y documentación ordenada.
+::: {.sobre-mi-column}
+## Intereses profesionales
+
+Me interesan los problemas en los que **inferencia, predicción y decisión** se conectan: comprender mecanismos y efectos, anticipar resultados y evaluar qué curso de acción resulta defendible con la información disponible.
+
+En causalidad y evaluación, me atraen la identificación de relaciones económicas, el diseño de estrategias empíricas, la experimentación y el análisis de robustez. En predicción, el forecasting, la modelización estadística y el aprendizaje automático ofrecen herramientas para planificación y seguimiento.
+
+También me interesan aplicaciones vinculadas con demanda y pricing, riesgo, validación de modelos y decisiones bajo incertidumbre. Son ámbitos en los que mi formación y toolkit resultan pertinentes; el punto de partida sigue siendo siempre el problema, no una técnica elegida de antemano.
+:::
 :::
 
-::: {.profile-card}
-### Colaboración
-- Diseño de piezas aplicadas para portfolio institucional o académico.
-- Revisión metodológica de análisis empíricos.
-- Mentoría para estructurar narrativa cuantitativa.
-:::
+::: {.sobre-mi-human-close}
+Fuera del trabajo, disfruto especialmente la música, el fútbol y el tiempo con mi familia.
 :::
 
 ## Contacto
 
-- LinkedIn: [danielméndez-ec](https://www.linkedin.com/in/danielm%C3%A9ndez-ec/)
-- Email: [daniknd14@gmail.com](mailto:daniknd14@gmail.com)
+::: {.sobre-mi-contact}
+- **LinkedIn:** [danielméndez-ec](https://www.linkedin.com/in/danielm%C3%A9ndez-ec/)
+- **GitHub:** [daniknd14econometrics-code](https://github.com/daniknd14econometrics-code)
+- **Email:** [daniknd14@gmail.com](mailto:daniknd14@gmail.com)
+:::

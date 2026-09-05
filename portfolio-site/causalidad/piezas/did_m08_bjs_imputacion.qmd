@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -69,7 +70,7 @@ $$
 \widehat{\tau}_{it}=Y_{it}-\widehat{Y}_{it}(0).
 $$
 
-Esta brecha es la unidad elemental del método. No es todavía un ATT global ni un coeficiente dinámico: esos objetos aparecen cuando las brechas se agregan.
+Esta brecha es la unidad elemental del método, pero no una estimación consistente del efecto individual de cada condado-año: también contiene variación idiosincrática. La identificación causal se sostiene en agregados apropiados de muchas brechas, con pesos definidos para la población y los horizontes de interés.
 
 ![De las observaciones no tratadas al resultado potencial imputado y la brecha causal](did_m08_observado_imputado.svg){fig-alt="Flujo de tres pasos: aprender el resultado potencial no tratado usando observaciones sin tratamiento, imputarlo para observaciones tratadas y comparar el resultado observado con el contrafactual. Para los horizontes cero y uno, las brechas medias son menos 0,031 y menos 0,052."}
 
@@ -149,11 +150,11 @@ p &lt; 0,001 · IC95% [−0,0741; −0,0213]
 
 ::::
 
-Dentro del diseño, el cambio de salario mínimo se asocia con una reducción causal media del log del empleo adolescente de aproximadamente 0,048 entre las observaciones tratadas imputables. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.
+Bajo el modelo de resultados no tratados y los supuestos del diseño, el cambio de salario mínimo produce una reducción media estimada de **4,77 puntos logarítmicos en el empleo adolescente** entre las observaciones tratadas imputables. El agregado reúne 291 observaciones condado-año, mientras 2.209 observaciones sin tratamiento permiten ajustar el contrafactual. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.
 
 ## Efectos dinámicos
 
-El tiempo relativo permite preguntar cómo evoluciona el efecto desde la primera exposición. Los dos horizontes posteriores con información efectiva suficiente muestran una reducción que aumenta en magnitud durante el primer año.
+El tiempo relativo permite preguntar cómo evoluciona el efecto desde la primera exposición. Los dos horizontes posteriores con información efectiva suficiente tienen estimaciones negativas; el punto es más negativo al primer año, pero la diferencia entre horizontes no es estadísticamente clara.
 
 ![Efectos dinámicos BJS con dos períodos pretratamiento y dos horizontes posteriores](did_m08_event_study.svg){fig-alt="Event study BJS con estimaciones cercanas a cero en K menos 2 y K menos 1. Los efectos son menos 0,031 en K igual a cero y menos 0,052 en K igual a uno, con intervalos de confianza de 95 por ciento. Los horizontes dos y tres se omiten por información efectiva insuficiente."}
 
@@ -164,8 +165,10 @@ El tiempo relativo permite preguntar cómo evoluciona el efecto desde la primera
 | Año de adopción · K = 0 | −0,0311 | 0,0137 | 0,023 | [−0,0579; −0,0043] |
 | Un año después · K = 1 | −0,0522 | 0,0193 | 0,007 | [−0,0901; −0,0143] |
 
-*Nota:* el test conjunto de los dos períodos pretratamiento arroja $F=1{,}298$ y $p=0{,}274$. Los horizontes posteriores se omiten por información efectiva insuficiente; no representan efectos estimados iguales a cero.
+*Nota:* el test conjunto de los dos períodos pretratamiento arroja $F=1{,}298$ y $p=0{,}274$. K = 2 y K = 3 se omiten por información efectiva insuficiente; no representan efectos estimados iguales a cero.
 :::
+
+El contraste K = 1 menos K = 0 es **−0,0212**, con EE **0,0187** y **p = 0,258**. Además, K = 0 reúne 191 condados de tres cohortes, mientras K = 1 reúne 60 de las cohortes 2004 y 2006. La diferencia combina duración y composición; no demuestra que el efecto se intensifique para una misma población.
 
 ## Qué promedio estamos estimando
 
@@ -209,11 +212,25 @@ Aunque el contrafactual sea imputable, ¿hay información suficientemente distri
 
 La cantidad bruta de observaciones no basta: si pocos condados o cohortes concentran la información relevante, la precisión efectiva puede ser mucho menor. Por eso las brechas descriptivas disponibles para horizontes posteriores no se presentan como resultados inferenciales equivalentes.
 
+Una sensibilidad ya realizada permite ver la diferencia: al excluir los 309 condados nunca tratados, en 2007 no queda ninguna observación sin exposición para estimar el efecto de ese año. **191 observaciones tratadas dejan de ser imputables**. El recorte automático elimina ese calendario, cambia la población de K = 0 y K = 1 y deja K = 3 sin contrafactual. Recortar permite continuar sobre otro soporte; no recupera la información faltante.
+
 ## Pretrends y especificación de Y(0)
 
-Los dos coeficientes previos son próximos a cero y el test conjunto no rechaza (`p=0,274`). Ese resultado es compatible con la especificación de referencia, pero no demuestra por sí solo tendencias paralelas ni descarta cualquier desviación posible.
+Los dos coeficientes previos se estiman **exclusivamente con observaciones no tratadas**, en un diagnóstico separado de los efectos posteriores. Son próximos a cero y el test conjunto no rechaza (`p=0,274`). El contraste evalúa esas dos desviaciones respecto del modelo de $Y(0)$; no demuestra que toda su especificación sea correcta.
 
-La estabilidad frente a modelos plausibles de $Y(0)$ aporta una comprobación adicional. Al permitir trayectorias por población inicial, los efectos se mantienen próximos a la referencia: alrededor de −0,033 en K = 0 y −0,057 en K = 1. La comparación no debe utilizarse para seleccionar el modelo que produce mayor significancia; su función es evaluar si el contrafactual depende de decisiones razonables de especificación.
+La comparación de modelos muestra qué restricciones sostienen el contrafactual:
+
+::: {.table-box}
+| Modelo de $Y(0)$ | K = 0 | K = 1 | p del test previo |
+|---|---:|---:|---:|
+| **Efectos fijos de condado y año** | **−0,0311** | **−0,0522** | **0,2740** |
+| Solo efectos de año | 0,3294 | 0,6942 | 0,0073 |
+| Condado y año + población inicial × año | −0,0332 | −0,0573 | 0,3029 |
+:::
+
+Omitir las diferencias permanentes entre condados revierte los signos y el diagnóstico previo rechaza. Esa fila ilustra una restricción inadecuada sobre $Y(0)$, no evidencia de un gran efecto positivo. Permitir trayectorias por población inicial apenas modifica la referencia. El criterio es la credibilidad del modelo no tratado, no la significación del efecto que produce.
+
+Los errores estándar corresponden a la inferencia BJS, con la opción de exclusión *leaveout* utilizada en la aplicación. Incorporan la estimación del contrafactual; no se calculan tratando las brechas imputadas como observaciones independientes con $Y(0)$ conocido.
 
 ## BJS frente a TWFE y Callaway–Sant’Anna
 
@@ -244,7 +261,7 @@ BJS vuelve transparente la construcción del contrafactual, excluye resultados y
 
 Borusyak–Jaravel–Spiess organiza Difference-in-Differences alrededor de una construcción explícita del resultado potencial no tratado. Primero aprende $Y(0)$ usando exclusivamente observaciones sin tratamiento, luego lo imputa para las tratadas y finalmente agrega las brechas causales según la pregunta de interés.
 
-En el panel de condados, el ATT global es negativo y los efectos publicables aumentan en magnitud entre el año de adopción y el período siguiente. La interpretación corresponde a observaciones tratadas cuyo contrafactual puede imputarse dentro del soporte del diseño.
+En el panel de condados, el ATT global y los efectos de K = 0 y K = 1 son negativos, pero el contraste entre estos dos horizontes no permite afirmar una intensificación del efecto. La interpretación corresponde a observaciones tratadas cuyo contrafactual puede imputarse dentro del soporte del diseño, con una composición de cohortes que cambia por horizonte.
 
 Imputar no elimina los supuestos. Especificación, no anticipación, soporte, imputabilidad, información efectiva y agregación continúan determinando qué efecto puede sostenerse y para quién.
 

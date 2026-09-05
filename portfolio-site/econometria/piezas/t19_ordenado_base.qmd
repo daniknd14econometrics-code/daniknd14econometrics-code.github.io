@@ -5,9 +5,10 @@ author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
-id_taller: "t19_ordenado_base"
-date: "2026-03-26"
-fuente_brief: "../../00_private/briefs/t19_ordenado_base_brief.txt"
+id_analisis: "t19_ordenado_base"
+date: "2026-08-13"
+fuentes_origen:
+  - "t19_ordenado_base"
 format:
   html:
     toc: true
@@ -18,6 +19,7 @@ format:
     css:
       - ../assets/portfolio.css
       - ../assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -30,7 +32,7 @@ execute:
 :::
 
 ::: {.hero-sub}
-Esta pieza estudia asignación de cartera previsional en tres niveles ordenados de exposición a acciones y prioriza una interpretación profesional en probabilidades: qué perfiles se asocian con carteras conservadoras, mixtas o más expuestas a acciones.
+El análisis estudia asignación de cartera previsional en tres niveles ordenados de exposición a acciones y prioriza una interpretación profesional en probabilidades.
 :::
 :::
 
@@ -66,15 +68,15 @@ Asignación previsional de hogares
 
 ::: {.metric-card}
 ::: {.metric-label}
-Distribución estimada
+Estructura del resultado
 :::
 
 ::: {.metric-value}
-Probabilidades bien repartidas
+Tres categorías ordenadas
 :::
 
 ::: {.metric-note}
-`Pr(cartera conservadora)=0.331`, `Pr(cartera mixta)=0.370`, `Pr(cartera más expuesta a acciones)=0.298`
+0%, 50% y 100% de exposición a acciones
 :::
 :::
 
@@ -96,7 +98,7 @@ Reasignan probabilidad entre cartera conservadora y cartera más expuesta a acci
 
 ## Resumen
 
-Esta pieza analiza una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (`pctstck`) toma tres categorías ordenadas (0% en acciones, 50% en acciones y 100% en acciones). La pregunta aplicada no es metodológica en abstracto; es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.
+Este análisis aborda una decisión financiera ordinal: la proporción del plan previsional invertida en acciones (`pctstck`) toma tres categorías ordenadas (0%, 50% y 100%). La pregunta aplicada es cómo interpretar de forma consistente esa jerarquía en términos de probabilidades.
 
 El valor del caso está en el criterio de lectura: usar un modelo ordenado para respetar la estructura del resultado y traducir la evidencia en cambios de probabilidad comparables, con interpretación sobria y sin sobreinterpretaciones.
 
@@ -146,7 +148,6 @@ Se utiliza `pension.dta` en corte transversal.
 2. Traducir resultados a probabilidades por categoría de cartera (conservadora, mixta y más expuesta a acciones) para lectura directa del caso.
 3. Reportar APEs por outcome en variables narrables (`choice`, `age`, `prftshr`).
 4. Mantener la comparación de enlace (`ologit`/`oprobit`) como respaldo breve, sin desplazar la historia aplicada.
-5. Dejar métricas de clasificación in-sample y bloques técnicos equivalentes en segundo plano.
 
 ## Resultados principales
 
@@ -167,21 +168,11 @@ La lectura aplicada se organiza en cuatro mensajes:
 | Plan con profit sharing (sí vs no) | -0.1521 (0.0692) | -0.0137 (0.0219) | +0.1658 (0.0877) | Se asocia con menor probabilidad conservadora y mayor probabilidad en la categoría más expuesta a acciones |
 :::
 
-El siguiente perfil resume hacia dónde se desplaza la probabilidad entre cartera conservadora, cartera mixta y cartera más expuesta a acciones para la posibilidad de elegir método de inversión, la edad y el profit sharing.
+El gráfico muestra directamente la redistribución asociada con poder elegir el método de inversión. La probabilidad ajustada cae de 0,411 a 0,283 en la cartera conservadora, apenas cambia en la mixta (0,362 a 0,372) y aumenta de 0,227 a 0,345 en la categoría más expuesta.
 
-<img src="../assets/t19_desplazamiento_ordinal.svg" alt="Perfil de desplazamiento ordinal en T19: poder elegir método de inversión y tener profit sharing reducen probabilidad en cartera conservadora y la aumentan en cartera más expuesta a acciones; la edad desplaza en sentido inverso; la cartera mixta cambia poco." width="780" style="display:block; max-width:100%; height:auto;" />
+<img src="../assets/t19_probabilidades_choice.svg" alt="Probabilidades ajustadas de carteras conservadora, mixta y más expuesta a acciones según la persona pueda elegir o no el método de inversión." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;" />
 
-::: {.table-box}
-## Probabilidades predichas por categoría (contexto secundario)
-
-| Categoría de cartera (pctstck) | Probabilidad promedio estimada | Lectura aplicada |
-|---|---:|---|
-| 0% en acciones (cartera conservadora) | 0.331 | Aproximadamente un tercio de la muestra se ubica en perfil conservador |
-| 50% en acciones (cartera mixta) | 0.370 | Es la categoría con mayor peso promedio |
-| 100% en acciones (cartera más expuesta a acciones) | 0.298 | Cerca de tres de cada diez casos se ubican en el perfil más accionario |
-:::
-
-Como objeto final de decisión, la pieza prioriza tres covariables protagonistas (posibilidad de elegir método de inversión, edad y profit sharing): en esta muestra, allí se concentra la señal narrable de reasignación de probabilidades.
+Como objeto final de decisión, el análisis prioriza tres covariables protagonistas (posibilidad de elegir método de inversión, edad y profit sharing): en esta muestra, allí se concentra la señal narrable de reasignación de probabilidades.
 
 Estas magnitudes describen asociaciones probabilísticas promedio en la muestra; no implican una interpretación concluyente.
 
@@ -192,16 +183,15 @@ El respaldo técnico se mantiene acotado y funcional a la historia aplicada.
 ::: {.table-box}
 ### Resumen de diagnósticos
 
-| Diagnóstico | Evidencia | Uso en la pieza |
+| Diagnóstico | Evidencia | Uso en el análisis |
 |---|---:|---|
 | Relevancia conjunta del bloque explicativo | Wald chi2(14)=25.32, p=0.0315 | Respalda que el modelo capta señal empírica en esta muestra |
 | Sensibilidad de enlace | Patrón cualitativo similar en ologit y oprobit | Evita que la narrativa dependa de una elección de enlace puntual |
-| Clasificación in-sample (secundaria) | PCP aprox. 44.33% | Se reporta solo como referencia descriptiva, no como objetivo predictivo |
 :::
 
 ## Lectura profesional
 
-El aporte de T19 es mostrar criterio econométrico aplicado: cuando el resultado tiene jerarquía natural, conviene preservar ese orden y comunicar resultados como probabilidades y reasignaciones de probabilidad entre categorías.
+El aporte de este caso es mostrar criterio econométrico aplicado: cuando el resultado tiene jerarquía natural, conviene preservar ese orden y comunicar resultados como probabilidades y reasignaciones de probabilidad entre categorías.
 
 En esta aplicación previsional, la lectura útil para un tercero no está en presentar una técnica como superior, sino en explicar con claridad cómo ciertas características se asocian con perfiles conservadores, mixtos o más expuestos a acciones, manteniendo límites explícitos de interpretación.
 
@@ -209,9 +199,9 @@ Para evitar dispersión, la lectura dominante se concentra en la posibilidad de 
 
 ## Cierre
 
-Esta pieza traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APEs comparables, con foco en decisión aplicada y sin exagerar el alcance metodológico.
+Este análisis traduce un problema financiero ordinal a un lenguaje profesional y narrable: probabilidades por categoría y APE comparables, con foco en decisión aplicada y sin exagerar el alcance metodológico.
 
 El valor del caso queda en esa combinación: jerarquía del resultado bien modelada, foco en covariables protagonistas narrables y prudencia interpretativa en un contexto de corte transversal.
 
-Dado el tamaño muestral (`N=194`) y la naturaleza transversal del caso, la pieza se presenta como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra.
+Dado el tamaño muestral (`N=194`) y la naturaleza transversal del caso, los resultados se presentan como evidencia asociativa útil para lectura profesional, no como base para extrapolaciones amplias o predicción fuera de muestra.
 

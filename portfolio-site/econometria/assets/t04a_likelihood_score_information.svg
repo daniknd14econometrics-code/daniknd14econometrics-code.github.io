@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="610" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+  <title id="title">Log-verosimilitud, score e información observada</title>
+  <desc id="desc">Dos paneles muestran una log-verosimilitud con máximo en la media estimada y un score que cruza cero en ese punto. Un bloque resume Hessiano, información y error estándar.</desc>
+  <rect width="1200" height="610" rx="22" fill="#f7f4ee"/>
+  <style>text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#24313a}.title{font-size:25px;font-weight:700}.sub{font-size:15px;fill:#59656d}.panel{font-size:17px;font-weight:700}.axis{stroke:#9aa4aa;stroke-width:1.2}.grid{stroke:#dfdbd2;stroke-width:1}.tick{font-size:13px;fill:#68737a}.lik{fill:none;stroke:#176b68;stroke-width:4}.score{fill:none;stroke:#c96d48;stroke-width:4}.zero{stroke:#8c969c;stroke-width:1.5;stroke-dasharray:6 6}.mark{stroke:#253f58;stroke-width:2;stroke-dasharray:7 6}.dot{fill:#253f58}.label{font-size:14px}.value{font-size:18px;font-weight:700}.note{font-size:14px;fill:#59656d}</style>
+  <text x="54" y="48" class="title">Máximo, pendiente y curvatura cuentan la misma historia</text>
+  <text x="54" y="75" class="sub">Modelo normal univariado · n = 200 · μ̂ = 2,018</text>
+  <rect x="42" y="100" width="535" height="425" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <rect x="597" y="100" width="561" height="425" rx="16" fill="#fff" stroke="#ded8ce"/>
+  <text x="68" y="132" class="panel">A · Log-verosimilitud concentrada</text>
+  <text x="623" y="132" class="panel">B · Score e información local</text>
+  <line x1="95" y1="437" x2="543" y2="437" class="axis"/><line x1="95" y1="170" x2="95" y2="437" class="axis"/>
+  <line x1="649" y1="341" x2="945" y2="341" class="zero"/><line x1="649" y1="170" x2="649" y2="437" class="axis"/>
+  <g class="grid"><line x1="95" y1="348" x2="543" y2="348"/><line x1="95" y1="259" x2="543" y2="259"/><line x1="649" y1="252" x2="945" y2="252"/><line x1="649" y1="430" x2="945" y2="430"/></g>
+  <path d="M111 416 C175 391 218 330 271 249 C302 202 334 180 363 178 C401 179 432 220 466 283 C496 338 519 386 535 414" class="lik"/>
+  <line x1="363" y1="168" x2="363" y2="437" class="mark"/><circle cx="363" cy="178" r="7" class="dot"/>
+  <text x="379" y="194" class="label">máximo: μ̂ = 2,018</text>
+  <path d="M665 214 C704 229 739 263 772 305 C785 322 793 333 798 341 C815 367 850 397 929 423" class="score"/>
+  <line x1="798" y1="168" x2="798" y2="437" class="mark"/><circle cx="798" cy="341" r="7" class="dot"/>
+  <text x="817" y="329" class="label">S(μ̂) = 0</text>
+  <rect x="965" y="167" width="168" height="232" rx="12" fill="#edf5f3"/>
+  <text x="984" y="197" class="label">Hessiano</text><text x="984" y="222" class="value">−100,706</text>
+  <text x="984" y="268" class="label">Información</text><text x="984" y="293" class="value">100,706</text>
+  <text x="984" y="339" class="label">Error estándar</text><text x="984" y="364" class="value">0,0997</text>
+  <g class="tick"><text x="103" y="460">μ bajo</text><text x="491" y="460">μ alto</text><text x="657" y="460">μ bajo</text><text x="885" y="460">μ alto</text></g>
+  <text x="68" y="563" class="note">Más curvatura alrededor del máximo → más información → menor incertidumbre.</text>
+</svg>

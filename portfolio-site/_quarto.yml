@@ -3,11 +3,13 @@
   output-dir: _site
 
 website:
-  title: "Portfolio de Econometría Aplicada — Daniel Méndez"
+  title: "Daniel Méndez"
   navbar:
     left:
       - text: "Inicio"
         href: index.qmd
+      - text: "Problemas de negocio"
+        href: problemas-negocio.qmd
       - text: "Econometría"
         href: econometria/index.qmd
       - text: "Causalidad"
@@ -17,8 +19,8 @@ website:
       - text: "Sobre mí"
         href: sobre-mi.qmd
   page-footer:
-    left: "Sitio de portfolio profesional"
-    right: "Actualización periódica"
+    left: "Daniel Méndez"
+    right: "[Créditos de imágenes](/creditos-imagenes.qmd)"
 
 format:
   html:
@@ -27,6 +29,8 @@ format:
     toc: false
     smooth-scroll: true
     link-external-newwindow: true
+    include-in-header:
+      - assets/noindex.html
 
 lang: es
 

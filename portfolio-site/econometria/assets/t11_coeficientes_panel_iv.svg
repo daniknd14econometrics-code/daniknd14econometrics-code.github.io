@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+  <title id="title">Comparación de coeficientes bajo cinco estimadores</title>
+  <desc id="desc">Coeficientes e intervalos de confianza para probabilidad de arresto y policía per cápita bajo pooled, pooled IV, efectos fijos, efectos fijos IV y between IV.</desc>
+  <rect width="1200" height="690" rx="22" fill="#f7fafb"/>
+  <text x="58" y="52" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#18344d">FE-IV cambia la fuente de variación y expande la incertidumbre</text>
+  <text x="58" y="82" font-family="Arial, sans-serif" font-size="16" fill="#5d7180">Coeficientes e IC95%; todos los modelos usan la misma muestra.</text>
+  <rect x="45" y="110" width="1110" height="250" rx="16" fill="#fff" stroke="#dfe7eb"/>
+  <rect x="45" y="385" width="1110" height="250" rx="16" fill="#fff" stroke="#dfe7eb"/>
+  <text x="70" y="143" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#263f52">Log(probabilidad de arresto)</text>
+  <text x="70" y="418" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#263f52">Log(policía per cápita)</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#5d7180" text-anchor="end"><text x="175" y="185">Pooled</text><text x="175" y="220">Pooled-IV</text><text x="175" y="255">FE</text><text x="175" y="290">FE-IV</text><text x="175" y="325">Between-IV</text><text x="175" y="460">Pooled</text><text x="175" y="495">Pooled-IV</text><text x="175" y="530">FE</text><text x="175" y="565">FE-IV</text><text x="175" y="600">Between-IV</text></g>
+  <line x1="771" y1="160" x2="771" y2="335" stroke="#9cafb9" stroke-width="2" stroke-dasharray="6 6"/>
+  <line x1="472" y1="435" x2="472" y2="610" stroke="#9cafb9" stroke-width="2" stroke-dasharray="6 6"/>
+  <g stroke="#225f7d" stroke-width="4" stroke-linecap="round" fill="#225f7d">
+    <line x1="590" y1="180" x2="676" y2="180"/><circle cx="633" cy="180" r="6"/><line x1="566" y1="215" x2="781" y2="215"/><circle cx="674" cy="215" r="6"/><line x1="650" y1="250" x2="711" y2="250"/><circle cx="680" cy="250" r="6"/><line x1="216" y1="285" x2="1030" y2="285"/><circle cx="623" cy="285" r="7"/><line x1="486" y1="320" x2="797" y2="320"/><circle cx="642" cy="320" r="6"/>
+  </g>
+  <g stroke="#b34a66" stroke-width="4" stroke-linecap="round" fill="#b34a66">
+    <line x1="511" y1="455" x2="608" y2="455"/><circle cx="560" cy="455" r="6"/><line x1="477" y1="490" x2="648" y2="490"/><circle cx="562" cy="490" r="6"/><line x1="532" y1="525" x2="616" y2="525"/><circle cx="574" cy="525" r="6"/><line x1="204" y1="560" x2="1130" y2="560"/><circle cx="632" cy="560" r="7"/><line x1="458" y1="595" x2="681" y2="595"/><circle cx="572" cy="595" r="6"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#667b89" text-anchor="middle"><text x="257" y="350">−2</text><text x="514" y="350">−1</text><text x="771" y="350">0</text><text x="1028" y="350">1</text><text x="278" y="625">−1</text><text x="472" y="625">0</text><text x="666" y="625">1</text><text x="860" y="625">2</text><text x="1054" y="625">3</text></g>
+  <text x="58" y="670" font-family="Arial, sans-serif" font-size="13" fill="#667b89">Fuente: Taller 9A. Estimaciones con errores agrupados por condado; barras horizontales: IC95%.</text>
+</svg>

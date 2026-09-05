@@ -5,9 +5,10 @@ author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
-id_taller: "t18_multinomial_panel_cre"
-date: "2026-03-26"
-fuente_brief: "../../00_private/briefs/t18_multinomial_panel_cre_brief.txt"
+id_analisis: "t18_multinomial_panel_cre"
+date: "2026-08-13"
+fuentes_origen:
+  - "t18_multinomial_panel_cre"
 format:
   html:
     toc: true
@@ -18,6 +19,7 @@ format:
     css:
       - ../assets/portfolio.css
       - ../assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -30,7 +32,7 @@ En un panel laboral corto, ¿cómo cambia la interpretación de escuela, hogar y
 :::
 
 ::: {.hero-sub}
-La pieza compara pooled vs CRE (Mundlak) para ordenar mejor la lectura aplicada y la elección de especificación: el foco está en probabilidades comparables (APEs), no en coeficientes latentes.
+El análisis compara pooled vs CRE (Mundlak) para ordenar mejor la lectura aplicada y la elección de especificación: el foco está en probabilidades comparables (APE), no en coeficientes latentes.
 :::
 :::
 
@@ -96,7 +98,7 @@ Mundlak conjunto significativo
 
 ## Resumen
 
-Esta pieza estudia un resultado multinomial de actividad (`status`: escuela, hogar, trabajo) en un panel laboral corto. La pregunta aplicada no es metodológica en abstracto: es si la lectura de probabilidades cambia de forma relevante cuando se reconoce heterogeneidad persistente no observada.
+Este análisis estudia un resultado multinomial de actividad (`status`: escuela, hogar, trabajo) en un panel laboral corto. La pregunta aplicada no es metodológica en abstracto: es si la lectura de probabilidades cambia de forma relevante cuando se reconoce heterogeneidad persistente no observada.
 
 La comparación entre multinomial pooled y multinomial-CRE (Mundlak) muestra diferencias importantes en APEs por categoría. Por eso, el aporte del caso se concentra en criterio de especificación e interpretación profesional de probabilidades, sin exagerar el alcance metodológico.
 
@@ -115,7 +117,7 @@ Resultado: `status` con tres categorías de actividad: Escuela, Hogar y Trabajo.
 ::: {.section-box}
 ## Idea central
 
-El valor de la pieza no está en "predecir más" ni en complejizar por complejizar. Está en mostrar cómo cambia la lectura aplicada cuando se controla heterogeneidad persistente correlacionada con regresores en un multinomial de panel.
+El valor del análisis está en mostrar cómo cambia la lectura aplicada cuando se controla heterogeneidad persistente correlacionada con regresores en un multinomial de panel.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -148,7 +150,6 @@ La secuencia se diseña para mantener foco aplicado:
 2. Estimar multinomial-CRE agregando medias temporales por individuo.
 3. Comparar APEs por categoría entre pooled y CRE, priorizando magnitudes interpretables.
 4. Usar test conjunto de medias temporales tipo Mundlak como respaldo sobre relevancia de heterogeneidad correlacionada.
-5. Dejar indicadores de clasificación in-sample en segundo plano, como chequeo descriptivo no predictivo.
 
 ## Qué evita una lectura automática
 
@@ -177,9 +178,9 @@ La comparación pooled vs CRE cambia la lectura aplicada en puntos importantes:
 | `exper` | -0.1493 (0.0062) | -0.0335 (0.0069) | -0.0756 (0.0060) | +0.0817 (0.0095) | +0.2249 (0.0050) | -0.0482 (0.0101) | La lectura pooled sobre trabajo no se sostiene en CRE |
 :::
 
-El comparador visual siguiente resume, por outcome, cuánto se mueve la lectura aplicada al pasar de pooled a CRE para educación y experiencia.
+El comparador visual concentra la variable protagonista: para educación, la lectura de Escuela y Hogar invierte su signo al pasar de pooled a CRE, mientras Trabajo conserva un APE positivo y algo mayor.
 
-<img src="../assets/t18_desplazamiento_pooled_cre.svg" alt="Comparación pooled versus CRE en T18: para Educación y Experiencia, los cambios de probabilidad por categoría en Escuela, Hogar y Trabajo muestran que el cambio de especificación altera materialmente la lectura aplicada." width="780" style="display:block; max-width:100%; height:auto;" />
+<img src="../assets/t18_ape_educ_pooled_cre.svg" alt="Efectos parciales promedio de educación sobre Escuela, Hogar y Trabajo bajo multinomial pooled y multinomial CRE; Escuela y Hogar cambian de signo." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;" />
 
 Estas diferencias no implican una lectura concluyente, pero sí muestran sensibilidad sustantiva de interpretación cuando se corrige la especificación para heterogeneidad persistente.  
 `expersq` y `black` se mantienen como evidencia complementaria en el respaldo técnico, sin desplazar las variables protagonistas.
@@ -190,24 +191,22 @@ El respaldo formal y técnico se mantiene acotado y funcional a la narrativa apl
 
 - **Test Mundlak conjunto:** `chi2(6)=1636.61`, `p=0.0000` para `educ_bar`, `exper_bar`, `expersq_bar`.
 - **Implicancia:** la heterogeneidad persistente correlacionada es empíricamente relevante en este caso.
-- **Nota secundaria (clasificación):** el ajuste in-sample del modelo CRE en `status` es `79.55%`; se reporta solo como referencia descriptiva y no como criterio de valor principal.
 
 ::: {.table-box}
 ### Resumen de diagnósticos
 
 | Diagnóstico | Evidencia | Lectura profesional |
 |---|---:|---|
-| Test conjunto Mundlak | chi2(6)=1636.61, p=0.0000 | La heterogeneidad persistente correlacionada es relevante En esta aplicación |
+| Test conjunto Mundlak | chi2(6)=1636.61, p=0.0000 | La heterogeneidad persistente correlacionada es relevante en esta aplicación |
 | Comparación APE pooled vs CRE | Cambios de magnitud y signo en educ y exper | La especificación afecta la interpretación aplicada de probabilidades |
-| Clasificación in-sample (secundaria) | 79.55% en status | Se informa como referencia descriptiva, no como meta predictiva |
 :::
 
 ## Lectura profesional
 
-T18 aporta una práctica profesional concreta: antes de cerrar una historia sustantiva en multinomial de panel, conviene auditar cuánto depende esa historia del supuesto pooled sobre heterogeneidad no observada.
+Este caso aporta una práctica profesional concreta: antes de cerrar una historia sustantiva en multinomial de panel, conviene auditar cuánto depende esa historia del supuesto pooled sobre heterogeneidad no observada.
 
 En este caso, la comparación pooled vs CRE cambia varias magnitudes y algunos signos en APEs. Por eso, para esta muestra, la lectura principal se ancla en CRE; no por superioridad abstracta del método, sino por consistencia entre pregunta aplicada, estructura de panel y evidencia de Mundlak.
 
 ## Cierre
 
-La pieza muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es el valor del caso: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados.
+El análisis muestra cómo una decisión de especificación puede cambiar la interpretación aplicada de estados de actividad en panel. Ese es el valor del caso: econometría al servicio de una lectura más creíble y transparente, con foco en probabilidades comparables y con límites explicitados.

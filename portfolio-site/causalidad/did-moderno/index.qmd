@@ -3,9 +3,11 @@ title: "Difference-in-Differences moderno"
 format:
   html:
     title-block-style: none
+    css: ../assets/causalidad-explorer.css
+    include-after-body: ../assets/causalidad-explorer.html
 ---
 
-::: {.hero-banner .hero-banner--causalidad}
+::: {.hero-banner .hero-banner--causalidad-did}
 ::: {.hero-banner__content}
 <span class="hero-banner__kicker">Causalidad · Línea de profundización</span>
 
@@ -24,22 +26,29 @@ Este espacio organiza la transición desde el diseño canónico hacia los proble
 :::
 :::
 
-## Del diseño canónico a las herramientas modernas
+::: {.causalidad-explorer .js-causalidad-explorer}
+<nav class="causalidad-sidebar" aria-label="Áreas de DiD moderno">
+<p class="causalidad-sidebar__title">EXPLORAR DID MODERNO</p>
+<div class="causalidad-tabs" role="tablist" aria-orientation="vertical">
+<button id="tab-crisis-twfe" class="causalidad-tab" type="button" role="tab" aria-controls="area-crisis-twfe">La crisis del TWFE</button>
+<button id="tab-soluciones-did" class="causalidad-tab" type="button" role="tab" aria-controls="area-soluciones-did">Soluciones modernas</button>
+</div>
+</nav>
+
+<div class="causalidad-mobile-control">
+<label for="did-area-select">Explorar área</label>
+<select id="did-area-select">
+<option value="area-crisis-twfe">La crisis del TWFE</option>
+<option value="area-soluciones-did">Soluciones modernas</option>
+</select>
+</div>
+
+::: {.causalidad-panels}
+::: {#area-crisis-twfe .causalidad-panel role="tabpanel" aria-labelledby="tab-crisis-twfe"}
+## La crisis del TWFE
 
 ::: {.section-lead}
-El DiD canónico ofrece un punto de partida transparente. La extensión a múltiples cohortes y períodos exige examinar qué compara una regresión TWFE, cómo inciden la adopción escalonada y la heterogeneidad de efectos, y qué diagnósticos y estimadores permiten recuperar parámetros causales bien definidos.
-:::
-
-::: {.section-status}
-**Ruta conceptual del bloque**
-
-DiD canónico → problemas de TWFE bajo adopción escalonada y heterogeneidad → diagnósticos → estimadores modernos.
-:::
-
-## Crisis moderna de Difference-in-Differences
-
-::: {.section-lead}
-Esta primera línea examina por qué una regresión TWFE puede perder una interpretación causal transparente cuando las cohortes adoptan en momentos distintos y los efectos varían con el tiempo o la exposición.
+Por qué la generalización clásica de diferencias en diferencias puede volverse problemática con adopción escalonada y efectos heterogéneos: comparaciones implícitas inadecuadas, ponderaciones problemáticas y contaminación de estudios de eventos dinámicos.
 :::
 
 ::: {.piece-grid}
@@ -54,7 +63,9 @@ Esta primera línea examina por qué una regresión TWFE puede perder una interp
 
 **Enseñanza principal:** TWFE puede usar cohortes ya tratadas como controles y mezclar comparaciones con distinto contenido causal
 
-**Estado de evidencia:** Pieza técnica
+**Estado de evidencia:** Análisis técnico
+
+<a class="piece-card__cta" href="../piezas/did_m04_twfe_goodman_bacon.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -68,7 +79,9 @@ Esta primera línea examina por qué una regresión TWFE puede perder una interp
 
 **Enseñanza principal:** Los pesos negativos pueden sacar a TWFE del rango de los efectos verdaderos; una alternativa requiere igualmente comparaciones creíbles
 
-**Estado de evidencia:** Pieza técnica
+**Estado de evidencia:** Análisis técnico
+
+<a class="piece-card__cta" href="../piezas/did_m05_twfe_pesos_negativos.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -82,14 +95,19 @@ Esta primera línea examina por qué una regresión TWFE puede perder una interp
 
 **Enseñanza principal:** Leads y lags TWFE pueden mezclar cohortes y tiempos relativos; incluso un lead puede incorporar efectos pos-tratamiento
 
-**Estado de evidencia:** Pieza técnica
+**Estado de evidencia:** Análisis técnico
+
+<a class="piece-card__cta" href="../piezas/did_m06_event_study_contaminacion.qmd">Abrir análisis →</a>
 :::
 :::
 
+:::
+
+::: {#area-soluciones-did .causalidad-panel role="tabpanel" aria-labelledby="tab-soluciones-did"}
 ## Soluciones modernas
 
 ::: {.section-lead}
-Esta segunda línea parte de efectos causales definidos por cohorte y período, selecciona grupos de comparación todavía válidos y hace explícitas las decisiones de agregación.
+Métodos que redefinen explícitamente el objeto causal, utilizan grupos de comparación válidos y separan identificación, estimación y agregación para recuperar efectos por cohorte, tiempo calendario o tiempo relativo.
 :::
 
 ::: {.piece-grid}
@@ -104,7 +122,9 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 
 **Enseñanza principal:** Primero se identifican comparaciones causales válidas; después se agregan los efectos heterogéneos con ponderaciones explícitas
 
-**Estado de evidencia:** Pieza técnica aplicada
+**Estado de evidencia:** Análisis técnico aplicado
+
+<a class="piece-card__cta" href="../piezas/did_m07_callaway_santanna.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -118,7 +138,9 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 
 **Enseñanza principal:** El contrafactual se aprende únicamente con observaciones sin tratamiento; las brechas tratadas se agregan después según la pregunta causal
 
-**Estado de evidencia:** Pieza técnica aplicada
+**Estado de evidencia:** Análisis técnico aplicado
+
+<a class="piece-card__cta" href="../piezas/did_m08_bjs_imputacion.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -132,7 +154,9 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 
 **Enseñanza principal:** La regresión puede recuperar `ATT(g,t)` modernos cuando la especificación admite la heterogeneidad relevante y la agregación se hace explícita
 
-**Estado de evidencia:** Pieza técnica aplicada con evidencia condicionada
+**Estado de evidencia:** Análisis técnico aplicado con evidencia condicionada
+
+<a class="piece-card__cta" href="../piezas/did_m09_wooldridge_etwfe.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -147,5 +171,10 @@ Esta segunda línea parte de efectos causales definidos por cohorte y período, 
 **Enseñanza principal:** La referencia pretratamiento puede redefinirse por cohorte antes de estimar comparaciones limpias; la elección entre nivel y tendencia cambia sustantivamente el contrafactual
 
 **Estado de evidencia:** Comparación metodológica aplicada con evidencia condicionada
+
+<a class="piece-card__cta" href="../piezas/did_m09b_lee_wooldridge_rolling.qmd">Abrir análisis →</a>
+:::
+:::
+:::
 :::
 :::

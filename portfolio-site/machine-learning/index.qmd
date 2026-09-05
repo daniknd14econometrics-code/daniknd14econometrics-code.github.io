@@ -9,10 +9,10 @@ format:
 ::: {.hero-banner__content}
 <span class="hero-banner__kicker">Portal de sección</span>
 
-# Machine Learning aplicado a problemas económicos
+# Statistical Machine Learning: de la predicción a la decisión
 
 ::: {.hero-banner__lead}
-Esta sección funciona hoy como una maqueta visual del módulo de machine learning. El contenido definitivo se incorporará de forma progresiva, manteniendo el mismo estándar editorial del sitio.
+Quince análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada pieza parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
 :::
 
 ::: {.hero-banner__actions}
@@ -24,34 +24,280 @@ Esta sección funciona hoy como una maqueta visual del módulo de machine learni
 :::
 :::
 
-## Módulo en desarrollo
+**15 análisis · 7 áreas**
 
-::: {.section-status}
-Sección en estado de prototipo visual. Las tarjetas siguientes muestran la estructura prevista y no deben leerse como piezas finales publicadas.
-:::
+## Áreas de trabajo
+
+Las cinco primeras áreas ya reúnen análisis publicados. Reducción de dimensión y supervivencia conservan su lugar en la arquitectura mientras se incorporan nuevas piezas.
 
 ::: {.piece-grid}
 ::: {.piece-card}
-### Prototipo de línea temática: series temporales y pronóstico
-Borrador de estructura para futuras piezas sobre demanda, actividad e indicadores con validación temporal.
+### Clasificación, probabilidades y decisión
+Estimar probabilidades, evaluar clasificadores y decidir bajo distintos costos de error.
 
-**Estado actual:** Maqueta editorial  
-**Publicación definitiva:** Pendiente  
+**5 piezas disponibles**
+
+<a class="piece-card__cta" href="#clasificacion">Explorar las piezas</a>
 :::
 
 ::: {.piece-card}
-### Prototipo de línea temática: clasificación y scoring
-Borrador de estructura para casos de clasificación en riesgo, adopción y segmentación con métricas de negocio.
+### Selección, regularización y alta dimensionalidad
+Controlar la complejidad y evaluar qué información ayuda a generalizar.
 
-**Estado actual:** Maqueta editorial  
-**Publicación definitiva:** Pendiente  
+**2 piezas disponibles**
+
+<a class="piece-card__cta" href="#seleccion-regularizacion">Explorar las piezas</a>
 :::
 
 ::: {.piece-card}
-### Prototipo de línea temática: causal ML
-Borrador de estructura para combinar aprendizaje automático e inferencia de efectos heterogéneos.
+### No linealidad y modelos aditivos {#area-no-linealidad}
+Representar relaciones flexibles conservando una lectura interpretable.
 
-**Estado actual:** Maqueta editorial  
-**Publicación definitiva:** Pendiente  
+**2 piezas disponibles**
+
+<a class="piece-card__cta" href="#no-linealidad-y-modelos-aditivos">Explorar las piezas</a>
 :::
+
+::: {.piece-card}
+### Árboles y ensambles
+Combinar reglas de aprendizaje y comparar su capacidad predictiva.
+
+**2 piezas disponibles**
+
+<a class="piece-card__cta" href="#arboles-y-ensambles">Explorar las piezas</a>
+:::
+
+::: {.piece-card}
+### Outcomes, pérdidas y objetivos predictivos
+Alinear la variable respuesta, la función de pérdida y la pregunta de decisión.
+
+**4 piezas disponibles**
+
+<a class="piece-card__cta" href="#outcomes-perdidas-y-objetivos-predictivos">Explorar las piezas</a>
+:::
+
+::: {.piece-card}
+### Reducción de dimensión y aprendizaje no supervisado
+Explorar estructura y construir representaciones de la información.
+
+**En desarrollo**
+:::
+
+::: {.piece-card}
+### Supervivencia y tiempo hasta evento
+Estudiar cuándo ocurre un evento y cómo evaluar predicciones con seguimiento incompleto.
+
+**En desarrollo**
+:::
+:::
+
+## Clasificación, probabilidades y decisión {#clasificacion}
+
+Cinco aplicaciones conectan probabilidades y decisiones: costos de error, validación temporal, eventos raros y comparación de clasificadores binarios y multiclase.
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Riesgo de default: de la probabilidad a la decisión](piezas/t01_default.qmd)
+Una misma probabilidad puede llevar a decisiones distintas. Logit y KNN se comparan con validación anidada y costos de error explícitos.
+
+**Métodos:** Logit · KNN · validación cruzada
+
+**Aplicación:** Default · 10.000 observaciones
+
+<a class="piece-card__cta" href="piezas/t01_default.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Dirección del mercado: la prueba está en el futuro](piezas/t02_smarket.qmd)
+El acierto de Logit en 2005 iguala al de una regla basada solo en prevalencia histórica. La prueba temporal cambia la lectura del resultado.
+
+**Métodos:** Logit · KNN · validación temporal
+
+**Aplicación:** Smarket · clasificación diaria
+
+<a class="piece-card__cta" href="piezas/t02_smarket.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Detectar compras raras: cuando 94 % de aciertos no alcanza](piezas/t03_caravan.qmd)
+KNN no detecta ninguna compra en la evaluación externa. El desbalance y la geometría de 85 predictores ayudan a interpretar el límite.
+
+**Métodos:** KNN · validación anidada · distancias
+
+**Aplicación:** Caravan · 348 compras en 5.822 casos
+
+<a class="piece-card__cta" href="piezas/t03_caravan.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Instituciones privadas: clasificar bien no es lo mismo que medir bien la certeza](piezas/t04_college.qmd)
+LDA mejora la clasificación y la calidad probabilística. Una AUC alta puede coexistir con pronósticos excesivamente seguros.
+
+**Métodos:** LDA · QDA · Gaussian Naive Bayes
+
+**Aplicación:** College · 777 instituciones
+
+<a class="piece-card__cta" href="piezas/t04_college.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Origen de los automóviles: acertar la clase o acertar la probabilidad](piezas/t05_auto.qmd)
+QDA clasifica mejor los tres orígenes; LDA obtiene mejor log-loss. Los errores por clase y los costos orientan la elección.
+
+**Métodos:** LDA · QDA · Gaussian Naive Bayes multiclase
+
+**Aplicación:** Auto · 392 automóviles
+
+<a class="piece-card__cta" href="piezas/t05_auto.qmd">Leer análisis</a>
+:::
+:::
+
+## Selección, regularización y alta dimensionalidad {#seleccion-regularizacion}
+
+Dos aplicaciones muestran cómo cambia la decisión metodológica cuando controlar la complejidad deja de ser opcional: seleccionar un subconjunto discreto o contraer coeficientes, y regularizar cuando hay más predictores que observaciones.
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Salarios de beisbolistas: cuánto simplificar sin perder predicción](piezas/t06_hitters.qmd)
+Selección secuencial, Lasso y Ridge compiten con MCO bajo validación anidada. El RMSE ganador convive con soluciones de complejidad muy distinta.
+
+**Métodos:** MCO · Forward/Backward · Lasso · Ridge
+
+**Aplicación:** Hitters · salario de 263 jugadores
+
+<a class="piece-card__cta" href="piezas/t06_hitters.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Espectros de suelo: regularizar cuando p supera a n](piezas/t07_nirsoil.qmd)
+Elastic Net combina contracción y selección en 700 predictores casi redundantes. La ventaja sobre Lasso es pequeña y debe leerse junto con la estabilidad.
+
+**Métodos:** Ridge · Lasso · Elastic Net
+
+**Aplicación:** NIRsoil · nitrógeno en 645 muestras
+
+<a class="piece-card__cta" href="piezas/t07_nirsoil.qmd">Leer análisis</a>
+:::
+:::
+
+## No linealidad y modelos aditivos {#no-linealidad-y-modelos-aditivos}
+
+Dos aplicaciones muestran cuándo conviene comprar flexibilidad y cuándo la penalización devuelve una regla simple.
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Concreto: cuando una recta deja resistencia sin explicar](piezas/t08a_concrete.qmd)
+Splines y GAM para predecir resistencia a compresión con validación agrupada por receta.
+
+**Métodos:** MCO · Splines · GAM
+
+**Aplicación:** Concrete · resistencia a compresión
+
+<a class="piece-card__cta" href="piezas/t08a_concrete.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Lealtad y precio: cuándo la flexibilidad vuelve a ser una recta](piezas/t08b_oj.qmd)
+GAM logístico para compras de jugo de naranja y probabilidades por marca fuera de muestra.
+
+**Métodos:** Logit · GAM logístico · splines
+
+**Aplicación:** OJ · elección Citrus Hill o Minute Maid
+
+<a class="piece-card__cta" href="piezas/t08b_oj.qmd">Leer análisis</a>
+:::
+:::
+
+## Árboles y ensambles {#arboles-y-ensambles}
+
+Dos problemas muestran qué cambia al pasar de un árbol individual a un promedio de árboles: predecir un valor continuo y clasificar mensajes bajo una regla de decisión.
+
+::: {.piece-grid}
+::: {.piece-card}
+### [California Housing: cuándo un ensamble estabiliza el valor de una vivienda](piezas/t09a_california.qmd)
+CART, Bagging y Random Forest para predecir el valor mediano de vivienda fuera de muestra.
+
+**Métodos:** CART · Bagging · Random Forest
+
+**Aplicación:** California Housing · valor mediano de vivienda
+
+<a class="piece-card__cta" href="piezas/t09a_california.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Spam: la estabilidad que convierte un árbol en una decisión confiable](piezas/t09b_spam.qmd)
+CART, Bagging y Random Forest para clasificar spam y email con scores y umbrales explícitos.
+
+**Métodos:** CART · Bagging · Random Forest
+
+**Aplicación:** Spam · clasificación de correo
+
+<a class="piece-card__cta" href="piezas/t09b_spam.qmd">Leer análisis</a>
+:::
+:::
+
+## Outcomes, pérdidas y objetivos predictivos {#outcomes-perdidas-y-objetivos-predictivos}
+
+Cuatro piezas muestran que definir el target incluye respetar su soporte, elegir el enlace adecuado y evaluar con la pérdida que representa la decisión.
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Contar bien: predecir hijos sin tratar el outcome como gaussiano](piezas/e01_fertil2_conteo.qmd)
+Poisson, suavizados y ensambles para una respuesta de conteo no negativa.
+
+**Métodos:** Poisson · GAM · Random Forest
+
+**Aplicación:** Fertil2 · número de hijos
+
+<a class="piece-card__cta" href="piezas/e01_fertil2_conteo.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Precios positivos: cuando MSE no cuenta toda la historia](piezas/e02_loanapp_gamma.qmd)
+Gamma, enlace log y flexibilidad para una respuesta continua y sesgada.
+
+**Métodos:** Gamma · enlace log · GAM
+
+**Aplicación:** Loanapp · monto positivo
+
+<a class="piece-card__cta" href="piezas/e02_loanapp_gamma.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Participación 401(k): predecir una fracción dentro del soporte](piezas/e03_401k_fraccional.qmd)
+Fractional Logit y métodos flexibles para una tasa acotada.
+
+**Métodos:** Fractional Logit · GAM · Random Forest
+
+**Aplicación:** 401(k) · tasa de participación
+
+<a class="piece-card__cta" href="piezas/e03_401k_fraccional.qmd">Leer análisis</a>
+:::
+
+::: {.piece-card}
+### [Activos financieros: predecir escenarios, no solo un promedio](piezas/q01_401ksubs_quantiles.qmd)
+QR, GAM cuantílico y Quantile Forest para cuantiles condicionales.
+
+**Métodos:** Regresión cuantílica · GAM · Quantile Forest
+
+**Aplicación:** 401(k) · activos financieros
+
+<a class="piece-card__cta" href="piezas/q01_401ksubs_quantiles.qmd">Leer análisis</a>
+:::
+:::
+
+## Reducción de dimensión y aprendizaje no supervisado
+
+Esta área incorporará piezas sobre representación, estructura latente y agrupamiento de observaciones.
+
+::: {.small-note}
+**En desarrollo.**
+:::
+
+## Supervivencia y tiempo hasta evento
+
+Esta área incorporará piezas sobre riesgo, censura y evaluación de predicciones a lo largo del tiempo.
+
+::: {.small-note}
+**En desarrollo.**
 :::

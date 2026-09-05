@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -77,7 +78,9 @@ Entre los observables relevantes, `edu` representa años de educación formal y 
 
 En este caso, tratados y controles no parten de condiciones equivalentes en observables clave. Por eso, la diferencia de medias no compara grupos plenamente comparables.
 
-Cuando esa comparabilidad falla, la brecha bruta en `salario` no puede leerse como efecto causal limpio: mezcla el posible impacto del tratamiento con diferencias previas entre grupos.
+La evidencia descriptiva permite verlo: el salario medio es aproximadamente 47.523 entre tratados y 40.359 entre controles, pero los tratados también tienen más educación (11,8 frente a 10,0 años) y una presencia mucho mayor en Montevideo (49% frente a 16%).
+
+El dato faltante es el salario que las personas tratadas habrían obtenido sin tratamiento. El promedio observado de los controles sólo representa ese contrafactual si ambos grupos son comparables; de lo contrario, la brecha bruta mezcla el efecto sobre los tratados con sesgo de selección.
 
 ## Comparación dominante
 
@@ -89,7 +92,7 @@ La comparación central evalúa cómo varía la magnitud estimada de `treat` cua
 | Diferencia de medias (tratados - controles) | 7163.8 | Brecha observada sin identificación causal |
 | MCO simple robusto | 7163.8 | Reexpresa la misma comparación bruta |
 | MCO con controles (`mont`, `edu`) | 100.1 | Cambia de forma drástica al ajustar por observables |
-| PSM ATE (logit/probit) | 976.0 / 1012.0 | Magnitud sensible al diseño de emparejamiento |
+| PSM ATE (logit/probit) | 976.0 / 1012.0 | Resultado similar con ambas funciones de enlace |
 | PSM ATET (logit) | 3614.4 | Efecto sobre tratados, no equivalente al ATE |
 :::
 
@@ -110,7 +113,7 @@ La lectura principal es directa: cuando la magnitud estimada cambia de forma sus
 
 La lección principal es metodológica y no de resultado puntual: una diferencia de medias no identifica, por sí sola, un efecto causal.
 
-Por ello, esta pieza no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.
+Por ello, este análisis no busca forzar una especificación ganadora: funciona como una comparación metodológica breve, no orientada a una especificación final única.
 
 En particular, los estimandos de emparejamiento (ATE/ATET) no deben leerse como "el efecto verdadero": su validez depende de supuestos como selección en observables y soporte común.
 

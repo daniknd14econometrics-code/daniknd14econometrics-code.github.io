@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -31,7 +32,7 @@ El efecto se identifica comparando cambios, no niveles aislados
 :::
 
 ::: {.hero-sub}
-Esta pieza parte del diseño canónico de dos grupos y dos períodos y avanza hacia una versión condicional que reconstruye la población de comparación mediante propensity scores y soporte común.
+Este análisis parte del diseño canónico de dos grupos y dos períodos y avanza hacia una versión condicional que reconstruye la población de comparación mediante propensity scores y soporte común.
 :::
 :::
 
@@ -179,9 +180,9 @@ La lógica no consiste en buscar grupos con idéntico ingreso observado después
 
 La extensión utiliza una muestra NSW/Dehejia-Wahba de **445 personas**: 185 participantes de un programa de capacitación laboral y 260 controles. El resultado es el cambio de ingresos entre 1975 y 1978. Los ingresos de 1974 se incorporan como covariable previa adicional para capturar diferencias de trayectoria antes del período base.
 
-![Distribución del propensity score para participantes y controles NSW](did01_overlap_nsw.svg){fig-alt="Histogramas superpuestos del propensity score para tratados y controles. La mayor parte de ambas distribuciones se encuentra dentro de la intersección de soporte entre 0,239 y 0,629."}
+La base funciona como vehículo pedagógico para implementar el método; no constituye una replicación exacta de la aplicación empírica original de Abadie.
 
-Los propensity scores presentan una intersección amplia. La versión operativa del gráfico, estimada mediante logit con las covariables predeterminadas, ubica el rango común aproximadamente entre `0,239` y `0,629`. El diagnóstico original con probit arroja una conclusión prácticamente idéntica. La estabilidad del ATT al restringir el soporte indica que el resultado no depende materialmente de unas pocas observaciones sin comparación adecuada.
+El propensity score probit documentado ubica a los tratados entre `0,237` y `0,680` y a los controles entre `0,228` y `0,629`. La intersección simple, `0,237–0,629`, conserva 439 de las 445 observaciones. La estabilidad del ATT al restringir ese soporte indica que el resultado no depende materialmente de unas pocas observaciones sin comparación adecuada.
 
 ::: {.table-box}
 | Estrategia | Efecto estimado sobre el cambio de ingresos | EE | p-value | IC 95% |
@@ -196,6 +197,12 @@ Los propensity scores presentan una intersección amplia. La versión operativa 
 El parámetro principal es un **ATT**: el efecto promedio del programa para la población tratada representada por el diseño. La estimación con `absdid` indica un aumento de ingresos cercano a **1.469 unidades monetarias** respecto del cambio contrafactual reconstruido con controles reponderados.
 
 La construcción manual y el comando especializado recuperan efectos puntuales muy próximos. La inferencia principal se toma de `absdid`, que incorpora el error asociado con estimar el propensity score; por eso no se asigna a la versión manual una precisión que esa reconstrucción pedagógica no reporta.
+
+## Heterogeneidad y sensibilidad a la escala
+
+La aproximación lineal al ATT condicional no aporta evidencia de heterogeneidad por edad (`p = 0,485`). La pendiente asociada con educación es positiva, pero solo sugestiva (`p = 0,058`); no alcanza para afirmar que el efecto aumente sistemáticamente con los años educativos.
+
+Al cambiar el outcome por la variación de `log(1 + ingreso)`, la diferencia sin ajuste es 0,3296 (`p = 0,514`), el ajuste lineal produce 0,3049 (`p = 0,526`) y la construcción manual de Abadie, 0,3959 sin inferencia formal. Esta sensibilidad no refuta el resultado en niveles: transforma la variable de resultado y, con ella, el estimando. Sí muestra que la precisión de la conclusión depende de la escala elegida.
 
 ## Qué cambia entre las dos estrategias
 
@@ -219,14 +226,8 @@ En NSW, el ATT se refiere a participantes comparables dentro del soporte observa
 
 Las dos aplicaciones tienen dos períodos principales. Por ello no abordan todavía tratamientos escalonados, efectos dinámicos ni problemas derivados de combinar múltiples cohortes y períodos en una única regresión.
 
-## Puente hacia diseños DiD con más períodos
-
-El DiD canónico establece la idea fundamental: identificar mediante una diferencia de cambios bajo tendencias paralelas. La versión condicional muestra que esa comparabilidad puede construirse con observables, weighting y soporte común.
-
-El paso siguiente es estudiar qué ocurre cuando se dispone de muchos períodos. Antes de reconsiderar el estimando, aparece un problema clásico de inferencia: los outcomes y los tratamientos pueden persistir en el tiempo, de modo que errores estándar ingenuos tratan como independiente información que no lo es. Esa cuestión requiere una pieza propia.
-
 ## Conclusión
 
 Difference-in-Differences sustituye comparaciones aisladas de niveles o de tiempo por una comparación de cambios con un contrafactual explícito. En la aplicación NJ–PA, el efecto estimado es **+2,750 FTE por restaurante**; en NSW, la extensión de Abadie estima un ATT cercano a **1.469 unidades monetarias de ingreso** para los participantes comparables.
 
-La contribución central no se reduce a esos dos números. La pieza muestra una progresión: tendencias paralelas incondicionales en el diseño canónico, tendencias paralelas condicionales cuando la composición importa y ponderación con soporte común para construir una comparación más pertinente. Esa arquitectura es el punto de partida para estudiar después la inferencia en paneles largos y, más adelante, los problemas de los diseños DiD con adopción escalonada.
+La contribución central no se reduce a esos dos números. El análisis muestra una progresión: tendencias paralelas incondicionales en el diseño canónico, tendencias paralelas condicionales cuando la composición importa y ponderación con soporte común para construir una comparación más pertinente.

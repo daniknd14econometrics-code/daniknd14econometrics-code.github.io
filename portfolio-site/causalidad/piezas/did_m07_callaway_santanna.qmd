@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -175,6 +176,8 @@ resume primero cada cohorte y luego combina esos efectos medios con pesos de coh
 
 Ambos parámetros son legítimos, pero responden preguntas distintas. El primero da mayor presencia a cohortes que aportan más celdas pos-tratamiento; el segundo organiza la ponderación a partir de efectos medios por cohorte. Elegir entre ellos exige decidir qué población y qué horizonte deben dominar el resumen.
 
+La misma matriz admite otras dos lecturas. La agregación por **calendario** pregunta cuál fue el efecto medio entre las cohortes ya tratadas en un año histórico; la agregación por **tiempo relativo** pregunta cómo evoluciona el efecto desde la adopción. Así, global, cohorte, calendario y *event time* no son cuatro formas intercambiables de presentar un número: son cuatro preguntas construidas sobre los mismos efectos elementales.
+
 ## Callaway–Sant’Anna frente a TWFE
 
 Como referencia, la regresión TWFE estática estima **−0,0365**, con EE **0,0133**. La cercanía numérica respecto de los agregados modernos no establece equivalencia entre estimandos.
@@ -195,17 +198,28 @@ La contribución metodológica no consiste en afirmar que TWFE estaba completame
 | Pseudo-ATT pretratamiento, test global | p = 0,2327 | Sin evidencia estadística conjunta de diferencias previas |
 | Ventana próxima al tratamiento | p = 0,5651 | Resultado compatible con la lectura global |
 | Nunca tratados frente a todavía no tratados | Agregados muy próximos | La elección del control no altera sustantivamente el resultado en esta muestra |
+| OR, IPW, IPW estabilizado y dos variantes DR | Globales entre −0,04197 y −0,04175 | Estabilidad frente a distintas rutas de estimación de las celdas |
 | Soporte pos-tratamiento | 7 de 7 celdas identificables | Hay tratados y controles válidos en cada celda observada |
 | Overlap ilustrativo | Razonable en `g=2006, t=2006` | Apoya esa comparación; no reemplaza tendencias paralelas |
 :::
 
-Los no rechazos ordenan la evidencia pretratamiento, pero no prueban tendencias paralelas. La identificación causal continúa dependiendo de que, condicionalmente en las covariables pretratamiento, las cohortes tratadas y sus controles representen evoluciones contrafactuales comparables.
+Los no rechazos ordenan la evidencia pretratamiento, pero no prueban tendencias paralelas. La identificación causal continúa dependiendo de que, condicionalmente en las covariables pretratamiento, las cohortes tratadas y sus controles representen evoluciones contrafactuales comparables. La proximidad entre OR, IPW y DR tampoco valida ese supuesto: muestra estabilidad frente a distintas maneras de estimar las mismas comparaciones. En esta base, además, el logaritmo de la población es constante dentro de cada condado; que una base pre común y otra definida por cohorte produzcan el mismo agregado es una limitación pedagógica, no evidencia de que la elección temporal de covariables sea irrelevante.
 
 ## Dinámica y composición
 
-Los `ATT(g,t)` también pueden agregarse por tiempo relativo. Sin embargo, en este panel las cohortes disponibles cambian con el horizonte: las tres contribuyen en el momento de adopción, solo dos alcanzan el período siguiente y únicamente la cohorte 2004 llega a los horizontes 2 y 3.
+Los `ATT(g,t)` también pueden agregarse por tiempo relativo. La trayectoria moderna estima **−0,0211** en el momento de adopción, **−0,0530** un año después, **−0,1404** a dos años y **−0,1069** a tres. Sin embargo, no observa la misma población en todos los puntos: las tres cohortes contribuyen en `e=0`, solo 2004 y 2006 alcanzan `e=1`, y únicamente 2004 llega a `e=2` y `e=3`.
 
-Una trayectoria balanceada puede restringir el análisis a cohortes observables durante un mismo horizonte pos-tratamiento. Esa decisión separa mejor dinámica y composición, pero reduce la población y el rango temporal. Aquí funciona como advertencia de construcción, no como un nuevo análisis de event studies.
+![Trayectoria pos-tratamiento con composición variable y versión balanceada](did_m07_event_study_composicion.svg){fig-alt="Dos paneles comparan agregaciones por tiempo relativo. La trayectoria con toda la información pasa de menos 0,0211 en e igual a cero a menos 0,1404 en e igual a dos, pero pierde cohortes con el horizonte. La versión balanceada conserva las cohortes 2004 y 2006 en e igual a cero y uno y obtiene un promedio post de menos 0,02860, frente a menos 0,08035 en la trayectoria no balanceada."}
+
+La versión balanceada hasta `e'=1` conserva solo las cohortes 2004 y 2006 en ambos horizontes. Su efecto en `e=0` es **−0,0042** y en `e=1` permanece en **−0,0530**. El promedio post cae en magnitud de **−0,08035** en la trayectoria no balanceada a **−0,02860** en la balanceada.
+
+La diferencia no selecciona una estimación “correcta” y otra “incorrecta”. La primera utiliza toda la información disponible en cada horizonte; la segunda sacrifica la cohorte 2007 y los horizontes largos para mantener constante la composición. El contraste muestra por qué una curva dinámica también requiere definir población y soporte antes de interpretarla como evolución del efecto.
+
+## Inferencia sobre agregados y trayectorias
+
+Las funciones de influencia permiten recombinar los `ATT(g,t)` y hacer inferencia sobre el agregado elegido. Para el promedio global simple, el error estándar asintótico es **0,01150** y el bootstrap multiplicador entrega **0,01176**; la conclusión sustantiva no cambia.
+
+En una trayectoria completa, la distinción relevante es entre incertidumbre punto a punto y cobertura conjunta. Para `e=1`, cuya estimación es −0,0530, el intervalo bootstrap punto a punto es aproximadamente **[−0,0860; −0,0200]**, mientras la banda uniforme es **[−0,0952; −0,0108]**. La segunda es más amplia porque busca cubrir simultáneamente toda la trayectoria. Por eso la inferencia del *event study* no debe reducirse a inspeccionar por separado la significación de cada punto.
 
 ## Qué mejora y qué supuestos permanecen
 

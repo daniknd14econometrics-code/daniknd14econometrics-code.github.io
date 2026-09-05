@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500" role="img" aria-labelledby="title desc">
   <title id="title">Comparación de estimadores en WAGEPAN</title>
-  <desc id="desc">TWFE estima cero coma 1024, primeras diferencias cero coma 0593 y WAS cero coma 0412. El intervalo de WAS incluye cero.</desc>
+  <desc id="desc">TWFE estima 0,1024, con IC95% de 0,0453 a 0,1595; primeras diferencias 0,0593, con IC95% de menos 0,0001 a 0,1187; WAS 0,0412, con IC95% de menos 0,0202 a 0,1026. Primeras diferencias y WAS incluyen cero. Los intervalos de las regresiones usan la distribución t con agrupación por trabajador.</desc>
   <rect width="1100" height="500" fill="#ffffff"/>
   <text x="550" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#15324a">La estimación cae al cambiar la comparación</text>
   <text x="550" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">WAGEPAN: efecto estimado de la afiliación sindical sobre el logaritmo del salario</text>
@@ -15,11 +15,11 @@
     <text x="40" y="169">TWFE</text><text x="40" y="269">Primeras diferencias</text><text x="40" y="369">WAS</text>
   </g>
   <g stroke="#277da1" stroke-width="5" stroke-linecap="round">
-    <line x1="542" y1="162" x2="891" y2="162"/><line x1="403" y1="262" x2="766" y2="262"/><line x1="341" y1="362" x2="717" y2="362"/>
+    <line x1="541.7" y1="162" x2="891.0" y2="162"/><line x1="402.8" y1="262" x2="766.3" y2="262"/><line x1="341" y1="362" x2="717" y2="362"/>
   </g>
   <g stroke="#277da1" stroke-width="3">
-    <line x1="542" y1="151" x2="542" y2="173"/><line x1="891" y1="151" x2="891" y2="173"/>
-    <line x1="403" y1="251" x2="403" y2="273"/><line x1="766" y1="251" x2="766" y2="273"/>
+    <line x1="541.7" y1="151" x2="541.7" y2="173"/><line x1="891.0" y1="151" x2="891.0" y2="173"/>
+    <line x1="402.8" y1="251" x2="402.8" y2="273"/><line x1="766.3" y1="251" x2="766.3" y2="273"/>
     <line x1="341" y1="351" x2="341" y2="373"/><line x1="717" y1="351" x2="717" y2="373"/>
   </g>
   <circle cx="716" cy="162" r="10" fill="#15324a"/>

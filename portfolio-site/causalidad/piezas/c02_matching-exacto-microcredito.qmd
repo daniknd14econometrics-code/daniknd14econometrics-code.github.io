@@ -1,6 +1,6 @@
 ---
 title: "Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito"
-subtitle: "Comparación metodológica con regla explícita de diseño"
+subtitle: "Matching exacto y CEM: comparabilidad, soporte común y costo del coarsening"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -31,20 +32,20 @@ La prioridad es diseñar bien el contrafactual antes de comparar efectos
 :::
 
 ::: {.hero-sub}
-En esta aplicación de microcrédito, la decisión entre estrategias de emparejamiento se ordena por soporte, balance y muestra efectiva, no por el ATET o ATE más alto.
+En esta aplicación de microcrédito, matching exacto y CEM muestran que exigir comparabilidad modifica el soporte, la población efectiva y el estimando que puede sostenerse. El coeficiente más alto no identifica por sí solo el diseño más convincente.
 :::
 :::
 
 ## Resumen
 
-Esta pieza compara estrategias de matching exacto y CEM sobre hogares con participación femenina en microcrédito. La lectura central no es "qué método da el ATET más grande", sino qué diseño conserva comparabilidad sin perder demasiada muestra. Bajo la regla de diseño adoptada, la especificación preferida es `Matching exacto - especificación base (Exact / S1)`, como decisión condicionada y no como ganador absoluto.
+Este análisis compara matching exacto manual y CEM sobre hogares con participación femenina en microcrédito. El diseño manual conserva 734 de 1.129 hogares y produce un ATE de 0.0953 y un ATET de 0.1063. CEM con la regla Freedman–Diaconis conserva 357 hogares y produce un ATET de 0.2249. La diferencia entre estimaciones no ordena métodos: cada coarsening construye otro soporte y otra población comparable.
 
 :::: {.quick-grid}
 
 ::: {.section-box}
 ## Pregunta central
 
-En esta aplicación, ¿cuál es el efecto de la participación femenina en microcrédito (`dfmfd`) sobre el log del gasto total del hogar cuando el contrafactual se construye con emparejamiento, y qué diseño ofrece la estimación más defendible bajo una regla explícita de balance y soporte?
+¿Qué efecto se estima para la participación femenina en microcrédito (`dfmfd`) sobre el log del gasto total per cápita cuando el contrafactual se restringe a hogares comparables, y cuánto cuesta esa exigencia en soporte y población efectiva?
 :::
 
 ::: {.section-box}
@@ -52,7 +53,7 @@ En esta aplicación, ¿cuál es el efecto de la participación femenina en micro
 
 ::: {.small-note}
 - **Unidad de análisis:** hogares (`N = 1129`).
-- **Resultado:** log del gasto total del hogar (`lexptot`; definición exacta: `ln(1 + exptot)`).
+- **Resultado:** log del gasto total per cápita (`lexptot`; definición exacta: `ln(1 + exptot)`).
 - **Tratamiento:** `dfmfd` (participación femenina en microcrédito).
 - **Covariables clave de comparabilidad:** `sexhead`, `vaccess`, `agehead`, `educhead`, `lnland` y `pcirr`.
 :::
@@ -70,62 +71,41 @@ Comparar tratados y controles sin construir soporte común mezcla diferencias de
 
 Por eso, la lectura profesional no puede depender solo del tamaño del coeficiente.
 
-## Regla de decisión
+## Cómo se construye la comparabilidad
 
-La selección de diseño se hizo sin usar la variable de resultado para ordenar candidatos. Primero se exigió balance (`max|SMD| <= 0.10` en covariables clave) y luego se priorizó soporte (`ESS` y muestra retenida).
+El matching manual exige coincidencia exacta en `sexhead` y `vaccess`. Para que las cuatro covariables continuas puedan formar celdas útiles, agrupa `agehead` en siete intervalos, `educhead` en cuatro categorías y divide `lnland` y `pcirr` en cuartiles. Solo conserva una celda cuando contiene al menos un hogar tratado y uno de control.
 
-Como apoyo visual del criterio de balance, se muestra el love plot del diseño seleccionado.
+Con esa regla quedan 409 tratados y 325 controles: 734 hogares, aproximadamente 65 % de la muestra. El 35 % restante no tiene contraparte dentro de la definición adoptada. La estimación se refiere desde ese momento a la región de soporte común, no a los 1.129 hogares originales.
 
-![Love plot del diseño ganador (selector T3)](../../../../causalidad/insumos/5_graficos/3_ME_selector/3_smd.svg)
-
-::: {.table-box}
-## Contraste central de diseño
-
-La tabla resume la compensación relevante para decidir entre estrategias de emparejamiento en esta base.
-
-| Especificación | max\|SMD\| (clave) | Cumple regla base (`max|SMD| <= 0.10`) | ESS controles | Soporte retenido (`N1` / `N0`) | Lectura de diseño |
-|---|---:|---|---:|---:|---|
-| Matching exacto - especificación base (Exact / S1) | 0.0839 | Pasa regla base | 164.3 | 409 / 325 | Preferida bajo la regla base por combinar balance aceptable y mayor soporte efectivo |
-| CEM - regla Scott (CEM / scott) | 0.0184 | Pasa regla base | 63.6 | 192 / 157 | Balance más estricto, con pérdida marcada de muestra efectiva |
-| Matching exacto - especificación ampliada (Exact / S2) | 0.1697 | No pasa regla base | 269.0 | 505 / 431 | Se vuelve opción relevante si el umbral se relaja a 0.20 |
-| CEM - regla FD (CEM / fd) | 0.2114 | No pasa regla base | 86.1 | 201 / 156 | No cumple la regla base aunque conserva una muestra intermedia |
-:::
-
-## Decisión metodológica y alcance
-
-Bajo la regla de diseño adoptada para esta comparación, la preferencia queda en `Matching exacto - especificación base (Exact / S1)`. Esa preferencia no es universal:
-
-1. Depende del umbral elegido para balance.
-2. Si se relaja a `max|SMD| <= 0.20`, el ranking cambia y `Matching exacto - especificación ampliada (Exact / S2)` pasa al tope.
-3. La frontera no dominada incluye alternativas con distintos compromisos entre balance y soporte.
-
-Entonces, la conclusión correcta no es "hay un ganador absoluto", sino "hay una decisión defendible bajo una regla explícita de diseño".
-
-Con la decisión metodológica ya cerrada, el bloque siguiente interpreta el efecto estimado bajo la especificación preferida.
-
-::: {.section-box}
-## Lectura sustantiva del efecto
+CEM sistematiza la misma lógica de coarsening y matching exacto. El informe compara reglas automáticas y adopta Freedman–Diaconis como especificación de trabajo. La distancia multivariada $L_1$ ayuda a describir balance dentro de una grilla, pero no permite ordenar mecánicamente corridas con coarsenings diferentes: al cambiar los cortes también cambia el objeto sobre el cual se mide el desequilibrio.
 
 ::: {.table-box}
-| Especificación | ATET reportado | Precisión | Rol en la lectura |
-|---|---:|---:|---|
-| Matching exacto - especificación base (Exact / S1) | 0.1063 | EE bootstrap 0.0397 | Efecto principal bajo la regla de diseño adoptada |
-| CEM - regla FD (CEM / fd) | 0.2249 | EE bootstrap 0.0643 | Contraste de magnitud no preferido por la regla de balance |
+| Diseño | Estimando reportado | Tratados / controles en soporte | Muestra retenida | Lectura |
+|---|---|---:|---:|---|
+| Matching exacto manual | ATE y ATET | 409 / 325 | 734 (65 %) | Mayor cobertura bajo las celdas definidas manualmente |
+| CEM, Freedman–Diaconis | ATET | 201 / 156 | 357 (32 %) | Otra regla de coarsening y un soporte mucho más reducido |
 :::
 
-Bajo la especificación preferida, el efecto estimado sobre los tratados es positivo: entre los hogares tratados comparables dentro del soporte común, la participación femenina en microcrédito eleva el resultado en **0.1063 log-puntos** frente a su contrafactual no tratado comparable.
+Los pesos de CEM se utilizan para reproducir la composición de los tratados dentro de su muestra emparejada. Por eso el informe interpreta un ATET y no un ATE poblacional derivado automáticamente de esos pesos.
 
-Traducido a una escala más comunicable, ese valor implica aproximadamente **11.2%** más en `1 + gasto total del hogar` (porque `exp(0.1063) - 1 ≈ 0.112`).
+## Estimación e incertidumbre del procedimiento
 
-Esta lectura aplica a los hogares tratados comparables que permanecen dentro del soporte común de la especificación preferida (N1/N0 = 409/325), y no se extrapola automáticamente al total de hogares.
+::: {.table-box}
+| Diseño | Estimando | Estimación | EE analítico | EE bootstrap |
+|---|---|---:|---:|---:|
+| Matching exacto manual | ATE | 0.0953 | 0.0265 | 0.0389 |
+| Matching exacto manual | ATET | 0.1063 | 0.0263 | 0.0410 |
+| CEM, Freedman–Diaconis | ATET | 0.2249 | — | 0.0643 |
 :::
 
-El contraste dominante es claro: un ATET mayor (`CEM - regla FD`) no implica mejor diseño si cae comparabilidad bajo la regla adoptada. La decisión se basa en balance + soporte, no en maximizar el coeficiente.
+Las estimaciones están expresadas en unidades de `ln(1 + exptot)`, no en dinero. En el diseño manual, ATE y ATET son próximos, pero corresponden a poblaciones de agregación distintas: el ATE pondera los estratos por la muestra emparejada y el ATET por la distribución de los tratados emparejados.
+
+El bootstrap reconstruye en cada réplica los bins, las celdas, el soporte y la estimación. Sus errores estándar mayores muestran que la incertidumbre no se agota en comparar medias dentro de estratos ya dados; también importa que la propia región comparable fue construida con la muestra.
+
+El ATET de CEM es más del doble que el ATET manual. Esa diferencia no demuestra que CEM encuentre un efecto mayor ni que un método sea superior: los dos diseños modifican de manera distinta las covariables, conservan hogares diferentes y promedian sobre soportes distintos.
 
 ## Cierre
 
-En términos sustantivos, la evidencia sugiere un efecto positivo entre los tratados comparables en soporte común: el ATET de 0.1063 bajo la regla base (`max|SMD| <= 0.10`) equivale aproximadamente a **11.2%** más en `1 + gasto total del hogar` frente a su contrafactual no tratado comparable.
+Las estimaciones son positivas dentro de los soportes construidos. Bajo independencia condicional en las covariables utilizadas y overlap, el ATET manual de 0.1063 puede interpretarse para los tratados comparables que permanecen en las celdas con soporte. Sin esos supuestos, describe una diferencia ajustada dentro de esa subpoblación.
 
-Esa respuesta vale para la subpoblación tratada en soporte común (`N1/N0 = 409/325`), no para toda la población de hogares.
-
-La lectura debe seguir siendo cauta: el resultado está condicionado al diseño y a supuestos como selección en observables y `overlap`, no representa una verdad causal definitiva.
+La conclusión no se extrapola a los hogares descartados. El matching es exacto sobre categorías coarsened, no necesariamente sobre los valores originales de edad, educación, tierra o riego; celdas más gruesas pueden conservar heterogeneidad residual. Además, matching no verifica ni elimina selección sobre variables no observadas.

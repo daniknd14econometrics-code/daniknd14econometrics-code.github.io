@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-labelledby="title desc">
+  <title id="title">Pinball loss de Quantile Forest por cuantil</title>
+  <desc id="desc">Quantile Forest logra la menor pinball loss en los cuantiles 0,20, 0,50 y 0,80; la mejora relativa frente al benchmark crece hacia el cuantil alto.</desc>
+  <rect width="900" height="540" rx="24" fill="#f7f4ee"/>
+  <text x="48" y="54" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#17324d">La señal predictiva crece hacia la parte alta de activos</text>
+  <text x="48" y="82" font-family="Arial, sans-serif" font-size="15" fill="#536575">Pinball loss en el test protegido · menor es mejor</text>
+  <g font-family="Arial, sans-serif" fill="#17324d">
+    <text x="48" y="136" font-size="18" font-weight="700">τ = 0,20</text><text x="180" y="136" font-size="14" fill="#536575">benchmark 5,5713</text><rect x="360" y="112" width="300" height="30" rx="6" fill="#8d9aa4"/><rect x="360" y="152" width="276" height="30" rx="6" fill="#e1813b"/><text x="675" y="135" font-size="16">QRF 5,1166</text><text x="675" y="175" font-size="14" fill="#536575">mejora 8,2 %</text><line x1="48" y1="208" x2="852" y2="208" stroke="#d6d0c7"/>
+    <text x="48" y="256" font-size="18" font-weight="700">τ = 0,50</text><text x="180" y="256" font-size="14" fill="#536575">benchmark 11,2525</text><rect x="360" y="232" width="420" height="30" rx="6" fill="#8d9aa4"/><rect x="360" y="272" width="325" height="30" rx="6" fill="#e1813b"/><text x="700" y="295" font-size="14" fill="#536575">QRF 8,7067 · mejora 22,6 %</text><line x1="48" y1="328" x2="852" y2="328" stroke="#d6d0c7"/>
+    <text x="48" y="376" font-size="18" font-weight="700">τ = 0,80</text><text x="180" y="376" font-size="14" fill="#536575">benchmark 13,7704</text><rect x="360" y="352" width="470" height="30" rx="6" fill="#8d9aa4"/><rect x="360" y="392" width="304" height="30" rx="6" fill="#e1813b"/><text x="680" y="415" font-size="14" fill="#536575">QRF 8,8987 · mejora 35,4 %</text>
+  </g>
+  <text x="48" y="490" font-family="Arial, sans-serif" font-size="13" fill="#536575">Cada fila compara la misma pérdida dentro de su cuantil; no mezcla tres objetivos distintos.</text>
+</svg>

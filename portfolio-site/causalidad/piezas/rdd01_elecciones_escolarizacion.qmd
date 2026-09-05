@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -73,7 +74,7 @@ El parámetro es el salto en el resultado esperado justo en el umbral: un efecto
 
 ::::
 
-La asignación es *sharp*: en la base, el tratamiento coincide exactamente con la regla `margen ≥ 0`. Hay **0 discrepancias** y ninguna observación ubicada exactamente en el punto de corte.
+La asignación es *sharp*: en la base, el tratamiento coincide exactamente con la regla `margen ≥ 0`. Hay **0 discrepancias** entre la regla de asignación y el tratamiento efectivo.
 
 ## Datos y muestra
 
@@ -151,11 +152,14 @@ El gráfico utiliza la ventana MSE-óptima y ajustes lineales locales con kernel
 |---|---|---:|---:|---:|---:|
 | Lineal local manual | ±20; pesos uniformes | 2,927 | — | — | — |
 | MSE-óptima con corrección de sesgo | `h = 17,240`; kernel triangular | **2,983** | **1,680** | **0,076** | **[−0,309; 6,276]** |
+| CER-óptima con corrección de sesgo | `h = 11,629`; kernel triangular | 2,411 | 1,821 | 0,186 | — |
 :::
 
 La primera fila reconstruye la intuición del diseño: los valores predichos en el umbral son 12,623% a la izquierda y 15,550% a la derecha. Su diferencia es 2,927 puntos porcentuales, pero esa construcción manual no aporta por sí sola la inferencia adecuada para RDD.
 
-La segunda fila es la lectura principal. Con selección MSE-óptima del ancho de banda e inferencia robusta con corrección de sesgo, el control municipal islámico se asocia con un incremento local estimado de **2,98 puntos porcentuales** en la finalización de secundaria de mujeres jóvenes. La magnitud es sustantiva y la evidencia es marginal o sugestiva: `p = 0,076`, mientras que el IC 95% incluye cero.
+La especificación MSE-óptima es la lectura principal. Con inferencia robusta y corrección de sesgo, el control municipal islámico se asocia con un incremento local estimado de **2,98 puntos porcentuales** en la finalización de secundaria de mujeres jóvenes. La magnitud es sustantiva y la evidencia es marginal o sugestiva: `p = 0,076`, mientras que el IC 95% incluye cero.
+
+El selector CER, orientado a mejorar la cobertura del intervalo, reduce la ventana a `h = 11,629` y la muestra efectiva de 795 a 576 municipios. El estimando económico no cambia, pero la ventana más estrecha entrega 2,41 puntos y mayor imprecisión (`p = 0,186`). La comparación hace visible el compromiso entre sesgo y varianza sin convertir la elección del ancho de banda en una búsqueda de significación.
 
 ## Robustez y sensibilidad esencial
 

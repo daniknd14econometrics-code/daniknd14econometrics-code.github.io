@@ -1,13 +1,12 @@
 ---
-title: "Retorno salarial de la educación: MCO frente a IV/2SLS"
-subtitle: "Educación endógena y salario con variables instrumentales"
+title: "Instituciones y desarrollo: qué puede —y qué no puede— resolver una variable instrumental"
+subtitle: "Mortalidad histórica, primera etapa frágil y límites de la identificación por variables instrumentales"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t01_vi"
-date: "2026-03-26"
-fuente_brief: "../../00_private/briefs/t01_vi_brief.txt"
+date: "2026-08-09"
 format:
   html:
     toc: true
@@ -18,18 +17,25 @@ format:
     css:
       - ../assets/portfolio.css
       - ../assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
   message: false
 ---
+
+<style>
+html, body { overflow-x: clip; }
+.table-responsive { max-width: 100%; }
+</style>
+
 ::: {.hero-box}
 ::: {.hero-title}
-La estimación cambia de forma importante cuando `educ` se trata como endógena
+Instrumentar no equivale a resolver la endogeneidad
 :::
 
 ::: {.hero-sub}
-En este caso, pasar de MCO a IV/2SLS no es un detalle técnico: cambia la magnitud del retorno estimado de la educación y mejora la credibilidad de la interpretación.
+La mortalidad histórica permite aislar una fuente distinta de variación institucional. Pero una primera etapa frágil, mayor incertidumbre y tensiones de sobreidentificación impiden convertir 2SLS en una garantía automática de credibilidad.
 :::
 :::
 
@@ -37,185 +43,139 @@ En este caso, pasar de MCO a IV/2SLS no es un detalle técnico: cambia la magnit
 
 ::: {.metric-card}
 ::: {.metric-label}
-MCO robusto
+Muestra común
 :::
 
 ::: {.metric-value}
-0.078
+53 países
 :::
 
 ::: {.metric-note}
-Coeficiente de `educ`
+Corte transversal
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-IV/2SLS robusto
+Primera etapa
 :::
 
 ::: {.metric-value}
-0.146
+F = 4,38
 :::
 
 ::: {.metric-note}
-Coeficiente de `educ`
+Instrumento débil o borderline
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Test de endogeneidad
+IV: un instrumento
 :::
 
 ::: {.metric-value}
-p = 0.0000
+1,313
 :::
 
 ::: {.metric-note}
-Se rechaza exogeneidad
+EE robusto = 0,495
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Primera etapa / Hansen
+Sobreidentificación
 :::
 
 ::: {.metric-value}
-70.1 / 0.877
+p = 0,049
 :::
 
 ::: {.metric-note}
-KP F fuerte, Hansen no rechaza
+Tensión con dos instrumentos
 :::
 :::
 
 ::::
 
-## Resumen
-
-Este caso analiza cómo cambia la estimación del retorno de la educación sobre el salario cuando la educación se trata como potencialmente endógena. La comparación entre MCO e IV/2SLS muestra que, cuando hay evidencia de endogeneidad, el análisis ingenuo puede subestimar o distorsionar la magnitud del efecto.
-
-:::: {.quick-grid}
-
-::: {.section-box}
 ## Pregunta
 
-¿Cambia de forma sustantiva la estimación del retorno salarial asociado a la educación cuando `educ` se trata como endógena y se estima con IV/2SLS, instrumentando con `meduc` y `feduc`, en lugar de MCO?
+¿Cuánto cambia la relación estimada entre protección institucional y desarrollo económico cuando la calidad de las instituciones se trata como endógena y se utiliza mortalidad histórica como instrumento?
 
-::: {.small-note}
-Variable dependiente: `lwage` (log del salario por hora). Variable endógena: `educ`. Controles: `exper`, `expersq`. Instrumentos: `meduc`, `feduc`.
-:::
-:::
+El caso separa dos preguntas que a menudo se confunden: si el instrumento **mueve** la variable endógena y si es razonable sostener que afecta el resultado **solamente a través de ella**. La primera puede estudiarse en los datos; la segunda exige un argumento sustantivo de exclusión.
 
-::: {.section-box}
-## Idea central
+## Aplicación y problema de endogeneidad
 
-Un MCO simple puede mezclar el efecto de la educación con habilidad u otros factores no observados. La estrategia IV usa la variación exógena inducida por la educación de los padres para identificar un parámetro más creíble.
+La base reúne **53 países**. El resultado es el logaritmo del PBI por habitante en 1995 y la variable endógena es un indicador de protección institucional —mayores valores representan menor riesgo de expropiación—. Los modelos incluyen controles regionales para Asia, América y Oceanía.
 
-<span class="badge">Ejercicio econométrico</span>
-:::
+Una regresión directa puede mezclar la relación institucional con geografía, historia, medición, persistencia o causalidad inversa. La estrategia instrumental utiliza el logaritmo de la mortalidad histórica como fuente de variación para la protección institucional.
 
-::::
+Esta estrategia requiere dos condiciones diferentes:
 
-## Por qué este problema importa
+- **Relevancia:** la mortalidad histórica debe estar asociada con las instituciones actuales.
+- **Exclusión:** condicional en los controles, no debe afectar el desarrollo actual por canales distintos de las instituciones.
 
-En una ecuación salarial, la educación puede estar correlacionada con factores no observados, como habilidad, entorno familiar o motivación. Si eso ocurre, el coeficiente de educación en MCO queda sesgado por endogeneidad.
+## Primera etapa y forma reducida
 
-Ese es el problema central del caso: distinguir entre una simple asociación y un efecto estimado con una estrategia más creíble de identificación.
+La primera etapa relaciona mortalidad histórica con protección institucional. La forma reducida relaciona ese mismo instrumento con el resultado. Ambas pendientes son negativas: mayor mortalidad histórica aparece asociada con instituciones menos protectoras y con menor desarrollo contemporáneo.
 
-## Datos y variables
+![La primera etapa muestra una relación negativa entre mortalidad histórica y protección institucional; la forma reducida muestra una relación negativa entre mortalidad histórica y desarrollo. Los puntos y rectas representan relaciones brutas, mientras que las cifras destacadas corresponden a modelos con controles regionales.](../assets/t01_etapas_iv.svg){fig-alt="Dos paneles de dispersión. En ambos, mortalidad histórica aparece en el eje horizontal. El primero muestra una relación negativa con protección institucional y el segundo una relación negativa con el log del PBI por habitante." width="100%"}
 
-Se trabaja con datos de corte transversal a nivel de individuos.
-La base corresponde a un ejercicio clásico de economía laboral con microdatos de salarios y educación.
-Cada observación representa a una persona, y el problema sustantivo es separar cuánto del salario se asocia a años de estudio y cuánto puede estar contaminado por factores no observados.
-En términos aplicados, el caso replica una decisión habitual en análisis de retornos educativos: cuándo una especificación simple deja de ser creíble para inferencia.
+Con controles regionales, la pendiente de la primera etapa es **−0,326**, con **F = 4,38** y un R² parcial de **0,077**. Existe una relación empírica, pero es débil o borderline. La forma reducida es más precisa: su pendiente es **−0,428**, con **F = 15,46**.
 
-- Variable dependiente: `lwage` (log del salario por hora)
-- Variable endógena de interés: `educ`
-- Controles: `exper`, `expersq`
-- Instrumentos excluidos: `meduc`, `feduc`
+En el caso exactamente identificado, el cociente entre forma reducida y primera etapa recupera el coeficiente IV:
 
-## Estrategia empírica
+$$
+\widehat\beta_{IV}=\frac{-0{,}4278}{-0{,}3259}=1{,}3128.
+$$
 
-La secuencia del análisis es la siguiente:
+La identidad organiza la lógica del estimador, pero no resuelve por sí misma la validez del instrumento ni su debilidad.
 
-1. Estimar una ecuación salarial por MCO.
-2. Reestimar el modelo usando IV/2SLS, tratando a `educ` como endógena.
-3. Evaluar si la endogeneidad es empíricamente relevante.
-4. Revisar la fortaleza de la primera etapa.
-5. Verificar si los instrumentos superan los tests de sobreidentificación.
+## MCO frente a 2SLS
 
-## Qué pasa con un análisis ingenuo
+MCO con controles regionales produce un coeficiente de **0,441** para protección institucional, con error estándar robusto de **0,066**. Al utilizar la variación inducida por la primera medida de mortalidad histórica, 2SLS eleva el coeficiente a **1,313**, con error estándar robusto de **0,495** e IC95% aproximado de **[0,342; 2,284]**.
 
-Un modelo MCO puede mezclar el efecto de la educación con factores no observados que también afectan el salario. En ese escenario, el coeficiente estimado no debe leerse automáticamente como un retorno de la educación libre de sesgo.
+![Comparación de MCO con controles, IV con una medida de mortalidad e IV con dos medidas. El modelo IV exactamente identificado produce el coeficiente mayor y el intervalo más amplio.](../assets/t01_coef_mco_iv.svg){fig-alt="Coeficientes e intervalos de confianza para MCO e IV. MCO tiene la estimación menor y más precisa; IV con un instrumento tiene la mayor estimación y el intervalo más amplio; IV con dos instrumentos ocupa una posición intermedia." width="100%"}
 
-La lógica de IV consiste en aislar la parte exógena de la educación generada por los instrumentos, y usar solo esa variación para identificar el parámetro.
+El aumento del coeficiente no debe presentarse como una corrección automática de MCO. 2SLS utiliza una porción mucho más estrecha de la variación institucional y esa porción está débilmente explicada por el instrumento. La magnitud mayor viene acompañada por una pérdida sustancial de precisión.
 
-**Hallazgo principal:** al instrumentar `educ` con `meduc` y `feduc`, el coeficiente estimado para la educación aumenta de forma importante respecto de MCO, en línea con la presencia de sesgo cuando `educ` se trata como exógena.
+La prueba de endogeneidad rechaza la exogeneidad de la protección institucional —p = 0,006 en el test robusto de score—. Esto justifica tomar en serio la diferencia entre MCO e IV, pero no demuestra que la restricción de exclusión sea correcta.
 
-::: {.table-box}
-## Resultados principales
+## Fragilidad instrumental
 
-En MCO, el coeficiente estimado de `educ` es aproximadamente 0.078. Cuando se instrumenta la educación con la educación de la madre y del padre, el coeficiente IV/2SLS robusto sube a aproximadamente 0.146.
+El estadístico Kleibergen–Paap de **4,38** y el test de subidentificación con **p = 0,051** ubican al modelo exactamente identificado en una zona frágil. Con una primera etapa débil:
 
-Esto cambia de forma importante la lectura del problema: la estimación por MCO no solo puede ser sesgada, sino que además puede estar alejándose de manera sustantiva del parámetro identificado por IV.
-En términos interpretativos, pasar de 0.078 a 0.146 implica que la magnitud estimada del retorno asociado a educación casi se duplica en la especificación IV.
-No es evidencia definitiva por sí sola, pero sí una señal fuerte de que tratar `educ` como exógena puede subestimar de manera relevante el efecto de interés.
+- el coeficiente IV puede ser inestable;
+- los intervalos convencionales pueden ofrecer una imagen incompleta de la incertidumbre;
+- una estimación alejada de MCO no es, por sí sola, evidencia de mayor credibilidad.
 
-| Modelo | Coeficiente de `educ` | Error estándar | IC 95% | N |
-|---|---:|---:|---:|---:|
-| MCO estándar | 0.0780 | 0.0066 | [0.0650, 0.0910] | 935 |
-| MCO robusto | 0.0780 | 0.0068 | [0.0646, 0.0913] | 935 |
-| IV/2SLS | 0.1457 | 0.0196 | [0.1072, 0.1842] | 722 |
-| IV/2SLS robusto | 0.1457 | 0.0183 | [0.1099, 0.1815] | 722 |
+El bloque FWL-IV confirma visualmente la mecánica: después de retirar los controles regionales, la pendiente entre desarrollo residualizado y protección institucional predicha por el instrumento reproduce **1,313**. Esa regresión auxiliar explica la geometría de 2SLS, pero su error estándar manual no es la inferencia IV correcta. Por eso queda como apoyo conceptual y no como resultado adicional.
 
-<div style="margin: 10px 0 8px 0;">
-<img src="../assets/t01_mini_ic95.svg" alt="Comparacion visual minima de MCO robusto e IV/2SLS robusto con IC 95%" width="590" style="display:block; max-width:100%; height:auto;" />
-</div>
+## Un segundo instrumento: más relevancia, nueva tensión
 
-La diferencia de muestra (`N = 935` en MCO frente a `N = 722` en IV) responde a disponibilidad de información en instrumentos y variables requeridas para la estimación IV.
-Esto implica que la comparación MCO vs IV debe leerse como contraste de método y de submuestra efectiva a la vez, no como un ejercicio con exactamente la misma base observacional.
+Al agregar una segunda medida de mortalidad histórica, el coeficiente IV baja a **0,785** y su error estándar robusto a **0,195**. La primera etapa conjunta mejora: el R² parcial sube a **0,213** y el estadístico Kleibergen–Paap a **7,27**. Aun así, la preocupación por debilidad no desaparece.
+
+::: {.table-responsive}
+| Especificación | Coeficiente institucional | Diagnóstico decisivo | Lectura |
+|---|---:|---|---|
+| MCO + controles | 0,441 | No trata la endogeneidad | Asociación parcial precisa |
+| IV: mortalidad 1 | 1,313 | KP F = 4,38 | Identificación débil o borderline |
+| IV: mortalidad 1 + 2 | 0,785 | KP F = 7,27; Hansen p = 0,049 | Mejora relevancia, pero aparece tensión de exclusión conjunta |
+
+: Una mejora mecánica de la primera etapa no garantiza validez instrumental
 :::
 
-::: {.table-box}
-## Diagnósticos clave
+El test de Hansen rechaza las restricciones de sobreidentificación al 5%. No identifica cuál instrumento sería problemático ni prueba por sí solo un canal alternativo, pero advierte que las dos restricciones de exclusión no encajan cómodamente en conjunto. Agregar instrumentos puede ganar relevancia y, al mismo tiempo, exigir supuestos adicionales difíciles de defender.
 
-### 1. Endogeneidad
+## Alcance
 
-El test de endogeneidad rechaza la hipótesis nula de exogeneidad de `educ`. Por lo tanto, no hay una buena base empírica para quedarse con MCO como especificación principal.
+Esta aplicación está vinculada a la discusión sobre instituciones y desarrollo, pero no constituye una réplica completa de esa literatura ni resuelve sus controversias históricas. La mortalidad es un instrumento continuo y la estimación debe interpretarse dentro del modelo lineal especificado y de la variación que ese instrumento genera en esta muestra.
 
-### 2. Relevancia de instrumentos
+La evidencia muestra asociaciones consistentes con la lógica instrumental, pero la primera etapa frágil y la tensión de sobreidentificación impiden presentar los coeficientes como una demostración causal concluyente.
 
-La primera etapa muestra que `meduc` y `feduc` tienen poder explicativo sobre `educ`. Los estadísticos reportados para relevancia son altos, lo que reduce la preocupación por instrumentos débiles.
+## Conclusión
 
-### 3. Sobreidentificación
+Variables instrumentales cambia la fuente de variación utilizada para estimar la relación entre instituciones y desarrollo. En esta muestra, 2SLS produce coeficientes mayores que MCO, pero también revela mucha más incertidumbre y sensibilidad al conjunto de instrumentos.
 
-Los tests de sobreidentificación no rechazan la validez conjunta de los instrumentos. Eso no “prueba” que los instrumentos sean perfectos, pero sí indica que los datos no muestran evidencia en contra de su validez conjunta.
-En este contexto, `meduc` y `feduc` se usan como instrumentos plausibles porque están correlacionados con la escolaridad de la persona y aportan variación relevante en primera etapa.
-Esa plausibilidad sigue siendo una hipótesis económica sustantiva: los tests estadísticos ayudan a evaluarla, pero no reemplazan la discusión de mecanismo y contexto.
-
-| Diagnóstico | Resultado | Lectura |
-|---|---:|---|
-| Test de endogeneidad | chi2 = 17.2702, p = 0.0000 | Se rechaza exogeneidad de `educ` |
-| Primera etapa | KP rk Wald F = 70.135 | Instrumentos fuertes |
-| Sobreidentificación (Hansen J) | p = 0.8767 | No hay evidencia contra la validez conjunta |
-:::
-
-## Lectura profesional del caso
-
-La conclusión principal no es simplemente estimar por 2SLS. La lección es que una estrategia IV seria exige tres cosas al mismo tiempo:
-
-- justificar por qué MCO puede estar sesgado;
-- demostrar que la primera etapa es suficientemente fuerte;
-- no sobreinterpretar los tests de sobreidentificación.
-
-En otras palabras, el valor del caso no está solo en la técnica, sino en el criterio econométrico con el que se decide cuándo abandonar una estimación ingenua.
-
-## Cierre
-
-Este caso muestra una idea central de la econometría aplicada: cuando la variable explicativa de interés es endógena, una regresión bien ejecutada técnicamente puede seguir siendo conceptualmente insuficiente. La decisión correcta no es quedarse con el modelo más simple, sino con el modelo cuya estrategia de identificación sea más creíble.
-En práctica profesional, cuando MCO e IV cuentan historias distintas, cambia la decisión analítica: no alcanza con reportar “el modelo que mejor ajusta”, sino que hay que priorizar la estimación cuya identificación sea más defendible para la pregunta de interés que se quiere responder.
-
-**Conclusión:** en este ejercicio, la evidencia favorece IV/2SLS como estrategia para estimar el efecto de la educación sobre el salario.
+La lectura dominante es metodológica: **IV no resuelve automáticamente la endogeneidad**. Una estrategia defendible necesita relevancia suficiente, una exclusión sustantivamente creíble y una inferencia acorde con la fragilidad de la primera etapa. El comando estima el modelo; los diagnósticos y el argumento económico determinan cuánto puede sostenerse con él.

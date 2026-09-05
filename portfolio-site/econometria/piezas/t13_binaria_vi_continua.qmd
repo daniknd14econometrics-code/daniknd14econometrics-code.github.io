@@ -1,13 +1,13 @@
 ---
-title: "Participación laboral femenina e ingreso no laboral del hogar"
-subtitle: "Una lectura binaria sobre cuándo tratar un regresor como potencialmente endógeno"
+title: "Endogeneidad en modelos binarios: la estrategia depende de la variable endógena"
+subtitle: "Función de control e IV-probit para una covariable continua; biprobit y eprobit cuando la variable problemática también es binaria"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
-id_taller: "t13_binaria_vi_continua"
-date: "2026-03-26"
-fuente_brief: "../../00_private/briefs/t13_binaria_vi_continua_brief.txt"
+id_analisis: "binaria_endogeneidad_continua_discreta"
+fuentes_origen: ["t13_binaria_vi_continua", "t14_binaria_vi_discreta"]
+date: "2026-08-13"
 format:
   html:
     toc: true
@@ -18,6 +18,7 @@ format:
     css:
       - ../assets/portfolio.css
       - ../assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -26,171 +27,147 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-¿Cómo se estima una respuesta binaria cuando una covariable continua central (`nwifeinc`) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?
+Una respuesta binaria no implica una única receta para tratar endogeneidad
 :::
 
 ::: {.hero-sub}
-La pieza organiza una comparación metodológica con anclaje aplicado: benchmark exógeno, eje CF y contraste paralelo con IV-probit, sin sobrerreaccionar en la lectura final.
+Cuando la covariable endógena es continua, la corrección se construye con función de control o IV-probit. Cuando también es binaria, cambia la estructura probabilística y corresponde un modelo recursivo como biprobit.
 :::
 :::
 
 :::: {.metric-grid}
-
 ::: {.metric-card}
 ::: {.metric-label}
-Modelo operativo
+Resultado común
 :::
-
 ::: {.metric-value}
-Probit base + sensibilidad IV/CF
+Participa / no participa
 :::
-
 ::: {.metric-note}
-APEs como unidad principal de lectura en probabilidad
+La variable dependiente es binaria en ambas aplicaciones.
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Contexto aplicado
+Endógena continua
 :::
-
 ::: {.metric-value}
-Mujeres y hogares
+CF / IV-probit
 :::
-
 ::: {.metric-note}
-`N=753` observaciones, corte transversal (`mroz`)
+Ingreso no salarial del hogar.
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Lectura metodológica
+Endógena binaria
 :::
-
 ::: {.metric-value}
-Exógeno vs endógeno
+Biprobit / eprobit
 :::
-
 ::: {.metric-note}
-CF como eje; IV-probit como contraste paralelo
+Haber tenido más de dos hijos.
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Auditoria de sensibilidad
+Unidad de lectura
 :::
-
 ::: {.metric-value}
-`nwifeinc` más negativo en IV/CF
+Probabilidades y APE
 :::
-
 ::: {.metric-note}
-APE aprox. `-0.0036` (probit exogeno) vs `-0.0108` a `-0.0105` (IV/CF)
+No se comparan coeficientes latentes de forma mecánica.
 :::
 :::
-
 ::::
 
 ## Resumen
 
-Esta pieza estudia participación laboral femenina (`inlf`) en relación con ingreso no laboral del hogar, educación, experiencia y composición familiar. El foco principal es metodológico: comparar estimación binaria exógena vs endógena con anclaje aplicado en decisiones de hogar.
+Dos problemas pueden compartir una variable dependiente binaria y, sin embargo, exigir estrategias econométricas distintas. La diferencia decisiva está en la naturaleza de la variable endógena.
 
-El orden de lectura es deliberado: probit exógeno como benchmark inicial, control function (CF) como eje metodológico principal, `ivprobit` como contraste de robustez e `MPL-IV` como benchmark lineal secundario.
+Con una covariable continua, la primera etapa puede modelarse linealmente y su residuo incorporarse mediante función de control; IV-probit ofrece una formulación paralela. Con una covariable binaria, esa lógica no se traslada mecánicamente: la ecuación de selección o tratamiento también es binaria y requiere una distribución conjunta apropiada, como la de biprobit.
 
 :::: {.quick-grid}
-
 ::: {.section-box}
-## Pregunta
+## La bifurcación metodológica
 
-¿Cómo se estima una respuesta binaria cuando una covariable continua central (`nwifeinc`) puede ser endógena, y qué cambia entre el enfoque exógeno y el endógeno?
-
-::: {.small-note}
-Resultado binario de participación laboral femenina (`inlf`): participa / no participa en la fuerza laboral. Variable clave: `nwifeinc`. Controles: `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`.
-:::
+| Variable endógena | Estrategia central | Cantidad interpretada |
+|---|---|---|
+| Continua | Función de control / IV-probit | APE estructural |
+| Binaria | Biprobit / eprobit | Cambio en `Pr(resultado=1)` |
 :::
 
 ::: {.section-box}
-## Idea central
+## Pregunta profesional
 
-La pieza se ordena como comparación metodológica: primero el problema de endogeneidad en binaria, luego el contraste de APEs entre modelos exógenos y endógenos.
+No es “qué comando usar”, sino qué estructura probabilística corresponde al proceso que genera la variable endógena y cuál es la probabilidad relevante para la decisión aplicada.
 
-<span class="badge">Portfolio econométrico</span>
+<span class="badge">Respuesta binaria e instrumentos</span>
 :::
-
 ::::
 
-## Por qué este problema importa
+## Caso 1 · Ingreso no salarial: covariable endógena continua
 
-La participación laboral femenina refleja decisiones de tiempo y recursos dentro del hogar. Ingreso no laboral, experiencia acumulada, escolaridad y presencia de hijos pequeños pueden alterar de forma marcada esa decisión.
+La primera aplicación usa 753 observaciones de mujeres y hogares de `mroz.dta`. El resultado es participación laboral (`inlf`) y la covariable central es el ingreso no salarial del hogar, medido en miles. El instrumento principal es la educación del esposo; educación de la madre y del padre amplían la especificación sobreidentificada.
 
-Para lectura profesional, importa distinguir entre un patrón sustantivo estable y un posible sesgo de modelado cuando una covariable central puede estar correlacionada con factores no observados.
+El probit exógeno sirve como referencia. La función de control estima una primera etapa para el ingreso no salarial, incorpora su residuo en el probit y permite evaluar exogeneidad. IV-probit modela conjuntamente el resultado binario y la covariable continua. El modelo lineal IV se conserva solo como benchmark secundario.
 
-## Datos y variables
+| Estrategia | APE del ingreso no salarial | EE | IC95% | Papel |
+|---|---:|---:|---:|---|
+| Probit exógeno | -0,0036 | 0,0016 | [-0,0067; -0,0005] | Punto de partida |
+| MPL–IV | -0,0116 | 0,0058 | [-0,0230; -0,0002] | Benchmark lineal |
+| Función de control | -0,0103 | 0,0048 | [-0,0197; -0,0009] | Eje del bloque endógeno |
+| IV-probit, dos etapas | -0,0105 | 0,0052 | [-0,0207; -0,0003] | Contraste no lineal |
+| IV-probit, ML | -0,0108 | 0,0057 | [-0,0220; 0,0004] | Contraste conjunto |
 
-Se usa `mroz.dta` en corte transversal.
+<img src="../assets/t13_ape_estrategias.svg" alt="Efectos parciales promedio e intervalos para ingreso no salarial bajo probit exógeno, MPL-IV, función de control e IV-probit." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;" />
 
-- Unidad de observacion: mujer/hogar
-- Tamano de muestra: `N=753`
-- Contexto temporal: información de referencia para 1975
-- Variable de resultado: `inlf` (participa / no participa en la fuerza laboral)
-- Variables clave: `nwifeinc`, `educ`, `exper`, `expersq`, `age`, `kidslt6`, `kidsge6`
-- Instrumentos para auditoría de endogeneidad: `huseduc` (principal), `motheduc`, `fatheduc`
+Las estrategias endógenas arrojan APE próximos entre sí y alrededor de tres veces mayores en magnitud que el probit exógeno. Pero la corrección no debe venderse como obligatoria: la primera etapa es relevante (`F(3,743)=16,67`; `p<0,001`), la sobreidentificación no muestra señales claras contra los instrumentos (`p=0,783`) y los tests de exogeneidad quedan aproximadamente entre `p=0,17` y `p=0,22`.
 
-## Estrategia empírica
+### Un límite que importa para la función de control
 
-1. Estimar probit exogeno como lectura base y reportar APEs.
-2. Usar control function (CF) como eje para tratar `nwifeinc` como potencialmente endógena en el modelo binario.
-3. Contrastar con `ivprobit` como implementación paralela de robustez y mantener `MPL-IV` como benchmark lineal secundario.
-4. Usar diagnósticos solo como respaldo de decisión aplicada.
+La función de control descansa en supuestos distributivos sobre el error de la primera etapa. El residuo presenta una cola derecha pronunciada y se aparta de la referencia normal en el gráfico Q–Q.
 
-## Resultados principales
+<img src="../assets/t13_residuo_primera_etapa.svg" alt="Histograma y gráfico Q-Q del residuo de la primera etapa; ambos muestran desviaciones respecto de normalidad, especialmente en la cola derecha." width="720" style="display:block; max-width:82%; height:auto; margin-inline:auto;" />
 
-La comparación metodológica deja una lectura clara:
+Esta advertencia refuerza una lectura de sensibilidad: los métodos endógenos son informativos, pero no justifican reemplazar automáticamente el benchmark exógeno en esta muestra.
 
-- El benchmark probit exógeno reporta un APE de `-0.0036` para `nwifeinc`.
-- Al pasar al bloque endógeno, los APEs no lineales quedan cercanos entre sí: `CF` alrededor de `-0.0103` e `IVprobit` alrededor de `-0.0108`.
-- `MPL-IV` queda como contraste lineal útil (`-0.0116`), sin desplazar el eje CF de la lectura.
-- Los demás patrones aplicados (`kidslt6`, `educ`, `exper`) se mantienen estables y no alteran la decisión metodológica central.
+## Caso 2 · Fecundidad: covariable endógena binaria
 
-En esta pieza, ese cambio se interpreta como sensibilidad de magnitud y no como señal automatica de que un enfoque deba reemplazar al otro.
+La segunda aplicación usa 31.857 observaciones de madres y hogares de `labsup.dta`. El resultado indica si la madre trabaja (`worked`) y la variable problemática indica si tuvo más de dos hijos (`morekids`). El instrumento excluido es que los dos primeros hijos sean del mismo sexo (`samesex`).
 
-::: {.table-box}
-## Sintesis de magnitudes (APE)
+Aquí no corresponde trasladar sin cambios la función de control o el IV-probit del caso continuo. La ecuación de `morekids` es también binaria; biprobit estima recursivamente las dos ecuaciones y permite correlación entre sus errores. `eprobit` funciona como contraste adicional.
 
-| Método | Rol en la comparación | APE `nwifeinc` | Error estándar | IC 95% (`nwifeinc`) | Lectura metodológica |
-|---|---|---:|---:|---:|---|
-| Probit exógeno | Benchmark inicial | -0.0036 | 0.0016 | [-0.0067, -0.0005] | Punto de partida exógeno |
-| CF sobre-ID (score) | Eje metodológico principal | -0.0103 | 0.0048 | [-0.0197, -0.0009] | Referencia central para bloque endógeno |
-| IVprobit MLE bivariado | Contraste paralelo de robustez | -0.0108 | 0.0057 | [-0.0220, 0.0004] | Magnitud cercana a CF con mayor incertidumbre |
-| MPL-IV | Benchmark lineal secundario | -0.0116 | 0.0058 | [-0.0230, -0.0002] | Chequeo lineal complementario |
-:::
+| Enfoque | Cambio en `Pr(trabaja=1)` al pasar a más de dos hijos | EE | Lectura |
+|---|---:|---:|---|
+| Probit exógeno | -0,1095 | 0,0055 | Referencia sin tratar endogeneidad |
+| MPL–IV | -0,2008 | 0,0965 | Benchmark lineal con alta incertidumbre |
+| Biprobit con instrumento | -0,2559 | 0,0710 | Modelo central para dos binarias |
+| Eprobit | -0,2559 | 0,0519 | Magnitud alineada con biprobit |
 
-<img src="../assets/t13_mini_ic95.svg" alt="Comparacion visual minima de Probit exogeno y CF sobre-ID con IC 95% para APE de nwifeinc" width="590" style="display:block; max-width:100%; height:auto;" />
+<img src="../assets/t14_probit_biprobit.svg" alt="Probabilidades ajustadas de trabajar para madres con hasta dos hijos y con más de dos hijos bajo probit exógeno y biprobit con instrumento." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;" />
 
-## Diagnosticos de respaldo
+La asociación permanece negativa, pero aumenta en magnitud al modelar la endogeneidad binaria. El instrumento es relevante en la primera etapa (`F(1,31849)=103,81`; `p<0,001`) y la dependencia entre errores muestra una señal limítrofe, por lo que el resultado se reporta con prudencia.
 
-Los diagnósticos se mantienen deliberadamente subordinados al caso aplicado:
+### La predicción correcta en biprobit
 
-- Relevancia instrumental: evidencia fuerte en primera etapa (`F(3,743)=16.67`, `p<0.001`).
-- Validez conjunta (sobreidentificacion): sin senales claras de invalidez (`Score chi2(2)=0.489`, `p=0.783`).
-- Exogeneidad de `nwifeinc`: no se rechaza de forma robusta (tests en torno a `p=0.17` a `p=0.22`).
+El `margins` por defecto de biprobit puede referirse a una probabilidad conjunta, `Pr(trabaja=1, más de dos hijos=1)`. Esa no es la cantidad sustantiva buscada aquí. La comparación debe solicitar la probabilidad marginal de trabajar, `Pr(trabaja=1)`, mediante `predict(pmarg1)`, y construir el contraste entre `morekids=0` y `morekids=1`.
 
-Por eso, la correccion IV/CF se lee como auditoría de sensibilidad y no como reemplazo automatico del modelo base.
+## Qué cambia entre ambos problemas
 
-## Lectura profesional
-
-El valor profesional del caso es mostrar criterio de modelado aplicado en binaria: partir del benchmark exógeno y decidir, con CF como eje, cuánto cambia la lectura al tratar `nwifeinc` como potencialmente endógena.
-
-En T13, `ivprobit` acompaña como verificación paralela y `MPL-IV` como control lineal secundario; la decisión se sostiene sobre la comparación metodológica y no sobre una sobreactuación de hallazgos sustantivos.
+| Dimensión | Endógena continua | Endógena binaria |
+|---|---|---|
+| Primera etapa | Ecuación continua | Ecuación probit |
+| Estructura conjunta | Binaria + continua | Dos ecuaciones binarias |
+| Estrategia principal | Función de control / IV-probit | Biprobit / eprobit |
+| Riesgo interpretativo | Sobreactuar una corrección débilmente respaldada | Leer la probabilidad conjunta equivocada |
 
 ## Cierre
 
-Esta pieza no plantea una competencia entre probit e IV-probit. Plantea una decisión econométrica profesional: cuándo una posible endogeneidad amerita escalar complejidad y cuándo conviene tratar esa complejidad como análisis de sensibilidad para no sobrerreaccionar en la interpretación aplicada.
+La naturaleza binaria del resultado no determina por sí sola la estrategia de endogeneidad. Es necesario mirar también cómo se genera la covariable problemática.
 
-
-
-
-
+Cuando es continua, función de control e IV-probit permiten construir APE comparables, pero sus supuestos y diagnósticos deben permanecer visibles. Cuando es binaria, cambia la verosimilitud y también la cantidad que debe pedirse al modelo. La decisión econométrica correcta comienza antes del estimador: comienza al describir adecuadamente la estructura del problema.

@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -49,16 +50,16 @@ Con adopción escalonada, cada punto de la trayectoria surge de comparar cohorte
 
 ## Por qué una etiqueta temporal no define el estimando
 
-El coeficiente dinámico asociado con el tiempo relativo $\ell$ puede representarse como una combinación de efectos cohorte-tiempo:
+El efecto medio sobre los tratados de la cohorte $e$ en el tiempo relativo $k$ se denota $CATT_{e,k}$. Bajo los supuestos de identificación y la normalización de referencia, el coeficiente poblacional TWFE asociado con $\ell$ puede representarse esquemáticamente como una combinación de esos efectos:
 
 $$
-\widehat\mu_{\ell}^{TWFE}
+\mu_{\ell}^{TWFE}
 =\sum_{e,k} w_{e,k}^{\ell}\,CATT_{e,k}.
 $$
 
 El superíndice $\ell$ identifica el coeficiente de la regresión. El subíndice $k$ identifica el tiempo relativo del efecto que recibe peso. Nada obliga a que $k=\ell$ en todas las celdas. Esa diferencia es el origen de la contaminación dinámica.
 
-La pieza anterior mostró que TWFE puede ponderar de manera problemática efectos heterogéneos en un coeficiente estático. Aquí el mismo problema se extiende a una secuencia completa de *leads* y *lags*.
+El análisis anterior mostró que TWFE puede ponderar de manera problemática efectos heterogéneos en un coeficiente estático. Aquí el mismo problema se extiende a una secuencia completa de *leads* y *lags*.
 
 ## Cuando un lead incorpora efectos posteriores
 
@@ -70,7 +71,7 @@ La suma de esos pesos sobre períodos posteriores puede ser pequeña o incluso c
 
 ## Ausencia de anticipación no garantiza leads TWFE iguales a cero
 
-El módulo impone un ejercicio transparente: todos los CATT pretratamiento se fijan en cero y se conservan los efectos estimados posteriores al tratamiento. Aun bajo esa ausencia de anticipación, las contribuciones pos-tratamiento a los coeficientes de ingresos alcanzan aproximadamente:
+En la aplicación sobre hospitalización e ingresos laborales, se fijan en cero todos los CATT pretratamiento y se conservan los efectos estimados posteriores. Aun bajo esa ausencia de anticipación, las contribuciones netas pos-tratamiento a los coeficientes de ingresos alcanzan las siguientes magnitudes, expresadas aproximadamente en dólares de 2005:
 
 :::: {.metric-grid}
 
@@ -79,10 +80,10 @@ El módulo impone un ejercicio transparente: todos los CATT pretratamiento se fi
 Contribución a lead −3
 :::
 ::: {.metric-value}
-+445
++441,6
 :::
 ::: {.metric-note}
-proveniente de efectos pos-tratamiento
+contribución neta de efectos pos-tratamiento
 :::
 :::
 
@@ -91,10 +92,10 @@ proveniente de efectos pos-tratamiento
 Contribución a lead −2
 :::
 ::: {.metric-value}
-−116
+−115,9
 :::
 ::: {.metric-note}
-proveniente de efectos pos-tratamiento
+contribución neta de efectos pos-tratamiento
 :::
 :::
 
@@ -104,7 +105,7 @@ El ejercicio no afirma que esos números sean los verdaderos efectos previos. De
 
 ## Aplicación: hospitalización y consecuencias económicas
 
-La aplicación utiliza RAND HRS para estudiar cómo evolucionan el gasto médico de bolsillo y los ingresos laborales alrededor de la primera hospitalización observada. Las cohortes se definen por la wave en que ocurre esa hospitalización índice.
+La aplicación utiliza RAND HRS Longitudinal File 2022 para estudiar cómo evolucionan el gasto médico de bolsillo y los ingresos laborales alrededor de la primera hospitalización observada. Ilustra el método de Sun–Abraham con esta base alternativa. Las cohortes se definen por la ronda de encuesta en que ocurre esa hospitalización índice.
 
 :::: {.quick-grid}
 
@@ -117,34 +118,43 @@ La aplicación utiliza RAND HRS para estudiar cómo evolucionan el gasto médico
 ::: {.section-box}
 **Panel**
 
-Waves 7–11, aproximadamente 2004–2012, conservando el desbalance observado.
+Rondas 7–11, aproximadamente 2004–2012, conservando el desbalance observado.
 :::
 
 ::: {.section-box}
 **Tratamiento**
 
-Indicador absorbente desde la primera hospitalización en las waves 8, 9, 10 u 11.
+Indicador que permanece activo desde la primera hospitalización en las rondas 8, 9, 10 u 11.
 :::
 
 ::: {.section-box}
 **Resultados**
 
-Gasto médico de bolsillo e ingresos laborales en dólares reales de 2005.
+Gasto médico de bolsillo e ingresos laborales, expresados aproximadamente en dólares de 2005 y con valores extremos limitados al percentil 99,95.
 :::
 
 ::::
 
-La ventana central utiliza tiempos relativos `−3`, `−2`, `0`, `1` y `2`, con `−1` como referencia. La muestra comparable contiene **3.605 observaciones de 963 personas**, con errores estándar agrupados por individuo.
+La ventana central utiliza tiempos relativos `−3`, `−2`, `0`, `1` y `2`, con `−1` como referencia. Cada paso corresponde a una ronda de encuesta, aproximadamente dos años. La muestra comparable contiene **3.605 observaciones de 963 personas**, con errores estándar agrupados por individuo. La especificación central incluye efectos fijos de persona y ronda, sin covariables adicionales.
 
 ## Cohortes, control y soporte
 
-La muestra analítica está definida alrededor de una hospitalización observada, por lo que no contiene un grupo nunca tratado limpio con un tiempo índice comparable. La estrategia utiliza la cohorte tratada en la wave 11 como control y restringe la estimación a `wave < 11`, cuando esa cohorte todavía no fue hospitalizada.
+La muestra analítica está definida alrededor de una hospitalización observada, por lo que no contiene un grupo nunca tratado limpio con un tiempo índice comparable. La estrategia utiliza la cohorte tratada en la ronda 11 como control y restringe la estimación a las rondas anteriores, cuando esa cohorte todavía no fue hospitalizada.
 
-El soporte cambia con el tiempo relativo. Tres cohortes contribuyen al período 0, dos al período 1 y solo la cohorte 8 permite estimar el período 2. Aunque existe información observada para `l = 3`, no hay soporte comparable para construir el estimador interaction-weighted correspondiente; por eso no se presenta como parte de la trayectoria central.
+El soporte cambia con el tiempo relativo. Tres cohortes contribuyen al período 0, dos al período 1 y solo la cohorte 8 permite estimar el período 2. Aunque se observa a la cohorte 8 en $\ell=3$, ese horizonte coincide con la ronda 11: la cohorte de control ya se hospitalizó. Por eso no hay una comparación no tratada para construir el estimador interaction-weighted en ese punto.
 
 ## TWFE frente a interaction-weighted
 
-Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo, utilizando como comparación a la cohorte aún no tratada. Después los agrega con participaciones de cohorte explícitas. El estimador interaction-weighted —IW— aproxima así la propiedad deseada: cada punto resume efectos causales definidos para el mismo tiempo relativo.
+Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo, utilizando como comparación a la cohorte aún no tratada. El estimador interaction-weighted —IW, ponderado por interacciones— los agrega con participaciones no negativas que suman uno entre las cohortes con soporte en cada horizonte:
+
+$$
+\widehat\nu_\ell
+=\sum_{e\in h_\ell}\widehat p_{e,\ell}\,\widehat{CATT}_{e,\ell},
+\qquad \widehat p_{e,\ell}\geq 0,
+\qquad \sum_{e\in h_\ell}\widehat p_{e,\ell}=1.
+$$
+
+Aquí $h_\ell$ reúne las cohortes con una comparación disponible. Bajo tendencias paralelas y ausencia de anticipación, cada punto estima un promedio causal para ese mismo tiempo relativo. Por ejemplo, el gasto en el período de hospitalización combina los efectos de las cohortes 8, 9 y 10 con pesos de 0,2306, 0,1519 y 0,6175: $0{,}2306(3.220{,}6)+0{,}1519(2.411{,}9)+0{,}6175(2.515{,}2)\approx 2.662$ dólares.
 
 En esta aplicación, TWFE e IW producen curvas numéricamente cercanas. Esa proximidad es un resultado empírico, no una garantía algebraica ni una equivalencia entre estimandos.
 
@@ -158,7 +168,7 @@ En esta aplicación, TWFE e IW producen curvas numéricamente cercanas. Esa prox
 | 2 | 483 | 198 | **−14.189** | **−14.734** |
 :::
 
-Las cifras están expresadas en dólares reales de 2005. La tabla organiza la comparación del estimando; la inferencia principal aparece en la trayectoria IW.
+Las cifras están expresadas aproximadamente en dólares de 2005. La tabla compara las estimaciones; los errores estándar y la figura siguiente completan la lectura de su precisión.
 
 ## Gasto médico e ingresos laborales
 
@@ -166,7 +176,11 @@ El estimador IW muestra un aumento inmediato del gasto médico de bolsillo en el
 
 Para ingresos laborales, IW estima una caída de **7.267 dólares** en el período 0, con EE **3.237**. La reducción alcanza **10.632 dólares** en el período 1 —EE 5.079— y **14.734 dólares** en el período 2 —EE 7.416—.
 
-![Trayectoria de ingresos laborales estimada por TWFE e interaction-weighted](did_m06_ingresos_twfe_iw.svg){fig-alt="TWFE e interaction-weighted producen trayectorias numéricamente próximas para los ingresos laborales. Ambos muestran valores cercanos a cero antes de la hospitalización y caídas desde el período cero, con intervalos amplios."}
+![Trayectoria de ingresos laborales estimada por TWFE e interaction-weighted](did_m06_ingresos_twfe_iw.svg){fig-alt="TWFE e interaction-weighted producen trayectorias numéricamente próximas para los ingresos laborales. Ambos muestran estimaciones previas imprecisas y caídas desde el período cero, con intervalos amplios. En el período dos, IW representa únicamente a la cohorte ocho."}
+
+::: {.small-note}
+**Alcance de la trayectoria.** Los efectos se refieren a las cohortes de hospitalización con soporte en esta muestra de personas de 50 a 59 años al ingreso, comparadas con quienes se hospitalizan en la ronda 11 mientras aún no recibieron el tratamiento. La caída de **14.734 dólares** en el período 2 corresponde exclusivamente a la cohorte 8. El aumento de las pérdidas entre horizontes combina duración desde la hospitalización y cambios en las cohortes representadas; no describe por sí solo el deterioro de una población constante.
+:::
 
 La comparación no sostiene que TWFE haya fallado dramáticamente en esta muestra. Muestra que dos curvas parecidas pueden tener construcciones diferentes: IW agrega CATT cohorte-tiempo de forma explícita; TWFE puede mezclar efectos de otros momentos relativos.
 
@@ -175,26 +189,32 @@ La comparación no sostiene que TWFE haya fallado dramáticamente en esta muestr
 Los tests conjuntos de los períodos `−3` y `−2` arrojan:
 
 ::: {.table-box}
-| Outcome | Test de leads TWFE | Test de leads IW |
+| Resultado | Test de leads TWFE | Test de leads IW |
 |---|---:|---:|
 | Gasto médico de bolsillo | p = 0,6705 | p = 0,8330 |
 | Ingresos laborales | p = 0,0912 | p = 0,2485 |
 :::
 
-Los resultados IW no muestran evidencia estadística de efectos previos en la ventana utilizada. Esto es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.
+Los resultados IW no muestran evidencia estadística de efectos previos en la ventana utilizada. El horizonte previo es corto y los intervalos son amplios, por lo que el no rechazo también puede reflejar poca potencia. Es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.
 
 En TWFE, la interpretación es todavía más limitada. Un *lead* distinto de cero podría reflejar anticipación, diferencias preexistentes, contaminación pos-tratamiento u otros tiempos relativos. Un no rechazo tampoco demuestra que las comparaciones contrafactuales sean válidas.
 
+## Sensibilidad con covariables prefijadas
+
+Como comprobación adicional, el taller incorpora edad y cobertura de Medicaid, Medicare y seguro privado, fijadas en el primer valor observado dentro de la muestra anterior a la ronda 11 e interactuadas con el tiempo calendario. El IW contemporáneo cambia de **2.662 a 2.416 dólares** para gasto y de **−7.267 a −7.210 dólares** para ingresos. Los tests conjuntos de *leads* siguen sin rechazar (`p = 0,565` y `p = 0,396`, respectivamente).
+
+La estabilidad de esos puntos es informativa, pero la especificación se presenta como una sensibilidad mecánica. Permite tendencias condicionales distintas según observables prefijados; no elimina la contaminación de TWFE ni reemplaza el argumento de identificación. Una aplicación definitiva requeriría fijar esos controles dentro de una ventana pretratamiento común y limpia.
+
 ## Qué exige una dinámica causal interpretable
 
-La construcción interaction-weighted funciona aquí como contraste metodológico, no como revisión exhaustiva de las soluciones modernas. Permite precisar qué propiedad se busca recuperar:
+La solución interaction-weighted reconstruye el event study a partir de cuatro decisiones:
 
 1. definir efectos causales por cohorte y período;
 2. utilizar grupos de comparación que todavía no recibieron el tratamiento;
 3. verificar que cada tiempo relativo tenga soporte;
 4. agregar los efectos mediante reglas explícitas y transparentes.
 
-Estas exigencias no sustituyen los supuestos de identificación. La interpretación causal continúa dependiendo de la comparabilidad de las cohortes y de la plausibilidad de las tendencias paralelas relevantes.
+La interpretación causal de esa trayectoria depende de tendencias paralelas entre las cohortes comparadas y de ausencia de anticipación. La agregación explícita permite conocer qué efectos se promedian; los supuestos del diseño sostienen su identificación.
 
 ## Conclusión
 
@@ -202,4 +222,4 @@ Un event study TWFE no puede interpretarse automáticamente como una trayectoria
 
 En la aplicación HRS, TWFE e IW son numéricamente próximos: el gasto médico aumenta en la hospitalización y los ingresos laborales caen desde el período índice. La similitud de las curvas no elimina la diferencia de estimando ni convierte los *leads* TWFE en tests limpios de pretratamiento.
 
-La crisis moderna deja instalada una regla de construcción: **estimar efectos causales definidos por cohorte y período mediante comparaciones válidas, y agregarlos después con reglas transparentes**. Esa es la base para evaluar sistemáticamente los estimadores modernos en el bloque siguiente.
+Sun–Abraham ofrece una solución específica a la contaminación dinámica: **estimar efectos por cohorte y período mediante comparaciones válidas y agregarlos después con participaciones explícitas**. Cada punto adquiere así un significado causal bajo los supuestos del diseño, con un alcance determinado por las cohortes que tienen soporte en ese horizonte.

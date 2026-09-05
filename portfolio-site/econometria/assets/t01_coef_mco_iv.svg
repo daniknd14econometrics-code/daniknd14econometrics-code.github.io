@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 540" role="img" aria-labelledby="title desc">
+  <title id="title">Comparación de estimaciones MCO e IV para protección institucional</title>
+  <desc id="desc">Coeficientes e intervalos de confianza del 95 por ciento para MCO con controles, IV con una medida de mortalidad e IV con dos medidas de mortalidad.</desc>
+  <rect width="1100" height="540" rx="24" fill="#f7fafb"/>
+  <text x="55" y="55" fill="#18344d" font-family="Arial, sans-serif" font-size="27" font-weight="700">IV cambia la magnitud, pero también la incertidumbre</text>
+  <text x="55" y="85" fill="#5d7180" font-family="Arial, sans-serif" font-size="16">Coeficiente de protección institucional e intervalo de confianza del 95%</text>
+  <g stroke="#dfe7eb" stroke-width="1">
+    <line x1="330" y1="125" x2="330" y2="410"/><line x1="456" y1="125" x2="456" y2="410"/><line x1="582" y1="125" x2="582" y2="410"/><line x1="708" y1="125" x2="708" y2="410"/><line x1="834" y1="125" x2="834" y2="410"/><line x1="960" y1="125" x2="960" y2="410"/>
+    <line x1="330" y1="175" x2="960" y2="175"/><line x1="330" y1="265" x2="960" y2="265"/><line x1="330" y1="355" x2="960" y2="355"/>
+  </g>
+  <line x1="330" y1="115" x2="330" y2="420" stroke="#718694" stroke-width="2" stroke-dasharray="6 6"/>
+  <g fill="#263f52" font-family="Arial, sans-serif" font-size="16">
+    <text x="300" y="181" text-anchor="end">MCO + controles</text>
+    <text x="300" y="271" text-anchor="end" font-weight="700">IV: mortalidad 1</text>
+    <text x="300" y="361" text-anchor="end">IV: mortalidad 1 + 2</text>
+  </g>
+  <g stroke="#225f7d" stroke-width="4" stroke-linecap="round" fill="#225f7d">
+    <line x1="408" y1="175" x2="474" y2="175"/><circle cx="441" cy="175" r="7"/>
+    <line x1="432" y1="355" x2="624" y2="355"/><circle cx="528" cy="355" r="7"/>
+  </g>
+  <g stroke="#b34a66" stroke-width="5" stroke-linecap="round" fill="#b34a66">
+    <line x1="416" y1="265" x2="905" y2="265"/><circle cx="661" cy="265" r="8"/>
+  </g>
+  <g fill="#263f52" font-family="Arial, sans-serif" font-size="14" font-weight="700">
+    <text x="985" y="181">0,441</text><text x="985" y="271" fill="#9e3854">1,313</text><text x="985" y="361">0,785</text>
+  </g>
+  <g fill="#5d7180" font-family="Arial, sans-serif" font-size="13">
+    <text x="330" y="444" text-anchor="middle">0</text><text x="456" y="444" text-anchor="middle">0,5</text><text x="582" y="444" text-anchor="middle">1,0</text><text x="708" y="444" text-anchor="middle">1,5</text><text x="834" y="444" text-anchor="middle">2,0</text><text x="960" y="444" text-anchor="middle">2,5</text>
+    <text x="645" y="476" text-anchor="middle">Cambio estimado en el log del PBI por habitante</text>
+  </g>
+  <text x="55" y="516" fill="#5d7180" font-family="Arial, sans-serif" font-size="13">El modelo exactamente identificado produce la estimación mayor y el intervalo más amplio; agregar otro instrumento no elimina la tensión diagnóstica.</text>
+</svg>

@@ -3,16 +3,17 @@ title: "Causalidad"
 format:
   html:
     title-block-style: none
+    css: assets/causalidad-explorer.css
 ---
 
-::: {.hero-banner .hero-banner--causalidad}
+::: {.hero-banner .hero-banner--causalidad-general}
 ::: {.hero-banner__content}
 <span class="hero-banner__kicker">Portal de sección</span>
 
 # Causalidad aplicada con foco en identificación válida
 
 ::: {.hero-banner__lead}
-La sección organiza piezas de inferencia causal observacional con criterios de comparabilidad, soporte común y chequeo de supuestos para una lectura robusta de efectos.
+La sección reúne aplicaciones de inferencia causal observacional, con atención al diseño de identificación, la comparabilidad, los supuestos que sostienen cada estrategia y la interpretación de los efectos estimados.
 :::
 
 ::: {.hero-banner__actions}
@@ -24,25 +25,23 @@ La sección organiza piezas de inferencia causal observacional con criterios de 
 :::
 :::
 
-## Líneas de trabajo
+::: {.causalidad-path-grid}
+::: {.causalidad-path-card}
+### Fundamentos de inferencia causal
 
-::: {.section-lead}
-Dos recorridos complementarios para avanzar desde los fundamentos de identificación hasta los desarrollos contemporáneos de Difference-in-Differences.
-:::
+Principales estrategias para construir comparaciones creíbles: selección sobre observables, variables instrumentales, regresión discontinua y diferencias en diferencias.
 
-::: {.portal-grid}
-::: {.portal-card}
-### [Fundamentos y diseños de inferencia causal](fundamentos/index.qmd)
-
-Diseños y herramientas para construir comparaciones causales creíbles: selección en observables, variables instrumentales, RDD, Difference-in-Differences canónico e inferencia.
+<span class="causalidad-path-card__meta">4 áreas</span>
 
 [Explorar fundamentos →](fundamentos/index.qmd){.cta-link}
 :::
 
-::: {.portal-card}
-### [Difference-in-Differences moderno](did-moderno/index.qmd)
+::: {.causalidad-path-card}
+### DiD moderno
 
-De los problemas del TWFE bajo adopción escalonada y heterogeneidad de efectos a los diagnósticos y estimadores contemporáneos.
+Qué cambia cuando la adopción es escalonada y los efectos son heterogéneos: límites del TWFE, problemas en estudios de eventos y métodos modernos para definir, estimar y agregar efectos causales.
+
+<span class="causalidad-path-card__meta">2 áreas</span>
 
 [Explorar DiD moderno →](did-moderno/index.qmd){.cta-link}
 :::

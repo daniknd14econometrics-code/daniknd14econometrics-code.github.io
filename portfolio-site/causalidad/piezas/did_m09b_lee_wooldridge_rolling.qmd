@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -71,6 +72,8 @@ Y_{ir}-\frac{1}{|\mathcal P_g|}\sum_{s\in\mathcal P_g}Y_{is},
 $$
 
 Es el resultado actual menos el promedio de la historia pretratamiento elegida para esa cohorte. La referencia “rueda” porque $\mathcal P_g$ cambia con su fecha de adopción: una cohorte temprana dispone de menos períodos pre que una tardía. También puede restringirse la ventana, por ejemplo al último período con `pre(1)`.
+
+La misma ventana $\mathcal P_g$ se aplica a la cohorte tratada y a sus controles, pero cada condado se centra con su propia historia. Así se comparan cambios respecto de referencias temporalmente compatibles, sin imponer que tratados y controles compartan el mismo nivel de empleo.
 
 **Rolling no significa promediar outcomes pos-tratamiento en una ventana móvil.** Toda la información que construye la referencia debe ser anterior a la adopción de la cohorte correspondiente.
 
@@ -131,12 +134,14 @@ Centra el outcome en la media de la historia pretratamiento relevante. Aprovecha
 ::: {.section-box}
 **Detrend · nivel y pendiente**
 
-Resta además una tendencia lineal estimada con períodos pretratamiento. Admite pendientes diferentes, pero exige que su extrapolación al post sea un contrafactual creíble.
+Resta la trayectoria lineal estimada con períodos pretratamiento **de cada condado**. Admite pendientes diferentes, pero exige que su extrapolación al post sea un contrafactual creíble.
 :::
 
 ::::
 
 Detrending no “soluciona” automáticamente los pretrends. Cambia el supuesto: en lugar de requerir trayectorias paralelas después de remover niveles, supone que las diferencias sistemáticas de pendiente son aproximadamente lineales, estables y extrapolables.
+
+IPWRA combina ponderación por la probabilidad de tratamiento y ajuste por regresión sobre el resultado transformado. Su doble robustez se refiere a esos modelos auxiliares; no protege frente a una transformación temporal que construya un contrafactual incorrecto.
 
 ## Aplicación: aperturas de Walmart
 
@@ -202,7 +207,7 @@ EE 0,0102 · IC95% [0,0117; 0,0517]
 
 ::::
 
-El post promedio cae de `0,0944` a `0,0317` cuando la transformación deja de remover únicamente el nivel previo y pasa a remover también una tendencia lineal. En términos aproximados, las magnitudes equivalen a 9,9% y 3,2% en empleo minorista, respectivamente.
+El post promedio cae de `0,0944` a `0,0317` cuando la transformación deja de remover únicamente el nivel previo y pasa a remover también una tendencia lineal. En términos aproximados, las magnitudes equivalen a 9,9% y 3,2% en empleo minorista, respectivamente. Son agregados sobre las celdas tratadas que integran cada especificación, no la media simple de algunos puntos seleccionados del gráfico.
 
 La segunda cifra **no es automáticamente el efecto verdadero**. La comparación demuestra que la magnitud depende fuertemente de cómo se construye la trayectoria contrafactual con la historia pretratamiento.
 
@@ -220,9 +225,13 @@ La tabla no establece un ranking. Dentro de una misma transformación, ajuste po
 
 ## Event study y trayectorias previas
 
-El event study agrega por tiempo relativo los efectos de celda estimados después de transformar el outcome. El contraste se restringe a $k=-8,\dots,8$; incluso en el último horizonte participan seis cohortes, evitando extremos sostenidos por una o dos.
+El event study agrega por tiempo relativo los efectos de celda estimados después de transformar el outcome. Su composición cambia con el horizonte porque solo intervienen las cohortes que conservan soporte en cada valor de $k$.
 
-![Comparación de la trayectoria WATT entre demeaning y detrending](did_m09b_event_demean_detrend.svg){fig-alt="Event study comparativo entre rolling demean y rolling detrend con IPWRA y covariables. Demeaning conserva una trayectoria previa ascendente y efectos posteriores mayores; detrending acerca el pre a cero y reduce los efectos posteriores."}
+![Comparación de la trayectoria WATT entre demeaning y detrending](did_m09b_event_demean_detrend.svg){fig-alt="Event study comparativo entre rolling demean y rolling detrend con IPWRA y covariables, mostrando solo estimaciones puntuales. Detrending acerca el pre a cero y reduce los efectos posteriores. Los ceros de referencia, en menos uno para demean y en menos dos y menos uno para detrend, no son evidencia estimada de ausencia de efecto."}
+
+La referencia es la media previa en *demean* y una trayectoria lineal en *detrend*. Los ceros de referencia que conserva la salida —K = −1 en *demean*; K = −2 y K = −1 en *detrend*— no son tests de ausencia de efecto. Tampoco debe leerse toda la curva como una diferencia respecto de K = −1, salvo en la especificación que utiliza exclusivamente ese período previo.
+
+El gráfico compara puntos estimados. La inferencia original utiliza **bandas simultáneas para el event study, con 750 repeticiones**, mientras los intervalos de los promedios pre y post son normales punto a punto. Los p-valores individuales no sustituyen las bandas al evaluar la trayectoria completa.
 
 Con *demean*, los puntos previos muestran una trayectoria ascendente marcada antes de la apertura. Con *detrend*, los pretratamientos quedan mucho más cerca de cero y la dinámica posterior se reduce. El diagnóstico, sin embargo, no desaparece:
 
@@ -238,7 +247,7 @@ La magnitud previa remanente es pequeña, pero estadísticamente distinta de cer
 
 Usar solo el último período pre reduce el post promedio de `0,0944` a `0,0707`. La ventana no es una elección inocua: determina qué historia se considera informativa para construir el contrafactual. Una referencia amplia puede mejorar precisión si el pre lejano es comparable; `pre(1)` es más local y puede ser preferible si esa comparabilidad se debilita con la distancia.
 
-Restringir la especificación detrended a nunca tratados reduce el agregado de `0,0317` a `0,0250`. El cambio es menor que el producido por la transformación, pero recuerda que el grupo de comparación también define el estimando.
+Restringir la especificación detrended a nunca tratados reduce el agregado de `0,0317` a `0,0250`. El cambio es menor que el producido por la transformación y muestra sensibilidad al contrafactual. Cambiar los controles no redefine por sí solo el ATT objetivo; sí puede cambiar su población si se pierde soporte o se modifican las ponderaciones.
 
 ## WATT y dinámica
 
@@ -260,25 +269,39 @@ WATT(1)
 0,0354
 :::
 ::: {.metric-note}
-EE 0,0051 · trece cohortes contribuyen al horizonte
+efecto un año después bajo el contrafactual detrended
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Lectura
+Composición
 :::
 ::: {.metric-value}
-≈ 3,6%
+Variable
 :::
 ::: {.metric-note}
-aumento estimado del empleo minorista al primer año, bajo el contrafactual detrended
+solo aportan las cohortes con soporte en ese horizonte
 :::
 :::
 
 ::::
 
 WATT es una agregación posterior, no un coeficiente primitivo de una regresión TWFE con leads y lags. Su composición cambia con el horizonte porque no todas las cohortes aportan a todos los valores de $k$.
+
+## Relación con ETWFE: tendencias por cohorte o por condado
+
+En la aplicación común, ETWFE incorpora tendencias por cohorte e interacciones con covariables dentro de la regresión. Rolling detrend estima primero la tendencia previa de cada condado, transforma el resultado y después aplica IPWRA. Los resultados ya producidos permiten comparar ambas construcciones:
+
+::: {.table-box}
+| Tiempo desde la apertura | ETWFE con tendencias por cohorte | Rolling detrend + IPWRA |
+|---|---:|---:|
+| Año de apertura | 0,00818 | 0,00868 |
+| Un año después | 0,03526 | 0,03541 |
+| Dos años después | 0,02944 | 0,02911 |
+:::
+
+La proximidad refuerza la importancia empírica de modelar las tendencias preexistentes, pero no demuestra equivalencia ni identifica cuál contrafactual es correcto. Cambian el nivel al que se estima la pendiente y el procedimiento que recupera los efectos.
 
 ## C&S, BJS, ETWFE y rolling
 
@@ -311,6 +334,6 @@ La transformación puede reducir patrones previos visibles. No convierte por sí
 
 Lee–Wooldridge muestra que la historia pretratamiento puede incorporarse de manera explícita antes de estimar los efectos. La referencia se redefine con cada cohorte, el outcome transformado se compara solo con controles todavía válidos y los $ATT(g,r)$ se agregan después según la pregunta causal.
 
-En Walmart, la sensibilidad dominante es `0,0944 → 0,0317` al pasar de *demean* a *detrend*. La evidencia continúa siendo positiva, pero su magnitud depende de aceptar una extrapolación lineal de las trayectorias previas y el diagnóstico pretratamiento no desaparece. La conclusión correcta no es que detrending encuentre “el verdadero efecto”, sino que **la construcción del contrafactual es parte del estimando empírico**.
+En Walmart, la sensibilidad dominante es `0,0944 → 0,0317` al pasar de *demean* a *detrend*. La evidencia continúa siendo positiva, pero su magnitud depende de aceptar una extrapolación lineal de las trayectorias previas y el diagnóstico pretratamiento no desaparece. La conclusión correcta no es que detrending encuentre “el verdadero efecto”, sino que **la estimación depende de los supuestos que permiten construir el contrafactual**.
 
 La secuencia de soluciones modernas queda así cerrada: Callaway–Sant’Anna organiza comparaciones $ATT(g,t)$; BJS imputa $Y(0)$; Wooldridge flexibiliza la regresión; Lee–Wooldridge hace explícita la referencia pre mediante transformaciones rolling. Difference-in-Differences moderno no es una colección de comandos: es un conjunto de decisiones sobre estimando, controles, contrafactual, heterogeneidad, timing y agregación.

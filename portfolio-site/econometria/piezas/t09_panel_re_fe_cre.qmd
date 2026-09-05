@@ -1,13 +1,13 @@
 ---
-title: "Subsidios de capacitación y desperdicio productivo en plantas industriales"
-subtitle: "Comparacion aplicada entre FE, RE y CRE (Mundlak) para tratar heterogeneidad persistente en panel corto"
+title: "Heterogeneidad no observada en panel: cuándo cambia la conclusión"
+subtitle: "Dos aplicaciones muestran por qué FE, RE y CRE deben evaluarse por su sensibilidad empírica, no como una competencia abstracta"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
 email: "daniknd14@gmail.com"
-id_taller: "t09_panel_re_fe_cre"
-date: "2026-03-26"
-fuente_brief: "../../00_private/briefs/t09_panel_re_fe_cre_brief.txt"
+id_analisis: "panel_heterogeneidad_lineal_binaria"
+fuentes_origen: ["t09_panel_re_fe_cre", "t15_binaria_panel"]
+date: "2026-08-13"
 format:
   html:
     toc: true
@@ -18,6 +18,7 @@ format:
     css:
       - ../assets/portfolio.css
       - ../assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -26,186 +27,138 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-En este panel de plantas industriales, la pregunta aplicada es si la asociación entre subsidios de capacitación y scrap cambia de forma relevante al controlar heterogeneidad persistente entre firmas
+¿Cuándo cambia realmente la conclusión al modelar la heterogeneidad no observada?
 :::
 
 ::: {.hero-sub}
-La comparación FE, RE y CRE se usa como contraste disciplinado para elegir especificación sin sobreactuar sobre un solo test: la econometría está al servicio de una lectura empírica más creíble del caso productivo.
+La respuesta depende de la evidencia. En un panel lineal de plantas, FE, RE y CRE-Mundlak cuentan una historia muy parecida. En un probit de panel sobre participación laboral, controlar heterogeneidad correlacionada reduce materialmente los efectos parciales.
 :::
 :::
 
 :::: {.metric-grid}
-
 ::: {.metric-card}
 ::: {.metric-label}
-Referencia operativa
+Pregunta común
 :::
-
 ::: {.metric-value}
-RE + cluster (sujeto a contraste FE/CRE)
+¿La especificación altera el mensaje?
 :::
-
 ::: {.metric-note}
-`xtreg lscrap grant grant_1 d88 d89, re vce(cluster fcode)`
+Se comparan magnitudes antes de usar los tests como respaldo.
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Contexto aplicado
+Panel lineal
 :::
-
 ::: {.metric-value}
-Panel corto de plantas
+Lectura estable
 :::
-
 ::: {.metric-note}
-`N=162`, `54` firmas, `1987-1989` (panel balanceado de 3 años)
+FE, RE y CRE producen coeficientes cercanos para los subsidios.
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Lectura sustantiva
+Panel binario
 :::
-
 ::: {.metric-value}
-Patron estable
+Atenuación sustantiva
 :::
-
 ::: {.metric-note}
-`grant` y `grant_1` mantienen signo y magnitud parecida en FE, RE y CRE
+Los APE disminuyen al incorporar RE y heterogeneidad correlacionada.
 :::
 :::
 
 ::: {.metric-card}
 ::: {.metric-label}
-Respaldo formal
+Regla de decisión
 :::
-
 ::: {.metric-value}
-Sin rechazo de RE
+Diagnóstico + sensibilidad
 :::
-
 ::: {.metric-note}
-Hausman `p=0.2425`; Mundlak clásico `p=0.3591`; Mundlak robusto `p=0.3965`
+Ningún estimador es un ganador universal.
 :::
 :::
-
 ::::
 
 ## Resumen
 
-Esta pieza estudia la relación empírica entre subsidios de capacitación (`grant`, `grant_1`) y desperdicio productivo (`lscrap`) en plantas industriales. El punto central no es defender un test aislado, sino verificar si la lectura sustantiva del caso cambia al tratar la heterogeneidad no observada con FE, RE o CRE.
+Los datos de panel permiten reconocer diferencias persistentes entre unidades, pero no garantizan que tratarlas de una manera u otra cambie la conclusión aplicada. Este análisis contrasta dos situaciones deliberadamente distintas.
 
-La evidencia muestra coeficientes de interés muy cercanos entre especificaciones, y los contrastes formales no aportan evidencia fuerte contra la formulación RE En esta muestra. Por eso, se toma RE como modelo operativo y FE/CRE como controles disciplinados de robustez conceptual.
+En plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo resulta estable bajo efectos fijos (FE), efectos aleatorios (RE) y efectos aleatorios correlacionados (CRE-Mundlak). En un panel de mujeres, en cambio, los efectos parciales de la estructura del hogar sobre la participación laboral se reducen de forma sostenida al pasar de pooled probit a RE y CRE.
+
+El aprendizaje no es elegir siempre FE, RE o CRE. Es comprobar cuánto depende la lectura del supuesto sobre la heterogeneidad y cerrar la especificación con evidencia sustantiva y diagnóstica combinada.
 
 :::: {.quick-grid}
-
 ::: {.section-box}
-## Pregunta
+## Problema econométrico
 
-¿La relación entre subsidios de capacitación y scrap, cambia de forma relevante cuando se controla por heterogeneidad persistente entre plantas?
-
-::: {.small-note}
-Resultado: `lscrap` (log del desperdicio/scrap rate). Regresores de interés: `grant`, `grant_1`. Controles temporales: `d88`, `d89`. Unidad de panel: `fcode`.
-:::
+Si el componente individual persistente, $c_i$, está correlacionado con los regresores, una especificación pooled o RE convencional puede mezclar diferencias estructurales entre unidades con cambios dentro de cada unidad.
 :::
 
 ::: {.section-box}
-## Idea central
+## Criterio de comparación
 
-La comparación FE, RE y CRE no se presenta como competencia técnica abstracta: se usa para auditar si la historia aplicada del caso productivo se mantiene al cambiar el supuesto sobre la correlación entre heterogeneidad no observada y regresores.
+Primero se comparan signos, magnitudes e incertidumbre. Después se usan Hausman o Mundlak para evaluar si la independencia entre $c_i$ y los regresores es compatible con los datos.
 
-<span class="badge">Portfolio econométrico</span>
+<span class="badge">Panel y heterogeneidad</span>
 :::
-
 ::::
 
-## Por qué este problema importa
+## Caso 1 · Plantas industriales: una lectura robusta a la especificación
 
-El caso analiza plantas que pueden diferir de manera persistente en gestión, tecnología o calidad operativa. Si esas diferencias inobservadas también se relacionan con el acceso a subsidios, una lectura ingenua podria confundir patrón estructural de cada planta con la asociación de interés en `lscrap`.
+La primera aplicación usa `jtrain1.dta`, con 162 observaciones de 54 plantas entre 1987 y 1989. El resultado es el log del desperdicio productivo (`lscrap`); las variables centrales indican subsidio de capacitación actual (`grant`) y rezagado (`grant_1`).
 
-En términos aplicados, importa saber si el mensaje sobre subsidios y desperdicio es estable cuando se cambia el tratamiento de esa heterogeneidad. Esa estabilidad, o su ausencia, es la que sostiene una lectura profesional del ejemplo.
+Las plantas pueden diferir persistentemente en tecnología, gestión o calidad operativa. La comparación FE/RE/CRE pregunta si esas diferencias alteran la lectura de los subsidios.
 
-## Datos y variables
+| Especificación | Subsidio actual | Subsidio rezagado | Lectura |
+|---|---:|---:|---|
+| FE + cluster | -0,252 (EE 0,143) | -0,422 (EE 0,282) | Magnitudes negativas con incertidumbre amplia |
+| RE + cluster | -0,214 (EE 0,131) | -0,373 (EE 0,268) | Patrón muy cercano a FE |
+| CRE-Mundlak + cluster | -0,252 (EE 0,144) | -0,422 (EE 0,284) | Prácticamente coincide con FE |
 
-Se trabaja con `jtrain1.dta`, en formato panel de firmas.
+<img src="../assets/t09_coef_fe_re_cre.svg" alt="Coeficientes e intervalos de confianza para subsidio actual y rezagado bajo efectos aleatorios, efectos fijos y CRE-Mundlak; las estimaciones son muy similares." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;" />
 
-- Unidad de observacion: planta-año (`fcode`)
-- Ventana temporal operativa: `1987-1989`
-- Muestra de estimación: `N=162`, `54` firmas, panel balanceado de 3 años
-- Variable de resultado: `lscrap` (log del desperdicio/scrap rate)
-- Regresores clave: `grant`, `grant_1`
-- Controles: `d88`, `d89`
-- En CRE/Mundlak: medias temporales `grant_bar`, `grant_1_bar`
+La estabilidad visual es el hallazgo principal. El test de relevancia del panel rechaza pooling simple (`F(53,104)=24,66`; `p<0,001`), pero los contrastes que distinguen RE de FE/CRE no aportan evidencia fuerte contra RE: Hausman `p=0,2425`, Mundlak clásico `p=0,3591` y Mundlak robusto `p=0,3965`.
 
-El tamano operativo queda en `162` observaciones porque el modelo se estima sobre el panel balanceado efectivo de firmas con información completa para `lscrap`, subsidio actual, subsidio rezagado y controles temporales en los tres periodos.
+RE puede usarse aquí como referencia operativa parsimoniosa. Eso no prueba que su supuesto sea verdadero: indica que, en esta muestra, cambiar el tratamiento de la heterogeneidad no cambia materialmente la historia empírica.
 
-## Estrategia empírica
+## Caso 2 · Participación laboral: la magnitud sí depende del tratamiento de la heterogeneidad
 
-La secuencia se organiza para mantener foco aplicado y disciplina de especificación:
+La segunda aplicación utiliza un panel balanceado de 28.315 observaciones: 5.663 mujeres seguidas durante cinco períodos. El resultado es la participación en la fuerza laboral. Las variables protagonistas son el número de hijos menores de 18 años y el log del ingreso del esposo.
 
-1. Estimar FE, RE y CRE/Mundlak con la misma estructura central de regresores.
-2. Comparar primero signos y magnitudes de `grant` y `grant_1` entre modelos.
-3. Tomar RE+cluster como modelo operativo si la lectura sustantiva es estable y los contrastes formales no muestran evidencia fuerte en contra.
-4. Usar Hausman clásico y tests de Mundlak como respaldo formal de la decisión, no como unica base narrativa.
+Aquí una lectura pooled puede confundir restricciones persistentes del hogar, preferencias o condiciones individuales no observadas con asociaciones contemporáneas. Por eso se comparan pooled probit, RE probit, CRE pooled y CRE-RE probit mediante efectos parciales promedio (APE).
 
-## Qué evita una lectura automatica
+| Modelo | APE: hijos menores de 18 | APE: ingreso del esposo (log) | Lectura |
+|---|---:|---:|---|
+| Pooled probit | -0,0660 (0,0049) | -0,0701 (0,0080) | Referencia sin modelar persistencia individual |
+| RE probit | -0,0516 (0,0050) | -0,0190 (0,0042) | Atenuación al incorporar efecto aleatorio |
+| CRE pooled | -0,0389 (0,0089) | -0,0095 (0,0047) | Menor magnitud al admitir correlación tipo Mundlak |
+| CRE-RE probit | -0,0322 (0,0085) | -0,0081 (0,0043) | Cierre operativo con heterogeneidad correlacionada |
 
-Una lectura automatica puede confundir planos distintos:
+<img src="../assets/t15_ape_pooled_re_cre.svg" alt="Efectos parciales promedio e intervalos de confianza para hijos menores de 18 años e ingreso del esposo bajo pooled probit, RE probit, CRE pooled y CRE-RE probit." width="900" style="display:block; max-width:100%; height:auto; margin-inline:auto;" />
 
-1. Relevancia de usar panel frente a pooling.
-2. Eleccion entre FE y RE/CRE según posible correlación `Cov(c_i, x_it)`.
-3. Precision inferencial bajo errores clusterizados.
+Los signos negativos se mantienen, pero su magnitud cae de forma marcada. El test conjunto de las medias individuales rechaza independencia entre heterogeneidad y regresores tanto en CRE pooled (`χ²(2)=57,50`) como en CRE-RE (`χ²(2)=61,34`), con `p<0,001`.
 
-La pieza separa esos planos para no convertir una salida de test en conclusión mecanica.
+La baja variación temporal del número de hijos aconseja prudencia sobre cuánto puede separarse el componente dentro de la mujer del componente entre mujeres. Aun con ese límite, la trayectoria pooled → RE → CRE muestra que la especificación sí afecta la lectura en probabilidades.
 
-::: {.table-box}
-## Resultados principales
+## Lo que enseña el contraste
 
-La lectura principal abre por lo sustantivo: los coeficientes de `grant` y `grant_1` son parecidos en FE, RE y CRE, con signos consistentes y orden de magnitud cercano. En este caso, la historia aplicada sobre subsidios y scrap no cambia de forma relevante al mover la especificación de heterogeneidad no observada.
+| Dimensión | Panel lineal de plantas | Probit de panel laboral |
+|---|---|---|
+| Qué se compara | Coeficientes FE, RE y CRE | APE pooled, RE y CRE |
+| Sensibilidad empírica | Baja | Alta |
+| Evidencia Mundlak | No rechaza independencia | Rechaza con fuerza |
+| Cierre operativo | RE con FE/CRE como auditoría | CRE con pooled/RE como referencias |
 
-Con esa base, RE se usa como modelo operativo por parsimonia y por compatibilidad con la evidencia robusta tipo Mundlak; FE y CRE quedan como contrastes disciplinados que auditan el supuesto de correlación entre `c_i` y regresores.
-
-| Bloque | Evidencia | Lectura |
-|---|---:|---|
-| FE + cluster (`grant`, `grant_1`) | -0.252 (EE 0.143; IC [-0.540, 0.035]); -0.422 (EE 0.282; IC [-0.988, 0.145]) | Magnitudes negativas con incertidumbre amplia |
-| RE + cluster (`grant`, `grant_1`) | -0.214 (EE 0.131; IC [-0.471, 0.042]); -0.373 (EE 0.268; IC [-0.897, 0.152]) | Patrón sustantivo similar al FE |
-| CRE + cluster (`grant`, `grant_1`) | -0.252 (EE 0.144; IC [-0.535, 0.031]); -0.422 (EE 0.284; IC [-0.979, 0.136]) | Muy cercano a FE en variables clave |
-:::
-
-::: {.table-box}
-## Diagnosticos y respaldo formal
-
-El `F test all u_i=0` en FE (`F(53,104)=24.66`, `p=0.0000`) indica que la estructura panel es relevante: pooling simple no alcanza para este caso.
-
-Ese diagnóstico no decide por sí solo entre RE y FE/CRE. La elección entre esos marcos depende del punto clave `Cov(c_i, x_it)`, evaluado con comparación de magnitudes y contrastes tipo Hausman/Mundlak.
-
-| Diagnostico | Resultado | Lectura correcta |
-|---|---:|---|
-| Relevancia panel vs pooling | F(53,104)=24.66, p=0.0000 | Hay heterogeneidad no observada importante |
-| Hausman clásico (FE vs RE) | chi2(2)=2.83, p=0.2425 | No hay evidencia fuerte contra RE |
-| Mundlak clásico | chi2(2)=2.05, p=0.3591 | Coherente con lectura de Hausman |
-| Mundlak robusto (cluster) | chi2(2)=1.85, p=0.3965 | Respaldo formal robusto a la misma conclusión |
-:::
-
-<img src="../assets/t09_decision_secuencial.svg" alt="Sintesis secuencial de decision metodologica en T9: comparacion FE-RE-CRE, contraste Hausman/Mundlak y cierre operativo RE con cautela" width="780" style="display:block; max-width:100%; height:auto;" />
-
-## Lectura profesional del caso
-
-La conclusión se formula con prudencia aplicada: no rechazar RE no significa probar que RE sea verdadero; significa que En esta muestra no aparece evidencia fuerte contra esa formulación. Por eso, la interpretación final se apoya en la combinación de estabilidad sustantiva de coeficientes, contexto del caso y respaldo formal de contrastes.
-
-En términos aplicados, T9 muestra una práctica profesional útil: cuando FE, RE y CRE cuentan una historia económica parecida, la decisión de modelo puede justificarse sin exagerar precisión ni convertir metodología en protagonista.
+CRE cumple el mismo papel conceptual en ambos casos: permite hacer visible la posible correlación entre heterogeneidad persistente y regresores. Lo que cambia es la respuesta de los datos. En una aplicación confirma que la conclusión es robusta; en la otra revela que parte de la magnitud pooled estaba asociada con heterogeneidad no modelada.
 
 ## Cierre
 
-En este panel corto de plantas industriales, la relación entre subsidios de capacitación y desperdicio productivo mantiene un patrón similar al comparar FE, RE y CRE. La evidencia formal es compatible con usar RE como modelo operativo, pero la lectura se mantiene deliberadamente condicionada a los supuestos del marco.
+Modelar heterogeneidad no observada no es un ritual ni una regla automática de selección. La decisión útil combina tres elementos: una pregunta aplicada clara, comparaciones en una escala interpretable y diagnósticos coherentes con el supuesto que se está evaluando.
 
-
-
-
-
-
-
-
+Cuando FE, RE y CRE cuentan una historia semejante, conviene decirlo sin sobreactuar diferencias técnicas. Cuando los APE cambian materialmente y Mundlak rechaza independencia, esa sensibilidad pasa a formar parte de la conclusión.

@@ -1,6 +1,6 @@
 ---
 title: "Innovación de producto/proceso y mejora ambiental en firmas innovadoras"
-subtitle: "Estimación principal con IPWRA sobre un diseño de comparabilidad ya seleccionado"
+subtitle: "Estimación con IPWRA, soporte y balance para un tratamiento multivaluado"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
 linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -27,11 +28,11 @@ execute:
 
 ::: {.hero-box}
 ::: {.hero-title}
-Cuando la innovación combina producto y proceso, la mejora ambiental aparece con mayor intensidad
+Tres contrastes positivos, sin confundir gradiente con complementariedad
 :::
 
 ::: {.hero-sub}
-Esta pieza estima, en firmas innovadoras comparables, cómo cambia la probabilidad de reportar mejora ambiental media/alta según el estado de innovación frente al grupo sin innovación de producto/proceso.
+Este análisis estima, en firmas innovadoras comparables, cómo cambia la probabilidad de reportar mejora ambiental media/alta para cada estado de innovación frente al grupo sin innovación de producto/proceso.
 :::
 :::
 
@@ -55,7 +56,7 @@ Esta decisión permite que la lectura final se concentre en una pregunta sustant
 
 ::: {.small-note}
 - **Unidad de análisis:** observación firma-año en panel de innovación.
-- **Muestra de estimación principal:** `N = 4,393` observaciones comparables.
+- **Muestra de estimación principal:** `N = 4,393` observaciones comparables de 2.662 firmas.
 - **Resultado:** indicador binario de mejora ambiental media/alta (`Y_cond`).
 - **Estados de tratamiento:**  
   `0` = sin innovación de producto/proceso,  
@@ -67,11 +68,17 @@ Esta decisión permite que la lectura final se concentre en una pregunta sustant
 
 La estimación se organiza en tres contrastes diagonales (`1 vs 0`, `2 vs 0`, `3 vs 0`) definidos para subpoblaciones tratadas comparables dentro del soporte común operativo.
 
-## Diseño seleccionado y por qué
+La especificación final modela el tratamiento multivaluado con `mlogit`, el resultado binario con `logit` y agrupa la inferencia por firma. IPWRA combina ambos modelos y ofrece doble robustez, pero esa propiedad no sustituye los supuestos de selección en observables y overlap.
 
-La estimación principal se apoya en una configuración de diseño fijada antes de leer magnitudes de efecto. Esa configuración se adopta porque preserva soporte efectivo amplio, mantiene balance ponderado en rangos aceptables y evita alternativas más restrictivas que reducen en exceso la muestra utilizable.
+Ambos modelos condicionan por edad, capital extranjero, proporción de profesionales y técnicos, condición exportadora, tamaño y vínculos de red. El modelo de tratamiento incorpora además interacciones de red con exportación y tamaño, y el macrosector; el modelo de resultado agrega términos cuadráticos de edad y tamaño, innovación organizacional y comercial, y un indicador de faltantes.
 
-La decisión metodológica es deliberada: primero asegurar comparabilidad, soporte y estabilidad de pesos; después interpretar resultados. La especificación no se elige por el efecto más alto, sino por la credibilidad del contrafactual.
+La muestra pasa de 5.485 observaciones con resultado y tratamiento observados a 5.393 luego de restringir sectores, 4.563 casos completos y 4.393 observaciones después del recorte de soporte. Las 170 observaciones excluidas por esa última regla delimitan la población sobre la que se interpretan los efectos.
+
+## Especificación final documentada
+
+La fuente curada documenta la especificación contemporánea final y sus diagnósticos. No reconstruye ni compara las alternativas consideradas durante una etapa previa de selección, por lo que esta ficha no atribuye a la configuración final una superioridad frente a especificaciones no reportadas.
+
+La evaluación disponible se concentra en lo que sí puede comprobarse para esa especificación: soporte, balance ponderado, estabilidad de pesos y sensibilidad de la interpretación a los supuestos causales.
 
 ## Soporte y balance
 
@@ -83,15 +90,27 @@ Los diagnósticos de la estimación principal no muestran señales de ruptura se
 
 Estos chequeos respaldan la credibilidad del diseño y ordenan la lectura del resultado principal.
 
+::: {.table-box}
+| Contraste | Máx. \|SMD\| sin ponderar | Máx. \|SMD\| ponderado |
+|---|---:|---:|
+| Solo producto (`1`) vs `0` | 0.308 | 0.038 |
+| Solo proceso (`2`) vs `0` | 0.194 | 0.035 |
+| Producto y proceso (`3`) vs `0` | 0.463 | 0.065 |
+:::
+
+La regla de diseño restringe la probabilidad estimada del grupo base a `0.05 <= p0(X) <= 0.95`. Después de ese recorte, `teffects` no marca observaciones fuera de soporte en los pares relevantes y el peor desbalance ponderado queda por debajo de 0.10.
+
+No se aplica un recorte superior adicional ni winsorización de pesos. Los máximos observados son 3.35, 2.28 y 4.76 para los contrastes `1 vs 0`, `2 vs 0` y `3 vs 0`; los tamaños efectivos de muestra del grupo base son aproximadamente 470.6, 551.9 y 395.0. Estos diagnósticos no muestran una concentración extrema de la ponderación en la muestra analizada, aunque no sustituyen el supuesto de positividad.
+
 Para el contraste más exigente (`3 vs 0`), se muestra el overlap antes y después de ponderar.
 
 ::: {.columns}
 ::: {.column width="50%"}
-![Overlap antes de ponderar (`3 vs 0`): Pr(D=3)](../../../../causalidad/insumos/5_graficos/6_%20IPWRA/6_overlap_manual_t3.png)
+![Overlap antes de ponderar (`3 vs 0`): Pr(D=3)](../assets/graficos/6_overlap_manual_t3.png)
 :::
 
 ::: {.column width="50%"}
-![Overlap después de ponderar (IPW, `3 vs 0`): Pr(D=3)](../../../../causalidad/insumos/5_graficos/6_%20IPWRA/6_overlap_weighted_manual_t3.png)
+![Overlap después de ponderar (IPW, `3 vs 0`): Pr(D=3)](../assets/graficos/6_overlap_weighted_manual_t3.png)
 :::
 :::
 
@@ -100,18 +119,24 @@ Con estas condiciones de comparabilidad y soporte, el bloque siguiente resume lo
 ::: {.table-box}
 ## Resultado principal
 
-| Contraste principal (vs grupo base `0`) | ATET | Error estándar | Lectura breve |
-|---|---:|---:|---|
-| Solo producto (`1`) vs sin producto/proceso (`0`) | 0.11796 | 0.03344 | Aumento estimado de **11.8 puntos porcentuales** |
-| Solo proceso (`2`) vs sin producto/proceso (`0`) | 0.18043 | 0.03312 | Aumento estimado de **18.0 puntos porcentuales** |
-| Producto y proceso (`3`) vs sin producto/proceso (`0`) | 0.27051 | 0.03155 | Aumento estimado de **27.1 puntos porcentuales** |
+| Contraste principal (vs grupo base `0`) | ATET | Error estándar | IC 95% |
+|---|---:|---:|---:|
+| Solo producto (`1`) vs sin producto/proceso (`0`) | 0.11796 | 0.03344 | [0.0524; 0.1835] |
+| Solo proceso (`2`) vs sin producto/proceso (`0`) | 0.18043 | 0.03312 | [0.1155; 0.2453] |
+| Producto y proceso (`3`) vs sin producto/proceso (`0`) | 0.27051 | 0.03155 | [0.2087; 0.3323] |
 :::
 
 El patrón central es nítido y consistente: `ATET_3 > ATET_2 > ATET_1 > 0` (producto y proceso > solo proceso > solo producto, siempre frente al grupo base).
 
 Como síntesis visual del resultado principal, se muestra un mini coefplot horizontal con los tres ATET diagonales y sus IC 95%.
 
-![Mini coefplot horizontal de ATET diagonales (IC 95%)](../../../../causalidad/insumos/5_graficos/6_%20IPWRA/6_mini_coefplot_atet_diagonales.svg)
+![Mini coefplot horizontal de ATET diagonales (IC 95%)](../assets/graficos/6_mini_coefplot_atet_diagonales.svg)
+
+## Por qué el gradiente no identifica complementariedad
+
+Los tres números no promedian sobre la misma población: cada ATET corresponde a las firmas que efectivamente están en ese estado de innovación. Por eso, restar `ATET_3 - ATET_2` no identifica el efecto causal de agregar innovación de producto a una firma que ya innova en proceso; la diferencia también cambia la población tratada sobre la que se promedia.
+
+La conclusión defendible es más precisa: cada estado tratado presenta un efecto positivo frente a su propio contrafactual `D=0`, y el grupo con innovación de producto y proceso exhibe el ATET puntual más alto. Probar complementariedad exigiría estimar contrastes directos entre tratamientos activos sobre una población objetivo común.
 
 ## Lectura sustantiva y alcance
 
@@ -132,15 +157,15 @@ Firmas innovadoras tratadas comparables de cada estado, dentro de la muestra fil
 ::: {.section-box}
 **Alcance**
 
-Efectos causales interpretables como cambios en probabilidad (puntos porcentuales) dentro del diseño observacional adoptado, para firmas innovadoras tratadas comparables en soporte.
+Efectos interpretables como cambios causales en probabilidad, condicionados a selección en observables y overlap, para firmas innovadoras tratadas comparables en soporte.
 :::
 
 ::::
 
-Dentro del diseño aplicado, la innovación de producto/proceso incrementa la probabilidad de mejora ambiental reportada frente al grupo base, y la magnitud esperada es mayor cuando ambas innovaciones aparecen de forma conjunta.
+Dentro del diseño aplicado, cada estado de innovación presenta un efecto positivo frente al grupo base; el ATET puntual es mayor para las firmas que realizan ambas innovaciones, sin que ese gradiente identifique por sí solo un efecto incremental entre tratamientos activos.
 
 ## Cierre: qué se concluye y qué no
 
-Se concluye que, para firmas innovadoras comparables en soporte, los tres estados de innovación frente al grupo base generan aumentos positivos en la probabilidad de mejora ambiental media/alta, con un gradiente creciente desde solo producto hasta producto y proceso.
+Los resultados estiman, para firmas innovadoras comparables en soporte, aumentos positivos en la probabilidad de mejora ambiental media/alta en los tres estados frente al grupo base, con un gradiente creciente desde solo producto hasta producto y proceso.
 
-Estos efectos causales se interpretan para la población objetivo del diseño: firmas innovadoras comparables en soporte con las covariables observadas incluidas en la estimación.
+La lectura causal depende de que las covariables incluidas sean suficientes para absorber la selección relevante y de que el orden temporal contemporáneo sea defendible. El panel aporta observaciones firma-año y permite agrupar la inferencia por firma, pero esta especificación no controla heterogeneidad fija de la firma ni incorpora indicadores de año. El buen balance no descarta confusión no observada, simultaneidad ni causalidad inversa; tampoco convierte el gradiente entre ATET en evidencia de complementariedad.

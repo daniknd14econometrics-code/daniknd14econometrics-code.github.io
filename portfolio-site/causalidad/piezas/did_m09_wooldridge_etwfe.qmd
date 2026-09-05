@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -65,6 +66,15 @@ $$
 
 Describe el efecto medio para la cohorte que adopta en $g$, observada en el período $t$. La especificación flexible incluye interacciones entre cohorte, calendario y estado tratado para recuperar esos efectos de celda.
 
+Sin covariables, la arquitectura puede escribirse esquemáticamente como:
+
+$$
+Y_{it}=\alpha_i+\lambda_t+
+\sum_g\sum_{s\geq g}\tau_{g,s}\,\mathbf{1}\{G_i=g,t=s\}+u_{it}.
+$$
+
+Cada interacción identifica una celda tratada. Bajo tendencias paralelas y ausencia de anticipación, $\tau_{g,s}$ representa su $ATT(g,s)$. Las observaciones nunca tratadas y todavía no tratadas identifican la evolución sin exposición; las interacciones permiten que las desviaciones posteriores varíen entre cohortes y calendarios. La flexibilidad de los efectos no libera al modelo de esos supuestos sobre el contrafactual.
+
 ![Del efecto común del TWFE restrictivo a los efectos por cohorte y período y su agregación explícita](did_m09_twfe_etwfe.svg){fig-alt="Comparación entre TWFE restrictivo, que asigna un beta común a todas las celdas tratadas, y ETWFE, que representa efectos distintos por cohorte y período y luego los agrega globalmente, por cohorte, calendario o tiempo relativo."}
 
 El orden importa: el agregado no se impone desde el comienzo. Primero se estima la colección $ATT(g,t)$; después se decide qué cohortes, años u horizontes deben pesar en el resumen.
@@ -77,15 +87,13 @@ La secuencia de soluciones modernas puede resumirse sin convertirlas en métodos
 - **Borusyak–Jaravel–Spiess:** aprende $Y(0)$ con observaciones sin tratamiento e imputa el contrafactual para las tratadas.
 - **Wooldridge:** demuestra cuándo esos objetos modernos pueden recuperarse mediante una regresión flexible.
 
-M09 funciona así como puente entre los estimandos del DiD moderno y la práctica regresiva aplicada.
+Esta formulación conecta los estimandos del DiD moderno con la práctica regresiva aplicada.
 
-## TWM e imputación como representaciones relacionadas
+## ETWFE, ETWM e imputación: coincidencias específicas
 
-Two-Way Mundlak representa la heterogeneidad de unidad y los shocks temporales mediante promedios de los regresores, en lugar de absorberlos como efectos fijos. Bajo las condiciones correspondientes, TWFE y TWM pueden ser representaciones algebraicamente equivalentes de una misma ecuación.
+En este panel lineal y balanceado, la versión que utiliza efectos fijos de cohorte en lugar de efectos fijos individuales produce un agregado de **0,0978**, prácticamente igual al ETWFE sin covariables. El taller interpreta esa proximidad como una verificación de equivalencias tipo ETWFE/ETWM dentro de esta especificación, no como nueva evidencia empírica ni como una identidad general entre formulaciones.
 
-Esa equivalencia, por sí sola, no resuelve la heterogeneidad del tratamiento. El paso sustantivo aparece cuando la ecuación también incorpora los efectos cohorte × período.
-
-La misma regresión flexible puede interpretarse como un modelo del resultado no tratado. Pooled OLS flexible, ETWFE, TWM extendido y ciertas representaciones por imputación pueden coincidir en los **ATT medios de celda**. Esto no exige que Wooldridge y BJS produzcan idénticas predicciones contrafactuales para cada observación individual.
+Una segunda conexión aparece al permitir tendencias por cohorte. Estimar el modelo de $Y(0)$ únicamente con observaciones sin tratamiento y promediar después $Y-\widehat Y(0)$ sobre las tratadas reproduce el agregado de **0,0352**. La coincidencia vincula la regresión extendida con una lectura por imputación cuando ambas representan el mismo espacio funcional; no convierte a ETWFE y BJS en el mismo estimador.
 
 ## Aplicación: aperturas de Walmart y empleo minorista
 
@@ -127,7 +135,7 @@ La especificación central incorpora características pretratamiento relacionada
 
 Las covariables no entran como simples controles aditivos. Se centran e interactúan con la estructura de heterogeneidad para preservar la interpretación de los coeficientes principales como promedios de cohorte y período.
 
-Para estudiar leads y pretrends se utiliza un comparador estable formado únicamente por los 394 condados nunca tratados. Cambiar el grupo de comparación cambia también el parámetro agregado y no constituye una mera opción computacional.
+Para estudiar leads y pretrends se utiliza un comparador estable formado únicamente por los 394 condados nunca tratados. Cambiar el grupo de comparación modifica cómo se identifica el contrafactual. El ATT objetivo puede mantenerse si se conservan las mismas celdas y ponderaciones; el agregado cambia de población si también varían el soporte o la composición.
 
 ## Resultado agregado
 
@@ -160,6 +168,8 @@ IC95% [0,0696; 0,1099]
 ::::
 
 La estimación sugiere un aumento medio del log del empleo minorista de aproximadamente 0,090 entre las observaciones tratadas que integran el agregado. La precisión estadística del coeficiente no resuelve la credibilidad del diseño: las trayectorias previas y la sensibilidad del contrafactual deben evaluarse antes de sostener una interpretación causal fuerte.
+
+Los errores estándar se agrupan por condado para reconocer la dependencia temporal. La inferencia de los agregados utiliza el método delta y la covarianza conjunta de los efectos estimados; no basta promediar los errores estándar de las celdas.
 
 ## Qué cambia entre especificaciones
 
@@ -208,6 +218,8 @@ Agrupa celdas con igual distancia temporal desde la apertura.
 ::::
 
 Estas reglas no son nombres alternativos para un mismo coeficiente. Cambian qué población y qué horizonte dominan el resumen. En horizontes largos participan menos cohortes, por lo que también cambia la composición del estimando.
+
+En el agregado simple de este panel balanceado, cada celda cohorte-año pesa según su número de condados tratados. Las cohortes tempranas aportan más años posteriores y, por ello, más observaciones al total. Dar igual peso a cada cohorte respondería otra pregunta.
 
 ## Event study y dinámica
 
@@ -264,6 +276,8 @@ EE 0,0092 · IC95% [0,0171; 0,0533]
 ::::
 
 La segunda cifra no debe declararse automáticamente como “el efecto verdadero”. La comparación muestra que el resultado depende de cómo se modelan las trayectorias contrafactuales. Junto con los pretrends, esa sensibilidad impide presentar la aplicación como una estimación causal definitiva del efecto de Walmart.
+
+La reconstrucción del mismo modelo con tendencias, ajustado solo en observaciones no tratadas, produce un promedio de $Y-\widehat Y(0)$ de **0,0352**, coincidente con el agregado ETWFE. La equivalencia es del modelo y del promedio: los residuos previos cercanos a cero son parte del ajuste y no una validación independiente de tendencias paralelas.
 
 ## ETWFE frente a TWFE, C&S y BJS
 

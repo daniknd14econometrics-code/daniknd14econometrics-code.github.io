@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+  <title id="title">Quién entra en la muestra salarial</title>
+  <desc id="desc">Árbol de selección de 753 mujeres y distribuciones estilizadas de probabilidad predicha de participación.</desc>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe4ec;stroke-width:1.5}.head{font:700 24px system-ui,sans-serif;fill:#17324d}.sub{font:500 13px system-ui,sans-serif;fill:#52677a}.label{font:700 16px system-ui,sans-serif;fill:#17324d}.small{font:500 12px system-ui,sans-serif;fill:#52677a}.num{font:800 28px system-ui,sans-serif;fill:#0b7285}.box{fill:#eef6f7;stroke:#bcdde2;stroke-width:1.5}.box2{fill:#fff7e6;stroke:#f0cf91;stroke-width:1.5}.line{stroke:#91a4b6;stroke-width:2;fill:none}.axis{stroke:#9aabba;stroke-width:1.2}.curve{stroke:#0b7285;stroke-width:4;fill:none}.curve2{stroke:#d97706;stroke-width:4;fill:none}.fill{fill:#0b7285;opacity:.10}.fill2{fill:#d97706;opacity:.10}.dash{stroke:#9aabba;stroke-width:1.2;stroke-dasharray:5 5}.pill{fill:#17324d}.white{font:700 12px system-ui,sans-serif;fill:#fff}
+  </style>
+  <rect class="bg" width="960" height="500" rx="18"/>
+  <text class="head" x="48" y="45">La participación decide qué salario puede observarse</text>
+  <text class="sub" x="48" y="70">La ausencia del resultado no equivale a un salario igual a cero</text>
+  <rect class="panel" x="40" y="95" width="425" height="350" rx="15"/>
+  <rect class="panel" x="495" y="95" width="425" height="350" rx="15"/>
+  <text class="label" x="65" y="130">A. Puerta de observación</text>
+  <rect class="box" x="155" y="154" width="195" height="67" rx="11"/>
+  <text class="small" x="214" y="177">Muestra completa</text><text class="num" x="216" y="208">753</text>
+  <path class="line" d="M252 221 L252 250 M252 250 L137 250 L137 277 M252 250 L367 250 L367 277"/>
+  <rect class="box2" x="68" y="277" width="179" height="101" rx="11"/>
+  <text class="label" x="91" y="304">No participa</text><text class="num" x="91" y="339">325</text><text class="small" x="91" y="363">43,16% · salario ausente</text>
+  <rect class="box" x="267" y="277" width="170" height="101" rx="11"/>
+  <text class="label" x="291" y="304">Participa</text><text class="num" x="291" y="339">428</text><text class="small" x="291" y="363">56,84% · salario observado</text>
+  <rect class="pill" x="123" y="397" width="260" height="26" rx="13"/>
+  <text class="white" x="143" y="415">lwage observado ⇔ participación = 1</text>
+  <text class="label" x="520" y="130">B. Probabilidad predicha de participar</text>
+  <text class="sub" x="520" y="151">Probit estimado sobre las 753 observaciones</text>
+  <line class="axis" x1="535" y1="365" x2="887" y2="365"/>
+  <line class="dash" x1="682" y1="184" x2="682" y2="365"/>
+  <line class="dash" x1="777" y1="184" x2="777" y2="365"/>
+  <path class="fill" d="M540 360 C555 307 584 246 626 224 C670 200 716 230 754 279 C777 309 797 342 820 360 Z"/>
+  <path class="curve" d="M540 360 C555 307 584 246 626 224 C670 200 716 230 754 279 C777 309 797 342 820 360"/>
+  <path class="fill2" d="M552 360 C590 351 632 326 672 290 C713 252 751 205 797 190 C839 177 871 247 887 360 Z"/>
+  <path class="curve2" d="M552 360 C590 351 632 326 672 290 C713 252 751 205 797 190 C839 177 871 247 887 360"/>
+  <text class="small" x="532" y="386">0</text><text class="small" x="699" y="386">0,5</text><text class="small" x="881" y="386">1</text>
+  <text class="small" x="643" y="178">media 0,417</text><text class="small" x="750" y="178">media 0,687</text>
+  <line class="curve" x1="550" y1="411" x2="580" y2="411"/><text class="small" x="588" y="415">No participa</text>
+  <line class="curve2" x1="706" y1="411" x2="736" y2="411"/><text class="small" x="744" y="415">Participa</text>
+</svg>

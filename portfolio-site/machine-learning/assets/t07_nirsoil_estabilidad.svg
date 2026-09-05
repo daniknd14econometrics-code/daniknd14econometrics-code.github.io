@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" role="img" aria-labelledby="title desc">
+  <title id="title">NIRsoil: alfa elegido por Elastic Net entre folds externos</title>
+  <desc id="desc">Alfa elegido por Elastic Net en los cinco folds externos: 0,90, 0,75, 0,95, 0,10 y 0,95. La configuración final posterior a la evaluación es alfa igual a 0,90.</desc>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect width="880" height="520" rx="18" fill="#f8fafc"/>
+    <text x="28" y="42" font-size="25" font-weight="700" fill="#17324d">La mezcla L1/L2 no se repite exactamente por fold</text>
+    <text x="28" y="72" font-size="17" fill="#5d6b78">Elastic Net · alfa seleccionado en cada entrenamiento externo</text>
+    <rect x="22" y="96" width="836" height="270" rx="14" fill="#fff"/>
+    <g stroke="#dce3e9" stroke-width="1.5"><path d="M105 316H800M105 266H800M105 216H800M105 166H800M105 116H800"/></g>
+    <g font-size="14" fill="#5d6b78" text-anchor="end"><text x="93" y="321">0,00</text><text x="93" y="271">0,25</text><text x="93" y="221">0,50</text><text x="93" y="171">0,75</text><text x="93" y="121">1,00</text></g>
+    <path d="M105 136H800" stroke="#8b5ca7" stroke-width="3" stroke-dasharray="9 7"/>
+    <g fill="#0b7285"><circle cx="165" cy="136" r="10"/><circle cx="300" cy="166" r="10"/><circle cx="435" cy="126" r="10"/><circle cx="570" cy="296" r="10"/><circle cx="705" cy="126" r="10"/></g>
+    <g font-size="14" fill="#17324d" font-weight="700" text-anchor="middle"><text x="165" y="118">0,90</text><text x="300" y="148">0,75</text><text x="435" y="108">0,95</text><text x="570" y="278">0,10</text><text x="705" y="108">0,95</text></g>
+    <g font-size="15" fill="#17324d" font-weight="700" text-anchor="middle"><text x="165" y="347">Fold 1</text><text x="300" y="347">Fold 2</text><text x="435" y="347">Fold 3</text><text x="570" y="347">Fold 4</text><text x="705" y="347">Fold 5</text></g>
+    <g transform="translate(28 399)"><path d="M0 0H54" stroke="#8b5ca7" stroke-width="3" stroke-dasharray="9 7"/><text x="68" y="5" font-size="15" fill="#765090">Referencia operativa final: α = 0,90</text></g>
+    <text x="28" y="455" font-size="17" font-weight="700" fill="#17324d">La configuración operativa resume la muestra completa; no fue usada para todas las predicciones externas.</text>
+    <text x="28" y="487" font-size="15" fill="#5d6b78">Los folds revelan sensibilidad de la representación, no una secuencia temporal ni réplicas independientes.</text>
+  </g>
+</svg>

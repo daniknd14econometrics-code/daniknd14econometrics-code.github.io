@@ -17,6 +17,7 @@ format:
     css:
       - ../../econometria/assets/portfolio.css
       - ../../econometria/assets/t01_palette.css
+      - ../../assets/analysis-layout.css
 execute:
   echo: false
   warning: false
@@ -49,7 +50,7 @@ Una cohorte tratada más tarde puede ser un control pertinente mientras todavía
 
 ## La aplicación: divorcio unilateral y cohortes de adopción
 
-La aplicación utiliza un panel balanceado de estados de Estados Unidos para estudiar legislación de divorcio unilateral y suicidio femenino. Su valor en esta pieza no es establecer un efecto causal definitivo, sino hacer visible la estructura de comparaciones contenida en TWFE.
+La aplicación utiliza un panel balanceado de estados de Estados Unidos para estudiar legislación de divorcio unilateral y suicidio femenino. Su valor aquí no es establecer un efecto causal definitivo, sino hacer visible la estructura de comparaciones contenida en TWFE.
 
 :::: {.quick-grid}
 
@@ -135,7 +136,7 @@ referencia t clusterizada
 
 ::::
 
-La estimación puntual es negativa, pero el intervalo incluye cero. Más importante para el objetivo de esta pieza, el número `−3,0799` no identifica por sí solo qué grupos están siendo comparados ni qué interpretación causal admite esa combinación.
+La estimación puntual es negativa, pero el intervalo incluye cero. Más importante para el objetivo del análisis, el número `−3,0799` no identifica por sí solo qué grupos están siendo comparados ni qué interpretación causal admite esa combinación.
 
 ## Qué comparaciones esconde el coeficiente
 
@@ -167,11 +168,27 @@ La familia más cercana a comparar una cohorte temprana con otra tardía todaví
 
 Las contribuciones reconstruyen el coeficiente con una diferencia numérica prácticamente nula. La descomposición no es una especificación alternativa: muestra de dónde proviene el TWFE observado.
 
+## Agregar covariables no elimina el problema de agregación
+
+La especificación que incorpora ingreso per cápita, tasa de homicidios y una medida de casos desplaza el TWFE de `−3,0799` a `−2,5160` (`EE cluster = 2,2831`; `p = 0,276`). La estabilidad aproximada del signo no vuelve más transparente al estimando.
+
+::: {.table-box}
+| Componente de la descomposición controlada | Peso | Coeficiente asociado | Contribución |
+|---|---:|---:|---:|
+| Within | 0,00509 | 80,0123 | 0,4072 |
+| Between | 0,99491 | −2,9382 | −2,9232 |
+| **Total** | **1,00000** | — | **−2,5160** |
+:::
+
+El valor 80,01 del componente Within no debe interpretarse aisladamente como un efecto: pesa apenas 0,5% y aporta 0,407 al coeficiente. La variación Between concentra 99,5% del peso. Agregar covariables cambia la residualización del tratamiento, pero no convierte automáticamente el TWFE en un promedio causal limpio.
+
 ## Cuando los tratados funcionan como controles
 
 Considérese una cohorte temprana y otra tardía. Antes de que la segunda adopte, puede aproximar la trayectoria contrafactual de la primera. Después de la adopción tardía, TWFE también utiliza a la cohorte temprana como referencia, aunque ya lleva varios períodos expuesta.
 
 Si el efecto es constante, restar el cambio de la cohorte temprana no altera sustantivamente la comparación. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.
+
+Incluso las comparaciones que utilizan unidades nunca tratadas o todavía no tratadas requieren tendencias paralelas apropiadas y ausencia de anticipación. La descomposición permite identificar quién actúa como control y con qué peso; no verifica por sí misma esos supuestos causales.
 
 ## Efectos homogéneos y efectos dinámicos
 
@@ -199,7 +216,7 @@ La descomposición diagnostica el origen del coeficiente, pero no ofrece por sí
 
 ## Puente hacia el siguiente problema moderno
 
-Esta primera pieza de la crisis moderna establece el vocabulario necesario: cohortes, timing de adopción, controles todavía no tratados, controles ya tratados y heterogeneidad dinámica. El paso siguiente será estudiar otra dimensión de la crisis sin volver a tratar TWFE como una única comparación transparente.
+Este primer análisis de la crisis moderna establece el vocabulario necesario: cohortes, timing de adopción, controles todavía no tratados, controles ya tratados y heterogeneidad dinámica. El paso siguiente será estudiar otra dimensión de la crisis sin volver a tratar TWFE como una única comparación transparente.
 
 ## Conclusión
 

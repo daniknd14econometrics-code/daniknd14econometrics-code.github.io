@@ -3,9 +3,11 @@ title: "Fundamentos y diseños de inferencia causal"
 format:
   html:
     title-block-style: none
+    css: ../assets/causalidad-explorer.css
+    include-after-body: ../assets/causalidad-explorer.html
 ---
 
-::: {.hero-banner .hero-banner--causalidad}
+::: {.hero-banner .hero-banner--causalidad-fundamentos}
 ::: {.hero-banner__content}
 <span class="hero-banner__kicker">Causalidad · Fundamentos</span>
 
@@ -24,10 +26,33 @@ Una colección aplicada de diseños y herramientas para construir comparaciones 
 :::
 :::
 
-## Piezas publicadas
+::: {.causalidad-explorer .js-causalidad-explorer}
+<nav class="causalidad-sidebar" aria-label="Áreas de Fundamentos">
+<p class="causalidad-sidebar__title">EXPLORAR FUNDAMENTOS</p>
+<div class="causalidad-tabs" role="tablist" aria-orientation="vertical">
+<button id="tab-observables" class="causalidad-tab" type="button" role="tab" aria-controls="area-observables">Selección sobre observables</button>
+<button id="tab-iv" class="causalidad-tab" type="button" role="tab" aria-controls="area-iv">Variables instrumentales</button>
+<button id="tab-rdd" class="causalidad-tab" type="button" role="tab" aria-controls="area-rdd">Regresión discontinua (RDD)</button>
+<button id="tab-did" class="causalidad-tab" type="button" role="tab" aria-controls="area-did">Diferencias en diferencias</button>
+</div>
+</nav>
+
+<div class="causalidad-mobile-control">
+<label for="fundamentos-area-select">Explorar área</label>
+<select id="fundamentos-area-select">
+<option value="area-observables">Selección sobre observables</option>
+<option value="area-iv">Variables instrumentales</option>
+<option value="area-rdd">Regresión discontinua (RDD)</option>
+<option value="area-did">Diferencias en diferencias</option>
+</select>
+</div>
+
+::: {.causalidad-panels}
+::: {#area-observables .causalidad-panel role="tabpanel" aria-labelledby="tab-observables"}
+## Selección sobre observables
 
 ::: {.section-lead}
-Ocho piezas que recorren la lógica causal, la selección en observables, las variables instrumentales, RDD, Difference-in-Differences canónico y sus problemas clásicos de inferencia.
+Estrategias que construyen comparabilidad a partir de covariables pretratamiento, con atención a balance, soporte común, emparejamiento y reponderación.
 :::
 
 ::: {.piece-grid}
@@ -37,6 +62,8 @@ Diferencias observadas no identifican causalidad sin una estrategia válida de c
 
 **Método principal:** Diagnóstico de sesgo de selección y comparación naive  
 **Tipo de datos:** Microdatos observacionales  
+
+<a class="piece-card__cta" href="../piezas/c01_diferencia-medias-no-causal.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -45,14 +72,18 @@ Construcción del grupo de comparación con matching exacto y verificación de b
 
 **Método principal:** Matching exacto y chequeo de balance  
 **Tipo de datos:** Microdatos de hogares  
+
+<a class="piece-card__cta" href="../piezas/c02_matching-exacto-microcredito.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad](../piezas/c04_psm_microcredito.qmd)
+### [Microcrédito femenino y gasto per cápita: evidencia con PSM bajo criterio de comparabilidad](../piezas/c04_psm_microcredito.qmd)
 Estimación de efectos con ponderación por puntaje de propensión bajo soporte común.
 
 **Método principal:** Propensity Score Matching (PSM)  
 **Tipo de datos:** Microdatos de hogares  
+
+<a class="piece-card__cta" href="../piezas/c04_psm_microcredito.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -61,15 +92,53 @@ Efecto de innovación sobre desempeño ambiental combinando modelos de resultado
 
 **Método principal:** IPWRA (ponderación inversa + regresión ajustada)  
 **Tipo de datos:** Panel/corte de firmas innovadoras  
+
+<a class="piece-card__cta" href="../piezas/c06_ipwra_innovacion_ambiental.qmd">Abrir análisis →</a>
 :::
 
+:::
+:::
+
+::: {#area-iv .causalidad-panel role="tabpanel" aria-labelledby="tab-iv"}
+## Variables instrumentales
+
+::: {.section-lead}
+Diseños que explotan variación exógena para tratar problemas de endogeneidad, evaluando relevancia, primera etapa, forma reducida y credibilidad de la restricción de exclusión.
+:::
+
+::: {.piece-grid}
+
 ::: {.piece-card}
-### [Retorno de la educación con variable instrumental](../piezas/c08_vi_retorno_educacion.qmd)
-Aplicación de variables instrumentales para corregir endogeneidad en el retorno educativo.
+### [Retorno a la educación con IV: cuando una estrategia más rica puede debilitar la identificación](../piezas/c08_vi_retorno_educacion.qmd)
+Trimestre de nacimiento, primera etapa e inferencia robusta para una lectura local y cauta del retorno educativo.
 
 **Método principal:** Variables instrumentales (2SLS)  
 **Tipo de datos:** Microdatos laborales  
+
+<a class="piece-card__cta" href="../piezas/c08_vi_retorno_educacion.qmd">Abrir análisis →</a>
 :::
+
+::: {.piece-card}
+### [Participación en 401(k) y activos financieros con DR-LATE](../piezas/c09_drlate_401k.qmd)
+Extensión moderna de IV con covariables, modelos auxiliares y estimación doblemente robusta de efectos locales.
+
+**Método principal:** DR-LATE mediante IPWRA<br>
+**Tipo de datos:** Microdatos financieros individuales
+
+<a class="piece-card__cta" href="../piezas/c09_drlate_401k.qmd">Abrir análisis →</a>
+:::
+
+:::
+:::
+
+::: {#area-rdd .causalidad-panel role="tabpanel" aria-labelledby="tab-rdd"}
+## Regresión discontinua (RDD)
+
+::: {.section-lead}
+Identificación local alrededor de un umbral, con foco en continuidad, ausencia de manipulación, elección de ventana o ancho de banda e inferencia robusta.
+:::
+
+::: {.piece-grid}
 
 ::: {.piece-card}
 ### [Elecciones reñidas y escolarización femenina: evidencia local con RDD](../piezas/rdd01_elecciones_escolarizacion.qmd)
@@ -78,7 +147,21 @@ Efecto local del control municipal islámico en elecciones decididas alrededor d
 **Método principal:** Regresión discontinua sharp con inferencia robusta
 
 **Tipo de datos:** Corte transversal de municipios
+
+<a class="piece-card__cta" href="../piezas/rdd01_elecciones_escolarizacion.qmd">Abrir análisis →</a>
 :::
+
+:::
+:::
+
+::: {#area-did .causalidad-panel role="tabpanel" aria-labelledby="tab-did"}
+## Diferencias en diferencias
+
+::: {.section-lead}
+Comparación de cambios entre grupos tratados y de control bajo tendencias paralelas, con atención al diseño, la inferencia y la interpretación del estimando.
+:::
+
+::: {.piece-grid}
 
 ::: {.piece-card}
 ### [Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional](../piezas/did01_did_clasico.qmd)
@@ -87,6 +170,8 @@ Comparación de cambios bajo tendencias paralelas y extensión condicional media
 **Método principal:** Difference-in-Differences 2×2 y DiD condicional
 
 **Tipo de datos:** Panel de dos períodos y resultados repetidos
+
+<a class="piece-card__cta" href="../piezas/did01_did_clasico.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
@@ -96,5 +181,10 @@ Tratamientos placebo para mostrar cómo la persistencia temporal puede producir 
 **Método principal:** Monte Carlo empírico e inferencia agrupada en DiD
 
 **Tipo de datos:** Panel estado-año con tratamientos placebo
+
+<a class="piece-card__cta" href="../piezas/bdm01_inferencia_did.qmd">Abrir análisis →</a>
+:::
+:::
+:::
 :::
 :::
