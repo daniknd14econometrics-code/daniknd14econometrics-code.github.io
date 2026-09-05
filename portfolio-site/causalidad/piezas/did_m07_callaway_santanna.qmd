@@ -60,7 +60,7 @@ La diferencia principal no es un nuevo comando ni la promesa de un número radic
 Sea $G=g$ la cohorte que adopta el tratamiento por primera vez en el período $g$. Para un período $t$, el parámetro
 
 $$
-ATT(g,t)=E\left[Y_t(1)-Y_t(0)\mid G=g\right]
+ATT(g,t)=E\left[Y_t(g)-Y_t(0)\mid G=g\right]
 $$
 
 describe el efecto causal medio para esa cohorte en ese momento. Cada celda pos-tratamiento identificable se apoya en una comparación DiD explícita: el cambio de la cohorte $g$ entre su período base y $t$, menos el cambio del grupo de control durante el mismo intervalo.
@@ -120,6 +120,15 @@ Logaritmo de la población, fijado antes de la exposición.
 
 Las cohortes de primera adopción reúnen 20 condados en 2004, 40 en 2006 y 131 en 2007. Los 309 condados restantes no adoptan durante la ventana observada y constituyen el control principal.
 
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Distribución de condados por cohorte de adopción](../assets/graficos/did_m07_distribucion_cohortes.png){fig-alt="Cantidad de condados en las cohortes de adopción de 2004, 2006 y 2007 y en el grupo nunca tratado."}
+:::
+::: {.figure-pair__item}
+![Trayectorias crudas del empleo adolescente por cohorte](../assets/graficos/did_m07_trayectorias_crudas.png){fig-alt="Trayectorias medias crudas del log del empleo adolescente para cada cohorte de adopción y los condados nunca tratados."}
+:::
+::::
+
 ## Cohortes, timing y soporte
 
 El tratamiento no se revierte una vez iniciado. Las siete celdas pos-tratamiento observables cuentan con unidades tratadas y controles válidos. Cuando se utiliza el grupo ampliado, la cantidad de controles todavía no tratados disminuye a medida que avanza el calendario; en 2007, las comparaciones descansan nuevamente en los nunca tratados.
@@ -140,7 +149,7 @@ Una vez estimadas las celdas elementales, la heterogeneidad puede mostrarse en l
 | **Promedio global simple** | **−0,0418** | **0,0115** | **[−0,0643; −0,0192]** |
 :::
 
-![Efectos estimados por cohorte y promedio GAverage](did_m07_efectos_por_cohorte.svg){fig-alt="Gráfico de coeficientes con intervalos de confianza del 95 por ciento. La cohorte 2004 presenta un efecto de menos 0,0846; las cohortes 2006 y 2007, efectos menores cuyos intervalos incluyen cero; y GAverage resume un efecto de menos 0,0328 con intervalo completamente negativo."}
+![Efectos estimados por cohorte y promedio GAverage](../assets/graficos/did_m07_agregacion_grupo.png){fig-alt="Estimaciones por cohorte y agregado GAverage mediante DR-IPW con condados nunca tratados como comparación."}
 
 Las estimaciones corresponden al efecto sobre el log del empleo adolescente para las cohortes tratadas del panel, bajo las comparaciones y los supuestos del diseño. La cohorte de 2004 presenta una reducción estimada mayor que las cohortes posteriores; esa diferencia se conserva como información sustantiva.
 
@@ -178,6 +187,8 @@ Ambos parámetros son legítimos, pero responden preguntas distintas. El primero
 
 La misma matriz admite otras dos lecturas. La agregación por **calendario** pregunta cuál fue el efecto medio entre las cohortes ya tratadas en un año histórico; la agregación por **tiempo relativo** pregunta cómo evoluciona el efecto desde la adopción. Así, global, cohorte, calendario y *event time* no son cuatro formas intercambiables de presentar un número: son cuatro preguntas construidas sobre los mismos efectos elementales.
 
+![Agregación de efectos por año calendario](../assets/graficos/did_m07_agregacion_calendario.png){fig-alt="Efectos agregados por calendario mediante DR-IPW con condados nunca tratados como comparación."}
+
 ## Callaway–Sant’Anna frente a TWFE
 
 Como referencia, la regresión TWFE estática estima **−0,0365**, con EE **0,0133**. La cercanía numérica respecto de los agregados modernos no establece equivalencia entre estimandos.
@@ -209,7 +220,16 @@ Los no rechazos ordenan la evidencia pretratamiento, pero no prueban tendencias 
 
 Los `ATT(g,t)` también pueden agregarse por tiempo relativo. La trayectoria moderna estima **−0,0211** en el momento de adopción, **−0,0530** un año después, **−0,1404** a dos años y **−0,1069** a tres. Sin embargo, no observa la misma población en todos los puntos: las tres cohortes contribuyen en `e=0`, solo 2004 y 2006 alcanzan `e=1`, y únicamente 2004 llega a `e=2` y `e=3`.
 
-![Trayectoria pos-tratamiento con composición variable y versión balanceada](did_m07_event_study_composicion.svg){fig-alt="Dos paneles comparan agregaciones por tiempo relativo. La trayectoria con toda la información pasa de menos 0,0211 en e igual a cero a menos 0,1404 en e igual a dos, pero pierde cohortes con el horizonte. La versión balanceada conserva las cohortes 2004 y 2006 en e igual a cero y uno y obtiene un promedio post de menos 0,02860, frente a menos 0,08035 en la trayectoria no balanceada."}
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Event study DR-IPW con composición variable](../assets/graficos/did_m07_event_study_never.png){fig-alt="Event study DR-IPW frente a condados nunca tratados, con períodos pretratamiento y composición de cohortes variable según el horizonte."}
+:::
+::: {.figure-pair__item}
+![Event study balanceado hasta el primer año posterior](../assets/graficos/did_m07_event_study_balanceado.png){fig-alt="Event study DR-IPW balanceado que mantiene las cohortes con soporte hasta un año después de la adopción."}
+:::
+::::
+
+*Nota:* los períodos negativos son pseudo-ATT pretratamiento con función diagnóstica, no efectos causales pretratamiento.
 
 La versión balanceada hasta `e'=1` conserva solo las cohortes 2004 y 2006 en ambos horizontes. Su efecto en `e=0` es **−0,0042** y en `e=1` permanece en **−0,0530**. El promedio post cae en magnitud de **−0,08035** en la trayectoria no balanceada a **−0,02860** en la balanceada.
 
@@ -221,12 +241,21 @@ Las funciones de influencia permiten recombinar los `ATT(g,t)` y hacer inferenci
 
 En una trayectoria completa, la distinción relevante es entre incertidumbre punto a punto y cobertura conjunta. Para `e=1`, cuya estimación es −0,0530, el intervalo bootstrap punto a punto es aproximadamente **[−0,0860; −0,0200]**, mientras la banda uniforme es **[−0,0952; −0,0108]**. La segunda es más amplia porque busca cubrir simultáneamente toda la trayectoria. Por eso la inferencia del *event study* no debe reducirse a inspeccionar por separado la significación de cada punto.
 
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Banda bootstrap uniforme para la trayectoria](../assets/graficos/did_m07_bootstrap_uniforme.png){fig-alt="Event study con banda bootstrap uniforme para cobertura conjunta de la trayectoria."}
+:::
+::: {.figure-pair__item}
+![Intervalos bootstrap punto a punto](../assets/graficos/did_m07_bootstrap_pointwise.png){fig-alt="Event study con intervalos bootstrap calculados por separado en cada período relativo."}
+:::
+::::
+
 ## Qué mejora y qué supuestos permanecen
 
 Callaway–Sant’Anna mejora la transparencia del estimando: evita controles ya tratados, admite heterogeneidad y permite elegir el agregado según la pregunta. No elimina la necesidad de:
 
 - tendencias paralelas condicionales creíbles;
-- ausencia de anticipación;
+- un supuesto explícito sobre anticipación —en esta aplicación, ausencia de anticipación—;
 - soporte suficiente dentro de cada comparación;
 - timing de adopción correctamente medido;
 - covariables definidas antes del tratamiento;

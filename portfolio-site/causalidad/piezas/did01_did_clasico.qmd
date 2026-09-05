@@ -172,7 +172,7 @@ Ahora los controles relevantes son aquellos con covariables `X` semejantes a las
 
 ## Ponderación de Abadie y soporte común
 
-La ponderación de Abadie utiliza el propensity score, $p(X)=P(D=1\mid X)$, para cambiar la composición del grupo de control. Los controles que representan mejor a la población tratada reciben mayor peso; los perfiles con escasa comparabilidad reciben menos influencia.
+La ponderación de Abadie utiliza el propensity score, $p(X)=P(D=1\mid X)$, para cambiar la composición del grupo de control. Los controles con perfiles observables relativamente frecuentes entre los tratados y escasos entre los controles reciben mayor peso. Por eso el overlap es crucial: cuando hay pocos controles comparables, los pesos pueden volverse grandes e inestables.
 
 La lógica no consiste en buscar grupos con idéntico ingreso observado después del programa. Se utilizan covariables predeterminadas para construir el contrafactual: edad, educación, raza y etnia, estado civil, finalización secundaria e ingresos de 1974.
 
@@ -183,6 +183,15 @@ La extensión utiliza una muestra NSW/Dehejia-Wahba de **445 personas**: 185 par
 La base funciona como vehículo pedagógico para implementar el método; no constituye una replicación exacta de la aplicación empírica original de Abadie.
 
 El propensity score probit documentado ubica a los tratados entre `0,237` y `0,680` y a los controles entre `0,228` y `0,629`. La intersección simple, `0,237–0,629`, conserva 439 de las 445 observaciones. La estabilidad del ATT al restringir ese soporte indica que el resultado no depende materialmente de unas pocas observaciones sin comparación adecuada.
+
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Cambios medios de ingresos en la aplicación NSW](../assets/graficos/did01_nsw_mean_changes.png){fig-alt="Cambios medios de ingresos para participantes y controles en la aplicación NSW."}
+:::
+::: {.figure-pair__item}
+![Overlap del propensity score en la aplicación NSW](../assets/graficos/did01_nsw_pscore_overlap.png){fig-alt="Distribuciones del propensity score para participantes y controles de NSW y su región de soporte compartido."}
+:::
+::::
 
 ::: {.table-box}
 | Estrategia | Efecto estimado sobre el cambio de ingresos | EE | p-value | IC 95% |
@@ -195,6 +204,8 @@ El propensity score probit documentado ubica a los tratados entre `0,237` y `0,6
 :::
 
 El parámetro principal es un **ATT**: el efecto promedio del programa para la población tratada representada por el diseño. La estimación con `absdid` indica un aumento de ingresos cercano a **1.469 unidades monetarias** respecto del cambio contrafactual reconstruido con controles reponderados.
+
+El ajuste lineal se utiliza como benchmark; no equivale por sí mismo al estimador semiparamétrico de Abadie ni sustituye su esquema de identificación mediante tendencias paralelas condicionales y reponderación.
 
 La construcción manual y el comando especializado recuperan efectos puntuales muy próximos. La inferencia principal se toma de `absdid`, que incorpora el error asociado con estimar el propensity score; por eso no se asigna a la versión manual una precisión que esa reconstrucción pedagógica no reporta.
 

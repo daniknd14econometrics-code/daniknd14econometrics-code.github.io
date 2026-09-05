@@ -40,7 +40,7 @@ Cuando los estados adoptan una política en años distintos, el coeficiente deja
 
 ¿Qué está promediando realmente una regresión con efectos fijos de unidad y tiempo cuando las unidades adoptan el tratamiento en momentos distintos?
 
-**Respuesta corta:** el coeficiente TWFE es una combinación ponderada de múltiples estimadores DiD 2×2. Algunas comparaciones usan unidades nunca tratadas o todavía no tratadas; otras utilizan como control a cohortes cuyo tratamiento ya comenzó. Bajo efectos dinámicos o heterogéneos, estas últimas pueden perder una interpretación causal limpia.
+**Respuesta corta:** el coeficiente TWFE es una combinación ponderada de múltiples estimadores DiD 2×2. Algunas comparaciones usan unidades nunca tratadas o todavía no tratadas; otras utilizan como control a cohortes cuyo tratamiento ya comenzó. Cuando los efectos cambian con el tiempo de exposición, estas últimas pueden contaminarse. Incluso si los efectos solo difieren entre cohortes pero son constantes en el tiempo, TWFE puede agregarlos con ponderaciones distintas de las del ATT de interés.
 
 ## Del DiD canónico a la adopción escalonada
 
@@ -148,6 +148,8 @@ $$
 
 Los pesos reflejan cuánta variación residual del tratamiento aporta cada comparación. La identidad es algebraica: permite abrir el coeficiente, pero no convierte automáticamente todos sus componentes en efectos causales válidos.
 
+![Descomposición Goodman–Bacon del TWFE de referencia](../assets/graficos/did_m04_bacon_decomp_baseline.png){fig-alt="Descomposición del coeficiente TWFE en comparaciones dos por dos y sus ponderaciones."}
+
 ## Descomposición Goodman–Bacon
 
 ::: {.table-box}
@@ -162,9 +164,9 @@ Los pesos reflejan cuánta variación residual del tratamiento aporta cada compa
 
 ![Contribución de cada familia de comparaciones a la estimación TWFE](did_m04_bacon_contribuciones.svg){fig-alt="Gráfico de barras divergentes de las cuatro contribuciones Goodman–Bacon. Siempre tratadas versus cohortes aporta menos 2,7078; tempranas versus tardías aún no tratadas, menos 0,0207; tardías versus tempranas ya tratadas, 0,9294; y cohortes versus nunca tratadas, menos 1,2809. La suma es menos 3,0799."}
 
-El componente más cercano al DiD canónico es también el de menor peso; las comparaciones con estados siempre tratados o con controles ya tratados ocupan buena parte de la composición.
+Dentro de las comparaciones entre cohortes tratadas, la más cercana al DiD canónico es también la de menor peso; las comparaciones con estados siempre tratados o con controles ya tratados ocupan buena parte de la composición.
 
-La familia más cercana a comparar una cohorte temprana con otra tardía todavía no tratada recibe solo **11,1%** del peso. En cambio, **26,5%** corresponde a comparaciones donde una cohorte temprana ya tratada funciona como control, y **38,4%** involucra estados tratados antes del inicio del panel.
+La familia que compara una cohorte temprana con otra tardía todavía no tratada recibe **11,1%** del peso; **24,0%** corresponde a cohortes frente a nunca tratadas; **26,5%** utiliza cohortes tempranas ya tratadas como controles; y **38,4%** involucra estados tratados antes del inicio del panel.
 
 Las contribuciones reconstruyen el coeficiente con una diferencia numérica prácticamente nula. La descomposición no es una especificación alternativa: muestra de dónde proviene el TWFE observado.
 
@@ -184,9 +186,18 @@ El valor 80,01 del componente Within no debe interpretarse aisladamente como un 
 
 ## Cuando los tratados funcionan como controles
 
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Cohortes de adopción del divorcio unilateral](../assets/graficos/did_m04_cohortes_adopcion.png){fig-alt="Distribución de estados según su cohorte de adopción del divorcio unilateral."}
+:::
+::: {.figure-pair__item}
+![Trayectorias medias de tres grupos de adopción](../assets/graficos/did_m04_tres_grupos_medias.png){fig-alt="Trayectorias medias del resultado para cohortes tempranas, tardías y nunca tratadas."}
+:::
+::::
+
 Considérese una cohorte temprana y otra tardía. Antes de que la segunda adopte, puede aproximar la trayectoria contrafactual de la primera. Después de la adopción tardía, TWFE también utiliza a la cohorte temprana como referencia, aunque ya lleva varios períodos expuesta.
 
-Si el efecto es constante, restar el cambio de la cohorte temprana no altera sustantivamente la comparación. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.
+Si el efecto de la cohorte temprana es constante a lo largo de las ventanas relevantes, usar su cambio como control no introduce el término de contaminación dinámica. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.
 
 Incluso las comparaciones que utilizan unidades nunca tratadas o todavía no tratadas requieren tendencias paralelas apropiadas y ausencia de anticipación. La descomposición permite identificar quién actúa como control y con qué peso; no verifica por sí misma esos supuestos causales.
 
@@ -220,6 +231,6 @@ Este primer análisis de la crisis moderna establece el vocabulario necesario: c
 
 ## Conclusión
 
-Con adopción escalonada, TWFE combina múltiples DiD 2×2. En la aplicación, solo 11,1% del peso proviene de comparaciones entre cohortes tempranas y tardías todavía no tratadas; 26,5% utiliza cohortes tempranas ya tratadas como controles y 38,4% involucra unidades siempre tratadas.
+Con adopción escalonada, TWFE combina múltiples DiD 2×2. En la aplicación, 11,1% corresponde a comparaciones entre cohortes tempranas y tardías todavía no tratadas, 24,0% a cohortes frente a nunca tratadas, 26,5% utiliza cohortes tempranas ya tratadas como controles y 38,4% involucra unidades siempre tratadas.
 
 La simulación muestra la consecuencia con claridad: una comparación elemental alcanza **−0,80** aunque los efectos verdaderos nunca sean negativos. La literatura moderna de DiD surge de este problema econométrico concreto. Antes de interpretar un coeficiente agregado, es necesario saber qué comparaciones lo construyen y si esas comparaciones conservan un contrafactual causal defendible.

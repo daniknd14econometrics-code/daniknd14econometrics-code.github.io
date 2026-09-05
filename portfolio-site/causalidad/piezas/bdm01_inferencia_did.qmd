@@ -130,7 +130,7 @@ La alternativa agrega artificialmente un efecto de 0,02. El 72% de OLS no puede 
 
 **Cluster por estado** permite dependencia arbitraria dentro de la unidad donde se asigna el tratamiento. En este ejercicio recupera una tasa de rechazo cercana al nivel nominal y constituye la corrección más directamente alineada con el diseño.
 
-**Agregación pre-post** comprime cada trayectoria a un cambio previo y posterior. Reduce la falsa multiplicación de información temporal, aunque sacrifica detalle dinámico.
+**Agregación pre-post** comprime cada trayectoria a un cambio previo y posterior. Reduce la falsa multiplicación de información temporal y sacrifica detalle dinámico, pero no elimina por sí sola los problemas inferenciales asociados a un número pequeño de grupos.
 
 Las correcciones **AR(1)** imponen una forma paramétrica para la dependencia. El contraste entre 24% con persistencia estimada y 3% con un valor impuesto muestra que sus resultados pueden depender de cómo se especifique el proceso temporal. La matriz empírica común también se acerca al nominal en este ejercicio, pero requiere estimar una estructura de covarianza compartida.
 
@@ -138,17 +138,19 @@ El mensaje no es que exista una corrección universal. La inferencia debe respon
 
 ## Block bootstrap con leyes placebo comunes
 
-El último experimento compara cinco métodos sobre la misma ley placebo en cada repetición externa y agrega un block bootstrap que remuestrea trayectorias estatales completas. Con 75 repeticiones externas y 74 remuestreos internos, OLS rechaza 38,7% bajo el nulo; cluster, pre-post y la matriz empírica común rechazan 6,7%, y el block bootstrap, 5,3%.
+El último experimento compara cinco métodos sobre la misma ley placebo en cada repetición externa y agrega un block bootstrap que remuestrea trayectorias estatales completas. Con 75 repeticiones externas y 74 remuestreos internos, OLS rechaza 38% bajo el nulo; cluster, 6%; y pre-post, la VCV común y el block bootstrap, 8% cada uno.
 
-El bootstrap queda cerca del tamaño nominal, pero el número reducido de repeticiones impide convertir diferencias pequeñas en una jerarquía definitiva. Su aporte es mostrar que preservar la trayectoria completa del estado puede corregir la falsa precisión sin tratar cada celda estado-año como información independiente.
+![Tasas de rechazo con leyes placebo comunes y block bootstrap](../assets/graficos/bdm01_bootstrap_comparativo_metodos.png){fig-alt="Comparación de tasas de rechazo bajo el nulo para OLS, cluster por estado, agregación pre-post, VCV común y block bootstrap con las mismas leyes placebo."}
+
+El bootstrap queda cerca del tamaño nominal, pero el número reducido de repeticiones impide convertir diferencias pequeñas en una jerarquía definitiva. Su aporte es mostrar que preservar la trayectoria completa del estado puede corregir la falsa precisión sin tratar cada celda estado-año como información independiente. Como otras correcciones basadas en grupos, su desempeño también depende de disponer de un número suficiente de clusters.
 
 ## Mismo coeficiente, distinta incertidumbre
 
-![Una misma ley placebo produce el mismo coeficiente y errores estándar distintos según el método de inferencia](bdm01_mismo_coeficiente.svg){fig-alt="El coeficiente estimado es 0,0057 con los cinco métodos. El error estándar es 0,0058 con OLS convencional, 0,0128 con cluster por estado, 0,0123 con matriz empírica común, 0,0080 con AR uno estimado y 0,0179 con AR uno imponiendo rho igual a 0,8."}
+![Una misma ley placebo produce el mismo coeficiente y errores estándar distintos según el método de inferencia](bdm01_mismo_coeficiente.svg){fig-alt="El coeficiente estimado es menos 0,0002 con los cinco métodos. Los errores estándar son 0,0061 con OLS, 0,0114 con cluster por estado, 0,0109 con agregación pre-post, 0,0084 con VCV común y 0,0189 con block bootstrap."}
 
-En una ley placebo fija, los cinco métodos producen exactamente el mismo coeficiente: `0,0057`. Lo que cambia es la incertidumbre. El error estándar convencional (`0,0058`) es menos de la mitad del cluster por estado (`0,0128`). La figura aísla así el mecanismo del problema: no aparecen cinco efectos causales distintos, sino cinco evaluaciones de precisión para un único estimador puntual.
+En una ley placebo fija, los cinco métodos producen exactamente el mismo coeficiente: `−0,0002`. Lo que cambia es la incertidumbre. Los errores estándar son `0,0061` con OLS, `0,0114` con cluster por estado, `0,0109` con agregación pre-post, `0,0084` con VCV común y `0,0189` con block bootstrap. La figura aísla así el mecanismo del problema: no aparecen cinco efectos causales distintos, sino cinco evaluaciones de precisión para un único estimador puntual.
 
-Tampoco debe leerse la barra más larga como el “mejor” método. Imponer `ρ = 0,8` eleva el error estándar a `0,0179` y puede volver la inferencia excesivamente conservadora. La evidencia favorece reconocer la dependencia pertinente, no maximizar mecánicamente la incertidumbre.
+Tampoco debe leerse la barra más larga como el “mejor” método. La evidencia favorece reconocer la dependencia pertinente, no maximizar mecánicamente la incertidumbre.
 
 ## Alcance y límites
 

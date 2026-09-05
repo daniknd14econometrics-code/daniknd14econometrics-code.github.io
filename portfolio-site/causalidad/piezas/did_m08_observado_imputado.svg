@@ -17,22 +17,23 @@
   <text x="660" y="72" text-anchor="middle" class="sub">Las observaciones ya tratadas no intervienen en el ajuste del contrafactual no tratado</text>
 
   <rect x="42" y="104" width="1236" height="166" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
-  <circle cx="105" cy="166" r="25" fill="#2f607d"/><text x="105" y="171" text-anchor="middle" class="number">1</text>
-  <text x="148" y="151" class="stepTitle">Aprender Y(0)</text>
-  <text x="148" y="177" class="stepText">Estimar la trayectoria no tratada con condados nunca tratados</text>
-  <text x="148" y="199" class="stepText">y con unidades todavía no tratadas.</text>
+  <circle cx="247" cy="137" r="22" fill="#2f607d"/><text x="247" y="142" text-anchor="middle" class="number">1</text>
+  <text x="247" y="178" text-anchor="middle" class="stepTitle">Aprender Y(0)</text>
+  <text x="247" y="205" text-anchor="middle" class="stepText">Estimar la trayectoria no tratada con condados</text>
+  <text x="247" y="227" text-anchor="middle" class="stepText">nunca tratados y con unidades todavía no tratadas.</text>
 
-  <path d="M430 166 L505 166" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
-  <circle cx="556" cy="166" r="25" fill="#17839a"/><text x="556" y="171" text-anchor="middle" class="number">2</text>
-  <text x="599" y="151" class="stepTitle">Imputar Ŷ(0)</text>
-  <text x="599" y="177" class="stepText">Proyectar ese resultado potencial sobre cada observación</text>
-  <text x="599" y="199" class="stepText">tratada para la que el contrafactual es identificable.</text>
+  <path d="M282 137 L612 137" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="647" cy="137" r="22" fill="#17839a"/><text x="647" y="142" text-anchor="middle" class="number">2</text>
+  <text x="647" y="178" text-anchor="middle" class="stepTitle">Imputar Ŷ(0)</text>
+  <text x="647" y="201" text-anchor="middle" class="stepText">Proyectar ese resultado potencial</text>
+  <text x="647" y="223" text-anchor="middle" class="stepText">sobre cada observación tratada para la que</text>
+  <text x="647" y="245" text-anchor="middle" class="stepText">el contrafactual es identificable.</text>
 
-  <path d="M880 166 L955 166" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
-  <circle cx="1006" cy="166" r="25" fill="#c4556c"/><text x="1006" y="171" text-anchor="middle" class="number">3</text>
-  <text x="1049" y="151" class="stepTitle">Medir la brecha</text>
-  <text x="1049" y="177" class="stepText">Comparar el resultado observado con Ŷ(0):</text>
-  <text x="1049" y="202" class="value">τ̂ᵢₜ = Yᵢₜ − Ŷᵢₜ(0)</text>
+  <path d="M682 137 L1012 137" fill="none" stroke="#2f607d" stroke-width="3" marker-end="url(#arrow)"/>
+  <circle cx="1047" cy="137" r="22" fill="#c4556c"/><text x="1047" y="142" text-anchor="middle" class="number">3</text>
+  <text x="1047" y="178" text-anchor="middle" class="stepTitle">Medir la brecha</text>
+  <text x="1047" y="205" text-anchor="middle" class="stepText">Comparar el resultado observado con Ŷ(0):</text>
+  <text x="1047" y="231" text-anchor="middle" class="value">τ̂ᵢₜ = Yᵢₜ − Ŷᵢₜ(0)</text>
 
   <rect x="42" y="298" width="597" height="332" rx="18" fill="#ffffff" stroke="#d7e0e5" filter="url(#shadow)"/>
   <text x="340" y="338" text-anchor="middle" class="panelTitle">Año de adopción · K = 0</text>

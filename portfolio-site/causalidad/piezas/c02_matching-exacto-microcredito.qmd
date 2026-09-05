@@ -38,7 +38,7 @@ En esta aplicación de microcrédito, matching exacto y CEM muestran que exigir 
 
 ## Resumen
 
-Este análisis compara matching exacto manual y CEM sobre hogares con participación femenina en microcrédito. El diseño manual conserva 734 de 1.129 hogares y produce un ATE de 0.0953 y un ATET de 0.1063. CEM con la regla Freedman–Diaconis conserva 357 hogares y produce un ATET de 0.2249. La diferencia entre estimaciones no ordena métodos: cada coarsening construye otro soporte y otra población comparable.
+Este análisis compara matching exacto manual y CEM sobre hogares con participación femenina en microcrédito. El diseño manual conserva 734 de 1.129 hogares y produce un ATE de 0.0953 en el soporte retenido y un ATET de 0.1063 entre los tratados retenidos. CEM con la regla Freedman–Diaconis conserva 357 hogares y produce un ATET de 0.2249 entre los tratados retenidos por CEM. La diferencia entre estimaciones no ordena métodos: cada coarsening construye otro soporte y otra población comparable.
 
 :::: {.quick-grid}
 
@@ -73,7 +73,9 @@ Por eso, la lectura profesional no puede depender solo del tamaño del coeficien
 
 ## Cómo se construye la comparabilidad
 
-El matching manual exige coincidencia exacta en `sexhead` y `vaccess`. Para que las cuatro covariables continuas puedan formar celdas útiles, agrupa `agehead` en siete intervalos, `educhead` en cuatro categorías y divide `lnland` y `pcirr` en cuartiles. Solo conserva una celda cuando contiene al menos un hogar tratado y uno de control.
+El diseño manual implementa matching exacto sobre celdas discretizadas manualmente: exige coincidencia exacta en `sexhead` y `vaccess`, agrupa `agehead` en siete intervalos y `educhead` en cuatro categorías, y divide `lnland` y `pcirr` en cuartiles. Solo conserva una celda cuando contiene al menos un hogar tratado y uno de control.
+
+El coarsening relaja la coincidencia exacta sobre los valores originales y puede mejorar el soporte, pero deja heterogeneidad observable dentro de cada celda; cortes más gruesos implican una exigencia menor de comparabilidad. La interpretación causal requiere, además, que las covariables utilizadas para construir las celdas sean pretratamiento y suficientemente ricas para sostener selección en observables.
 
 Con esa regla quedan 409 tratados y 325 controles: 734 hogares, aproximadamente 65 % de la muestra. El 35 % restante no tiene contraparte dentro de la definición adoptada. La estimación se refiere desde ese momento a la región de soporte común, no a los 1.129 hogares originales.
 
@@ -82,8 +84,8 @@ CEM sistematiza la misma lógica de coarsening y matching exacto. El informe com
 ::: {.table-box}
 | Diseño | Estimando reportado | Tratados / controles en soporte | Muestra retenida | Lectura |
 |---|---|---:|---:|---|
-| Matching exacto manual | ATE y ATET | 409 / 325 | 734 (65 %) | Mayor cobertura bajo las celdas definidas manualmente |
-| CEM, Freedman–Diaconis | ATET | 201 / 156 | 357 (32 %) | Otra regla de coarsening y un soporte mucho más reducido |
+| Matching exacto manual | ATE en el soporte retenido y ATET entre tratados retenidos | 409 / 325 | 734 (65 %) | Mayor cobertura bajo las celdas definidas manualmente |
+| CEM, Freedman–Diaconis | ATET entre tratados retenidos por CEM | 201 / 156 | 357 (32 %) | Otra regla de coarsening y un soporte mucho más reducido |
 :::
 
 Los pesos de CEM se utilizan para reproducir la composición de los tratados dentro de su muestra emparejada. Por eso el informe interpreta un ATET y no un ATE poblacional derivado automáticamente de esos pesos.
@@ -93,12 +95,12 @@ Los pesos de CEM se utilizan para reproducir la composición de los tratados den
 ::: {.table-box}
 | Diseño | Estimando | Estimación | EE analítico | EE bootstrap |
 |---|---|---:|---:|---:|
-| Matching exacto manual | ATE | 0.0953 | 0.0265 | 0.0389 |
-| Matching exacto manual | ATET | 0.1063 | 0.0263 | 0.0410 |
-| CEM, Freedman–Diaconis | ATET | 0.2249 | — | 0.0643 |
+| Matching exacto manual | ATE en el soporte retenido | 0.0953 | 0.0265 | 0.0389 |
+| Matching exacto manual | ATET entre tratados retenidos | 0.1063 | 0.0263 | 0.0410 |
+| CEM, Freedman–Diaconis | ATET entre tratados retenidos por CEM | 0.2249 | — | 0.0643 |
 :::
 
-Las estimaciones están expresadas en unidades de `ln(1 + exptot)`, no en dinero. En el diseño manual, ATE y ATET son próximos, pero corresponden a poblaciones de agregación distintas: el ATE pondera los estratos por la muestra emparejada y el ATET por la distribución de los tratados emparejados.
+Las estimaciones están expresadas en unidades de `ln(1 + exptot)`, no en dinero. En el diseño manual, el ATE en el soporte retenido y el ATET entre tratados retenidos son próximos, pero corresponden a poblaciones de agregación distintas: el primero pondera los estratos por la muestra emparejada y el segundo por la distribución de los tratados emparejados.
 
 El bootstrap reconstruye en cada réplica los bins, las celdas, el soporte y la estimación. Sus errores estándar mayores muestran que la incertidumbre no se agota en comparar medias dentro de estratos ya dados; también importa que la propia región comparable fue construida con la muestra.
 

@@ -57,7 +57,7 @@ El informe no selecciona un algoritmo óptimo: presenta las alternativas como un
 - **Covariables de comparabilidad:** sexo, edad y educación de la jefatura del hogar; tierra; acceso vial; riego per cápita; e indicadores de producción/consumo alimentario.
 :::
 
-La lectura causal descansa en selección en observables y soporte común. Por eso, el diseño se evalúa por comparabilidad ex ante entre tratados y controles antes de convertir los resultados en afirmaciones sustantivas.
+La lectura causal descansa en selección en observables y soporte común. Requiere que las covariables utilizadas para modelar la asignación sean pretratamiento y suficientemente ricas para sostener selección en observables. Por eso, el diseño se evalúa por comparabilidad ex ante entre tratados y controles antes de convertir los resultados en afirmaciones sustantivas.
 
 ## Por qué la comparabilidad importa
 
@@ -72,13 +72,22 @@ PSM permite construir un contrafactual más creíble al combinar tres capas: est
 La superposición es relevante, pero las distribuciones no son idénticas: definir soporte y comparabilidad sigue siendo necesario antes de construir el contrafactual mediante matching.
 
 ::: {.table-box}
-| Regla de soporte | Soporte retenido (`N1/N0`) | Observaciones fuera de soporte | Balance global (post-matching) | Lectura |
+| Regla de soporte | Soporte retenido (`N1/N0`) | Observaciones excluidas por la regla | Balance global (post-matching) | Lectura |
 |---|---:|---:|---|---|
 | `common` | 591 / 530 | 8 | `MeanBias = 4.7`, `B = 20.2`, `R = 0.93` | Mayor cobertura con mejora global clara de comparabilidad |
 | `trim(10)` | 536 / 481 | 112 | `MeanBias = 4.9`, `B = 21.8`, `R = 0.95` | Podado más agresivo sin mejora concluyente en desbalances residuales clave |
 :::
 
-Aunque `trim(10)` recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable. Con `common`, por ejemplo, todavía quedan diferencias estandarizadas de 14,1 en `sexhead`, 9,6 en `vaccess` y 10,1 en `egg`; con `trim(10)`, `sexhead` llega a 15,5 y `egg` a 14,7. El buen balance global no elimina la revisión covariable por covariable.
+`trim(10)` restringe más agresivamente la región retenida, pero esa regla adicional no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable. Con `common`, por ejemplo, todavía quedan diferencias estandarizadas de 14,1 en `sexhead`, 9,6 en `vaccess` y 10,1 en `egg`; con `trim(10)`, `sexhead` llega a 15,5 y `egg` a 14,7. El buen balance global no elimina la revisión covariable por covariable.
+
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Soporte retenido con la regla `common`](../assets/graficos/c04_common.png){fig-alt="Distribución del propensity score para tratados y controles, distinguiendo observaciones dentro y fuera del soporte definido por common."}
+:::
+::: {.figure-pair__item}
+![Región retenida con la regla adicional `trim(10)`](../assets/graficos/c04_trim10.png){fig-alt="Distribución del propensity score para tratados y controles, distinguiendo las observaciones retenidas y excluidas por trim diez."}
+:::
+::::
 
 ## Sensibilidad entre alternativas de matching
 
@@ -110,7 +119,7 @@ La comparación sugiere estabilidad en órdenes de magnitud cercanos a 0.10-0.11
 | `teffects psmatch` (probit, NN(1)) | soporte de `teffects` | 0.0688 | 0.1099 |
 :::
 
-El bootstrap documentado ofrece inferencia para dos contrastes pedagógicos, no para una especificación declarada óptima. En la exportación original de `teffects`, el error estándar del ATET quedó referenciado por error a la matriz de la corrida ATE. Por eso se conservan sus puntos estimados como contraste, pero no se presenta esa precisión defectuosa ni se reestima el modelo.
+El bootstrap documentado ofrece inferencia para dos contrastes pedagógicos, no para una especificación declarada óptima, y rehace el procedimiento completo. En matching por vecino más cercano, sin embargo, el bootstrap convencional no debe interpretarse como universalmente válido; esta cautela es especialmente relevante para NN(8). En la exportación original de `teffects`, el error estándar del ATET quedó referenciado por error a la matriz de la corrida ATE. Por eso se conservan sus puntos estimados como contraste, pero no se presenta esa precisión defectuosa ni se reestima el modelo.
 
 ## Lectura sustantiva del ATET: población objetivo y alcance
 

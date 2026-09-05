@@ -141,8 +141,6 @@ municipios en la ventana
 
 ## Evidencia visual alrededor del corte
 
-![Finalización de secundaria entre mujeres jóvenes alrededor del umbral electoral](rdd01_resultado_local.svg){fig-alt="Promedios locales y ajustes lineales a ambos lados del margen electoral cero; el ajuste muestra un salto positivo en el umbral."}
-
 El gráfico utiliza la ventana MSE-óptima y ajustes lineales locales con kernel triangular. Los puntos resumen el resultado por intervalos sólo para facilitar la lectura; la estimación se realiza con las observaciones municipales dentro de la ventana. El salto visual es positivo, pero la incertidumbre requiere una inferencia específica para RDD.
 
 ## Resultado principal: estimación local e inferencia robusta
@@ -154,6 +152,15 @@ El gráfico utiliza la ventana MSE-óptima y ajustes lineales locales con kernel
 | MSE-óptima con corrección de sesgo | `h = 17,240`; kernel triangular | **2,983** | **1,680** | **0,076** | **[−0,309; 6,276]** |
 | CER-óptima con corrección de sesgo | `h = 11,629`; kernel triangular | 2,411 | 1,821 | 0,186 | — |
 :::
+
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Resultado local con ancho de banda MSE](rdd01_resultado_local.svg){fig-alt="Promedios locales y ajustes lineales a ambos lados del margen electoral cero con ancho de banda MSE; el ajuste muestra un salto positivo en el umbral."}
+:::
+::: {.figure-pair__item}
+![Sensibilidad del resultado local con ancho de banda CER](../assets/graficos/rdd01_resultado_cer.png){fig-alt="Estimación local de regresión discontinua con ancho de banda orientado a cobertura del intervalo."}
+:::
+::::
 
 La primera fila reconstruye la intuición del diseño: los valores predichos en el umbral son 12,623% a la izquierda y 15,550% a la derecha. Su diferencia es 2,927 puntos porcentuales, pero esa construcción manual no aporta por sí sola la inferencia adecuada para RDD.
 
@@ -173,6 +180,8 @@ El selector CER, orientado a mejorar la cobertura del intervalo, reduce la venta
 
 El signo positivo y el orden de magnitud no dependen de una única variante. Sin embargo, la fuerza inferencial sí cambia con el orden polinómico, el kernel, la regla de varianza y la muestra disponible. Esa sensibilidad refuerza la decisión de privilegiar la especificación lineal local y presentar la evidencia sin una conclusión binaria basada sólo en un umbral de significación.
 
+La incorporación de covariables predeterminadas es una especificación de precisión y sensibilidad; no sustituye la identificación por continuidad local ni corrige por sí sola un problema de selección alrededor del cutoff. Como su inclusión reduce la muestra por valores faltantes, la comparación de coeficientes tampoco es estrictamente *ceteris paribus*.
+
 ## Validez del diseño: covariables y densidad
 
 Los tests locales sobre siete covariables predeterminadas no detectan saltos estadísticamente significativos. Sus p-values robustos se ubican entre `0,275` y `0,910`. Es una señal favorable para la continuidad local de características observables, aunque no prueba por sí sola continuidad de factores no observados.
@@ -187,9 +196,9 @@ La conclusión prudente no es que la ausencia de manipulación haya quedado prob
 
 ## Alcance del estimando y límites
 
-El efecto estimado es local. Describe municipios cuyas elecciones estuvieron suficientemente cerca del empate como para entrar en la ventana alrededor del corte; no es un efecto promedio para todos los municipios turcos ni para elecciones con márgenes amplios.
+El efecto estimado es local al cutoff: describe el efecto para municipios en el margen electoral de empate. La ventana seleccionada determina qué observaciones se utilizan para estimarlo, no redefine la población causal como todos los municipios contenidos en ese bandwidth. Tampoco es un efecto promedio para todos los municipios turcos ni para elecciones con márgenes amplios.
 
-La lectura causal depende de que, en ausencia del cambio de alcalde, los resultados potenciales evolucionen suavemente al cruzar el umbral. La continuidad de covariables y el diagnóstico de densidad aportan evidencia sobre esa condición, pero no eliminan toda incertidumbre. A esto se suma la imprecisión estadística reflejada en el intervalo de confianza.
+La lectura causal depende de que, en ausencia del cambio de alcalde, los resultados potenciales evolucionen suavemente al cruzar el umbral. La continuidad de covariables y el diagnóstico de densidad aportan evidencia indirecta sobre la credibilidad de esa condición, pero no permiten testear directamente la continuidad de los resultados potenciales. A esto se suma la imprecisión estadística reflejada en el intervalo de confianza.
 
 ## Conclusión
 

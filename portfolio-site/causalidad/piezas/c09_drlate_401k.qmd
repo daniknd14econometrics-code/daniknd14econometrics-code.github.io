@@ -40,7 +40,7 @@ La elegibilidad a un plan 401(k) se utiliza como instrumento de la participació
 
 Esta aplicación conserva la arquitectura causal de variables instrumentales: un tratamiento endógeno, un instrumento binario, una primera etapa y un efecto local para quienes modifican su participación por la elegibilidad. La extensión DR-LATE incorpora modelos separados para el resultado, el tratamiento y el mecanismo del instrumento, y permite combinar regresión ajustada con ponderación.
 
-En 9.275 individuos, la elegibilidad eleva la participación en 68,9 puntos porcentuales y produce una primera etapa extraordinariamente fuerte (`F = 7422.81`). El benchmark 2SLS estima un LATE de 13,66 unidades de activos financieros netos; IPWRA estima 12,60. Los resultados son próximos entre 2SLS, IPWRA, AIPW y RA.
+En 9.275 individuos, la elegibilidad eleva la participación en 68,9 puntos porcentuales y produce una primera etapa extraordinariamente fuerte (`F = 7422.81`). El benchmark lineal 2SLS estima 13,66 unidades de activos financieros netos; el LATE IPWRA es 12,60. Los resultados son próximos entre 2SLS, IPWRA, AIPW y RA.
 
 :::: {.quick-grid}
 
@@ -104,14 +104,14 @@ El patrón de cumplimiento es especialmente transparente: entre 5.638 no elegibl
 |---|---:|---|
 | Elegibilidad sobre participación | 0.6889 | Primera etapa de 68,9 puntos porcentuales (`F = 7422.81`) |
 | Elegibilidad sobre activos netos | 9.409 | Forma reducida positiva |
-| Participación sobre activos netos, 2SLS | 13.6586 | Benchmark LATE (`EE = 1.9837`) |
+| Participación sobre activos netos, 2SLS | 13.6586 | Benchmark lineal 2SLS (`EE = 1.9837`) |
 :::
 
 La primera etapa descarta la debilidad instrumental como preocupación empírica en este bloque. La interpretación causal todavía requiere que la elegibilidad sea comparable condicionalmente en las covariables, que afecte los activos únicamente mediante la participación y que no existan respuestas contrarias a la dirección de cumplimiento asumida.
 
 ## El propensity score es del instrumento
 
-DR-LATE estima `P(e401k = 1 | X)` para comparar personas elegibles y no elegibles con covariables observadas semejantes. Esto es distinto del propensity score del tratamiento utilizado en matching: aquí se modela el mecanismo del instrumento, no la decisión final de participar.
+DR-LATE estima `P(e401k = 1 | X)` para modelar la asignación condicional del instrumento y construir las ponderaciones utilizadas en las regresiones de media. Esto es distinto del propensity score del tratamiento utilizado en matching: aquí se modela el mecanismo del instrumento, no la decisión final de participar.
 
 ![Overlap del propensity score de la elegibilidad al 401(k)](../assets/graficos/drlate_overlap_instrumento_401k.png){fig-alt="Distribuciones del propensity score del instrumento para personas elegibles y no elegibles. Existe superposición sustantiva, aunque las distribuciones no son idénticas."}
 
@@ -135,16 +135,16 @@ Esta propiedad protege frente a determinadas fallas de especificación de los *n
 | Estimando | Efecto | Error estándar | Población local |
 |---|---:|---:|---|
 | LATE, IPWRA | 12.6015 | 1.9194 | Personas cuya participación cambia por la elegibilidad |
-| LATT, IPWRA | 15.3191 | 2.4440 | Población local tratada correspondiente al LATT |
+| LATT, IPWRA | 15.3191 | 2.4440 | Compliers tratados |
 :::
 
 El LATE IPWRA se construye a partir de un efecto ajustado del instrumento sobre el resultado de 8,5971 y un efecto sobre el tratamiento de 0,6822. La estimación principal equivale a **12,60 unidades de `nettfa`** para los compliers.
 
-El LATT de 15,32 no es una versión superior del LATE. Cambia la población local utilizada para promediar la heterogeneidad del efecto y, por tanto, responde a otra pregunta.
+El LATT de 15,32 no es una versión superior del LATE. Resume el efecto para los compliers tratados y, por tanto, pondera una población local distinta de la utilizada por el LATE.
 
 ## Estabilidad entre estimadores
 
-![Comparación de estimadores del LATE sobre activos financieros netos](../assets/graficos/drlate_late_estimadores_401k.png){fig-alt="Estimaciones puntuales e intervalos de confianza al 95% para 2SLS, DR-LATE IPWRA, DR-LATE AIPW y DR-LATE RA. Los cuatro intervalos se superponen ampliamente."}
+![Comparación entre el benchmark 2SLS y estimadores DR-LATE](../assets/graficos/drlate_late_estimadores_401k.png){fig-alt="Estimaciones puntuales e intervalos de confianza al 95% para el benchmark 2SLS y los estimadores DR-LATE IPWRA, AIPW y RA. Los cuatro intervalos se superponen ampliamente."}
 
 2SLS estima 13,66; IPWRA, 12,60; AIPW, 12,72; y RA, 12,90. Los intervalos se superponen ampliamente. Esta estabilidad muestra que la conclusión sustantiva del caso 401(k) no depende de una única implementación, pero no permite inferir que todos los modelos auxiliares sean correctos ni validar los supuestos estructurales del instrumento.
 
@@ -162,6 +162,8 @@ Los bloques adicionales cambian una pieza por vez para separar flexibilidad func
 :::
 
 Estas extensiones muestran que logit o Poisson pueden representar mejor el soporte de un modelo auxiliar, pero no relajan los supuestos IV. En el bloque de fertilidad, además, el informe no interpreta el LATT Poisson porque el cero reportado es incompatible con los componentes `Z on Y` y `Z on D`; ese control algebraico impide tratar la salida como evidencia.
+
+Cuando el tratamiento deja de ser binario, la interpretación ya no es el LATE canónico de compliers `0→1`: el cociente debe leerse como un efecto local por unidad de intensidad del tratamiento inducida por el instrumento binario.
 
 ## Qué puede concluirse y qué no
 

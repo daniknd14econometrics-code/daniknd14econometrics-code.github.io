@@ -64,7 +64,7 @@ Esta no es una comparación de tratados y controles como en matching o IPWRA. Aq
 
 En esa arquitectura, OLS puede mezclar el retorno de la educación con factores no observados que también afectan ingresos. IV entra en el módulo de causalidad porque intenta reconstruir un contrafactual causal a partir de variación exógena inducida por instrumentos, no porque sea solo una técnica alternativa de estimación.
 
-La lectura como LATE exige cuatro condiciones: que el trimestre de nacimiento sea relevante para la educación; que sea comparable respecto de los resultados potenciales, condicional en los controles; que afecte el salario únicamente a través de la educación (exclusión); y que no existan personas cuya escolaridad responda al instrumento en la dirección opuesta al margen institucional considerado (monotonicidad). La primera condición puede diagnosticarse en los datos; las restantes dependen de la credibilidad sustantiva del diseño.
+La interpretación local requiere que el trimestre de nacimiento sea relevante para la educación; que sea comparable respecto de los resultados potenciales, condicional en los controles; que afecte el salario únicamente a través de la educación (exclusión); y condiciones de monotonicidad apropiadas a los márgenes instrumentales relevantes. En el contraste binario, la lectura es especialmente transparente: un efecto local de la educación para individuos cuya escolaridad es modificada por ese contraste instrumental. La primera condición puede diagnosticarse en los datos; las restantes dependen de la credibilidad sustantiva del diseño.
 
 ## OLS versus IV: qué cambia y por qué importa
 
@@ -159,9 +159,9 @@ Como contraste adicional, `gmm2s` en la misma especificación entrega un coefici
 
 ## Qué lectura domina
 
-En este ejercicio, IV no identifica un retorno único y universal: identifica efectos locales (LATE) para las personas cuya escolaridad responde a la variación inducida por las reglas de escolarización vinculadas al trimestre de nacimiento.
+En este ejercicio, IV no identifica un retorno único y universal. El contraste binario identifica un efecto local de la educación para individuos cuya escolaridad es modificada por ese margen instrumental. Con instrumentos múltiples, la estimación 2SLS combina distintos márgenes locales de respuesta inducidos por los instrumentos.
 
-Por eso, cuando cambia el set de instrumentos, puede cambiar tanto la magnitud estimada como la población local efectivamente identificada. En los diseños simples, el retorno IV ronda `0.10` con primera etapa fuerte; al pasar al diseño con interacciones `QOB x YOB` y controles, el coeficiente baja a `0.0656` y la primera etapa se debilita de forma marcada (`KP rk F = 1.699`).
+Por eso, cuando cambia el set de instrumentos, puede cambiar tanto la magnitud estimada como los márgenes locales de respuesta y las ponderaciones con que 2SLS los agrega. En los diseños simples, el retorno IV ronda `0.10` con primera etapa fuerte; al pasar al diseño con interacciones `QOB x YOB` y controles, el coeficiente baja a `0.0656` y la primera etapa se debilita de forma marcada (`KP rk F = 1.699`).
 
 ## Cierre
 
@@ -169,6 +169,6 @@ Para esta cohorte, la evidencia sugiere un retorno positivo de la educación en 
 
 La estrategia IV mantiene una lógica causal clara: aislar variación exógena en educación para estimar su efecto sobre salarios. En esta aplicación, el límite principal no está en esa lógica, sino en la fuerza empírica de los instrumentos en la especificación con controles e interacciones.
 
-La lectura final es directa: IV aporta una identificación causal local (LATE), pero la credibilidad de esa estimación depende de instrumentos suficientemente relevantes. Aquí, la debilidad de primera etapa acota el alcance inferencial del resultado.
+La lectura final es directa: IV explota variación local inducida por los instrumentos; en el contraste binario la interpretación local es especialmente transparente, mientras que con instrumentos múltiples la estimación agrega distintos márgenes de respuesta. La credibilidad depende de instrumentos suficientemente relevantes y aquí la debilidad de primera etapa acota el alcance inferencial del resultado.
 
 La extensión moderna de esta arquitectura —instrumento binario, covariables y modelos auxiliares doblemente robustos— se desarrolla en [Participación en 401(k) y activos financieros con DR-LATE](c09_drlate_401k.qmd).

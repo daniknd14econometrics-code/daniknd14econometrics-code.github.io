@@ -227,7 +227,14 @@ La tabla no establece un ranking. Dentro de una misma transformación, ajuste po
 
 El event study agrega por tiempo relativo los efectos de celda estimados después de transformar el outcome. Su composición cambia con el horizonte porque solo intervienen las cohortes que conservan soporte en cada valor de $k$.
 
-![Comparación de la trayectoria WATT entre demeaning y detrending](did_m09b_event_demean_detrend.svg){fig-alt="Event study comparativo entre rolling demean y rolling detrend con IPWRA y covariables, mostrando solo estimaciones puntuales. Detrending acerca el pre a cero y reduce los efectos posteriores. Los ceros de referencia, en menos uno para demean y en menos dos y menos uno para detrend, no son evidencia estimada de ausencia de efecto."}
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Trayectoria WATT con rolling demean, IPWRA y covariables](../assets/graficos/did_m09b_demean_ipwra_x.png){fig-alt="Event study con transformación rolling demean, IPWRA y covariables, con períodos pretratamiento y posteriores."}
+:::
+::: {.figure-pair__item}
+![Trayectoria WATT con rolling detrend, IPWRA y covariables](../assets/graficos/did_m09b_detrend_ipwra_x.png){fig-alt="Event study con transformación rolling detrend, IPWRA y covariables, con períodos pretratamiento y posteriores."}
+:::
+::::
 
 La referencia es la media previa en *demean* y una trayectoria lineal en *detrend*. Los ceros de referencia que conserva la salida —K = −1 en *demean*; K = −2 y K = −1 en *detrend*— no son tests de ausencia de efecto. Tampoco debe leerse toda la curva como una diferencia respecto de K = −1, salvo en la especificación que utiliza exclusivamente ese período previo.
 
@@ -246,6 +253,8 @@ La magnitud previa remanente es pequeña, pero estadísticamente distinta de cer
 ## Ventana pre y grupo de comparación
 
 Usar solo el último período pre reduce el post promedio de `0,0944` a `0,0707`. La ventana no es una elección inocua: determina qué historia se considera informativa para construir el contrafactual. Una referencia amplia puede mejorar precisión si el pre lejano es comparable; `pre(1)` es más local y puede ser preferible si esa comparabilidad se debilita con la distancia.
+
+![Trayectoria WATT con referencia pre(1)](../assets/graficos/did_m09b_pre1_ipwra_x.png){fig-alt="Event study rolling demean con IPWRA y covariables que utiliza el período g menos uno como referencia pretratamiento."}
 
 Restringir la especificación detrended a nunca tratados reduce el agregado de `0,0317` a `0,0250`. El cambio es menor que el producido por la transformación y muestra sensibilidad al contrafactual. Cambiar los controles no redefine por sí solo el ATT objetivo; sí puede cambiar su población si se pierde soporte o se modifican las ponderaciones.
 
@@ -291,7 +300,9 @@ WATT es una agregación posterior, no un coeficiente primitivo de una regresión
 
 ## Relación con ETWFE: tendencias por cohorte o por condado
 
-En la aplicación común, ETWFE incorpora tendencias por cohorte e interacciones con covariables dentro de la regresión. Rolling detrend estima primero la tendencia previa de cada condado, transforma el resultado y después aplica IPWRA. Los resultados ya producidos permiten comparar ambas construcciones:
+No existe una única versión rolling comparable con ETWFE: la comparación depende de la transformación, la referencia pretratamiento, el grupo de control y la especificación de tendencias. Rolling demean con comparador por defecto dialoga con el ETWFE central sin tendencias específicas por cohorte: `0,0944` frente a `0,0898`. La variante `pre(1)` también pertenece a esa familia y utiliza $g-1$ como referencia; su cercanía numérica a ETWFE con solo nunca tratados —`0,0707` frente a `0,0740`— no constituye una equivalencia teórica, porque también cambia el grupo comparador.
+
+Rolling detrend estima primero la tendencia previa de cada condado, transforma el resultado y después aplica IPWRA. Su conexión estructural más directa es con ETWFE que incorpora tendencias específicas por cohorte: `0,0317` frente a `0,0352`. Los resultados dinámicos permiten comparar ambas construcciones:
 
 ::: {.table-box}
 | Tiempo desde la apertura | ETWFE con tendencias por cohorte | Rolling detrend + IPWRA |
@@ -314,7 +325,7 @@ La proximidad refuerza la importancia empírica de modelar las tendencias preexi
 | **Lee–Wooldridge rolling** | Transforma $Y$ con historia pre y estima después por celda | Hace explícita la referencia pretratamiento y admite estimadores de tratamiento modulares |
 :::
 
-`pre(1)` acerca rolling a la referencia local de C&S. Con ajuste por regresión lineal existen equivalencias parciales con POLS en contextos específicos, pero no una equivalencia general con ETWFE para toda la dinámica bajo adopción escalonada. BJS y rolling también difieren en el orden: **modelar $Y(0)$ e imputar** frente a **transformar $Y$ y estimar ATT por celda**.
+`pre(1)` utiliza $g-1$ y funciona como puente hacia construcciones de diferencia larga y event study con período base inmediatamente anterior, cercanas a la lógica de C&S. Esa conexión no implica identidad entre `pre(1)`, Callaway–Sant’Anna y ETWFE. Con ajuste por regresión lineal existen equivalencias parciales con POLS en contextos específicos, pero no una equivalencia general con ETWFE para toda la dinámica bajo adopción escalonada. BJS y rolling también difieren en el orden: **modelar $Y(0)$ e imputar** frente a **transformar $Y$ y estimar ATT por celda**.
 
 ## Qué mejora y qué supuestos permanecen
 

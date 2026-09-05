@@ -101,6 +101,8 @@ contribución neta de efectos pos-tratamiento
 
 ::::
 
+![Contribuciones pos-tratamiento a los leads TWFE de ingresos](../assets/graficos/did_m06_contribution_leads_earnings.png){fig-alt="Contribuciones de efectos pos-tratamiento a los coeficientes lead menos tres y menos dos del event study TWFE de ingresos."}
+
 El ejercicio no afirma que esos números sean los verdaderos efectos previos. Demuestra algo más básico: un *lead* TWFE puede moverse por efectos que ocurren después del tratamiento. Por eso no constituye automáticamente un test limpio de anticipación o tendencias paralelas.
 
 ## Aplicación: hospitalización y consecuencias económicas
@@ -145,7 +147,7 @@ El soporte cambia con el tiempo relativo. Tres cohortes contribuyen al período 
 
 ## TWFE frente a interaction-weighted
 
-Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo, utilizando como comparación a la cohorte aún no tratada. El estimador interaction-weighted —IW, ponderado por interacciones— los agrega con participaciones no negativas que suman uno entre las cohortes con soporte en cada horizonte:
+En esta aplicación, Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo utilizando como comparación a la última cohorte tratada mientras todavía permanece no tratada. El estimador interaction-weighted —IW, ponderado por interacciones— los agrega con participaciones no negativas que suman uno entre las cohortes con soporte en cada horizonte:
 
 $$
 \widehat\nu_\ell
@@ -176,7 +178,14 @@ El estimador IW muestra un aumento inmediato del gasto médico de bolsillo en el
 
 Para ingresos laborales, IW estima una caída de **7.267 dólares** en el período 0, con EE **3.237**. La reducción alcanza **10.632 dólares** en el período 1 —EE 5.079— y **14.734 dólares** en el período 2 —EE 7.416—.
 
-![Trayectoria de ingresos laborales estimada por TWFE e interaction-weighted](did_m06_ingresos_twfe_iw.svg){fig-alt="TWFE e interaction-weighted producen trayectorias numéricamente próximas para los ingresos laborales. Ambos muestran estimaciones previas imprecisas y caídas desde el período cero, con intervalos amplios. En el período dos, IW representa únicamente a la cohorte ocho."}
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Gasto médico de bolsillo: TWFE comparable frente a interaction-weighted](../assets/graficos/did_m06_oop_spend_twfe_vs_iw.png){fig-alt="Trayectorias de gasto médico de bolsillo estimadas mediante TWFE en muestra comparable e interaction-weighted."}
+:::
+::: {.figure-pair__item}
+![Ingresos laborales: TWFE comparable frente a interaction-weighted](../assets/graficos/did_m06_earnings_twfe_vs_iw.png){fig-alt="Trayectorias de ingresos laborales estimadas mediante TWFE en muestra comparable e interaction-weighted."}
+:::
+::::
 
 ::: {.small-note}
 **Alcance de la trayectoria.** Los efectos se refieren a las cohortes de hospitalización con soporte en esta muestra de personas de 50 a 59 años al ingreso, comparadas con quienes se hospitalizan en la ronda 11 mientras aún no recibieron el tratamiento. La caída de **14.734 dólares** en el período 2 corresponde exclusivamente a la cohorte 8. El aumento de las pérdidas entre horizontes combina duración desde la hospitalización y cambios en las cohortes representadas; no describe por sí solo el deterioro de una población constante.
@@ -195,7 +204,7 @@ Los tests conjuntos de los períodos `−3` y `−2` arrojan:
 | Ingresos laborales | p = 0,0912 | p = 0,2485 |
 :::
 
-Los resultados IW no muestran evidencia estadística de efectos previos en la ventana utilizada. El horizonte previo es corto y los intervalos son amplios, por lo que el no rechazo también puede reflejar poca potencia. Es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.
+Los coeficientes pretratamiento IW no muestran evidencia estadística de desviaciones respecto de cero en la ventana utilizada. El horizonte previo es corto y los intervalos son amplios, por lo que el no rechazo también puede reflejar poca potencia. Es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.
 
 En TWFE, la interpretación es todavía más limitada. Un *lead* distinto de cero podría reflejar anticipación, diferencias preexistentes, contaminación pos-tratamiento u otros tiempos relativos. Un no rechazo tampoco demuestra que las comparaciones contrafactuales sean válidas.
 

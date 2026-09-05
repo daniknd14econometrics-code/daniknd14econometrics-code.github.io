@@ -118,6 +118,15 @@ El soporte cambia con el calendario: hay 500 observaciones sin tratamiento en 20
 Nunca tratados y todavía no tratados mientras permanecen sin exposición. Una vez tratado, el resultado de un condado deja de utilizarse para aprender $Y(0)$.
 :::
 
+:::: {.figure-pair}
+::: {.figure-pair__item}
+![Soporte de observaciones no tratadas por año](../assets/graficos/did_m08_soporte_untreated.png){fig-alt="Cantidad de observaciones no tratadas disponibles por año para estimar el resultado potencial sin tratamiento."}
+:::
+::: {.figure-pair__item}
+![Soporte de tratados al excluir los nunca tratados](../assets/graficos/did_m08_soporte_sin_never.png){fig-alt="Observaciones tratadas imputables y no imputables cuando se excluye el grupo nunca tratado."}
+:::
+::::
+
 ## Resultado global
 
 El ATT global promedia las brechas imputadas sobre las observaciones tratadas que integran el estimando.
@@ -150,13 +159,15 @@ p &lt; 0,001 · IC95% [−0,0741; −0,0213]
 
 ::::
 
-Bajo el modelo de resultados no tratados y los supuestos del diseño, el cambio de salario mínimo produce una reducción media estimada de **4,77 puntos logarítmicos en el empleo adolescente** entre las observaciones tratadas imputables. El agregado reúne 291 observaciones condado-año, mientras 2.209 observaciones sin tratamiento permiten ajustar el contrafactual. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.
+Bajo el modelo de resultados no tratados y los supuestos del diseño, el cambio de salario mínimo produce una reducción media estimada de **0,0477 puntos logarítmicos en el empleo adolescente** entre las observaciones tratadas imputables. El agregado reúne 291 observaciones condado-año, mientras 2.209 observaciones sin tratamiento permiten ajustar el contrafactual. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.
 
 ## Efectos dinámicos
 
 El tiempo relativo permite preguntar cómo evoluciona el efecto desde la primera exposición. Los dos horizontes posteriores con información efectiva suficiente tienen estimaciones negativas; el punto es más negativo al primer año, pero la diferencia entre horizontes no es estadísticamente clara.
 
 ![Efectos dinámicos BJS con dos períodos pretratamiento y dos horizontes posteriores](did_m08_event_study.svg){fig-alt="Event study BJS con estimaciones cercanas a cero en K menos 2 y K menos 1. Los efectos son menos 0,031 en K igual a cero y menos 0,052 en K igual a uno, con intervalos de confianza de 95 por ciento. Los horizontes dos y tres se omiten por información efectiva insuficiente."}
+
+*Nota:* K = −2 y K = −1 son diagnósticos de pretrends sobre observaciones no tratadas, no efectos causales pretratamiento.
 
 ::: {.table-box}
 | Estimando | Estimación | EE | p | IC95% |
@@ -210,6 +221,8 @@ Aunque el contrafactual sea imputable, ¿hay información suficientemente distri
 
 ::::
 
+![Soporte de observaciones tratadas por cohorte y horizonte](../assets/graficos/did_m08_soporte_cohorte_horizonte.png){fig-alt="Distribución de observaciones tratadas imputables por cohorte de adopción y horizonte relativo."}
+
 La cantidad bruta de observaciones no basta: si pocos condados o cohortes concentran la información relevante, la precisión efectiva puede ser mucho menor. Por eso las brechas descriptivas disponibles para horizontes posteriores no se presentan como resultados inferenciales equivalentes.
 
 Una sensibilidad ya realizada permite ver la diferencia: al excluir los 309 condados nunca tratados, en 2007 no queda ninguna observación sin exposición para estimar el efecto de ese año. **191 observaciones tratadas dejan de ser imputables**. El recorte automático elimina ese calendario, cambia la población de K = 0 y K = 1 y deja K = 3 sin contrafactual. Recortar permite continuar sobre otro soporte; no recupera la información faltante.
@@ -227,6 +240,8 @@ La comparación de modelos muestra qué restricciones sostienen el contrafactual
 | Solo efectos de año | 0,3294 | 0,6942 | 0,0073 |
 | Condado y año + población inicial × año | −0,0332 | −0,0573 | 0,3029 |
 :::
+
+![Event study BJS con controles temporales y población inicial](../assets/graficos/did_m08_event_study_timecontrols.png){fig-alt="Event study de la especificación del taller que incorpora población inicial interactuada con el tiempo al modelo de resultado no tratado."}
 
 Omitir las diferencias permanentes entre condados revierte los signos y el diagnóstico previo rechaza. Esa fila ilustra una restricción inadecuada sobre $Y(0)$, no evidencia de un gran efecto positivo. Permitir trayectorias por población inicial apenas modifica la referencia. El criterio es la credibilidad del modelo no tratado, no la significación del efecto que produce.
 
