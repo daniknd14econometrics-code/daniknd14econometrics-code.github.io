@@ -1,54 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="230" viewBox="0 0 760 230" role="img" aria-labelledby="title desc">
-  <title id="title">ATET diagonales e IC 95% (IPWRA, control=0)</title>
-  <desc id="desc">Mini coefplot horizontal con tres ATET diagonales y sus intervalos de confianza al 95 por ciento para los contrastes 1 vs 0, 2 vs 0 y 3 vs 0.</desc>
-
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="480" viewBox="0 0 1000 480" role="img" aria-labelledby="title desc">
+  <title id="title">ATET diagonales e intervalos de confianza al 95%</title>
+  <desc id="desc">Coefplot horizontal con tres efectos sobre los tratados: solo producto 0,11796, solo proceso 0,18043 y producto y proceso 0,27051, todos frente al grupo sin innovación de producto o proceso.</desc>
   <style>
-    .axis { stroke: #9ca3af; stroke-width: 1; }
-    .tick { stroke: #9ca3af; stroke-width: 1; }
-    .zero { stroke: #6b7280; stroke-width: 1; stroke-dasharray: 4 4; }
-    .ci { stroke: #4b5563; stroke-width: 2; stroke-linecap: round; }
-    .pt { fill: #1f2937; }
-    .label { font: 13px "Segoe UI", Arial, sans-serif; fill: #1f2937; }
-    .small { font: 12px "Segoe UI", Arial, sans-serif; fill: #374151; }
-    .title { font: 13px "Segoe UI", Arial, sans-serif; fill: #111827; font-weight: 600; }
+    .title{font:700 26px "Segoe UI",Arial,sans-serif;fill:#17384d}
+    .sub{font:15px "Segoe UI",Arial,sans-serif;fill:#5b6b76}
+    .label{font:600 16px "Segoe UI",Arial,sans-serif;fill:#243f50}
+    .tick{font:14px "Segoe UI",Arial,sans-serif;fill:#5b6b76}
+    .value{font:700 15px "Segoe UI",Arial,sans-serif;fill:#17384d}
+    .grid{stroke:#dce5eb;stroke-width:1}
+    .zero{stroke:#72828d;stroke-width:1.5;stroke-dasharray:6 5}
+    .ci{stroke:#2f607d;stroke-width:4;stroke-linecap:round}
+    .cap{stroke:#2f607d;stroke-width:2}
+    .point{fill:#c4556c;stroke:#ffffff;stroke-width:2}
   </style>
+  <rect width="1000" height="480" fill="#ffffff"/>
+  <text x="500" y="48" text-anchor="middle" class="title">Efectos sobre los tratados por estado de innovación</text>
+  <text x="500" y="75" text-anchor="middle" class="sub">IPWRA · contraste frente al grupo sin innovación de producto o proceso · IC 95%</text>
 
-  <!-- Plot area: x in [-0.02, 0.35] mapped to [250, 590] -->
-  <text x="250" y="24" class="title">ATET diagonales e IC 95% (IPWRA, control=0)</text>
+  <g>
+    <line x1="340" y1="112" x2="340" y2="395" class="zero"/>
+    <line x1="500" y1="112" x2="500" y2="395" class="grid"/>
+    <line x1="660" y1="112" x2="660" y2="395" class="grid"/>
+    <line x1="820" y1="112" x2="820" y2="395" class="grid"/>
+    <line x1="340" y1="395" x2="900" y2="395" stroke="#9bacb6" stroke-width="1.5"/>
+    <line x1="340" y1="395" x2="340" y2="402" stroke="#9bacb6"/><line x1="500" y1="395" x2="500" y2="402" stroke="#9bacb6"/>
+    <line x1="660" y1="395" x2="660" y2="402" stroke="#9bacb6"/><line x1="820" y1="395" x2="820" y2="402" stroke="#9bacb6"/>
+    <text x="340" y="423" text-anchor="middle" class="tick">0,0</text>
+    <text x="500" y="423" text-anchor="middle" class="tick">0,1</text>
+    <text x="660" y="423" text-anchor="middle" class="tick">0,2</text>
+    <text x="820" y="423" text-anchor="middle" class="tick">0,3</text>
+    <text x="620" y="454" text-anchor="middle" class="sub">Cambio en probabilidad</text>
+  </g>
 
-  <!-- x axis and ticks -->
-  <line x1="250" y1="190" x2="590" y2="190" class="axis" />
-  <line x1="268.38" y1="45" x2="268.38" y2="190" class="zero" />
+  <text x="312" y="163" text-anchor="end" class="label">Solo producto vs. sin producto/proceso</text>
+  <line x1="424" y1="158" x2="634" y2="158" class="ci"/>
+  <line x1="424" y1="148" x2="424" y2="168" class="cap"/><line x1="634" y1="148" x2="634" y2="168" class="cap"/>
+  <circle cx="529" cy="158" r="8" class="point"/>
+  <text x="547" y="163" class="value">0,11796</text>
 
-  <line x1="268.38" y1="190" x2="268.38" y2="196" class="tick" />
-  <text x="268.38" y="212" text-anchor="middle" class="small">0.0</text>
+  <text x="312" y="263" text-anchor="end" class="label">Solo proceso vs. sin producto/proceso</text>
+  <line x1="525" y1="258" x2="732" y2="258" class="ci"/>
+  <line x1="525" y1="248" x2="525" y2="268" class="cap"/><line x1="732" y1="248" x2="732" y2="268" class="cap"/>
+  <circle cx="629" cy="258" r="8" class="point"/>
+  <text x="647" y="263" class="value">0,18043</text>
 
-  <line x1="360.27" y1="190" x2="360.27" y2="196" class="tick" />
-  <text x="360.27" y="212" text-anchor="middle" class="small">0.1</text>
-
-  <line x1="452.16" y1="190" x2="452.16" y2="196" class="tick" />
-  <text x="452.16" y="212" text-anchor="middle" class="small">0.2</text>
-
-  <line x1="544.05" y1="190" x2="544.05" y2="196" class="tick" />
-  <text x="544.05" y="212" text-anchor="middle" class="small">0.3</text>
-
-  <!-- Row 1 -->
-  <text x="22" y="73" class="label">Solo producto (1) vs base (0)</text>
-  <line x1="316.58" y1="68" x2="436.97" y2="68" class="ci" />
-  <circle cx="376.72" cy="68" r="4" class="pt" />
-  <text x="604" y="72" class="small">0.118 [0.052, 0.183]</text>
-
-  <!-- Row 2 -->
-  <text x="26" y="118" class="label">Solo proceso (2) vs base (0)</text>
-  <line x1="374.54" y1="113" x2="493.82" y2="113" class="ci" />
-  <circle cx="434.18" cy="113" r="4" class="pt" />
-  <text x="604" y="117" class="small">0.180 [0.116, 0.245]</text>
-
-  <!-- Row 3 -->
-  <text x="5" y="163" class="label">Producto y proceso (3) vs base (0)</text>
-  <line x1="460.13" y1="158" x2="573.50" y2="158" class="ci" />
-  <circle cx="516.95" cy="158" r="4" class="pt" />
-  <text x="604" y="162" class="small">0.271 [0.209, 0.332]</text>
-
-  <text x="250" y="228" class="small">Escala: cambio en probabilidad (proporcion; 0.10 = 10 puntos porcentuales).</text>
+  <text x="312" y="363" text-anchor="end" class="label">Producto y proceso vs. sin producto/proceso</text>
+  <line x1="674" y1="358" x2="872" y2="358" class="ci"/>
+  <line x1="674" y1="348" x2="674" y2="368" class="cap"/><line x1="872" y1="348" x2="872" y2="368" class="cap"/>
+  <circle cx="773" cy="358" r="8" class="point"/>
+  <text x="791" y="345" class="value">0,27051</text>
 </svg>

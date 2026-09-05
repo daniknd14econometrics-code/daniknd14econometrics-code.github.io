@@ -416,11 +416,23 @@ ATT(g,r)=E\left[Y_r(g)-Y_r(\infty)\mid G=g\right].
 <section id="event-study-y-trayectorias-previas" class="level2">
 <h2 class="anchored" data-anchor-id="event-study-y-trayectorias-previas">Event study y trayectorias previas</h2>
 <p>El event study agrega por tiempo relativo los efectos de celda estimados después de transformar el outcome. Su composición cambia con el horizonte porque solo intervienen las cohortes que conservan soporte en cada valor de <span class="math inline">\(k\)</span>.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="did_m09b_event_demean_detrend.svg" class="img-fluid figure-img" alt="Event study comparativo entre rolling demean y rolling detrend con IPWRA y covariables, mostrando solo estimaciones puntuales. Detrending acerca el pre a cero y reduce los efectos posteriores. Los ceros de referencia, en menos uno para demean y en menos dos y menos uno para detrend, no son evidencia estimada de ausencia de efecto."></p>
-<figcaption>Comparación de la trayectoria WATT entre demeaning y detrending</figcaption>
+<p><img src="../assets/graficos/did_m09b_demean_ipwra_x.png" class="img-fluid figure-img" alt="Event study con transformación rolling demean, IPWRA y covariables, con períodos pretratamiento y posteriores."></p>
+<figcaption>Trayectoria WATT con rolling demean, IPWRA y covariables</figcaption>
 </figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09b_detrend_ipwra_x.png" class="img-fluid figure-img" alt="Event study con transformación rolling detrend, IPWRA y covariables, con períodos pretratamiento y posteriores."></p>
+<figcaption>Trayectoria WATT con rolling detrend, IPWRA y covariables</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <p>La referencia es la media previa en <em>demean</em> y una trayectoria lineal en <em>detrend</em>. Los ceros de referencia que conserva la salida —K = −1 en <em>demean</em>; K = −2 y K = −1 en <em>detrend</em>— no son tests de ausencia de efecto. Tampoco debe leerse toda la curva como una diferencia respecto de K = −1, salvo en la especificación que utiliza exclusivamente ese período previo.</p>
 <p>El gráfico compara puntos estimados. La inferencia original utiliza <strong>bandas simultáneas para el event study, con 750 repeticiones</strong>, mientras los intervalos de los promedios pre y post son normales punto a punto. Los p-valores individuales no sustituyen las bandas al evaluar la trayectoria completa.</p>
@@ -434,6 +446,12 @@ ATT(g,r)=E\left[Y_r(g)-Y_r(\infty)\mid G=g\right].
 <section id="ventana-pre-y-grupo-de-comparación" class="level2">
 <h2 class="anchored" data-anchor-id="ventana-pre-y-grupo-de-comparación">Ventana pre y grupo de comparación</h2>
 <p>Usar solo el último período pre reduce el post promedio de <code>0,0944</code> a <code>0,0707</code>. La ventana no es una elección inocua: determina qué historia se considera informativa para construir el contrafactual. Una referencia amplia puede mejorar precisión si el pre lejano es comparable; <code>pre(1)</code> es más local y puede ser preferible si esa comparabilidad se debilita con la distancia.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09b_pre1_ipwra_x.png" class="img-fluid figure-img" alt="Event study rolling demean con IPWRA y covariables que utiliza el período g menos uno como referencia pretratamiento."></p>
+<figcaption>Trayectoria WATT con referencia pre(1)</figcaption>
+</figure>
+</div>
 <p>Restringir la especificación detrended a nunca tratados reduce el agregado de <code>0,0317</code> a <code>0,0250</code>. El cambio es menor que el producido por la transformación y muestra sensibilidad al contrafactual. Cambiar los controles no redefine por sí solo el ATT objetivo; sí puede cambiar su población si se pierde soporte o se modifican las ponderaciones.</p>
 </section>
 <section id="watt-y-dinámica" class="level2">
@@ -471,7 +489,8 @@ WATT(k)=\sum_{g\in\mathcal G_k}w(g,k)ATT(g,g+k).
 </section>
 <section id="relación-con-etwfe-tendencias-por-cohorte-o-por-condado" class="level2">
 <h2 class="anchored" data-anchor-id="relación-con-etwfe-tendencias-por-cohorte-o-por-condado">Relación con ETWFE: tendencias por cohorte o por condado</h2>
-<p>En la aplicación común, ETWFE incorpora tendencias por cohorte e interacciones con covariables dentro de la regresión. Rolling detrend estima primero la tendencia previa de cada condado, transforma el resultado y después aplica IPWRA. Los resultados ya producidos permiten comparar ambas construcciones:</p>
+<p>No existe una única versión rolling comparable con ETWFE: la comparación depende de la transformación, la referencia pretratamiento, el grupo de control y la especificación de tendencias. Rolling demean con comparador por defecto dialoga con el ETWFE central sin tendencias específicas por cohorte: <code>0,0944</code> frente a <code>0,0898</code>. La variante <code>pre(1)</code> también pertenece a esa familia y utiliza <span class="math inline">\(g-1\)</span> como referencia; su cercanía numérica a ETWFE con solo nunca tratados —<code>0,0707</code> frente a <code>0,0740</code>— no constituye una equivalencia teórica, porque también cambia el grupo comparador.</p>
+<p>Rolling detrend estima primero la tendencia previa de cada condado, transforma el resultado y después aplica IPWRA. Su conexión estructural más directa es con ETWFE que incorpora tendencias específicas por cohorte: <code>0,0317</code> frente a <code>0,0352</code>. Los resultados dinámicos permiten comparar ambas construcciones:</p>
 <div class="table-box">
 <table class="caption-top table">
 <colgroup>
@@ -547,7 +566,7 @@ WATT(k)=\sum_{g\in\mathcal G_k}w(g,k)ATT(g,g+k).
 </tbody>
 </table>
 </div>
-<p><code>pre(1)</code> acerca rolling a la referencia local de C&amp;S. Con ajuste por regresión lineal existen equivalencias parciales con POLS en contextos específicos, pero no una equivalencia general con ETWFE para toda la dinámica bajo adopción escalonada. BJS y rolling también difieren en el orden: <strong>modelar <span class="math inline">\(Y(0)\)</span> e imputar</strong> frente a <strong>transformar <span class="math inline">\(Y\)</span> y estimar ATT por celda</strong>.</p>
+<p><code>pre(1)</code> utiliza <span class="math inline">\(g-1\)</span> y funciona como puente hacia construcciones de diferencia larga y event study con período base inmediatamente anterior, cercanas a la lógica de C&amp;S. Esa conexión no implica identidad entre <code>pre(1)</code>, Callaway–Sant’Anna y ETWFE. Con ajuste por regresión lineal existen equivalencias parciales con POLS en contextos específicos, pero no una equivalencia general con ETWFE para toda la dinámica bajo adopción escalonada. BJS y rolling también difieren en el orden: <strong>modelar <span class="math inline">\(Y(0)\)</span> e imputar</strong> frente a <strong>transformar <span class="math inline">\(Y\)</span> y estimar ATT por celda</strong>.</p>
 </section>
 <section id="qué-mejora-y-qué-supuestos-permanecen" class="level2">
 <h2 class="anchored" data-anchor-id="qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</h2>

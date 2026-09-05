@@ -230,7 +230,7 @@ window.Quarto = {
 <section id="pregunta-central" class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
 <p>¿Qué está promediando realmente una regresión con efectos fijos de unidad y tiempo cuando las unidades adoptan el tratamiento en momentos distintos?</p>
-<p><strong>Respuesta corta:</strong> el coeficiente TWFE es una combinación ponderada de múltiples estimadores DiD 2×2. Algunas comparaciones usan unidades nunca tratadas o todavía no tratadas; otras utilizan como control a cohortes cuyo tratamiento ya comenzó. Bajo efectos dinámicos o heterogéneos, estas últimas pueden perder una interpretación causal limpia.</p>
+<p><strong>Respuesta corta:</strong> el coeficiente TWFE es una combinación ponderada de múltiples estimadores DiD 2×2. Algunas comparaciones usan unidades nunca tratadas o todavía no tratadas; otras utilizan como control a cohortes cuyo tratamiento ya comenzó. Cuando los efectos cambian con el tiempo de exposición, estas últimas pueden contaminarse. Incluso si los efectos solo difieren entre cohortes pero son constantes en el tiempo, TWFE puede agregarlos con ponderaciones distintas de las del ATT de interés.</p>
 </section>
 <section id="del-did-canónico-a-la-adopción-escalonada" class="level2">
 <h2 class="anchored" data-anchor-id="del-did-canónico-a-la-adopción-escalonada">Del DiD canónico a la adopción escalonada</h2>
@@ -317,6 +317,12 @@ window.Quarto = {
 \widehat\beta_{TWFE}=\sum_j \omega_j\widehat\beta_j^{2\times2}.
 \]</span></p>
 <p>Los pesos reflejan cuánta variación residual del tratamiento aporta cada comparación. La identidad es algebraica: permite abrir el coeficiente, pero no convierte automáticamente todos sus componentes en efectos causales válidos.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m04_bacon_decomp_baseline.png" class="img-fluid figure-img" alt="Descomposición del coeficiente TWFE en comparaciones dos por dos y sus ponderaciones."></p>
+<figcaption>Descomposición Goodman–Bacon del TWFE de referencia</figcaption>
+</figure>
+</div>
 </section>
 <section id="descomposición-goodmanbacon" class="level2">
 <h2 class="anchored" data-anchor-id="descomposición-goodmanbacon">Descomposición Goodman–Bacon</h2>
@@ -383,8 +389,8 @@ window.Quarto = {
 <figcaption>Contribución de cada familia de comparaciones a la estimación TWFE</figcaption>
 </figure>
 </div>
-<p>El componente más cercano al DiD canónico es también el de menor peso; las comparaciones con estados siempre tratados o con controles ya tratados ocupan buena parte de la composición.</p>
-<p>La familia más cercana a comparar una cohorte temprana con otra tardía todavía no tratada recibe solo <strong>11,1%</strong> del peso. En cambio, <strong>26,5%</strong> corresponde a comparaciones donde una cohorte temprana ya tratada funciona como control, y <strong>38,4%</strong> involucra estados tratados antes del inicio del panel.</p>
+<p>Dentro de las comparaciones entre cohortes tratadas, la más cercana al DiD canónico es también la de menor peso; las comparaciones con estados siempre tratados o con controles ya tratados ocupan buena parte de la composición.</p>
+<p>La familia que compara una cohorte temprana con otra tardía todavía no tratada recibe <strong>11,1%</strong> del peso; <strong>24,0%</strong> corresponde a cohortes frente a nunca tratadas; <strong>26,5%</strong> utiliza cohortes tempranas ya tratadas como controles; y <strong>38,4%</strong> involucra estados tratados antes del inicio del panel.</p>
 <p>Las contribuciones reconstruyen el coeficiente con una diferencia numérica prácticamente nula. La descomposición no es una especificación alternativa: muestra de dónde proviene el TWFE observado.</p>
 </section>
 <section id="agregar-covariables-no-elimina-el-problema-de-agregación" class="level2">
@@ -432,8 +438,26 @@ window.Quarto = {
 </section>
 <section id="cuando-los-tratados-funcionan-como-controles" class="level2">
 <h2 class="anchored" data-anchor-id="cuando-los-tratados-funcionan-como-controles">Cuando los tratados funcionan como controles</h2>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m04_cohortes_adopcion.png" class="img-fluid figure-img" alt="Distribución de estados según su cohorte de adopción del divorcio unilateral."></p>
+<figcaption>Cohortes de adopción del divorcio unilateral</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m04_tres_grupos_medias.png" class="img-fluid figure-img" alt="Trayectorias medias del resultado para cohortes tempranas, tardías y nunca tratadas."></p>
+<figcaption>Trayectorias medias de tres grupos de adopción</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>Considérese una cohorte temprana y otra tardía. Antes de que la segunda adopte, puede aproximar la trayectoria contrafactual de la primera. Después de la adopción tardía, TWFE también utiliza a la cohorte temprana como referencia, aunque ya lleva varios períodos expuesta.</p>
-<p>Si el efecto es constante, restar el cambio de la cohorte temprana no altera sustantivamente la comparación. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.</p>
+<p>Si el efecto de la cohorte temprana es constante a lo largo de las ventanas relevantes, usar su cambio como control no introduce el término de contaminación dinámica. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.</p>
 <p>Incluso las comparaciones que utilizan unidades nunca tratadas o todavía no tratadas requieren tendencias paralelas apropiadas y ausencia de anticipación. La descomposición permite identificar quién actúa como control y con qué peso; no verifica por sí misma esos supuestos causales.</p>
 </section>
 <section id="efectos-homogéneos-y-efectos-dinámicos" class="level2">
@@ -465,7 +489,7 @@ window.Quarto = {
 </section>
 <section id="conclusión" class="level2">
 <h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
-<p>Con adopción escalonada, TWFE combina múltiples DiD 2×2. En la aplicación, solo 11,1% del peso proviene de comparaciones entre cohortes tempranas y tardías todavía no tratadas; 26,5% utiliza cohortes tempranas ya tratadas como controles y 38,4% involucra unidades siempre tratadas.</p>
+<p>Con adopción escalonada, TWFE combina múltiples DiD 2×2. En la aplicación, 11,1% corresponde a comparaciones entre cohortes tempranas y tardías todavía no tratadas, 24,0% a cohortes frente a nunca tratadas, 26,5% utiliza cohortes tempranas ya tratadas como controles y 38,4% involucra unidades siempre tratadas.</p>
 <p>La simulación muestra la consecuencia con claridad: una comparación elemental alcanza <strong>−0,80</strong> aunque los efectos verdaderos nunca sean negativos. La literatura moderna de DiD surge de este problema econométrico concreto. Antes de interpretar un coeficiente agregado, es necesario saber qué comparaciones lo construyen y si esas comparaciones conservan un contrafactual causal defendible.</p>
 
 

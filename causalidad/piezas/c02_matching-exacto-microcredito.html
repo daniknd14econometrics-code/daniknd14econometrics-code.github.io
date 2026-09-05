@@ -221,7 +221,7 @@ window.Quarto = {
 </div>
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Este análisis compara matching exacto manual y CEM sobre hogares con participación femenina en microcrédito. El diseño manual conserva 734 de 1.129 hogares y produce un ATE de 0.0953 y un ATET de 0.1063. CEM con la regla Freedman–Diaconis conserva 357 hogares y produce un ATET de 0.2249. La diferencia entre estimaciones no ordena métodos: cada coarsening construye otro soporte y otra población comparable.</p>
+<p>Este análisis compara matching exacto manual y CEM sobre hogares con participación femenina en microcrédito. El diseño manual conserva 734 de 1.129 hogares y produce un ATE de 0.0953 en el soporte retenido y un ATET de 0.1063 entre los tratados retenidos. CEM con la regla Freedman–Diaconis conserva 357 hogares y produce un ATET de 0.2249 entre los tratados retenidos por CEM. La diferencia entre estimaciones no ordena métodos: cada coarsening construye otro soporte y otra población comparable.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta-central" class="level2 section-box">
@@ -252,7 +252,8 @@ window.Quarto = {
 </section>
 <section id="cómo-se-construye-la-comparabilidad" class="level2">
 <h2 class="anchored" data-anchor-id="cómo-se-construye-la-comparabilidad">Cómo se construye la comparabilidad</h2>
-<p>El matching manual exige coincidencia exacta en <code>sexhead</code> y <code>vaccess</code>. Para que las cuatro covariables continuas puedan formar celdas útiles, agrupa <code>agehead</code> en siete intervalos, <code>educhead</code> en cuatro categorías y divide <code>lnland</code> y <code>pcirr</code> en cuartiles. Solo conserva una celda cuando contiene al menos un hogar tratado y uno de control.</p>
+<p>El diseño manual implementa matching exacto sobre celdas discretizadas manualmente: exige coincidencia exacta en <code>sexhead</code> y <code>vaccess</code>, agrupa <code>agehead</code> en siete intervalos y <code>educhead</code> en cuatro categorías, y divide <code>lnland</code> y <code>pcirr</code> en cuartiles. Solo conserva una celda cuando contiene al menos un hogar tratado y uno de control.</p>
+<p>El coarsening relaja la coincidencia exacta sobre los valores originales y puede mejorar el soporte, pero deja heterogeneidad observable dentro de cada celda; cortes más gruesos implican una exigencia menor de comparabilidad. La interpretación causal requiere, además, que las covariables utilizadas para construir las celdas sean pretratamiento y suficientemente ricas para sostener selección en observables.</p>
 <p>Con esa regla quedan 409 tratados y 325 controles: 734 hogares, aproximadamente 65 % de la muestra. El 35 % restante no tiene contraparte dentro de la definición adoptada. La estimación se refiere desde ese momento a la región de soporte común, no a los 1.129 hogares originales.</p>
 <p>CEM sistematiza la misma lógica de coarsening y matching exacto. El informe compara reglas automáticas y adopta Freedman–Diaconis como especificación de trabajo. La distancia multivariada <span class="math inline">\(L_1\)</span> ayuda a describir balance dentro de una grilla, pero no permite ordenar mecánicamente corridas con coarsenings diferentes: al cambiar los cortes también cambia el objeto sobre el cual se mide el desequilibrio.</p>
 <div class="table-box">
@@ -276,14 +277,14 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td>Matching exacto manual</td>
-<td>ATE y ATET</td>
+<td>ATE en el soporte retenido y ATET entre tratados retenidos</td>
 <td style="text-align: right;">409 / 325</td>
 <td style="text-align: right;">734 (65 %)</td>
 <td>Mayor cobertura bajo las celdas definidas manualmente</td>
 </tr>
 <tr class="even">
 <td>CEM, Freedman–Diaconis</td>
-<td>ATET</td>
+<td>ATET entre tratados retenidos por CEM</td>
 <td style="text-align: right;">201 / 156</td>
 <td style="text-align: right;">357 (32 %)</td>
 <td>Otra regla de coarsening y un soporte mucho más reducido</td>
@@ -297,6 +298,13 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="estimación-e-incertidumbre-del-procedimiento">Estimación e incertidumbre del procedimiento</h2>
 <div class="table-box">
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Diseño</th>
@@ -309,21 +317,21 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td>Matching exacto manual</td>
-<td>ATE</td>
+<td>ATE en el soporte retenido</td>
 <td style="text-align: right;">0.0953</td>
 <td style="text-align: right;">0.0265</td>
 <td style="text-align: right;">0.0389</td>
 </tr>
 <tr class="even">
 <td>Matching exacto manual</td>
-<td>ATET</td>
+<td>ATET entre tratados retenidos</td>
 <td style="text-align: right;">0.1063</td>
 <td style="text-align: right;">0.0263</td>
 <td style="text-align: right;">0.0410</td>
 </tr>
 <tr class="odd">
 <td>CEM, Freedman–Diaconis</td>
-<td>ATET</td>
+<td>ATET entre tratados retenidos por CEM</td>
 <td style="text-align: right;">0.2249</td>
 <td style="text-align: right;">—</td>
 <td style="text-align: right;">0.0643</td>
@@ -331,7 +339,7 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>Las estimaciones están expresadas en unidades de <code>ln(1 + exptot)</code>, no en dinero. En el diseño manual, ATE y ATET son próximos, pero corresponden a poblaciones de agregación distintas: el ATE pondera los estratos por la muestra emparejada y el ATET por la distribución de los tratados emparejados.</p>
+<p>Las estimaciones están expresadas en unidades de <code>ln(1 + exptot)</code>, no en dinero. En el diseño manual, el ATE en el soporte retenido y el ATET entre tratados retenidos son próximos, pero corresponden a poblaciones de agregación distintas: el primero pondera los estratos por la muestra emparejada y el segundo por la distribución de los tratados emparejados.</p>
 <p>El bootstrap reconstruye en cada réplica los bins, las celdas, el soporte y la estimación. Sus errores estándar mayores muestran que la incertidumbre no se agota en comparar medias dentro de estratos ya dados; también importa que la propia región comparable fue construida con la muestra.</p>
 <p>El ATET de CEM es más del doble que el ATET manual. Esa diferencia no demuestra que CEM encuentre un efecto mayor ni que un método sea superior: los dos diseños modifican de manera distinta las covariables, conservan hogares diferentes y promedian sobre soportes distintos.</p>
 </section>

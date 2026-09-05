@@ -214,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Covariables de comparabilidad:</strong> sexo, edad y educación de la jefatura del hogar; tierra; acceso vial; riego per cápita; e indicadores de producción/consumo alimentario.</li>
 </ul>
 </div>
-<p>La lectura causal descansa en selección en observables y soporte común. Por eso, el diseño se evalúa por comparabilidad ex ante entre tratados y controles antes de convertir los resultados en afirmaciones sustantivas.</p>
+<p>La lectura causal descansa en selección en observables y soporte común. Requiere que las covariables utilizadas para modelar la asignación sean pretratamiento y suficientemente ricas para sostener selección en observables. Por eso, el diseño se evalúa por comparabilidad ex ante entre tratados y controles antes de convertir los resultados en afirmaciones sustantivas.</p>
 </section>
 <section id="por-qué-la-comparabilidad-importa" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-la-comparabilidad-importa">Por qué la comparabilidad importa</h2>
@@ -243,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="header">
 <th>Regla de soporte</th>
 <th style="text-align: right;">Soporte retenido (<code>N1/N0</code>)</th>
-<th style="text-align: right;">Observaciones fuera de soporte</th>
+<th style="text-align: right;">Observaciones excluidas por la regla</th>
 <th>Balance global (post-matching)</th>
 <th>Lectura</th>
 </tr>
@@ -266,7 +266,25 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<p>Aunque <code>trim(10)</code> recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable. Con <code>common</code>, por ejemplo, todavía quedan diferencias estandarizadas de 14,1 en <code>sexhead</code>, 9,6 en <code>vaccess</code> y 10,1 en <code>egg</code>; con <code>trim(10)</code>, <code>sexhead</code> llega a 15,5 y <code>egg</code> a 14,7. El buen balance global no elimina la revisión covariable por covariable.</p>
+<p><code>trim(10)</code> restringe más agresivamente la región retenida, pero esa regla adicional no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable. Con <code>common</code>, por ejemplo, todavía quedan diferencias estandarizadas de 14,1 en <code>sexhead</code>, 9,6 en <code>vaccess</code> y 10,1 en <code>egg</code>; con <code>trim(10)</code>, <code>sexhead</code> llega a 15,5 y <code>egg</code> a 14,7. El buen balance global no elimina la revisión covariable por covariable.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/c04_common.png" class="img-fluid figure-img" alt="Distribución del propensity score para tratados y controles, distinguiendo observaciones dentro y fuera del soporte definido por common."></p>
+<figcaption>Soporte retenido con la regla <code>common</code></figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/c04_trim10.png" class="img-fluid figure-img" alt="Distribución del propensity score para tratados y controles, distinguiendo las observaciones retenidas y excluidas por trim diez."></p>
+<figcaption>Región retenida con la regla adicional <code>trim(10)</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="sensibilidad-entre-alternativas-de-matching" class="level2">
 <h2 class="anchored" data-anchor-id="sensibilidad-entre-alternativas-de-matching">Sensibilidad entre alternativas de matching</h2>
@@ -358,7 +376,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<p>El bootstrap documentado ofrece inferencia para dos contrastes pedagógicos, no para una especificación declarada óptima. En la exportación original de <code>teffects</code>, el error estándar del ATET quedó referenciado por error a la matriz de la corrida ATE. Por eso se conservan sus puntos estimados como contraste, pero no se presenta esa precisión defectuosa ni se reestima el modelo.</p>
+<p>El bootstrap documentado ofrece inferencia para dos contrastes pedagógicos, no para una especificación declarada óptima, y rehace el procedimiento completo. En matching por vecino más cercano, sin embargo, el bootstrap convencional no debe interpretarse como universalmente válido; esta cautela es especialmente relevante para NN(8). En la exportación original de <code>teffects</code>, el error estándar del ATET quedó referenciado por error a la matriz de la corrida ATE. Por eso se conservan sus puntos estimados como contraste, pero no se presenta esa precisión defectuosa ni se reestima el modelo.</p>
 </section>
 <section id="lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</h2>

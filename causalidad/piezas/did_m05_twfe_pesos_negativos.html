@@ -404,7 +404,7 @@ window.Quarto = {
 <div class="small-note">
 <p><strong>Lectura disciplinada.</strong> WAGEPAN no reproduce la paradoja extrema de la simulación. El coeficiente TWFE permanece positivo y el peso negativo agregado es reducido. El diagnóstico identifica una vulnerabilidad del estimando, no una explicación automática de cada diferencia empírica.</p>
 </div>
-<p>Las medidas formales de sensibilidad a heterogeneidad precisan esa lectura. Para TWFE base, el paquete reporta <span class="math inline">\(\underline{\sigma}=0{,}0945\)</span> y <span class="math inline">\(\overline{\sigma}=3{,}1893\)</span>; para primeras diferencias, 0,0319 y 0,6039; y para TWFE con covariables, 0,0764 y 2,0238. La primera medida resume cuánta heterogeneidad mínima sería compatible con un efecto promedio relevante igual a cero; la segunda, cuánta se necesitaría para que todos los efectos tuvieran signo opuesto al coeficiente. No estiman la dispersión verdadera de los ATT. En el TWFE base, el nivel puede ser sensible a heterogeneidad de un orden comparable al coeficiente, mientras que atribuir su signo positivo a una reversión extrema exigiría una heterogeneidad mucho mayor.</p>
+<p>Las medidas formales de sensibilidad a heterogeneidad precisan esa lectura. Para TWFE base, el paquete reporta <span class="math inline">\(\underline{\sigma}=0{,}0945\)</span> y <span class="math inline">\(\overline{\sigma}=3{,}1893\)</span>; para primeras diferencias, 0,0319 y 0,6039; y para TWFE con covariables, 0,0764 y 2,0238. La primera medida resume cuánta heterogeneidad mínima sería compatible con que el ATT y el coeficiente TWFE tuvieran signos opuestos; la segunda, cuánta sería necesaria para que todas las ATE por celda tuvieran signo opuesto al coeficiente. No estiman la dispersión verdadera de los ATT. En el TWFE base, el nivel puede ser sensible a heterogeneidad de un orden comparable al coeficiente, mientras que atribuir su signo positivo a una reversión extrema exigiría una heterogeneidad mucho mayor.</p>
 </section>
 <section id="twfe-primeras-diferencias-y-was" class="level2">
 <h2 class="anchored" data-anchor-id="twfe-primeras-diferencias-y-was">TWFE, primeras diferencias y WAS</h2>
@@ -425,9 +425,33 @@ window.Quarto = {
 <li><strong>Salidas de la afiliación (<code>1→0</code>):</strong> el cambio salarial de quienes permanecen afiliados (<code>1→1</code>) se compara con el de quienes salen. La resta se invierte para expresar también el efecto de estar afiliado frente a no estarlo.</li>
 </ul>
 <p>Los contrastes se agregan según el número de cambios observados. Aquí participan <strong>250 transiciones de afiliación: 128 entradas y 122 salidas</strong>. El estimando es el efecto contemporáneo para esas transiciones, con stayers del mismo estado inicial como contrafactual; no es una trayectoria dinámica ni un promedio para todos los trabajadores del panel.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m05_switchers_por_anio.png" class="img-fluid figure-img" alt="Cantidad de transiciones hacia y fuera de la afiliación sindical por año."></p>
+<figcaption>Entradas y salidas de afiliación sindical por año</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m05_didm_bloques_por_anio.png" class="img-fluid figure-img" alt="Comparaciones entre switchers y stayers que integran DIDM en cada año."></p>
+<figcaption>Bloques DIDM por año</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>El taller verifica ese objeto estático con tres implementaciones. La construcción manual entrega <strong>0,0310</strong> y no produce inferencia formal; la implementación histórica de DIDM estima <strong>0,0412</strong> con EE <strong>0,0329</strong>; y WAS moderno estima <strong>0,0412</strong> con EE <strong>0,0313</strong>. La proximidad de los puntos confirma la coherencia de la implementación, mientras que la diferencia entre errores estándar responde a procedimientos inferenciales distintos. Esa verificación no resuelve por sí misma la validez del contrafactual.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m05_comparacion_didm.png" class="img-fluid figure-img" alt="Comparación de las estimaciones DIDM manual, DIDM histórico y WAS moderno para afiliación sindical y salarios."></p>
+<figcaption>Comparación entre DIDM manual, implementación histórica y WAS moderno</figcaption>
+</figure>
+</div>
 <div class="small-note">
-<p><strong>Interpretación del resultado.</strong> El punto WAS de 0,0412 representa una diferencia estimada de <strong>4,1 puntos logarítmicos en el salario por estar afiliado frente a no estarlo</strong>, para las transiciones que componen el agregado. Su lectura causal requiere tendencias paralelas entre switchers y stayers comparables; el intervalo y los placebos permiten evaluar cuánto respalda esta aplicación esa interpretación.</p>
+<p><strong>Interpretación del resultado.</strong> El punto WAS de 0,0412 representa una diferencia estimada de <strong>4,1 puntos logarítmicos en el salario por estar afiliado frente a no estarlo</strong>, para las transiciones que componen el agregado. Su lectura causal requiere los supuestos DIDM de tendencias comunes relevantes entre switchers y stayers con el mismo estado inicial, junto con grupos estables adecuados. Para entradas y salidas, esas condiciones involucran respectivamente los resultados potenciales bajo el estado inicial correspondiente; el intervalo y los placebos permiten evaluar cuánto respalda esta aplicación esa interpretación.</p>
 </div>
 </section>
 <section id="placebos-y-credibilidad-causal" class="level2">

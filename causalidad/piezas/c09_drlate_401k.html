@@ -198,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="resumen-ejecutivo" class="level2">
 <h2 class="anchored" data-anchor-id="resumen-ejecutivo">Resumen ejecutivo</h2>
 <p>Esta aplicación conserva la arquitectura causal de variables instrumentales: un tratamiento endógeno, un instrumento binario, una primera etapa y un efecto local para quienes modifican su participación por la elegibilidad. La extensión DR-LATE incorpora modelos separados para el resultado, el tratamiento y el mecanismo del instrumento, y permite combinar regresión ajustada con ponderación.</p>
-<p>En 9.275 individuos, la elegibilidad eleva la participación en 68,9 puntos porcentuales y produce una primera etapa extraordinariamente fuerte (<code>F = 7422.81</code>). El benchmark 2SLS estima un LATE de 13,66 unidades de activos financieros netos; IPWRA estima 12,60. Los resultados son próximos entre 2SLS, IPWRA, AIPW y RA.</p>
+<p>En 9.275 individuos, la elegibilidad eleva la participación en 68,9 puntos porcentuales y produce una primera etapa extraordinariamente fuerte (<code>F = 7422.81</code>). El benchmark lineal 2SLS estima 13,66 unidades de activos financieros netos; el LATE IPWRA es 12,60. Los resultados son próximos entre 2SLS, IPWRA, AIPW y RA.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta-central" class="level2 section-box">
@@ -278,7 +278,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>Participación sobre activos netos, 2SLS</td>
 <td style="text-align: right;">13.6586</td>
-<td>Benchmark LATE (<code>EE = 1.9837</code>)</td>
+<td>Benchmark lineal 2SLS (<code>EE = 1.9837</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -287,7 +287,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="el-propensity-score-es-del-instrumento" class="level2">
 <h2 class="anchored" data-anchor-id="el-propensity-score-es-del-instrumento">El propensity score es del instrumento</h2>
-<p>DR-LATE estima <code>P(e401k = 1 | X)</code> para comparar personas elegibles y no elegibles con covariables observadas semejantes. Esto es distinto del propensity score del tratamiento utilizado en matching: aquí se modela el mecanismo del instrumento, no la decisión final de participar.</p>
+<p>DR-LATE estima <code>P(e401k = 1 | X)</code> para modelar la asignación condicional del instrumento y construir las ponderaciones utilizadas en las regresiones de media. Esto es distinto del propensity score del tratamiento utilizado en matching: aquí se modela el mecanismo del instrumento, no la decisión final de participar.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/graficos/drlate_overlap_instrumento_401k.png" class="img-fluid figure-img" alt="Distribuciones del propensity score del instrumento para personas elegibles y no elegibles. Existe superposición sustantiva, aunque las distribuciones no son idénticas."></p>
@@ -334,20 +334,20 @@ ul.task-list li input[type="checkbox"] {
 <td>LATT, IPWRA</td>
 <td style="text-align: right;">15.3191</td>
 <td style="text-align: right;">2.4440</td>
-<td>Población local tratada correspondiente al LATT</td>
+<td>Compliers tratados</td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>El LATE IPWRA se construye a partir de un efecto ajustado del instrumento sobre el resultado de 8,5971 y un efecto sobre el tratamiento de 0,6822. La estimación principal equivale a <strong>12,60 unidades de <code>nettfa</code></strong> para los compliers.</p>
-<p>El LATT de 15,32 no es una versión superior del LATE. Cambia la población local utilizada para promediar la heterogeneidad del efecto y, por tanto, responde a otra pregunta.</p>
+<p>El LATT de 15,32 no es una versión superior del LATE. Resume el efecto para los compliers tratados y, por tanto, pondera una población local distinta de la utilizada por el LATE.</p>
 </section>
 <section id="estabilidad-entre-estimadores" class="level2">
 <h2 class="anchored" data-anchor-id="estabilidad-entre-estimadores">Estabilidad entre estimadores</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/graficos/drlate_late_estimadores_401k.png" class="img-fluid figure-img" alt="Estimaciones puntuales e intervalos de confianza al 95% para 2SLS, DR-LATE IPWRA, DR-LATE AIPW y DR-LATE RA. Los cuatro intervalos se superponen ampliamente."></p>
-<figcaption>Comparación de estimadores del LATE sobre activos financieros netos</figcaption>
+<p><img src="../assets/graficos/drlate_late_estimadores_401k.png" class="img-fluid figure-img" alt="Estimaciones puntuales e intervalos de confianza al 95% para el benchmark 2SLS y los estimadores DR-LATE IPWRA, AIPW y RA. Los cuatro intervalos se superponen ampliamente."></p>
+<figcaption>Comparación entre el benchmark 2SLS y estimadores DR-LATE</figcaption>
 </figure>
 </div>
 <p>2SLS estima 13,66; IPWRA, 12,60; AIPW, 12,72; y RA, 12,90. Los intervalos se superponen ampliamente. Esta estabilidad muestra que la conclusión sustantiva del caso 401(k) no depende de una única implementación, pero no permite inferir que todos los modelos auxiliares sean correctos ni validar los supuestos estructurales del instrumento.</p>
@@ -400,6 +400,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 <p>Estas extensiones muestran que logit o Poisson pueden representar mejor el soporte de un modelo auxiliar, pero no relajan los supuestos IV. En el bloque de fertilidad, además, el informe no interpreta el LATT Poisson porque el cero reportado es incompatible con los componentes <code>Z on Y</code> y <code>Z on D</code>; ese control algebraico impide tratar la salida como evidencia.</p>
+<p>Cuando el tratamiento deja de ser binario, la interpretación ya no es el LATE canónico de compliers <code>0→1</code>: el cociente debe leerse como un efecto local por unidad de intensidad del tratamiento inducida por el instrumento binario.</p>
 </section>
 <section id="qué-puede-concluirse-y-qué-no" class="level2">
 <h2 class="anchored" data-anchor-id="qué-puede-concluirse-y-qué-no">Qué puede concluirse y qué no</h2>

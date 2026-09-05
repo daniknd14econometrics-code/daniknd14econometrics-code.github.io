@@ -294,6 +294,24 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 <p><strong>Quién construye el contrafactual</strong></p>
 <p>Nunca tratados y todavía no tratados mientras permanecen sin exposición. Una vez tratado, el resultado de un condado deja de utilizarse para aprender <span class="math inline">\(Y(0)\)</span>.</p>
 </div>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m08_soporte_untreated.png" class="img-fluid figure-img" alt="Cantidad de observaciones no tratadas disponibles por año para estimar el resultado potencial sin tratamiento."></p>
+<figcaption>Soporte de observaciones no tratadas por año</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m08_soporte_sin_never.png" class="img-fluid figure-img" alt="Observaciones tratadas imputables y no imputables cuando se excluye el grupo nunca tratado."></p>
+<figcaption>Soporte de tratados al excluir los nunca tratados</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="resultado-global" class="level2">
 <h2 class="anchored" data-anchor-id="resultado-global">Resultado global</h2>
@@ -322,7 +340,7 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 </div>
 </div>
 </div>
-<p>Bajo el modelo de resultados no tratados y los supuestos del diseño, el cambio de salario mínimo produce una reducción media estimada de <strong>4,77 puntos logarítmicos en el empleo adolescente</strong> entre las observaciones tratadas imputables. El agregado reúne 291 observaciones condado-año, mientras 2.209 observaciones sin tratamiento permiten ajustar el contrafactual. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.</p>
+<p>Bajo el modelo de resultados no tratados y los supuestos del diseño, el cambio de salario mínimo produce una reducción media estimada de <strong>0,0477 puntos logarítmicos en el empleo adolescente</strong> entre las observaciones tratadas imputables. El agregado reúne 291 observaciones condado-año, mientras 2.209 observaciones sin tratamiento permiten ajustar el contrafactual. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.</p>
 </section>
 <section id="efectos-dinámicos" class="level2">
 <h2 class="anchored" data-anchor-id="efectos-dinámicos">Efectos dinámicos</h2>
@@ -333,6 +351,7 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 <figcaption>Efectos dinámicos BJS con dos períodos pretratamiento y dos horizontes posteriores</figcaption>
 </figure>
 </div>
+<p><em>Nota:</em> K = −2 y K = −1 son diagnósticos de pretrends sobre observaciones no tratadas, no efectos causales pretratamiento.</p>
 <div class="table-box">
 <table class="caption-top table">
 <colgroup>
@@ -435,6 +454,12 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 <p>Aunque el contrafactual sea imputable, ¿hay información suficientemente distribuida para realizar inferencia confiable? Los horizontes K = 2 y K = 3 no superan este criterio.</p>
 </div>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m08_soporte_cohorte_horizonte.png" class="img-fluid figure-img" alt="Distribución de observaciones tratadas imputables por cohorte de adopción y horizonte relativo."></p>
+<figcaption>Soporte de observaciones tratadas por cohorte y horizonte</figcaption>
+</figure>
+</div>
 <p>La cantidad bruta de observaciones no basta: si pocos condados o cohortes concentran la información relevante, la precisión efectiva puede ser mucho menor. Por eso las brechas descriptivas disponibles para horizontes posteriores no se presentan como resultados inferenciales equivalentes.</p>
 <p>Una sensibilidad ya realizada permite ver la diferencia: al excluir los 309 condados nunca tratados, en 2007 no queda ninguna observación sin exposición para estimar el efecto de ese año. <strong>191 observaciones tratadas dejan de ser imputables</strong>. El recorte automático elimina ese calendario, cambia la población de K = 0 y K = 1 y deja K = 3 sin contrafactual. Recortar permite continuar sobre otro soporte; no recupera la información faltante.</p>
 </section>
@@ -479,6 +504,12 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 </tr>
 </tbody>
 </table>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m08_event_study_timecontrols.png" class="img-fluid figure-img" alt="Event study de la especificación del taller que incorpora población inicial interactuada con el tiempo al modelo de resultado no tratado."></p>
+<figcaption>Event study BJS con controles temporales y población inicial</figcaption>
+</figure>
 </div>
 <p>Omitir las diferencias permanentes entre condados revierte los signos y el diagnóstico previo rechaza. Esa fila ilustra una restricción inadecuada sobre <span class="math inline">\(Y(0)\)</span>, no evidencia de un gran efecto positivo. Permitir trayectorias por población inicial apenas modifica la referencia. El criterio es la credibilidad del modelo no tratado, no la significación del efecto que produce.</p>
 <p>Los errores estándar corresponden a la inferencia BJS, con la opción de exclusión <em>leaveout</em> utilizada en la aplicación. Incorporan la estimación del contrafactual; no se calculan tratando las brechas imputadas como observaciones independientes con <span class="math inline">\(Y(0)\)</span> conocido.</p>

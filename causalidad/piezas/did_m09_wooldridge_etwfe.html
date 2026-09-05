@@ -302,6 +302,24 @@ Y_{it}=\alpha_i+\lambda_t+
 <p>Cohortes tratadas entre 1986 y 1999; 886 condados están tratados al final del panel.</p>
 </div>
 </div>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_distribucion_cohortes.png" class="img-fluid figure-img" alt="Distribución de los condados según el año de primera apertura de Walmart y el grupo nunca tratado."></p>
+<figcaption>Distribución de condados por cohorte de primera apertura</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_outcome_ever_vs_never.png" class="img-fluid figure-img" alt="Trayectorias brutas del log del empleo minorista para condados alguna vez tratados y nunca tratados."></p>
+<figcaption>Empleo minorista bruto en condados alguna vez y nunca tratados</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>Otros <strong>394 condados nunca reciben una apertura</strong> durante la ventana observada. En la especificación principal, estos condados y las cohortes todavía no tratadas construyen el grupo de comparación mientras permanecen sin exposición.</p>
 </section>
 <section id="covariables-y-comparación" class="level2">
@@ -416,15 +434,45 @@ Y_{it}=\alpha_i+\lambda_t+
 </div>
 <p>Estas reglas no son nombres alternativos para un mismo coeficiente. Cambian qué población y qué horizonte dominan el resumen. En horizontes largos participan menos cohortes, por lo que también cambia la composición del estimando.</p>
 <p>En el agregado simple de este panel balanceado, cada celda cohorte-año pesa según su número de condados tratados. Las cohortes tempranas aportan más años posteriores y, por ello, más observaciones al total. Dar igual peso a cada cohorte respondería otra pregunta.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_att_por_cohorte.png" class="img-fluid figure-img" alt="Efectos ETWFE con covariables agregados por cohorte de primera apertura."></p>
+<figcaption>ATT de ETWFE agregado por cohorte</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_att_por_calendario.png" class="img-fluid figure-img" alt="Efectos ETWFE con covariables agregados por año calendario."></p>
+<figcaption>ATT de ETWFE agregado por calendario</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="event-study-y-dinámica" class="level2">
 <h2 class="anchored" data-anchor-id="event-study-y-dinámica">Event study y dinámica</h2>
 <p>El event study con nunca tratados organiza los efectos alrededor de la primera apertura y utiliza K=−1 como período base.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="did_m09_event_study_never.svg" class="img-fluid figure-img" alt="Event study ETWFE con estimaciones negativas entre ocho y cinco años antes de la apertura y efectos positivos seleccionados después. El test conjunto de pretrends rechaza con chi cuadrado 40,16 y p menor a 0,001."></p>
+<p><img src="../assets/graficos/did_m09_event_post.png" class="img-fluid figure-img" alt="Efectos posteriores por tiempo desde la apertura bajo ETWFE con covariables y comparador por defecto."></p>
+<figcaption>Dinámica posterior bajo la especificación ETWFE central</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_event_never_window.png" class="img-fluid figure-img" alt="Event study ETWFE frente a condados nunca tratados, con períodos pretratamiento y posteriores alrededor de la apertura."></p>
 <figcaption>Event study ETWFE frente a condados nunca tratados</figcaption>
 </figure>
+</div>
+</div>
 </div>
 <p>Con este comparador estable, los efectos posteriores seleccionados son <code>0,0234</code> en K=0, <code>0,0554</code> en K=1, <code>0,0686</code> en K=5 y <code>0,1359</code> en K=10. La trayectoria creciente no puede leerse aisladamente de las diferencias previas.</p>
 </section>
@@ -462,6 +510,24 @@ Y_{it}=\alpha_i+\lambda_t+
 </div>
 <div class="metric-note">
 <p>EE 0,0092 · IC95% [0,0171; 0,0533]</p>
+</div>
+</div>
+</div>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_event_cohort_trends.png" class="img-fluid figure-img" alt="Efectos posteriores por tiempo relativo bajo ETWFE con tendencias lineales específicas por cohorte."></p>
+<figcaption>Event study con tendencias lineales por cohorte</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m09_cohort_trends_imputacion.png" class="img-fluid figure-img" alt="Efectos reconstruidos mediante un modelo de resultado no tratado con tendencias lineales específicas por cohorte."></p>
+<figcaption>Reconstrucción por imputación con tendencias por cohorte</figcaption>
+</figure>
 </div>
 </div>
 </div>

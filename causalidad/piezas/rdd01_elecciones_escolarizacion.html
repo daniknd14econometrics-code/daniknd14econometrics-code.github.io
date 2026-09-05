@@ -285,12 +285,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="evidencia-visual-alrededor-del-corte" class="level2">
 <h2 class="anchored" data-anchor-id="evidencia-visual-alrededor-del-corte">Evidencia visual alrededor del corte</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="rdd01_resultado_local.svg" class="img-fluid figure-img" alt="Promedios locales y ajustes lineales a ambos lados del margen electoral cero; el ajuste muestra un salto positivo en el umbral."></p>
-<figcaption>Finalización de secundaria entre mujeres jóvenes alrededor del umbral electoral</figcaption>
-</figure>
-</div>
 <p>El gráfico utiliza la ventana MSE-óptima y ajustes lineales locales con kernel triangular. Los puntos resumen el resultado por intervalos sólo para facilitar la lectura; la estimación se realiza con las observaciones municipales dentro de la ventana. El salto visual es positivo, pero la incertidumbre requiere una inferencia específica para RDD.</p>
 </section>
 <section id="resultado-principal-estimación-local-e-inferencia-robusta" class="level2">
@@ -343,6 +337,24 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="rdd01_resultado_local.svg" class="img-fluid figure-img" alt="Promedios locales y ajustes lineales a ambos lados del margen electoral cero con ancho de banda MSE; el ajuste muestra un salto positivo en el umbral."></p>
+<figcaption>Resultado local con ancho de banda MSE</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/rdd01_resultado_cer.png" class="img-fluid figure-img" alt="Estimación local de regresión discontinua con ancho de banda orientado a cobertura del intervalo."></p>
+<figcaption>Sensibilidad del resultado local con ancho de banda CER</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>La primera fila reconstruye la intuición del diseño: los valores predichos en el umbral son 12,623% a la izquierda y 15,550% a la derecha. Su diferencia es 2,927 puntos porcentuales, pero esa construcción manual no aporta por sí sola la inferencia adecuada para RDD.</p>
 <p>La especificación MSE-óptima es la lectura principal. Con inferencia robusta y corrección de sesgo, el control municipal islámico se asocia con un incremento local estimado de <strong>2,98 puntos porcentuales</strong> en la finalización de secundaria de mujeres jóvenes. La magnitud es sustantiva y la evidencia es marginal o sugestiva: <code>p = 0,076</code>, mientras que el IC 95% incluye cero.</p>
 <p>El selector CER, orientado a mejorar la cobertura del intervalo, reduce la ventana a <code>h = 11,629</code> y la muestra efectiva de 795 a 576 municipios. El estimando económico no cambia, pero la ventana más estrecha entrega 2,41 puntos y mayor imprecisión (<code>p = 0,186</code>). La comparación hace visible el compromiso entre sesgo y varianza sin convertir la elección del ancho de banda en una búsqueda de significación.</p>
@@ -388,6 +400,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 <p>El signo positivo y el orden de magnitud no dependen de una única variante. Sin embargo, la fuerza inferencial sí cambia con el orden polinómico, el kernel, la regla de varianza y la muestra disponible. Esa sensibilidad refuerza la decisión de privilegiar la especificación lineal local y presentar la evidencia sin una conclusión binaria basada sólo en un umbral de significación.</p>
+<p>La incorporación de covariables predeterminadas es una especificación de precisión y sensibilidad; no sustituye la identificación por continuidad local ni corrige por sí sola un problema de selección alrededor del cutoff. Como su inclusión reduce la muestra por valores faltantes, la comparación de coeficientes tampoco es estrictamente <em>ceteris paribus</em>.</p>
 </section>
 <section id="validez-del-diseño-covariables-y-densidad" class="level2">
 <h2 class="anchored" data-anchor-id="validez-del-diseño-covariables-y-densidad">Validez del diseño: covariables y densidad</h2>
@@ -409,8 +422,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="alcance-del-estimando-y-límites" class="level2">
 <h2 class="anchored" data-anchor-id="alcance-del-estimando-y-límites">Alcance del estimando y límites</h2>
-<p>El efecto estimado es local. Describe municipios cuyas elecciones estuvieron suficientemente cerca del empate como para entrar en la ventana alrededor del corte; no es un efecto promedio para todos los municipios turcos ni para elecciones con márgenes amplios.</p>
-<p>La lectura causal depende de que, en ausencia del cambio de alcalde, los resultados potenciales evolucionen suavemente al cruzar el umbral. La continuidad de covariables y el diagnóstico de densidad aportan evidencia sobre esa condición, pero no eliminan toda incertidumbre. A esto se suma la imprecisión estadística reflejada en el intervalo de confianza.</p>
+<p>El efecto estimado es local al cutoff: describe el efecto para municipios en el margen electoral de empate. La ventana seleccionada determina qué observaciones se utilizan para estimarlo, no redefine la población causal como todos los municipios contenidos en ese bandwidth. Tampoco es un efecto promedio para todos los municipios turcos ni para elecciones con márgenes amplios.</p>
+<p>La lectura causal depende de que, en ausencia del cambio de alcalde, los resultados potenciales evolucionen suavemente al cruzar el umbral. La continuidad de covariables y el diagnóstico de densidad aportan evidencia indirecta sobre la credibilidad de esa condición, pero no permiten testear directamente la continuidad de los resultados potenciales. A esto se suma la imprecisión estadística reflejada en el intervalo de confianza.</p>
 </section>
 <section id="conclusión" class="level2">
 <h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>

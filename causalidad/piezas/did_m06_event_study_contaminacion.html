@@ -285,6 +285,12 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m06_contribution_leads_earnings.png" class="img-fluid figure-img" alt="Contribuciones de efectos pos-tratamiento a los coeficientes lead menos tres y menos dos del event study TWFE de ingresos."></p>
+<figcaption>Contribuciones pos-tratamiento a los leads TWFE de ingresos</figcaption>
+</figure>
+</div>
 <p>El ejercicio no afirma que esos números sean los verdaderos efectos previos. Demuestra algo más básico: un <em>lead</em> TWFE puede moverse por efectos que ocurren después del tratamiento. Por eso no constituye automáticamente un test limpio de anticipación o tendencias paralelas.</p>
 </section>
 <section id="aplicación-hospitalización-y-consecuencias-económicas" class="level2">
@@ -317,7 +323,7 @@ window.Quarto = {
 </section>
 <section id="twfe-frente-a-interaction-weighted" class="level2">
 <h2 class="anchored" data-anchor-id="twfe-frente-a-interaction-weighted">TWFE frente a interaction-weighted</h2>
-<p>Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo, utilizando como comparación a la cohorte aún no tratada. El estimador interaction-weighted —IW, ponderado por interacciones— los agrega con participaciones no negativas que suman uno entre las cohortes con soporte en cada horizonte:</p>
+<p>En esta aplicación, Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo utilizando como comparación a la última cohorte tratada mientras todavía permanece no tratada. El estimador interaction-weighted —IW, ponderado por interacciones— los agrega con participaciones no negativas que suman uno entre las cohortes con soporte en cada horizonte:</p>
 <p><span class="math display">\[
 \widehat\nu_\ell
 =\sum_{e\in h_\ell}\widehat p_{e,\ell}\,\widehat{CATT}_{e,\ell},
@@ -389,11 +395,23 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="gasto-médico-e-ingresos-laborales">Gasto médico e ingresos laborales</h2>
 <p>El estimador IW muestra un aumento inmediato del gasto médico de bolsillo en el período de hospitalización: <strong>2.662 dólares</strong>, con EE <strong>649</strong>. Las estimaciones posteriores son 183 y 198 dólares, ambas imprecisas.</p>
 <p>Para ingresos laborales, IW estima una caída de <strong>7.267 dólares</strong> en el período 0, con EE <strong>3.237</strong>. La reducción alcanza <strong>10.632 dólares</strong> en el período 1 —EE 5.079— y <strong>14.734 dólares</strong> en el período 2 —EE 7.416—.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="did_m06_ingresos_twfe_iw.svg" class="img-fluid figure-img" alt="TWFE e interaction-weighted producen trayectorias numéricamente próximas para los ingresos laborales. Ambos muestran estimaciones previas imprecisas y caídas desde el período cero, con intervalos amplios. En el período dos, IW representa únicamente a la cohorte ocho."></p>
-<figcaption>Trayectoria de ingresos laborales estimada por TWFE e interaction-weighted</figcaption>
+<p><img src="../assets/graficos/did_m06_oop_spend_twfe_vs_iw.png" class="img-fluid figure-img" alt="Trayectorias de gasto médico de bolsillo estimadas mediante TWFE en muestra comparable e interaction-weighted."></p>
+<figcaption>Gasto médico de bolsillo: TWFE comparable frente a interaction-weighted</figcaption>
 </figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/did_m06_earnings_twfe_vs_iw.png" class="img-fluid figure-img" alt="Trayectorias de ingresos laborales estimadas mediante TWFE en muestra comparable e interaction-weighted."></p>
+<figcaption>Ingresos laborales: TWFE comparable frente a interaction-weighted</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <div class="small-note">
 <p><strong>Alcance de la trayectoria.</strong> Los efectos se refieren a las cohortes de hospitalización con soporte en esta muestra de personas de 50 a 59 años al ingreso, comparadas con quienes se hospitalizan en la ronda 11 mientras aún no recibieron el tratamiento. La caída de <strong>14.734 dólares</strong> en el período 2 corresponde exclusivamente a la cohorte 8. El aumento de las pérdidas entre horizontes combina duración desde la hospitalización y cambios en las cohortes representadas; no describe por sí solo el deterioro de una población constante.</p>
@@ -426,7 +444,7 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>Los resultados IW no muestran evidencia estadística de efectos previos en la ventana utilizada. El horizonte previo es corto y los intervalos son amplios, por lo que el no rechazo también puede reflejar poca potencia. Es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.</p>
+<p>Los coeficientes pretratamiento IW no muestran evidencia estadística de desviaciones respecto de cero en la ventana utilizada. El horizonte previo es corto y los intervalos son amplios, por lo que el no rechazo también puede reflejar poca potencia. Es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.</p>
 <p>En TWFE, la interpretación es todavía más limitada. Un <em>lead</em> distinto de cero podría reflejar anticipación, diferencias preexistentes, contaminación pos-tratamiento u otros tiempos relativos. Un no rechazo tampoco demuestra que las comparaciones contrafactuales sean válidas.</p>
 </section>
 <section id="sensibilidad-con-covariables-prefijadas" class="level2">

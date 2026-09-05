@@ -273,6 +273,24 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>La regla de diseño restringe la probabilidad estimada del grupo base a <code>0.05 &lt;= p0(X) &lt;= 0.95</code>. Después de ese recorte, <code>teffects</code> no marca observaciones fuera de soporte en los pares relevantes y el peor desbalance ponderado queda por debajo de 0.10.</p>
 <p>No se aplica un recorte superior adicional ni winsorización de pesos. Los máximos observados son 3.35, 2.28 y 4.76 para los contrastes <code>1 vs 0</code>, <code>2 vs 0</code> y <code>3 vs 0</code>; los tamaños efectivos de muestra del grupo base son aproximadamente 470.6, 551.9 y 395.0. Estos diagnósticos no muestran una concentración extrema de la ponderación en la muestra analizada, aunque no sustituyen el supuesto de positividad.</p>
+<div class="figure-pair">
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/c06_loveplot_teffects_t3.png" class="img-fluid figure-img" alt="Love plot de diferencias estandarizadas antes y después de la ponderación para el contraste producto y proceso frente al grupo base."></p>
+<figcaption>Balance antes y después de ponderar para producto y proceso frente al grupo base</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-pair__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/graficos/c06_weights_norm_design_manual_t3.png" class="img-fluid figure-img" alt="Distribución de pesos normalizados del diseño manual para el contraste producto y proceso frente al grupo base."></p>
+<figcaption>Distribución de los pesos normalizados para producto y proceso frente al grupo base</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>Para el contraste más exigente (<code>3 vs 0</code>), se muestra el overlap antes y después de ponderar.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -333,11 +351,11 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 <p>El patrón central es nítido y consistente: <code>ATET_3 &gt; ATET_2 &gt; ATET_1 &gt; 0</code> (producto y proceso &gt; solo proceso &gt; solo producto, siempre frente al grupo base).</p>
-<p>Como síntesis visual del resultado principal, se muestra un mini coefplot horizontal con los tres ATET diagonales y sus IC 95%.</p>
+<p>Como síntesis visual del resultado principal, se muestra un coefplot horizontal con los tres ATET diagonales y sus IC 95%.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/graficos/6_mini_coefplot_atet_diagonales.svg" class="img-fluid figure-img"></p>
-<figcaption>Mini coefplot horizontal de ATET diagonales (IC 95%)</figcaption>
+<figcaption>Coefplot horizontal de ATET diagonales (IC 95%)</figcaption>
 </figure>
 </div>
 <section id="por-qué-el-gradiente-no-identifica-complementariedad" class="level2">
