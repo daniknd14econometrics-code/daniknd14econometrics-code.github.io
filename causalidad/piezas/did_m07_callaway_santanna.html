@@ -179,6 +179,7 @@ window.Quarto = {
   <li><a href="#callawaysantanna-frente-a-twfe" id="toc-callawaysantanna-frente-a-twfe" class="nav-link" data-scroll-target="#callawaysantanna-frente-a-twfe">Callaway–Sant’Anna frente a TWFE</a></li>
   <li><a href="#diagnósticos-y-sensibilidad" id="toc-diagnósticos-y-sensibilidad" class="nav-link" data-scroll-target="#diagnósticos-y-sensibilidad">Diagnósticos y sensibilidad</a></li>
   <li><a href="#dinámica-y-composición" id="toc-dinámica-y-composición" class="nav-link" data-scroll-target="#dinámica-y-composición">Dinámica y composición</a></li>
+  <li><a href="#inferencia-sobre-agregados-y-trayectorias" id="toc-inferencia-sobre-agregados-y-trayectorias" class="nav-link" data-scroll-target="#inferencia-sobre-agregados-y-trayectorias">Inferencia sobre agregados y trayectorias</a></li>
   <li><a href="#qué-mejora-y-qué-supuestos-permanecen" id="toc-qué-mejora-y-qué-supuestos-permanecen" class="nav-link" data-scroll-target="#qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</a></li>
   <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
   <li><a href="#puente-hacia-la-siguiente-solución-moderna" id="toc-puente-hacia-la-siguiente-solución-moderna" class="nav-link" data-scroll-target="#puente-hacia-la-siguiente-solución-moderna">Puente hacia la siguiente solución moderna</a></li>
@@ -392,6 +393,7 @@ ATT(g,t)=E\left[Y_t(1)-Y_t(0)\mid G=g\right]
 </div>
 </div>
 <p>Ambos parámetros son legítimos, pero responden preguntas distintas. El primero da mayor presencia a cohortes que aportan más celdas pos-tratamiento; el segundo organiza la ponderación a partir de efectos medios por cohorte. Elegir entre ellos exige decidir qué población y qué horizonte deben dominar el resumen.</p>
+<p>La misma matriz admite otras dos lecturas. La agregación por <strong>calendario</strong> pregunta cuál fue el efecto medio entre las cohortes ya tratadas en un año histórico; la agregación por <strong>tiempo relativo</strong> pregunta cómo evoluciona el efecto desde la adopción. Así, global, cohorte, calendario y <em>event time</em> no son cuatro formas intercambiables de presentar un número: son cuatro preguntas construidas sobre los mismos efectos elementales.</p>
 </section>
 <section id="callawaysantanna-frente-a-twfe" class="level2">
 <h2 class="anchored" data-anchor-id="callawaysantanna-frente-a-twfe">Callaway–Sant’Anna frente a TWFE</h2>
@@ -435,11 +437,16 @@ ATT(g,t)=E\left[Y_t(1)-Y_t(0)\mid G=g\right]
 <td>La elección del control no altera sustantivamente el resultado en esta muestra</td>
 </tr>
 <tr class="even">
+<td>OR, IPW, IPW estabilizado y dos variantes DR</td>
+<td style="text-align: right;">Globales entre −0,04197 y −0,04175</td>
+<td>Estabilidad frente a distintas rutas de estimación de las celdas</td>
+</tr>
+<tr class="odd">
 <td>Soporte pos-tratamiento</td>
 <td style="text-align: right;">7 de 7 celdas identificables</td>
 <td>Hay tratados y controles válidos en cada celda observada</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Overlap ilustrativo</td>
 <td style="text-align: right;">Razonable en <code>g=2006, t=2006</code></td>
 <td>Apoya esa comparación; no reemplaza tendencias paralelas</td>
@@ -447,12 +454,24 @@ ATT(g,t)=E\left[Y_t(1)-Y_t(0)\mid G=g\right]
 </tbody>
 </table>
 </div>
-<p>Los no rechazos ordenan la evidencia pretratamiento, pero no prueban tendencias paralelas. La identificación causal continúa dependiendo de que, condicionalmente en las covariables pretratamiento, las cohortes tratadas y sus controles representen evoluciones contrafactuales comparables.</p>
+<p>Los no rechazos ordenan la evidencia pretratamiento, pero no prueban tendencias paralelas. La identificación causal continúa dependiendo de que, condicionalmente en las covariables pretratamiento, las cohortes tratadas y sus controles representen evoluciones contrafactuales comparables. La proximidad entre OR, IPW y DR tampoco valida ese supuesto: muestra estabilidad frente a distintas maneras de estimar las mismas comparaciones. En esta base, además, el logaritmo de la población es constante dentro de cada condado; que una base pre común y otra definida por cohorte produzcan el mismo agregado es una limitación pedagógica, no evidencia de que la elección temporal de covariables sea irrelevante.</p>
 </section>
 <section id="dinámica-y-composición" class="level2">
 <h2 class="anchored" data-anchor-id="dinámica-y-composición">Dinámica y composición</h2>
-<p>Los <code>ATT(g,t)</code> también pueden agregarse por tiempo relativo. Sin embargo, en este panel las cohortes disponibles cambian con el horizonte: las tres contribuyen en el momento de adopción, solo dos alcanzan el período siguiente y únicamente la cohorte 2004 llega a los horizontes 2 y 3.</p>
-<p>Una trayectoria balanceada puede restringir el análisis a cohortes observables durante un mismo horizonte pos-tratamiento. Esa decisión separa mejor dinámica y composición, pero reduce la población y el rango temporal. Aquí funciona como advertencia de construcción, no como un nuevo análisis de event studies.</p>
+<p>Los <code>ATT(g,t)</code> también pueden agregarse por tiempo relativo. La trayectoria moderna estima <strong>−0,0211</strong> en el momento de adopción, <strong>−0,0530</strong> un año después, <strong>−0,1404</strong> a dos años y <strong>−0,1069</strong> a tres. Sin embargo, no observa la misma población en todos los puntos: las tres cohortes contribuyen en <code>e=0</code>, solo 2004 y 2006 alcanzan <code>e=1</code>, y únicamente 2004 llega a <code>e=2</code> y <code>e=3</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="did_m07_event_study_composicion.svg" class="img-fluid figure-img" alt="Dos paneles comparan agregaciones por tiempo relativo. La trayectoria con toda la información pasa de menos 0,0211 en e igual a cero a menos 0,1404 en e igual a dos, pero pierde cohortes con el horizonte. La versión balanceada conserva las cohortes 2004 y 2006 en e igual a cero y uno y obtiene un promedio post de menos 0,02860, frente a menos 0,08035 en la trayectoria no balanceada."></p>
+<figcaption>Trayectoria pos-tratamiento con composición variable y versión balanceada</figcaption>
+</figure>
+</div>
+<p>La versión balanceada hasta <code>e'=1</code> conserva solo las cohortes 2004 y 2006 en ambos horizontes. Su efecto en <code>e=0</code> es <strong>−0,0042</strong> y en <code>e=1</code> permanece en <strong>−0,0530</strong>. El promedio post cae en magnitud de <strong>−0,08035</strong> en la trayectoria no balanceada a <strong>−0,02860</strong> en la balanceada.</p>
+<p>La diferencia no selecciona una estimación “correcta” y otra “incorrecta”. La primera utiliza toda la información disponible en cada horizonte; la segunda sacrifica la cohorte 2007 y los horizontes largos para mantener constante la composición. El contraste muestra por qué una curva dinámica también requiere definir población y soporte antes de interpretarla como evolución del efecto.</p>
+</section>
+<section id="inferencia-sobre-agregados-y-trayectorias" class="level2">
+<h2 class="anchored" data-anchor-id="inferencia-sobre-agregados-y-trayectorias">Inferencia sobre agregados y trayectorias</h2>
+<p>Las funciones de influencia permiten recombinar los <code>ATT(g,t)</code> y hacer inferencia sobre el agregado elegido. Para el promedio global simple, el error estándar asintótico es <strong>0,01150</strong> y el bootstrap multiplicador entrega <strong>0,01176</strong>; la conclusión sustantiva no cambia.</p>
+<p>En una trayectoria completa, la distinción relevante es entre incertidumbre punto a punto y cobertura conjunta. Para <code>e=1</code>, cuya estimación es −0,0530, el intervalo bootstrap punto a punto es aproximadamente <strong>[−0,0860; −0,0200]</strong>, mientras la banda uniforme es <strong>[−0,0952; −0,0108]</strong>. La segunda es más amplia porque busca cubrir simultáneamente toda la trayectoria. Por eso la inferencia del <em>event study</em> no debe reducirse a inspeccionar por separado la significación de cada punto.</p>
 </section>
 <section id="qué-mejora-y-qué-supuestos-permanecen" class="level2">
 <h2 class="anchored" data-anchor-id="qué-mejora-y-qué-supuestos-permanecen">Qué mejora y qué supuestos permanecen</h2>

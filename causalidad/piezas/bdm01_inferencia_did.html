@@ -147,6 +147,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#monte-carlo-con-un-efecto-verdadero-igual-a-cero" id="toc-monte-carlo-con-un-efecto-verdadero-igual-a-cero" class="nav-link" data-scroll-target="#monte-carlo-con-un-efecto-verdadero-igual-a-cero">Monte Carlo con un efecto verdadero igual a cero</a></li>
   <li><a href="#qué-ocurre-con-distintos-métodos-de-inferencia" id="toc-qué-ocurre-con-distintos-métodos-de-inferencia" class="nav-link" data-scroll-target="#qué-ocurre-con-distintos-métodos-de-inferencia">Qué ocurre con distintos métodos de inferencia</a></li>
   <li><a href="#qué-estrategias-corrigen-el-problema" id="toc-qué-estrategias-corrigen-el-problema" class="nav-link" data-scroll-target="#qué-estrategias-corrigen-el-problema">Qué estrategias corrigen el problema</a></li>
+  <li><a href="#block-bootstrap-con-leyes-placebo-comunes" id="toc-block-bootstrap-con-leyes-placebo-comunes" class="nav-link" data-scroll-target="#block-bootstrap-con-leyes-placebo-comunes">Block bootstrap con leyes placebo comunes</a></li>
+  <li><a href="#mismo-coeficiente-distinta-incertidumbre" id="toc-mismo-coeficiente-distinta-incertidumbre" class="nav-link" data-scroll-target="#mismo-coeficiente-distinta-incertidumbre">Mismo coeficiente, distinta incertidumbre</a></li>
   <li><a href="#alcance-y-límites" id="toc-alcance-y-límites" class="nav-link" data-scroll-target="#alcance-y-límites">Alcance y límites</a></li>
   <li><a href="#qué-resuelve-bdm-y-qué-no" id="toc-qué-resuelve-bdm-y-qué-no" class="nav-link" data-scroll-target="#qué-resuelve-bdm-y-qué-no">Qué resuelve BDM y qué no</a></li>
   <li><a href="#puente-hacia-la-crisis-moderna-de-twfe" id="toc-puente-hacia-la-crisis-moderna-de-twfe" class="nav-link" data-scroll-target="#puente-hacia-la-crisis-moderna-de-twfe">Puente hacia la crisis moderna de TWFE</a></li>
@@ -215,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="diseño-placebo-inspirado-en-bdm" class="level2">
 <h2 class="anchored" data-anchor-id="diseño-placebo-inspirado-en-bdm">Diseño placebo inspirado en BDM</h2>
-<p>El ejercicio asigna tratamientos que no corresponden a una política real. En cada repetición se remuestrean trayectorias estatales completas, se selecciona aleatoriamente un conjunto tratado y se fija un año placebo entre 1985 y 1995. Desde ese año, el indicador permanece activo para los estados ficticiamente tratados.</p>
+<p>El ejercicio asigna tratamientos que no corresponden a una política real. En cada repetición se selecciona aleatoriamente un conjunto tratado y se sortea un año placebo; desde ese año, el indicador permanece activo. Un primer experimento mantiene fija la muestra CPS y un segundo remuestrea trayectorias estatales completas para preservar la dependencia temporal dentro de cada estado.</p>
 <p>El outcome original no se modifica bajo el nulo. Por construcción, el efecto verdadero del placebo es <strong>cero</strong>. Por tanto, cada rechazo al 5% es un falso positivo y la frecuencia de rechazos mide directamente la calibración del método de inferencia.</p>
 <div class="quick-grid">
 <div class="section-box">
@@ -242,10 +244,9 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Panel agregado:</strong> 1.071 celdas estado-año, balanceado.</li>
 <li><strong>Outcome del ejercicio:</strong> media estado-año del residuo del logaritmo del ingreso semanal.</li>
 <li><strong>Tratamiento:</strong> adopción placebo persistente, asignada aleatoriamente.</li>
-<li><strong>Repeticiones:</strong> 100, con seed fijado en el material fuente.</li>
+<li><strong>Repeticiones:</strong> 100 en los experimentos principales.</li>
 </ul>
 </div>
-<p>La base filtrada previa contiene 538.999 registros; 538.506 integran la regresión de residualización y constituyen la muestra analítica relevante.</p>
 </section>
 <section id="persistencia-temporal" class="level2">
 <h2 class="anchored" data-anchor-id="persistencia-temporal">Persistencia temporal</h2>
@@ -267,21 +268,23 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Tasas de rechazo bajo el nulo por método de inferencia</figcaption>
 </figure>
 </div>
-<p>La comparación dominante es inmediata: <strong>44% de falsos positivos con OLS convencional frente a un tamaño nominal de 5%</strong>. El procedimiento rechaza casi nueve veces más de lo previsto aun cuando no existe ningún efecto.</p>
+<p>La comparación dominante es inmediata: <strong>44% de falsos positivos con OLS convencional frente a un tamaño nominal de 5%</strong>. El procedimiento rechaza casi nueve veces más de lo previsto aun cuando no existe ningún efecto. En el experimento previo sobre la muestra CPS fija, el mismo patrón ya aparece: OLS rechaza 34%, frente a 4% con cluster por estado, 5% con agregación pre-post y 6% con la matriz empírica común.</p>
 </section>
 <section id="qué-ocurre-con-distintos-métodos-de-inferencia" class="level2">
 <h2 class="anchored" data-anchor-id="qué-ocurre-con-distintos-métodos-de-inferencia">Qué ocurre con distintos métodos de inferencia</h2>
 <div class="table-box">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Método</th>
 <th style="text-align: right;">Rechazos bajo el nulo</th>
+<th style="text-align: right;">Rechazos bajo la alternativa</th>
 <th>Lectura</th>
 </tr>
 </thead>
@@ -289,37 +292,43 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>OLS convencional</td>
 <td style="text-align: right;"><strong>44%</strong></td>
+<td style="text-align: right;">72%</td>
 <td>Sobre-rechazo muy marcado</td>
 </tr>
 <tr class="even">
 <td>Cluster por estado</td>
 <td style="text-align: right;"><strong>5%</strong></td>
+<td style="text-align: right;">29%</td>
 <td>Cercano al tamaño nominal</td>
 </tr>
 <tr class="odd">
 <td>Agregación pre-post</td>
 <td style="text-align: right;"><strong>5%</strong></td>
+<td style="text-align: right;">30%</td>
 <td>Cercano al tamaño nominal</td>
 </tr>
 <tr class="even">
 <td>AR(1) con persistencia estimada</td>
 <td style="text-align: right;"><strong>24%</strong></td>
+<td style="text-align: right;">58%</td>
 <td>Corrige solo parcialmente</td>
 </tr>
 <tr class="odd">
 <td>AR(1) con <code>ρ = 0,8</code></td>
 <td style="text-align: right;"><strong>3%</strong></td>
-<td>Cercano al nominal; diferencia no interpretable como ranking</td>
+<td style="text-align: right;">18%</td>
+<td>Tamaño bajo, con menor capacidad de rechazo bajo la alternativa</td>
 </tr>
 <tr class="even">
 <td>Matriz de covarianza empírica común</td>
 <td style="text-align: right;"><strong>5%</strong></td>
+<td style="text-align: right;">33%</td>
 <td>Cercano al tamaño nominal</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Con solo 100 repeticiones, tasas como 3% y 5% contienen ruido Monte Carlo. No corresponde concluir que un método “gana” por dos puntos porcentuales. La evidencia sustantiva es que varios procedimientos reducen drásticamente el sobre-rechazo de OLS convencional.</p>
+<p>La alternativa agrega artificialmente un efecto de 0,02. El 72% de OLS no puede interpretarse como potencia útil sin recordar que el método ya rechaza 44% bajo el nulo. Con solo 100 repeticiones, diferencias pequeñas entre los procedimientos bien calibrados contienen ruido Monte Carlo y no sostienen un ranking fino.</p>
 </section>
 <section id="qué-estrategias-corrigen-el-problema" class="level2">
 <h2 class="anchored" data-anchor-id="qué-estrategias-corrigen-el-problema">Qué estrategias corrigen el problema</h2>
@@ -328,10 +337,27 @@ ul.task-list li input[type="checkbox"] {
 <p>Las correcciones <strong>AR(1)</strong> imponen una forma paramétrica para la dependencia. El contraste entre 24% con persistencia estimada y 3% con un valor impuesto muestra que sus resultados pueden depender de cómo se especifique el proceso temporal. La matriz empírica común también se acerca al nominal en este ejercicio, pero requiere estimar una estructura de covarianza compartida.</p>
 <p>El mensaje no es que exista una corrección universal. La inferencia debe responder al nivel de asignación, el número de grupos y la dependencia temporal plausible en cada aplicación.</p>
 </section>
+<section id="block-bootstrap-con-leyes-placebo-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="block-bootstrap-con-leyes-placebo-comunes">Block bootstrap con leyes placebo comunes</h2>
+<p>El último experimento compara cinco métodos sobre la misma ley placebo en cada repetición externa y agrega un block bootstrap que remuestrea trayectorias estatales completas. Con 75 repeticiones externas y 74 remuestreos internos, OLS rechaza 38,7% bajo el nulo; cluster, pre-post y la matriz empírica común rechazan 6,7%, y el block bootstrap, 5,3%.</p>
+<p>El bootstrap queda cerca del tamaño nominal, pero el número reducido de repeticiones impide convertir diferencias pequeñas en una jerarquía definitiva. Su aporte es mostrar que preservar la trayectoria completa del estado puede corregir la falsa precisión sin tratar cada celda estado-año como información independiente.</p>
+</section>
+<section id="mismo-coeficiente-distinta-incertidumbre" class="level2">
+<h2 class="anchored" data-anchor-id="mismo-coeficiente-distinta-incertidumbre">Mismo coeficiente, distinta incertidumbre</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="bdm01_mismo_coeficiente.svg" class="img-fluid figure-img" alt="El coeficiente estimado es 0,0057 con los cinco métodos. El error estándar es 0,0058 con OLS convencional, 0,0128 con cluster por estado, 0,0123 con matriz empírica común, 0,0080 con AR uno estimado y 0,0179 con AR uno imponiendo rho igual a 0,8."></p>
+<figcaption>Una misma ley placebo produce el mismo coeficiente y errores estándar distintos según el método de inferencia</figcaption>
+</figure>
+</div>
+<p>En una ley placebo fija, los cinco métodos producen exactamente el mismo coeficiente: <code>0,0057</code>. Lo que cambia es la incertidumbre. El error estándar convencional (<code>0,0058</code>) es menos de la mitad del cluster por estado (<code>0,0128</code>). La figura aísla así el mecanismo del problema: no aparecen cinco efectos causales distintos, sino cinco evaluaciones de precisión para un único estimador puntual.</p>
+<p>Tampoco debe leerse la barra más larga como el “mejor” método. Imponer <code>ρ = 0,8</code> eleva el error estándar a <code>0,0179</code> y puede volver la inferencia excesivamente conservadora. La evidencia favorece reconocer la dependencia pertinente, no maximizar mecánicamente la incertidumbre.</p>
+</section>
 <section id="alcance-y-límites" class="level2">
 <h2 class="anchored" data-anchor-id="alcance-y-límites">Alcance y límites</h2>
 <p>El ejercicio estudia calibración inferencial, no el efecto de una política sustantiva. Las leyes son placebo y el parámetro verdadero se fija en cero para observar directamente cuántas veces cada método declara un efecto inexistente.</p>
 <p>Las tasas provienen de 100 repeticiones y deben leerse como evidencia ilustrativa, no como estimaciones de precisión Monte Carlo extrema. El patrón grande —44% frente a 5%— es informativo; las diferencias pequeñas alrededor del nivel nominal no sostienen rankings finos.</p>
+<p>En una aplicación real, una inferencia bien calibrada sigue necesitando un diseño identificado: tendencias paralelas pertinentes, ausencia de anticipación y un grupo de comparación defendible. Ninguno de los procedimientos estudiados vuelve causal a un contraste que no satisface esas condiciones.</p>
 </section>
 <section id="qué-resuelve-bdm-y-qué-no" class="level2">
 <h2 class="anchored" data-anchor-id="qué-resuelve-bdm-y-qué-no">Qué resuelve BDM y qué no</h2>

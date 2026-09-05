@@ -329,6 +329,13 @@ body,
   line-height: 1.38;
 }
 
+/* Quarto may mark the root list as Bootstrap's collapsed component even when
+   it contains the page-level TOC. Keep only that root list visible; nested
+   lists retain their normal collapse behavior. */
+#quarto-margin-sidebar #TOC > ul.collapse {
+  display: block !important;
+}
+
 #quarto-margin-sidebar #TOC .nav-link {
   margin: 0.1rem 0;
   padding: 0.24rem 0.48rem;

@@ -177,6 +177,7 @@ window.Quarto = {
   <li><a href="#twfe-frente-a-interaction-weighted" id="toc-twfe-frente-a-interaction-weighted" class="nav-link" data-scroll-target="#twfe-frente-a-interaction-weighted">TWFE frente a interaction-weighted</a></li>
   <li><a href="#gasto-médico-e-ingresos-laborales" id="toc-gasto-médico-e-ingresos-laborales" class="nav-link" data-scroll-target="#gasto-médico-e-ingresos-laborales">Gasto médico e ingresos laborales</a></li>
   <li><a href="#qué-dicen-y-qué-no-dicen-los-leads" id="toc-qué-dicen-y-qué-no-dicen-los-leads" class="nav-link" data-scroll-target="#qué-dicen-y-qué-no-dicen-los-leads">Qué dicen —y qué no dicen— los leads</a></li>
+  <li><a href="#sensibilidad-con-covariables-prefijadas" id="toc-sensibilidad-con-covariables-prefijadas" class="nav-link" data-scroll-target="#sensibilidad-con-covariables-prefijadas">Sensibilidad con covariables prefijadas</a></li>
   <li><a href="#qué-exige-una-dinámica-causal-interpretable" id="toc-qué-exige-una-dinámica-causal-interpretable" class="nav-link" data-scroll-target="#qué-exige-una-dinámica-causal-interpretable">Qué exige una dinámica causal interpretable</a></li>
   <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
   </ul>
@@ -238,9 +239,9 @@ window.Quarto = {
 </section>
 <section id="por-qué-una-etiqueta-temporal-no-define-el-estimando" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-una-etiqueta-temporal-no-define-el-estimando">Por qué una etiqueta temporal no define el estimando</h2>
-<p>El coeficiente dinámico asociado con el tiempo relativo <span class="math inline">\(\ell\)</span> puede representarse como una combinación de efectos cohorte-tiempo:</p>
+<p>El efecto medio sobre los tratados de la cohorte <span class="math inline">\(e\)</span> en el tiempo relativo <span class="math inline">\(k\)</span> se denota <span class="math inline">\(CATT_{e,k}\)</span>. Bajo los supuestos de identificación y la normalización de referencia, el coeficiente poblacional TWFE asociado con <span class="math inline">\(\ell\)</span> puede representarse esquemáticamente como una combinación de esos efectos:</p>
 <p><span class="math display">\[
-\widehat\mu_{\ell}^{TWFE}
+\mu_{\ell}^{TWFE}
 =\sum_{e,k} w_{e,k}^{\ell}\,CATT_{e,k}.
 \]</span></p>
 <p>El superíndice <span class="math inline">\(\ell\)</span> identifica el coeficiente de la regresión. El subíndice <span class="math inline">\(k\)</span> identifica el tiempo relativo del efecto que recibe peso. Nada obliga a que <span class="math inline">\(k=\ell\)</span> en todas las celdas. Esa diferencia es el origen de la contaminación dinámica.</p>
@@ -259,17 +260,17 @@ window.Quarto = {
 </section>
 <section id="ausencia-de-anticipación-no-garantiza-leads-twfe-iguales-a-cero" class="level2">
 <h2 class="anchored" data-anchor-id="ausencia-de-anticipación-no-garantiza-leads-twfe-iguales-a-cero">Ausencia de anticipación no garantiza leads TWFE iguales a cero</h2>
-<p>El módulo impone un ejercicio transparente: todos los CATT pretratamiento se fijan en cero y se conservan los efectos estimados posteriores al tratamiento. Aun bajo esa ausencia de anticipación, las contribuciones pos-tratamiento a los coeficientes de ingresos alcanzan aproximadamente:</p>
+<p>En la aplicación sobre hospitalización e ingresos laborales, se fijan en cero todos los CATT pretratamiento y se conservan los efectos estimados posteriores. Aun bajo esa ausencia de anticipación, las contribuciones netas pos-tratamiento a los coeficientes de ingresos alcanzan las siguientes magnitudes, expresadas aproximadamente en dólares de 2005:</p>
 <div class="metric-grid">
 <div class="metric-card">
 <div class="metric-label">
 <p>Contribución a lead −3</p>
 </div>
 <div class="metric-value">
-<p>+445</p>
+<p>+441,6</p>
 </div>
 <div class="metric-note">
-<p>proveniente de efectos pos-tratamiento</p>
+<p>contribución neta de efectos pos-tratamiento</p>
 </div>
 </div>
 <div class="metric-card">
@@ -277,10 +278,10 @@ window.Quarto = {
 <p>Contribución a lead −2</p>
 </div>
 <div class="metric-value">
-<p>−116</p>
+<p>−115,9</p>
 </div>
 <div class="metric-note">
-<p>proveniente de efectos pos-tratamiento</p>
+<p>contribución neta de efectos pos-tratamiento</p>
 </div>
 </div>
 </div>
@@ -288,7 +289,7 @@ window.Quarto = {
 </section>
 <section id="aplicación-hospitalización-y-consecuencias-económicas" class="level2">
 <h2 class="anchored" data-anchor-id="aplicación-hospitalización-y-consecuencias-económicas">Aplicación: hospitalización y consecuencias económicas</h2>
-<p>La aplicación utiliza RAND HRS para estudiar cómo evolucionan el gasto médico de bolsillo y los ingresos laborales alrededor de la primera hospitalización observada. Las cohortes se definen por la wave en que ocurre esa hospitalización índice.</p>
+<p>La aplicación utiliza RAND HRS Longitudinal File 2022 para estudiar cómo evolucionan el gasto médico de bolsillo y los ingresos laborales alrededor de la primera hospitalización observada. Ilustra el método de Sun–Abraham con esta base alternativa. Las cohortes se definen por la ronda de encuesta en que ocurre esa hospitalización índice.</p>
 <div class="quick-grid">
 <div class="section-box">
 <p><strong>Población inicial</strong></p>
@@ -296,27 +297,34 @@ window.Quarto = {
 </div>
 <div class="section-box">
 <p><strong>Panel</strong></p>
-<p>Waves 7–11, aproximadamente 2004–2012, conservando el desbalance observado.</p>
+<p>Rondas 7–11, aproximadamente 2004–2012, conservando el desbalance observado.</p>
 </div>
 <div class="section-box">
 <p><strong>Tratamiento</strong></p>
-<p>Indicador absorbente desde la primera hospitalización en las waves 8, 9, 10 u 11.</p>
+<p>Indicador que permanece activo desde la primera hospitalización en las rondas 8, 9, 10 u 11.</p>
 </div>
 <div class="section-box">
 <p><strong>Resultados</strong></p>
-<p>Gasto médico de bolsillo e ingresos laborales en dólares reales de 2005.</p>
+<p>Gasto médico de bolsillo e ingresos laborales, expresados aproximadamente en dólares de 2005 y con valores extremos limitados al percentil 99,95.</p>
 </div>
 </div>
-<p>La ventana central utiliza tiempos relativos <code>−3</code>, <code>−2</code>, <code>0</code>, <code>1</code> y <code>2</code>, con <code>−1</code> como referencia. La muestra comparable contiene <strong>3.605 observaciones de 963 personas</strong>, con errores estándar agrupados por individuo.</p>
+<p>La ventana central utiliza tiempos relativos <code>−3</code>, <code>−2</code>, <code>0</code>, <code>1</code> y <code>2</code>, con <code>−1</code> como referencia. Cada paso corresponde a una ronda de encuesta, aproximadamente dos años. La muestra comparable contiene <strong>3.605 observaciones de 963 personas</strong>, con errores estándar agrupados por individuo. La especificación central incluye efectos fijos de persona y ronda, sin covariables adicionales.</p>
 </section>
 <section id="cohortes-control-y-soporte" class="level2">
 <h2 class="anchored" data-anchor-id="cohortes-control-y-soporte">Cohortes, control y soporte</h2>
-<p>La muestra analítica está definida alrededor de una hospitalización observada, por lo que no contiene un grupo nunca tratado limpio con un tiempo índice comparable. La estrategia utiliza la cohorte tratada en la wave 11 como control y restringe la estimación a <code>wave &lt; 11</code>, cuando esa cohorte todavía no fue hospitalizada.</p>
-<p>El soporte cambia con el tiempo relativo. Tres cohortes contribuyen al período 0, dos al período 1 y solo la cohorte 8 permite estimar el período 2. Aunque existe información observada para <code>l = 3</code>, no hay soporte comparable para construir el estimador interaction-weighted correspondiente; por eso no se presenta como parte de la trayectoria central.</p>
+<p>La muestra analítica está definida alrededor de una hospitalización observada, por lo que no contiene un grupo nunca tratado limpio con un tiempo índice comparable. La estrategia utiliza la cohorte tratada en la ronda 11 como control y restringe la estimación a las rondas anteriores, cuando esa cohorte todavía no fue hospitalizada.</p>
+<p>El soporte cambia con el tiempo relativo. Tres cohortes contribuyen al período 0, dos al período 1 y solo la cohorte 8 permite estimar el período 2. Aunque se observa a la cohorte 8 en <span class="math inline">\(\ell=3\)</span>, ese horizonte coincide con la ronda 11: la cohorte de control ya se hospitalizó. Por eso no hay una comparación no tratada para construir el estimador interaction-weighted en ese punto.</p>
 </section>
 <section id="twfe-frente-a-interaction-weighted" class="level2">
 <h2 class="anchored" data-anchor-id="twfe-frente-a-interaction-weighted">TWFE frente a interaction-weighted</h2>
-<p>Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo, utilizando como comparación a la cohorte aún no tratada. Después los agrega con participaciones de cohorte explícitas. El estimador interaction-weighted —IW— aproxima así la propiedad deseada: cada punto resume efectos causales definidos para el mismo tiempo relativo.</p>
+<p>Sun–Abraham estima primero efectos específicos por cohorte y tiempo relativo, utilizando como comparación a la cohorte aún no tratada. El estimador interaction-weighted —IW, ponderado por interacciones— los agrega con participaciones no negativas que suman uno entre las cohortes con soporte en cada horizonte:</p>
+<p><span class="math display">\[
+\widehat\nu_\ell
+=\sum_{e\in h_\ell}\widehat p_{e,\ell}\,\widehat{CATT}_{e,\ell},
+\qquad \widehat p_{e,\ell}\geq 0,
+\qquad \sum_{e\in h_\ell}\widehat p_{e,\ell}=1.
+\]</span></p>
+<p>Aquí <span class="math inline">\(h_\ell\)</span> reúne las cohortes con una comparación disponible. Bajo tendencias paralelas y ausencia de anticipación, cada punto estima un promedio causal para ese mismo tiempo relativo. Por ejemplo, el gasto en el período de hospitalización combina los efectos de las cohortes 8, 9 y 10 con pesos de 0,2306, 0,1519 y 0,6175: <span class="math inline">\(0{,}2306(3.220{,}6)+0{,}1519(2.411{,}9)+0{,}6175(2.515{,}2)\approx 2.662\)</span> dólares.</p>
 <p>En esta aplicación, TWFE e IW producen curvas numéricamente cercanas. Esa proximidad es un resultado empírico, no una garantía algebraica ni una equivalencia entre estimandos.</p>
 <div class="table-box">
 <table class="caption-top table">
@@ -375,7 +383,7 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>Las cifras están expresadas en dólares reales de 2005. La tabla organiza la comparación del estimando; la inferencia principal aparece en la trayectoria IW.</p>
+<p>Las cifras están expresadas aproximadamente en dólares de 2005. La tabla compara las estimaciones; los errores estándar y la figura siguiente completan la lectura de su precisión.</p>
 </section>
 <section id="gasto-médico-e-ingresos-laborales" class="level2">
 <h2 class="anchored" data-anchor-id="gasto-médico-e-ingresos-laborales">Gasto médico e ingresos laborales</h2>
@@ -383,9 +391,12 @@ window.Quarto = {
 <p>Para ingresos laborales, IW estima una caída de <strong>7.267 dólares</strong> en el período 0, con EE <strong>3.237</strong>. La reducción alcanza <strong>10.632 dólares</strong> en el período 1 —EE 5.079— y <strong>14.734 dólares</strong> en el período 2 —EE 7.416—.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="did_m06_ingresos_twfe_iw.svg" class="img-fluid figure-img" alt="TWFE e interaction-weighted producen trayectorias numéricamente próximas para los ingresos laborales. Ambos muestran valores cercanos a cero antes de la hospitalización y caídas desde el período cero, con intervalos amplios."></p>
+<p><img src="did_m06_ingresos_twfe_iw.svg" class="img-fluid figure-img" alt="TWFE e interaction-weighted producen trayectorias numéricamente próximas para los ingresos laborales. Ambos muestran estimaciones previas imprecisas y caídas desde el período cero, con intervalos amplios. En el período dos, IW representa únicamente a la cohorte ocho."></p>
 <figcaption>Trayectoria de ingresos laborales estimada por TWFE e interaction-weighted</figcaption>
 </figure>
+</div>
+<div class="small-note">
+<p><strong>Alcance de la trayectoria.</strong> Los efectos se refieren a las cohortes de hospitalización con soporte en esta muestra de personas de 50 a 59 años al ingreso, comparadas con quienes se hospitalizan en la ronda 11 mientras aún no recibieron el tratamiento. La caída de <strong>14.734 dólares</strong> en el período 2 corresponde exclusivamente a la cohorte 8. El aumento de las pérdidas entre horizontes combina duración desde la hospitalización y cambios en las cohortes representadas; no describe por sí solo el deterioro de una población constante.</p>
 </div>
 <p>La comparación no sostiene que TWFE haya fallado dramáticamente en esta muestra. Muestra que dos curvas parecidas pueden tener construcciones diferentes: IW agrega CATT cohorte-tiempo de forma explícita; TWFE puede mezclar efectos de otros momentos relativos.</p>
 </section>
@@ -396,7 +407,7 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Outcome</th>
+<th>Resultado</th>
 <th style="text-align: right;">Test de leads TWFE</th>
 <th style="text-align: right;">Test de leads IW</th>
 </tr>
@@ -415,25 +426,30 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>Los resultados IW no muestran evidencia estadística de efectos previos en la ventana utilizada. Esto es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.</p>
+<p>Los resultados IW no muestran evidencia estadística de efectos previos en la ventana utilizada. El horizonte previo es corto y los intervalos son amplios, por lo que el no rechazo también puede reflejar poca potencia. Es un diagnóstico compatible con ausencia de anticipación, no una prueba definitiva de tendencias paralelas.</p>
 <p>En TWFE, la interpretación es todavía más limitada. Un <em>lead</em> distinto de cero podría reflejar anticipación, diferencias preexistentes, contaminación pos-tratamiento u otros tiempos relativos. Un no rechazo tampoco demuestra que las comparaciones contrafactuales sean válidas.</p>
+</section>
+<section id="sensibilidad-con-covariables-prefijadas" class="level2">
+<h2 class="anchored" data-anchor-id="sensibilidad-con-covariables-prefijadas">Sensibilidad con covariables prefijadas</h2>
+<p>Como comprobación adicional, el taller incorpora edad y cobertura de Medicaid, Medicare y seguro privado, fijadas en el primer valor observado dentro de la muestra anterior a la ronda 11 e interactuadas con el tiempo calendario. El IW contemporáneo cambia de <strong>2.662 a 2.416 dólares</strong> para gasto y de <strong>−7.267 a −7.210 dólares</strong> para ingresos. Los tests conjuntos de <em>leads</em> siguen sin rechazar (<code>p = 0,565</code> y <code>p = 0,396</code>, respectivamente).</p>
+<p>La estabilidad de esos puntos es informativa, pero la especificación se presenta como una sensibilidad mecánica. Permite tendencias condicionales distintas según observables prefijados; no elimina la contaminación de TWFE ni reemplaza el argumento de identificación. Una aplicación definitiva requeriría fijar esos controles dentro de una ventana pretratamiento común y limpia.</p>
 </section>
 <section id="qué-exige-una-dinámica-causal-interpretable" class="level2">
 <h2 class="anchored" data-anchor-id="qué-exige-una-dinámica-causal-interpretable">Qué exige una dinámica causal interpretable</h2>
-<p>La construcción interaction-weighted funciona aquí como contraste metodológico, no como revisión exhaustiva de las soluciones modernas. Permite precisar qué propiedad se busca recuperar:</p>
+<p>La solución interaction-weighted reconstruye el event study a partir de cuatro decisiones:</p>
 <ol type="1">
 <li>definir efectos causales por cohorte y período;</li>
 <li>utilizar grupos de comparación que todavía no recibieron el tratamiento;</li>
 <li>verificar que cada tiempo relativo tenga soporte;</li>
 <li>agregar los efectos mediante reglas explícitas y transparentes.</li>
 </ol>
-<p>Estas exigencias no sustituyen los supuestos de identificación. La interpretación causal continúa dependiendo de la comparabilidad de las cohortes y de la plausibilidad de las tendencias paralelas relevantes.</p>
+<p>La interpretación causal de esa trayectoria depende de tendencias paralelas entre las cohortes comparadas y de ausencia de anticipación. La agregación explícita permite conocer qué efectos se promedian; los supuestos del diseño sostienen su identificación.</p>
 </section>
 <section id="conclusión" class="level2">
 <h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
 <p>Un event study TWFE no puede interpretarse automáticamente como una trayectoria de ATT por tiempo relativo. Bajo adopción escalonada y heterogeneidad, cada coeficiente puede mezclar cohortes y momentos distintos; incluso un <em>lead</em> puede contener efectos pos-tratamiento.</p>
 <p>En la aplicación HRS, TWFE e IW son numéricamente próximos: el gasto médico aumenta en la hospitalización y los ingresos laborales caen desde el período índice. La similitud de las curvas no elimina la diferencia de estimando ni convierte los <em>leads</em> TWFE en tests limpios de pretratamiento.</p>
-<p>La crisis moderna deja instalada una regla de construcción: <strong>estimar efectos causales definidos por cohorte y período mediante comparaciones válidas, y agregarlos después con reglas transparentes</strong>. Esa es la base para evaluar sistemáticamente los estimadores modernos en el bloque siguiente.</p>
+<p>Sun–Abraham ofrece una solución específica a la contaminación dinámica: <strong>estimar efectos por cohorte y período mediante comparaciones válidas y agregarlos después con participaciones explícitas</strong>. Cada punto adquiere así un significado causal bajo los supuestos del diseño, con un alcance determinado por las cohortes que tienen soporte en ese horizonte.</p>
 
 
 </section>

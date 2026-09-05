@@ -280,9 +280,9 @@ window.Quarto = {
 <section id="de-comparaciones-22-a-pesos-sobre-efectos-heterogéneos" class="level2">
 <h2 class="anchored" data-anchor-id="de-comparaciones-22-a-pesos-sobre-efectos-heterogéneos">De comparaciones 2×2 a pesos sobre efectos heterogéneos</h2>
 <p>La descomposición de Goodman–Bacon permite reconocer las comparaciones 2×2 que forman TWFE y detectar cuándo una cohorte ya tratada funciona como control. El paso adicional consiste en preguntar cómo esas comparaciones terminan ponderando los efectos causales de cada grupo y período.</p>
-<p>Bajo tendencias paralelas apropiadas, el coeficiente puede escribirse como</p>
+<p>Bajo tendencias paralelas apropiadas, el coeficiente poblacional puede escribirse como</p>
 <p><span class="math display">\[
-\widehat\beta_{TWFE}=\sum_{g,t:D_{g,t}=1} w_{g,t}\,ATT_{g,t},
+\beta_{TWFE}=\sum_{g,t:D_{g,t}=1} w_{g,t}\,ATT_{g,t},
 \qquad \sum_{g,t:D_{g,t}=1}w_{g,t}=1.
 \]</span></p>
 <p>Que los pesos sumen uno no convierte la expresión en un promedio convexo. Algunos pesos pueden estar por debajo de cero. Cuando los efectos son homogéneos, esa característica no cambia el resultado: cualquier combinación cuyos pesos sumen uno recupera el mismo efecto. Con heterogeneidad, en cambio, la ubicación de los pesos negativos importa.</p>
@@ -349,13 +349,13 @@ window.Quarto = {
 <td>TWFE</td>
 <td style="text-align: right;"><strong>0,1024</strong></td>
 <td style="text-align: right;">0,0291</td>
-<td style="text-align: right;">[0,0455; 0,1594]</td>
+<td style="text-align: right;">[0,0453; 0,1595]</td>
 </tr>
 <tr class="even">
 <td>Primeras diferencias</td>
 <td style="text-align: right;"><strong>0,0593</strong></td>
 <td style="text-align: right;">0,0302</td>
-<td style="text-align: right;">[0,0001; 0,1186]</td>
+<td style="text-align: right;">[−0,0001; 0,1187]</td>
 </tr>
 <tr class="odd">
 <td>WAS</td>
@@ -367,6 +367,7 @@ window.Quarto = {
 </table>
 </div>
 <p>La simulación establece la posibilidad econométrica extrema. La aplicación muestra una situación más matizada: las tres estimaciones son positivas, pero su magnitud y precisión cambian de forma sustantiva con la comparación utilizada.</p>
+<p>Los errores estándar (EE) de TWFE y primeras diferencias se agrupan por trabajador; sus intervalos usan la distribución t y el de primeras diferencias incluye cero por un margen mínimo. WAS conserva la inferencia de su implementación. TWFE utiliza 4.360 observaciones en niveles; primeras diferencias y WAS trabajan con 3.815 transiciones anuales. Estas filas no constituyen por sí solas un contraste entre estimadores en muestra común.</p>
 </section>
 <section id="aplicación-afiliación-sindical-y-salarios" class="level2">
 <h2 class="anchored" data-anchor-id="aplicación-afiliación-sindical-y-salarios">Aplicación: afiliación sindical y salarios</h2>
@@ -374,7 +375,7 @@ window.Quarto = {
 <div class="quick-grid">
 <div class="section-box">
 <p><strong>Unidad de análisis</strong></p>
-<p>545 trabajadores observados durante ocho años: 4.360 observaciones persona-año.</p>
+<p>545 trabajadores observados entre 1980 y 1987: 4.360 observaciones persona-año.</p>
 </div>
 <div class="section-box">
 <p><strong>Resultado</strong></p>
@@ -392,7 +393,7 @@ window.Quarto = {
 </section>
 <section id="diagnóstico-empírico-de-pesos" class="level2">
 <h2 class="anchored" data-anchor-id="diagnóstico-empírico-de-pesos">Diagnóstico empírico de pesos</h2>
-<p>La especificación TWFE base genera <strong>1.024 pesos de celdas</strong>. De ellos, <strong>144 son negativos</strong> —14,1%—, pero su masa agregada es solo <strong>−0,0107</strong>. La presencia de pesos negativos confirma que el coeficiente merece ser abierto y diagnosticado; la masa pequeña impide atribuirles mecánicamente toda la distancia entre estimadores.</p>
+<p>Bajo el supuesto de tendencias paralelas utilizado en la descomposición, el TWFE base pondera <strong>1.024 efectos de celdas trabajador-año</strong>. De sus pesos, <strong>144 son negativos</strong> —14,1%—, pero su masa agregada es solo <strong>−0,0107</strong>. La presencia de pesos negativos confirma que el coeficiente merece ser abierto y diagnosticado; la masa pequeña impide atribuirles mecánicamente toda la distancia entre estimadores.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="did_m05_masa_pesos_negativos.svg" class="img-fluid figure-img" alt="Comparación horizontal de la masa agregada de pesos negativos en WAGEPAN: menos 0,0107 en TWFE base, menos 0,0440 en primeras diferencias y menos 0,0130 en TWFE con covariables. También se informa la cantidad de pesos negativos de cada especificación."></p>
@@ -403,22 +404,31 @@ window.Quarto = {
 <div class="small-note">
 <p><strong>Lectura disciplinada.</strong> WAGEPAN no reproduce la paradoja extrema de la simulación. El coeficiente TWFE permanece positivo y el peso negativo agregado es reducido. El diagnóstico identifica una vulnerabilidad del estimando, no una explicación automática de cada diferencia empírica.</p>
 </div>
+<p>Las medidas formales de sensibilidad a heterogeneidad precisan esa lectura. Para TWFE base, el paquete reporta <span class="math inline">\(\underline{\sigma}=0{,}0945\)</span> y <span class="math inline">\(\overline{\sigma}=3{,}1893\)</span>; para primeras diferencias, 0,0319 y 0,6039; y para TWFE con covariables, 0,0764 y 2,0238. La primera medida resume cuánta heterogeneidad mínima sería compatible con un efecto promedio relevante igual a cero; la segunda, cuánta se necesitaría para que todos los efectos tuvieran signo opuesto al coeficiente. No estiman la dispersión verdadera de los ATT. En el TWFE base, el nivel puede ser sensible a heterogeneidad de un orden comparable al coeficiente, mientras que atribuir su signo positivo a una reversión extrema exigiría una heterogeneidad mucho mayor.</p>
 </section>
 <section id="twfe-primeras-diferencias-y-was" class="level2">
 <h2 class="anchored" data-anchor-id="twfe-primeras-diferencias-y-was">TWFE, primeras diferencias y WAS</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="did_m05_wagepan_estimadores.svg" class="img-fluid figure-img" alt="TWFE estima 0,1024 con intervalo positivo; primeras diferencias estima 0,0593 con un límite inferior cercano a cero; WAS estima 0,0412 y su intervalo de confianza incluye cero."></p>
+<p><img src="did_m05_wagepan_estimadores.svg" class="img-fluid figure-img" alt="TWFE estima 0,1024 con intervalo positivo; primeras diferencias estima 0,0593 con intervalo de menos 0,0001 a 0,1187, que incluye cero por un margen mínimo; WAS estima 0,0412 y su intervalo de confianza también incluye cero."></p>
 <figcaption>Estimaciones de TWFE, primeras diferencias y WAS en WAGEPAN</figcaption>
 </figure>
 </div>
-<p>TWFE estima un cambio de aproximadamente <strong>10,2 puntos logarítmicos</strong> en el salario asociado con la afiliación bajo las comparaciones implícitas de esa regresión. Primeras diferencias reduce la estimación a <strong>5,9 puntos logarítmicos</strong> y WAS a <strong>4,1 puntos logarítmicos</strong>. En una muestra común, TWFE supera a WAS en aproximadamente <strong>0,0624</strong>, con <code>p = 0,02</code> para esa diferencia.</p>
+<p>TWFE estima un cambio de aproximadamente <strong>10,2 puntos logarítmicos</strong> en el salario asociado con la afiliación bajo las comparaciones implícitas de esa regresión. Primeras diferencias reduce la estimación a <strong>5,9 puntos logarítmicos</strong> y WAS a <strong>4,1 puntos logarítmicos</strong>. Un contraste bootstrap separado, realizado en muestra común, reporta una diferencia media TWFE–WAS de aproximadamente <strong>0,0624</strong>, con <code>p = 0,02</code>. Esa cifra resume las diferencias en las réplicas bootstrap; no se obtiene restando las filas de la tabla anterior.</p>
 <p>La comparación no establece que WAS sea automáticamente la estimación causal correcta. Los métodos agregan transiciones y poblaciones de referencia de manera diferente; por tanto, la distancia entre coeficientes es una señal metodológica que debe leerse junto con los supuestos y diagnósticos de cada estimando.</p>
 </section>
 <section id="switchers-y-stayers-como-comparación-alternativa" class="level2">
 <h2 class="anchored" data-anchor-id="switchers-y-stayers-como-comparación-alternativa">Switchers y stayers como comparación alternativa</h2>
-<p>WAS organiza la estimación alrededor de unidades que cambian de tratamiento —<em>switchers</em>— y unidades que conservan el mismo estado inicial —<em>stayers</em>. Para una transición determinada, el cambio del resultado de los switchers se compara con el de stayers que compartían su situación de tratamiento antes del cambio.</p>
-<p>Este procedimiento evita ciertas comparaciones problemáticas incorporadas en TWFE y construye una agregación más explícita de los cambios relevantes. No elimina, sin embargo, la necesidad de tendencias paralelas para los grupos comparados ni garantiza por sí mismo que las trayectorias previas sean compatibles.</p>
+<p>La alternativa estática de de Chaisemartin–D’Haultfoeuille, DIDM, organiza la estimación alrededor de quienes cambian de tratamiento —<em>switchers</em>— y quienes permanecen en el mismo estado —<em>stayers</em>. En este caso binario, WAS (<em>Weighted Average Slope</em>, pendiente media ponderada), con emparejamiento exacto por estado inicial, implementa esa misma lógica:</p>
+<ul>
+<li><strong>Entradas a la afiliación (<code>0→1</code>):</strong> el cambio salarial de quienes entran se compara con el de quienes siguen sin afiliación (<code>0→0</code>).</li>
+<li><strong>Salidas de la afiliación (<code>1→0</code>):</strong> el cambio salarial de quienes permanecen afiliados (<code>1→1</code>) se compara con el de quienes salen. La resta se invierte para expresar también el efecto de estar afiliado frente a no estarlo.</li>
+</ul>
+<p>Los contrastes se agregan según el número de cambios observados. Aquí participan <strong>250 transiciones de afiliación: 128 entradas y 122 salidas</strong>. El estimando es el efecto contemporáneo para esas transiciones, con stayers del mismo estado inicial como contrafactual; no es una trayectoria dinámica ni un promedio para todos los trabajadores del panel.</p>
+<p>El taller verifica ese objeto estático con tres implementaciones. La construcción manual entrega <strong>0,0310</strong> y no produce inferencia formal; la implementación histórica de DIDM estima <strong>0,0412</strong> con EE <strong>0,0329</strong>; y WAS moderno estima <strong>0,0412</strong> con EE <strong>0,0313</strong>. La proximidad de los puntos confirma la coherencia de la implementación, mientras que la diferencia entre errores estándar responde a procedimientos inferenciales distintos. Esa verificación no resuelve por sí misma la validez del contrafactual.</p>
+<div class="small-note">
+<p><strong>Interpretación del resultado.</strong> El punto WAS de 0,0412 representa una diferencia estimada de <strong>4,1 puntos logarítmicos en el salario por estar afiliado frente a no estarlo</strong>, para las transiciones que componen el agregado. Su lectura causal requiere tendencias paralelas entre switchers y stayers comparables; el intervalo y los placebos permiten evaluar cuánto respalda esta aplicación esa interpretación.</p>
+</div>
 </section>
 <section id="placebos-y-credibilidad-causal" class="level2">
 <h2 class="anchored" data-anchor-id="placebos-y-credibilidad-causal">Placebos y credibilidad causal</h2>

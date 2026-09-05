@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Concreto: cuándo una recta deja resistencia sin explicar – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../problemas-negocio.html"> 
+<span class="menu-text">Problemas de negocio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" id="toc-la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" class="nav-link active" data-scroll-target="#la-pregunta-es-cuándo-una-recta-empieza-a-perder-información">La pregunta es cuándo una recta empieza a perder información</a></li>
+  <li><a href="#la-receta-y-no-una-fila-define-la-prueba-externa" id="toc-la-receta-y-no-una-fila-define-la-prueba-externa" class="nav-link" data-scroll-target="#la-receta-y-no-una-fila-define-la-prueba-externa">La receta, y no una fila, define la prueba externa</a></li>
+  <li><a href="#dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" id="toc-dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" class="nav-link" data-scroll-target="#dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación">Dos controles de flexibilidad, una misma disciplina de evaluación</a></li>
+  <li><a href="#la-mejora-aparece-fuera-de-muestra-y-es-material" id="toc-la-mejora-aparece-fuera-de-muestra-y-es-material" class="nav-link" data-scroll-target="#la-mejora-aparece-fuera-de-muestra-y-es-material">La mejora aparece fuera de muestra y es material</a></li>
+  <li><a href="#las-funciones-estimadas-muestran-dónde-estaba-la-restricción" id="toc-las-funciones-estimadas-muestran-dónde-estaba-la-restricción" class="nav-link" data-scroll-target="#las-funciones-estimadas-muestran-dónde-estaba-la-restricción">Las funciones estimadas muestran dónde estaba la restricción</a></li>
+  <li><a href="#la-complejidad-se-aprende-y-se-diagnostica" id="toc-la-complejidad-se-aprende-y-se-diagnostica" class="nav-link" data-scroll-target="#la-complejidad-se-aprende-y-se-diagnostica">La complejidad se aprende y se diagnostica</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Concreto: cuándo una recta deja resistencia sin explicar</h1>
+<p class="subtitle lead">Splines y GAM convierten la no linealidad en una decisión predictiva evaluable</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">4 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../machine-learning/index.html">Machine Learning</a> / <a href="../../machine-learning/index.html#no-linealidad-y-modelos-aditivos">No linealidad y modelos aditivos</a></p>
+<p><span class="badge">Regresión · Splines · GAM</span></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>Con los mismos ocho predictores, abandonar la recta reduce el RMSE externo de 10,55 a 6,06 MPa. La ganancia aparece porque los datos sostienen formas aditivas no lineales, no porque se agreguen variables.</p>
+</div>
+<div class="hero-sub">
+<p>Concrete permite responder una pregunta práctica: cuándo la flexibilidad compra predicción real y cómo evitar que una curva que luce convincente sea solo sobreajuste.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Muestra</p>
+</div>
+<div class="metric-value">
+<p>1.030</p>
+</div>
+<div class="metric-note">
+<p>Mezclas de concreto; siete ingredientes, edad de ensayo y resistencia en MPa.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Unidad protegida</p>
+</div>
+<div class="metric-value">
+<p>427 recetas</p>
+</div>
+<div class="metric-note">
+<p>181 se repiten: una receta nunca se divide entre entrenamiento y evaluación.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>RMSE MCO</p>
+</div>
+<div class="metric-value">
+<p>10,55 MPa</p>
+</div>
+<div class="metric-note">
+<p>Referencia lineal con los mismos ocho predictores.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>RMSE GAM</p>
+</div>
+<div class="metric-value">
+<p>6,06 MPa</p>
+</div>
+<div class="metric-note">
+<p>66,9 % menos MSE que MCO sobre predicciones externas.</p>
+</div>
+</div>
+</div>
+<section id="la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta-es-cuándo-una-recta-empieza-a-perder-información">La pregunta es cuándo una recta empieza a perder información</h2>
+<p>El objetivo es predecir la resistencia a compresión de una mezcla de concreto. <strong>Concrete</strong>, del paquete <code>AppliedPredictiveModeling</code>, registra siete ingredientes, la edad del ensayo y la resistencia en MPa. MCO impone que cada predictor tenga una pendiente constante. Esa forma puede ser demasiado restrictiva si, por ejemplo, el aumento de resistencia es rápido al comienzo de la maduración y luego se aplana, o si el agua altera la resistencia con pendientes diferentes según su nivel.</p>
+<p>La comparación mantiene exactamente los mismos ocho predictores y cambia solo la forma funcional. La media del entrenamiento es el benchmark sin información; MCO es el benchmark lineal; natural splines y un GAM penalizado ofrecen dos maneras distintas de introducir curvatura sin abandonar una estructura aditiva interpretable.</p>
+<p>Las curvas describen predicciones condicionales de esta especificación. No son efectos causales de cambiar un ingrediente aislado, ni sustituyen ensayos físicos de formulación.</p>
+</section>
+<section id="la-receta-y-no-una-fila-define-la-prueba-externa" class="level2">
+<h2 class="anchored" data-anchor-id="la-receta-y-no-una-fila-define-la-prueba-externa">La receta, y no una fila, define la prueba externa</h2>
+<p>Muchas observaciones comparten la misma composición de siete ingredientes y difieren, por ejemplo, en la edad de ensayo. Una partición fila a fila podría dejar una formulación prácticamente idéntica en entrenamiento y evaluación. Para plantear una prueba más exigente, los cinco folds externos se agrupan por receta: una formulación completa queda en un único fold.</p>
+<p>Natural splines selecciona dentro de cada entrenamiento externo los grados de libertad de sus ocho bases mediante CV interna también agrupada por receta. La búsqueda por coordenadas explora <span class="math inline">\(df\in\{3,4,5,6\}\)</span> para cada predictor desde dos puntos iniciales. En cada paso cambia una base y reevalúa el modelo aditivo completo; es una búsqueda operativa, no un recorrido exhaustivo de las 65.536 combinaciones. Los dos inicios y la convergencia rápida —entre dos y tres ciclos en las cinco vueltas— reducen el riesgo de una solución puramente accidental, pero no convierten el procedimiento en una búsqueda global.</p>
+<p>El GAM penalizado parte de bases más amplias y selecciona conjuntamente sus ocho suavidades por GCV dentro del entrenamiento externo. GCV equilibra ajuste y flexibilidad efectiva: una reducción del residuo debe compensar el costo de conservar más curvatura. El fold externo no participa en esa decisión.</p>
+<p>Cada una de las 1.030 predicciones <strong>outer-OOF</strong> se genera para una receta que no participó ni en el ajuste ni en la selección de complejidad que produjo esa predicción. Por eso el RMSE externo evalúa el procedimiento entero, no una curva elegida mirando su propia prueba.</p>
+</section>
+<section id="dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" class="level2">
+<h2 class="anchored" data-anchor-id="dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación">Dos controles de flexibilidad, una misma disciplina de evaluación</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Cómo permite curvatura</th>
+<th>Cómo limita complejidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MCO</td>
+<td>No la permite</td>
+<td>Pendiente constante por predictor</td>
+</tr>
+<tr class="even">
+<td>Natural splines</td>
+<td>Bases cúbicas naturales</td>
+<td>Elige <span class="math inline">\(df\)</span> discretos mediante CV interna</td>
+</tr>
+<tr class="odd">
+<td>GAM penalizado</td>
+<td>Bases cúbicas de mayor capacidad</td>
+<td>GCV penaliza rugosidad y deja edf continuos</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Un <code>df</code> mayor agrega capacidad discreta a una base de natural splines. En cambio, el GAM parte de una capacidad nominal y deja que la penalización decida qué fracción queda activa. Sus <strong>grados de libertad efectivos</strong> (edf) no son knots ni un conteo de columnas: resumen la flexibilidad que persiste después de suavizar. Un edf cercano a 1 sería aproximadamente lineal; aquí los edf finales son mucho mayores para la mayoría de los predictores.</p>
+<p>La configuración operativa de natural splines, obtenida después de cerrar la evaluación externa, muestra cómo se distribuye la complejidad discreta:</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Predictor</th>
+<th style="text-align: right;"><code>df</code> final</th>
+<th>Evidencia de estabilidad entre entrenamientos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cemento</td>
+<td style="text-align: right;">4</td>
+<td>complejidad variable</td>
+</tr>
+<tr class="even">
+<td>Escoria</td>
+<td style="text-align: right;">4</td>
+<td><code>df = 6</code> en los cinco outer-training; baja en el ajuste final</td>
+</tr>
+<tr class="odd">
+<td>Ceniza volante</td>
+<td style="text-align: right;">3</td>
+<td><code>df = 3</code> en todas las vueltas y en el final</td>
+</tr>
+<tr class="even">
+<td>Agua</td>
+<td style="text-align: right;">3</td>
+<td>base final contenida</td>
+</tr>
+<tr class="odd">
+<td>Superplastificante</td>
+<td style="text-align: right;">5</td>
+<td>curvatura intermedia-alta</td>
+</tr>
+<tr class="even">
+<td>Agregado grueso</td>
+<td style="text-align: right;">5</td>
+<td>curvatura intermedia-alta</td>
+</tr>
+<tr class="odd">
+<td>Agregado fino</td>
+<td style="text-align: right;">6</td>
+<td>extremo superior de la grilla final</td>
+</tr>
+<tr class="even">
+<td>Edad</td>
+<td style="text-align: right;">6</td>
+<td><code>df = 5</code> o <code>6</code> en todas las vueltas</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La suma final es 36 columnas de base más un intercepto. No debe compararse directamente con la suma de edf del GAM penalizado: natural splines elige una dimensión disponible y luego ajusta sin penalización adicional; el GAM puede utilizar parcialmente cada dirección mediante suavizado continuo.</p>
+</section>
+<section id="la-mejora-aparece-fuera-de-muestra-y-es-material" class="level2">
+<h2 class="anchored" data-anchor-id="la-mejora-aparece-fuera-de-muestra-y-es-material">La mejora aparece fuera de muestra y es material</h2>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">MSE</th>
+<th style="text-align: right;">RMSE</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;"><span class="math inline">\(R^2\)</span> outer-OOF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GAM penalizado</td>
+<td style="text-align: right;"><strong>36,784</strong></td>
+<td style="text-align: right;"><strong>6,065</strong></td>
+<td style="text-align: right;"><strong>4,713</strong></td>
+<td style="text-align: right;"><strong>0,8681</strong></td>
+</tr>
+<tr class="even">
+<td>Natural splines</td>
+<td style="text-align: right;">45,068</td>
+<td style="text-align: right;">6,713</td>
+<td style="text-align: right;">5,277</td>
+<td style="text-align: right;">0,8384</td>
+</tr>
+<tr class="odd">
+<td>MCO lineal</td>
+<td style="text-align: right;">111,287</td>
+<td style="text-align: right;">10,549</td>
+<td style="text-align: right;">8,363</td>
+<td style="text-align: right;">0,6009</td>
+</tr>
+<tr class="even">
+<td>Media outer-training</td>
+<td style="text-align: right;">281,349</td>
+<td style="text-align: right;">16,773</td>
+<td style="text-align: right;">13,515</td>
+<td style="text-align: right;">−0,0091</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fig-concrete-desempeno" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RMSE outer-OOF: media 16,773 MPa; MCO 10,549; natural splines 6,713; GAM penalizado 6,065. Natural splines reduce el MSE frente a MCO 59,5 % y GAM penalizado 66,9 %.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-concrete-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t08a_concrete_desempeno.png" class="img-fluid figure-img" style="width:100.0%" alt="RMSE outer-OOF: media 16,773 MPa; MCO 10,549; natural splines 6,713; GAM penalizado 6,065. Natural splines reduce el MSE frente a MCO 59,5 % y GAM penalizado 66,9 %.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Desempeño predictivo externo de media, MCO, natural splines y GAM penalizado. Para los dos modelos no lineales se informa también el cambio de MSE respecto de MCO.
+</figcaption>
+</figure>
+</div>
+<p>Los predictores ya aportan señal bajo MCO: frente a la media, reducen el MSE 60,45 %. Pero la comparación decisiva es MCO contra formas no lineales. Natural splines reduce su MSE 59,5 % y el GAM penalizado 66,9 %. El GAM también baja el MSE 18,4 % frente a natural splines, equivalente a una reducción de 0,65 MPa —9,7 %— en RMSE. La magnitud y el carácter externo de esa mejora sostienen que la recta dejaba estructura predictiva sin representar.</p>
+<p>La ventaja de los modelos no lineales aparece repetidamente al cambiar las recetas reservadas, no en un único fold conveniente. Esa estabilidad importa porque los folds tienen tamaños distintos: se priorizó mantener recetas completas, no fabricar cinco bloques de filas exactamente iguales.</p>
+</section>
+<section id="las-funciones-estimadas-muestran-dónde-estaba-la-restricción" class="level2">
+<h2 class="anchored" data-anchor-id="las-funciones-estimadas-muestran-dónde-estaba-la-restricción">Las funciones estimadas muestran dónde estaba la restricción</h2>
+<div id="fig-concrete-perfiles" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Ocho perfiles de predicción comparan MCO, natural splines y GAM penalizado para edad, ingredientes y agregados. Las curvas no lineales muestran cambios de pendiente, aplanamientos y relaciones no monotónicas que MCO no puede representar.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-concrete-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t08a_concrete_perfiles.png" class="img-fluid figure-img" style="width:100.0%" alt="Ocho perfiles de predicción comparan MCO, natural splines y GAM penalizado para edad, ingredientes y agregados. Las curvas no lineales muestran cambios de pendiente, aplanamientos y relaciones no monotónicas que MCO no puede representar.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Perfiles de predicción producidos por el informe: se varía un predictor, los otros se mantienen en sus medianas y las marcas inferiores indican soporte observado.
+</figcaption>
+</figure>
+</div>
+<p>Los perfiles son cortes de la superficie aditiva: al variar una variable, las otras siete se fijan en sus medianas. La edad resume el caso más claro: la resistencia aumenta con fuerza a edades bajas y luego se aplana, mientras MCO extiende una pendiente constante. Cemento y escoria muestran pendientes que cambian; agua presenta una relación negativa marcadamente no lineal. Superplastificante y los agregados incorporan zonas débiles o no monotónicas que una única pendiente tampoco puede describir. En los extremos, las marcas de soporte obligan a no sobrerreaccionar a oscilaciones locales.</p>
+<p>La figura también separa dos ideas. Natural splines y GAM pueden producir formas diferentes sin que una deba interpretarse como la función verdadera. Su utilidad aquí proviene de que esa flexibilidad se evaluó sobre recetas reservadas y redujo el error externo, no de que una curva sea visualmente más elaborada.</p>
+</section>
+<section id="la-complejidad-se-aprende-y-se-diagnostica" class="level2">
+<h2 class="anchored" data-anchor-id="la-complejidad-se-aprende-y-se-diagnostica">La complejidad se aprende y se diagnostica</h2>
+<div id="fig-concrete-edf" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Los edf finales del GAM van de 10,59 para edad a 17,11 para agua. Los rangos entre outer-trainings muestran que la flexibilidad no es idéntica en cada muestra.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-concrete-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t08a_concrete_edf.png" class="img-fluid figure-img" style="width:100.0%" alt="Los edf finales del GAM van de 10,59 para edad a 17,11 para agua. Los rangos entre outer-trainings muestran que la flexibilidad no es idéntica en cada muestra.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Rango, media entre entrenamientos externos y edf del ajuste operativo final para cada smooth del GAM penalizado.
+</figcaption>
+</figure>
+</div>
+<p>El ajuste operativo final usa <span class="math inline">\(k=20\)</span> para los ingredientes y <span class="math inline">\(k=12\)</span> para edad. Los edf finales son 15,42 para cemento, 16,01 para escoria, 13,08 para ceniza volante, 17,11 para agua, 14,25 para superplastificante, 16,04 para agregado grueso, 15,15 para agregado fino y 10,59 para edad. La capacidad nominal no quedó vacía, y los edf altos son coherentes con la mejora predictiva.</p>
+<p>La figura muestra también que la flexibilidad cambia entre entrenamientos: cemento es el componente más variable —cae a 3,68 edf en un fold y supera 14 en los otros cuatro—, mientras edad permanece cerca de 10,3–10,6. Esa diferencia evita hablar de una complejidad fija aprendida de una vez: GCV vuelve a decidir en cada muestra de entrenamiento.</p>
+<p><code>k.check()</code> y concurvity son diagnósticos complementarios para revisar si una base quedó demasiado limitada o si smooths distintos comparten patrón. Edad utiliza 10,59 de 11 grados disponibles después de la restricción del smooth y agua 17,11 de 19; son las funciones que más justifican cautela al interpretar detalles finos. Concurvity recuerda además que ingredientes que se mueven conjuntamente pueden compartir señal. Ninguno reordena los modelos: la evidencia principal sigue siendo el error outer-OOF.</p>
+<p>Los residuos externos completan esa lectura. MCO conserva una forma sistemática y comprime parte de las resistencias altas; natural splines elimina buena parte del patrón y el GAM lo reduce todavía más, aunque no desaparece en los extremos. La mejora no autoriza a afirmar que el GAM recuperó la función verdadera: muestra que redujo un sesgo de forma bajo una restricción aditiva todavía exigente.</p>
+<section id="qué-decisión-queda-respaldada" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="qué-decisión-queda-respaldada">Qué decisión queda respaldada</h3>
+<p>Para predecir resistencia en nuevas formulaciones, el GAM penalizado es la alternativa mejor respaldada bajo esta arquitectura de validación. Natural splines también mejora de forma grande sobre MCO, por lo que la conclusión robusta es primero que la linealidad era demasiado restrictiva. La ventaja adicional del GAM justifica elegir su suavizado continuo en esta aplicación, no asumir que todo problema de regresión necesita un modelo más flexible.</p>
+</section>
+<p>La evaluación y la configuración operativa permanecen separadas. Después de comparar las 1.030 predicciones externas, natural splines vuelve a seleccionar su vector de <code>df</code> con una CV agrupada sobre toda la muestra y el GAM vuelve a elegir suavidades por GCV. Esos ajustes preparan una regla para una receta nueva; no producen una segunda estimación independiente de generalización ni reemplazan los RMSE externos.</p>
+<p>La conclusión depende de una pérdida cuadrática, una respuesta en niveles y una estructura aditiva. No se modelan interacciones entre ingredientes; la búsqueda de splines es greedy; y la extrapolación fuera del soporte de recetas observadas requiere cautela. Un mejor ajuste in-sample, por sí solo, no habría resuelto ninguna de esas limitaciones.</p>
+<p><a href="../../machine-learning/piezas/t08b_oj.html">OJ</a> ofrece el contraste: allí el GAM recibe la misma oportunidad de curvar, pero la evidencia externa y los edf indican que la forma simple ya era suficiente.</p>
+<div class="small-note">
+<p><strong>Fuente:</strong> informe curado «Taller 08A: Splines y GAM para regresión con Concrete». Figuras originales del informe convertidas a PNG para la pieza; no se generaron estimaciones nuevas.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

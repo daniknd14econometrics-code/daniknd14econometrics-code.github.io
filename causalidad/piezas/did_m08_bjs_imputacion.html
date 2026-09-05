@@ -256,7 +256,7 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 <p><span class="math display">\[
 \widehat{\tau}_{it}=Y_{it}-\widehat{Y}_{it}(0).
 \]</span></p>
-<p>Esta brecha es la unidad elemental del método. No es todavía un ATT global ni un coeficiente dinámico: esos objetos aparecen cuando las brechas se agregan.</p>
+<p>Esta brecha es la unidad elemental del método, pero no una estimación consistente del efecto individual de cada condado-año: también contiene variación idiosincrática. La identificación causal se sostiene en agregados apropiados de muchas brechas, con pesos definidos para la población y los horizontes de interés.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="did_m08_observado_imputado.svg" class="img-fluid figure-img" alt="Flujo de tres pasos: aprender el resultado potencial no tratado usando observaciones sin tratamiento, imputarlo para observaciones tratadas y comparar el resultado observado con el contrafactual. Para los horizontes cero y uno, las brechas medias son menos 0,031 y menos 0,052."></p>
@@ -322,11 +322,11 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 </div>
 </div>
 </div>
-<p>Dentro del diseño, el cambio de salario mínimo se asocia con una reducción causal media del log del empleo adolescente de aproximadamente 0,048 entre las observaciones tratadas imputables. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.</p>
+<p>Bajo el modelo de resultados no tratados y los supuestos del diseño, el cambio de salario mínimo produce una reducción media estimada de <strong>4,77 puntos logarítmicos en el empleo adolescente</strong> entre las observaciones tratadas imputables. El agregado reúne 291 observaciones condado-año, mientras 2.209 observaciones sin tratamiento permiten ajustar el contrafactual. La cifra resume cohortes y horizontes distintos; su población objetivo no es el conjunto completo de condados ni un efecto homogéneo común.</p>
 </section>
 <section id="efectos-dinámicos" class="level2">
 <h2 class="anchored" data-anchor-id="efectos-dinámicos">Efectos dinámicos</h2>
-<p>El tiempo relativo permite preguntar cómo evoluciona el efecto desde la primera exposición. Los dos horizontes posteriores con información efectiva suficiente muestran una reducción que aumenta en magnitud durante el primer año.</p>
+<p>El tiempo relativo permite preguntar cómo evoluciona el efecto desde la primera exposición. Los dos horizontes posteriores con información efectiva suficiente tienen estimaciones negativas; el punto es más negativo al primer año, pero la diferencia entre horizontes no es estadísticamente clara.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="did_m08_event_study.svg" class="img-fluid figure-img" alt="Event study BJS con estimaciones cercanas a cero en K menos 2 y K menos 1. Los efectos son menos 0,031 en K igual a cero y menos 0,052 en K igual a uno, con intervalos de confianza de 95 por ciento. Los horizontes dos y tres se omiten por información efectiva insuficiente."></p>
@@ -375,8 +375,9 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 </tr>
 </tbody>
 </table>
-<p><em>Nota:</em> el test conjunto de los dos períodos pretratamiento arroja <span class="math inline">\(F=1{,}298\)</span> y <span class="math inline">\(p=0{,}274\)</span>. Los horizontes posteriores se omiten por información efectiva insuficiente; no representan efectos estimados iguales a cero.</p>
+<p><em>Nota:</em> el test conjunto de los dos períodos pretratamiento arroja <span class="math inline">\(F=1{,}298\)</span> y <span class="math inline">\(p=0{,}274\)</span>. K = 2 y K = 3 se omiten por información efectiva insuficiente; no representan efectos estimados iguales a cero.</p>
 </div>
+<p>El contraste K = 1 menos K = 0 es <strong>−0,0212</strong>, con EE <strong>0,0187</strong> y <strong>p = 0,258</strong>. Además, K = 0 reúne 191 condados de tres cohortes, mientras K = 1 reúne 60 de las cohortes 2004 y 2006. La diferencia combina duración y composición; no demuestra que el efecto se intensifique para una misma población.</p>
 </section>
 <section id="qué-promedio-estamos-estimando" class="level2">
 <h2 class="anchored" data-anchor-id="qué-promedio-estamos-estimando">Qué promedio estamos estimando</h2>
@@ -435,11 +436,52 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 </div>
 </div>
 <p>La cantidad bruta de observaciones no basta: si pocos condados o cohortes concentran la información relevante, la precisión efectiva puede ser mucho menor. Por eso las brechas descriptivas disponibles para horizontes posteriores no se presentan como resultados inferenciales equivalentes.</p>
+<p>Una sensibilidad ya realizada permite ver la diferencia: al excluir los 309 condados nunca tratados, en 2007 no queda ninguna observación sin exposición para estimar el efecto de ese año. <strong>191 observaciones tratadas dejan de ser imputables</strong>. El recorte automático elimina ese calendario, cambia la población de K = 0 y K = 1 y deja K = 3 sin contrafactual. Recortar permite continuar sobre otro soporte; no recupera la información faltante.</p>
 </section>
 <section id="pretrends-y-especificación-de-y0" class="level2">
 <h2 class="anchored" data-anchor-id="pretrends-y-especificación-de-y0">Pretrends y especificación de Y(0)</h2>
-<p>Los dos coeficientes previos son próximos a cero y el test conjunto no rechaza (<code>p=0,274</code>). Ese resultado es compatible con la especificación de referencia, pero no demuestra por sí solo tendencias paralelas ni descarta cualquier desviación posible.</p>
-<p>La estabilidad frente a modelos plausibles de <span class="math inline">\(Y(0)\)</span> aporta una comprobación adicional. Al permitir trayectorias por población inicial, los efectos se mantienen próximos a la referencia: alrededor de −0,033 en K = 0 y −0,057 en K = 1. La comparación no debe utilizarse para seleccionar el modelo que produce mayor significancia; su función es evaluar si el contrafactual depende de decisiones razonables de especificación.</p>
+<p>Los dos coeficientes previos se estiman <strong>exclusivamente con observaciones no tratadas</strong>, en un diagnóstico separado de los efectos posteriores. Son próximos a cero y el test conjunto no rechaza (<code>p=0,274</code>). El contraste evalúa esas dos desviaciones respecto del modelo de <span class="math inline">\(Y(0)\)</span>; no demuestra que toda su especificación sea correcta.</p>
+<p>La comparación de modelos muestra qué restricciones sostienen el contrafactual:</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo de <span class="math inline">\(Y(0)\)</span></th>
+<th style="text-align: right;">K = 0</th>
+<th style="text-align: right;">K = 1</th>
+<th style="text-align: right;">p del test previo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Efectos fijos de condado y año</strong></td>
+<td style="text-align: right;"><strong>−0,0311</strong></td>
+<td style="text-align: right;"><strong>−0,0522</strong></td>
+<td style="text-align: right;"><strong>0,2740</strong></td>
+</tr>
+<tr class="even">
+<td>Solo efectos de año</td>
+<td style="text-align: right;">0,3294</td>
+<td style="text-align: right;">0,6942</td>
+<td style="text-align: right;">0,0073</td>
+</tr>
+<tr class="odd">
+<td>Condado y año + población inicial × año</td>
+<td style="text-align: right;">−0,0332</td>
+<td style="text-align: right;">−0,0573</td>
+<td style="text-align: right;">0,3029</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Omitir las diferencias permanentes entre condados revierte los signos y el diagnóstico previo rechaza. Esa fila ilustra una restricción inadecuada sobre <span class="math inline">\(Y(0)\)</span>, no evidencia de un gran efecto positivo. Permitir trayectorias por población inicial apenas modifica la referencia. El criterio es la credibilidad del modelo no tratado, no la significación del efecto que produce.</p>
+<p>Los errores estándar corresponden a la inferencia BJS, con la opción de exclusión <em>leaveout</em> utilizada en la aplicación. Incorporan la estimación del contrafactual; no se calculan tratando las brechas imputadas como observaciones independientes con <span class="math inline">\(Y(0)\)</span> conocido.</p>
 </section>
 <section id="bjs-frente-a-twfe-y-callawaysantanna" class="level2">
 <h2 class="anchored" data-anchor-id="bjs-frente-a-twfe-y-callawaysantanna">BJS frente a TWFE y Callaway–Sant’Anna</h2>
@@ -499,7 +541,7 @@ Y_{it}(0)=\alpha_i+\lambda_t+\varepsilon_{it}.
 <section id="conclusión" class="level2">
 <h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
 <p>Borusyak–Jaravel–Spiess organiza Difference-in-Differences alrededor de una construcción explícita del resultado potencial no tratado. Primero aprende <span class="math inline">\(Y(0)\)</span> usando exclusivamente observaciones sin tratamiento, luego lo imputa para las tratadas y finalmente agrega las brechas causales según la pregunta de interés.</p>
-<p>En el panel de condados, el ATT global es negativo y los efectos publicables aumentan en magnitud entre el año de adopción y el período siguiente. La interpretación corresponde a observaciones tratadas cuyo contrafactual puede imputarse dentro del soporte del diseño.</p>
+<p>En el panel de condados, el ATT global y los efectos de K = 0 y K = 1 son negativos, pero el contraste entre estos dos horizontes no permite afirmar una intensificación del efecto. La interpretación corresponde a observaciones tratadas cuyo contrafactual puede imputarse dentro del soporte del diseño, con una composición de cohortes que cambia por horizonte.</p>
 <p>Imputar no elimina los supuestos. Especificación, no anticipación, soporte, imputabilidad, información efectiva y agregación continúan determinando qué efecto puede sostenerse y para quién.</p>
 </section>
 <section id="puente-hacia-la-siguiente-solución" class="level2">

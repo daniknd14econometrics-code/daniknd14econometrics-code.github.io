@@ -141,7 +141,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#resumen-ejecutivo" id="toc-resumen-ejecutivo" class="nav-link active" data-scroll-target="#resumen-ejecutivo">Resumen ejecutivo</a></li>
   <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link" data-scroll-target="#pregunta-central">Pregunta central</a></li>
   <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#por-qué-iv-es-causal-en-este-caso" id="toc-por-qué-iv-es-causal-en-este-caso" class="nav-link" data-scroll-target="#por-qué-iv-es-causal-en-este-caso">Por qué IV es causal en este caso</a></li>
+  <li><a href="#cómo-iv-intenta-resolver-la-endogeneidad" id="toc-cómo-iv-intenta-resolver-la-endogeneidad" class="nav-link" data-scroll-target="#cómo-iv-intenta-resolver-la-endogeneidad">Cómo IV intenta resolver la endogeneidad</a></li>
   <li><a href="#ols-versus-iv-qué-cambia-y-por-qué-importa" id="toc-ols-versus-iv-qué-cambia-y-por-qué-importa" class="nav-link" data-scroll-target="#ols-versus-iv-qué-cambia-y-por-qué-importa">OLS versus IV: qué cambia y por qué importa</a></li>
   <li><a href="#evidencia-descriptiva-inicial" id="toc-evidencia-descriptiva-inicial" class="nav-link" data-scroll-target="#evidencia-descriptiva-inicial">Evidencia descriptiva inicial</a></li>
   <li><a href="#criterio-de-credibilidad-para-leer-la-comparación-iv" id="toc-criterio-de-credibilidad-para-leer-la-comparación-iv" class="nav-link" data-scroll-target="#criterio-de-credibilidad-para-leer-la-comparación-iv">Criterio de credibilidad para leer la comparación IV</a></li>
@@ -218,10 +218,11 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </div>
 </section>
-<section id="por-qué-iv-es-causal-en-este-caso" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-iv-es-causal-en-este-caso">Por qué IV es causal en este caso</h2>
+<section id="cómo-iv-intenta-resolver-la-endogeneidad" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-iv-intenta-resolver-la-endogeneidad">Cómo IV intenta resolver la endogeneidad</h2>
 <p>Esta no es una comparación de tratados y controles como en matching o IPWRA. Aquí la identificación causal se apoya en otra lógica: aislar la parte de <code>educ</code> que cambia por una fuente exógena (trimestre de nacimiento y sus interacciones con cohorte), y usar solo esa variación para estimar el efecto sobre salario.</p>
 <p>En esa arquitectura, OLS puede mezclar el retorno de la educación con factores no observados que también afectan ingresos. IV entra en el módulo de causalidad porque intenta reconstruir un contrafactual causal a partir de variación exógena inducida por instrumentos, no porque sea solo una técnica alternativa de estimación.</p>
+<p>La lectura como LATE exige cuatro condiciones: que el trimestre de nacimiento sea relevante para la educación; que sea comparable respecto de los resultados potenciales, condicional en los controles; que afecte el salario únicamente a través de la educación (exclusión); y que no existan personas cuya escolaridad responda al instrumento en la dirección opuesta al margen institucional considerado (monotonicidad). La primera condición puede diagnosticarse en los datos; las restantes dependen de la credibilidad sustantiva del diseño.</p>
 </section>
 <section id="ols-versus-iv-qué-cambia-y-por-qué-importa" class="level2">
 <h2 class="anchored" data-anchor-id="ols-versus-iv-qué-cambia-y-por-qué-importa">OLS versus IV: qué cambia y por qué importa</h2>
@@ -254,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>IV con controles e interacciones (<code>QOB x YOB</code>)</td>
 <td style="text-align: right;">0.0656</td>
-<td>Estimación causal por IV positiva, pero con primera etapa débil</td>
+<td>Punto IV positivo, pero con primera etapa débil</td>
 </tr>
 </tbody>
 </table>
@@ -267,20 +268,21 @@ ul.task-list li input[type="checkbox"] {
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/graficos/8_fs.png" class="img-fluid figure-img"></p>
+<p><img src="../assets/graficos/8_fs.png" class="img-fluid figure-img" alt="Educación media por grupos de año y trimestre de nacimiento; la tendencia entre cohortes domina, con variaciones menores asociadas al trimestre."></p>
 <figcaption>Educación promedio por año-trimestre de nacimiento</figcaption>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/graficos/8_rf.png" class="img-fluid figure-img"></p>
+<p><img src="../assets/graficos/8_rf.png" class="img-fluid figure-img" alt="Logaritmo medio del salario semanal por grupos de año y trimestre de nacimiento, usado como forma reducida descriptiva."></p>
 <figcaption>Log salario promedio por año-trimestre de nacimiento</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Los gráficos descriptivos muestran variación por grupo año-trimestre en educación (primera etapa descriptiva) y salario (forma reducida descriptiva). Ayudan a motivar la estrategia, pero no sustituyen los diagnósticos formales de relevancia.</p>
+<p>En la comparación binaria más transparente, nacer en el primer trimestre reduce la educación media en 0,1088 años y el log salario semanal en 0,0111. Su cociente produce el estimador de Wald de 0,102: un retorno local aproximado de 10,2% por año adicional de educación para quienes modifican su escolaridad por ese margen instrumental.</p>
 </section>
 <section id="criterio-de-credibilidad-para-leer-la-comparación-iv" class="level2">
 <h2 class="anchored" data-anchor-id="criterio-de-credibilidad-para-leer-la-comparación-iv">Criterio de credibilidad para leer la comparación IV</h2>
@@ -331,56 +333,16 @@ ul.task-list li input[type="checkbox"] {
 <td>Primera etapa fuerte y mayor flexibilidad por trimestre</td>
 </tr>
 <tr class="even">
-<td>IV con interacciones trimestre x cohorte (<code>QOB x YOB</code>)</td>
-<td style="text-align: right;">0.0891</td>
-<td style="text-align: right;">4.801</td>
-<td style="text-align: right;">0.6961</td>
-<td>Empieza a debilitarse la relevancia del instrumento</td>
-</tr>
-<tr class="odd">
 <td>IV con controles (<code>edad</code>, <code>edad²</code>, cohorte + <code>QOB x YOB</code>)</td>
 <td style="text-align: right;">0.0656</td>
 <td style="text-align: right;">1.699</td>
 <td style="text-align: right;">0.6424</td>
-<td>Especificación conceptual central, pero frágil por instrumentos débiles</td>
+<td>2SLS convencional: <code>p = 0.020</code>; Anderson-Rubin: <code>p = 0.562</code></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Con ese filtro de lectura, la tabla resume la evidencia comparativa para esta cohorte con estimaciones robustas en corte transversal.</p>
-<div class="section-box">
-<svg viewbox="0 0 960 220" width="100%" role="img" aria-label="Trayectoria IV simple a rica: cae beta educ y cae KP rk F" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrow-c08" markerwidth="8" markerheight="8" refx="7" refy="4" orient="auto" markerunits="strokeWidth">
-      <path d="M0,0 L8,4 L0,8 z" fill="#6b7280"></path>
-    </marker>
-  </defs>
-
-  <line x1="290" y1="110" x2="335" y2="110" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-c08)"></line>
-  <line x1="615" y1="110" x2="660" y2="110" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-c08)"></line>
-
-  <rect x="20" y="42" width="270" height="136" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"></rect>
-  <text x="34" y="66" font-size="15" font-weight="700" fill="#111827">Simple/fuerte</text>
-  <text x="34" y="88" font-size="12.5" fill="#374151">IV con dummies trimestre</text>
-  <text x="34" y="106" font-size="12.5" fill="#374151">(qob_2 qob_3 qob_4)</text>
-  <text x="34" y="132" font-size="13.5" fill="#111827">β educ = 0.1025976</text>
-  <text x="34" y="154" font-size="13.5" fill="#111827">KP rk F = 34.054</text>
-
-  <rect x="345" y="42" width="270" height="136" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"></rect>
-  <text x="359" y="66" font-size="15" font-weight="700" fill="#111827">Intermedio</text>
-  <text x="359" y="88" font-size="12.5" fill="#374151">IV con interacciones</text>
-  <text x="359" y="106" font-size="12.5" fill="#374151">QOB x YOB (sin edad, edad²)</text>
-  <text x="359" y="132" font-size="13.5" fill="#111827">β educ = 0.0891155</text>
-  <text x="359" y="154" font-size="13.5" fill="#111827">KP rk F = 4.801</text>
-
-  <rect x="670" y="42" width="270" height="136" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"></rect>
-  <text x="684" y="66" font-size="15" font-weight="700" fill="#111827">Rico/débil final</text>
-  <text x="684" y="88" font-size="12.5" fill="#374151">IV + edad, edad², cohorte</text>
-  <text x="684" y="106" font-size="12.5" fill="#374151">+ QOB x YOB</text>
-  <text x="684" y="132" font-size="13.5" fill="#111827">β educ = 0.0655891</text>
-  <text x="684" y="154" font-size="13.5" fill="#111827">KP rk F = 1.699</text>
-</svg>
-</div>
+<p>Con ese filtro de lectura, la tabla resume la evidencia comparativa para esta cohorte con estimaciones robustas en corte transversal. En la especificación final, Stata elimina dos interacciones por colinealidad y quedan 28 instrumentos excluidos efectivos; su señal conjunta alcanza para rechazar subidentificación, pero no para evitar el problema de instrumentos débiles.</p>
 </section>
 <section id="credibilidad-empírica-de-la-identificación" class="level2">
 <h2 class="anchored" data-anchor-id="credibilidad-empírica-de-la-identificación">Credibilidad empírica de la identificación</h2>
@@ -400,12 +362,17 @@ ul.task-list li input[type="checkbox"] {
 <p>Hansen J: <code>p = 0.6424</code>.</p>
 <p>No rechazar sobreidentificación no certifica validez total del diseño. Menos aún cuando la relevancia del instrumento ya es baja.</p>
 </div>
+<div class="section-box">
+<p><strong>Inferencia robusta a instrumentos débiles</strong></p>
+<p>Anderson-Rubin: <code>p = 0.5624</code>.</p>
+<p>Mientras la inferencia convencional de 2SLS rechaza efecto cero, Anderson-Rubin no lo hace. Con <code>KP rk F = 1.699</code>, esta discrepancia forma parte del resultado principal y no es un detalle técnico.</p>
+</div>
 </div>
 <p>Como contraste adicional, <code>gmm2s</code> en la misma especificación entrega un coeficiente cercano (<code>0.0674</code>). Eso sugiere estabilidad puntual frente al estimador, pero no corrige la debilidad de la primera etapa.</p>
 </section>
 <section id="qué-lectura-domina" class="level2">
 <h2 class="anchored" data-anchor-id="qué-lectura-domina">Qué lectura domina</h2>
-<p>En este ejercicio, IV no identifica un retorno único y universal: identifica efectos locales (LATE) asociados a la variación exógena específica que cada instrumento logra inducir sobre educación.</p>
+<p>En este ejercicio, IV no identifica un retorno único y universal: identifica efectos locales (LATE) para las personas cuya escolaridad responde a la variación inducida por las reglas de escolarización vinculadas al trimestre de nacimiento.</p>
 <p>Por eso, cuando cambia el set de instrumentos, puede cambiar tanto la magnitud estimada como la población local efectivamente identificada. En los diseños simples, el retorno IV ronda <code>0.10</code> con primera etapa fuerte; al pasar al diseño con interacciones <code>QOB x YOB</code> y controles, el coeficiente baja a <code>0.0656</code> y la primera etapa se debilita de forma marcada (<code>KP rk F = 1.699</code>).</p>
 </section>
 <section id="cierre" class="level2">
@@ -413,6 +380,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Para esta cohorte, la evidencia sugiere un retorno positivo de la educación en casi todas las variantes, pero su interpretación causal depende de qué tan convincente sea la identificación por instrumentos.</p>
 <p>La estrategia IV mantiene una lógica causal clara: aislar variación exógena en educación para estimar su efecto sobre salarios. En esta aplicación, el límite principal no está en esa lógica, sino en la fuerza empírica de los instrumentos en la especificación con controles e interacciones.</p>
 <p>La lectura final es directa: IV aporta una identificación causal local (LATE), pero la credibilidad de esa estimación depende de instrumentos suficientemente relevantes. Aquí, la debilidad de primera etapa acota el alcance inferencial del resultado.</p>
+<p>La extensión moderna de esta arquitectura —instrumento binario, covariables y modelos auxiliares doblemente robustos— se desarrolla en <a href="../../causalidad/piezas/c09_drlate_401k.html">Participación en 401(k) y activos financieros con DR-LATE</a>.</p>
 
 
 </section>

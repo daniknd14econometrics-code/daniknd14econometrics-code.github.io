@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Mismo coeficiente, distinta incertidumbre</title>
+  <desc id="desc">Para una misma ley placebo, el coeficiente es 0,0057 con todos los métodos. Los errores estándar son 0,0058 con OLS convencional, 0,0128 con cluster por estado, 0,0123 con matriz empírica común, 0,0080 con AR uno estimado y 0,0179 con AR uno imponiendo rho igual a 0,8.</desc>
+  <rect width="1200" height="650" fill="#ffffff"/>
+
+  <text x="600" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#15324a">El coeficiente no cambia; la incertidumbre sí</text>
+  <text x="600" y="86" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Una misma ley placebo, estimada sobre la misma muestra</text>
+
+  <rect x="425" y="108" width="350" height="58" rx="12" fill="#e9f3ef" stroke="#9dc7b7" stroke-width="2"/>
+  <text x="600" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#3e6b59">COEFICIENTE COMÚN</text>
+  <text x="600" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#15324a">β̂ = 0,0057</text>
+
+  <g stroke="#dce5eb" stroke-width="1">
+    <line x1="360" y1="205" x2="360" y2="548"/>
+    <line x1="560" y1="205" x2="560" y2="548"/>
+    <line x1="760" y1="205" x2="760" y2="548"/>
+    <line x1="960" y1="205" x2="960" y2="548"/>
+    <line x1="1160" y1="205" x2="1160" y2="548"/>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="16" fill="#526575" text-anchor="middle">
+    <text x="360" y="578">0</text>
+    <text x="560" y="578">0,005</text>
+    <text x="760" y="578">0,010</text>
+    <text x="960" y="578">0,015</text>
+    <text x="1160" y="578">0,020</text>
+  </g>
+  <text x="710" y="612" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#314858">Error estándar estimado</text>
+
+  <g font-family="Arial, sans-serif" font-size="18" fill="#314858" text-anchor="end">
+    <text x="330" y="247">OLS convencional</text>
+    <text x="330" y="317">Cluster por estado</text>
+    <text x="330" y="387">Covarianza empírica</text>
+    <text x="330" y="457">AR(1) estimado</text>
+    <text x="330" y="527">AR(1), ρ = 0,8</text>
+  </g>
+
+  <g>
+    <rect x="360" y="222" width="232" height="34" rx="6" fill="#c36b65"/>
+    <rect x="360" y="292" width="512" height="34" rx="6" fill="#277da1"/>
+    <rect x="360" y="362" width="492" height="34" rx="6" fill="#277da1"/>
+    <rect x="360" y="432" width="320" height="34" rx="6" fill="#7894a6"/>
+    <rect x="360" y="502" width="716" height="34" rx="6" fill="#7894a6"/>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#15324a">
+    <text x="606" y="246">0,0058</text>
+    <text x="886" y="316">0,0128</text>
+    <text x="866" y="386">0,0123</text>
+    <text x="694" y="456">0,0080</text>
+    <text x="1090" y="526">0,0179</text>
+  </g>
+
+  <text x="600" y="638" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#526575">Una barra más larga no implica un método superior: cada corrección incorpora supuestos distintos.</text>
+</svg>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Spam: la estabilidad que convierte un árbol en una decisión confiable – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../problemas-negocio.html"> 
+<span class="menu-text">Problemas de negocio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#el-problema-tiene-dos-salidas-score-y-decisión" id="toc-el-problema-tiene-dos-salidas-score-y-decisión" class="nav-link active" data-scroll-target="#el-problema-tiene-dos-salidas-score-y-decisión">El problema tiene dos salidas: score y decisión</a></li>
+  <li><a href="#un-árbol-legible-también-puede-ser-frágil" id="toc-un-árbol-legible-también-puede-ser-frágil" class="nav-link" data-scroll-target="#un-árbol-legible-también-puede-ser-frágil">Un árbol legible también puede ser frágil</a></li>
+  <li><a href="#el-criterio-cambia-el-ranking-de-los-cart" id="toc-el-criterio-cambia-el-ranking-de-los-cart" class="nav-link" data-scroll-target="#el-criterio-cambia-el-ranking-de-los-cart">El criterio cambia el ranking de los CART</a></li>
+  <li><a href="#el-umbral-expresa-el-costo-de-equivocarse" id="toc-el-umbral-expresa-el-costo-de-equivocarse" class="nav-link" data-scroll-target="#el-umbral-expresa-el-costo-de-equivocarse">El umbral expresa el costo de equivocarse</a></li>
+  <li><a href="#bagging-estabiliza-random-forest-diversifica" id="toc-bagging-estabiliza-random-forest-diversifica" class="nav-link" data-scroll-target="#bagging-estabiliza-random-forest-diversifica">Bagging estabiliza; Random Forest diversifica</a></li>
+  <li><a href="#el-test-muestra-una-mejora-en-ambas-clases" id="toc-el-test-muestra-una-mejora-en-ambas-clases" class="nav-link" data-scroll-target="#el-test-muestra-una-mejora-en-ambas-clases">El test muestra una mejora en ambas clases</a></li>
+  <li><a href="#la-mejora-también-aparece-antes-del-umbral" id="toc-la-mejora-también-aparece-antes-del-umbral" class="nav-link" data-scroll-target="#la-mejora-también-aparece-antes-del-umbral">La mejora también aparece antes del umbral</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Spam: la estabilidad que convierte un árbol en una decisión confiable</h1>
+<p class="subtitle lead">CART, Bagging y Random Forest para clasificar correo con scores y umbrales explícitos</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">4 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../machine-learning/index.html">Machine Learning</a> / <a href="../../machine-learning/index.html#arboles-y-ensambles">Árboles y ensambles</a></p>
+<p><span class="badge">Clasificación binaria · CART · Bagging · Random Forest</span></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>Random Forest reduce falsos positivos y falsos negativos en el mismo test. El avance no es solo más accuracy: el ensamble mejora el score antes de que el umbral lo convierta en decisión.</p>
+</div>
+<div class="hero-sub">
+<p>Spam muestra cómo el promedio de árboles estabiliza un clasificador y por qué calidad probabilística, umbral y tipos de error deben leerse por separado.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Mensajes</p>
+</div>
+<div class="metric-value">
+<p>4.601</p>
+</div>
+<div class="metric-note">
+<p>57 predictores de palabras, caracteres y mayúsculas.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Test protegido</p>
+</div>
+<div class="metric-value">
+<p>1.536</p>
+</div>
+<div class="metric-note">
+<p>Desarrollo estratificado: 3.065 mensajes.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Error RF</p>
+</div>
+<div class="metric-value">
+<p>0,0488</p>
+</div>
+<div class="metric-note">
+<p>75 errores, frente a 119 de CART-min.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>ROC-AUC RF</p>
+</div>
+<div class="metric-value">
+<p>0,9841</p>
+</div>
+<div class="metric-note">
+<p>El score separa spam y email antes del threshold.</p>
+</div>
+</div>
+</div>
+<section id="el-problema-tiene-dos-salidas-score-y-decisión" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema-tiene-dos-salidas-score-y-decisión">El problema tiene dos salidas: score y decisión</h2>
+<p>La tarea es clasificar 4.601 mensajes como spam o email a partir de 57 frecuencias de palabras, caracteres y secuencias de mayúsculas. La partición estratificada reserva 1.536 correos para test —931 emails y 605 spam— y deja 3.065 para desarrollo. Allí se aprende toda la estructura antes de mirar las respuestas protegidas.</p>
+<p>Un CART asigna a cada hoja la proporción de spam observada entre los correos que llegaron a ella. Esa proporción es un score; recién el umbral <span class="math inline">\(t=0,5\)</span> la transforma en clase. Separar ambos objetos permite preguntar dos cosas distintas: qué tan bien ordena el modelo los mensajes y qué errores produce una regla operativa concreta.</p>
+<p>El benchmark muestra por qué accuracy no alcanza. Si se clasifica todo como email se acierta 60,6 % del test, pero no se detecta un solo spam: sensibilidad 0 y <em>balanced accuracy</em> 0,5.</p>
+</section>
+<section id="un-árbol-legible-también-puede-ser-frágil" class="level2">
+<h2 class="anchored" data-anchor-id="un-árbol-legible-también-puede-ser-frágil">Un árbol legible también puede ser frágil</h2>
+<p>La primera partición de CART es <code>char_freq_dollar &lt; 0,0555</code>. En desarrollo, el corte separa un grupo de 2.309 mensajes con 23,6 % de spam de otro de 756 con 87,8 %. La reducción de impureza Gini es 0,1535. El resultado hace visible cómo una regla local organiza las clases, aunque no implica que ese carácter sea una causa del spam.</p>
+<p>El árbol grande <span class="math inline">\(T_0\)</span> llega a 51 hojas, profundidad 17 y error de entrenamiento 5,45 %. Su complejidad y su ajuste interno no bastan para adoptarlo. La validación cruzada estratificada de cinco folds reconstruye el aprendizaje en cada partición y elige cuánto podar mediante error 0–1:</p>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Regla</th>
+<th style="text-align: right;">Hojas</th>
+<th style="text-align: right;">Profundidad</th>
+<th style="text-align: right;">Error CV</th>
+<th style="text-align: right;">Error test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CART grande <span class="math inline">\(T_0\)</span></td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0,0885</td>
+</tr>
+<tr class="even">
+<td>CART-min</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"><strong>0,0917</strong></td>
+<td style="text-align: right;"><strong>0,0775</strong></td>
+</tr>
+<tr class="odd">
+<td>CART-1SE</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0,0940</td>
+<td style="text-align: right;">0,0879</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>CART-1SE reduce casi a la mitad las hojas de CART-min y permanece bajo el umbral 1SE de 0,0951. Es una elección de parsimonia, no evidencia de igualdad estadística. En test, CART-min logra el menor error de los árboles. <span class="math inline">\(T_0\)</span> detecta algo más de spam, pero a costa de 71 falsos positivos frente a 46 de CART-min; la poda cambia tanto el número como el tipo de errores.</p>
+</section>
+<section id="el-criterio-cambia-el-ranking-de-los-cart" class="level2">
+<h2 class="anchored" data-anchor-id="el-criterio-cambia-el-ranking-de-los-cart">El criterio cambia el ranking de los CART</h2>
+<p>Con <span class="math inline">\(t=0,5\)</span>, CART-min gana en error 0–1 y Brier. Sin fijar un umbral, <span class="math inline">\(T_0\)</span> obtiene el mayor AUC, 0,9494. CART-1SE registra la menor Log Loss, 0,2759, porque produce menos probabilidades extremas equivocadas. En <span class="math inline">\(T_0\)</span>, 11 mensajes reciben score 0 o 1 y quedan mal clasificados; esas predicciones seguras y erróneas reciben una penalización especialmente alta.</p>
+<p>No hay contradicción: error 0–1 evalúa la decisión, AUC el ordenamiento y Log Loss/Brier la calidad del score bajo pérdidas diferentes. La poda fue seleccionada con error 0–1; mirar después otra métrica del test no permite reabrir esa decisión.</p>
+</section>
+<section id="el-umbral-expresa-el-costo-de-equivocarse" class="level2">
+<h2 class="anchored" data-anchor-id="el-umbral-expresa-el-costo-de-equivocarse">El umbral expresa el costo de equivocarse</h2>
+<p>En desarrollo, las probabilidades fuera de fold de CART-1SE permiten mover <span class="math inline">\(t\)</span> sin tocar el test. Con <span class="math inline">\(t=0,5\)</span> aparecen 108 falsos positivos y 180 falsos negativos. Si el umbral sube, bloquear un email legítimo se vuelve menos frecuente y dejar pasar spam más frecuente. Los tramos planos son propios de un árbol: todas las observaciones de una hoja comparten el mismo score.</p>
+<p>El informe reconoce que un falso positivo puede ser especialmente costoso, pero no dispone de una relación cuantificada entre ambos errores. Por eso mantiene <span class="math inline">\(t=0,5\)</span> en lugar de inventar una matriz de costos. En producción, el modelo y el umbral serían dos decisiones separadas.</p>
+</section>
+<section id="bagging-estabiliza-random-forest-diversifica" class="level2">
+<h2 class="anchored" data-anchor-id="bagging-estabiliza-random-forest-diversifica">Bagging estabiliza; Random Forest diversifica</h2>
+<p>Bagging ajusta 750 árboles profundos sobre muestras bootstrap y agrega sus votos. Su score es la proporción de árboles que vota spam: vive entre cero y uno, pero conceptualmente no es la proporción de spam de una hoja CART. Random Forest añade una restricción local: solo <code>mtry</code> variables sorteadas pueden competir en cada nodo.</p>
+<p>El error OOB de desarrollo selecciona <code>mtry = 12</code>, frente a Bagging con las 57 variables disponibles. La trayectoria, sin embargo, es plana alrededor del mínimo:</p>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><code>mtry</code></th>
+<th style="text-align: right;">Error OOB</th>
+<th style="text-align: right;">AUC OOB</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,0858</td>
+<td style="text-align: right;">0,9723</td>
+<td>Restricción excesiva</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0,0542</td>
+<td style="text-align: right;"><strong>0,9844</strong></td>
+<td>166 errores OOB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"><strong>0,0538</strong></td>
+<td style="text-align: right;">0,9830</td>
+<td>165 errores; seleccionado</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0,0548</td>
+<td style="text-align: right;">0,9801</td>
+<td>Zona aún cercana</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">0,0607</td>
+<td style="text-align: right;">0,9763</td>
+<td>Bagging</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La regla preespecificada elige 12, pero un solo error separa ese valor de <code>mtry = 5</code>. Cuando el procedimiento se reajusta después con los 4.601 casos etiquetados, el mínimo operativo cambia precisamente a 5. Esto confirma que <code>mtry = 12</code> no es una constante estructural; la conclusión estable es que restringir bastante la competencia respecto de Bagging funciona bien en esta muestra.</p>
+<p>La evidencia sobre el mecanismo va en la dirección esperada. El desacuerdo medio entre árboles sube de 0,0806 en Bagging a 0,0893 en RF y la correlación baja de 0,8311 a 0,8128. Con 750 árboles, la trayectoria OOB ya está en una meseta. Diversidad y estabilidad Monte Carlo son diagnósticos internos; el test sigue siendo la evaluación externa.</p>
+</section>
+<section id="el-test-muestra-una-mejora-en-ambas-clases" class="level2">
+<h2 class="anchored" data-anchor-id="el-test-muestra-una-mejora-en-ambas-clases">El test muestra una mejora en ambas clases</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">Sens. spam</th>
+<th style="text-align: right;">Espec. email</th>
+<th style="text-align: right;">AUC</th>
+<th style="text-align: right;">Log Loss</th>
+<th style="text-align: right;">Brier</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CART-min</td>
+<td style="text-align: right;">0,0775</td>
+<td style="text-align: right;">0,8793</td>
+<td style="text-align: right;">0,9506</td>
+<td style="text-align: right;">0,9420</td>
+<td style="text-align: right;">0,2913</td>
+<td style="text-align: right;">0,0677</td>
+</tr>
+<tr class="even">
+<td>CART-1SE</td>
+<td style="text-align: right;">0,0879</td>
+<td style="text-align: right;">0,8595</td>
+<td style="text-align: right;">0,9463</td>
+<td style="text-align: right;">0,9328</td>
+<td style="text-align: right;">0,2759</td>
+<td style="text-align: right;">0,0759</td>
+</tr>
+<tr class="odd">
+<td>Bagging</td>
+<td style="text-align: right;">0,0599</td>
+<td style="text-align: right;">0,9190</td>
+<td style="text-align: right;">0,9538</td>
+<td style="text-align: right;">0,9807</td>
+<td style="text-align: right;">0,2214</td>
+<td style="text-align: right;">0,0442</td>
+</tr>
+<tr class="even">
+<td>Random Forest</td>
+<td style="text-align: right;"><strong>0,0488</strong></td>
+<td style="text-align: right;"><strong>0,9273</strong></td>
+<td style="text-align: right;"><strong>0,9667</strong></td>
+<td style="text-align: right;"><strong>0,9841</strong></td>
+<td style="text-align: right;"><strong>0,1950</strong></td>
+<td style="text-align: right;"><strong>0,0402</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fig-spam-confusion" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Random Forest registra 31 falsos positivos y 44 falsos negativos, frente a 46 y 73 en CART-min y 43 y 49 en Bagging.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spam-confusion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t09b_spam_confusion.png" class="img-fluid figure-img" style="width:100.0%" alt="Random Forest registra 31 falsos positivos y 44 falsos negativos, frente a 46 y 73 en CART-min y 43 y 49 en Bagging.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spam-confusion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Matrices de confusión de CART y ensambles sobre el mismo test, con threshold 0,5.
+</figcaption>
+</figure>
+</div>
+<p>Random Forest comete 75 errores, Bagging 92 y CART-min 119. Frente a CART-min, RF reduce 37,0 % el error total; frente a Bagging, 18,5 %. La mejora no sacrifica una clase: los falsos positivos bajan de 46 a 31 y los falsos negativos de 73 a 44. Con el umbral fijado, preserva más emails legítimos y detecta más spam.</p>
+</section>
+<section id="la-mejora-también-aparece-antes-del-umbral" class="level2">
+<h2 class="anchored" data-anchor-id="la-mejora-también-aparece-antes-del-umbral">La mejora también aparece antes del umbral</h2>
+<div id="fig-spam-metricas" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Random Forest logra AUC 0,984, Log Loss 0,195 y Brier 0,040; Bagging queda segundo con 0,981, 0,221 y 0,044.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spam-metricas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t09b_spam_metricas.png" class="img-fluid figure-img" style="width:100.0%" alt="Random Forest logra AUC 0,984, Log Loss 0,195 y Brier 0,040; Bagging queda segundo con 0,981, 0,221 y 0,044.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spam-metricas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: AUC, Log Loss y Brier sobre el test protegido para benchmark, CART, Bagging y Random Forest.
+</figcaption>
+</figure>
+</div>
+<p>Los ensambles producen muchos más niveles de score que un CART y separan mejor emails de spam. Random Forest presenta el mejor valor observado en error, sensibilidad, especificidad, AUC, Log Loss y Brier; Bagging queda segundo. La señal es más uniforme que entre los árboles individuales, cuyos rankings dependían de la pérdida elegida.</p>
+<p>La importancia por permutación del RF distribuye la señal entre secuencias de mayúsculas y frecuencias como <code>word_freq_hp</code>, <code>char_freq_exclamation</code>, <code>word_freq_remove</code> y <code>char_freq_dollar</code>. El predictor del primer corte sigue siendo útil, pero ya no domina una única jerarquía. Estas importancias describen capacidad predictiva y pueden repartirse entre variables relacionadas.</p>
+<section id="decisión-bajo-el-criterio-fijado" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="decisión-bajo-el-criterio-fijado">Decisión bajo el criterio fijado</h3>
+<p>Random Forest es la opción preferible bajo el umbral y las métricas observadas. CART conserva una regla completa que puede recorrerse; el bosque cambia esa transparencia por scores y decisiones más estables. Una implementación real debería cuantificar el costo de bloquear un email legítimo frente a dejar pasar spam y elegir el threshold en consecuencia.</p>
+</section>
+<p>La conclusión depende de una única partición estratificada y de un corpus cuyo lenguaje puede cambiar con usuarios, idiomas y tiempo. OOB participó en el tuning de <code>mtry</code>, el score de votos no fue calibrado mediante un procedimiento adicional y las diferencias observadas no incluyen inferencia sobre superioridad poblacional. El desempeño y las importancias son predictivos, no causales.</p>
+<p><a href="../../machine-learning/piezas/t09a_california.html">California Housing</a> presenta el mismo mecanismo en regresión: promediar árboles reduce MSE, aunque no exista un umbral de decisión.</p>
+<div class="small-note">
+<p><strong>Fuente:</strong> informe curado «Taller 09B: CART, Bagging y Random Forest con Spam». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

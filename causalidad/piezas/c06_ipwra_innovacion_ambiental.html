@@ -142,9 +142,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#pregunta-central" id="toc-pregunta-central" class="nav-link" data-scroll-target="#pregunta-central">Pregunta central</a></li>
   <li><a href="#por-qué-importa-la-comparabilidad" id="toc-por-qué-importa-la-comparabilidad" class="nav-link" data-scroll-target="#por-qué-importa-la-comparabilidad">Por qué importa la comparabilidad</a></li>
   <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#diseño-seleccionado-y-por-qué" id="toc-diseño-seleccionado-y-por-qué" class="nav-link" data-scroll-target="#diseño-seleccionado-y-por-qué">Diseño seleccionado y por qué</a></li>
+  <li><a href="#especificación-final-documentada" id="toc-especificación-final-documentada" class="nav-link" data-scroll-target="#especificación-final-documentada">Especificación final documentada</a></li>
   <li><a href="#soporte-y-balance" id="toc-soporte-y-balance" class="nav-link" data-scroll-target="#soporte-y-balance">Soporte y balance</a></li>
   <li><a href="#resultado-principal" id="toc-resultado-principal" class="nav-link" data-scroll-target="#resultado-principal">Resultado principal</a></li>
+  <li><a href="#por-qué-el-gradiente-no-identifica-complementariedad" id="toc-por-qué-el-gradiente-no-identifica-complementariedad" class="nav-link" data-scroll-target="#por-qué-el-gradiente-no-identifica-complementariedad">Por qué el gradiente no identifica complementariedad</a></li>
   <li><a href="#lectura-sustantiva-y-alcance" id="toc-lectura-sustantiva-y-alcance" class="nav-link" data-scroll-target="#lectura-sustantiva-y-alcance">Lectura sustantiva y alcance</a></li>
   <li><a href="#cierre-qué-se-concluye-y-qué-no" id="toc-cierre-qué-se-concluye-y-qué-no" class="nav-link" data-scroll-target="#cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</a></li>
   </ul>
@@ -156,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Innovación de producto/proceso y mejora ambiental en firmas innovadoras</h1>
-<p class="subtitle lead">Estimación principal con IPWRA sobre un diseño de comparabilidad ya seleccionado</p>
+<p class="subtitle lead">Estimación con IPWRA, soporte y balance para un tratamiento multivaluado</p>
 </div>
 
 
@@ -188,10 +189,10 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="../../causalidad/index.html">&lt;- Volver al índice de Causalidad</a></p>
 <div class="hero-box">
 <div class="hero-title">
-<p>Cuando la innovación combina producto y proceso, la mejora ambiental aparece con mayor intensidad</p>
+<p>Tres contrastes positivos, sin confundir gradiente con complementariedad</p>
 </div>
 <div class="hero-sub">
-<p>Este análisis estima, en firmas innovadoras comparables, cómo cambia la probabilidad de reportar mejora ambiental media/alta según el estado de innovación frente al grupo sin innovación de producto/proceso.</p>
+<p>Este análisis estima, en firmas innovadoras comparables, cómo cambia la probabilidad de reportar mejora ambiental media/alta para cada estado de innovación frente al grupo sin innovación de producto/proceso.</p>
 </div>
 </div>
 <section id="resumen-ejecutivo" class="level2">
@@ -213,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="small-note">
 <ul>
 <li><strong>Unidad de análisis:</strong> observación firma-año en panel de innovación.</li>
-<li><strong>Muestra de estimación principal:</strong> <code>N = 4,393</code> observaciones comparables.</li>
+<li><strong>Muestra de estimación principal:</strong> <code>N = 4,393</code> observaciones comparables de 2.662 firmas.</li>
 <li><strong>Resultado:</strong> indicador binario de mejora ambiental media/alta (<code>Y_cond</code>).</li>
 <li><strong>Estados de tratamiento:</strong><br>
 <code>0</code> = sin innovación de producto/proceso,<br>
@@ -224,11 +225,14 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </div>
 <p>La estimación se organiza en tres contrastes diagonales (<code>1 vs 0</code>, <code>2 vs 0</code>, <code>3 vs 0</code>) definidos para subpoblaciones tratadas comparables dentro del soporte común operativo.</p>
+<p>La especificación final modela el tratamiento multivaluado con <code>mlogit</code>, el resultado binario con <code>logit</code> y agrupa la inferencia por firma. IPWRA combina ambos modelos y ofrece doble robustez, pero esa propiedad no sustituye los supuestos de selección en observables y overlap.</p>
+<p>Ambos modelos condicionan por edad, capital extranjero, proporción de profesionales y técnicos, condición exportadora, tamaño y vínculos de red. El modelo de tratamiento incorpora además interacciones de red con exportación y tamaño, y el macrosector; el modelo de resultado agrega términos cuadráticos de edad y tamaño, innovación organizacional y comercial, y un indicador de faltantes.</p>
+<p>La muestra pasa de 5.485 observaciones con resultado y tratamiento observados a 5.393 luego de restringir sectores, 4.563 casos completos y 4.393 observaciones después del recorte de soporte. Las 170 observaciones excluidas por esa última regla delimitan la población sobre la que se interpretan los efectos.</p>
 </section>
-<section id="diseño-seleccionado-y-por-qué" class="level2">
-<h2 class="anchored" data-anchor-id="diseño-seleccionado-y-por-qué">Diseño seleccionado y por qué</h2>
-<p>La estimación principal se apoya en una configuración de diseño fijada antes de leer magnitudes de efecto. Esa configuración se adopta porque preserva soporte efectivo amplio, mantiene balance ponderado en rangos aceptables y evita alternativas más restrictivas que reducen en exceso la muestra utilizable.</p>
-<p>La decisión metodológica es deliberada: primero asegurar comparabilidad, soporte y estabilidad de pesos; después interpretar resultados. La especificación no se elige por el efecto más alto, sino por la credibilidad del contrafactual.</p>
+<section id="especificación-final-documentada" class="level2">
+<h2 class="anchored" data-anchor-id="especificación-final-documentada">Especificación final documentada</h2>
+<p>La fuente curada documenta la especificación contemporánea final y sus diagnósticos. No reconstruye ni compara las alternativas consideradas durante una etapa previa de selección, por lo que esta ficha no atribuye a la configuración final una superioridad frente a especificaciones no reportadas.</p>
+<p>La evaluación disponible se concentra en lo que sí puede comprobarse para esa especificación: soporte, balance ponderado, estabilidad de pesos y sensibilidad de la interpretación a los supuestos causales.</p>
 </section>
 <section id="soporte-y-balance" class="level2">
 <h2 class="anchored" data-anchor-id="soporte-y-balance">Soporte y balance</h2>
@@ -239,6 +243,36 @@ ul.task-list li input[type="checkbox"] {
 <li>el contraste <code>ambas vs 0</code> es el más exigente en términos de reponderación, pero permanece dentro de una zona de balance aceptable.</li>
 </ul>
 <p>Estos chequeos respaldan la credibilidad del diseño y ordenan la lectura del resultado principal.</p>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Contraste</th>
+<th style="text-align: right;">Máx. |SMD| sin ponderar</th>
+<th style="text-align: right;">Máx. |SMD| ponderado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Solo producto (<code>1</code>) vs <code>0</code></td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: right;">0.038</td>
+</tr>
+<tr class="even">
+<td>Solo proceso (<code>2</code>) vs <code>0</code></td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">0.035</td>
+</tr>
+<tr class="odd">
+<td>Producto y proceso (<code>3</code>) vs <code>0</code></td>
+<td style="text-align: right;">0.463</td>
+<td style="text-align: right;">0.065</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La regla de diseño restringe la probabilidad estimada del grupo base a <code>0.05 &lt;= p0(X) &lt;= 0.95</code>. Después de ese recorte, <code>teffects</code> no marca observaciones fuera de soporte en los pares relevantes y el peor desbalance ponderado queda por debajo de 0.10.</p>
+<p>No se aplica un recorte superior adicional ni winsorización de pesos. Los máximos observados son 3.35, 2.28 y 4.76 para los contrastes <code>1 vs 0</code>, <code>2 vs 0</code> y <code>3 vs 0</code>; los tamaños efectivos de muestra del grupo base son aproximadamente 470.6, 551.9 y 395.0. Estos diagnósticos no muestran una concentración extrema de la ponderación en la muestra analizada, aunque no sustituyen el supuesto de positividad.</p>
 <p>Para el contraste más exigente (<code>3 vs 0</code>), se muestra el overlap antes y después de ponderar.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -263,17 +297,17 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="resultado-principal">Resultado principal</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Contraste principal (vs grupo base <code>0</code>)</th>
 <th style="text-align: right;">ATET</th>
 <th style="text-align: right;">Error estándar</th>
-<th>Lectura breve</th>
+<th style="text-align: right;">IC 95%</th>
 </tr>
 </thead>
 <tbody>
@@ -281,19 +315,19 @@ ul.task-list li input[type="checkbox"] {
 <td>Solo producto (<code>1</code>) vs sin producto/proceso (<code>0</code>)</td>
 <td style="text-align: right;">0.11796</td>
 <td style="text-align: right;">0.03344</td>
-<td>Aumento estimado de <strong>11.8 puntos porcentuales</strong></td>
+<td style="text-align: right;">[0.0524; 0.1835]</td>
 </tr>
 <tr class="even">
 <td>Solo proceso (<code>2</code>) vs sin producto/proceso (<code>0</code>)</td>
 <td style="text-align: right;">0.18043</td>
 <td style="text-align: right;">0.03312</td>
-<td>Aumento estimado de <strong>18.0 puntos porcentuales</strong></td>
+<td style="text-align: right;">[0.1155; 0.2453]</td>
 </tr>
 <tr class="odd">
 <td>Producto y proceso (<code>3</code>) vs sin producto/proceso (<code>0</code>)</td>
 <td style="text-align: right;">0.27051</td>
 <td style="text-align: right;">0.03155</td>
-<td>Aumento estimado de <strong>27.1 puntos porcentuales</strong></td>
+<td style="text-align: right;">[0.2087; 0.3323]</td>
 </tr>
 </tbody>
 </table>
@@ -306,6 +340,11 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Mini coefplot horizontal de ATET diagonales (IC 95%)</figcaption>
 </figure>
 </div>
+<section id="por-qué-el-gradiente-no-identifica-complementariedad" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-el-gradiente-no-identifica-complementariedad">Por qué el gradiente no identifica complementariedad</h2>
+<p>Los tres números no promedian sobre la misma población: cada ATET corresponde a las firmas que efectivamente están en ese estado de innovación. Por eso, restar <code>ATET_3 - ATET_2</code> no identifica el efecto causal de agregar innovación de producto a una firma que ya innova en proceso; la diferencia también cambia la población tratada sobre la que se promedia.</p>
+<p>La conclusión defendible es más precisa: cada estado tratado presenta un efecto positivo frente a su propio contrafactual <code>D=0</code>, y el grupo con innovación de producto y proceso exhibe el ATET puntual más alto. Probar complementariedad exigiría estimar contrastes directos entre tratamientos activos sobre una población objetivo común.</p>
+</section>
 <section id="lectura-sustantiva-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-sustantiva-y-alcance">Lectura sustantiva y alcance</h2>
 <div class="quick-grid">
@@ -319,15 +358,15 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="section-box">
 <p><strong>Alcance</strong></p>
-<p>Efectos causales interpretables como cambios en probabilidad (puntos porcentuales) dentro del diseño observacional adoptado, para firmas innovadoras tratadas comparables en soporte.</p>
+<p>Efectos interpretables como cambios causales en probabilidad, condicionados a selección en observables y overlap, para firmas innovadoras tratadas comparables en soporte.</p>
 </div>
 </div>
-<p>Dentro del diseño aplicado, la innovación de producto/proceso incrementa la probabilidad de mejora ambiental reportada frente al grupo base, y la magnitud esperada es mayor cuando ambas innovaciones aparecen de forma conjunta.</p>
+<p>Dentro del diseño aplicado, cada estado de innovación presenta un efecto positivo frente al grupo base; el ATET puntual es mayor para las firmas que realizan ambas innovaciones, sin que ese gradiente identifique por sí solo un efecto incremental entre tratamientos activos.</p>
 </section>
 <section id="cierre-qué-se-concluye-y-qué-no" class="level2">
 <h2 class="anchored" data-anchor-id="cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</h2>
-<p>Se concluye que, para firmas innovadoras comparables en soporte, los tres estados de innovación frente al grupo base generan aumentos positivos en la probabilidad de mejora ambiental media/alta, con un gradiente creciente desde solo producto hasta producto y proceso.</p>
-<p>Estos efectos causales se interpretan para la población objetivo del diseño: firmas innovadoras comparables en soporte con las covariables observadas incluidas en la estimación.</p>
+<p>Los resultados estiman, para firmas innovadoras comparables en soporte, aumentos positivos en la probabilidad de mejora ambiental media/alta en los tres estados frente al grupo base, con un gradiente creciente desde solo producto hasta producto y proceso.</p>
+<p>La lectura causal depende de que las covariables incluidas sean suficientes para absorber la selección relevante y de que el orden temporal contemporáneo sea defendible. El panel aporta observaciones firma-año y permite agrupar la inferencia por firma, pero esta especificación no controla heterogeneidad fija de la firma ni incorpora indicadores de año. El buen balance no descarta confusión no observada, simultaneidad ni causalidad inversa; tampoco convierte el gradiente entre ATET en evidencia de complementariedad.</p>
 
 
 </section>

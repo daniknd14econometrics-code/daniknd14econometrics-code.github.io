@@ -222,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 <p>El parámetro es el salto en el resultado esperado justo en el umbral: un efecto causal local para municipios con elecciones muy reñidas.</p>
 </div>
 </div>
-<p>La asignación es <em>sharp</em>: en la base, el tratamiento coincide exactamente con la regla <code>margen ≥ 0</code>. Hay <strong>0 discrepancias</strong> y ninguna observación ubicada exactamente en el punto de corte.</p>
+<p>La asignación es <em>sharp</em>: en la base, el tratamiento coincide exactamente con la regla <code>margen ≥ 0</code>. Hay <strong>0 discrepancias</strong> entre la regla de asignación y el tratamiento efectivo.</p>
 </section>
 <section id="datos-y-muestra" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-muestra">Datos y muestra</h2>
@@ -332,11 +332,20 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;"><strong>0,076</strong></td>
 <td style="text-align: right;"><strong>[−0,309; 6,276]</strong></td>
 </tr>
+<tr class="odd">
+<td>CER-óptima con corrección de sesgo</td>
+<td><code>h = 11,629</code>; kernel triangular</td>
+<td style="text-align: right;">2,411</td>
+<td style="text-align: right;">1,821</td>
+<td style="text-align: right;">0,186</td>
+<td style="text-align: right;">—</td>
+</tr>
 </tbody>
 </table>
 </div>
 <p>La primera fila reconstruye la intuición del diseño: los valores predichos en el umbral son 12,623% a la izquierda y 15,550% a la derecha. Su diferencia es 2,927 puntos porcentuales, pero esa construcción manual no aporta por sí sola la inferencia adecuada para RDD.</p>
-<p>La segunda fila es la lectura principal. Con selección MSE-óptima del ancho de banda e inferencia robusta con corrección de sesgo, el control municipal islámico se asocia con un incremento local estimado de <strong>2,98 puntos porcentuales</strong> en la finalización de secundaria de mujeres jóvenes. La magnitud es sustantiva y la evidencia es marginal o sugestiva: <code>p = 0,076</code>, mientras que el IC 95% incluye cero.</p>
+<p>La especificación MSE-óptima es la lectura principal. Con inferencia robusta y corrección de sesgo, el control municipal islámico se asocia con un incremento local estimado de <strong>2,98 puntos porcentuales</strong> en la finalización de secundaria de mujeres jóvenes. La magnitud es sustantiva y la evidencia es marginal o sugestiva: <code>p = 0,076</code>, mientras que el IC 95% incluye cero.</p>
+<p>El selector CER, orientado a mejorar la cobertura del intervalo, reduce la ventana a <code>h = 11,629</code> y la muestra efectiva de 795 a 576 municipios. El estimando económico no cambia, pero la ventana más estrecha entrega 2,41 puntos y mayor imprecisión (<code>p = 0,186</code>). La comparación hace visible el compromiso entre sesgo y varianza sin convertir la elección del ancho de banda en una búsqueda de significación.</p>
 </section>
 <section id="robustez-y-sensibilidad-esencial" class="level2">
 <h2 class="anchored" data-anchor-id="robustez-y-sensibilidad-esencial">Robustez y sensibilidad esencial</h2>

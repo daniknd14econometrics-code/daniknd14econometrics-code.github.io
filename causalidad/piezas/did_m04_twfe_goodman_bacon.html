@@ -173,6 +173,7 @@ window.Quarto = {
   <li><a href="#un-coeficiente-twfe-aparentemente-familiar" id="toc-un-coeficiente-twfe-aparentemente-familiar" class="nav-link" data-scroll-target="#un-coeficiente-twfe-aparentemente-familiar">Un coeficiente TWFE aparentemente familiar</a></li>
   <li><a href="#qué-comparaciones-esconde-el-coeficiente" id="toc-qué-comparaciones-esconde-el-coeficiente" class="nav-link" data-scroll-target="#qué-comparaciones-esconde-el-coeficiente">Qué comparaciones esconde el coeficiente</a></li>
   <li><a href="#descomposición-goodmanbacon" id="toc-descomposición-goodmanbacon" class="nav-link" data-scroll-target="#descomposición-goodmanbacon">Descomposición Goodman–Bacon</a></li>
+  <li><a href="#agregar-covariables-no-elimina-el-problema-de-agregación" id="toc-agregar-covariables-no-elimina-el-problema-de-agregación" class="nav-link" data-scroll-target="#agregar-covariables-no-elimina-el-problema-de-agregación">Agregar covariables no elimina el problema de agregación</a></li>
   <li><a href="#cuando-los-tratados-funcionan-como-controles" id="toc-cuando-los-tratados-funcionan-como-controles" class="nav-link" data-scroll-target="#cuando-los-tratados-funcionan-como-controles">Cuando los tratados funcionan como controles</a></li>
   <li><a href="#efectos-homogéneos-y-efectos-dinámicos" id="toc-efectos-homogéneos-y-efectos-dinámicos" class="nav-link" data-scroll-target="#efectos-homogéneos-y-efectos-dinámicos">Efectos homogéneos y efectos dinámicos</a></li>
   <li><a href="#inferencia-correcta-no-implica-interpretación-correcta" id="toc-inferencia-correcta-no-implica-interpretación-correcta" class="nav-link" data-scroll-target="#inferencia-correcta-no-implica-interpretación-correcta">Inferencia correcta no implica interpretación correcta</a></li>
@@ -386,10 +387,54 @@ window.Quarto = {
 <p>La familia más cercana a comparar una cohorte temprana con otra tardía todavía no tratada recibe solo <strong>11,1%</strong> del peso. En cambio, <strong>26,5%</strong> corresponde a comparaciones donde una cohorte temprana ya tratada funciona como control, y <strong>38,4%</strong> involucra estados tratados antes del inicio del panel.</p>
 <p>Las contribuciones reconstruyen el coeficiente con una diferencia numérica prácticamente nula. La descomposición no es una especificación alternativa: muestra de dónde proviene el TWFE observado.</p>
 </section>
+<section id="agregar-covariables-no-elimina-el-problema-de-agregación" class="level2">
+<h2 class="anchored" data-anchor-id="agregar-covariables-no-elimina-el-problema-de-agregación">Agregar covariables no elimina el problema de agregación</h2>
+<p>La especificación que incorpora ingreso per cápita, tasa de homicidios y una medida de casos desplaza el TWFE de <code>−3,0799</code> a <code>−2,5160</code> (<code>EE cluster = 2,2831</code>; <code>p = 0,276</code>). La estabilidad aproximada del signo no vuelve más transparente al estimando.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Componente de la descomposición controlada</th>
+<th style="text-align: right;">Peso</th>
+<th style="text-align: right;">Coeficiente asociado</th>
+<th style="text-align: right;">Contribución</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Within</td>
+<td style="text-align: right;">0,00509</td>
+<td style="text-align: right;">80,0123</td>
+<td style="text-align: right;">0,4072</td>
+</tr>
+<tr class="even">
+<td>Between</td>
+<td style="text-align: right;">0,99491</td>
+<td style="text-align: right;">−2,9382</td>
+<td style="text-align: right;">−2,9232</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>1,00000</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><strong>−2,5160</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>El valor 80,01 del componente Within no debe interpretarse aisladamente como un efecto: pesa apenas 0,5% y aporta 0,407 al coeficiente. La variación Between concentra 99,5% del peso. Agregar covariables cambia la residualización del tratamiento, pero no convierte automáticamente el TWFE en un promedio causal limpio.</p>
+</section>
 <section id="cuando-los-tratados-funcionan-como-controles" class="level2">
 <h2 class="anchored" data-anchor-id="cuando-los-tratados-funcionan-como-controles">Cuando los tratados funcionan como controles</h2>
 <p>Considérese una cohorte temprana y otra tardía. Antes de que la segunda adopte, puede aproximar la trayectoria contrafactual de la primera. Después de la adopción tardía, TWFE también utiliza a la cohorte temprana como referencia, aunque ya lleva varios períodos expuesta.</p>
 <p>Si el efecto es constante, restar el cambio de la cohorte temprana no altera sustantivamente la comparación. Si el efecto aumenta o disminuye con la exposición, ese cambio contiene parte del tratamiento. El grupo de referencia deja entonces de representar una trayectoria no tratada.</p>
+<p>Incluso las comparaciones que utilizan unidades nunca tratadas o todavía no tratadas requieren tendencias paralelas apropiadas y ausencia de anticipación. La descomposición permite identificar quién actúa como control y con qué peso; no verifica por sí misma esos supuestos causales.</p>
 </section>
 <section id="efectos-homogéneos-y-efectos-dinámicos" class="level2">
 <h2 class="anchored" data-anchor-id="efectos-homogéneos-y-efectos-dinámicos">Efectos homogéneos y efectos dinámicos</h2>

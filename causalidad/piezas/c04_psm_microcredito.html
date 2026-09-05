@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Méndez">
 
-<title>Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad – Daniel Méndez</title>
+<title>Microcrédito femenino y gasto per cápita: evidencia con PSM bajo criterio de comparabilidad – Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -143,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
   <li><a href="#por-qué-la-comparabilidad-importa" id="toc-por-qué-la-comparabilidad-importa" class="nav-link" data-scroll-target="#por-qué-la-comparabilidad-importa">Por qué la comparabilidad importa</a></li>
   <li><a href="#soporte-y-comparabilidad-common-frente-a-trim10" id="toc-soporte-y-comparabilidad-common-frente-a-trim10" class="nav-link" data-scroll-target="#soporte-y-comparabilidad-common-frente-a-trim10">Soporte y comparabilidad: <code>common</code> frente a <code>trim(10)</code></a></li>
-  <li><a href="#especificación-preferida-y-criterio-de-elección" id="toc-especificación-preferida-y-criterio-de-elección" class="nav-link" data-scroll-target="#especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</a></li>
+  <li><a href="#sensibilidad-entre-alternativas-de-matching" id="toc-sensibilidad-entre-alternativas-de-matching" class="nav-link" data-scroll-target="#sensibilidad-entre-alternativas-de-matching">Sensibilidad entre alternativas de matching</a></li>
   <li><a href="#resultado-principal-comparación-de-atet-y-contrastes" id="toc-resultado-principal-comparación-de-atet-y-contrastes" class="nav-link" data-scroll-target="#resultado-principal-comparación-de-atet-y-contrastes">Resultado principal: comparación de ATET y contrastes</a></li>
   <li><a href="#lectura-sustantiva-del-atet-población-objetivo-y-alcance" id="toc-lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="nav-link" data-scroll-target="#lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</a></li>
   <li><a href="#cierre-qué-se-concluye-y-qué-no" id="toc-cierre-qué-se-concluye-y-qué-no" class="nav-link" data-scroll-target="#cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</a></li>
@@ -155,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Microcrédito femenino y gasto del hogar: evidencia con PSM bajo criterio de comparabilidad</h1>
+<h1 class="title">Microcrédito femenino y gasto per cápita: evidencia con PSM bajo criterio de comparabilidad</h1>
 <p class="subtitle lead">Estimación del efecto sobre hogares tratados comparables en soporte común</p>
 </div>
 
@@ -191,18 +191,18 @@ ul.task-list li input[type="checkbox"] {
 <p>En PSM, la decisión relevante no es el efecto más alto, sino el contrafactual más creíble</p>
 </div>
 <div class="hero-sub">
-<p>Esta aplicación estima el efecto de la participación femenina en microcrédito sobre el gasto del hogar comparando alternativas de soporte y emparejamiento bajo un criterio explícito de comparabilidad.</p>
+<p>Esta aplicación estima el efecto de la participación femenina en microcrédito sobre el gasto per cápita comparando alternativas de soporte y emparejamiento bajo un criterio explícito de comparabilidad.</p>
 </div>
 </div>
 <section id="resumen-ejecutivo" class="level2">
 <h2 class="anchored" data-anchor-id="resumen-ejecutivo">Resumen ejecutivo</h2>
-<p>Este estudio evalúa el efecto de la participación femenina en microcrédito sobre el gasto del hogar con Propensity Score Matching (PSM) en una muestra de 1.129 hogares. El punto central no es maximizar el ATET, sino elegir un diseño que combine soporte, balance y precisión.</p>
-<p>La comparación entre reglas de soporte muestra que <code>common</code> ofrece, en esta aplicación, un compromiso más defendible entre cobertura y comparabilidad que <code>trim(10)</code>.</p>
-<p>Bajo ese marco, la especificación preferida en esta aplicación es <code>kernel biweight bw = 0.40*SD(LPS) + common</code>, con respaldo en una regla de selección predefinida.</p>
+<p>Este estudio evalúa el efecto de la participación femenina en microcrédito sobre el gasto per cápita con Propensity Score Matching (PSM) en una muestra de 1.129 hogares. El punto central es examinar cómo cambian el soporte, el balance y el efecto estimado entre alternativas de emparejamiento.</p>
+<p>La regla <code>common</code> conserva una población más amplia que <code>trim(10)</code> y logra una mejora global clara del balance, aunque persisten diferencias en algunas covariables.</p>
+<p>El informe no selecciona un algoritmo óptimo: presenta las alternativas como un ejercicio de sensibilidad. Varias especificaciones con soporte común ubican el ATET en torno a 0.10-0.11, mientras que recortes más exigentes cambian la población comparable y elevan algunos puntos estimados hacia 0.13.</p>
 </section>
 <section id="pregunta-central" class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-central">Pregunta central</h2>
-<p>¿Cuál es el efecto de la participación femenina en microcrédito sobre el gasto del hogar cuando el contrafactual se construye con PSM y la decisión de diseño prioriza comparabilidad?</p>
+<p>¿Cuál es el efecto de la participación femenina en microcrédito sobre el gasto total per cápita cuando el contrafactual se construye con PSM y la decisión de diseño prioriza comparabilidad?</p>
 </section>
 <section id="datos-y-variables" class="level2">
 <h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
@@ -210,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Unidad de análisis:</strong> hogares (<code>N = 1129</code>).</li>
 <li><strong>Tratamiento:</strong> participación femenina en microcrédito (<code>dfmfd</code>).</li>
-<li><strong>Resultado:</strong> logaritmo del gasto total del hogar (<code>lexptot</code>).</li>
+<li><strong>Resultado:</strong> logaritmo del gasto total per cápita (<code>lexptot = ln(1 + exptot)</code>).</li>
 <li><strong>Covariables de comparabilidad:</strong> sexo, edad y educación de la jefatura del hogar; tierra; acceso vial; riego per cápita; e indicadores de producción/consumo alimentario.</li>
 </ul>
 </div>
@@ -266,21 +266,13 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<p>Aunque <code>trim(10)</code> recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable.</p>
+<p>Aunque <code>trim(10)</code> recorta más soporte, esa poda no domina la decisión: en esta aplicación no corrige mejor los desbalances residuales más sensibles y reduce la muestra utilizable. Con <code>common</code>, por ejemplo, todavía quedan diferencias estandarizadas de 14,1 en <code>sexhead</code>, 9,6 en <code>vaccess</code> y 10,1 en <code>egg</code>; con <code>trim(10)</code>, <code>sexhead</code> llega a 15,5 y <code>egg</code> a 14,7. El buen balance global no elimina la revisión covariable por covariable.</p>
 </section>
-<section id="especificación-preferida-y-criterio-de-elección" class="level2">
-<h2 class="anchored" data-anchor-id="especificación-preferida-y-criterio-de-elección">Especificación preferida y criterio de elección</h2>
-<p>La especificación preferida en esta aplicación es:</p>
-<p><code>kernel biweight bw = 0.40*SD(LPS) + common</code>.</p>
-<p>La lógica de elección es explícita: priorizar comparabilidad, soporte y precisión entre candidatas viables. La regla operativa fija umbrales de diseño (<code>max|SMD| &lt;= 0.10</code>, <code>maxvr &lt;= 2</code>, <code>share1 &gt;= 0.80</code>) y, entre candidatas que cumplen, prioriza mayor retención de tratados y mayor ESS de controles antes que un ATET más alto.</p>
-<p>Como respaldo visual del balance post-matching, se muestra el love plot de la especificación seleccionada.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../assets/graficos/5_loveplot.svg" class="img-fluid figure-img"></p>
-<figcaption>Love plot de balance (selector T5)</figcaption>
-</figure>
-</div>
-<p>Con el diseño validado y la especificación ya elegida, el bloque siguiente resume los efectos estimados.</p>
+<section id="sensibilidad-entre-alternativas-de-matching" class="level2">
+<h2 class="anchored" data-anchor-id="sensibilidad-entre-alternativas-de-matching">Sensibilidad entre alternativas de matching</h2>
+<p>El taller no implementa una búsqueda formal de la especificación óptima del propensity score ni una regla automática para elegir algoritmo, caliper o ancho de banda. Compara alternativas fijas para mostrar cuánto dependen los resultados de esas decisiones.</p>
+<p>Con <code>common</code>, NN(1), NN(2), NN(8), radius con caliper 0.01 y los kernels considerados producen ATET cercanos entre sí. En cambio, radius con caliper 0.002 y las variantes con <code>trim(10)</code> trabajan sobre un soporte más estrecho y ubican algunos efectos alrededor de 0.13. Esa diferencia debe leerse junto con el cambio de población comparable, no como evidencia de que el mayor resultado sea preferible.</p>
+<p>El bloque siguiente resume esa sensibilidad sin declarar un algoritmo ganador.</p>
 </section>
 <section id="resultado-principal-comparación-de-atet-y-contrastes" class="level2">
 <h2 class="anchored" data-anchor-id="resultado-principal-comparación-de-atet-y-contrastes">Resultado principal: comparación de ATET y contrastes</h2>
@@ -331,59 +323,49 @@ ul.task-list li input[type="checkbox"] {
 <div class="table-box">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 30%">
-<col style="width: 23%">
-<col style="width: 23%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Opción de contraste</th>
-<th style="text-align: right;">ATET</th>
-<th>Precisión / inferencia</th>
-<th>Rol en la decisión</th>
+<th>Procedimiento documentado</th>
+<th>Soporte</th>
+<th style="text-align: right;">ATE (EE bootstrap)</th>
+<th style="text-align: right;">ATET (EE bootstrap)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PSM <code>common</code> + NN(1)</td>
-<td style="text-align: right;">0.1108</td>
-<td>EE <code>psmatch2</code> (aprox.) 0.0428</td>
-<td>Referencia metodológica base</td>
+<td>Kernel epanechnikov (<code>h = 0.06</code>)</td>
+<td><code>common</code></td>
+<td style="text-align: right;">0.0799 (0.0280)</td>
+<td style="text-align: right;">0.1070 (0.0295)</td>
 </tr>
 <tr class="even">
-<td>PSM <code>trim(10)</code> + NN(1)</td>
-<td style="text-align: right;">0.1279</td>
-<td>EE <code>psmatch2</code> (aprox.) 0.0441</td>
-<td>Contraste con menor soporte y mayor poda</td>
+<td>NN(8)</td>
+<td><code>trim(10)</code></td>
+<td style="text-align: right;">0.1195 (0.0338)</td>
+<td style="text-align: right;">0.1338 (0.0360)</td>
 </tr>
 <tr class="odd">
-<td><strong>PSM <code>common</code> + kernel biweight <code>bw = 0.40*SD(LPS)</code></strong></td>
-<td style="text-align: right;"><strong>0.1099</strong></td>
-<td>EE bootstrap 0.0273</td>
-<td><strong>Especificación preferida</strong></td>
-</tr>
-<tr class="even">
-<td><code>teffects psmatch</code> (ATET, probit, NN(1))</td>
+<td><code>teffects psmatch</code> (probit, NN(1))</td>
+<td>soporte de <code>teffects</code></td>
+<td style="text-align: right;">0.0688</td>
 <td style="text-align: right;">0.1099</td>
-<td>EE robusta de Abadie–Imbens 0.0362</td>
-<td>Contraste secundario de estabilidad</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div style="max-width:420px;margin:0.4rem 0 0.6rem 0;">
-<svg viewbox="0 0 420 96" width="100%" role="img" aria-label="ATET de la especificación preferida con IC 95 bootstrap">
-<line x1="170" y1="14" x2="170" y2="60" stroke="#8a8f93" stroke-width="1.1"></line> <line x1="241" y1="36" x2="374" y2="36" stroke="#2f3a3d" stroke-width="2"></line> <line x1="241" y1="31" x2="241" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line> <line x1="374" y1="31" x2="374" y2="41" stroke="#2f3a3d" stroke-width="1.6"></line> <circle cx="307" cy="36" r="3.7" fill="#2f3a3d"></circle> <text x="8" y="40" font-size="12.5" fill="#2f3a3d">Preferida por diseño</text> <line x1="170" y1="64" x2="420" y2="64" stroke="#c6ccd2" stroke-width="1"></line> <line x1="170" y1="61" x2="170" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <line x1="295" y1="61" x2="295" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <line x1="420" y1="61" x2="420" y2="67" stroke="#7f8c8d" stroke-width="1"></line> <text x="163" y="79" font-size="10.5" fill="#6c757d">0.00</text> <text x="288" y="79" font-size="10.5" fill="#6c757d">0.10</text> <text x="413" y="79" font-size="10.5" fill="#6c757d">0.20</text> <text x="295" y="92" font-size="10.8" fill="#6c757d" text-anchor="middle">Efecto estimado (ATET)</text>
-</svg>
-</div>
+<p>El bootstrap documentado ofrece inferencia para dos contrastes pedagógicos, no para una especificación declarada óptima. En la exportación original de <code>teffects</code>, el error estándar del ATET quedó referenciado por error a la matriz de la corrida ATE. Por eso se conservan sus puntos estimados como contraste, pero no se presenta esa precisión defectuosa ni se reestima el modelo.</p>
 </section>
 <section id="lectura-sustantiva-del-atet-población-objetivo-y-alcance" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-sustantiva-del-atet-población-objetivo-y-alcance">Lectura sustantiva del ATET: población objetivo y alcance</h2>
 <div class="quick-grid">
 <div class="section-box">
 <p><strong>Estimando reportado</strong></p>
-<p>ATET para hogares tratados comparables en soporte común, con valor de referencia de <strong>0.11</strong> en log del gasto, equivalente aproximadamente a <strong>11%-12%</strong>.</p>
+<p>ATET para hogares tratados comparables en soporte común, con valor de referencia de <strong>0.11</strong> en <code>ln(1 + gasto per cápita)</code>, equivalente aproximadamente a <strong>11%-12%</strong> en <code>1 + gasto per cápita</code>.</p>
 </div>
 <div class="section-box">
 <p><strong>Población objetivo</strong></p>
@@ -394,13 +376,13 @@ ul.task-list li input[type="checkbox"] {
 <p>Interpretación válida bajo selección en observables y <code>overlap</code>; no extrapolable automáticamente al total de hogares.</p>
 </div>
 </div>
-<p>En términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el gasto total esperado es mayor que su contrafactual no tratado comparable.</p>
+<p>En términos sustantivos, un ATET alrededor de 0.11 indica que, para los hogares tratados comparables en soporte común, el resultado transformado es mayor que su contrafactual no tratado comparable. La conversión porcentual refiere a <code>1 + gasto per cápita</code>, no exactamente al gasto medio en niveles.</p>
 </section>
 <section id="cierre-qué-se-concluye-y-qué-no" class="level2">
 <h2 class="anchored" data-anchor-id="cierre-qué-se-concluye-y-qué-no">Cierre: qué se concluye y qué no</h2>
-<p>La pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un gasto total esperado <strong>11%-12%</strong> mayor frente a su contrafactual comparable.</p>
-<p>Dentro de las reglas de soporte evaluadas, <code>common</code> resulta más defendible que <code>trim(10)</code>; ese contraste funciona como un insumo del criterio general de diseño, no como fundamento único de la elección final.</p>
-<p>Esta evidencia no autoriza una afirmación causal absoluta para toda la población. La conclusión preferida aplica a hogares tratados que quedan dentro del soporte común efectivo; su alcance queda delimitado por el diseño observacional, la calidad del soporte común y los supuestos de selección en observables.</p>
+<p>La pregunta inicial puede responderse de forma directa: al construir el contrafactual con PSM bajo criterio de comparabilidad, el efecto estimado sobre hogares tratados comparables en soporte común es positivo y equivale aproximadamente a un valor de <code>1 + gasto per cápita</code> <strong>11%-12%</strong> mayor frente a su contrafactual comparable.</p>
+<p>Dentro de las reglas evaluadas, <code>common</code> conserva más soporte y alcanza un balance global similar al de <code>trim(10)</code>. El recorte más agresivo cambia la población comparable y desplaza algunos puntos estimados, por lo que ambos resultados no deben leerse como estimaciones intercambiables sobre la misma muestra.</p>
+<p>Esta evidencia no autoriza una afirmación causal absoluta para toda la población. La conclusión aplica a hogares tratados que quedan dentro del soporte común efectivo; su alcance queda delimitado por el diseño observacional, el balance imperfecto en algunas covariables y el supuesto no verificable de selección en observables.</p>
 
 
 </section>

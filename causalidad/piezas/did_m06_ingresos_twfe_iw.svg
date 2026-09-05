@@ -3,7 +3,7 @@
   <desc id="desc">TWFE e interaction-weighted muestran trayectorias similares: valores imprecisos antes de la hospitalización y caídas de ingresos desde el período cero hasta el período dos.</desc>
   <rect width="1200" height="620" fill="#ffffff"/>
   <text x="600" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#15324a">Ingresos laborales: trayectorias próximas, estimandos distintos</text>
-  <text x="600" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Estimaciones en dólares reales de 2005; intervalos de confianza de 95%</text>
+  <text x="600" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#526575">Estimaciones en dólares de 2005 aproximados; intervalos de confianza de 95%</text>
 
   <g stroke="#dce5eb" stroke-width="1">
     <line x1="118" y1="134" x2="1120" y2="134"/><line x1="118" y1="214" x2="1120" y2="214"/>

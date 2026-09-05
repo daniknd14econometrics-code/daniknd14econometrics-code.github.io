@@ -171,7 +171,7 @@ window.Quarto = {
   <li><a href="#el-problema-no-es-la-regresión-sino-la-restricción" id="toc-el-problema-no-es-la-regresión-sino-la-restricción" class="nav-link" data-scroll-target="#el-problema-no-es-la-regresión-sino-la-restricción">El problema no es la regresión, sino la restricción</a></li>
   <li><a href="#de-attgt-a-una-regresión-flexible" id="toc-de-attgt-a-una-regresión-flexible" class="nav-link" data-scroll-target="#de-attgt-a-una-regresión-flexible">De ATT(g,t) a una regresión flexible</a></li>
   <li><a href="#continuidad-con-callawaysantanna-y-bjs" id="toc-continuidad-con-callawaysantanna-y-bjs" class="nav-link" data-scroll-target="#continuidad-con-callawaysantanna-y-bjs">Continuidad con Callaway–Sant’Anna y BJS</a></li>
-  <li><a href="#twm-e-imputación-como-representaciones-relacionadas" id="toc-twm-e-imputación-como-representaciones-relacionadas" class="nav-link" data-scroll-target="#twm-e-imputación-como-representaciones-relacionadas">TWM e imputación como representaciones relacionadas</a></li>
+  <li><a href="#etwfe-etwm-e-imputación-coincidencias-específicas" id="toc-etwfe-etwm-e-imputación-coincidencias-específicas" class="nav-link" data-scroll-target="#etwfe-etwm-e-imputación-coincidencias-específicas">ETWFE, ETWM e imputación: coincidencias específicas</a></li>
   <li><a href="#aplicación-aperturas-de-walmart-y-empleo-minorista" id="toc-aplicación-aperturas-de-walmart-y-empleo-minorista" class="nav-link" data-scroll-target="#aplicación-aperturas-de-walmart-y-empleo-minorista">Aplicación: aperturas de Walmart y empleo minorista</a></li>
   <li><a href="#covariables-y-comparación" id="toc-covariables-y-comparación" class="nav-link" data-scroll-target="#covariables-y-comparación">Covariables y comparación</a></li>
   <li><a href="#resultado-agregado" id="toc-resultado-agregado" class="nav-link" data-scroll-target="#resultado-agregado">Resultado agregado</a></li>
@@ -252,6 +252,12 @@ Y_{it}=\alpha_i+\lambda_t+\beta D_{it}+u_{it}.
 ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
 \]</span></p>
 <p>Describe el efecto medio para la cohorte que adopta en <span class="math inline">\(g\)</span>, observada en el período <span class="math inline">\(t\)</span>. La especificación flexible incluye interacciones entre cohorte, calendario y estado tratado para recuperar esos efectos de celda.</p>
+<p>Sin covariables, la arquitectura puede escribirse esquemáticamente como:</p>
+<p><span class="math display">\[
+Y_{it}=\alpha_i+\lambda_t+
+\sum_g\sum_{s\geq g}\tau_{g,s}\,\mathbf{1}\{G_i=g,t=s\}+u_{it}.
+\]</span></p>
+<p>Cada interacción identifica una celda tratada. Bajo tendencias paralelas y ausencia de anticipación, <span class="math inline">\(\tau_{g,s}\)</span> representa su <span class="math inline">\(ATT(g,s)\)</span>. Las observaciones nunca tratadas y todavía no tratadas identifican la evolución sin exposición; las interacciones permiten que las desviaciones posteriores varíen entre cohortes y calendarios. La flexibilidad de los efectos no libera al modelo de esos supuestos sobre el contrafactual.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="did_m09_twfe_etwfe.svg" class="img-fluid figure-img" alt="Comparación entre TWFE restrictivo, que asigna un beta común a todas las celdas tratadas, y ETWFE, que representa efectos distintos por cohorte y período y luego los agrega globalmente, por cohorte, calendario o tiempo relativo."></p>
@@ -268,13 +274,12 @@ ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
 <li><strong>Borusyak–Jaravel–Spiess:</strong> aprende <span class="math inline">\(Y(0)\)</span> con observaciones sin tratamiento e imputa el contrafactual para las tratadas.</li>
 <li><strong>Wooldridge:</strong> demuestra cuándo esos objetos modernos pueden recuperarse mediante una regresión flexible.</li>
 </ul>
-<p>M09 funciona así como puente entre los estimandos del DiD moderno y la práctica regresiva aplicada.</p>
+<p>Esta formulación conecta los estimandos del DiD moderno con la práctica regresiva aplicada.</p>
 </section>
-<section id="twm-e-imputación-como-representaciones-relacionadas" class="level2">
-<h2 class="anchored" data-anchor-id="twm-e-imputación-como-representaciones-relacionadas">TWM e imputación como representaciones relacionadas</h2>
-<p>Two-Way Mundlak representa la heterogeneidad de unidad y los shocks temporales mediante promedios de los regresores, en lugar de absorberlos como efectos fijos. Bajo las condiciones correspondientes, TWFE y TWM pueden ser representaciones algebraicamente equivalentes de una misma ecuación.</p>
-<p>Esa equivalencia, por sí sola, no resuelve la heterogeneidad del tratamiento. El paso sustantivo aparece cuando la ecuación también incorpora los efectos cohorte × período.</p>
-<p>La misma regresión flexible puede interpretarse como un modelo del resultado no tratado. Pooled OLS flexible, ETWFE, TWM extendido y ciertas representaciones por imputación pueden coincidir en los <strong>ATT medios de celda</strong>. Esto no exige que Wooldridge y BJS produzcan idénticas predicciones contrafactuales para cada observación individual.</p>
+<section id="etwfe-etwm-e-imputación-coincidencias-específicas" class="level2">
+<h2 class="anchored" data-anchor-id="etwfe-etwm-e-imputación-coincidencias-específicas">ETWFE, ETWM e imputación: coincidencias específicas</h2>
+<p>En este panel lineal y balanceado, la versión que utiliza efectos fijos de cohorte en lugar de efectos fijos individuales produce un agregado de <strong>0,0978</strong>, prácticamente igual al ETWFE sin covariables. El taller interpreta esa proximidad como una verificación de equivalencias tipo ETWFE/ETWM dentro de esta especificación, no como nueva evidencia empírica ni como una identidad general entre formulaciones.</p>
+<p>Una segunda conexión aparece al permitir tendencias por cohorte. Estimar el modelo de <span class="math inline">\(Y(0)\)</span> únicamente con observaciones sin tratamiento y promediar después <span class="math inline">\(Y-\widehat Y(0)\)</span> sobre las tratadas reproduce el agregado de <strong>0,0352</strong>. La coincidencia vincula la regresión extendida con una lectura por imputación cuando ambas representan el mismo espacio funcional; no convierte a ETWFE y BJS en el mismo estimador.</p>
 </section>
 <section id="aplicación-aperturas-de-walmart-y-empleo-minorista" class="level2">
 <h2 class="anchored" data-anchor-id="aplicación-aperturas-de-walmart-y-empleo-minorista">Aplicación: aperturas de Walmart y empleo minorista</h2>
@@ -303,7 +308,7 @@ ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
 <h2 class="anchored" data-anchor-id="covariables-y-comparación">Covariables y comparación</h2>
 <p>La especificación central incorpora características pretratamiento relacionadas con estructura manufacturera, pobreza y educación secundaria, medidas alrededor de 1980. Al ser anteriores a las aperturas analizadas, pueden utilizarse para permitir trayectorias contrafactuales condicionales sin controlar por variables potencialmente afectadas por Walmart.</p>
 <p>Las covariables no entran como simples controles aditivos. Se centran e interactúan con la estructura de heterogeneidad para preservar la interpretación de los coeficientes principales como promedios de cohorte y período.</p>
-<p>Para estudiar leads y pretrends se utiliza un comparador estable formado únicamente por los 394 condados nunca tratados. Cambiar el grupo de comparación cambia también el parámetro agregado y no constituye una mera opción computacional.</p>
+<p>Para estudiar leads y pretrends se utiliza un comparador estable formado únicamente por los 394 condados nunca tratados. Cambiar el grupo de comparación modifica cómo se identifica el contrafactual. El ATT objetivo puede mantenerse si se conservan las mismas celdas y ponderaciones; el agregado cambia de población si también varían el soporte o la composición.</p>
 </section>
 <section id="resultado-agregado" class="level2">
 <h2 class="anchored" data-anchor-id="resultado-agregado">Resultado agregado</h2>
@@ -332,6 +337,7 @@ ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
 </div>
 </div>
 <p>La estimación sugiere un aumento medio del log del empleo minorista de aproximadamente 0,090 entre las observaciones tratadas que integran el agregado. La precisión estadística del coeficiente no resuelve la credibilidad del diseño: las trayectorias previas y la sensibilidad del contrafactual deben evaluarse antes de sostener una interpretación causal fuerte.</p>
+<p>Los errores estándar se agrupan por condado para reconocer la dependencia temporal. La inferencia de los agregados utiliza el método delta y la covarianza conjunta de los efectos estimados; no basta promediar los errores estándar de las celdas.</p>
 </section>
 <section id="qué-cambia-entre-especificaciones" class="level2">
 <h2 class="anchored" data-anchor-id="qué-cambia-entre-especificaciones">Qué cambia entre especificaciones</h2>
@@ -409,6 +415,7 @@ ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
 </div>
 </div>
 <p>Estas reglas no son nombres alternativos para un mismo coeficiente. Cambian qué población y qué horizonte dominan el resumen. En horizontes largos participan menos cohortes, por lo que también cambia la composición del estimando.</p>
+<p>En el agregado simple de este panel balanceado, cada celda cohorte-año pesa según su número de condados tratados. Las cohortes tempranas aportan más años posteriores y, por ello, más observaciones al total. Dar igual peso a cada cohorte respondería otra pregunta.</p>
 </section>
 <section id="event-study-y-dinámica" class="level2">
 <h2 class="anchored" data-anchor-id="event-study-y-dinámica">Event study y dinámica</h2>
@@ -459,6 +466,7 @@ ATT(g,t)=E\left[Y_{it}(1)-Y_{it}(0)\mid G_i=g\right].
 </div>
 </div>
 <p>La segunda cifra no debe declararse automáticamente como “el efecto verdadero”. La comparación muestra que el resultado depende de cómo se modelan las trayectorias contrafactuales. Junto con los pretrends, esa sensibilidad impide presentar la aplicación como una estimación causal definitiva del efecto de Walmart.</p>
+<p>La reconstrucción del mismo modelo con tendencias, ajustado solo en observaciones no tratadas, produce un promedio de <span class="math inline">\(Y-\widehat Y(0)\)</span> de <strong>0,0352</strong>, coincidente con el agregado ETWFE. La equivalencia es del modelo y del promedio: los residuos previos cercanos a cero son parte del ajuste y no una validación independiente de tendencias paralelas.</p>
 </section>
 <section id="etwfe-frente-a-twfe-cs-y-bjs" class="level2">
 <h2 class="anchored" data-anchor-id="etwfe-frente-a-twfe-cs-y-bjs">ETWFE frente a TWFE, C&amp;S y BJS</h2>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" role="img" aria-labelledby="title desc">
+  <title id="title">Hitters: estabilidad de la escasez seleccionada por Lasso</title>
+  <desc id="desc">Por fold externo, Lasso lambda mínimo selecciona 6, 16, 10, 8 y 18 coeficientes activos; la regla 1SE selecciona 4, 6, 4, 5 y 5.</desc>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect width="880" height="500" rx="18" fill="#f8fafc"/>
+    <text x="28" y="42" font-size="25" font-weight="700" fill="#17324d">1SE reduce la complejidad en cada entrenamiento</text>
+    <text x="28" y="72" font-size="17" fill="#5d6b78">Lasso · número de coeficientes activos elegido dentro de cada fold externo</text>
+    <rect x="22" y="96" width="836" height="285" rx="14" fill="#fff"/>
+    <g stroke="#dce3e9" stroke-width="1.5">
+      <path d="M105 330H808M105 278H808M105 226H808M105 174H808M105 122H808"/>
+    </g>
+    <g font-size="14" fill="#5d6b78" text-anchor="end"><text x="93" y="335">0</text><text x="93" y="283">5</text><text x="93" y="231">10</text><text x="93" y="179">15</text><text x="93" y="127">20</text></g>
+    <g stroke="#9aa8b3" stroke-width="4" stroke-linecap="round">
+      <path d="M170 267V288"/><path d="M310 163V288"/><path d="M450 225V288"/><path d="M590 246V278"/><path d="M730 143V278"/>
+    </g>
+    <g fill="#0b7285"><circle cx="170" cy="267" r="9"/><circle cx="310" cy="163" r="9"/><circle cx="450" cy="225" r="9"/><circle cx="590" cy="246" r="9"/><circle cx="730" cy="143" r="9"/></g>
+    <g fill="#b76514"><path d="M170 280l10 17h-20z"/><path d="M310 259l10 17h-20z"/><path d="M450 280l10 17h-20z"/><path d="M590 270l10 17h-20z"/><path d="M730 270l10 17h-20z"/></g>
+    <g font-size="15" fill="#17324d" font-weight="700" text-anchor="middle"><text x="170" y="359">Fold 1</text><text x="310" y="359">Fold 2</text><text x="450" y="359">Fold 3</text><text x="590" y="359">Fold 4</text><text x="730" y="359">Fold 5</text></g>
+    <g font-size="15" font-weight="700"><circle cx="278" cy="422" r="8" fill="#0b7285"/><text x="295" y="428" fill="#17324d">λ mínimo</text><path d="M460 414l9 15h-18z" fill="#b76514"/><text x="477" y="428" fill="#17324d">Regla 1SE</text></g>
+    <text x="28" y="463" font-size="17" font-weight="700" fill="#17324d">La identidad y el tamaño cambian por fold; 1SE mantiene una solución más compacta.</text>
+  </g>
+</svg>

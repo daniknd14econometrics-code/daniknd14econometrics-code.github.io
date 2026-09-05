@@ -220,7 +220,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="por-qué-la-comparación-bruta-falla" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-la-comparación-bruta-falla">Por qué la comparación bruta falla</h2>
 <p>En este caso, tratados y controles no parten de condiciones equivalentes en observables clave. Por eso, la diferencia de medias no compara grupos plenamente comparables.</p>
-<p>Cuando esa comparabilidad falla, la brecha bruta en <code>salario</code> no puede leerse como efecto causal limpio: mezcla el posible impacto del tratamiento con diferencias previas entre grupos.</p>
+<p>La evidencia descriptiva permite verlo: el salario medio es aproximadamente 47.523 entre tratados y 40.359 entre controles, pero los tratados también tienen más educación (11,8 frente a 10,0 años) y una presencia mucho mayor en Montevideo (49% frente a 16%).</p>
+<p>El dato faltante es el salario que las personas tratadas habrían obtenido sin tratamiento. El promedio observado de los controles sólo representa ese contrafactual si ambos grupos son comparables; de lo contrario, la brecha bruta mezcla el efecto sobre los tratados con sesgo de selección.</p>
 </section>
 <section id="comparación-dominante" class="level2">
 <h2 class="anchored" data-anchor-id="comparación-dominante">Comparación dominante</h2>
@@ -258,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>PSM ATE (logit/probit)</td>
 <td style="text-align: right;">976.0 / 1012.0</td>
-<td>Magnitud sensible al diseño de emparejamiento</td>
+<td>Resultado similar con ambas funciones de enlace</td>
 </tr>
 <tr class="odd">
 <td>PSM ATET (logit)</td>

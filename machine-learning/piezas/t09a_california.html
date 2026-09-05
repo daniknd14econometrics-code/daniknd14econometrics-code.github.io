@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>California Housing: cuándo un ensamble estabiliza el valor de una vivienda – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../problemas-negocio.html"> 
+<span class="menu-text">Problemas de negocio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html"> 
+<span class="menu-text">Econometría</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html"> 
+<span class="menu-text">Causalidad</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html"> 
+<span class="menu-text">Sobre mí</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#predecir-precios-exige-una-referencia-fuera-de-muestra" id="toc-predecir-precios-exige-una-referencia-fuera-de-muestra" class="nav-link active" data-scroll-target="#predecir-precios-exige-una-referencia-fuera-de-muestra">Predecir precios exige una referencia fuera de muestra</a></li>
+  <li><a href="#un-árbol-convierte-el-espacio-en-reglas-locales" id="toc-un-árbol-convierte-el-espacio-en-reglas-locales" class="nav-link" data-scroll-target="#un-árbol-convierte-el-espacio-en-reglas-locales">Un árbol convierte el espacio en reglas locales</a></li>
+  <li><a href="#crecer-primero-y-podar-después" id="toc-crecer-primero-y-podar-después" class="nav-link" data-scroll-target="#crecer-primero-y-podar-después">Crecer primero y podar después</a></li>
+  <li><a href="#el-ensamble-trata-la-inestabilidad-como-materia-prima" id="toc-el-ensamble-trata-la-inestabilidad-como-materia-prima" class="nav-link" data-scroll-target="#el-ensamble-trata-la-inestabilidad-como-materia-prima">El ensamble trata la inestabilidad como materia prima</a></li>
+  <li><a href="#la-comparación-externa-separa-los-dos-saltos" id="toc-la-comparación-externa-separa-los-dos-saltos" class="nav-link" data-scroll-target="#la-comparación-externa-separa-los-dos-saltos">La comparación externa separa los dos saltos</a></li>
+  <li><a href="#qué-información-usa-el-bosque" id="toc-qué-información-usa-el-bosque" class="nav-link" data-scroll-target="#qué-información-usa-el-bosque">Qué información usa el bosque</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">California Housing: cuándo un ensamble estabiliza el valor de una vivienda</h1>
+<p class="subtitle lead">De un árbol podado a Bagging y Random Forest para predecir precios fuera de muestra</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">4 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../../machine-learning/index.html">Machine Learning</a> / <a href="../../machine-learning/index.html#arboles-y-ensambles">Árboles y ensambles</a></p>
+<p><span class="badge">Regresión · CART · Bagging · Random Forest</span></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>Un árbol podado predice bien y se puede recorrer; Random Forest reduce todavía más el MSE al promediar y decorrelacionar árboles, a cambio de perder esa lectura única.</p>
+</div>
+<div class="hero-sub">
+<p>California Housing permite medir cuándo abandonar una regla interpretable compensa por la estabilidad de un ensamble.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Observaciones</p>
+</div>
+<div class="metric-value">
+<p>20.640</p>
+</div>
+<div class="metric-note">
+<p>Grupos censales; ocho predictores y valor mediano de vivienda.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Test protegido</p>
+</div>
+<div class="metric-value">
+<p>4.128</p>
+</div>
+<div class="metric-note">
+<p>El desarrollo reúne las 16.512 observaciones restantes.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>MSE CART-min</p>
+</div>
+<div class="metric-value">
+<p>0,3886</p>
+</div>
+<div class="metric-note">
+<p>El subárbol elegido por mínimo de CV.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>MSE RF</p>
+</div>
+<div class="metric-value">
+<p>0,2464</p>
+</div>
+<div class="metric-note">
+<p>36,6 % menos MSE que CART-min en el test común.</p>
+</div>
+</div>
+</div>
+<section id="predecir-precios-exige-una-referencia-fuera-de-muestra" class="level2">
+<h2 class="anchored" data-anchor-id="predecir-precios-exige-una-referencia-fuera-de-muestra">Predecir precios exige una referencia fuera de muestra</h2>
+<p>La tarea es predecir <code>MedHouseVal</code>, el valor mediano de vivienda de cada grupo censal de California, expresado en unidades de USD 100.000, a partir de ocho variables demográficas, habitacionales y geográficas. Una regla que repite para todos la media aprendida en desarrollo entrega el punto de comparación: en el test su MSE es 1,2935 y su RMSE equivale a unos USD 113.733.</p>
+<p>El diseño reserva 4.128 observaciones antes de aprender cualquier estructura. Las otras 16.512 forman desarrollo: allí se crecen árboles, se selecciona la poda por validación cruzada y se elige <code>mtry</code> mediante observaciones <em>out-of-bag</em> (OOB). El test se abre una sola vez para comparar decisiones ya cerradas.</p>
+</section>
+<section id="un-árbol-convierte-el-espacio-en-reglas-locales" class="level2">
+<h2 class="anchored" data-anchor-id="un-árbol-convierte-el-espacio-en-reglas-locales">Un árbol convierte el espacio en reglas locales</h2>
+<p>CART divide recursivamente el espacio de predictores y asigna a cada hoja la media de los casos que llegan a ella. La primera división resume bien el mecanismo: <code>MedInc &lt; 5,07535</code> separa 13.091 observaciones con valor medio 1,739 de otras 3.421 con media 3,339. El corte reduce el RSS de la raíz en 6.944,0 porque crea dos grupos grandes con respuestas muy distintas.</p>
+<p>Cada predicción puede recorrerse como una secuencia de condiciones, pero dentro de una hoja permanece constante. Esa transparencia tiene un costo: un cambio pequeño en la muestra puede alterar un corte temprano y, por propagación, muchas reglas posteriores.</p>
+</section>
+<section id="crecer-primero-y-podar-después" class="level2">
+<h2 class="anchored" data-anchor-id="crecer-primero-y-podar-después">Crecer primero y podar después</h2>
+<p>Con guardas mínimas fijadas de antemano, el árbol grande <span class="math inline">\(T_0\)</span> alcanza 1.404 hojas y profundidad 23. Su RSS de entrenamiento cae de 22.143,6 a 2.878,9, una mejora que todavía no dice cuánto generaliza. <span class="math inline">\(T_0\)</span> funciona como árbol madre de una ruta de subárboles: la poda elimina ramas que aportan poco ajuste por unidad de complejidad.</p>
+<p>La validación cruzada de cinco folds reconstruye el aprendizaje dentro de cada fold y selecciona sobre MSE. CART-min conserva 375 hojas y logra MSE-CV 0,3688. La regla 1SE acepta MSE-CV 0,3778 —por debajo del umbral 0,3779— y reduce el árbol a 194 hojas. Esa regla formaliza una preferencia por parsimonia; no prueba que ambos riesgos sean iguales.</p>
+<p>En el test, CART-min obtiene MSE 0,3886. El árbol grande queda apenas detrás, con 0,3959, y CART-1SE llega a 0,4047. La poda mejora modestamente al árbol grande bajo la pérdida usada para seleccionar, mientras que la fuerte simplificación 1SE paga un costo pequeño y visible. Ninguno de esos resultados elimina la inestabilidad estructural de depender de un solo árbol.</p>
+</section>
+<section id="el-ensamble-trata-la-inestabilidad-como-materia-prima" class="level2">
+<h2 class="anchored" data-anchor-id="el-ensamble-trata-la-inestabilidad-como-materia-prima">El ensamble trata la inestabilidad como materia prima</h2>
+<p>Bagging ajusta árboles profundos sobre muestras bootstrap y promedia sus predicciones. Así amortigua las variaciones particulares de cada árbol sin buscar una única estructura definitiva. Random Forest conserva ese promedio y añade otra perturbación: en cada nodo solo deja competir a <code>mtry</code> predictores elegidos al azar.</p>
+<p>Con ocho variables, Bagging corresponde a <span class="math inline">\(m=8\)</span>. La búsqueda OOB del bosque muestra el compromiso completo: restringir demasiado debilita los árboles (<span class="math inline">\(m=1\)</span>, MSE-OOB 0,2828); permitir dos o tres variables reduce con fuerza el error (<span class="math inline">\(m=2\)</span>, 0,2374; <span class="math inline">\(m=3\)</span>, <strong>0,2331</strong>); al acercarse otra vez a Bagging, el error sube (<span class="math inline">\(m=4\)</span>, 0,2377; <span class="math inline">\(m=8\)</span>, 0,2473).</p>
+<div id="fig-california-mtry" class="quarto-float quarto-figure quarto-figure-center anchored" alt="El MSE OOB baja desde mtry 1 a un mínimo de 0,233 en mtry 3 y aumenta gradualmente hasta 0,247 con Bagging mtry 8.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-california-mtry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t09a_california_mtry.png" class="img-fluid figure-img" style="width:100.0%" alt="El MSE OOB baja desde mtry 1 a un mínimo de 0,233 en mtry 3 y aumenta gradualmente hasta 0,247 con Bagging mtry 8.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-california-mtry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Tuning OOB de mtry en desarrollo: el menor MSE aparece con tres predictores candidatos por nodo; m igual a ocho corresponde a Bagging.
+</figcaption>
+</figure>
+</div>
+<p>El mínimo en <span class="math inline">\(m=3\)</span> respalda una combinación concreta: árboles que todavía encuentran cortes informativos, pero que repiten algo menos las mismas jerarquías. El diagnóstico acompaña esa lectura: la correlación media entre predicciones de árboles individuales baja de 0,8797 en Bagging a 0,8730 en Random Forest. La diferencia es moderada; el bosque no necesita árboles independientes para beneficiarse.</p>
+<p>Se utilizaron 1.000 árboles porque las curvas OOB ya estaban estables: entre 500 y 1.000 árboles, el MSE-OOB de RF pasa de 0,2328 a 0,2331 y el de Bagging permanece prácticamente en 0,2473. Esa meseta indica estabilidad del promedio frente a más realizaciones aleatorias; no reemplaza la evaluación externa.</p>
+</section>
+<section id="la-comparación-externa-separa-los-dos-saltos" class="level2">
+<h2 class="anchored" data-anchor-id="la-comparación-externa-separa-los-dos-saltos">La comparación externa separa los dos saltos</h2>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">MSE test</th>
+<th style="text-align: right;">RMSE test</th>
+<th style="text-align: right;">MAE test</th>
+<th style="text-align: right;"><span class="math inline">\(R^2\)</span> test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Media de desarrollo</td>
+<td style="text-align: right;">1,2935</td>
+<td style="text-align: right;">1,1373</td>
+<td style="text-align: right;">0,8996</td>
+<td style="text-align: right;">-0,0001</td>
+</tr>
+<tr class="even">
+<td>CART grande</td>
+<td style="text-align: right;">0,3959</td>
+<td style="text-align: right;">0,6292</td>
+<td style="text-align: right;">0,4153</td>
+<td style="text-align: right;">0,6939</td>
+</tr>
+<tr class="odd">
+<td>CART-min</td>
+<td style="text-align: right;">0,3886</td>
+<td style="text-align: right;">0,6234</td>
+<td style="text-align: right;">0,4184</td>
+<td style="text-align: right;">0,6995</td>
+</tr>
+<tr class="even">
+<td>CART-1SE</td>
+<td style="text-align: right;">0,4047</td>
+<td style="text-align: right;">0,6361</td>
+<td style="text-align: right;">0,4335</td>
+<td style="text-align: right;">0,6871</td>
+</tr>
+<tr class="odd">
+<td>Bagging</td>
+<td style="text-align: right;">0,2603</td>
+<td style="text-align: right;">0,5102</td>
+<td style="text-align: right;">0,3287</td>
+<td style="text-align: right;">0,7987</td>
+</tr>
+<tr class="even">
+<td>Random Forest</td>
+<td style="text-align: right;"><strong>0,2464</strong></td>
+<td style="text-align: right;"><strong>0,4964</strong></td>
+<td style="text-align: right;"><strong>0,3222</strong></td>
+<td style="text-align: right;"><strong>0,8095</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fig-california-desempeno" class="quarto-float quarto-figure quarto-figure-center anchored" alt="MSE de test: benchmark 1,294; CART-min 0,389; Bagging 0,260 y Random Forest 0,246.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-california-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/t09a_california_desempeno.png" class="img-fluid figure-img" style="width:100.0%" alt="MSE de test: benchmark 1,294; CART-min 0,389; Bagging 0,260 y Random Forest 0,246.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-california-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: MSE de test común para benchmark, CART y ensambles.
+</figcaption>
+</figure>
+</div>
+<p>El salto principal ocurre al agregar árboles: Bagging reduce 33,0 % el MSE de CART-min. Random Forest lleva la reducción a 36,6 % respecto de CART-min y mejora 5,35 % adicional frente a Bagging. La evidencia respalda dos mecanismos distintos: primero promediar estabiliza; después restringir predictores reduce algo más la similitud entre árboles.</p>
+<p>La comparación entre <span class="math inline">\(T_0\)</span> y CART-min también evita una lectura demasiado simple. El primero obtiene un MAE apenas menor, aunque CART-min gana en MSE, la pérdida usada durante la selección. Distintas métricas penalizan de manera diferente los errores grandes; el criterio de decisión debe definirse antes de mirar cuál favorece a cada modelo.</p>
+</section>
+<section id="qué-información-usa-el-bosque" class="level2">
+<h2 class="anchored" data-anchor-id="qué-información-usa-el-bosque">Qué información usa el bosque</h2>
+<p>La importancia por permutación del RF coloca primero a <code>MedInc</code>, seguida por <code>Latitude</code>, <code>Longitude</code> y <code>AveOccup</code>. Describe cuánto aumenta el error OOB al romper la información de cada variable. La geografía, por tanto, aporta señal predictiva además del ingreso; no es un simple atributo de visualización.</p>
+<p>Esa jerarquía no identifica efectos de intervención. Predictores relacionados pueden sustituirse y repartirse importancia, y un bosque no ofrece una regla global única como la de CART. La ganancia de desempeño desplaza la interpretación desde un camino de cortes hacia diagnósticos agregados.</p>
+<section id="decisión-bajo-el-criterio-fijado" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="decisión-bajo-el-criterio-fijado">Decisión bajo el criterio fijado</h3>
+<p>Random Forest con <code>mtry = 3</code> y 1.000 árboles es la opción preferible si el objetivo es minimizar MSE en observaciones comparables a este test. CART-min conserva valor cuando explicar una regla individual compensa un RMSE mayor: aproximadamente USD 62.340 frente a USD 49.640 del bosque.</p>
+</section>
+<p>La conclusión está condicionada a una única partición aleatoria de grupos censales. La respuesta acumula 965 casos en su máximo observado, el test no representa una región geográfica completamente nueva y los árboles no extrapolan suavemente fuera del soporte. Las métricas y las importancias son predictivas, no causales.</p>
+<p><a href="../../machine-learning/piezas/t09b_spam.html">Spam</a> lleva la misma secuencia a clasificación: allí el score del ensamble debe convertirse explícitamente en una decisión y en tipos de error.</p>
+<div class="small-note">
+<p><strong>Fuente:</strong> informe curado «Taller 09A: CART, Bagging y Random Forest con California Housing». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
