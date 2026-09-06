@@ -1,6 +1,11 @@
 ﻿project:
   type: website
   output-dir: _site
+  render:
+    - "*.qmd"
+    - "causalidad/**/*.qmd"
+    - "econometria/**/*.qmd"
+    - "machine-learning/**/*.qmd"
 
 website:
   title: "Daniel Méndez"
