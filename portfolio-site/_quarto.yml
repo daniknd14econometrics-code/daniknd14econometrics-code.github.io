@@ -31,6 +31,8 @@ format:
     link-external-newwindow: true
     include-in-header:
       - assets/noindex.html
+    include-after-body:
+      - assets/portfolio-navigation.html
 
 lang: es
 

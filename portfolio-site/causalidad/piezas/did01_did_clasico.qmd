@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[← Volver al índice de Causalidad](../index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 El efecto se identifica comparando cambios, no niveles aislados

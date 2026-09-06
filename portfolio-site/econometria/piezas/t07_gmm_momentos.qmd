@@ -115,6 +115,15 @@ El análogo muestral reemplaza la esperanza por un promedio y elige $\widehat\th
 
 Los ejemplos cumplen una función precisa: separar el objeto que se desea estimar de la distribución completa. Poisson PML y Gamma GLM coinciden con sus implementaciones GMM cuando usan la misma ecuación exactamente identificada. En el ejercicio Tobit, GMM aproxima directamente una media no lineal preservada por el diseño, mientras la máxima verosimilitud impone una distribución latente que fue alterada deliberadamente.
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/gmm_media_pml_vs_gmm.png){fig-alt="Comparación práctica entre la media estimada mediante Poisson PML y GMM"}
+:::
+::: {.figure-pair__item}
+![](../assets/gmm_tobit_media_vs_mle.png){fig-alt="Comparación entre la media tipo Tobit estimada mediante GMM y máxima verosimilitud"}
+:::
+:::
+
 La flexibilidad no elimina supuestos. Cambia dónde están escritos: en la forma de la media, los instrumentos y las condiciones de momento elegidas.
 
 ## Cuándo la ponderación importa

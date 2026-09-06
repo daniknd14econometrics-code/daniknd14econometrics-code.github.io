@@ -137,6 +137,8 @@ El procedimiento manual vuelve visible la lógica del método:
 
 Bajo normalidad bivariada, Mills resume cómo cambia la media del error salarial al condicionar en haber sido seleccionada. Un valor alto corresponde a una participación relativamente improbable dado el perfil observado; su variación permite representar la parte de la selección asociada con el resultado no observado.
 
+![](../assets/06_mills_hist_densidad_seleccionadas.png){fig-alt="Histograma y densidad de la razón inversa de Mills entre las observaciones seleccionadas" width="100%"}
+
 La segunda etapa manual estima un coeficiente de Mills de 0,032, con *p*=0,843 usando errores robustos ordinarios. Sirve para entender la mecánica, pero no es la inferencia final: trata como fijo un regresor generado. `Heckman` en dos etapas conserva los mismos coeficientes y usa la corrección de varianza apropiada.
 
 ## Qué cambia al corregir selección

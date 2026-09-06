@@ -137,6 +137,8 @@ La secuencia es informativa. Pooled queda cerca de uno porque mezcla dinámica y
 
 La especificación con controles sugiere una persistencia moderada: mecánicamente, un impulso inicial deja menos de 12% de su magnitud después de dos períodos si $\rho$ está entre 0,26 y 0,34. Esto no es una función impulso–respuesta causal; resume únicamente la propagación implícita en el modelo autorregresivo.
 
+![](../assets/08_perfil_dinamico_rho.png){fig-alt="Propagación mecánica de un impulso inicial para distintos valores del coeficiente autorregresivo rho" width="100%"}
+
 ## Diagnóstico: los tests no eligen solos
 
 En residuos diferenciados, rechazar AR(1) es esperable porque $\Delta u_{it}$ comparte componentes entre períodos consecutivos. El diagnóstico decisivo es AR(2): si se rechaza, $y_{i,t-2}$ deja de ser un instrumento defendible para la ecuación diferenciada.

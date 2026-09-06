@@ -92,6 +92,15 @@ Correlación acumulada de dos años de la misma firma
 
 La unidad observada es firma–año, pero la arquitectura económica tiene tres niveles: años dentro de firmas y firmas dentro de sectores CIIU4. El 94,5% de las firmas mantiene un único sector observado en la ventana; para preservar el anidamiento, se asigna a cada firma su sector modal. La muestra ampliada contiene 35.989 observaciones, 7.283 firmas y 302 sectores.
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/fig_07_boxplot_ln_vbp_sectores_top12.png){fig-alt="Distribución del logaritmo del valor bruto de producción en los doce sectores principales"}
+:::
+::: {.figure-pair__item}
+![](../assets/fig_08_trayectorias_firmas_ln_vbp.png){fig-alt="Trayectorias del logaritmo del valor bruto de producción para firmas seleccionadas"}
+:::
+:::
+
 ## Qué agrega una jerarquía
 
 Pooled OLS puede agrupar errores por firma y mejorar la inferencia, pero sigue tratando la heterogeneidad como un residuo plano. Efectos aleatorios clásico agrega un intercepto persistente de firma, aunque no distingue cuánto de él pertenece al sector. Efectos fijos permite correlación arbitraria entre la heterogeneidad permanente de firma y los regresores, pero absorbe esa heterogeneidad: no estima su varianza ni produce efectos sectoriales regularizados.

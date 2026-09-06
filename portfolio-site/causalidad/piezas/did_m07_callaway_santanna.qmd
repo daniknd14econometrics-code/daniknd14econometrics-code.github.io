@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[← Volver a Difference-in-Differences moderno](../did-moderno/index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 Primero definir el efecto causal; después decidir cómo agregarlo

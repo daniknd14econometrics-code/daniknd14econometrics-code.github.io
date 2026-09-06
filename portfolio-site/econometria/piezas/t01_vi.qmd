@@ -152,6 +152,8 @@ El estadístico Kleibergen–Paap de **4,38** y el test de subidentificación co
 
 El bloque FWL-IV confirma visualmente la mecánica: después de retirar los controles regionales, la pendiente entre desarrollo residualizado y protección institucional predicha por el instrumento reproduce **1,313**. Esa regresión auxiliar explica la geometría de 2SLS, pero su error estándar manual no es la inferencia IV correcta. Por eso queda como apoyo conceptual y no como resultado adicional.
 
+![](../assets/08_fwl_iv.png){fig-alt="Representación FWL de la relación entre desarrollo residualizado y protección institucional predicha por el instrumento" width="100%"}
+
 ## Un segundo instrumento: más relevancia, nueva tensión
 
 Al agregar una segunda medida de mortalidad histórica, el coeficiente IV baja a **0,785** y su error estándar robusto a **0,195**. La primera etapa conjunta mejora: el R² parcial sube a **0,213** y el estadístico Kleibergen–Paap a **7,27**. Aun así, la preocupación por debilidad no desaparece.

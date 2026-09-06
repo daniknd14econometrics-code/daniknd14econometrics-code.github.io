@@ -55,15 +55,7 @@ Por qué la generalización clásica de diferencias en diferencias puede volvers
 ::: {.piece-card}
 ### [Cuando los tratados se vuelven controles: adopción escalonada y la descomposición de TWFE](../piezas/did_m04_twfe_goodman_bacon.qmd)
 
-¿Qué comparaciones construyen el coeficiente cuando distintas cohortes adoptan el tratamiento en años diferentes?
-
-**Método principal:** Descomposición de Goodman–Bacon y simulación pedagógica
-
-**Tipo de diseño:** Panel con adopción escalonada y múltiples cohortes
-
-**Enseñanza principal:** TWFE puede usar cohortes ya tratadas como controles y mezclar comparaciones con distinto contenido causal
-
-**Estado de evidencia:** Análisis técnico
+**Método:** Goodman–Bacon (GB)
 
 <a class="piece-card__cta" href="../piezas/did_m04_twfe_goodman_bacon.qmd">Abrir análisis →</a>
 :::
@@ -71,15 +63,7 @@ Por qué la generalización clásica de diferencias en diferencias puede volvers
 ::: {.piece-card}
 ### [Cuando TWFE cambia el signo: pesos negativos y heterogeneidad en Difference-in-Differences](../piezas/did_m05_twfe_pesos_negativos.qmd)
 
-¿Cómo puede TWFE estimar un efecto negativo cuando todos los efectos causales del tratamiento son positivos?
-
-**Método principal:** Pesos sobre efectos grupo-período y estimador WAS
-
-**Tipo de diseño:** Panel con tratamiento variable y efectos heterogéneos
-
-**Enseñanza principal:** Los pesos negativos pueden sacar a TWFE del rango de los efectos verdaderos; una alternativa requiere igualmente comparaciones creíbles
-
-**Estado de evidencia:** Análisis técnico
+**Método:** dCDH / WAS
 
 <a class="piece-card__cta" href="../piezas/did_m05_twfe_pesos_negativos.qmd">Abrir análisis →</a>
 :::
@@ -87,18 +71,11 @@ Por qué la generalización clásica de diferencias en diferencias puede volvers
 ::: {.piece-card}
 ### [Cuando los leads mezclan efectos pos-tratamiento: contaminación dinámica en event studies TWFE](../piezas/did_m06_event_study_contaminacion.qmd)
 
-¿Los coeficientes de un event study TWFE miden realmente el efecto causal de cada período relativo?
-
-**Método principal:** Pesos dinámicos e interaction-weighted de Sun–Abraham
-
-**Tipo de diseño:** Panel desbalanceado con cohortes de primera hospitalización
-
-**Enseñanza principal:** Leads y lags TWFE pueden mezclar cohortes y tiempos relativos; incluso un lead puede incorporar efectos pos-tratamiento
-
-**Estado de evidencia:** Análisis técnico
+**Método:** Sun–Abraham (SA)
 
 <a class="piece-card__cta" href="../piezas/did_m06_event_study_contaminacion.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -107,22 +84,14 @@ Por qué la generalización clásica de diferencias en diferencias puede volvers
 ## Soluciones modernas
 
 ::: {.section-lead}
-Métodos que redefinen explícitamente el objeto causal, utilizan grupos de comparación válidos y separan identificación, estimación y agregación para recuperar efectos por cohorte, tiempo calendario o tiempo relativo.
+Métodos que redefinen explícitamente el objeto causal, utilizan grupos de comparación explícitamente definidos y compatibles con los supuestos del diseño, y separan identificación, estimación y agregación para recuperar efectos por cohorte, tiempo calendario o tiempo relativo.
 :::
 
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Efectos por cohorte y período: Callaway–Sant’Anna para adopción escalonada](../piezas/did_m07_callaway_santanna.qmd)
 
-¿Cómo recuperar efectos causales interpretables cuando distintas cohortes adoptan el tratamiento en momentos diferentes?
-
-**Método principal:** ATT por cohorte y período con estimación doblemente robusta
-
-**Tipo de diseño:** Panel con adopción escalonada, nunca tratados y controles todavía no tratados
-
-**Enseñanza principal:** Primero se identifican comparaciones causales válidas; después se agregan los efectos heterogéneos con ponderaciones explícitas
-
-**Estado de evidencia:** Análisis técnico aplicado
+**Método:** Callaway–Sant’Anna (CS)
 
 <a class="piece-card__cta" href="../piezas/did_m07_callaway_santanna.qmd">Abrir análisis →</a>
 :::
@@ -130,15 +99,7 @@ Métodos que redefinen explícitamente el objeto causal, utilizan grupos de comp
 ::: {.piece-card}
 ### [Imputar el contrafactual: Borusyak–Jaravel–Spiess en Difference-in-Differences](../piezas/did_m08_bjs_imputacion.qmd)
 
-¿Cómo estimar efectos dinámicos bajo adopción escalonada sin utilizar resultados ya tratados para construir el contrafactual?
-
-**Método principal:** Imputación del resultado potencial no tratado con Borusyak–Jaravel–Spiess
-
-**Tipo de diseño:** Panel con adopción escalonada, nunca tratados y unidades todavía no tratadas
-
-**Enseñanza principal:** El contrafactual se aprende únicamente con observaciones sin tratamiento; las brechas tratadas se agregan después según la pregunta causal
-
-**Estado de evidencia:** Análisis técnico aplicado
+**Método:** Borusyak–Jaravel–Spiess (BJS)
 
 <a class="piece-card__cta" href="../piezas/did_m08_bjs_imputacion.qmd">Abrir análisis →</a>
 :::
@@ -146,15 +107,7 @@ Métodos que redefinen explícitamente el objeto causal, utilizan grupos de comp
 ::: {.piece-card}
 ### [Cuando la regresión respeta la heterogeneidad: Wooldridge y ETWFE en Difference-in-Differences](../piezas/did_m09_wooldridge_etwfe.qmd)
 
-¿Cómo recuperar efectos por cohorte y período mediante una regresión sin volver a las restricciones del TWFE convencional?
-
-**Método principal:** ETWFE con interacciones flexibles de cohorte y período
-
-**Tipo de diseño:** Panel con adopción escalonada, controles nunca y todavía no tratados y covariables predeterminadas
-
-**Enseñanza principal:** La regresión puede recuperar `ATT(g,t)` modernos cuando la especificación admite la heterogeneidad relevante y la agregación se hace explícita
-
-**Estado de evidencia:** Análisis técnico aplicado con evidencia condicionada
+**Método:** ETWFE (Wooldridge)
 
 <a class="piece-card__cta" href="../piezas/did_m09_wooldridge_etwfe.qmd">Abrir análisis →</a>
 :::
@@ -162,18 +115,11 @@ Métodos que redefinen explícitamente el objeto causal, utilizan grupos de comp
 ::: {.piece-card}
 ### [Más que el último período pre: Lee–Wooldridge y transformaciones rolling en Difference-in-Differences](../piezas/did_m09b_lee_wooldridge_rolling.qmd)
 
-¿Cómo aprovechar la historia pretratamiento para construir comparaciones DiD limpias sin imponer una regresión global?
-
-**Método principal:** Transformaciones rolling del outcome y estimación de ATT por cohorte y período
-
-**Tipo de diseño:** Panel con adopción escalonada, controles nunca y todavía no tratados y covariables predeterminadas
-
-**Enseñanza principal:** La referencia pretratamiento puede redefinirse por cohorte antes de estimar comparaciones limpias; la elección entre nivel y tendencia cambia sustantivamente el contrafactual
-
-**Estado de evidencia:** Comparación metodológica aplicada con evidencia condicionada
+**Método:** LW (Lee–Wooldridge)
 
 <a class="piece-card__cta" href="../piezas/did_m09b_lee_wooldridge_rolling.qmd">Abrir análisis →</a>
 :::
+
 :::
 :::
 :::

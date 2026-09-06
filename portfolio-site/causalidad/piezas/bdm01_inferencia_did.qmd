@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[← Volver al índice de Causalidad](../index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 La significancia puede aparecer aun cuando el efecto verdadero sea cero

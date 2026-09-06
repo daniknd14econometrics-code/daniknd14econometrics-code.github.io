@@ -142,6 +142,8 @@ El contraste adecuado de heterogeneidad usa además las covarianzas entre cuanti
 
 Canay necesita estimar con suficiente precisión el componente de cada mujer. Elevar la longitud mínima puede ayudar, pero también cambia quién permanece en la muestra.
 
+![](../assets/01_distribucion_Ti.png){fig-alt="Distribución del número de observaciones disponibles por mujer en el panel" width="100%"}
+
 ::: {.table-box}
 | Mínimo de observaciones | Mujeres | Experiencia: q0,25 → q0,75 | Antigüedad: q0,25 → q0,75 |
 |---|---:|---:|---:|

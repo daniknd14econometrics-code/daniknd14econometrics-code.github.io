@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[← Volver a Difference-in-Differences moderno](../did-moderno/index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 Una regresión TWFE puede combinar comparaciones con significados causales diferentes

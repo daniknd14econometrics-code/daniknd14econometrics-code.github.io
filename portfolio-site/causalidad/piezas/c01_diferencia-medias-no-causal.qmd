@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[<- Volver al índice de Causalidad](../index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 Una diferencia de medias describe una brecha, pero no identifica causalidad
@@ -100,7 +98,7 @@ La comparación central evalúa cómo varía la magnitud estimada de `treat` cua
 **Cómo leer estimandos y población objetivo**
 
 - Diferencia de medias y MCO (simple y con controles): comparan la muestra depurada completa (`N = 999`).
-- PSM-ATE: resume el efecto promedio poblacional bajo selección en observables y soporte común.
+- PSM-ATE: resume el efecto promedio en la subpoblación retenida con soporte común, bajo selección en observables.
 - PSM-ATET: resume el efecto promedio sobre los tratados emparejados.
 - ATE y ATET no responden para la misma población objetivo.
 :::

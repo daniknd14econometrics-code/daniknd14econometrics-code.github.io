@@ -86,6 +86,8 @@ Asociación ajustada; se mantiene cerca de 1.695 al incluir ingreso previo.
 
 Un ingreso promedio mayor puede combinar cambios en la probabilidad de tener ingresos positivos, diferencias cerca de la mediana y una separación en la parte alta. La media resume esos movimientos en un solo número. Para evaluar la forma de la diferencia necesitamos observar la distribución.
 
+![](../assets/03_cdf_empirica_por_grupo.png){fig-alt="Funciones de distribución empíricas del ingreso laboral por grupo de participación" width="100%"}
+
 La aplicación utiliza una adaptación docente de una base inspirada en el National Supported Work Demonstration (NSW). Aunque existen observaciones de 1975 y 1978, aquí se construye un **corte transversal de 1978**. El resultado es el ingreso laboral real; la comparación principal distingue participación observada en capacitación. Edad, educación y los indicadores de origen racial y latino se miden en 1975. El ingreso de ese año se incorpora después como sensibilidad.
 
 La asignación aleatoria original no está disponible. Por eso el análisis describe diferencias observadas y asociaciones condicionales. El buen balance de las características previas ayuda a interpretar el ajuste, pero no identifica el efecto causal del programa.
@@ -114,6 +116,15 @@ donde $D$ indica participación y $H$ contiene las características previas. El 
 | MCO sin controles | Diferencia de medias observadas | Participantes con ingreso medio 886 unidades mayor |
 | QR sin controles | Diferencia de cuantiles marginales observados | Brecha de medianas de 486 unidades |
 | QR con características previas | Coeficiente en un cuantil condicional | Asociación de 317 unidades en la mediana condicional |
+:::
+
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/05_perfil_qr_sin_controles.png){fig-alt="Perfil de regresión por cuantiles sin controles"}
+:::
+::: {.figure-pair__item}
+![](../assets/06_perfil_qr_con_controles.png){fig-alt="Perfil de regresión por cuantiles con características previas"}
+:::
 :::
 
 Las dos últimas cifras no son versiones intercambiables del mismo parámetro. Tampoco un coeficiente condicional puede leerse como el efecto para una persona que ocupa permanentemente cierto percentil.

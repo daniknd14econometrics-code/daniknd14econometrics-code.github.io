@@ -100,6 +100,8 @@ $$
 
 La brecha se recorre en dos movimientos. Desde la media femenina, cambiar la ecuación salarial manteniendo su composición lleva al contrafactual; después, cambiar la composición manteniendo la ecuación masculina lleva a la media masculina.
 
+![](../assets/02_escenario_contrafactual.png){fig-alt="Recorrido entre la media salarial femenina observada, el promedio contrafactual y la media masculina observada" width="100%"}
+
 ::: {.table-box}
 | Estado | Media del log salario | Qué se mantiene o cambia |
 |---|---:|---|

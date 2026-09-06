@@ -112,6 +112,15 @@ La versión estándar compara las RIF de los dos períodos. La versión reponder
 
 La composición detallada es muy parecida en ambas versiones. Para el 90–10 pasa de 0,0609 a 0,0611. La estructura es más sensible: cambia de 0,0491 a 0,0339, y sus contribuciones de experiencia e intercepto se redistribuyen de forma importante.
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/04_standard_vs_reweighted_composicion.png){fig-alt="Contribuciones de composición en las versiones RIF estándar y reponderada"}
+:::
+::: {.figure-pair__item}
+![](../assets/05_standard_vs_reweighted_estructura.png){fig-alt="Contribuciones de estructura en las versiones RIF estándar y reponderada"}
+:::
+:::
+
 ::: {.table-box}
 | Rango | Cambio observado | Total RIF | Composición reponderada | Estructura reponderada | Residuo |
 |---|---:|---:|---:|---:|---:|
@@ -134,7 +143,14 @@ En la composición reponderada del 90–10, cobertura sindical aporta 0,0358, fr
 
 Del lado de estructura, educación aporta 0,1224 al 90–10. Experiencia compensa −0,0711 y el intercepto −0,0249. El agregado moderado de estructura es el saldo de aportes mucho mayores y de signos opuestos.
 
-![La contribución sindical domina composición en el 90–10; educación es el mayor bloque sustantivo expansivo de estructura. Se conserva el intercepto para mostrar las compensaciones. El residuo pertenece al cierre agregado y no se asigna a una covariable.](../assets/t19_rif_bloques.svg){#fig-rif-bloques fig-alt="RIF reponderada del 90–10. Composición: cobertura 0,0358, educación 0,0143, experiencia 0,0110. Estructura: cobertura 0,0074, educación 0,1224, experiencia menos 0,0711, intercepto menos 0,0249. Residuo agregado 0,01505." width="100%"}
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/01_composicion_detallada_rif.png){fig-alt="Contribuciones detalladas de composición para los rangos 50–10, 90–10 y 90–50"}
+:::
+::: {.figure-pair__item}
+![](../assets/02_estructura_detallada_rif.png){fig-alt="Contribuciones detalladas de estructura para los rangos 50–10, 90–10 y 90–50"}
+:::
+:::
 
 La localización importa. La contribución sindical de composición es **+0,0573 en el 90–50** y **−0,0215 en el 50–10**: apertura superior y compresión inferior. Educación, por estructura, aporta +0,0770 arriba y +0,0454 abajo. Estos números describen asignaciones dentro de una especificación; no identifican efectos de intervenir sobre cobertura o educación.
 

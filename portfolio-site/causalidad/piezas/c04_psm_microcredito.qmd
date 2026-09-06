@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[<- Volver al índice de Causalidad](../index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 En PSM, la decisión relevante no es el efecto más alto, sino el contrafactual más creíble

@@ -124,6 +124,15 @@ El kernel determina cómo cae el peso con la distancia; el ancho de banda $h$ de
 | Cross-validation | 0,153 | 0,153 | Prioriza predicción fuera de muestra y retiene más detalle |
 :::
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/07_nw_comparacion_h.png){fig-alt="Estimaciones Nadaraya–Watson con distintos anchos de banda"}
+:::
+::: {.figure-pair__item}
+![](../assets/08_ll_comparacion_h.png){fig-alt="Estimaciones locales lineales con distintos anchos de banda"}
+:::
+:::
+
 Las curvas coinciden ampliamente en la región central y divergen más en los extremos. La sensibilidad relevante no es elegir mecánicamente un ganador, sino distinguir rasgos persistentes de ondulaciones que solo aparecen con un vecindario muy estrecho. En esta aplicación, cambiar el método local altera menos la historia que cambiar cuánto se suaviza.
 
 ## Inferencia: precisión local, no una banda uniforme

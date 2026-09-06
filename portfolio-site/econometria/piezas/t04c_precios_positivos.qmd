@@ -175,6 +175,8 @@ MCO sobre `log(Y)` cumple otra función. Estima una media condicional logarítmi
 
 Flexibilizar la dispersión mejora mucho el ajuste global. La lognormal heterocedástica obtiene el menor BIC, 21.918,5, y la Gamma con dispersión condicional queda cerca, con 21.984,3. Sus densidades promediadas también reproducen bien la forma visible de la distribución.
 
+![](../assets/fig_05_densidades_avanzadas.png){fig-alt="Densidades observada y ajustadas de los modelos positivos con dispersión flexible" width="100%"}
+
 El ranking cambia al examinar la media en niveles. En la lognormal heterocedástica, unas pocas predicciones altas de $\sigma_i^2$ entran exponencialmente en $E(Y_i\mid X_i)$ y llevan la media predicha promedio a aproximadamente $1{,}54\times10^{28}$. La Gamma con dispersión variable predice 582,22, con error medio de +385,57 y RMSE de 4.733,73.
 
 Las versiones parsimoniosas sacrifican ajuste distribucional, pero conservan momentos mucho más estables. La lognormal estándar predice una media de 195,58 y la Gamma estándar 204,95, frente a 196,65 observada. MCO-log con smearing queda en 195,46, aunque su objeto original sigue siendo $E[\log(Y)\mid X]$.

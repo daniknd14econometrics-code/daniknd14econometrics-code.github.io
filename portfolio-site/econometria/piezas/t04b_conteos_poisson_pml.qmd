@@ -158,6 +158,8 @@ La cercanía de los efectos medios no rehabilita Poisson como distribución. $\a
 
 La tercera aplicación da el paso final: abandonar la defensa de una distribución completa. En 2.260 observaciones firma-año, el número medio de patentes es 22,9, la varianza alcanza 4.868,7 y el máximo es 906. La sobredispersión extrema vuelve poco creíble interpretar probabilidades Poisson.
 
+![](../assets/fig_08_patent_hist_patents_truncado.png){fig-alt="Histograma truncado del número de patentes en observaciones firma-año" width="100%"}
+
 Poisson se usa aquí como PML/QMLE para modelar $E(Y\mid X)$ y la inferencia se clusteriza por firma. Esto habilita razones de medias, elasticidades y efectos sobre la media; no habilita $P(Y=k\mid X)$ ni colas Poisson.
 
 La especificación separa dos márgenes de I+D:

@@ -98,6 +98,8 @@ El modelo lineal de probabilidad ofrece una referencia inmediata: un aumento uni
 
 El costo aparece en las predicciones: 234 de 1.969 quedan fuera del intervalo admisible [0, 1]. El MLP sigue siendo un benchmark útil, pero no una representación completa de una probabilidad condicional binaria.
 
+![](../assets/02_mlp_predicciones.png){fig-alt="Predicciones del modelo lineal de probabilidad, incluidas observaciones fuera del intervalo entre cero y uno" width="100%"}
+
 ## Logit: odds y cambios en probabilidad
 
 En logit, el coeficiente de `loanprc` es 1,699 y su *odds ratio* es 5,47. Esto no significa que la probabilidad se multiplique por 5,47: son los *odds* de rechazo los que cambian en esa proporción ante un aumento unitario, manteniendo constantes las demás covariables.

@@ -58,40 +58,32 @@ Estrategias que construyen comparabilidad a partir de covariables pretratamiento
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Por qué una diferencia de medias no equivale a efecto causal](../piezas/c01_diferencia-medias-no-causal.qmd)
-Diferencias observadas no identifican causalidad sin una estrategia válida de comparación.
 
-**Método principal:** Diagnóstico de sesgo de selección y comparación naive  
-**Tipo de datos:** Microdatos observacionales  
+**Método:** Diferencia de medias
 
 <a class="piece-card__cta" href="../piezas/c01_diferencia-medias-no-causal.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Diseño de matching primero: soporte, balance y muestra efectiva en microcrédito](../piezas/c02_matching-exacto-microcredito.qmd)
-Construcción del grupo de comparación con matching exacto y verificación de balance.
 
-**Método principal:** Matching exacto y chequeo de balance  
-**Tipo de datos:** Microdatos de hogares  
+**Método:** Matching exacto · CEM
 
 <a class="piece-card__cta" href="../piezas/c02_matching-exacto-microcredito.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Microcrédito femenino y gasto per cápita: evidencia con PSM bajo criterio de comparabilidad](../piezas/c04_psm_microcredito.qmd)
-Estimación de efectos con ponderación por puntaje de propensión bajo soporte común.
 
-**Método principal:** Propensity Score Matching (PSM)  
-**Tipo de datos:** Microdatos de hogares  
+**Método:** PSM
 
 <a class="piece-card__cta" href="../piezas/c04_psm_microcredito.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Innovación de producto/proceso y mejora ambiental en firmas innovadoras](../piezas/c06_ipwra_innovacion_ambiental.qmd)
-Efecto de innovación sobre desempeño ambiental combinando modelos de resultado y tratamiento.
 
-**Método principal:** IPWRA (ponderación inversa + regresión ajustada)  
-**Tipo de datos:** Panel/corte de firmas innovadoras  
+**Método:** IPWRA
 
 <a class="piece-card__cta" href="../piezas/c06_ipwra_innovacion_ambiental.qmd">Abrir análisis →</a>
 :::
@@ -103,27 +95,23 @@ Efecto de innovación sobre desempeño ambiental combinando modelos de resultado
 ## Variables instrumentales
 
 ::: {.section-lead}
-Diseños que explotan variación exógena para tratar problemas de endogeneidad, evaluando relevancia, primera etapa, forma reducida y credibilidad de la restricción de exclusión.
+Diseños que buscan aislar variación exógena mediante instrumentos, evaluando relevancia, primera etapa, forma reducida y credibilidad de los supuestos de validez.
 :::
 
 ::: {.piece-grid}
 
 ::: {.piece-card}
 ### [Retorno a la educación con IV: cuando una estrategia más rica puede debilitar la identificación](../piezas/c08_vi_retorno_educacion.qmd)
-Trimestre de nacimiento, primera etapa e inferencia robusta para una lectura local y cauta del retorno educativo.
 
-**Método principal:** Variables instrumentales (2SLS)  
-**Tipo de datos:** Microdatos laborales  
+**Método:** VI
 
 <a class="piece-card__cta" href="../piezas/c08_vi_retorno_educacion.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Participación en 401(k) y activos financieros con DR-LATE](../piezas/c09_drlate_401k.qmd)
-Extensión moderna de IV con covariables, modelos auxiliares y estimación doblemente robusta de efectos locales.
 
-**Método principal:** DR-LATE mediante IPWRA<br>
-**Tipo de datos:** Microdatos financieros individuales
+**Método:** DR-LATE
 
 <a class="piece-card__cta" href="../piezas/c09_drlate_401k.qmd">Abrir análisis →</a>
 :::
@@ -135,18 +123,15 @@ Extensión moderna de IV con covariables, modelos auxiliares y estimación doble
 ## Regresión discontinua (RDD)
 
 ::: {.section-lead}
-Identificación local alrededor de un umbral, con foco en continuidad, ausencia de manipulación, elección de ventana o ancho de banda e inferencia robusta.
+Identificación local alrededor de un umbral, con foco en continuidad, diagnósticos de sorting/manipulación, elección de ancho de banda e inferencia robusta.
 :::
 
 ::: {.piece-grid}
 
 ::: {.piece-card}
 ### [Elecciones reñidas y escolarización femenina: evidencia local con RDD](../piezas/rdd01_elecciones_escolarizacion.qmd)
-Efecto local del control municipal islámico en elecciones decididas alrededor del umbral de victoria.
 
-**Método principal:** Regresión discontinua sharp con inferencia robusta
-
-**Tipo de datos:** Corte transversal de municipios
+**Método:** RDD
 
 <a class="piece-card__cta" href="../piezas/rdd01_elecciones_escolarizacion.qmd">Abrir análisis →</a>
 :::
@@ -165,25 +150,20 @@ Comparación de cambios entre grupos tratados y de control bajo tendencias paral
 
 ::: {.piece-card}
 ### [Difference-in-Differences clásico: de la doble diferencia a la comparabilidad condicional](../piezas/did01_did_clasico.qmd)
-Comparación de cambios bajo tendencias paralelas y extensión condicional mediante ponderación de Abadie.
 
-**Método principal:** Difference-in-Differences 2×2 y DiD condicional
-
-**Tipo de datos:** Panel de dos períodos y resultados repetidos
+**Método:** DiD clásico
 
 <a class="piece-card__cta" href="../piezas/did01_did_clasico.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Cuando DiD encuentra efectos que no existen: correlación serial e inferencia](../piezas/bdm01_inferencia_did.qmd)
-Tratamientos placebo para mostrar cómo la persistencia temporal puede producir falsos positivos.
 
-**Método principal:** Monte Carlo empírico e inferencia agrupada en DiD
-
-**Tipo de datos:** Panel estado-año con tratamientos placebo
+**Método:** BDM
 
 <a class="piece-card__cta" href="../piezas/bdm01_inferencia_did.qmd">Abrir análisis →</a>
 :::
+
 :::
 :::
 :::

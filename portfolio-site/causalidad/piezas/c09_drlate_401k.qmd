@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[<- Volver al índice de Causalidad](../index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 La doble robustez amplía la estimación IV, no reemplaza la validez del instrumento

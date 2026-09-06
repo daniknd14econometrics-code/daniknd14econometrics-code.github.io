@@ -90,6 +90,8 @@ El ejercicio usa procesos deliberadamente simples y parámetros conocidos. Así 
 
 La Ley de los Grandes Números explica por qué los promedios muestrales se estabilizan. Una variable χ²(2) es positiva y muy asimétrica, pero tiene esperanza conocida igual a 2. En una trayectoria de 5.000 observaciones, la media acumulada termina en 1,9828.
 
+![](../assets/grafico_02_variable_original_chi2.png){fig-alt="Distribución original chi cuadrado con dos grados de libertad utilizada en la simulación" width="100%"}
+
 El Teorema Central del Límite responde una pregunta distinta: no dónde termina la media, sino cómo fluctúa alrededor de su esperanza. Con 1.000 muestras de tamaño 40, el estadístico estandarizado tiene media -0,050, desviación 0,997 y una forma aproximadamente normal, aunque los datos originales no lo sean.
 
 ![La LGN estabiliza una media acumulada alrededor de su esperanza; el TCL vuelve aproximadamente normal la distribución de medias estandarizadas aunque la variable original sea asimétrica.](../assets/t00b_lgn_tcl.svg){fig-alt="Media acumulada convergiendo a dos y distribución aproximadamente normal de medias estandarizadas" width="100%"}

@@ -70,25 +70,20 @@ De la interpretación de asociaciones parciales a los problemas de endogeneidad 
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Educación e ingresos: qué significa controlar en una regresión lineal](piezas/t00_mco_ingresos.qmd)
-MCO simple y múltiple, FWL e inferencia robusta en una aplicación laboral.
 
-**Método principal:** Regresión lineal, FWL y errores robustos
-
-**Tipo de datos:** Corte transversal de personas
+**Método:** MCO · FWL
 
 <a class="piece-card__cta" href="piezas/t00_mco_ingresos.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Instituciones y desarrollo: qué puede —y qué no puede— resolver una variable instrumental](piezas/t01_vi.qmd)
-Mortalidad histórica, primera etapa frágil y límites de la identificación instrumental.
 
-**Método principal:** Variables instrumentales / 2SLS
-
-**Tipo de datos:** Corte transversal de países
+**Método:** VI · 2SLS
 
 <a class="piece-card__cta" href="piezas/t01_vi.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -103,55 +98,44 @@ Qué cambia al explotar variación temporal dentro de las mismas unidades y mode
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Impuestos a la cerveza y accidentes: por qué between y within cuentan historias distintas](piezas/t02_panel_pooled_salarios.qmd)
-Cómo cambia la lectura al comparar diferencias entre estados con variación dentro de cada estado.
 
-**Método principal:** Pooled OLS, between, efectos aleatorios y efectos fijos
-
-**Tipo de datos:** Panel balanceado de estados
+**Método:** Pooled OLS · Between · RE · FE
 
 <a class="piece-card__cta" href="piezas/t02_panel_pooled_salarios.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Heterogeneidad no observada en panel: cuándo cambia la conclusión](piezas/t09_panel_re_fe_cre.qmd)
-Dos aplicaciones contrastan una lectura estable en panel lineal con efectos parciales sensibles en probit de panel.
 
-**Método principal:** FE, RE y CRE-Mundlak en modelos lineales y binarios
-
-**Tipo de datos:** Paneles cortos de plantas y mujeres
+**Método:** FE · RE · CRE-Mundlak
 
 <a class="piece-card__cta" href="piezas/t09_panel_re_fe_cre.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Crimen, arrestos y policía dentro del panel](piezas/t11_panel_iv.qmd)
-Qué exige identificar con instrumentos usando variación within.
+### [Crimen, arrestos y policía: qué identifica una variable instrumental dentro del panel](piezas/t11_panel_iv.qmd)
 
-**Método principal:** FE-IV, pooled-IV y between-IV
-**Tipo de datos:** Panel de condados
+**Método:** FE-IV · Pooled IV · Between IV
 
 <a class="piece-card__cta" href="piezas/t11_panel_iv.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Producción con memoria: panel dinámico e instrumentos internos](piezas/t09b_panel_dinamico.qmd)
-Por qué la dinámica vuelve endógeno el rezago y exige disciplinar la matriz de instrumentos.
+### [Producción con memoria: por qué un panel dinámico necesita instrumentos internos](piezas/t09b_panel_dinamico.qmd)
 
-**Método principal:** Anderson–Hsiao y Arellano–Bond / Difference GMM
-**Tipo de datos:** Panel corto no balanceado de firmas
+**Método:** Anderson–Hsiao · Difference GMM
 
 <a class="piece-card__cta" href="piezas/t09b_panel_dinamico.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Empresas dentro de sectores: panel multinivel y shrinkage](piezas/t09c_panel_multinivel.qmd)
-Qué se aprende al separar heterogeneidad sectorial, de firma y firma–año.
+### [Empresas dentro de sectores: heterogeneidad, ICC y shrinkage en un panel multinivel](piezas/t09c_panel_multinivel.qmd)
 
-**Método principal:** Modelos lineales mixtos, ICC y efectos aleatorios
-**Tipo de datos:** Panel jerárquico firma–año–sector
+**Método:** Modelos lineales mixtos · ICC
 
 <a class="piece-card__cta" href="piezas/t09c_panel_multinivel.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -165,44 +149,37 @@ Modelos para probabilidades y resultados binarios, multinomiales y ordenados, ta
 
 ::: {.piece-grid}
 ::: {.piece-card}
-### [Rechazo hipotecario: probabilidades y diagnóstico](piezas/t12_binaria_base.qmd)
-MLP, logit y probit ante un evento poco frecuente.
+### [Rechazo hipotecario: probabilidades, efectos marginales y diagnóstico en modelos binarios](piezas/t12_binaria_base.qmd)
 
-**Método principal:** Modelos binarios, APE y ROC
-**Tipo de datos:** Solicitudes hipotecarias
+**Método:** MLP · Logit · Probit
 
 <a class="piece-card__cta" href="piezas/t12_binaria_base.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Endogeneidad en modelos binarios: la estrategia depende de la variable endógena](piezas/t13_binaria_vi_continua.qmd)
-Función de control e IV-probit para una endógena continua; biprobit cuando la variable problemática también es binaria.
 
-**Método principal:** Función de control, IV-probit y biprobit<br>
-**Tipo de datos:** Microdatos de hogares
+**Método:** Función de control · IV-Probit · Biprobit
 
 <a class="piece-card__cta" href="piezas/t13_binaria_vi_continua.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Estados de actividad en panel: qué cambia entre multinomial pooled y CRE](piezas/t18_multinomial_panel_cre.qmd)
-Heterogeneidad persistente en escuela, hogar y trabajo.
 
-**Método principal:** Multinomial agrupado + CRE<br>
-**Tipo de datos:** Panel laboral
+**Método:** Multinomial pooled · CRE
 
 <a class="piece-card__cta" href="piezas/t18_multinomial_panel_cre.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Asignación previsional con resultado ordinal: una lectura aplicada](piezas/t19_ordenado_base.qmd)
-Probabilidades por categoría y efectos marginales.
 
-**Método principal:** Logit/Probit ordenado<br>
-**Tipo de datos:** Microdatos individuales
+**Método:** Logit ordenado · Probit ordenado
 
 <a class="piece-card__cta" href="piezas/t19_ordenado_base.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -217,47 +194,36 @@ Modelos para respuestas no negativas y acotadas, distinguiendo entre especificar
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Cuando la varianza desborda la media: Poisson, binomial negativa y PML](piezas/t04b_conteos_poisson_pml.qmd)
-Tres aplicaciones muestran cuándo interpretar probabilidades de conteo y cuándo conservar solo una media exponencial.
 
-**Método principal:** Poisson, binomial negativa NB2 y Poisson PML/QMLE
-
-**Tipo de datos:** Cortes transversales y panel firma-año
+**Método:** Poisson · NB2 · PML
 
 <a class="piece-card__cta" href="piezas/t04b_conteos_poisson_pml.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Modelar precios positivos: ajuste distribucional y estabilidad de la media](piezas/t04c_precios_positivos.qmd)
-Por qué mejorar el ajuste de una distribución positiva no garantiza una media en niveles bien comportada.
 
-**Método principal:** Lognormal, Gamma, máxima verosimilitud y smearing
-
-**Tipo de datos:** Corte transversal de operaciones hipotecarias
+**Método:** Lognormal · Gamma · Smearing
 
 <a class="piece-card__cta" href="piezas/t04c_precios_positivos.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [I+D y patentes en panel: cómo cambia la asociación al controlar heterogeneidad de firma](piezas/t04d_poisson_panel_heterogeneidad.qmd)
-La intensidad de I+D permanece asociada con más patentes, pero su magnitud cae al explotar variación dentro de firma.
 
-**Método principal:** Poisson QMLE pooled, RE, CRE/Mundlak y FE condicional
-
-**Tipo de datos:** Panel firma-año
+**Método:** Poisson QMLE · RE · CRE-Mundlak · FE
 
 <a class="piece-card__cta" href="piezas/t04d_poisson_panel_heterogeneidad.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Modelar proporciones: misma asociación, distintos supuestos](piezas/t04f_proporciones_beta.qmd)
-Cuatro modelos producen casi el mismo efecto marginal del gasto electoral, aunque difieren en soporte y estructura distribucional.
 
-**Método principal:** Modelo lineal, Bernoulli QMLE y beta MLE
-
-**Tipo de datos:** Corte transversal de distritos electorales
+**Método:** Modelo lineal · Bernoulli QMLE · Beta MLE
 
 <a class="piece-card__cta" href="piezas/t04f_proporciones_beta.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -271,24 +237,21 @@ Problemas en los que los límites observados, las masas en cero o la selección 
 
 ::: {.piece-grid}
 ::: {.piece-card}
-### [Ceros reales y datos censurados: dos límites observados](piezas/t06a_esquina_censura.qmd)
-Demanda con solución de esquina y top-coding de ingresos en dos aplicaciones complementarias.
+### [Ceros reales y datos censurados: dos límites observados, dos problemas econométricos](piezas/t06a_esquina_censura.qmd)
 
-**Método principal:** MCO, Tobit y Poisson QMLE
-**Tipo de datos:** Cortes transversales de hogares
+**Método:** MCO · Tobit · Poisson QMLE
 
 <a class="piece-card__cta" href="piezas/t06a_esquina_censura.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Salarios observados solo para quienes trabajan](piezas/t06b_seleccion_heckman.qmd)
-Participación laboral, resultados ausentes y corrección por selección sobre inobservables.
+### [Salarios observados solo para quienes trabajan: selección muestral y corrección de Heckman](piezas/t06b_seleccion_heckman.qmd)
 
-**Método principal:** MCO y selección de Heckman
-**Tipo de datos:** Corte transversal de mujeres casadas
+**Método:** MCO · Heckman
 
 <a class="piece-card__cta" href="piezas/t06b_seleccion_heckman.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -303,35 +266,28 @@ Fundamentos que sostienen la estimación y la inferencia: comportamiento asintó
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [De promedios a estimadores: por qué las muestras grandes sostienen la inferencia](piezas/t00b_teoria_asintotica.qmd)
-LGN, TCL, consistencia y normalidad asintótica de MCO mediante simulación.
 
-**Método principal:** Teoría asintótica y simulación Monte Carlo
-
-**Tipo de datos:** Procesos simulados
+**Método:** Teoría asintótica · Monte Carlo
 
 <a class="piece-card__cta" href="piezas/t00b_teoria_asintotica.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Máxima verosimilitud bajo la lupa: función objetivo, inferencia y QMLE](piezas/t04a_maxima_verosimilitud.qmd)
-Qué exige estimar con una distribución completa y qué puede conservarse bajo una lectura quasi-MV con inferencia robusta.
 
-**Método principal:** Máxima verosimilitud, contrastes clásicos y QMLE
-
-**Tipo de datos:** Procesos simulados
+**Método:** Máxima verosimilitud · QMLE
 
 <a class="piece-card__cta" href="piezas/t04a_maxima_verosimilitud.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [De condiciones de momento a IV-GMM](piezas/t07_gmm_momentos.qmd)
-Qué aporta pensar mediante momentos y por qué una restricción inválida puede dominar el resultado.
+### [De condiciones de momento a IV-GMM: cuándo ponderar ayuda y cuándo un momento invalida el estimador](piezas/t07_gmm_momentos.qmd)
 
-**Método principal:** GMM, IV-GMM y test de Hansen
-**Tipo de datos:** Procesos simulados y Monte Carlo
+**Método:** GMM · IV-GMM
 
 <a class="piece-card__cta" href="piezas/t07_gmm_momentos.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 :::
@@ -345,26 +301,21 @@ Estimación flexible de distribuciones y relaciones condicionales sin imponer un
 
 ::: {.piece-grid}
 ::: {.piece-card}
-### [Ingresos sin bins: densidad kernel y ancho de banda](piezas/t10_densidad_marginal.qmd)
-Cómo el suavizado cambia la lectura de una distribución y por qué el bandwidth es decisivo.
+### [Ingresos sin bins: qué revela una densidad kernel y cuánto depende del ancho de banda](piezas/t10_densidad_marginal.qmd)
 
-**Método principal:** Histogramas y estimación de densidad kernel
-
-**Tipo de datos:** Cortes transversales repetidos ponderados
+**Método:** Densidad kernel
 
 <a class="piece-card__cta" href="piezas/t10_densidad_marginal.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Ingreso y consumo sin una forma impuesta: regresión local](piezas/t11_regresion_no_parametrica.qmd)
-Cómo Nadaraya–Watson y la regresión local lineal aprenden una curva condicional y por qué el ancho de banda gobierna su flexibilidad.
+### [Ingreso y consumo sin una forma impuesta: regresión local, ancho de banda e inferencia](piezas/t11_regresion_no_parametrica.qmd)
 
-**Método principal:** Regresión kernel, local lineal e inferencia bootstrap
-
-**Tipo de datos:** Corte transversal de hogares
+**Método:** Nadaraya–Watson · Regresión local lineal
 
 <a class="piece-card__cta" href="piezas/t11_regresion_no_parametrica.qmd">Abrir análisis →</a>
 :::
+
 :::
 :::
 
@@ -380,36 +331,28 @@ Siete análisis recorren las diferencias entre cuantiles, la selección en la pa
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Ingresos más allá del promedio](piezas/t13_qr_qte.qmd)
-Menos ingresos cero, poca diferencia en la mediana y una asociación mayor en la zona media-alta: qué revela abrir el promedio.
 
-**Método principal:** Regresión por cuantiles y comparación con MCO
-
-**Tipo de datos:** Corte transversal de personas con características previas
+**Método:** Regresión cuantílica · MCO
 
 <a class="piece-card__cta" href="piezas/t13_qr_qte.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Capacitación laboral: participación, selección y efectos distributivos](piezas/t14_qriv_qte_vi.qmd)
-La oferta aleatoria permite contrastar la ventaja observada de quienes se capacitan con efectos cuantílicos locales y estructurales.
 
-**Método principal:** QTE-IV de AAI e IVQR de Chernozhukov–Hansen
-
-**Tipo de datos:** Evaluación JTPA con cumplimiento imperfecto
+**Método:** QTE-IV (AAI) · IVQR (CH)
 
 <a class="piece-card__cta" href="piezas/t14_qriv_qte_vi.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Experiencia y antigüedad: qué cambia al seguir a las mismas trabajadoras](piezas/t15_qr_panel.qmd)
-El ajuste por diferencias persistentes aplana el perfil de experiencia, mientras el gradiente de antigüedad permanece.
 
-**Método principal:** QR pooled y estimador de Canay
-
-**Tipo de datos:** Panel de mujeres, NLS Young Women
+**Método:** QR pooled · Canay
 
 <a class="piece-card__cta" href="piezas/t15_qr_panel.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 **Brechas y distribuciones contrafactuales**
@@ -417,47 +360,36 @@ El ajuste por diferencias persistentes aplana el perfil de experiencia, mientras
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Brecha salarial: características, estructuras y referencia](piezas/t16_oaxaca_blinder.qmd)
-Cómo se organiza una brecha media y por qué el reparto entre composición y estructura depende del contrafactual.
 
-**Método principal:** Oaxaca–Blinder y sensibilidad a la referencia
-
-**Tipo de datos:** Corte transversal de hombres y mujeres, NLSY79
+**Método:** Oaxaca–Blinder
 
 <a class="piece-card__cta" href="piezas/t16_oaxaca_blinder.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Salarios: apertura arriba, compresión abajo](piezas/t17_dfl.qmd)
-Una distribución contrafactual permite distinguir los cambios de composición y estructura en cada tramo salarial.
 
-**Método principal:** Reponderación DFL y cuantiles incondicionales
-
-**Tipo de datos:** Cortes transversales CPS ponderados, 1983–1985 y 2003–2005
+**Método:** Reponderación DFL
 
 <a class="piece-card__cta" href="piezas/t17_dfl.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Cobertura sindical: prima salarial y compresión distributiva](piezas/t18_uqr_rif.qmd)
-Una prima condicional positiva puede coexistir con un perfil marginal compatible con compresión salarial.
 
-**Método principal:** CQR, UQR/RIF–OLS y sensibilidad RIF–Logit
-
-**Tipo de datos:** Muestra de replicación CPS 1983–1985, sin ponderación
+**Método:** CQR · UQR/RIF
 
 <a class="piece-card__cta" href="piezas/t18_uqr_rif.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Qué componentes acompañan el aumento de la desigualdad salarial](piezas/t19_descomposicion_rif.qmd)
-El detalle por cobertura sindical, educación y experiencia permite localizar contribuciones y hacer visible el costo de la aproximación RIF.
 
-**Método principal:** RIF–Oaxaca estándar y reponderada, con referencia DFL
-
-**Tipo de datos:** Cortes transversales CPS ponderados, 1983–1985 y 2003–2005
+**Método:** RIF–Oaxaca · DFL
 
 <a class="piece-card__cta" href="piezas/t19_descomposicion_rif.qmd">Abrir análisis →</a>
 :::
+
 :::
 :::
 :::

@@ -120,6 +120,15 @@ Compara cada condado consigo mismo. Es la fuente de variación pertinente para F
 
 ::::
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/05_between_endogenas.png){fig-alt="Variación between de las variables potencialmente endógenas en el panel de condados"}
+:::
+::: {.figure-pair__item}
+![](../assets/06_within_endogenas.png){fig-alt="Variación within de las variables potencialmente endógenas en el panel de condados"}
+:::
+:::
+
 ## Primeras etapas dentro del condado
 
 Con dos variables endógenas existen dos primeras etapas. Después de absorber controles, efectos de año y efectos de condado, `ltaxpc` y `lmix` explican algo de la variación de `lprbarr`, pero casi nada de la variación de `lpolpc`.

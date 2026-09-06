@@ -102,6 +102,8 @@ $$
 
 La distribución salarial condicional se mantiene en $A$; la distribución de características se sustituye por la de $B$. El cociente de densidades de características se estima mediante un modelo de pertenencia al período. El peso contrafactual multiplica ese cociente por el peso CPS original.
 
+![](../assets/02_distribuciones_dfl_ecdf.png){fig-alt="Distribuciones empíricas inicial, contrafactual DFL y reciente" width="100%"}
+
 Para cualquier estadístico $v$ calculado sobre esas distribuciones:
 
 $$
@@ -137,6 +139,8 @@ El rango 90–10 aumenta 0,1091 log puntos: 0,0756 corresponden a composición y
 La composición habría ampliado el 50–10 en 0,0565. La compresión estructural de −0,1301 domina y deja un cambio observado negativo. En la mitad superior, estructura aporta 0,1637 a una apertura total de 0,1827. Decir únicamente que “composición explica más del aumento de desigualdad” omitiría dónde y cómo se transforma la distribución.
 
 ## Soporte y pesos sostienen la comparación
+
+![](../assets/01_overlap_propensity.png){fig-alt="Superposición de los puntajes de propensión estimados entre los períodos inicial y reciente" width="100%"}
 
 El contrafactual necesita representar la composición reciente con observaciones disponibles en el período inicial. Los diagnósticos reportados son favorables: ambos períodos comparten un rango de probabilidades estimadas cercano a [0,100; 0,766], el cociente DFL tiene máximo 3,39 y su media ponderada es 1,0003. No se aplica recorte de soporte en la estimación principal.
 

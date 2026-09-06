@@ -98,58 +98,44 @@ Cinco aplicaciones conectan probabilidades y decisiones: costos de error, valida
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Riesgo de default: de la probabilidad a la decisión](piezas/t01_default.qmd)
-Una misma probabilidad puede llevar a decisiones distintas. Logit y KNN se comparan con validación anidada y costos de error explícitos.
 
-**Métodos:** Logit · KNN · validación cruzada
+**Método:** Logit · KNN
 
-**Aplicación:** Default · 10.000 observaciones
-
-<a class="piece-card__cta" href="piezas/t01_default.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t01_default.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Dirección del mercado: la prueba está en el futuro](piezas/t02_smarket.qmd)
-El acierto de Logit en 2005 iguala al de una regla basada solo en prevalencia histórica. La prueba temporal cambia la lectura del resultado.
 
-**Métodos:** Logit · KNN · validación temporal
+**Método:** Logit · KNN
 
-**Aplicación:** Smarket · clasificación diaria
-
-<a class="piece-card__cta" href="piezas/t02_smarket.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t02_smarket.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Detectar compras raras: cuando 94 % de aciertos no alcanza](piezas/t03_caravan.qmd)
-KNN no detecta ninguna compra en la evaluación externa. El desbalance y la geometría de 85 predictores ayudan a interpretar el límite.
 
-**Métodos:** KNN · validación anidada · distancias
+**Método:** KNN
 
-**Aplicación:** Caravan · 348 compras en 5.822 casos
-
-<a class="piece-card__cta" href="piezas/t03_caravan.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t03_caravan.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Instituciones privadas: clasificar bien no es lo mismo que medir bien la certeza](piezas/t04_college.qmd)
-LDA mejora la clasificación y la calidad probabilística. Una AUC alta puede coexistir con pronósticos excesivamente seguros.
 
-**Métodos:** LDA · QDA · Gaussian Naive Bayes
+**Método:** LDA · QDA · Gaussian Naive Bayes
 
-**Aplicación:** College · 777 instituciones
-
-<a class="piece-card__cta" href="piezas/t04_college.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t04_college.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Origen de los automóviles: acertar la clase o acertar la probabilidad](piezas/t05_auto.qmd)
-QDA clasifica mejor los tres orígenes; LDA obtiene mejor log-loss. Los errores por clase y los costos orientan la elección.
 
-**Métodos:** LDA · QDA · Gaussian Naive Bayes multiclase
+**Método:** LDA · QDA · Gaussian Naive Bayes
 
-**Aplicación:** Auto · 392 automóviles
-
-<a class="piece-card__cta" href="piezas/t05_auto.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t05_auto.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 ## Selección, regularización y alta dimensionalidad {#seleccion-regularizacion}
@@ -159,25 +145,20 @@ Dos aplicaciones muestran cómo cambia la decisión metodológica cuando control
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Salarios de beisbolistas: cuánto simplificar sin perder predicción](piezas/t06_hitters.qmd)
-Selección secuencial, Lasso y Ridge compiten con MCO bajo validación anidada. El RMSE ganador convive con soluciones de complejidad muy distinta.
 
-**Métodos:** MCO · Forward/Backward · Lasso · Ridge
+**Método:** MCO · Forward/Backward · Lasso · Ridge
 
-**Aplicación:** Hitters · salario de 263 jugadores
-
-<a class="piece-card__cta" href="piezas/t06_hitters.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t06_hitters.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Espectros de suelo: regularizar cuando p supera a n](piezas/t07_nirsoil.qmd)
-Elastic Net combina contracción y selección en 700 predictores casi redundantes. La ventaja sobre Lasso es pequeña y debe leerse junto con la estabilidad.
 
-**Métodos:** Ridge · Lasso · Elastic Net
+**Método:** Ridge · Lasso · Elastic Net
 
-**Aplicación:** NIRsoil · nitrógeno en 645 muestras
-
-<a class="piece-card__cta" href="piezas/t07_nirsoil.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t07_nirsoil.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 ## No linealidad y modelos aditivos {#no-linealidad-y-modelos-aditivos}
@@ -186,26 +167,21 @@ Dos aplicaciones muestran cuándo conviene comprar flexibilidad y cuándo la pen
 
 ::: {.piece-grid}
 ::: {.piece-card}
-### [Concreto: cuando una recta deja resistencia sin explicar](piezas/t08a_concrete.qmd)
-Splines y GAM para predecir resistencia a compresión con validación agrupada por receta.
+### [Concreto: cuándo una recta deja resistencia sin explicar](piezas/t08a_concrete.qmd)
 
-**Métodos:** MCO · Splines · GAM
+**Método:** MCO · Splines · GAM
 
-**Aplicación:** Concrete · resistencia a compresión
-
-<a class="piece-card__cta" href="piezas/t08a_concrete.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t08a_concrete.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Lealtad y precio: cuándo la flexibilidad vuelve a ser una recta](piezas/t08b_oj.qmd)
-GAM logístico para compras de jugo de naranja y probabilidades por marca fuera de muestra.
 
-**Métodos:** Logit · GAM logístico · splines
+**Método:** Logit · GAM
 
-**Aplicación:** OJ · elección Citrus Hill o Minute Maid
-
-<a class="piece-card__cta" href="piezas/t08b_oj.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t08b_oj.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 ## Árboles y ensambles {#arboles-y-ensambles}
@@ -215,25 +191,20 @@ Dos problemas muestran qué cambia al pasar de un árbol individual a un promedi
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [California Housing: cuándo un ensamble estabiliza el valor de una vivienda](piezas/t09a_california.qmd)
-CART, Bagging y Random Forest para predecir el valor mediano de vivienda fuera de muestra.
 
-**Métodos:** CART · Bagging · Random Forest
+**Método:** CART · Bagging · Random Forest
 
-**Aplicación:** California Housing · valor mediano de vivienda
-
-<a class="piece-card__cta" href="piezas/t09a_california.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t09a_california.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Spam: la estabilidad que convierte un árbol en una decisión confiable](piezas/t09b_spam.qmd)
-CART, Bagging y Random Forest para clasificar spam y email con scores y umbrales explícitos.
 
-**Métodos:** CART · Bagging · Random Forest
+**Método:** CART · Bagging · Random Forest
 
-**Aplicación:** Spam · clasificación de correo
-
-<a class="piece-card__cta" href="piezas/t09b_spam.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/t09b_spam.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 ## Outcomes, pérdidas y objetivos predictivos {#outcomes-perdidas-y-objetivos-predictivos}
@@ -243,47 +214,36 @@ Cuatro piezas muestran que definir el target incluye respetar su soporte, elegir
 ::: {.piece-grid}
 ::: {.piece-card}
 ### [Contar bien: predecir hijos sin tratar el outcome como gaussiano](piezas/e01_fertil2_conteo.qmd)
-Poisson, suavizados y ensambles para una respuesta de conteo no negativa.
 
-**Métodos:** Poisson · GAM · Random Forest
+**Método:** Poisson · GAM · Random Forest
 
-**Aplicación:** Fertil2 · número de hijos
-
-<a class="piece-card__cta" href="piezas/e01_fertil2_conteo.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/e01_fertil2_conteo.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Precios positivos: cuando MSE no cuenta toda la historia](piezas/e02_loanapp_gamma.qmd)
-Gamma, enlace log y flexibilidad para una respuesta continua y sesgada.
+### [Precios positivos: cuando el error relativo importa](piezas/e02_loanapp_gamma.qmd)
 
-**Métodos:** Gamma · enlace log · GAM
+**Método:** Gamma · GAM
 
-**Aplicación:** Loanapp · monto positivo
-
-<a class="piece-card__cta" href="piezas/e02_loanapp_gamma.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/e02_loanapp_gamma.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
-### [Participación 401(k): predecir una fracción dentro del soporte](piezas/e03_401k_fraccional.qmd)
-Fractional Logit y métodos flexibles para una tasa acotada.
+### [Participación 401(k): predecir una fracción sin salir de \[0, 1\]](piezas/e03_401k_fraccional.qmd)
 
-**Métodos:** Fractional Logit · GAM · Random Forest
+**Método:** Fractional Logit · GAM · Random Forest
 
-**Aplicación:** 401(k) · tasa de participación
-
-<a class="piece-card__cta" href="piezas/e03_401k_fraccional.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/e03_401k_fraccional.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}
 ### [Activos financieros: predecir escenarios, no solo un promedio](piezas/q01_401ksubs_quantiles.qmd)
-QR, GAM cuantílico y Quantile Forest para cuantiles condicionales.
 
-**Métodos:** Regresión cuantílica · GAM · Quantile Forest
+**Método:** Regresión cuantílica · GAM · Quantile Forest
 
-**Aplicación:** 401(k) · activos financieros
-
-<a class="piece-card__cta" href="piezas/q01_401ksubs_quantiles.qmd">Leer análisis</a>
+<a class="piece-card__cta" href="piezas/q01_401ksubs_quantiles.qmd">Abrir análisis →</a>
 :::
+
 :::
 
 ## Reducción de dimensión y aprendizaje no supervisado

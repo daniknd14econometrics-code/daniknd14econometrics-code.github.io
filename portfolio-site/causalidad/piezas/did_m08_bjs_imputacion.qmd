@@ -24,8 +24,6 @@ execute:
   message: false
 ---
 
-[← Volver a Difference-in-Differences moderno](../did-moderno/index.qmd)
-
 ::: {.hero-box}
 ::: {.hero-title}
 Construir el contrafactual antes de agregar los efectos

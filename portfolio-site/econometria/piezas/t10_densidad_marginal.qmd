@@ -133,6 +133,15 @@ El compromiso es entre varianza y sesgo. Un ancho pequeño puede convertir ruido
 
 El selector plug-in usa un tamaño efectivo ponderado de 44.437,45, estima la curvatura integrada y obtiene $h=0,2229$. Su cercanía a 0,20 disciplina la referencia visual. En cambio, el automático con *frequency weights* es 0,0429 porque la suma expandida de ponderadores se interpreta como mucha más información independiente. La expansión poblacional no debe confundirse mecánicamente con tamaño muestral efectivo.
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/08_kdensity_bandwidth_plugin_2015.png){fig-alt="Densidad kernel de 2015 con el ancho de banda plug-in"}
+:::
+::: {.figure-pair__item}
+![](../assets/09_kdens_bandwidth_selectors_2015.png){fig-alt="Comparación de selectores de ancho de banda para la densidad de 2015"}
+:::
+:::
+
 ## Kernel: importante, pero secundario aquí
 
 Con el mismo $h=0,20$, las curvas gaussiana, Epanechnikov y triangular son casi indistinguibles en la aplicación. La forma exacta de los pesos locales importa menos que la distancia sobre la cual se permite que las observaciones contribuyan.
@@ -142,6 +151,8 @@ El resultado no implica que el kernel nunca importe. Indica que, con kernels sim
 ## Un punto local hace visible el cálculo
 
 El análisis evalúa la densidad en la mediana ponderada de 2015, $x_0=9,6847$, usando $h=0,20$. Una ventana rígida contiene 19,873% de la masa ponderada; al dividirla por su ancho total, $2h=0,40$, el estimador naive es 0,49682. El kernel gaussiano ponderado, que reduce suavemente el peso con la distancia, entrega 0,48682.
+
+![](../assets/05_histograma_ventana_naive_x0_2015.png){fig-alt="Histograma de 2015 con la ventana local alrededor de la mediana ponderada" width="100%"}
 
 ::: {.table-box}
 | Estimador en $x_0$ | Densidad |

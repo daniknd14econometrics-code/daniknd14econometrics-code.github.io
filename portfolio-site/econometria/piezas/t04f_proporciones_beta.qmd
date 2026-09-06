@@ -95,6 +95,8 @@ Rango entre las cuatro especificaciones comparadas.
 
 La unidad de observación es un distrito electoral estadounidense. El resultado es la participación del incumbente en el voto bipartidista de 1990, expresada entre cero y uno. La covariable principal es la participación del incumbente en el gasto total de campaña; los controles recogen fortaleza partidaria previa, partido, presencia de un retador repetido, antigüedad legislativa y formación jurídica.
 
+![](../assets/00_distribucion_y_vote.png){fig-alt="Distribución de la participación del incumbente en el voto bipartidista" width="100%"}
+
 La pregunta es cómo cambia la participación esperada de voto del incumbente con su participación en el gasto electoral, manteniendo constantes esas características. La dificultad econométrica surge porque el resultado es continuo, pero está acotado: no es una variable binaria ni una respuesta sin límites.
 
 ## El soporte importa, aunque el benchmark lineal no falle aquí

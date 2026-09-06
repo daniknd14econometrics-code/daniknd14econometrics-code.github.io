@@ -139,7 +139,6 @@ Si el objetivo es reducir errores relativos sobre una respuesta positiva, Random
 La evidencia proviene de una única partición con 394 casos de test, por lo que no cuantifica la estabilidad del ranking ante otras divisiones. El mínimo de `mtry` es poco pronunciado; los modelos flexibles subestiman parte de la cola; los perfiles condicionados pueden recorrer combinaciones poco frecuentes. Dos avisos de convergencia de `glmnet` no afectaron las curvas ni predicciones seleccionadas, pero merecerían una auditoría numérica antes de producción. Los resultados e importancias son predictivos, no causales.
 
 ::: {.section-box}
-**Siguiente pieza:** [Una fracción no es una variable binaria](e03_401k_fraccional.qmd) extiende el problema a outcomes acotados entre cero y uno.
 :::
 
 *Fuente: informe curado del Taller E02, `loanapp`. Los resultados son predictivos y se reportan sobre el test protegido del ejercicio.*

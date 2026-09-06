@@ -144,6 +144,8 @@ Los efectos fijos de estado eliminan toda característica estatal constante en e
 
 En la especificación con ambos conjuntos de efectos, el coeficiente del impuesto es **−0,485**. La misma cifra se obtiene estimando variables indicadoras por estado o aplicando la transformación within; la igualdad exacta también se verifica mediante Frisch–Waugh–Lovell después de residualizar resultado y regresores. Estas equivalencias son una comprobación de implementación, no evidencia adicional a favor de la magnitud estimada.
 
+![](../assets/11_fwl_completo_accid_impcerv.png){fig-alt="Relación parcial ajustada mediante Frisch–Waugh–Lovell entre accidentes e impuesto a la cerveza" width="100%"}
+
 ::: {.section-box}
 ### Lectura dominante
 

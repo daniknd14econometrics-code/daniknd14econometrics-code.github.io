@@ -115,6 +115,15 @@ La especificación relaciona la demanda con el precio de las manzanas ecológica
 
 MCO estimado solo entre compras positivas responde otra pregunta: describe la cantidad condicional a participar y, por eso, no es una alternativa directamente comparable para la media de toda la población.
 
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/apple_07_scatter_ecolbs_precio_relativo.png){fig-alt="Relación observada entre libras de manzanas ecológicas y precio relativo"}
+:::
+::: {.figure-pair__item}
+![](../assets/apple_08_margins_ecoprc_tobit.png){fig-alt="Respuesta media ajustada del modelo Tobit al precio de las manzanas ecológicas"}
+:::
+:::
+
 ### Comparar objetos equivalentes
 
 Los coeficientes del índice Tobit y del índice logarítmico Poisson no están en las mismas unidades que el coeficiente de MCO. La comparación correcta utiliza efectos marginales promedio sobre la media observada.
@@ -146,6 +155,15 @@ MCO ignora esa pérdida de información y trata 112,5 como una cifra exacta. El 
 :::
 
 Las magnitudes están expresadas en miles de dólares. La educación de ambos integrantes se asocia positivamente con el ingreso familiar observado; la presencia de hijos pequeños se asocia negativamente. El Tobit no transforma estas asociaciones en efectos causales: corrige la representación del mecanismo de observación bajo supuestos paramétricos.
+
+::: {.figure-pair}
+::: {.figure-pair__item}
+![](../assets/apple_10_kdensity_predicciones_media.png){fig-alt="Distribuciones de medias predichas entre modelos en la aplicación de manzanas"}
+:::
+::: {.figure-pair__item}
+![](../assets/cps91_07_kdensity_predicciones_media.png){fig-alt="Distribuciones de medias predichas entre modelos en la aplicación de ingresos censurados"}
+:::
+:::
 
 ![El panel izquierdo compara el efecto marginal promedio del precio ecológico sobre la demanda media mediante MCO, Tobit y Poisson QMLE. El derecho contrasta MCO y Tobit censurado para educación e hijos pequeños en la aplicación de ingresos. Las líneas son IC95%.](../assets/t06a_modelos_comparados.svg){fig-alt="Coefplots de efectos comparables en la demanda de manzanas ecológicas y el ingreso familiar censurado" width="100%"}
 

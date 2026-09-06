@@ -108,6 +108,8 @@ $$
 
 Cada observación recibe una transformación según esté por encima o por debajo del cuantil. La densidad en el umbral determina la escala: cuando hay poca masa cerca del cuantil, una pequeña perturbación de probabilidad puede desplazarlo más.
 
+![](../assets/02_rif_mediana.png){fig-alt="Transformación RIF de las observaciones por encima y por debajo de la mediana salarial" width="100%"}
+
 RIF–OLS aproxima linealmente la esperanza condicional de esa transformación:
 
 $$
@@ -141,7 +143,7 @@ Tampoco corresponde multiplicar mecánicamente el coeficiente por un aumento arb
 
 RIF–Logit modela la probabilidad de superar el umbral salarial y calcula un cambio discreto promedio por cobertura, escalado por la densidad en el cuantil. Conserva el enfoque local, pero utiliza otra forma funcional para la relación auxiliar.
 
-![RIF–Logit conserva el signo y la forma general del contraste en los puntos mostrados. Las magnitudes difieren más en la cola alta; la coincidencia cualitativa no prueba correcta especificación ni identificación causal.](../assets/t18_rif_sensibilidad.svg){#fig-rif-sensibilidad fig-alt="RIF–OLS y RIF–Logit: mediana, aproximadamente 0,337 y 0,321; cuantil 0,90, menos 0,135 y menos 0,102; cuantil 0,95, menos 0,231 y menos 0,192." width="100%"}
+![RIF–Logit conserva el signo y la forma general del contraste. Las magnitudes difieren más en la cola alta; la coincidencia cualitativa no prueba correcta especificación ni identificación causal.](../assets/04_rifols_vs_riflogit.png){#fig-rif-sensibilidad fig-alt="Perfiles completos de RIF–OLS y RIF–Logit a través de la distribución salarial" width="100%"}
 
 El resultado no parece exclusivo de RIF–OLS: la versión Logit también es positiva en la mediana y negativa en los cuantiles 0,90 y 0,95. La densidad cae de aproximadamente 0,626 en la mediana a 0,151 en el cuantil 0,95. Su inversa amplifica la sensibilidad de la RIF, por lo que las magnitudes de cola requieren mayor cautela. Esta sensibilidad funcional no sustituye una evaluación del ancho de banda.
 

@@ -169,6 +169,8 @@ Una likelihood normal homocedástica admite dos lecturas. Como **MLE correcta**,
 
 El ejercicio simula una media lineal correctamente especificada con errores heterocedásticos y no normales. MCO y la estimación normal entregan los mismos coeficientes: para $x_1$, 0,7688. La diferencia aparece en la incertidumbre.
 
+![](../assets/fig_08_qmle_normal_residuos_vs_x1.png){fig-alt="Residuos del ejercicio QMLE normal frente a x1, con dispersión heterocedástica" width="100%"}
+
 ::: {.table-box}
 | Parámetro | Coeficiente | SE nominal | SE robusto |
 |---|---:|---:|---:|
