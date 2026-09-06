@@ -241,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="resumen" class="level2">
 <h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <p>Este caso analiza innovación empresarial con una pregunta concreta: cuando rinde la I+D en términos de patentamiento dentro de las firmas. La variable de resultado es <code>lpat</code> (log de <code>1 + patents</code>) y el foco está en la trayectoria temporal de <code>lrnd</code> y sus rezagos.</p>
-<p>La pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociación acumulativa con el patentamiento.</p>
+<p>El análisis usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociación acumulativa con el patentamiento.</p>
 </section>
 <div class="quick-grid">
 <section id="pregunta" class="level2 section-box">
@@ -401,8 +401,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="lectura-profesional-del-caso" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
-<p>Esta pieza muestra una forma aplicada de leer innovación en panel: fijar primero la pregunta de negocio empírica (cuando rinde la I+D), después elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).</p>
-<p>La contribución de la pieza no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.</p>
+<p>Este análisis muestra una forma aplicada de leer innovación en panel: fijar primero la pregunta de negocio empírica (cuando rinde la I+D), después elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).</p>
+<p>La contribución del análisis no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
@@ -413,6 +413,210 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+<script>
+(() => {
+  "use strict";
+
+  const entriesForArea = (area, paths) => paths.map((path) => ({ path, area }));
+
+  const collections = [
+    {
+      portal: "../index.html",
+      entries: [
+        ...entriesForArea("lineales", [
+          "econometria/piezas/t00_mco_ingresos.html",
+          "econometria/piezas/t01_vi.html"
+        ]),
+        ...entriesForArea("panel", [
+          "econometria/piezas/t02_panel_pooled_salarios.html",
+          "econometria/piezas/t09_panel_re_fe_cre.html",
+          "econometria/piezas/t11_panel_iv.html",
+          "econometria/piezas/t09b_panel_dinamico.html",
+          "econometria/piezas/t09c_panel_multinivel.html"
+        ]),
+        ...entriesForArea("discreta", [
+          "econometria/piezas/t12_binaria_base.html",
+          "econometria/piezas/t13_binaria_vi_continua.html",
+          "econometria/piezas/t18_multinomial_panel_cre.html",
+          "econometria/piezas/t19_ordenado_base.html"
+        ]),
+        ...entriesForArea("resultados", [
+          "econometria/piezas/t04b_conteos_poisson_pml.html",
+          "econometria/piezas/t04c_precios_positivos.html",
+          "econometria/piezas/t04d_poisson_panel_heterogeneidad.html",
+          "econometria/piezas/t04f_proporciones_beta.html"
+        ]),
+        ...entriesForArea("censura", [
+          "econometria/piezas/t06a_esquina_censura.html",
+          "econometria/piezas/t06b_seleccion_heckman.html"
+        ]),
+        ...entriesForArea("inferencia", [
+          "econometria/piezas/t00b_teoria_asintotica.html",
+          "econometria/piezas/t04a_maxima_verosimilitud.html",
+          "econometria/piezas/t07_gmm_momentos.html"
+        ]),
+        ...entriesForArea("no-parametricos", [
+          "econometria/piezas/t10_densidad_marginal.html",
+          "econometria/piezas/t11_regresion_no_parametrica.html"
+        ]),
+        ...entriesForArea("cuantiles", [
+          "econometria/piezas/t13_qr_qte.html",
+          "econometria/piezas/t14_qriv_qte_vi.html",
+          "econometria/piezas/t15_qr_panel.html",
+          "econometria/piezas/t16_oaxaca_blinder.html",
+          "econometria/piezas/t17_dfl.html",
+          "econometria/piezas/t18_uqr_rif.html",
+          "econometria/piezas/t19_descomposicion_rif.html"
+        ])
+      ]
+    },
+    {
+      portal: "../fundamentos/index.html",
+      entries: [
+        ...entriesForArea("observables", [
+          "causalidad/piezas/c01_diferencia-medias-no-causal.html",
+          "causalidad/piezas/c02_matching-exacto-microcredito.html",
+          "causalidad/piezas/c04_psm_microcredito.html",
+          "causalidad/piezas/c06_ipwra_innovacion_ambiental.html"
+        ]),
+        ...entriesForArea("iv", [
+          "causalidad/piezas/c08_vi_retorno_educacion.html",
+          "causalidad/piezas/c09_drlate_401k.html"
+        ]),
+        ...entriesForArea("rdd", [
+          "causalidad/piezas/rdd01_elecciones_escolarizacion.html"
+        ]),
+        ...entriesForArea("did", [
+          "causalidad/piezas/did01_did_clasico.html",
+          "causalidad/piezas/bdm01_inferencia_did.html"
+        ])
+      ]
+    },
+    {
+      portal: "../did-moderno/index.html",
+      entries: [
+        ...entriesForArea("crisis-twfe", [
+          "causalidad/piezas/did_m04_twfe_goodman_bacon.html",
+          "causalidad/piezas/did_m05_twfe_pesos_negativos.html",
+          "causalidad/piezas/did_m06_event_study_contaminacion.html"
+        ]),
+        ...entriesForArea("soluciones-did", [
+          "causalidad/piezas/did_m07_callaway_santanna.html",
+          "causalidad/piezas/did_m08_bjs_imputacion.html",
+          "causalidad/piezas/did_m09_wooldridge_etwfe.html",
+          "causalidad/piezas/did_m09b_lee_wooldridge_rolling.html"
+        ])
+      ]
+    },
+    {
+      portal: "../index.html",
+      entries: [
+        ...entriesForArea("clasificacion", [
+          "machine-learning/piezas/t01_default.html",
+          "machine-learning/piezas/t02_smarket.html",
+          "machine-learning/piezas/t03_caravan.html",
+          "machine-learning/piezas/t04_college.html",
+          "machine-learning/piezas/t05_auto.html"
+        ]),
+        ...entriesForArea("seleccion-regularizacion", [
+          "machine-learning/piezas/t06_hitters.html",
+          "machine-learning/piezas/t07_nirsoil.html"
+        ]),
+        ...entriesForArea("no-linealidad", [
+          "machine-learning/piezas/t08a_concrete.html",
+          "machine-learning/piezas/t08b_oj.html"
+        ]),
+        ...entriesForArea("arboles", [
+          "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t09b_spam.html"
+        ]),
+        ...entriesForArea("outcomes", [
+          "machine-learning/piezas/e01_fertil2_conteo.html",
+          "machine-learning/piezas/e02_loanapp_gamma.html",
+          "machine-learning/piezas/e03_401k_fraccional.html",
+          "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ])
+      ]
+    }
+  ];
+
+  const currentPath = decodeURI(window.location.pathname)
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+
+  let activeCollection;
+  let activeIndex = -1;
+
+  for (const collection of collections) {
+    const index = collection.entries.findIndex((entry) => currentPath.endsWith(entry.path));
+    if (index !== -1) {
+      activeCollection = collection;
+      activeIndex = index;
+      break;
+    }
+  }
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
+
+  document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
+    if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
+      heading.textContent = "AUTOR";
+    }
+  });
+
+  const main = document.querySelector("main.content");
+  const titleBlock = document.querySelector("#title-block-header");
+  if (!main || !titleBlock) {
+    return;
+  }
+
+  const activeEntry = activeCollection.entries[activeIndex];
+  const topNav = document.createElement("nav");
+  topNav.className = "portfolio-back-nav";
+  topNav.dataset.portfolioNavigation = "back";
+  topNav.setAttribute("aria-label", "Volver al área del análisis");
+
+  const backLink = document.createElement("a");
+  backLink.className = "portfolio-back-link";
+  backLink.href = `${activeCollection.portal}#${activeEntry.area}`;
+  backLink.textContent = "← Volver";
+  topNav.appendChild(backLink);
+  titleBlock.insertAdjacentElement("afterend", topNav);
+
+  const sequenceNav = document.createElement("nav");
+  sequenceNav.className = "portfolio-sequence-nav";
+  sequenceNav.dataset.portfolioNavigation = "sequence";
+  sequenceNav.setAttribute("aria-label", "Navegación entre análisis");
+
+  const addSlot = (modifier, entry, label, href) => {
+    const slot = document.createElement("div");
+    slot.className = `portfolio-sequence-nav__slot portfolio-sequence-nav__slot--${modifier}`;
+    if (entry || href) {
+      const link = document.createElement("a");
+      link.className = "portfolio-sequence-nav__link";
+      link.href = href || entry.path.split("/").pop();
+      link.textContent = label;
+      slot.appendChild(link);
+    } else {
+      slot.setAttribute("aria-hidden", "true");
+    }
+    sequenceNav.appendChild(slot);
+  };
+
+  addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
+  const nextEntry = activeCollection.entries[activeIndex + 1];
+  addSlot(
+    "next",
+    nextEntry,
+    nextEntry ? "Siguiente →" : "Home →",
+    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+  );
+
+  main.appendChild(sequenceNav);
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

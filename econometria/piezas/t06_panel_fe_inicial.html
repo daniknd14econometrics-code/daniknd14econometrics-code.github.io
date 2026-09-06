@@ -403,19 +403,223 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 <ul>
 <li>FE es una estrategia coherente cuando preocupa <code>c_i</code> correlacionado con regresores.</li>
 <li>Esa coherencia no habilita, por si sola, una afirmacion concluyente.</li>
-<li>En esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.</li>
+<li>En este análisis no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.</li>
 </ul>
 <p>La conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.</p>
 </section>
 <section id="cierre" class="level2">
 <h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
 <p>Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.</p>
-<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.</p>
+<p>Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, el análisis queda presentado como un reporte profesional útil: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.</p>
 
 
 </section>
 
 </main> <!-- /main -->
+<script>
+(() => {
+  "use strict";
+
+  const entriesForArea = (area, paths) => paths.map((path) => ({ path, area }));
+
+  const collections = [
+    {
+      portal: "../index.html",
+      entries: [
+        ...entriesForArea("lineales", [
+          "econometria/piezas/t00_mco_ingresos.html",
+          "econometria/piezas/t01_vi.html"
+        ]),
+        ...entriesForArea("panel", [
+          "econometria/piezas/t02_panel_pooled_salarios.html",
+          "econometria/piezas/t09_panel_re_fe_cre.html",
+          "econometria/piezas/t11_panel_iv.html",
+          "econometria/piezas/t09b_panel_dinamico.html",
+          "econometria/piezas/t09c_panel_multinivel.html"
+        ]),
+        ...entriesForArea("discreta", [
+          "econometria/piezas/t12_binaria_base.html",
+          "econometria/piezas/t13_binaria_vi_continua.html",
+          "econometria/piezas/t18_multinomial_panel_cre.html",
+          "econometria/piezas/t19_ordenado_base.html"
+        ]),
+        ...entriesForArea("resultados", [
+          "econometria/piezas/t04b_conteos_poisson_pml.html",
+          "econometria/piezas/t04c_precios_positivos.html",
+          "econometria/piezas/t04d_poisson_panel_heterogeneidad.html",
+          "econometria/piezas/t04f_proporciones_beta.html"
+        ]),
+        ...entriesForArea("censura", [
+          "econometria/piezas/t06a_esquina_censura.html",
+          "econometria/piezas/t06b_seleccion_heckman.html"
+        ]),
+        ...entriesForArea("inferencia", [
+          "econometria/piezas/t00b_teoria_asintotica.html",
+          "econometria/piezas/t04a_maxima_verosimilitud.html",
+          "econometria/piezas/t07_gmm_momentos.html"
+        ]),
+        ...entriesForArea("no-parametricos", [
+          "econometria/piezas/t10_densidad_marginal.html",
+          "econometria/piezas/t11_regresion_no_parametrica.html"
+        ]),
+        ...entriesForArea("cuantiles", [
+          "econometria/piezas/t13_qr_qte.html",
+          "econometria/piezas/t14_qriv_qte_vi.html",
+          "econometria/piezas/t15_qr_panel.html",
+          "econometria/piezas/t16_oaxaca_blinder.html",
+          "econometria/piezas/t17_dfl.html",
+          "econometria/piezas/t18_uqr_rif.html",
+          "econometria/piezas/t19_descomposicion_rif.html"
+        ])
+      ]
+    },
+    {
+      portal: "../fundamentos/index.html",
+      entries: [
+        ...entriesForArea("observables", [
+          "causalidad/piezas/c01_diferencia-medias-no-causal.html",
+          "causalidad/piezas/c02_matching-exacto-microcredito.html",
+          "causalidad/piezas/c04_psm_microcredito.html",
+          "causalidad/piezas/c06_ipwra_innovacion_ambiental.html"
+        ]),
+        ...entriesForArea("iv", [
+          "causalidad/piezas/c08_vi_retorno_educacion.html",
+          "causalidad/piezas/c09_drlate_401k.html"
+        ]),
+        ...entriesForArea("rdd", [
+          "causalidad/piezas/rdd01_elecciones_escolarizacion.html"
+        ]),
+        ...entriesForArea("did", [
+          "causalidad/piezas/did01_did_clasico.html",
+          "causalidad/piezas/bdm01_inferencia_did.html"
+        ])
+      ]
+    },
+    {
+      portal: "../did-moderno/index.html",
+      entries: [
+        ...entriesForArea("crisis-twfe", [
+          "causalidad/piezas/did_m04_twfe_goodman_bacon.html",
+          "causalidad/piezas/did_m05_twfe_pesos_negativos.html",
+          "causalidad/piezas/did_m06_event_study_contaminacion.html"
+        ]),
+        ...entriesForArea("soluciones-did", [
+          "causalidad/piezas/did_m07_callaway_santanna.html",
+          "causalidad/piezas/did_m08_bjs_imputacion.html",
+          "causalidad/piezas/did_m09_wooldridge_etwfe.html",
+          "causalidad/piezas/did_m09b_lee_wooldridge_rolling.html"
+        ])
+      ]
+    },
+    {
+      portal: "../index.html",
+      entries: [
+        ...entriesForArea("clasificacion", [
+          "machine-learning/piezas/t01_default.html",
+          "machine-learning/piezas/t02_smarket.html",
+          "machine-learning/piezas/t03_caravan.html",
+          "machine-learning/piezas/t04_college.html",
+          "machine-learning/piezas/t05_auto.html"
+        ]),
+        ...entriesForArea("seleccion-regularizacion", [
+          "machine-learning/piezas/t06_hitters.html",
+          "machine-learning/piezas/t07_nirsoil.html"
+        ]),
+        ...entriesForArea("no-linealidad", [
+          "machine-learning/piezas/t08a_concrete.html",
+          "machine-learning/piezas/t08b_oj.html"
+        ]),
+        ...entriesForArea("arboles", [
+          "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t09b_spam.html"
+        ]),
+        ...entriesForArea("outcomes", [
+          "machine-learning/piezas/e01_fertil2_conteo.html",
+          "machine-learning/piezas/e02_loanapp_gamma.html",
+          "machine-learning/piezas/e03_401k_fraccional.html",
+          "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ])
+      ]
+    }
+  ];
+
+  const currentPath = decodeURI(window.location.pathname)
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+
+  let activeCollection;
+  let activeIndex = -1;
+
+  for (const collection of collections) {
+    const index = collection.entries.findIndex((entry) => currentPath.endsWith(entry.path));
+    if (index !== -1) {
+      activeCollection = collection;
+      activeIndex = index;
+      break;
+    }
+  }
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
+
+  document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
+    if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
+      heading.textContent = "AUTOR";
+    }
+  });
+
+  const main = document.querySelector("main.content");
+  const titleBlock = document.querySelector("#title-block-header");
+  if (!main || !titleBlock) {
+    return;
+  }
+
+  const activeEntry = activeCollection.entries[activeIndex];
+  const topNav = document.createElement("nav");
+  topNav.className = "portfolio-back-nav";
+  topNav.dataset.portfolioNavigation = "back";
+  topNav.setAttribute("aria-label", "Volver al área del análisis");
+
+  const backLink = document.createElement("a");
+  backLink.className = "portfolio-back-link";
+  backLink.href = `${activeCollection.portal}#${activeEntry.area}`;
+  backLink.textContent = "← Volver";
+  topNav.appendChild(backLink);
+  titleBlock.insertAdjacentElement("afterend", topNav);
+
+  const sequenceNav = document.createElement("nav");
+  sequenceNav.className = "portfolio-sequence-nav";
+  sequenceNav.dataset.portfolioNavigation = "sequence";
+  sequenceNav.setAttribute("aria-label", "Navegación entre análisis");
+
+  const addSlot = (modifier, entry, label, href) => {
+    const slot = document.createElement("div");
+    slot.className = `portfolio-sequence-nav__slot portfolio-sequence-nav__slot--${modifier}`;
+    if (entry || href) {
+      const link = document.createElement("a");
+      link.className = "portfolio-sequence-nav__link";
+      link.href = href || entry.path.split("/").pop();
+      link.textContent = label;
+      slot.appendChild(link);
+    } else {
+      slot.setAttribute("aria-hidden", "true");
+    }
+    sequenceNav.appendChild(slot);
+  };
+
+  addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
+  const nextEntry = activeCollection.entries[activeIndex + 1];
+  addSlot(
+    "next",
+    nextEntry,
+    nextEntry ? "Siguiente →" : "Home →",
+    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+  );
+
+  main.appendChild(sequenceNav);
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
