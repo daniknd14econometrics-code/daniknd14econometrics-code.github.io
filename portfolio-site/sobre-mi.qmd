@@ -18,6 +18,7 @@ Soy economista, con Maestría en Economía. Mi recorrido reúne casi siete años
 
 ::: {.hero-banner__actions}
 <a class="button-primary" href="index.qmd#areas-de-trabajo">Explorar análisis</a>
+<a class="button-secondary" href="/assets/CV_Daniel_Mendez_2026_final.pdf" target="_blank" rel="noopener">CV (PDF)</a>
 <a class="button-secondary" href="#contacto">Contacto</a>
 :::
 :::

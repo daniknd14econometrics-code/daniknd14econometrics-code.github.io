@@ -6,6 +6,8 @@
     - "causalidad/**/*.qmd"
     - "econometria/**/*.qmd"
     - "machine-learning/**/*.qmd"
+  resources:
+    - "assets/CV_Daniel_Mendez_2026_final.pdf"
 
 website:
   title: "Daniel Méndez"

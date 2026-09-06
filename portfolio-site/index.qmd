@@ -3,7 +3,9 @@ title: "Inicio"
 format:
   html:
     title-block-style: none
-    css: assets/problemas-negocio.css
+    css:
+      - assets/problemas-negocio.css
+      - assets/home.css
 ---
 
 ::: {.hero-banner .hero-banner--home}
@@ -13,15 +15,24 @@ format:
 # Economista cuantitativo
 
 ::: {.hero-banner__lead}
-<p class="hero-banner__specialization">Econometría · Inferencia causal · Statistical Machine Learning</p>
+<p class="hero-banner__specialization">Econometría, inferencia causal y Statistical Machine Learning para problemas de estimación, predicción y decisión.</p>
 
 Abordo problemas cuantitativos desde la formulación de la pregunta y el diseño metodológico hasta la estimación, validación, inferencia e interpretación de resultados para la toma de decisiones.
 :::
 
+<div class="credential-strip" aria-label="Credenciales profesionales">
+<span class="credential-chip credential-chip--education">MSc Economía · FCEA–Udelar</span>
+<span class="credential-chip credential-chip--experience">6+ años en Conaprole</span>
+<span class="credential-chip credential-chip--research">Investigación aplicada</span>
+<span class="credential-chip credential-chip--causal">Econometría e inferencia causal</span>
+<span class="credential-chip credential-chip--ml">Statistical ML</span>
+</div>
+
 ::: {.hero-banner__actions}
-<a class="button-primary" href="#areas-de-trabajo">Explorar análisis</a>
-<a class="button-secondary" href="problemas-negocio.qmd">Problemas de negocio</a>
-<a class="button-secondary" href="sobre-mi.qmd">Sobre mí</a>
+<a class="button-primary" href="#areas-de-trabajo">Explorar análisis →</a>
+<a class="button-secondary" href="/sobre-mi.html">Sobre mí</a>
+<a class="button-secondary" href="/assets/CV_Daniel_Mendez_2026_final.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+<a class="button-secondary" href="/sobre-mi.html#contacto">Contacto</a>
 :::
 :::
 
@@ -30,6 +41,50 @@ Abordo problemas cuantitativos desde la formulación de la pregunta y el diseño
 
 ::: {.hero-profile-note}
 Casi siete años de trayectoria profesional, combinando experiencia empresarial e investigación aplicada autónoma.
+:::
+:::
+
+## Áreas de trabajo {#areas-de-trabajo}
+
+::: {.section-lead}
+Tres áreas complementarias desde las que abordo problemas de inferencia, predicción, evaluación y decisión.
+:::
+
+::: {.portal-grid}
+::: {.portal-card}
+::: {.portal-card__heading}
+<span class="portal-card__icon" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><path d="M10 36V25h7v11zm11 0V17h7v19zm11 0V9h7v27z" fill="currentColor"/></svg></span>
+
+### [Econometría](econometria/index.qmd)
+:::
+
+Aplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.
+
+<a class="cta-link" href="econometria/index.qmd">Explorar Econometría →</a>
+:::
+
+::: {.portal-card}
+::: {.portal-card__heading}
+<span class="portal-card__icon" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><circle cx="24" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="34" r="5" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="36" cy="34" r="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M21 14 14 29m13-15 7 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+
+### [Inferencia causal](causalidad/index.qmd)
+:::
+
+Diseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.
+
+<a class="cta-link" href="causalidad/index.qmd">Explorar Causalidad →</a>
+:::
+
+::: {.portal-card}
+::: {.portal-card__heading}
+<span class="portal-card__icon" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><path d="M24 11c-2-5-10-4-10 2-5-1-8 5-5 9-5 3-3 10 2 10 1 6 8 7 10 3m-2-24v30m0-27c3-5 11-3 10 3 5 0 7 6 4 9 5 4 2 10-2 10-1 6-8 7-10 3M13 22c3-1 5 1 6 4m16-4c-3-1-5 1-6 4M15 32c2-2 5-2 7 0m11 0c-2-2-5-2-7 0" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+
+### [Machine Learning](machine-learning/index.qmd)
+:::
+
+Métodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.
+
+<a class="cta-link" href="machine-learning/index.qmd">Explorar Machine Learning →</a>
 :::
 :::
 
@@ -110,39 +165,7 @@ El análisis cuantitativo cobra valor cuando ayuda a responder una pregunta conc
 :::
 :::
 
-<a class="cta-link" href="problemas-negocio.qmd">Explorar problemas de negocio</a>
-:::
-
-## Áreas de trabajo {#areas-de-trabajo}
-
-::: {.section-lead}
-Tres áreas complementarias desde las que abordo problemas de inferencia, predicción, evaluación y decisión.
-:::
-
-::: {.portal-grid}
-::: {.portal-card}
-### [Econometría](econometria/index.qmd)
-
-Aplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.
-
-<a class="cta-link" href="econometria/index.qmd">Explorar Econometría</a>
-:::
-
-::: {.portal-card}
-### [Inferencia causal](causalidad/index.qmd)
-
-Diseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.
-
-<a class="cta-link" href="causalidad/index.qmd">Explorar Causalidad</a>
-:::
-
-::: {.portal-card}
-### [Machine Learning](machine-learning/index.qmd)
-
-Métodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.
-
-<a class="cta-link" href="machine-learning/index.qmd">Explorar Machine Learning</a>
-:::
+<a class="cta-link" href="problemas-negocio.qmd">Explorar problemas de negocio →</a>
 :::
 
 ::: {.portfolio-note}
