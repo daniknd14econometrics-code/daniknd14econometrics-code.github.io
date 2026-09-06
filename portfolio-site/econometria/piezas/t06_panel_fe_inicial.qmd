@@ -200,7 +200,7 @@ T6 consolida una regla aplicada de panel:
 
 - FE es una estrategia coherente cuando preocupa `c_i` correlacionado con regresores.
 - Esa coherencia no habilita, por si sola, una afirmacion concluyente.
-- En esta pieza no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.
+- En este análisis no se ejecuta una prueba tipo Hausman, por lo que no corresponde afirmar empiricamente que FE sea preferible a RE.
 
 La conclusión metodológica es deliberadamente prudente: FE organiza mejor la identificación frente a heterogeneidad fija no observada, pero no agota la evaluación de endogeneidad ni reemplaza contrastes entre especificaciones cuando esos contrastes no fueron realizados.
 
@@ -208,7 +208,6 @@ La conclusión metodológica es deliberadamente prudente: FE organiza mejor la i
 
 Este taller marca el paso de una lectura agrupada a una lectura within: que cambia dentro del individuo es lo que identifica FE, y lo invariante queda fuera de la estimación. En este caso, esa diferencia mejora la lectura empírica del problema salarial frente a pooled simple porque ordena mejor que parte de la evidencia viene de trayectorias individuales y no de contrastes entre personas.
 
-Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, la pieza queda posicionada como reporte profesional útil para análisis aplicado: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.
-
+Con evidencia fuerte de que la estructura panel importa y sin sobreafirmar comparaciones no testeadas contra RE, el análisis queda presentado como un reporte profesional útil: mejora la interpretación econométrica del ejemplo sin exagerar su alcance inferencial.
 
 

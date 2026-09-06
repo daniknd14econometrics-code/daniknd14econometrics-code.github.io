@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Machine Learning](../index.qmd) / [No linealidad y modelos aditivos](../index.qmd#no-linealidad-y-modelos-aditivos)
-
 <span class="badge">Clasificación binaria · GAM logístico · Penalización</span>
 
 ::: {.hero-box}
@@ -170,5 +168,5 @@ El alcance es limitado: los modelos son aditivos y no exploran interacciones sua
 [Concrete](t08a_concrete.qmd) muestra el caso complementario: la misma disciplina de evaluación sí respalda una ganancia material al permitir formas funcionales no lineales.
 
 ::: {.small-note}
-**Fuente:** informe curado «Taller 08B: GAM logístico con OJ». Figuras originales del informe convertidas a PNG para la pieza; no se generaron estimaciones nuevas.
+**Fuente:** informe curado «Taller 08B: GAM logístico con OJ». Figuras originales del informe convertidas a PNG para este análisis; no se generaron estimaciones nuevas.
 :::

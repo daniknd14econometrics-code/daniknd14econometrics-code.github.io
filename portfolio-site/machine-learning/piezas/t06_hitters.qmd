@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Machine Learning](../index.qmd) / [Selección, regularización y alta dimensionalidad](../index.qmd#seleccion-regularizacion)
-
 <span class="badge">Selección · Regularización · Validación anidada</span>
 
 ::: {.hero-box}

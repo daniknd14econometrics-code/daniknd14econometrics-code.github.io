@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Machine Learning](../index.qmd) / [No linealidad y modelos aditivos](../index.qmd#no-linealidad-y-modelos-aditivos)
-
 <span class="badge">Regresión · Splines · GAM</span>
 
 ::: {.hero-box}
@@ -179,5 +177,5 @@ La conclusión depende de una pérdida cuadrática, una respuesta en niveles y u
 [OJ](t08b_oj.qmd) ofrece el contraste: allí el GAM recibe la misma oportunidad de curvar, pero la evidencia externa y los edf indican que la forma simple ya era suficiente.
 
 ::: {.small-note}
-**Fuente:** informe curado «Taller 08A: Splines y GAM para regresión con Concrete». Figuras originales del informe convertidas a PNG para la pieza; no se generaron estimaciones nuevas.
+**Fuente:** informe curado «Taller 08A: Splines y GAM para regresión con Concrete». Figuras originales del informe convertidas a PNG para este análisis; no se generaron estimaciones nuevas.
 :::

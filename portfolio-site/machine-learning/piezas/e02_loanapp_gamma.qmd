@@ -22,10 +22,6 @@ execute:
   message: false
 ---
 
-::: {.breadcrumb}
-[Machine Learning](../index.qmd) / [Outcomes, pérdidas y objetivos predictivos](../index.qmd#outcomes-perdidas-y-objetivos-predictivos)
-:::
-
 ::: {.eyebrow}
 E02 · Outcome continuo positivo · Gamma y pérdidas predictivas
 :::

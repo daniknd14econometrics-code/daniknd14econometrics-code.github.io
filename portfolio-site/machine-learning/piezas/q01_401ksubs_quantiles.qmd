@@ -22,10 +22,6 @@ execute:
   message: false
 ---
 
-::: {.breadcrumb}
-[Machine Learning](../index.qmd) / [Outcomes, pérdidas y objetivos predictivos](../index.qmd#outcomes-perdidas-y-objetivos-predictivos)
-:::
-
 <span class="badge">Q01 · Predicción cuantílica · Escenarios y calibración</span>
 
 ::: {.hero-box}

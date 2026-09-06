@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Machine Learning](../index.qmd) / [Clasificación, probabilidades y decisión](../index.qmd#clasificacion)
-
 <span class="badge">Clasificación binaria · Posteriores · Calibración</span>
 
 ::: {.hero-box}

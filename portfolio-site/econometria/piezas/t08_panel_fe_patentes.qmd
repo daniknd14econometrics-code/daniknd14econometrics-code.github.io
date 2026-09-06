@@ -98,7 +98,7 @@ Clasico: `F(5,884)=3.18`, `p=0.0075`; Cluster: `F(5,225)=2.96`, `p=0.0131`
 
 Este caso analiza innovación empresarial con una pregunta concreta: cuando rinde la I+D en términos de patentamiento dentro de las firmas. La variable de resultado es `lpat` (log de `1 + patents`) y el foco está en la trayectoria temporal de `lrnd` y sus rezagos.
 
-La pieza usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociación acumulativa con el patentamiento.
+El análisis usa un modelo de panel con efectos fijos y rezagos distribuidos de I+D. En lectura aplicada, el mensaje central no es un coeficiente puntual, sino si la historia reciente de gasto innovador muestra una asociación acumulativa con el patentamiento.
 
 :::: {.quick-grid}
 
@@ -196,9 +196,9 @@ Los siguientes resultados se reportan como soporte del caso:
 
 ## Lectura profesional del caso
 
-Esta pieza muestra una forma aplicada de leer innovación en panel: fijar primero la pregunta de negocio empírica (cuando rinde la I+D), después elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).
+Este análisis muestra una forma aplicada de leer innovación en panel: fijar primero la pregunta de negocio empírica (cuando rinde la I+D), después elegir una estrategia coherente con la estructura de datos (efectos fijos + dinamica de rezagos), y finalmente reportar inferencia con criterio prudente (cluster y tests conjuntos).
 
-La contribución de la pieza no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.
+La contribución del análisis no es afirmar un efecto puntual por cada rezago, sino mostrar que la trayectoria reciente de I+D parece importar de manera acumulada para el patentamiento dentro de las firmas.
 
 ## Cierre
 

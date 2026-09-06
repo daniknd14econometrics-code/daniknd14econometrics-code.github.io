@@ -22,10 +22,6 @@ execute:
   message: false
 ---
 
-::: {.breadcrumb}
-[Machine Learning](../index.qmd) / [Outcomes, pérdidas y objetivos predictivos](../index.qmd#outcomes-perdidas-y-objetivos-predictivos)
-:::
-
 <span class="badge">E03 · Outcome fraccional · Soporte y pérdida</span>
 
 ::: {.hero-box}

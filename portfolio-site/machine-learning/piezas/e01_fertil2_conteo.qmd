@@ -19,10 +19,6 @@ format:
 execute: {echo: false, warning: false, message: false}
 ---
 
-::: {.breadcrumb}
-[Machine Learning](../index.qmd) / [Outcomes, pérdidas y objetivos predictivos](../index.qmd#outcomes-perdidas-y-objetivos-predictivos)
-:::
-
 ::: {.eyebrow}
 E01 · Outcome de conteo · Poisson y pérdidas predictivas
 :::

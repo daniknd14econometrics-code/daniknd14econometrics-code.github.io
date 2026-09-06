@@ -146,7 +146,7 @@ Métodos de aprendizaje estadístico y modelos predictivos aplicados a problemas
 :::
 
 ::: {.portfolio-note}
-## Sobre las piezas del portfolio
+## Sobre los análisis del portfolio
 
-Las piezas presentadas aquí son síntesis profesionales de trabajos técnicos considerablemente más extensos. Los trabajos completos incluyen desarrollo metodológico, código, diagnósticos, validaciones y análisis de sensibilidad que deliberadamente no se reproducen íntegramente en el sitio. Los materiales originales pueden discutirse o compartirse cuando resulte pertinente en un proceso profesional.
+Los análisis presentados aquí son síntesis profesionales de trabajos técnicos considerablemente más extensos. Los trabajos completos incluyen desarrollo metodológico, código, diagnósticos, validaciones y análisis de sensibilidad que deliberadamente no se reproducen íntegramente en el sitio. Los materiales originales pueden discutirse o compartirse cuando resulte pertinente en un proceso profesional.
 :::

@@ -98,7 +98,7 @@ rho = 0.893
 
 Este taller analiza un panel corto de plantas para estudiar la relación empírica entre subsidios de capacitación (`grant`, `grant_1`) y desempeño productivo medido por `lscrap`. La motivacion aplicada es concreta: comparar firmas entre si puede mezclar diferencias estructurales persistentes con la asociación de interés.
 
-Por eso, la pieza usa FE como modelo operativo para concentrarse en variación within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadística.
+Por eso, el análisis usa FE como modelo operativo para concentrarse en variación within de cada planta, y reporta inferencia principal con cluster por firma para mantener prudencia estadística.
 
 :::: {.quick-grid}
 

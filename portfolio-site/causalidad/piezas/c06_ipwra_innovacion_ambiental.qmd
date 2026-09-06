@@ -36,7 +36,7 @@ Este análisis estima, en firmas innovadoras comparables, cómo cambia la probab
 
 ## Resumen ejecutivo
 
-Esta ficha presenta una estimación principal sobre firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. El foco narrativo es explícito: primero se hace visible la arquitectura de diseño causal y recién después se reportan los efectos.
+Este análisis presenta una estimación principal sobre firmas innovadoras con comparabilidad ex ante en soporte y estabilidad de pesos. El foco narrativo es explícito: primero se hace visible la arquitectura de diseño causal y recién después se reportan los efectos.
 
 La lectura metodológica central es que la credibilidad de la comparación depende de soporte, balance y estabilidad de ponderación, no de buscar de antemano la magnitud más alta.
 
@@ -74,7 +74,7 @@ La muestra pasa de 5.485 observaciones con resultado y tratamiento observados a 
 
 ## Especificación final documentada
 
-La fuente curada documenta la especificación contemporánea final y sus diagnósticos. No reconstruye ni compara las alternativas consideradas durante una etapa previa de selección, por lo que esta ficha no atribuye a la configuración final una superioridad frente a especificaciones no reportadas.
+La fuente curada documenta la especificación contemporánea final y sus diagnósticos. No reconstruye ni compara las alternativas consideradas durante una etapa previa de selección, por lo que este análisis no atribuye a la configuración final una superioridad frente a especificaciones no reportadas.
 
 La evaluación disponible se concentra en lo que sí puede comprobarse para esa especificación: soporte, balance ponderado, estabilidad de pesos y sensibilidad de la interpretación a los supuestos causales.
 

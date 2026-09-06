@@ -192,7 +192,7 @@ Pero la validez econométrica de esa elección sigue siendo condicional al supue
 
 ## Cierre
 
-Esta pieza posiciona a RE como una especificación operativa bajo un supuesto fuerte, no como cierre definitivo de identificación. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como `educ` y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explícita el supuesto `corr(c_i, x_it)=0`, por ejemplo con una prueba tipo Hausman.
+Este análisis posiciona a RE como una especificación operativa bajo un supuesto fuerte, no como cierre definitivo de identificación. Como benchmark aplicado, habilita una lectura ordenada de diferencias salariales cuando interesa retener variables invariantes como `educ` y reconocer heterogeneidad persistente entre trabajadores. Lo que queda pendiente antes de afirmar que RE es preferible a FE es contrastar de forma explícita el supuesto `corr(c_i, x_it)=0`, por ejemplo con una prueba tipo Hausman.
 
 
 

@@ -148,7 +148,7 @@ El LATT de 15,32 no es una versión superior del LATE. Resume el efecto para los
 
 ## Qué cambia cuando el outcome o el tratamiento no son continuos
 
-Los bloques adicionales cambian una pieza por vez para separar flexibilidad funcional de credibilidad causal.
+Los bloques adicionales cambian un componente por vez para separar flexibilidad funcional de credibilidad causal.
 
 ::: {.table-box}
 | Aplicación | Cambio respecto del caso canónico | Evidencia principal | Lectura |

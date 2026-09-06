@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Econometría](../index.qmd) / [Cuantiles, distribuciones y descomposiciones](../index.qmd#cuantiles)
-
 <span class="badge">Brechas y distribuciones contrafactuales</span>
 
 ::: {.hero-box}

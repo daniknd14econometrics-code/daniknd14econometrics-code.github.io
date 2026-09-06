@@ -30,7 +30,7 @@ execute:
 :::
 
 ::: {.hero-sub}
-La pieza sigue trayectorias de actividad en el panel laboral `keane` y usa un logit multinomial, tratado como pooled con `cluster(id)`, para traducir una variable multiclase en probabilidades comparables y útiles para lectura profesional.
+El análisis sigue trayectorias de actividad en el panel laboral `keane` y usa un logit multinomial, tratado como pooled con `cluster(id)`, para traducir una variable multiclase en probabilidades comparables y útiles para lectura profesional.
 :::
 :::
 
@@ -96,7 +96,7 @@ La categoria `services` se separa peor que escuela o blue collar bajo esta espec
 
 ## Resumen
 
-Esta pieza analiza como se distribuyen estados de actividad (`choice`) en un panel laboral corto, con categorias nominales mutuamente excluyentes: escuela, hogar, white collar, blue collar y services. El foco no es metodologico en abstracto, sino sustantivo: leer como cambian probabilidades entre alternativas frente a educación, experiencia y perfil demográfico.
+Este análisis examina como se distribuyen estados de actividad (`choice`) en un panel laboral corto, con categorias nominales mutuamente excluyentes: escuela, hogar, white collar, blue collar y services. El foco no es metodologico en abstracto, sino sustantivo: leer como cambian probabilidades entre alternativas frente a educación, experiencia y perfil demográfico.
 
 La econometría se usa para ordenar una pregunta aplicada. El panel se trata como pooled con inferencia robusta `cluster(id)`, y la lectura principal se apoya en APEs y probabilidades predichas por categoria.
 
@@ -115,7 +115,7 @@ Resultado: `choice` con cinco categorías de actividad: Escuela, Hogar, Empleo w
 ::: {.section-box}
 ## Idea central
 
-El valor profesional de la pieza es transformar una variable multiclase en una lectura comparativa de probabilidades entre alternativas de actividad, explícita en sus alcances y limites de discriminacion.
+El valor profesional del análisis es transformar una variable multiclase en una lectura comparativa de probabilidades entre alternativas de actividad, explícita en sus alcances y limites de discriminacion.
 
 <span class="badge">Portfolio econométrico</span>
 :::
@@ -148,7 +148,7 @@ La secuencia mantiene foco aplicado:
 3. Complementar con probabilidades predichas y clasificacion por maxima probabilidad como referencia descriptiva.
 4. Reportar un chequeo secundario con `status` (escuela/hogar/trabajo) para verificar estabilidad general de la historia sustantiva.
 
-En todo el análisis, el panel se trata como pooled con `cluster(id)`: Esta pieza no busca modelar heterogeneidad no observada con una estructura multinomial de panel, sino ofrecer una lectura clara y útil de reasignacion de probabilidades.
+En todo el análisis, el panel se trata como pooled con `cluster(id)`: este análisis no busca modelar heterogeneidad no observada con una estructura multinomial de panel, sino ofrecer una lectura clara y útil de reasignacion de probabilidades.
 
 ## Resultados principales
 
@@ -176,7 +176,7 @@ El esquema siguiente sintetiza como educacion, experiencia y perfil demografico 
 
 ## Diagnosticos de respaldo
 
-Estos diagnósticos se reportan solo como respaldo de lectura aplicada. El PCP se reporta solo como diagnóstico auxiliar in-sample y no como núcleo de la pieza.
+Estos diagnósticos se reportan solo como respaldo de lectura aplicada. El PCP se reporta solo como diagnóstico auxiliar in-sample y no como núcleo del análisis.
 
 - **Chequeo con `choice` (5 categorías):** clasificación in-sample `53.8%`, coherente con mayor dificultad de separación fina.
 - **Simplificación secundaria con `status` (3 categorías):** clasificación in-sample `69.0%`, útil como contraste descriptivo y no como evidencia de predicción fuera de muestra.
@@ -186,11 +186,11 @@ Estos diagnósticos se reportan solo como respaldo de lectura aplicada. El PCP s
 
 El aporte de T16 no es presentar un multinomial por sí mismo. El aporte es traducir una decisión multiclase del mercado laboral a probabilidades comparables entre alternativas, manteniendo una narrativa sustantiva útil para un lector externo.
 
-Tambien deja una práctica profesional importante: explicitar limites. Con panel tratado como pooled y `cluster(id)`, la pieza ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es más debil.
+Tambien deja una práctica profesional importante: explicitar limites. Con panel tratado como pooled y `cluster(id)`, el análisis ofrece una lectura clara de reasignacion de probabilidades, pero reconoce con honestidad donde la discriminacion entre categorias es más debil.
 
 ## Cierre
 
-Esta pieza convierte un problema de elección nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.
+Este análisis convierte un problema de elección nominal en una lectura aplicada de trayectorias de actividad: que variables empujan hacia estudio, hogar o distintos tipos de empleo, y con que intensidad promedio.
 
 El valor del caso queda en una traduccion rigurosa y útil para lectura profesional: panel pooled con `cluster(id)`, probabilidades interpretables y limites de discriminacion explicitados con prudencia.
 

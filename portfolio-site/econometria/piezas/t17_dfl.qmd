@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Econometría](../index.qmd) / [Cuantiles, distribuciones y descomposiciones](../index.qmd#cuantiles)
-
 <span class="badge">Brechas y distribuciones contrafactuales</span>
 
 ::: {.hero-box}
@@ -128,7 +126,7 @@ El componente de composición es positivo en todos los deciles analizados. Bajo 
 | 0,90 | 2,4482 | 2,5676 | 2,6194 | +0,1194 | +0,0518 |
 :::
 
-La mediana muestra el mecanismo con claridad. La composición la habría llevado de 1,7890 a 1,8893, pero la mediana reciente es 1,7774. El componente de estructura más que revierte el desplazamiento composicional. En el cuantil 0,90, ambas piezas trabajan en la misma dirección.
+La mediana muestra el mecanismo con claridad. La composición la habría llevado de 1,7890 a 1,8893, pero la mediana reciente es 1,7774. El componente de estructura más que revierte el desplazamiento composicional. En el cuantil 0,90, ambos análisis trabajan en la misma dirección.
 
 ## La desigualdad cambia de manera distinta en cada mitad
 

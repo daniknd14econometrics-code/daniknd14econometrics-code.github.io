@@ -3,6 +3,8 @@ title: "Machine Learning"
 format:
   html:
     title-block-style: none
+    css: ../econometria/assets/econometria-explorer.css
+    include-after-body: ../econometria/assets/econometria-explorer.html
 ---
 
 ::: {.hero-banner .hero-banner--ml}
@@ -12,7 +14,7 @@ format:
 # Statistical Machine Learning: de la predicción a la decisión
 
 ::: {.hero-banner__lead}
-Quince análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada pieza parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
+Quince análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada análisis parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
 :::
 
 ::: {.hero-banner__actions}
@@ -24,76 +26,44 @@ Quince análisis organizados en siete áreas conectan problemas predictivos, eva
 :::
 :::
 
-**15 análisis · 7 áreas**
-
-## Áreas de trabajo
-
-Las cinco primeras áreas ya reúnen análisis publicados. Reducción de dimensión y supervivencia conservan su lugar en la arquitectura mientras se incorporan nuevas piezas.
-
-::: {.piece-grid}
-::: {.piece-card}
-### Clasificación, probabilidades y decisión
-Estimar probabilidades, evaluar clasificadores y decidir bajo distintos costos de error.
-
-**5 piezas disponibles**
-
-<a class="piece-card__cta" href="#clasificacion">Explorar las piezas</a>
+::: {.econometria-summary}
+15 análisis · 7 áreas
 :::
 
-::: {.piece-card}
-### Selección, regularización y alta dimensionalidad
-Controlar la complejidad y evaluar qué información ayuda a generalizar.
+::: {.econometria-explorer .js-econometria-explorer}
+<nav class="econometria-sidebar" aria-label="Áreas de Machine Learning">
+  <p class="econometria-sidebar__title">EXPLORAR MACHINE LEARNING</p>
+  <div class="econometria-tabs" role="tablist" aria-orientation="vertical">
+<button id="tab-clasificacion" class="econometria-tab" type="button" role="tab" aria-controls="area-clasificacion">Clasificación, probabilidades y decisión</button>
+<button id="tab-seleccion-regularizacion" class="econometria-tab" type="button" role="tab" aria-controls="area-seleccion-regularizacion">Selección, regularización y alta dimensionalidad</button>
+<button id="tab-no-linealidad" class="econometria-tab" type="button" role="tab" aria-controls="area-no-linealidad">No linealidad y modelos aditivos</button>
+<button id="tab-arboles" class="econometria-tab" type="button" role="tab" aria-controls="area-arboles">Árboles y ensambles</button>
+<button id="tab-outcomes" class="econometria-tab" type="button" role="tab" aria-controls="area-outcomes">Outcomes, pérdidas y objetivos predictivos</button>
+<button id="tab-reduccion" class="econometria-tab" type="button" role="tab" aria-controls="area-reduccion">Reducción de dimensión y aprendizaje no supervisado</button>
+<button id="tab-supervivencia" class="econometria-tab" type="button" role="tab" aria-controls="area-supervivencia">Supervivencia y tiempo hasta evento</button>
+  </div>
+</nav>
 
-**2 piezas disponibles**
+<div class="econometria-mobile-control">
+  <label for="econometria-area-select">Explorar área</label>
+  <select id="econometria-area-select">
+    <option value="area-clasificacion">Clasificación, probabilidades y decisión</option>
+    <option value="area-seleccion-regularizacion">Selección, regularización y alta dimensionalidad</option>
+    <option value="area-no-linealidad">No linealidad y modelos aditivos</option>
+    <option value="area-arboles">Árboles y ensambles</option>
+    <option value="area-outcomes">Outcomes, pérdidas y objetivos predictivos</option>
+    <option value="area-reduccion">Reducción de dimensión y aprendizaje no supervisado</option>
+    <option value="area-supervivencia">Supervivencia y tiempo hasta evento</option>
+  </select>
+</div>
 
-<a class="piece-card__cta" href="#seleccion-regularizacion">Explorar las piezas</a>
-:::
+::: {.econometria-panels}
+::: {#area-clasificacion .econometria-panel role="tabpanel" aria-labelledby="tab-clasificacion"}
+## Clasificación, probabilidades y decisión
 
-::: {.piece-card}
-### No linealidad y modelos aditivos {#area-no-linealidad}
-Representar relaciones flexibles conservando una lectura interpretable.
-
-**2 piezas disponibles**
-
-<a class="piece-card__cta" href="#no-linealidad-y-modelos-aditivos">Explorar las piezas</a>
-:::
-
-::: {.piece-card}
-### Árboles y ensambles
-Combinar reglas de aprendizaje y comparar su capacidad predictiva.
-
-**2 piezas disponibles**
-
-<a class="piece-card__cta" href="#arboles-y-ensambles">Explorar las piezas</a>
-:::
-
-::: {.piece-card}
-### Outcomes, pérdidas y objetivos predictivos
-Alinear la variable respuesta, la función de pérdida y la pregunta de decisión.
-
-**4 piezas disponibles**
-
-<a class="piece-card__cta" href="#outcomes-perdidas-y-objetivos-predictivos">Explorar las piezas</a>
-:::
-
-::: {.piece-card}
-### Reducción de dimensión y aprendizaje no supervisado
-Explorar estructura y construir representaciones de la información.
-
-**En desarrollo**
-:::
-
-::: {.piece-card}
-### Supervivencia y tiempo hasta evento
-Estudiar cuándo ocurre un evento y cómo evaluar predicciones con seguimiento incompleto.
-
-**En desarrollo**
-:::
-:::
-
-## Clasificación, probabilidades y decisión {#clasificacion}
-
+::: {.section-lead}
 Cinco aplicaciones conectan probabilidades y decisiones: costos de error, validación temporal, eventos raros y comparación de clasificadores binarios y multiclase.
+:::
 
 ::: {.piece-grid}
 ::: {.piece-card}
@@ -135,12 +105,15 @@ Cinco aplicaciones conectan probabilidades y decisiones: costos de error, valida
 
 <a class="piece-card__cta" href="piezas/t05_auto.qmd">Abrir análisis →</a>
 :::
-
+:::
 :::
 
-## Selección, regularización y alta dimensionalidad {#seleccion-regularizacion}
+::: {#area-seleccion-regularizacion .econometria-panel role="tabpanel" aria-labelledby="tab-seleccion-regularizacion"}
+## Selección, regularización y alta dimensionalidad
 
+::: {.section-lead}
 Dos aplicaciones muestran cómo cambia la decisión metodológica cuando controlar la complejidad deja de ser opcional: seleccionar un subconjunto discreto o contraer coeficientes, y regularizar cuando hay más predictores que observaciones.
+:::
 
 ::: {.piece-grid}
 ::: {.piece-card}
@@ -158,12 +131,15 @@ Dos aplicaciones muestran cómo cambia la decisión metodológica cuando control
 
 <a class="piece-card__cta" href="piezas/t07_nirsoil.qmd">Abrir análisis →</a>
 :::
-
+:::
 :::
 
-## No linealidad y modelos aditivos {#no-linealidad-y-modelos-aditivos}
+::: {#area-no-linealidad .econometria-panel role="tabpanel" aria-labelledby="tab-no-linealidad"}
+## No linealidad y modelos aditivos
 
+::: {.section-lead}
 Dos aplicaciones muestran cuándo conviene comprar flexibilidad y cuándo la penalización devuelve una regla simple.
+:::
 
 ::: {.piece-grid}
 ::: {.piece-card}
@@ -181,12 +157,15 @@ Dos aplicaciones muestran cuándo conviene comprar flexibilidad y cuándo la pen
 
 <a class="piece-card__cta" href="piezas/t08b_oj.qmd">Abrir análisis →</a>
 :::
-
+:::
 :::
 
-## Árboles y ensambles {#arboles-y-ensambles}
+::: {#area-arboles .econometria-panel role="tabpanel" aria-labelledby="tab-arboles"}
+## Árboles y ensambles
 
+::: {.section-lead}
 Dos problemas muestran qué cambia al pasar de un árbol individual a un promedio de árboles: predecir un valor continuo y clasificar mensajes bajo una regla de decisión.
+:::
 
 ::: {.piece-grid}
 ::: {.piece-card}
@@ -204,12 +183,15 @@ Dos problemas muestran qué cambia al pasar de un árbol individual a un promedi
 
 <a class="piece-card__cta" href="piezas/t09b_spam.qmd">Abrir análisis →</a>
 :::
-
+:::
 :::
 
-## Outcomes, pérdidas y objetivos predictivos {#outcomes-perdidas-y-objetivos-predictivos}
+::: {#area-outcomes .econometria-panel role="tabpanel" aria-labelledby="tab-outcomes"}
+## Outcomes, pérdidas y objetivos predictivos
 
-Cuatro piezas muestran que definir el target incluye respetar su soporte, elegir el enlace adecuado y evaluar con la pérdida que representa la decisión.
+::: {.section-lead}
+Cuatro análisis muestran que definir el target incluye respetar su soporte, elegir el enlace adecuado y evaluar con la pérdida que representa la decisión.
+:::
 
 ::: {.piece-grid}
 ::: {.piece-card}
@@ -243,21 +225,31 @@ Cuatro piezas muestran que definir el target incluye respetar su soporte, elegir
 
 <a class="piece-card__cta" href="piezas/q01_401ksubs_quantiles.qmd">Abrir análisis →</a>
 :::
-
+:::
 :::
 
+::: {#area-reduccion .econometria-panel role="tabpanel" aria-labelledby="tab-reduccion"}
 ## Reducción de dimensión y aprendizaje no supervisado
 
-Esta área incorporará piezas sobre representación, estructura latente y agrupamiento de observaciones.
+::: {.section-lead}
+Esta área incorporará análisis sobre representación, estructura latente y agrupamiento de observaciones.
+:::
 
 ::: {.small-note}
 **En desarrollo.**
 :::
+:::
 
+::: {#area-supervivencia .econometria-panel role="tabpanel" aria-labelledby="tab-supervivencia"}
 ## Supervivencia y tiempo hasta evento
 
-Esta área incorporará piezas sobre riesgo, censura y evaluación de predicciones a lo largo del tiempo.
+::: {.section-lead}
+Esta área incorporará análisis sobre riesgo, censura y evaluación de predicciones a lo largo del tiempo.
+:::
 
 ::: {.small-note}
 **En desarrollo.**
+:::
+:::
+:::
 :::

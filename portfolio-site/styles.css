@@ -541,11 +541,6 @@ body:has(.hero-banner) .profile-card h3 {
 
 .portfolio-back-link,
 .portfolio-sequence-nav__link {
-  color: var(--brand, #1f4e79);
-  text-decoration: none;
-}
-
-.portfolio-back-link {
   display: inline-flex;
   align-items: center;
   min-height: 36px;
@@ -553,8 +548,14 @@ body:has(.hero-banner) .profile-card h3 {
   border: 1px solid var(--line, #d8e0e8);
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface-soft, #f5f7fa) 72%, transparent);
+  color: var(--brand, #1f4e79);
   font-size: 0.9rem;
   font-weight: 650;
+  text-decoration: none;
+}
+
+.portfolio-back-link {
+  justify-content: center;
 }
 
 .portfolio-back-link:hover,
@@ -589,10 +590,7 @@ body:has(.hero-banner) .profile-card h3 {
 }
 
 .portfolio-sequence-nav__link {
-  display: inline-block;
   max-width: 100%;
-  font-size: 0.91rem;
-  font-weight: 650;
   line-height: 1.4;
 }
 

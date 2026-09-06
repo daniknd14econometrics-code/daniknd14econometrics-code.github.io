@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Econometría](../index.qmd) / [Cuantiles, distribuciones y descomposiciones](../index.qmd#cuantiles)
-
 <span class="badge">Brechas y distribuciones contrafactuales</span>
 
 ::: {.hero-box}
@@ -89,7 +87,7 @@ Entre trabajadores con las mismas características observadas, ¿cómo difieren 
 La aplicación reproduce la muestra de Firpo, Fortin y Lemieux (2009): 266.956 hombres de CPS ORG 1983–1985. El resultado es el log salario horario en dólares de 1979. Cobertura sindical indica estar cubierto por un contrato sindical; los controles incluyen raza, estado civil y categorías de educación y experiencia potencial. La cobertura muestral es 26,16%.
 
 ::: {.small-note}
-**Una muestra distinta:** esta replicación no utiliza los pesos de encuesta. DFL y la descomposición RIF de las otras piezas comparan muestras de 232.784 y 170.693 observaciones con pesos CPS. Los resultados aquí no deben compararse numéricamente con aquellos como si representaran exactamente la misma población y ponderación.
+**Una muestra distinta:** esta replicación no utiliza los pesos de encuesta. DFL y la descomposición RIF de los otros análisis comparan muestras de 232.784 y 170.693 observaciones con pesos CPS. Los resultados aquí no deben compararse numéricamente con aquellos como si representaran exactamente la misma población y ponderación.
 :::
 
 Los cubiertos tienen un log salario medio mayor, pero también difieren en edad, experiencia y otras características. MCO ajustado estima una asociación de 0,179. La pregunta distributiva exige ir más allá de esa media, sin suponer que los controles hayan resuelto la selección en cobertura.

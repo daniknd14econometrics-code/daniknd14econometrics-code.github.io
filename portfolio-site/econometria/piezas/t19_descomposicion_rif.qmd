@@ -22,8 +22,6 @@ execute:
   message: false
 ---
 
-[Econometría](../index.qmd) / [Cuantiles, distribuciones y descomposiciones](../index.qmd#cuantiles)
-
 <span class="badge">Brechas y distribuciones contrafactuales</span>
 
 ::: {.hero-box}
@@ -88,7 +86,7 @@ Necesario junto con composición y estructura para cerrar el total RIF del 90–
 
 La aplicación utiliza las mismas muestras masculinas de CPS y los mismos pesos de encuesta que [DFL](t17_dfl.qmd): 232.784 observaciones de 1983–1985 y 170.693 de 2003–2005. El resultado es el log salario horario; los bloques sustantivos son cobertura sindical, categorías educativas y experiencia potencial. La cobertura cae de aproximadamente 26,5% a 15,2%.
 
-La comparación con [UQR](t18_uqr_rif.qmd) es conceptual: aquella pieza utiliza otra muestra de replicación sin pesos. Sus coeficientes no se trasladan directamente a esta descomposición temporal.
+La comparación con [UQR](t18_uqr_rif.qmd) es conceptual: aquel análisis utiliza otra muestra de replicación sin pesos. Sus coeficientes no se trasladan directamente a esta descomposición temporal.
 
 ## Extender Oaxaca–Blinder fuera de la media
 
@@ -188,7 +186,7 @@ RIF–Oaxaca permite localizar contribuciones de cobertura sindical, educación 
 
 ## Una progresión de preguntas
 
-[Oaxaca–Blinder](t16_oaxaca_blinder.qmd) aporta el álgebra de una descomposición de medias; [DFL](t17_dfl.qmd), el contrafactual distributivo agregado; [UQR/RIF](t18_uqr_rif.qmd), la transformación que aproxima funcionales marginales. Esta pieza combina las tres ideas para obtener detalle y mostrar su costo de aproximación.
+[Oaxaca–Blinder](t16_oaxaca_blinder.qmd) aporta el álgebra de una descomposición de medias; [DFL](t17_dfl.qmd), el contrafactual distributivo agregado; [UQR/RIF](t18_uqr_rif.qmd), la transformación que aproxima funcionales marginales. Este análisis combina las tres ideas para obtener detalle y mostrar su costo de aproximación.
 
 ::: {.small-note}
 **Fuente:** informe curado «Taller 19: Descomposición RIF», replicación de Firpo, Fortin y Lemieux. Figuras y tablas reproducen valores reportados; el detalle principal corresponde a la versión reponderada y la comparación DFL a la RIF estándar. No se redistribuye el residuo ni se fuerza el cierre de cifras redondeadas.
