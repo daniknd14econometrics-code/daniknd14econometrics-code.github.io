@@ -18,10 +18,16 @@ body:has(.hero-banner--home) .hero-banner__specialization {
 }
 
 body:has(.hero-banner--home) .credential-strip {
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+  margin-top: 0.15rem;
+}
+
+body:has(.hero-banner--home) .credential-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 0.15rem;
 }
 
 body:has(.hero-banner--home) .credential-chip {
@@ -44,16 +50,17 @@ body:has(.hero-banner--home) .credential-chip--experience {
   color: #76541b;
 }
 
-body:has(.hero-banner--home) .credential-chip--causal {
+body:has(.hero-banner--home) .credential-chip--research {
+  border-color: #bddfd7;
+  background: #e1f2ee;
+  color: #24665f;
+}
+
+body:has(.hero-banner--home) .credential-chip--causal,
+body:has(.hero-banner--home) .credential-chip--ml {
   border-color: #d8d0ee;
   background: #f1edfb;
   color: #59498b;
-}
-
-body:has(.hero-banner--home) .credential-chip--ml {
-  border-color: #c9dced;
-  background: #edf5fb;
-  color: #28587d;
 }
 
 body:has(.hero-banner--home) .hero-banner__actions {
@@ -122,8 +129,28 @@ body:has(.hero-banner--home) .portal-card .cta-link {
   align-self: flex-start;
   min-height: 38px;
   padding: 0.4rem 0.75rem;
+  border-color: #2f6fae;
   border-radius: 8px;
-  background: var(--surface);
+  background: #2f6fae;
+  color: #ffffff !important;
+}
+
+body:has(.hero-banner--home) .portal-card .cta-link:visited {
+  color: #ffffff !important;
+}
+
+body:has(.hero-banner--home) .portal-card .cta-link:hover,
+body:has(.hero-banner--home) .portal-card .cta-link:focus,
+body:has(.hero-banner--home) .portal-card .cta-link:active {
+  border-color: #245a8d;
+  background: #245a8d;
+  color: #ffffff !important;
+}
+
+@media (min-width: 992px) {
+  body:has(.hero-banner--home) .credential-row {
+    flex-wrap: nowrap;
+  }
 }
 
 @media (max-width: 991px) {

@@ -21,11 +21,15 @@ Abordo problemas cuantitativos desde la formulación de la pregunta y el diseño
 :::
 
 <div class="credential-strip" aria-label="Credenciales profesionales">
+<div class="credential-row credential-row--trajectory">
 <span class="credential-chip credential-chip--education">MSc Economía · FCEA–Udelar</span>
 <span class="credential-chip credential-chip--experience">6+ años en Conaprole</span>
 <span class="credential-chip credential-chip--research">Investigación aplicada</span>
+</div>
+<div class="credential-row credential-row--technical">
 <span class="credential-chip credential-chip--causal">Econometría e inferencia causal</span>
 <span class="credential-chip credential-chip--ml">Statistical ML</span>
+</div>
 </div>
 
 ::: {.hero-banner__actions}
