@@ -35,9 +35,9 @@ body:has(.t00-visual-pilot-marker) #quarto-document-content {
 }
 
 body:has(.t00-visual-pilot-marker) #title-block-header.quarto-title-block.default {
-  background: #ffffff;
-  border-color: #d8e1ea;
-  box-shadow: 0 8px 22px rgba(23, 74, 120, 0.055);
+  background: #e4ecf4;
+  border-color: #d3dee9;
+  box-shadow: 0 6px 18px rgba(23, 74, 120, 0.05);
 }
 
 body:has(.t00-visual-pilot-marker) #title-block-header .title {
@@ -46,13 +46,13 @@ body:has(.t00-visual-pilot-marker) #title-block-header .title {
 
 body:has(.t00-visual-pilot-marker) #title-block-header .subtitle,
 body:has(.t00-visual-pilot-marker) #title-block-header .quarto-title-meta-heading {
-  color: #5b6878;
+  color: #4f6072 !important;
 }
 
 body:has(.t00-visual-pilot-marker) #title-block-header .quarto-title-meta > div {
-  background: #f8fafc;
-  border-color: #d8e1ea;
-  box-shadow: none;
+  background: #ffffff;
+  border-color: #d3dee9;
+  box-shadow: 0 1px 3px rgba(23, 74, 120, 0.035);
 }
 
 body:has(.t00-visual-pilot-marker) .portfolio-back-nav {
