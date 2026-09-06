@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Soy economista, con Maestría en Economía. Mi recorrido reúne casi siete años de trayectoria profesional: más de seis en una gran empresa, junto con experiencia universitaria e investigación aplicada autónoma. Me especializo en econometría, inferencia causal y Statistical Machine Learning para abordar problemas de modelización, evaluación, predicción y decisión.</p>
 </div>
 <div class="hero-banner__actions">
-<p><a class="button-primary" href="./index.html#areas-de-trabajo">Explorar análisis</a> <a class="button-secondary" href="#contacto">Contacto</a></p>
+<p><a class="button-primary" href="./index.html#areas-de-trabajo">Explorar análisis</a> <a class="button-secondary" href="./assets/CV_Daniel_Mendez_2026_final.pdf" target="_blank" rel="noopener">CV (PDF)</a> <a class="button-secondary" href="#contacto">Contacto</a></p>
 </div>
 </section>
 </div>
@@ -260,6 +260,10 @@ ul.task-list li input[type="checkbox"] {
     },
     {
       portal: "../fundamentos/index.html",
+      terminal: {
+        label: "DiD moderno →",
+        href: "/causalidad/did-moderno/"
+      },
       entries: [
         ...entriesForArea("observables", [
           "causalidad/piezas/c01_diferencia-medias-no-causal.html",
@@ -354,6 +358,8 @@ ul.task-list li input[type="checkbox"] {
     return;
   }
 
+  document.body.classList.add("portfolio-piece");
+
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");
   if (!main || !titleBlock) {
@@ -395,11 +401,15 @@ ul.task-list li input[type="checkbox"] {
 
   addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
   const nextEntry = activeCollection.entries[activeIndex + 1];
+  const terminalLink = activeCollection.terminal || {
+    label: "Home →",
+    href: "https://daniknd14econometrics-code.github.io/"
+  };
   addSlot(
     "next",
     nextEntry,
-    nextEntry ? "Siguiente →" : "Home →",
-    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+    nextEntry ? "Siguiente →" : terminalLink.label,
+    nextEntry ? undefined : terminalLink.href
   );
 
   main.appendChild(sequenceNav);

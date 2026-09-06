@@ -492,6 +492,10 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
     },
     {
       portal: "../fundamentos/index.html",
+      terminal: {
+        label: "DiD moderno →",
+        href: "/causalidad/did-moderno/"
+      },
       entries: [
         ...entriesForArea("observables", [
           "causalidad/piezas/c01_diferencia-medias-no-causal.html",
@@ -586,6 +590,8 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
     return;
   }
 
+  document.body.classList.add("portfolio-piece");
+
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");
   if (!main || !titleBlock) {
@@ -627,11 +633,15 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
 
   addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
   const nextEntry = activeCollection.entries[activeIndex + 1];
+  const terminalLink = activeCollection.terminal || {
+    label: "Home →",
+    href: "https://daniknd14econometrics-code.github.io/"
+  };
   addSlot(
     "next",
     nextEntry,
-    nextEntry ? "Siguiente →" : "Home →",
-    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+    nextEntry ? "Siguiente →" : terminalLink.label,
+    nextEntry ? undefined : terminalLink.href
   );
 
   main.appendChild(sequenceNav);

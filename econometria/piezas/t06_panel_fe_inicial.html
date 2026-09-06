@@ -475,6 +475,10 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
     },
     {
       portal: "../fundamentos/index.html",
+      terminal: {
+        label: "DiD moderno →",
+        href: "/causalidad/did-moderno/"
+      },
       entries: [
         ...entriesForArea("observables", [
           "causalidad/piezas/c01_diferencia-medias-no-causal.html",
@@ -569,6 +573,8 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
     return;
   }
 
+  document.body.classList.add("portfolio-piece");
+
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");
   if (!main || !titleBlock) {
@@ -610,11 +616,15 @@ En FE con <code>c.educ##i.year</code>, las interacciones aparecen sin evidencia 
 
   addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
   const nextEntry = activeCollection.entries[activeIndex + 1];
+  const terminalLink = activeCollection.terminal || {
+    label: "Home →",
+    href: "https://daniknd14econometrics-code.github.io/"
+  };
   addSlot(
     "next",
     nextEntry,
-    nextEntry ? "Siguiente →" : "Home →",
-    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+    nextEntry ? "Siguiente →" : terminalLink.label,
+    nextEntry ? undefined : terminalLink.href
   );
 
   main.appendChild(sequenceNav);

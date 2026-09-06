@@ -431,6 +431,10 @@ E(\text{patents}_{it}\mid X_{it})=\exp(X_{it}'\beta),
     },
     {
       portal: "../fundamentos/index.html",
+      terminal: {
+        label: "DiD moderno →",
+        href: "/causalidad/did-moderno/"
+      },
       entries: [
         ...entriesForArea("observables", [
           "causalidad/piezas/c01_diferencia-medias-no-causal.html",
@@ -568,11 +572,15 @@ E(\text{patents}_{it}\mid X_{it})=\exp(X_{it}'\beta),
 
   addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
   const nextEntry = activeCollection.entries[activeIndex + 1];
+  const terminalLink = activeCollection.terminal || {
+    label: "Home →",
+    href: "https://daniknd14econometrics-code.github.io/"
+  };
   addSlot(
     "next",
     nextEntry,
-    nextEntry ? "Siguiente →" : "Home →",
-    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+    nextEntry ? "Siguiente →" : terminalLink.label,
+    nextEntry ? undefined : terminalLink.href
   );
 
   main.appendChild(sequenceNav);

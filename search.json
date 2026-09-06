@@ -462,6 +462,13 @@
     "text": "La dispersión no se diagnostica con una comparación marginal\nQue la varianza marginal sea mayor que la media no demuestra sobredispersión condicional. Tras modelar \\(X\\), el GLM reporta dispersión de Pearson 0,8402 y el estimador de momentos NB2 es negativo, \\(\\widehat\\alpha=-0,0114\\). No aparece evidencia para forzar una Binomial Negativa.\nEsto tampoco demuestra que Poisson describa perfectamente toda la distribución. Como diagnóstico adicional, el GLM reproduce aproximadamente la masa de ceros del test —0,256 predicha frente a 0,265 observada—, pero sobrepredice el conteo uno. La comparación principal evalúa medias condicionales; modelar todas las probabilidades puntuales exigiría una afirmación distribucional más fuerte.\n\nDecisión bajo la pérdida declarada\nNatural splines Poisson es la opción con menor deviance y RMSE observados. GAM y Random Forest quedan tan próximos que la elección práctica puede considerar interpretabilidad y mantenimiento. La conclusión más estable es que la mejora proviene de flexibilizar la forma de la media respetando el target, no de penalizar una log-media rígida.\n\nEl resultado depende de una única partición, de casos completos y de una pérdida predefinida. El GAM conserva una cautela sobre la base de idlnchld; RF solo ajusta mtry; el ejercicio no construye un modelo operativo posterior al test. Ningún perfil, corte o ranking de importancia admite interpretación causal.\nLoanapp muestra el caso continuo positivo: cambiar de soporte discreto a continuo no vuelve automáticamente adecuada la pérdida gaussiana.\n\nFuente: informe curado «E01: fertil2, conteo y Poisson». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas."
   },
   {
+    "objectID": "index.html#areas-de-trabajo",
+    "href": "index.html#areas-de-trabajo",
+    "title": "Inicio",
+    "section": "Áreas de trabajo",
+    "text": "Áreas de trabajo\n\nTres áreas complementarias desde las que abordo problemas de inferencia, predicción, evaluación y decisión.\n\n\n\n\n\n\nEconometría\n\n\nAplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.\nExplorar Econometría →\n\n\n\n\n\nInferencia causal\n\n\nDiseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.\nExplorar Causalidad →\n\n\n\n\n\nMachine Learning\n\n\nMétodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.\nExplorar Machine Learning →"
+  },
+  {
     "objectID": "index.html#cómo-trabajo",
     "href": "index.html#cómo-trabajo",
     "title": "Inicio",
@@ -473,14 +480,7 @@
     "href": "index.html#problemas-de-negocio",
     "title": "Inicio",
     "section": "Problemas de negocio",
-    "text": "Problemas de negocio\n\nEl análisis cuantitativo cobra valor cuando ayuda a responder una pregunta concreta y a tomar una decisión. Estos son algunos ejemplos de problemas empresariales que pueden abordarse desde distintas herramientas cuantitativas.\n\n\n\n\n¿A qué precio deberíamos lanzar un producto nuevo?\n\nEconometría Optimización\n\n\n\n¿La campaña realmente aumentó las ventas?\n\nInferencia causal Econometría\n\n\n\n¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?\n\nSeries temporales Econometría Optimización\n\n\n\nExplorar problemas de negocio"
-  },
-  {
-    "objectID": "index.html#areas-de-trabajo",
-    "href": "index.html#areas-de-trabajo",
-    "title": "Inicio",
-    "section": "Áreas de trabajo",
-    "text": "Áreas de trabajo\n\nTres áreas complementarias desde las que abordo problemas de inferencia, predicción, evaluación y decisión.\n\n\n\nEconometría\nAplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.\nExplorar Econometría\n\n\nInferencia causal\nDiseños y aplicaciones para construir comparaciones creíbles y estimar efectos causales, desde selección sobre observables y variables instrumentales hasta regresión discontinua y diferencias en diferencias.\nExplorar Causalidad\n\n\nMachine Learning\nMétodos de aprendizaje estadístico y modelos predictivos aplicados a problemas económicos y de negocio.\nExplorar Machine Learning"
+    "text": "Problemas de negocio\n\nEl análisis cuantitativo cobra valor cuando ayuda a responder una pregunta concreta y a tomar una decisión. Estos son algunos ejemplos de problemas empresariales que pueden abordarse desde distintas herramientas cuantitativas.\n\n\n\n\n¿A qué precio deberíamos lanzar un producto nuevo?\n\nEconometría Optimización\n\n\n\n¿La campaña realmente aumentó las ventas?\n\nInferencia causal Econometría\n\n\n\n¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?\n\nSeries temporales Econometría Optimización\n\n\n\nExplorar problemas de negocio →"
   },
   {
     "objectID": "index.html#sobre-los-análisis-del-portfolio",
@@ -1691,7 +1691,7 @@
     "href": "econometria/piezas/t00_mco_ingresos.html",
     "title": "Educación e ingresos: qué significa controlar en una regresión lineal",
     "section": "",
-    "text": "El término lineal de edad es positivo y el cuadrático negativo, consistente con un perfil creciente a tasa decreciente. Alrededor de los 40 años, la combinación correspondiente equivale a 0,0154 log-puntos por un año adicional. El coeficiente asociado a hombre es 0,197, una diferencia condicional aproximada de 21,8% respecto de la categoría base. Son asociaciones condicionadas, no efectos causales."
+    "text": "Controlar significa aislar la variación que queda después de descontar los controles.\n\n\nEsta aplicación usa ingresos laborales para conectar MCO simple y múltiple con una idea central: el coeficiente parcial de educación compara componentes de ingreso y educación que ya no están explicados linealmente por edad y sexo. FWL vuelve visible esa operación.\nEl término lineal de edad es positivo y el cuadrático negativo, consistente con un perfil creciente a tasa decreciente. Alrededor de los 40 años, la combinación correspondiente equivale a 0,0154 log-puntos por un año adicional. El coeficiente asociado a hombre es 0,197, una diferencia condicional aproximada de 21,8% respecto de la categoría base. Son asociaciones condicionadas, no efectos causales."
   },
   {
     "objectID": "econometria/piezas/t00_mco_ingresos.html#pregunta-aplicada",

@@ -525,6 +525,10 @@ y_{it}=\rho y_{i,t-1}+X_{it}'\beta+\alpha_i+\lambda_t+u_{it}.
     },
     {
       portal: "../fundamentos/index.html",
+      terminal: {
+        label: "DiD moderno →",
+        href: "/causalidad/did-moderno/"
+      },
       entries: [
         ...entriesForArea("observables", [
           "causalidad/piezas/c01_diferencia-medias-no-causal.html",
@@ -662,11 +666,15 @@ y_{it}=\rho y_{i,t-1}+X_{it}'\beta+\alpha_i+\lambda_t+u_{it}.
 
   addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
   const nextEntry = activeCollection.entries[activeIndex + 1];
+  const terminalLink = activeCollection.terminal || {
+    label: "Home →",
+    href: "https://daniknd14econometrics-code.github.io/"
+  };
   addSlot(
     "next",
     nextEntry,
-    nextEntry ? "Siguiente →" : "Home →",
-    nextEntry ? undefined : "https://daniknd14econometrics-code.github.io/"
+    nextEntry ? "Siguiente →" : terminalLink.label,
+    nextEntry ? undefined : terminalLink.href
   );
 
   main.appendChild(sequenceNav);
