@@ -79,7 +79,6 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../assets/portfolio.css">
 <link rel="stylesheet" href="../assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
-<link rel="stylesheet" href="../assets/t00_visual_pilot.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -185,7 +184,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><span class="t00-visual-pilot-marker" hidden="" aria-hidden="true"></span></p>
 <div class="hero-box">
 <div class="hero-title">
 <p>Controlar significa aislar la variación que queda después de descontar los controles.</p>
@@ -538,6 +536,8 @@ ul.task-list li input[type="checkbox"] {
   if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
     return;
   }
+
+  document.body.classList.add("portfolio-piece");
 
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");

@@ -744,6 +744,8 @@ WATT(k)=\sum_{g\in\mathcal G_k}w(g,k)ATT(g,g+k).
     return;
   }
 
+  document.body.classList.add("portfolio-piece");
+
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");
   if (!main || !titleBlock) {
