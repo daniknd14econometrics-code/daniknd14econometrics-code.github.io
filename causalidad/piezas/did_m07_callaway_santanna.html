@@ -695,15 +695,15 @@ ATT(g,t)=E\left[Y_t(g)-Y_t(0)\mid G=g\right]
     }
   }
 
-  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
-    return;
-  }
-
   document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
     if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
       heading.textContent = "AUTOR";
     }
   });
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
 
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");

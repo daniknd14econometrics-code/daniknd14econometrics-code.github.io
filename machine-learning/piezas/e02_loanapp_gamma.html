@@ -548,15 +548,15 @@ Figura&nbsp;2: Comparación de RMSE en el conjunto de test. CART logra el menor 
     }
   }
 
-  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
-    return;
-  }
-
   document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
     if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
       heading.textContent = "AUTOR";
     }
   });
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
 
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");

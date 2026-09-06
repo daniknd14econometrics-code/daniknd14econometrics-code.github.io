@@ -558,15 +558,15 @@ Figura&nbsp;2: El cuantil 0,70 presenta una asociación mayor y un intervalo pos
     }
   }
 
-  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
-    return;
-  }
-
   document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
     if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
       heading.textContent = "AUTOR";
     }
   });
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
 
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");

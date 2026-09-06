@@ -564,15 +564,15 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
     }
   }
 
-  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
-    return;
-  }
-
   document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
     if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
       heading.textContent = "AUTOR";
     }
   });
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
 
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");

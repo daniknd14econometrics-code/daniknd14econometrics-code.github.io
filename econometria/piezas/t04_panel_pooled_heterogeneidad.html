@@ -576,15 +576,15 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
     }
   }
 
-  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
-    return;
-  }
-
   document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
     if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
       heading.textContent = "AUTOR";
     }
   });
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
 
   const main = document.querySelector("main.content");
   const titleBlock = document.querySelector("#title-block-header");
