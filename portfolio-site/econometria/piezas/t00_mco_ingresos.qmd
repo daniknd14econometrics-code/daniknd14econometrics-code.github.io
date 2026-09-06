@@ -18,11 +18,14 @@ format:
       - ../assets/portfolio.css
       - ../assets/t01_palette.css
       - ../../assets/analysis-layout.css
+      - ../assets/t00_visual_pilot.css
 execute:
   echo: false
   warning: false
   message: false
 ---
+
+<span class="t00-visual-pilot-marker" hidden aria-hidden="true"></span>
 
 ::: {.hero-box}
 ::: {.hero-title}
