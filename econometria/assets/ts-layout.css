@@ -1,0 +1,38 @@
+/* Ajustes limitados a las cuatro nuevas piezas de series temporales. */
+@media (max-width: 700px) {
+  #quarto-content.page-columns,
+  #quarto-content .page-columns {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  main.content,
+  #title-block-header,
+  #quarto-document-content {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #quarto-document-content .quarto-figure {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+  #quarto-document-content .badge {
+    white-space: normal;
+    max-width: 100%;
+    line-height: 1.5;
+  }
+  #quarto-document-content .quarto-figure figure {
+    width: 760px;
+    max-width: none;
+  }
+  #quarto-document-content .quarto-figure img {
+    width: 760px !important;
+    max-width: none !important;
+  }
+  #quarto-document-content .quarto-figure figcaption {
+    width: calc(100vw - 3.5rem);
+    max-width: 100%;
+  }
+}

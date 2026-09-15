@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Méndez">
+
+<title>Forecasting univariado de un producto lácteo – Daniel Méndez</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="robots" content="noindex, nofollow">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../assets/portfolio.css">
+<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="stylesheet" href="../assets/ts-layout.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Daniel Méndez</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+<span class="menu-text">Inicio</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../problemas-negocio.html">
+<span class="menu-text">Problemas de negocio</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../econometria/index.html">
+<span class="menu-text">Econometría</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../causalidad/index.html">
+<span class="menu-text">Causalidad</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../machine-learning/index.html">
+<span class="menu-text">Machine Learning</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../sobre-mi.html">
+<span class="menu-text">Sobre mí</span></a>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+
+  <ul class="collapse">
+  <li><a href="#pregunta-y-datos" id="toc-pregunta-y-datos" class="nav-link active" data-scroll-target="#pregunta-y-datos">Pregunta y datos</a></li>
+  <li><a href="#de-la-estructura-temporal-a-los-candidatos" id="toc-de-la-estructura-temporal-a-los-candidatos" class="nav-link" data-scroll-target="#de-la-estructura-temporal-a-los-candidatos">De la estructura temporal a los candidatos</a></li>
+  <li><a href="#validación-que-reproduce-la-decisión" id="toc-validación-que-reproduce-la-decisión" class="nav-link" data-scroll-target="#validación-que-reproduce-la-decisión">Validación que reproduce la decisión</a></li>
+  <li><a href="#resultado-casi-empate-con-objetos-distintos" id="toc-resultado-casi-empate-con-objetos-distintos" class="nav-link" data-scroll-target="#resultado-casi-empate-con-objetos-distintos">Resultado: casi empate, con objetos distintos</a></li>
+  <li><a href="#forecast-e-incertidumbre-anual" id="toc-forecast-e-incertidumbre-anual" class="nav-link" data-scroll-target="#forecast-e-incertidumbre-anual">Forecast e incertidumbre anual</a></li>
+  <li><a href="#auditoría-posterior-y-alcance" id="toc-auditoría-posterior-y-alcance" class="nav-link" data-scroll-target="#auditoría-posterior-y-alcance">Auditoría posterior y alcance</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Forecasting univariado de un producto lácteo</h1>
+<p class="subtitle lead">Presupuesto mensual y anual, cambio de régimen y competencia entre SARIMA y un benchmark estacional</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Méndez </p>
+          </div>
+  </div>
+
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">15 de septiembre de 2026</p>
+    </div>
+  </div>
+
+
+  </div>
+
+
+
+</header>
+
+
+<p><span class="badge">Series temporales y forecasting · Historia propia</span></p>
+<div class="hero-box">
+<div class="hero-title">
+<p>El mejor SARIMA queda casi empatado con una regla estacional simple. La decisión depende de la pérdida presupuestaria, además del ajuste del modelo.</p>
+</div>
+<div class="hero-sub">
+<p>Esta aplicación anonimizada pronostica la remisión de producto lácteo a doce meses. La comparación resuelve integración, estacionalidad, trayectoria y ventana de estimación antes de elegir una regla. El benchmark conserva el primer lugar por una diferencia mínima; el SARIMA reciente aporta una dinámica más rica y el modelo con ruptura permite representar el cambio de régimen.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Historia de desarrollo</p>
+</div>
+<div class="metric-value">
+<p>156 meses</p>
+</div>
+<div class="metric-note">
+<p>Enero de 2010 a diciembre de 2022.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Validación temporal</p>
+</div>
+<div class="metric-value">
+<p>7 presupuestos</p>
+</div>
+<div class="metric-note">
+<p>84 predicciones; años completos 2016–2022.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Distancia entre líderes</p>
+</div>
+<div class="metric-value">
+<p>0,19%</p>
+</div>
+<div class="metric-note">
+<p>Diferencia relativa del score; casi empate.</p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Volumen anual esperado</p>
+</div>
+<div class="metric-value">
+<p>1.500,468</p>
+</div>
+<div class="metric-note">
+<p>Millones de litros; presupuesto construido desde diciembre de 2022.</p>
+</div>
+</div>
+</div>
+<section id="pregunta-y-datos" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-y-datos">Pregunta y datos</h2>
+<p>¿Qué procedimiento habría producido mejores presupuestos mensuales y anuales de remisión de producto lácteo utilizando únicamente la información disponible en diciembre del año anterior? El total anual importa para planificación de capacidad y presupuesto; la distribución mensual importa porque errores de signo opuesto pueden compensarse al sumar el año.</p>
+<p>El resultado <span class="math inline">\(Y_t\)</span> es el volumen total remitido durante el mes, en litros. Para separar intensidad productiva y duración del mes, los modelos dinámicos trabajan sobre</p>
+<p><span class="math display">\[
+R_t=Y_t/D_t,\qquad x_t=\log R_t,
+\]</span></p>
+<p>donde <span class="math inline">\(D_t\)</span> es la cantidad de días calendario. <span class="math inline">\(R_t\)</span> es una intensidad diaria <strong>promedio del mes</strong>: la frecuencia sigue siendo mensual. Al pronosticar se reincorpora la duración de cada mes para recuperar el objeto presupuestario.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ts_sarima_02_perfil_estacional_remision_diaria.png" class="img-fluid figure-img" style="width:100.0%" alt="Perfil mensual de intensidad diaria promedio de remisión de producto lácteo, con máximo en octubre"></p>
+<figcaption>El perfil medio de 2010–2022 muestra mínimos en febrero–marzo y máximos en setiembre–octubre. Normalizar por duración del mes conserva un patrón productivo intraanual marcado.</figcaption>
+</figure>
+</div>
+</section>
+<section id="de-la-estructura-temporal-a-los-candidatos" class="level2">
+<h2 class="anchored" data-anchor-id="de-la-estructura-temporal-a-los-candidatos">De la estructura temporal a los candidatos</h2>
+<p>La persistencia regular se estudia con ADF y KPSS, cuidando la selección de rezagos y la autocorrelación de las regresiones auxiliares. La evidencia conjunta favorece <span class="math inline">\(d=0\)</span> <strong>alrededor de una trayectoria determinística</strong>. Por eso la tendencia permanece en el forecast; retirar la diferencia regular sin conservar esa trayectoria cambiaría la interpretación del modelo.</p>
+<p>La estacionalidad enfrenta tres representaciones: diferencia estacional con dinámica autorregresiva/media móvil estacional; dinámica estacional estacionaria sin diferencia; y efectos mensuales determinísticos con dinámica residual. Las tres se evalúan con y sin ruptura. Los diagnósticos por frecuencia son matizados y no prueban todas las raíces que impone <span class="math inline">\(1-L^{12}\)</span>. La representación predictiva se decide en validación temporal: <span class="math inline">\(D=1\)</span> obtiene el menor score en las tres estrategias de estimación.</p>
+<p>El diagnóstico de estabilidad localiza una ruptura alrededor de abril de 2012. La fecha reaparece en los siete orígenes históricos, aunque el tipo de ruptura alterna entre pendiente y nivel más pendiente. Se conserva como una transición estadística de trayectoria; no se atribuye a una causa empresarial ni a un evento puntual.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ts_sarima_03D_estabilidad_break_estructural.png" class="img-fluid figure-img" style="width:100.0%" alt="Comparación BIC del número de rupturas y ubicación de abril de 2012 en la intensidad de remisión"></p>
+<figcaption>BIC favorece un quiebre frente a cero, dos o tres; la serie ubica la transición estimada en abril de 2012. Esta evidencia motiva comparar una trayectoria quebrada con una ventana reciente.</figcaption>
+</figure>
+</div>
+<p>Para el error alrededor de la trayectoria, la grilla manual elige <span class="math inline">\(ARIMA(1,0,0)(0,1,1)_{12}\)</span> en los ajustes finales. Los candidatos deben tener raíces admisibles y diagnósticos residuales aceptables antes de priorizar AICc. La rama sin ruptura se evalúa también con una ventana móvil de 84 meses, que reduce el peso del régimen inicial.</p>
+</section>
+<section id="validación-que-reproduce-la-decisión" class="level2">
+<h2 class="anchored" data-anchor-id="validación-que-reproduce-la-decisión">Validación que reproduce la decisión</h2>
+<p>Cada diciembre entre 2015 y 2021 se vuelve a estimar con el pasado disponible y se pronostican doce meses completos. Se reaprenden tendencia, integración, representación estacional y órdenes; en la rama con ruptura también su existencia, fecha y tipo. Así se obtienen siete presupuestos de 2016–2022.</p>
+<p>La pérdida predefinida combina el error anual absoluto porcentual medio y el WAPE mensual —error absoluto total como porcentaje del volumen observado—:</p>
+<p><span class="math display">\[
+S=0{,}60\,\overline{|B_k|}+0{,}40\,WAPE.
+\]</span></p>
+<p>Menor es mejor. El peso anual de 60% expresa la prioridad presupuestaria. Este bloque sirve para <strong>seleccionar</strong> la regla final: las predicciones son fuera de muestra respecto de cada ajuste, pero el ranking no es un test protegido e independiente de la selección.</p>
+</section>
+<section id="resultado-casi-empate-con-objetos-distintos" class="level2">
+<h2 class="anchored" data-anchor-id="resultado-casi-empate-con-objetos-distintos">Resultado: casi empate, con objetos distintos</h2>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Procedimiento</th>
+<th style="text-align: right;">WAPE mensual (%)</th>
+<th style="text-align: right;">Error anual absoluto medio (%)</th>
+<th style="text-align: right;">Score (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Benchmark estacional en volumen mensual</strong></td>
+<td style="text-align: right;">5,674</td>
+<td style="text-align: right;"><strong>5,063</strong></td>
+<td style="text-align: right;"><strong>5,308</strong></td>
+</tr>
+<tr class="even">
+<td>SARIMA, ventana móvil de 84 meses</td>
+<td style="text-align: right;"><strong>5,646</strong></td>
+<td style="text-align: right;">5,099</td>
+<td style="text-align: right;">5,318</td>
+</tr>
+<tr class="odd">
+<td>SARIMA con ruptura, historia completa</td>
+<td style="text-align: right;">5,720</td>
+<td style="text-align: right;">5,220</td>
+<td style="text-align: right;">5,420</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>El SARIMA móvil tiene WAPE ligeramente menor, pero el benchmark cierra mejor el total anual y gana bajo la combinación declarada. La distancia de score es aproximadamente 0,010 puntos porcentuales: <strong>no permite sostener una superioridad sustantiva del benchmark sobre el SARIMA reciente</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ts_sarima_08B_comparacion_expanding_rolling_break.png" class="img-fluid figure-img" style="width:100.0%" alt="Scores históricos de SARIMA expansivo, SARIMA con ruptura y SARIMA con ventana móvil de 84 meses"></p>
+<figcaption>Una vez comparadas las representaciones estacionales, la ventana reciente reduce el score del SARIMA de 6,132 a 5,318. Modelar explícitamente la ruptura alcanza 5,420 y conserva toda la historia. La figura compara estrategias SARIMA; el benchmark se incorpora en la tabla del ranking final.</figcaption>
+</figure>
+</div>
+<p>La mejora de ventana es 13,29%, superior al umbral previo de 3% para activarla. El auditor automático no supera a la grilla manual; tratar las anomalías detectadas empeora el score de 5,318 a 5,532. Las intervenciones por COVID tampoco mejoran los criterios de información. Detectar una anomalía o conocer un evento no basta para incorporarlo permanentemente.</p>
+<p>El diagnóstico acompaña la decisión. El SARIMA móvil deja Ljung–Box aceptables a 12, 24 y 36 rezagos. El ganador estacional conserva señal residual: es una regla presupuestaria competitiva, aunque no agota la dinámica. En intervalos, el benchmark cubre 94,0% y 100% para niveles nominales de 80% y 95%; el SARIMA móvil cubre 72,6% y 91,7%. La cobertura excesiva sugiere conservadurismo; la insuficiente advierte sobre bandas demasiado estrechas. Los intervalos de la rama con ruptura quedan especialmente subcalibrados y condicionan en una estructura seleccionada.</p>
+</section>
+<section id="forecast-e-incertidumbre-anual" class="level2">
+<h2 class="anchored" data-anchor-id="forecast-e-incertidumbre-anual">Forecast e incertidumbre anual</h2>
+<p>La regla elegida replica para cada mes de 2023 el volumen del mismo mes de 2022:</p>
+<p><span class="math display">\[
+\widehat Y_{T+h\mid T}=Y_{T+h-12},\qquad h=1,\ldots,12.
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ts_sarima_09_presupuesto_mensual_2023.png" class="img-fluid figure-img" style="width:100.0%" alt="Forecast mensual de remisión de producto lácteo para 2023 con bandas predictivas de 80 y 95 por ciento"></p>
+<figcaption>El presupuesto mensual conserva la forma estacional del año previo. Las bandas de 80% y 95% son intervalos predictivos del volumen futuro.</figcaption>
+</figure>
+</div>
+<p>Los modelos en logaritmos distinguen mediana y media: bajo una distribución gaussiana transformada, la media mensual es <span class="math inline">\(D_{T+h}\exp(\mu_h+\sigma_h^2/2)\)</span>; los cuantiles se transforman por monotonía sin sumar esa corrección. Para el benchmark en niveles, media y mediana mensuales coinciden bajo la innovación simétrica implementada.</p>
+<p>La incertidumbre del año se calcula sumando cada una de <strong>5.000 trayectorias conjuntas</strong> y tomando cuantiles de esos totales. Sumar los extremos de doce bandas marginales no produce un intervalo anual válido.</p>
+<div class="table-box">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resumen anual de 2023</th>
+<th style="text-align: right;">Millones de litros</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Suma de medias mensuales</td>
+<td style="text-align: right;">1.500,468</td>
+</tr>
+<tr class="even">
+<td>Media simulada</td>
+<td style="text-align: right;">1.500,944</td>
+</tr>
+<tr class="odd">
+<td>Mediana simulada</td>
+<td style="text-align: right;">1.500,884</td>
+</tr>
+<tr class="even">
+<td>Intervalo predictivo 80%</td>
+<td style="text-align: right;">[1.459,810; 1.542,342]</td>
+</tr>
+<tr class="odd">
+<td>Intervalo predictivo 95%</td>
+<td style="text-align: right;">[1.437,117; 1.564,345]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La diferencia de 0,476 millones entre suma de medias y media simulada es compatible con error Monte Carlo, menor a 0,04% del total.</p>
+</section>
+<section id="auditoría-posterior-y-alcance" class="level2">
+<h2 class="anchored" data-anchor-id="auditoría-posterior-y-alcance">Auditoría posterior y alcance</h2>
+<p>Las seis realizaciones disponibles de enero–junio de 2023 no participan de la selección final. Ya habían sido observadas antes de la ampliación metodológica del análisis, por lo que se presentan como <strong>auditoría post-hoc</strong>, no como test intocado. El WAPE es 5,080% y el sesgo acumulado +1,444%; febrero y marzo se sobrepredicen, mientras abril–junio compensan en dirección opuesta.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ts_sarima_11_auditoria_externa_2023H1.png" class="img-fluid figure-img" style="width:100.0%" alt="Comparación del presupuesto mensual bloqueado y el volumen realizado de producto lácteo en enero a junio de 2023"></p>
+<figcaption>El presupuesto bloqueado se compara con las realizaciones de 2023H1. El sesgo agregado moderado convive con errores mensuales heterogéneos.</figcaption>
+</figure>
+</div>
+<p>Solo hay siete realizaciones del objeto anual, y 2023H1 no permite evaluar el año completo. La fecha de ruptura es más estable que su forma exacta; algunos orígenes de la rama estructural dejan tensión residual. Las bandas tampoco incorporan toda la incertidumbre de selección.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Decisión profesional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Retener el benchmark bajo la pérdida presupuestaria declarada, reconocer el casi empate del SARIMA reciente y conservar la ruptura como lectura de trayectoria. Una mejora adicional debe demostrar valor con información nueva disponible en el origen y con evaluación temporal; añadir otra variante de la misma historia tiene rendimientos decrecientes.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+(() => {
+  "use strict";
+
+  const entriesForArea = (area, paths) => paths.map((path) => ({ path, area }));
+
+  const collections = [
+    {
+      portal: "../index.html",
+      entries: [
+        ...entriesForArea("lineales", [
+          "econometria/piezas/t00_mco_ingresos.html",
+          "econometria/piezas/t01_vi.html"
+        ]),
+        ...entriesForArea("panel", [
+          "econometria/piezas/t02_panel_pooled_salarios.html",
+          "econometria/piezas/t09_panel_re_fe_cre.html",
+          "econometria/piezas/t11_panel_iv.html",
+          "econometria/piezas/t09b_panel_dinamico.html",
+          "econometria/piezas/t09c_panel_multinivel.html"
+        ]),
+        ...entriesForArea("discreta", [
+          "econometria/piezas/t12_binaria_base.html",
+          "econometria/piezas/t13_binaria_vi_continua.html",
+          "econometria/piezas/t18_multinomial_panel_cre.html",
+          "econometria/piezas/t19_ordenado_base.html"
+        ]),
+        ...entriesForArea("resultados", [
+          "econometria/piezas/t04b_conteos_poisson_pml.html",
+          "econometria/piezas/t04c_precios_positivos.html",
+          "econometria/piezas/t04d_poisson_panel_heterogeneidad.html",
+          "econometria/piezas/t04f_proporciones_beta.html"
+        ]),
+        ...entriesForArea("censura", [
+          "econometria/piezas/t06a_esquina_censura.html",
+          "econometria/piezas/t06b_seleccion_heckman.html"
+        ]),
+        ...entriesForArea("inferencia", [
+          "econometria/piezas/t00b_teoria_asintotica.html",
+          "econometria/piezas/t04a_maxima_verosimilitud.html",
+          "econometria/piezas/t07_gmm_momentos.html"
+        ]),
+        ...entriesForArea("no-parametricos", [
+          "econometria/piezas/t10_densidad_marginal.html",
+          "econometria/piezas/t11_regresion_no_parametrica.html"
+        ]),
+        ...entriesForArea("cuantiles", [
+          "econometria/piezas/t13_qr_qte.html",
+          "econometria/piezas/t14_qriv_qte_vi.html",
+          "econometria/piezas/t15_qr_panel.html",
+          "econometria/piezas/t16_oaxaca_blinder.html",
+          "econometria/piezas/t17_dfl.html",
+          "econometria/piezas/t18_uqr_rif.html",
+          "econometria/piezas/t19_descomposicion_rif.html"
+        ]),
+        ...entriesForArea("series-temporales", [
+          "econometria/piezas/ts_sarima_producto_lacteo.html",
+          "econometria/piezas/ts_arimax_producto_lacteo.html",
+          "econometria/piezas/ts_ucm_pib_uruguay.html",
+          "econometria/piezas/ts_vecm_vivienda_salarios_costos.html"
+        ])
+      ]
+    },
+    {
+      portal: "../fundamentos/index.html",
+      terminal: {
+        label: "DiD moderno →",
+        href: "/causalidad/did-moderno/"
+      },
+      entries: [
+        ...entriesForArea("observables", [
+          "causalidad/piezas/c01_diferencia-medias-no-causal.html",
+          "causalidad/piezas/c02_matching-exacto-microcredito.html",
+          "causalidad/piezas/c04_psm_microcredito.html",
+          "causalidad/piezas/c06_ipwra_innovacion_ambiental.html"
+        ]),
+        ...entriesForArea("iv", [
+          "causalidad/piezas/c08_vi_retorno_educacion.html",
+          "causalidad/piezas/c09_drlate_401k.html"
+        ]),
+        ...entriesForArea("rdd", [
+          "causalidad/piezas/rdd01_elecciones_escolarizacion.html"
+        ]),
+        ...entriesForArea("did", [
+          "causalidad/piezas/did01_did_clasico.html",
+          "causalidad/piezas/bdm01_inferencia_did.html"
+        ])
+      ]
+    },
+    {
+      portal: "../did-moderno/index.html",
+      entries: [
+        ...entriesForArea("crisis-twfe", [
+          "causalidad/piezas/did_m04_twfe_goodman_bacon.html",
+          "causalidad/piezas/did_m05_twfe_pesos_negativos.html",
+          "causalidad/piezas/did_m06_event_study_contaminacion.html"
+        ]),
+        ...entriesForArea("soluciones-did", [
+          "causalidad/piezas/did_m07_callaway_santanna.html",
+          "causalidad/piezas/did_m08_bjs_imputacion.html",
+          "causalidad/piezas/did_m09_wooldridge_etwfe.html",
+          "causalidad/piezas/did_m09b_lee_wooldridge_rolling.html"
+        ])
+      ]
+    },
+    {
+      portal: "../index.html",
+      entries: [
+        ...entriesForArea("clasificacion", [
+          "machine-learning/piezas/t01_default.html",
+          "machine-learning/piezas/t02_smarket.html",
+          "machine-learning/piezas/t03_caravan.html",
+          "machine-learning/piezas/t04_college.html",
+          "machine-learning/piezas/t05_auto.html"
+        ]),
+        ...entriesForArea("seleccion-regularizacion", [
+          "machine-learning/piezas/t06_hitters.html",
+          "machine-learning/piezas/t07_nirsoil.html"
+        ]),
+        ...entriesForArea("no-linealidad", [
+          "machine-learning/piezas/t08a_concrete.html",
+          "machine-learning/piezas/t08b_oj.html"
+        ]),
+        ...entriesForArea("arboles", [
+          "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t09b_spam.html"
+        ]),
+        ...entriesForArea("outcomes", [
+          "machine-learning/piezas/e01_fertil2_conteo.html",
+          "machine-learning/piezas/e02_loanapp_gamma.html",
+          "machine-learning/piezas/e03_401k_fraccional.html",
+          "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ])
+      ]
+    }
+  ];
+
+  const currentPath = decodeURI(window.location.pathname)
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+
+  let activeCollection;
+  let activeIndex = -1;
+
+  for (const collection of collections) {
+    const index = collection.entries.findIndex((entry) => currentPath.endsWith(entry.path));
+    if (index !== -1) {
+      activeCollection = collection;
+      activeIndex = index;
+      break;
+    }
+  }
+
+  document.querySelectorAll(".quarto-title-meta-heading").forEach((heading) => {
+    if (heading.textContent.trim().toLocaleUpperCase("es") === "AUTOR/A") {
+      heading.textContent = "AUTOR";
+    }
+  });
+
+  if (!activeCollection || document.querySelector("[data-portfolio-navigation]")) {
+    return;
+  }
+
+  document.body.classList.add("portfolio-piece");
+
+  const main = document.querySelector("main.content");
+  const titleBlock = document.querySelector("#title-block-header");
+  if (!main || !titleBlock) {
+    return;
+  }
+
+  const activeEntry = activeCollection.entries[activeIndex];
+  const topNav = document.createElement("nav");
+  topNav.className = "portfolio-back-nav";
+  topNav.dataset.portfolioNavigation = "back";
+  topNav.setAttribute("aria-label", "Volver al área del análisis");
+
+  const backLink = document.createElement("a");
+  backLink.className = "portfolio-back-link";
+  backLink.href = `${activeCollection.portal}#${activeEntry.area}`;
+  backLink.textContent = "← Volver";
+  topNav.appendChild(backLink);
+  titleBlock.insertAdjacentElement("afterend", topNav);
+
+  const sequenceNav = document.createElement("nav");
+  sequenceNav.className = "portfolio-sequence-nav";
+  sequenceNav.dataset.portfolioNavigation = "sequence";
+  sequenceNav.setAttribute("aria-label", "Navegación entre análisis");
+
+  const addSlot = (modifier, entry, label, href) => {
+    const slot = document.createElement("div");
+    slot.className = `portfolio-sequence-nav__slot portfolio-sequence-nav__slot--${modifier}`;
+    if (entry || href) {
+      const link = document.createElement("a");
+      link.className = "portfolio-sequence-nav__link";
+      link.href = href || entry.path.split("/").pop();
+      link.textContent = label;
+      slot.appendChild(link);
+    } else {
+      slot.setAttribute("aria-hidden", "true");
+    }
+    sequenceNav.appendChild(slot);
+  };
+
+  addSlot("previous", activeCollection.entries[activeIndex - 1], "← Anterior");
+  const nextEntry = activeCollection.entries[activeIndex + 1];
+  const terminalLink = activeCollection.terminal || {
+    label: "Home →",
+    href: "https://daniknd14econometrics-code.github.io/"
+  };
+  addSlot(
+    "next",
+    nextEntry,
+    nextEntry ? "Siguiente →" : terminalLink.label,
+    nextEntry ? undefined : terminalLink.href
+  );
+
+  main.appendChild(sequenceNav);
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined;
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              }
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Daniel Méndez</p>
+</div>
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../creditos-imagenes.html">Créditos de imágenes</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
