@@ -241,6 +241,12 @@ window.Quarto = {
 </div>
 <section id="el-target-es-una-tasa-observada-no-una-etiqueta" class="level2">
 <h2 class="anchored" data-anchor-id="el-target-es-una-tasa-observada-no-una-etiqueta">El target es una tasa observada, no una etiqueta</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_e03_01_distribucion_prate_fraccional.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Distribución de la tasa de participación, acotada en [0, 1] y con masa en uno.</figcaption>
+</figure>
+</div>
 <p>El outcome es <code>prate / 100</code>: la fracción de trabajadores elegibles que participa en un plan 401(k). Las 1.534 observaciones están entre 0,03 y 1, con media 0,8736 y mediana 0,957. No hay ceros, pero 682 planes —44,46 %— presentan participación exactamente igual a uno.</p>
 <p>Una fila con 0,87 registra una tasa efectivamente observada; no es una clase binaria ni la probabilidad de que esa fila pertenezca a una categoría. El objeto predictivo es <span class="math inline">\(\mu(x)=E(Y\mid X=x)\)</span>, una media fraccional. No hay threshold, accuracy ni matriz de confusión.</p>
 <p>El benchmark constante aprende la media de desarrollo, 0,8728, y obtiene deviance fraccional 0,2455 en test. MCO utiliza los cuatro predictores y ofrece una referencia lineal, pero no obliga a que <span class="math inline">\(\widehat\mu(x)\)</span> permanezca entre cero y uno.</p>
@@ -347,13 +353,13 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<div id="fig-e03-deviance" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Deviance fraccional de test: MCO 0,2474; Fractional Logit 0,2247; CART 0,2169; GAM 0,2131; splines 0,2113; Random Forest 0,2045. MCO emite nueve predicciones mayores a uno.">
+<div id="fig-e03-deviance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-e03-deviance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/e03_fraccional_metricas.svg" class="img-fluid figure-img" style="width:100.0%" alt="Deviance fraccional de test: MCO 0,2474; Fractional Logit 0,2247; CART 0,2169; GAM 0,2131; splines 0,2113; Random Forest 0,2045. MCO emite nueve predicciones mayores a uno.">
+<img src="../assets/ml_e03_09_comparacion_test_fractional_deviance.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-e03-deviance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: La deviance fraccional en test favorece a los métodos flexibles y muestra que MCO, además, deja el soporte de una tasa.
+Figura&nbsp;1: Comparación transversal de la deviance fraccional en test.
 </figcaption>
 </figure>
 </div>
@@ -367,8 +373,20 @@ Figura&nbsp;1: La deviance fraccional en test favorece a los métodos flexibles 
 </section>
 <section id="la-calibración-explica-qué-corrige-la-flexibilidad" class="level2">
 <h2 class="anchored" data-anchor-id="la-calibración-explica-qué-corrige-la-flexibilidad">La calibración explica qué corrige la flexibilidad</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_e03_12_perfil_predictivo_mrate.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Perfil predictivo de <code>mrate</code> para los métodos comparados.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_e03_11_calibracion_media_test.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Calibración de la media por deciles en el test.</figcaption>
+</figure>
+</div>
 <p>Fractional Logit subestima el primer decil de participación —0,729 predicho frente a 0,785 observado— y sobrestima el décimo —0,981 frente a 0,940—. Natural splines sigue la diagonal con mayor regularidad. RF mejora el patrón general, aunque todavía subestima el noveno y décimo decil.</p>
-<p>Los perfiles dan una explicación coherente. La media logit lineal aumenta continuamente con <code>mrate</code>; splines, GAM y RF encuentran crecimiento, saturación alrededor de 2,6–2,7 y una posible reversión posterior. Con la edad del plan aparece crecimiento con rendimientos decrecientes; con <code>ltotemp</code>, una relación negativa cuya intensidad cambia en el rango. Son cortes predictivos condicionados, no efectos de política.</p>
+<p>El perfil de <code>mrate</code> da una explicación coherente. La media logit lineal aumenta continuamente con <code>mrate</code>; splines, GAM y RF encuentran crecimiento, saturación alrededor de 2,6–2,7 y una posible reversión posterior. Los otros perfiles del informe muestran crecimiento con rendimientos decrecientes para la edad del plan y, con <code>ltotemp</code>, una relación negativa cuya intensidad cambia en el rango. Son cortes predictivos condicionados, no efectos de política.</p>
 <section id="decisión-bajo-la-pérdida-declarada" class="level3 section-box">
 <h3 class="anchored" data-anchor-id="decisión-bajo-la-pérdida-declarada">Decisión bajo la pérdida declarada</h3>
 <p>Random Forest con <code>mtry = 1</code> es la opción con menor deviance y RMSE observados. Natural splines queda cerca, obtiene el menor MAE y permite describir las curvaturas con más claridad. La decisión profesional debe exigir primero una tasa válida y luego elegir entre desempeño, estabilidad e interpretabilidad.</p>

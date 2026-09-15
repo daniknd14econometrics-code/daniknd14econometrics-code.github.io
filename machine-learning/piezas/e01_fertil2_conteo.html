@@ -243,6 +243,12 @@ window.Quarto = {
 </div>
 <section id="antes-del-modelo-el-outcome-ya-impone-condiciones" class="level2">
 <h2 class="anchored" data-anchor-id="antes-del-modelo-el-outcome-ya-impone-condiciones">Antes del modelo, el outcome ya impone condiciones</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_e01_01_distribucion_children_DESARROLLO.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Distribución de <code>children</code> en desarrollo: conteo no negativo, masa en cero y cola derecha.</figcaption>
+</figure>
+</div>
 <p><code>children</code> es un conteo entero y no negativo. En desarrollo toma valores entre 0 y 13, tiene media 2,21 y 26,15 % de ceros; su varianza, 4,70, supera ampliamente la media. Una regla constante que predice 2,21 hijos para todos ofrece el benchmark mínimo y alcanza deviance Poisson 2,3302 en el test.</p>
 <p>MCO agrega información mediante una media lineal y pérdida cuadrática, pero no garantiza predicciones no negativas ni aprovecha que cero, uno y dos son resultados discretos. El GLM Poisson cambia la formulación:</p>
 <p><span class="math display">\[
@@ -375,22 +381,24 @@ Figura&nbsp;1: Ranking de test bajo deviance Poisson.
 </section>
 <section id="rmse-revela-una-tensión-que-no-conviene-ocultar" class="level2">
 <h2 class="anchored" data-anchor-id="rmse-revela-una-tensión-que-no-conviene-ocultar">RMSE revela una tensión que no conviene ocultar</h2>
-<div id="fig-e01-rmse" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RMSE de natural splines 1,2927, Random Forest 1,2967, GAM 1,3005 y GLM Poisson 1,4382.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-e01-rmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/e01_rmse.png" class="img-fluid figure-img" style="width:100.0%" alt="RMSE de natural splines 1,2927, Random Forest 1,2967, GAM 1,3005 y GLM Poisson 1,4382.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-e01-rmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Comparación complementaria de RMSE sobre el mismo test.
-</figcaption>
-</figure>
-</div>
 <p>Natural splines también obtiene el menor RMSE y los tres modelos flexibles siguen formando el grupo líder. El orden completo, sin embargo, cambia. MCO truncado presenta RMSE 1,3566: supera al GLM Poisson, a Ridge, Lasso y ambos CART bajo pérdida cuadrática, aunque su deviance 1,5531 es mucho peor.</p>
 <p>Ese resultado incómodo importa. MCO produjo 89 predicciones crudas negativas, 10,67 % del test, y debió truncarse en cero antes de calcular las métricas. Un RMSE competitivo no corrige la incompatibilidad de soporte; una buena deviance tampoco garantiza ser la mejor regla si la decisión real penaliza prioritariamente errores absolutos grandes. La métrica define la pregunta y debe fijarse antes de observar el test.</p>
 </section>
 <section id="la-mejora-flexible-tiene-una-explicación-visible" class="level2">
 <h2 class="anchored" data-anchor-id="la-mejora-flexible-tiene-una-explicación-visible">La mejora flexible tiene una explicación visible</h2>
-<p>El GLM obliga a que edad produzca crecimiento multiplicativo continuo de la media. Splines y GAM encuentran crecimiento inicial, una meseta y una leve caída en edades altas. También permiten que la relación con hijos ideales alcance un máximo interior, algo que Ridge y Lasso no pueden crear al limitarse a contraer una pendiente lineal.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_e01_13_perfil_idlnchld_poisson_ns_gam.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Perfil de hijos ideales comparado entre GLM Poisson, Natural Splines y GAM.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_e01_16_calibracion_deciles_test.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Calibración por deciles de los métodos comparados en test.</figcaption>
+</figure>
+</div>
+<p>El perfil de edad del informe muestra que el GLM obliga a un crecimiento multiplicativo continuo de la media, mientras splines y GAM encuentran crecimiento inicial, una meseta y una leve caída en edades altas. El perfil de hijos ideales aquí mostrado también permite observar un máximo interior, algo que Ridge y Lasso no pueden crear al limitarse a contraer una pendiente lineal.</p>
 <p>La calibración por deciles acompaña esa lectura: splines y GAM siguen de cerca las medias observadas, mientras el GLM sobrepredice en grupos bajos, subpredice buena parte de la zona media-alta y vuelve a sobrepredecir arriba. RF también se aproxima bien, aunque en el decil superior predice 5,51 frente a 6,04 observados. Son patrones predictivos condicionados, no mecanismos de fertilidad.</p>
 </section>
 <section id="la-dispersión-no-se-diagnostica-con-una-comparación-marginal" class="level2">

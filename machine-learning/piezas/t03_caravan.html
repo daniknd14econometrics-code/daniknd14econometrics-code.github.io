@@ -274,6 +274,12 @@ window.Quarto = {
 </section>
 <section id="la-distancia-forma-parte-del-modelo" class="level2">
 <h2 class="anchored" data-anchor-id="la-distancia-forma-parte-del-modelo">La distancia forma parte del modelo</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t03_02_curva_cv_k.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Curva de validación cruzada para el número de vecinos.</figcaption>
+</figure>
+</div>
 <p>KNN estima <span class="math inline">\(P(\text{compra}\mid X=x)\)</span> como la proporción de compradores entre los <span class="math inline">\(K\)</span> vecinos más cercanos. La distancia euclídea reúne las diferencias entre predictores <strong>estandarizados</strong>. Sin escalado, una variable medida en unidades grandes podría dominar la cercanía por su escala, sin aportar más información.</p>
 <p>Estandarizar iguala unidades, pero no garantiza que las 85 coordenadas construyan vecindarios predictivamente útiles. Con <span class="math inline">\(K\)</span> pequeño, la estimación es más local y variable; con <span class="math inline">\(K\)</span> grande, se suaviza y puede aproximarse a la frecuencia de la clase mayoritaria.</p>
 <p>La selección compara los impares <span class="math inline">\(K=1,3,\ldots,101\)</span> mediante <strong>validación cruzada anidada y estratificada: cinco folds externos y cinco internos</strong>. En cada entrenamiento externo, los internos eligen <span class="math inline">\(K\)</span> por la pérdida correspondiente. El fold externo evalúa el procedimiento sin participar en esa elección. Al reunir las cinco vueltas se obtienen 5.822 predicciones OOF.</p>
@@ -281,6 +287,12 @@ window.Quarto = {
 </section>
 <section id="la-matriz-de-errores-revela-el-resultado" class="level2">
 <h2 class="anchored" data-anchor-id="la-matriz-de-errores-revela-el-resultado">La matriz de errores revela el resultado</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t03_04_riesgo_oof_knn_vs_baseline.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Riesgo OOF de KNN frente al benchmark mayoritario.</figcaption>
+</figure>
+</div>
 <p>Los tres escenarios fijan umbrales de 1/2, 1/3 y 2/3 para costos iguales, FN doble y FP doble, respectivamente. Un falso negativo omite una compra; un falso positivo anuncia una compra inexistente. En KNN cambia también la selección de <span class="math inline">\(K\)</span> según el costo: no se trata de aplicar tres umbrales a un único vector de probabilidades.</p>
 <div class="table-box">
 <table class="caption-top table">
@@ -336,6 +348,12 @@ window.Quarto = {
 <section id="las-probabilidades-tampoco-superan-la-referencia" class="level2">
 <h2 class="anchored" data-anchor-id="las-probabilidades-tampoco-superan-la-referencia">Las probabilidades tampoco superan la referencia</h2>
 <p>Anunciar a todos la prevalencia de compra del <strong>entrenamiento externo</strong> produce un log-loss de 0,22634. Las probabilidades KNN evaluadas en esos mismos folds dan:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t03_07_probabilidades_oof_knn.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Probabilidades OOF de KNN, concentradas en valores bajos.</figcaption>
+</figure>
+</div>
 <div class="table-box">
 <table class="caption-top table">
 <thead>

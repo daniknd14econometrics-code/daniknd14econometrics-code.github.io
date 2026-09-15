@@ -172,10 +172,10 @@ window.Quarto = {
   <li><a href="#cada-cuantil-requiere-su-propia-pérdida" id="toc-cada-cuantil-requiere-su-propia-pérdida" class="nav-link" data-scroll-target="#cada-cuantil-requiere-su-propia-pérdida">Cada cuantil requiere su propia pérdida</a></li>
   <li><a href="#el-benchmark-también-debe-predecir-cuantiles" id="toc-el-benchmark-también-debe-predecir-cuantiles" class="nav-link" data-scroll-target="#el-benchmark-también-debe-predecir-cuantiles">El benchmark también debe predecir cuantiles</a></li>
   <li><a href="#tres-modelos-levantan-restricciones-diferentes" id="toc-tres-modelos-levantan-restricciones-diferentes" class="nav-link" data-scroll-target="#tres-modelos-levantan-restricciones-diferentes">Tres modelos levantan restricciones diferentes</a></li>
-  <li><a href="#el-tuning-del-bosque-es-un-compromiso-entre-tres-tareas" id="toc-el-tuning-del-bosque-es-un-compromiso-entre-tres-tareas" class="nav-link" data-scroll-target="#el-tuning-del-bosque-es-un-compromiso-entre-tres-tareas">El tuning del bosque es un compromiso entre tres tareas</a></li>
+  <li><a href="#cada-cuantil-tiene-su-propio-tuning" id="toc-cada-cuantil-tiene-su-propio-tuning" class="nav-link" data-scroll-target="#cada-cuantil-tiene-su-propio-tuning">Cada cuantil tiene su propio tuning</a></li>
   <li><a href="#la-información-disponible-rinde-distinto-en-cada-escenario" id="toc-la-información-disponible-rinde-distinto-en-cada-escenario" class="nav-link" data-scroll-target="#la-información-disponible-rinde-distinto-en-cada-escenario">La información disponible rinde distinto en cada escenario</a></li>
   <li><a href="#cobertura-correcta-no-implica-una-predicción-útil" id="toc-cobertura-correcta-no-implica-una-predicción-útil" class="nav-link" data-scroll-target="#cobertura-correcta-no-implica-una-predicción-útil">Cobertura correcta no implica una predicción útil</a></li>
-  <li><a href="#el-intervalo-combina-cuantiles-pero-no-es-confianza-paramétrica" id="toc-el-intervalo-combina-cuantiles-pero-no-es-confianza-paramétrica" class="nav-link" data-scroll-target="#el-intervalo-combina-cuantiles-pero-no-es-confianza-paramétrica">El intervalo combina cuantiles, pero no es confianza paramétrica</a></li>
+  <li><a href="#el-intervalo-combina-los-dos-cuantiles-pero-no-es-confianza-paramétrica" id="toc-el-intervalo-combina-los-dos-cuantiles-pero-no-es-confianza-paramétrica" class="nav-link" data-scroll-target="#el-intervalo-combina-los-dos-cuantiles-pero-no-es-confianza-paramétrica">El intervalo combina los dos cuantiles, pero no es confianza paramétrica</a></li>
   <li><a href="#las-formas-cambian-a-lo-largo-de-la-distribución" id="toc-las-formas-cambian-a-lo-largo-de-la-distribución" class="nav-link" data-scroll-target="#las-formas-cambian-a-lo-largo-de-la-distribución">Las formas cambian a lo largo de la distribución</a></li>
   </ul>
 </nav>
@@ -186,7 +186,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Activos financieros: predecir escenarios, no solo un promedio</h1>
-<p class="subtitle lead">Regresión cuantílica, GAM y Quantile Forest para escenarios bajos, centrales y altos</p>
+<p class="subtitle lead">Regresión cuantílica, GAM y Quantile Forest para escenarios bajos y altos</p>
 </div>
 
 
@@ -203,7 +203,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">5 de septiembre de 2026</p>
+      <p class="date">9 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -219,7 +219,7 @@ window.Quarto = {
 <section id="activos-financieros-predecir-escenarios-no-solo-un-promedio" class="level1 hero-box">
 <h1>Activos financieros: predecir escenarios, no solo un promedio</h1>
 <div class="hero-box__lead">
-<p>Para <code>nettfa</code>, la pregunta no es solamente cuánto activo neto esperar en promedio. Quantile Forest obtiene la menor <em>pinball loss</em> en los cuantiles 0,20, 0,50 y 0,80; la señal disponible es mucho más útil para distinguir la parte alta que la baja de la distribución.</p>
+<p>Para <code>nettfa</code>, la pregunta no es solamente cuánto activo neto esperar en promedio. Q01 trata <span class="math inline">\(\tau=0{,}20\)</span> y <span class="math inline">\(\tau=0{,}80\)</span> como <strong>dos problemas predictivos independientes</strong>: cada cuantil tiene su propia pérdida, su propio ajuste y, en Quantile Forest, su propio tuning. El bosque obtiene la menor <em>pinball loss</em> en ambos escenarios, pero la señal disponible aporta mucho más en la zona alta que en la baja de la distribución.</p>
 </div>
 </section>
 <div class="metric-grid">
@@ -228,220 +228,234 @@ window.Quarto = {
 <p>hogares en la muestra analítica</p>
 </div>
 <div class="metric-card">
-<p><strong>0,20 · 0,50 · 0,80</strong></p>
+<p><strong>0,20 · 0,80</strong></p>
 <p>cuantiles condicionales objetivo</p>
 </div>
 <div class="metric-card">
-<p><strong>7,5740</strong></p>
-<p>pinball promedio de Quantile Forest en test</p>
+<p><strong>8,36 % · 35,92 %</strong></p>
+<p>mejora de QRF frente al benchmark</p>
 </div>
 <div class="metric-card">
-<p><strong>62,75 %</strong></p>
+<p><strong>62,53 %</strong></p>
 <p>cobertura del intervalo central QRF</p>
 </div>
 </div>
 <section id="el-cambio-principal-ocurre-antes-de-elegir-un-modelo" class="level2">
 <h2 class="anchored" data-anchor-id="el-cambio-principal-ocurre-antes-de-elegir-un-modelo">El cambio principal ocurre antes de elegir un modelo</h2>
-<p><code>nettfa</code> mide activos financieros netos en miles de dólares. En desarrollo, la media es 19,07 y la mediana apenas 2,08; 28,89 % de los hogares presenta valores negativos, 6,05 % exactamente cero y la cola se extiende desde -502,30 hasta 1.536,80. Una sola media condicional ocultaría diferencias importantes entre escenarios bajos, centrales y altos.</p>
-<p>Q01 estima <span class="math inline">\(Q_{0,20}(Y\mid X)\)</span>, <span class="math inline">\(Q_{0,50}(Y\mid X)\)</span> y <span class="math inline">\(Q_{0,80}(Y\mid X)\)</span>. Para un mismo hogar, los tres números describen posiciones distintas de su distribución condicional predicha. No son grupos de personas, clases ni una estimación continua de toda la distribución entre esos puntos.</p>
-<p>El nivel <span class="math inline">\(\tau\)</span> lo fija la pregunta de decisión. Un escenario bajo puede servir para evaluar vulnerabilidad patrimonial; la mediana resume una posición central robusta; el cuantil alto describe un escenario favorable. Cambiar <span class="math inline">\(\tau\)</span> cambia el objeto que se intenta localizar.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_q01_01_distribucion_nettfa_desarrollo.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Distribución de <code>nettfa</code> en desarrollo. La exploración de la respuesta utiliza solo desarrollo; el test permanece protegido.</figcaption>
+</figure>
+</div>
+<p><code>nettfa</code> mide activos financieros netos en miles de dólares. En desarrollo, la media es 19,07 y la mediana apenas 2,08; 28,9 % de los hogares presenta valores negativos y la distribución tiene una cola derecha muy larga. Una sola media condicional ocultaría diferencias importantes entre escenarios patrimoniales bajos y altos.</p>
+<p>Q01 estima <span class="math inline">\(Q_{0,20}(Y\mid X)\)</span> y <span class="math inline">\(Q_{0,80}(Y\mid X)\)</span>. Para un mismo hogar, ambos números describen posiciones distintas de su distribución condicional predicha. No son grupos de personas ni una reconstrucción completa de toda la distribución.</p>
+<p>El nivel <span class="math inline">\(\tau\)</span> lo fija la pregunta de decisión. Cambiar de <span class="math inline">\(\tau=0,20\)</span> a <span class="math inline">\(0,80\)</span> significa hacer otra pregunta para el mismo perfil de covariables. Esa diferencia guía toda la versión actualizada del taller: <strong>cada <span class="math inline">\(\tau\)</span> se trata como un ejercicio predictivo propio</strong> y ambos se reúnen solamente cuando una pregunta necesita simultáneamente los dos extremos, como <em>quantile crossing</em> o el intervalo central del 60 %.</p>
 </section>
 <section id="cada-cuantil-requiere-su-propia-pérdida" class="level2">
 <h2 class="anchored" data-anchor-id="cada-cuantil-requiere-su-propia-pérdida">Cada cuantil requiere su propia pérdida</h2>
-<p>La <em>pinball</em> o <em>check loss</em> utiliza <span class="math inline">\(u=y-q\)</span> y penaliza de manera asimétrica. Para <span class="math inline">\(\tau=0,20\)</span>, sobrepredecir recibe peso 0,80 y quedar corto peso 0,20. En <span class="math inline">\(\tau=0,80\)</span> ocurre lo inverso. En la mediana, la pérdida es proporcional al error absoluto. Esa asimetría hace que el mínimo esperado sea precisamente el cuantil solicitado.</p>
-<p>MSE apuntaría a la media condicional y respondería otra pregunta. La métrica externa de Q01 es pinball loss para cada <span class="math inline">\(\tau\)</span>. Promediar las tres pérdidas ofrece un resumen operativo con igual peso para los tres escenarios; no crea una pérdida universal ni una distribución completa.</p>
+<p>La <em>pinball</em> o <em>check loss</em> utiliza <span class="math inline">\(u=y-q\)</span> y penaliza de forma asimétrica:</p>
+<p><span class="math display">\[
+\rho_\tau(u)=u\left(\tau-\mathbf{1}\{u&lt;0\}\right).
+\]</span></p>
+<p>Para <span class="math inline">\(\tau=0,20\)</span>, sobrepredecir recibe peso 0,80 y quedar corto peso 0,20. En <span class="math inline">\(\tau=0,80\)</span> ocurre lo inverso. Esa asimetría hace que el mínimo esperado sea precisamente el cuantil solicitado.</p>
+<p>MSE apuntaría a la media condicional y respondería otra pregunta. Por eso la métrica externa de Q01 es la <em>pinball loss</em> correspondiente a cada <span class="math inline">\(\tau\)</span>. En esta versión <strong>no se promedian las pérdidas de 0,20 y 0,80</strong> ni se construye un ranking global: son dos objetos predictivos y dos funciones de pérdida diferentes. Promediarlas introduciría una tercera pregunta compuesta que el taller no necesita.</p>
 </section>
 <section id="el-benchmark-también-debe-predecir-cuantiles" class="level2">
 <h2 class="anchored" data-anchor-id="el-benchmark-también-debe-predecir-cuantiles">El benchmark también debe predecir cuantiles</h2>
-<p>La referencia ignora los predictores y aprende en desarrollo los cuantiles marginales: -1,50, 2,08 y 25,65. Un benchmark basado en la media no sería coherente con los objetos evaluados. En el test, esos tres valores constantes producen pinball losses 5,5713, 11,2525 y 13,7704.</p>
-<p>La muestra separa 7.420 hogares para desarrollo y 1.855 para test. Los cuantiles realizados del test —<span class="math inline">\(-1,379\)</span>, <span class="math inline">\(1,770\)</span> y <span class="math inline">\(29,310\)</span>— se calculan después del tuning y no participan de ninguna decisión.</p>
+<p>La referencia ignora los predictores y aprende en desarrollo los cuantiles marginales de <code>nettfa</code>: -1,50 para <span class="math inline">\(\tau=0,20\)</span> y 25,65 para <span class="math inline">\(\tau=0,80\)</span>. Un benchmark basado en la media no sería coherente con los objetos evaluados. En el test, esos valores constantes producen <em>pinball losses</em> de 5,5713 y 13,7704, respectivamente.</p>
+<p>La muestra separa 7.420 hogares para desarrollo y 1.855 para test protegido. La respuesta del test no interviene en exploración, ajuste ni tuning. Sus cuantiles realizados —-1,379 y 29,310— se calculan únicamente después de fijar todas las configuraciones.</p>
 </section>
 <section id="tres-modelos-levantan-restricciones-diferentes" class="level2">
 <h2 class="anchored" data-anchor-id="tres-modelos-levantan-restricciones-diferentes">Tres modelos levantan restricciones diferentes</h2>
-<p>QR lineal estima un vector de coeficientes separado para cada <span class="math inline">\(\tau\)</span>. Permite que la asociación cambie a lo largo de la distribución, pero mantiene linealidad y aditividad dentro de cada cuantil. Por ejemplo, el coeficiente predictivo de ingreso aumenta de 0,082 en <span class="math inline">\(\tau=0,20\)</span> a 0,517 en <span class="math inline">\(\tau=0,80\)</span>; los asociados a participación en 401(k) e IRA también crecen con fuerza hacia arriba. Esa heterogeneidad no es un efecto causal.</p>
-<p>El GAM cuantílico flexibiliza ingreso, edad y tamaño del hogar con funciones suaves distintas por cuantil. Los grados de libertad efectivos de ingreso suben de 4,31 a 7,84 y los de edad de 2,29 a 4,11; <code>fsize</code> permanece prácticamente lineal. El diagnóstico <code>k.check</code>, sin embargo, advierte capacidad de base posiblemente insuficiente en <span class="math inline">\(\tau=0,20\)</span> y para edad en la mediana. El resultado se conserva tal como fue evaluado, con esa cautela explícita.</p>
-<p>Quantile Forest aprende vecindades mediante árboles y extrae cuantiles de una distribución local ponderada. Usa particiones especializadas para cuantiles, no un bosque de media al que luego se le pide otro resumen. La honestidad del bosque separa dentro de cada árbol la información que decide los cortes de la que estima lo ocurrido en las hojas; no reemplaza el test externo.</p>
+<p>QR lineal estima un vector de coeficientes separado para cada <span class="math inline">\(\tau\)</span>. Permite que la asociación cambie entre zonas de la distribución, pero mantiene linealidad y aditividad dentro de cada cuantil. Por ejemplo, el coeficiente predictivo de ingreso aumenta de 0,082 en <span class="math inline">\(\tau=0,20\)</span> a 0,517 en <span class="math inline">\(\tau=0,80\)</span>; los asociados a <code>p401k</code> e <code>pira</code> también crecen con fuerza hacia arriba. Esa heterogeneidad es predictiva, no causal.</p>
+<p>El GAM cuantílico flexibiliza ingreso, edad y tamaño del hogar con funciones suaves, pero también se ajusta <strong>independientemente para cada cuantil</strong>. Los grados de libertad efectivos de ingreso pasan de 4,31 a 7,85 y los de edad de 2,29 a 4,09; <code>fsize</code> permanece prácticamente lineal. En <span class="math inline">\(\tau=0,20\)</span>, <code>k.check</code> deja una alerta para ingreso y edad que debe conservarse como diagnóstico, sin sustituir la evaluación externa.</p>
+<p>Quantile Forest abandona además la aditividad y aprende vecindades mediante árboles con particiones especializadas para cuantiles. La honestidad del bosque separa dentro de cada árbol la información que decide los cortes de la que estima lo ocurrido en las hojas; no reemplaza el test externo.</p>
 </section>
-<section id="el-tuning-del-bosque-es-un-compromiso-entre-tres-tareas" class="level2">
-<h2 class="anchored" data-anchor-id="el-tuning-del-bosque-es-un-compromiso-entre-tres-tareas">El tuning del bosque es un compromiso entre tres tareas</h2>
-<p>QR no requiere hiperparámetros. El GAM aprende suavidad usando solo desarrollo. Para Quantile Forest se prueban ocho valores de <code>mtry</code> con 1.000 árboles y se minimiza el promedio simple de las pinball losses OOB de los tres cuantiles.</p>
-<p>El mínimo aparece en <code>mtry = 5</code>, con pérdida OOB promedio 7,6634. La curva cae con fuerza hasta cuatro o cinco variables y luego entra en una meseta: <code>mtry</code> 6, 7 y 8 rondan 7,677. La selección es real, aunque poco sensible a valores vecinos.</p>
-<p>Usar un único <code>mtry</code> obliga a ponderar por igual las tres tareas. La configuración elegida no es necesariamente la mejor para cada cuantil por separado; es un compromiso común que mantiene una sola arquitectura. Cerrado el tuning, el bosque final utiliza 2.000 árboles. OOB selecciona y el test evalúa.</p>
+<section id="cada-cuantil-tiene-su-propio-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="cada-cuantil-tiene-su-propio-tuning">Cada cuantil tiene su propio tuning</h2>
+<p>QR no requiere hiperparámetros. Cada GAM determina su suavidad usando únicamente desarrollo. Para Quantile Forest se prueban ocho valores de <code>mtry</code> con 1.000 árboles, pero ahora el criterio está alineado con cada tarea por separado:</p>
+<p><span class="math display">\[
+\widehat m_\tau
+=
+\arg\min_{m\in\{1,\ldots,8\}}
+\widehat L^{\mathrm{OOB}}_\tau(m).
+\]</span></p>
+<div id="fig-q01-tuning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-q01-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_q01_04_qrf_tuning_mtry_oob_por_tau.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q01-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Tuning OOB de <code>mtry</code> por cuantil. Cada panel minimiza la pinball loss OOB del mismo <span class="math inline">\(\tau\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>En <span class="math inline">\(\tau=0,20\)</span>, la pérdida OOB cae de 5,4541 con <code>mtry = 1</code> a un mínimo de 5,2031 con <code>mtry = 6</code>. En <span class="math inline">\(\tau=0,80\)</span>, desciende de 9,5042 a 8,9808, también con <code>mtry = 6</code>.</p>
+<p>Que ambos ejercicios seleccionen <code>mtry = 6</code> es un <strong>resultado de dos optimizaciones independientes</strong>, no una restricción impuesta para compartir configuración. Las curvas, además, son relativamente planas alrededor del mínimo, de modo que la elección no parece extremadamente frágil. Cerrado el tuning, se ajusta un bosque final de 2.000 árboles para cada <span class="math inline">\(\tau\)</span>. OOB selecciona; el test evalúa.</p>
+<p>La propia composición de la importancia cambia entre bosques: <code>pira</code> domina en ambos —54,2 % en <span class="math inline">\(\tau=0,20\)</span> y 53,7 % en <span class="math inline">\(\tau=0,80\)</span>—, pero <code>inc</code> casi duplica su participación, de 12,5 % a 23,4 %, mientras <code>p401k</code> y <code>age</code> pierden peso relativo. La lectura es predictiva: no indica signo, tamaño de efecto ni causalidad.</p>
 </section>
 <section id="la-información-disponible-rinde-distinto-en-cada-escenario" class="level2">
 <h2 class="anchored" data-anchor-id="la-información-disponible-rinde-distinto-en-cada-escenario">La información disponible rinde distinto en cada escenario</h2>
 <div class="table-box">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 15%">
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 21%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Cuantil</th>
-<th>Modelo con menor pérdida</th>
+<th>Modelo</th>
 <th style="text-align: right;">Pinball en test</th>
-<th style="text-align: right;">Benchmark constante</th>
-<th style="text-align: right;">Mejora</th>
+<th style="text-align: right;">Mejora vs.&nbsp;benchmark</th>
+<th style="text-align: right;">Ranking</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0,20</td>
 <td>Quantile Forest</td>
-<td style="text-align: right;"><strong>5,1166</strong></td>
-<td style="text-align: right;">5,5713</td>
-<td style="text-align: right;">8,16 %</td>
+<td style="text-align: right;"><strong>5,1054</strong></td>
+<td style="text-align: right;"><strong>8,36 %</strong></td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">0,50</td>
-<td>Quantile Forest</td>
-<td style="text-align: right;"><strong>8,7067</strong></td>
-<td style="text-align: right;">11,2525</td>
-<td style="text-align: right;">22,62 %</td>
+<td style="text-align: right;"></td>
+<td>GAM cuantílico</td>
+<td style="text-align: right;">5,2342</td>
+<td style="text-align: right;">6,05 %</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td>QR lineal</td>
+<td style="text-align: right;">5,2356</td>
+<td style="text-align: right;">6,03 %</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"></td>
+<td>Benchmark</td>
+<td style="text-align: right;">5,5713</td>
+<td style="text-align: right;">0,00 %</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">0,80</td>
 <td>Quantile Forest</td>
-<td style="text-align: right;"><strong>8,8987</strong></td>
+<td style="text-align: right;"><strong>8,8245</strong></td>
+<td style="text-align: right;"><strong>35,92 %</strong></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"></td>
+<td>GAM cuantílico</td>
+<td style="text-align: right;">9,0509</td>
+<td style="text-align: right;">34,27 %</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td>QR lineal</td>
+<td style="text-align: right;">9,5763</td>
+<td style="text-align: right;">30,46 %</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"></td>
+<td>Benchmark</td>
 <td style="text-align: right;">13,7704</td>
-<td style="text-align: right;">35,38 %</td>
+<td style="text-align: right;">0,00 %</td>
+<td style="text-align: right;">4</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="fig-q01-pinball" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Pinball loss de test de Quantile Forest frente al benchmark: 5,1166 frente a 5,5713 en tau 0,20; 8,7067 frente a 11,2525 en 0,50; 8,8987 frente a 13,7704 en 0,80.">
+<div id="fig-q01-pinball" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-q01-pinball-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/q01_quantiles_pinball.svg" class="img-fluid figure-img" style="width:100.0%" alt="Pinball loss de test de Quantile Forest frente al benchmark: 5,1166 frente a 5,5713 en tau 0,20; 8,7067 frente a 11,2525 en 0,50; 8,8987 frente a 13,7704 en 0,80.">
+<img src="../assets/ml_q01_06_test_pinball_loss_por_tau.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q01-pinball-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: La mejora de Quantile Forest frente al benchmark aumenta desde el cuantil 0,20 hasta el 0,80. Cada fila compara modelos bajo la pérdida correspondiente a ese cuantil.
+Figura&nbsp;2: Pinball loss de Benchmark, QR, GAM y Quantile Forest por cuantil. Cada panel corresponde a una función de pérdida diferente.
 </figcaption>
 </figure>
 </div>
-<div class="table-box">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Modelo</th>
-<th style="text-align: right;">Pinball 0,20</th>
-<th style="text-align: right;">Pinball 0,50</th>
-<th style="text-align: right;">Pinball 0,80</th>
-<th style="text-align: right;">Promedio</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Quantile Forest</td>
-<td style="text-align: right;"><strong>5,1166</strong></td>
-<td style="text-align: right;"><strong>8,7067</strong></td>
-<td style="text-align: right;"><strong>8,8987</strong></td>
-<td style="text-align: right;"><strong>7,5740</strong></td>
-</tr>
-<tr class="even">
-<td>GAM cuantílico</td>
-<td style="text-align: right;">5,2342</td>
-<td style="text-align: right;">9,1521</td>
-<td style="text-align: right;">9,0513</td>
-<td style="text-align: right;">7,8125</td>
-</tr>
-<tr class="odd">
-<td>QR lineal</td>
-<td style="text-align: right;">5,2356</td>
-<td style="text-align: right;">9,2810</td>
-<td style="text-align: right;">9,5763</td>
-<td style="text-align: right;">8,0310</td>
-</tr>
-<tr class="even">
-<td>Benchmark</td>
-<td style="text-align: right;">5,5713</td>
-<td style="text-align: right;">11,2525</td>
-<td style="text-align: right;">13,7704</td>
-<td style="text-align: right;">10,1980</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Quantile Forest queda primero en los tres escenarios, pero la magnitud cuenta una historia más útil que el ranking. En el cuantil bajo, condicionar en ocho variables mejora apenas 8,16 % frente al cuantil marginal. En la mediana la mejora alcanza 22,62 % y arriba 35,38 %. La información disponible diferencia mucho mejor posiciones patrimoniales altas que la vulnerabilidad de la parte baja.</p>
-<p>La ganancia de no linealidad tampoco es uniforme. GAM y QR son casi idénticos en <span class="math inline">\(\tau=0,20\)</span> —5,2342 frente a 5,2356—, mientras en <span class="math inline">\(\tau=0,80\)</span> el GAM baja la pérdida de 9,5763 a 9,0513. La flexibilidad suave aporta más precisamente donde ingreso y edad utilizan más grados de libertad.</p>
-<p>El bosque mejora el promedio del GAM de 7,8125 a 7,5740, una ventaja moderada. Su importancia se concentra en <code>pira</code> (48,1 %), ingreso (24,4 %) y <code>p401k</code> (12,3 %). Son variables útiles para formar vecindades predictivas, no mecanismos causales.</p>
+<p>Quantile Forest queda primero en ambos ejercicios, pero la magnitud cuenta una historia más útil que el ranking. En el cuantil bajo, condicionar en ocho variables mejora apenas 8,36 % frente al cuantil marginal. En el cuantil alto, la mejora alcanza 35,92 %. La información disponible distingue mucho mejor posiciones patrimoniales altas que la zona baja de activos.</p>
+<p>La ganancia de flexibilidad tampoco es uniforme. GAM y QR son prácticamente indistinguibles en <span class="math inline">\(\tau=0,20\)</span> —5,2342 frente a 5,2356—, mientras en <span class="math inline">\(\tau=0,80\)</span> el GAM reduce la pérdida de 9,5763 a 9,0509. Es justamente en la zona alta donde ingreso y edad utilizan más grados de libertad efectivos.</p>
 </section>
 <section id="cobertura-correcta-no-implica-una-predicción-útil" class="level2">
 <h2 class="anchored" data-anchor-id="cobertura-correcta-no-implica-una-predicción-útil">Cobertura correcta no implica una predicción útil</h2>
-<p>La cobertura global pregunta qué fracción del test queda por debajo del cuantil predicho. Quantile Forest obtiene 18,27 %, 51,00 % y 81,02 %, cerca de los niveles nominales. QR alcanza 19,19 %, 49,22 % y 80,22 %; GAM, 15,96 %, 46,95 % y 82,91 %.</p>
-<p>El benchmark constante también logra coberturas razonables —19,57 %, 51,59 % y 78,17 %— sin distinguir un hogar de otro. La cobertura marginal es una condición necesaria débil: puede acertar la frecuencia total y compensar errores entre regiones. Pinball loss añade cuánto cuesta localizar mal cada cuantil.</p>
-<p>El diagnóstico por deciles se acerca a la calibración condicional sin recuperarla por completo. QRF es especialmente estable en los cuantiles 0,20 y 0,80; la mediana resulta más difícil para los tres modelos. En el benchmark, formar deciles a partir de predicciones idénticas solo reparte empates y no revela estructura local.</p>
+<p>La cobertura global pregunta qué fracción del test queda por debajo del cuantil predicho. Quantile Forest obtiene 18,11 % y 80,65 %, cerca de los niveles nominales. QR alcanza 19,19 % y 80,22 %; GAM, 15,96 % y 82,91 %.</p>
+<p>El benchmark constante también logra coberturas razonables —19,57 % y 78,17 %— sin distinguir un hogar de otro. La cobertura marginal es, por tanto, una condición necesaria débil: puede acertar la frecuencia total y compensar errores entre regiones. La <em>pinball loss</em> añade cuánto cuesta localizar mal cada cuantil.</p>
+<p>El diagnóstico por deciles se acerca a la calibración condicional sin recuperarla por completo. QRF muestra el patrón local más estable en ambos niveles; QR y GAM presentan oscilaciones mayores. Como el benchmark predice un valor constante dentro de cada <span class="math inline">\(\tau\)</span>, formar “deciles de predicción” para él sería artificial.</p>
 </section>
-<section id="el-intervalo-combina-cuantiles-pero-no-es-confianza-paramétrica" class="level2">
-<h2 class="anchored" data-anchor-id="el-intervalo-combina-cuantiles-pero-no-es-confianza-paramétrica">El intervalo combina cuantiles, pero no es confianza paramétrica</h2>
+<section id="el-intervalo-combina-los-dos-cuantiles-pero-no-es-confianza-paramétrica" class="level2">
+<h2 class="anchored" data-anchor-id="el-intervalo-combina-los-dos-cuantiles-pero-no-es-confianza-paramétrica">El intervalo combina los dos cuantiles, pero no es confianza paramétrica</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_q01_08_intervalo_central_60_cobertura_ancho.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Cobertura y ancho del intervalo central <span class="math inline">\([Q_{0,20},Q_{0,80}]\)</span>.</figcaption>
+</figure>
+</div>
 <p>Los extremos forman la banda predictiva <span class="math inline">\([\widehat Q_{0,20}(x),\widehat Q_{0,80}(x)]\)</span>, con cobertura nominal central de 60 %. Describe una región para una respuesta futura condicionada en <span class="math inline">\(x\)</span>; no es un intervalo de confianza para un coeficiente o una función estimada.</p>
 <div class="table-box">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Modelo</th>
-<th style="text-align: right;">Cobertura 0,20</th>
-<th style="text-align: right;">Cobertura 0,50</th>
-<th style="text-align: right;">Cobertura 0,80</th>
-<th style="text-align: right;">Banda central: cobertura</th>
+<th style="text-align: right;">Cobertura central</th>
 <th style="text-align: right;">Ancho medio</th>
+<th style="text-align: right;">Mediana del ancho</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>QR lineal</td>
-<td style="text-align: right;">19,19 %</td>
-<td style="text-align: right;">49,22 %</td>
-<td style="text-align: right;">80,22 %</td>
-<td style="text-align: right;">61,02 %</td>
-<td style="text-align: right;">28,39</td>
+<td>Benchmark</td>
+<td style="text-align: right;">58,71 %</td>
+<td style="text-align: right;">27,15</td>
+<td style="text-align: right;">27,15</td>
 </tr>
 <tr class="even">
-<td>GAM cuantílico</td>
-<td style="text-align: right;">15,96 %</td>
-<td style="text-align: right;">46,95 %</td>
-<td style="text-align: right;">82,91 %</td>
-<td style="text-align: right;">66,95 %</td>
-<td style="text-align: right;">29,98</td>
+<td>QR lineal</td>
+<td style="text-align: right;">61,02 %</td>
+<td style="text-align: right;">28,39</td>
+<td style="text-align: right;">18,95</td>
 </tr>
 <tr class="odd">
+<td>GAM cuantílico</td>
+<td style="text-align: right;">66,95 %</td>
+<td style="text-align: right;">29,98</td>
+<td style="text-align: right;">19,30</td>
+</tr>
+<tr class="even">
 <td>Quantile Forest</td>
-<td style="text-align: right;">18,27 %</td>
-<td style="text-align: right;">51,00 %</td>
-<td style="text-align: right;">81,02 %</td>
-<td style="text-align: right;">62,75 %</td>
-<td style="text-align: right;"><strong>26,86</strong></td>
+<td style="text-align: right;"><strong>62,53 %</strong></td>
+<td style="text-align: right;">27,30</td>
+<td style="text-align: right;"><strong>13,49</strong></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>QRF combina cobertura 62,75 % con el menor ancho medio y una mediana de ancho de 13,70. GAM sobrecubre con la banda más amplia. QR queda más cerca de 60 %, pero presenta 16 cruces entre la mediana y <span class="math inline">\(Q_{0,80}\)</span>, 0,86 % del test. No se reordenaron esas predicciones: el cruce se conserva como inconsistencia real de estimar ecuaciones separadas. Los extremos nunca se cruzan, por lo que las bandas mantienen ancho no negativo.</p>
+<p>QRF combina cobertura 62,53 % con ancho medio 27,30 y la menor mediana de ancho entre los modelos condicionados. QR queda más cerca del 60 % nominal, aunque con mayor ancho medio. GAM sobrecubre y presenta la banda más amplia.</p>
+<p>Los cuantiles se estiman independientemente, por lo que el orden <span class="math inline">\(\widehat Q_{0,20}(x)\leq\widehat Q_{0,80}(x)\)</span> no está garantizado por construcción. En esta ejecución, sin embargo, <strong>ningún método presenta <em>quantile crossing</em></strong> en las 1.855 observaciones de test.</p>
 </section>
 <section id="las-formas-cambian-a-lo-largo-de-la-distribución" class="level2">
 <h2 class="anchored" data-anchor-id="las-formas-cambian-a-lo-largo-de-la-distribución">Las formas cambian a lo largo de la distribución</h2>
-<p>En QR, ingreso crece linealmente y su pendiente se intensifica con <span class="math inline">\(\tau\)</span>. El GAM aprende una forma en U en el cuantil bajo y fuerte convexidad en mediana y cuantil alto. QRF mantiene perfiles más locales y escalonados, con crecimiento alto menos explosivo. La evidencia externa favorece esa flexibilidad local frente a una extrapolación suave muy pronunciada.</p>
-<p>Edad presenta poca curvatura abajo y mucha más arriba; tamaño del hogar permanece casi lineal en GAM. Estos perfiles mantienen las demás covariables en un escenario de referencia: ayudan a explicar la superficie predicha, pero no son efectos promedio ni causales.</p>
-<section id="decisión-para-tres-escenarios" class="level3 section-box">
-<h3 class="anchored" data-anchor-id="decisión-para-tres-escenarios">Decisión para tres escenarios</h3>
-<p>Quantile Forest es la regla preferible bajo pinball loss en los tres cuantiles y ofrece una banda central relativamente estrecha. GAM conserva valor cuando comunicar curvas suaves importa y su margen de pérdida resulta aceptable. Para decisiones concentradas en la zona baja, la mejora frente al benchmark es pequeña y aconseja expectativas más prudentes sobre la capacidad de discriminación.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_q01_10_perfil_inc_qr_qgam_qrf.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Perfil de ingreso por método y cuantil. Las demás covariables se mantienen en un escenario de referencia de desarrollo.</figcaption>
+</figure>
+</div>
+<p>Ingreso es la variable donde la diferencia entre clases funcionales resulta más visible. QR impone una recta creciente en ambos cuantiles, con una pendiente mucho mayor en <span class="math inline">\(\tau=0,80\)</span>. El GAM utiliza una forma moderadamente no lineal en el cuantil bajo y una convexidad mucho más fuerte en el alto. Quantile Forest produce perfiles más locales y escalonados; en <span class="math inline">\(\tau=0,80\)</span> crece de forma marcada, pero menos explosiva que el GAM hacia el extremo superior del soporte.</p>
+<p>Los otros perfiles del informe muestran una historia compatible: edad utiliza más curvatura en <span class="math inline">\(\tau=0,80\)</span>, mientras tamaño del hogar permanece casi lineal en GAM. Tanto esos perfiles como el de ingreso aquí mostrado mantienen las demás covariables en valores de referencia aprendidos de desarrollo. Ayudan a entender la superficie predicha, pero no son efectos promedio ni causales.</p>
+<section id="decisión-para-dos-escenarios" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="decisión-para-dos-escenarios">Decisión para dos escenarios</h3>
+<p>Quantile Forest es la regla preferible bajo <em>pinball loss</em> en ambos cuantiles. La mejora frente al benchmark es modesta en la zona baja y muy importante en la alta, de modo que la capacidad de discriminación no debe comunicarse como uniforme a lo largo de la distribución. GAM conserva valor cuando interesa una representación suave e interpretable de la forma funcional, especialmente en el cuantil alto.</p>
 </section>
-<p>Q01 estima solo tres cuantiles, no toda la distribución. La cobertura global puede esconder errores condicionales; el GAM conserva alertas de base; el promedio OOB asigna igual valor a los tres escenarios; y la evidencia procede de una única partición externa. El taller termina en evaluación: no se ajustó un modelo operativo con las 9.275 observaciones. Ningún coeficiente, perfil o ranking de importancia tiene interpretación causal.</p>
+<p>Q01 estima solo dos cuantiles, no toda la distribución. La cobertura global puede esconder errores condicionales; el GAM conserva una alerta de base en <span class="math inline">\(\tau=0,20\)</span>; los cuantiles se ajustan independientemente y, aunque aquí no aparece crossing, no existe una restricción conjunta que lo impida en otras muestras. La evidencia procede de una única partición externa. El taller termina en evaluación: no se ajustó un modelo operativo con las 9.275 observaciones. Ningún coeficiente, perfil o ranking de importancia tiene interpretación causal.</p>
 <div class="section-box">
 <p><strong>Cierre del área:</strong> E01–E03 cambian el soporte del outcome y la pérdida; Q01 cambia directamente el objeto predictivo, de media condicional a escenarios cuantílicos.</p>
 </div>
-<p><em>Fuente: informe curado del Taller Q01, <code>401ksubs</code>. Los resultados son predictivos y corresponden al test protegido del ejercicio.</em></p>
+<p><em>Fuente: informe actualizado del Taller Q01, <code>401ksubs</code>. Los resultados son predictivos y corresponden al test protegido del ejercicio.</em></p>
 
 
 </section>

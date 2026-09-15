@@ -381,13 +381,13 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<div id="fig-oj-metricas" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Logit tiene Log Loss 0,4060, Brier 0,1267 y AUC 0,8909; GAM penalizado, 0,4072, 0,1274 y 0,8900; natural splines, 0,4168, 0,1301 y 0,8855.">
+<div id="fig-oj-metricas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-oj-metricas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08b_oj_metricas.png" class="img-fluid figure-img" style="width:100.0%" alt="Logit tiene Log Loss 0,4060, Brier 0,1267 y AUC 0,8909; GAM penalizado, 0,4072, 0,1274 y 0,8900; natural splines, 0,4168, 0,1301 y 0,8855.">
+<img src="../assets/t08b_oj_metricas.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oj-metricas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Comparación externa de Log Loss, Brier Score y ROC-AUC para prevalencia, Logit, natural splines y GAM penalizado.
+Figura&nbsp;1: Métricas probabilísticas outer-OOF de prevalencia, Logit, Natural Splines y GAM.
 </figcaption>
 </figure>
 </div>
@@ -400,38 +400,56 @@ Figura&nbsp;1: Comparación externa de Log Loss, Brier Score y ROC-AUC para prev
 <p>Las AUC casi idénticas muestran que Logit y GAM penalizado ordenan las compras de manera muy parecida. La pequeña ventaja de Logit en log-loss y Brier proviene de la magnitud de las probabilidades, no de una separación radicalmente mejor entre clases.</p>
 <p>La calibración por grupos de probabilidad sigue de cerca la diagonal para los tres modelos. Natural splines presenta desviaciones algo mayores en zonas intermedias, pero no un fracaso general de calibración. El informe estima además intercepto y pendiente de calibración sobre las probabilidades externas; ese diagnóstico se calcula después de predecir y no se usa para recalibrar ni alterar el ranking.</p>
 <p>Accuracy, sensibilidad y especificidad agregan una tercera capa: describen qué ocurre al convertir la probabilidad en acción con umbral 0,5. Cambiar el costo comercial de confundir CH con MM podría cambiar ese umbral sin modificar el modelo probabilístico. Por eso una misma probabilidad puede evaluarse bien como ranking y, al mismo tiempo, requerir otra regla de decisión.</p>
+<div class="figure-panel">
+<div class="figure-panel__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t08b_02_curvas_ROC_outer_oof.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Curvas ROC outer-OOF de los clasificadores probabilísticos.</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-panel__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t08b_03_calibracion_outer_oof.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Calibración outer-OOF de las probabilidades de compra.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="una-base-rica-puede-terminar-en-un-modelo-simple" class="level2">
 <h2 class="anchored" data-anchor-id="una-base-rica-puede-terminar-en-un-modelo-simple">Una base rica puede terminar en un modelo simple</h2>
 <p>El GAM no recibe una forma lineal impuesta: cada smooth parte con <span class="math inline">\(k=10\)</span> y REML cobra por curvatura. Los grados de libertad efectivos muestran qué parte de esa capacidad quedó realmente activa. Un edf próximo a 1 implica una relación casi lineal en la escala logit.</p>
-<div id="fig-oj-edf" class="quarto-float quarto-figure quarto-figure-center anchored" alt="LoyalCH y WeekofPurchase permanecen en edf 1. PriceDiff llega a 4,71 en un entrenamiento externo, pero su ajuste final vuelve a edf 1.">
+<p>En cuatro de los cinco entrenamientos externos, los tres smooths quedan cerca de 1. La excepción es <code>PriceDiff</code> en el fold 2, donde alcanza edf 4,71. Esa curvatura no reaparece en los otros entrenamientos ni en el ajuste operativo final: los tres edf finales son aproximadamente 1,0001. El resultado incómodo —una muestra sí pidió curvatura— no contradice la conclusión; obliga a expresarla como falta de curvatura persistente, no como ausencia absoluta.</p>
+<p>Esto aclara una diferencia importante. El ajuste final describe el modelo disponible para una compra futura después de usar las 1.070 observaciones. Las métricas outer-OOF describen el procedimiento que volvió a seleccionar suavidad cinco veces. Por eso el GAM final puede verse lineal sin que sus métricas externas sean idénticas a las de Logit.</p>
+<div id="fig-oj-edf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-oj-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08b_oj_edf.png" class="img-fluid figure-img" style="width:100.0%" alt="LoyalCH y WeekofPurchase permanecen en edf 1. PriceDiff llega a 4,71 en un entrenamiento externo, pero su ajuste final vuelve a edf 1.">
+<img src="../assets/t08b_oj_edf.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oj-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Rangos de edf entre entrenamientos externos, media y ajuste final del GAM penalizado para LoyalCH, PriceDiff y WeekofPurchase.
+Figura&nbsp;2: Estabilidad de los grados de libertad efectivos del GAM penalizado.
 </figcaption>
 </figure>
 </div>
-<p>En cuatro de los cinco entrenamientos externos, los tres smooths quedan cerca de 1. La excepción es <code>PriceDiff</code> en el fold 2, donde alcanza edf 4,71. Esa curvatura no reaparece en los otros entrenamientos ni en el ajuste operativo final: los tres edf finales son aproximadamente 1,0001. El resultado incómodo —una muestra sí pidió curvatura— no contradice la conclusión; obliga a expresarla como falta de curvatura persistente, no como ausencia absoluta.</p>
-<p>Esto aclara una diferencia importante. El ajuste final describe el modelo disponible para una compra futura después de usar las 1.070 observaciones. Las métricas outer-OOF describen el procedimiento que volvió a seleccionar suavidad cinco veces. Por eso el GAM final puede verse lineal sin que sus métricas externas sean idénticas a las de Logit.</p>
 <p><code>k.check()</code> y concurvity son diagnósticos del ajuste final: revisan capacidad de base y solapamiento entre smooths, respectivamente. No sustituyen la comparación externa ni son una regla automática para pedir más complejidad. Con <span class="math inline">\(k=10\)</span> y edf cercanos a 1, las bases quedan muy lejos de su capacidad nominal: la penalización tuvo margen para curvar y no encontró una curvatura estable que conservar.</p>
 </section>
 <section id="los-perfiles-muestran-una-señal-simple-no-ausencia-de-señal" class="level2">
 <h2 class="anchored" data-anchor-id="los-perfiles-muestran-una-señal-simple-no-ausencia-de-señal">Los perfiles muestran una señal simple, no ausencia de señal</h2>
-<div id="fig-oj-perfiles" class="quarto-float quarto-figure quarto-figure-center anchored" alt="La probabilidad de CH aumenta fuertemente con LoyalCH y PriceDiff; WeekofPurchase es casi plano. Logit y GAM penalizado se superponen; natural splines se aparta levemente, sobre todo donde hay menos soporte.">
+<p><code>LoyalCH</code> tiene una señal predictiva fuerte: al aumentar la lealtad, sube de forma marcada la probabilidad estimada de CH. <code>PriceDiff</code> también eleva esa probabilidad cuando MM se vuelve relativamente más caro. <code>WeekofPurchase</code> cambia poco dentro de su rango. Son relaciones informativas aunque no requieran una forma no lineal estable.</p>
+<p>Las curvas en escala de probabilidad tienen una forma sigmoide incluso cuando el predictor es lineal en log-odds. Por eso una curva con forma de S no prueba que Logit haya fallado. La superposición entre Logit y GAM penalizado es justamente la consecuencia esperable de edf cercanos a 1. Natural splines se aparta algo más en zonas de menor soporte, especialmente para diferencia de precio, pero esa libertad no mejora las métricas externas.</p>
+<div id="fig-oj-perfiles" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-oj-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08b_oj_perfiles.png" class="img-fluid figure-img" style="width:100.0%" alt="La probabilidad de CH aumenta fuertemente con LoyalCH y PriceDiff; WeekofPurchase es casi plano. Logit y GAM penalizado se superponen; natural splines se aparta levemente, sobre todo donde hay menos soporte.">
+<img src="../assets/t08b_oj_perfiles.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oj-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Perfiles de probabilidad de CH para Logit lineal, natural splines y GAM penalizado, con los demás predictores fijados en valores de referencia.
+Figura&nbsp;3: Perfiles de probabilidad de Logit, Natural Splines y GAM penalizado.
 </figcaption>
 </figure>
 </div>
-<p><code>LoyalCH</code> tiene una señal predictiva fuerte: al aumentar la lealtad, sube de forma marcada la probabilidad estimada de CH. <code>PriceDiff</code> también eleva esa probabilidad cuando MM se vuelve relativamente más caro. <code>WeekofPurchase</code> cambia poco dentro de su rango. Son relaciones informativas aunque no requieran una forma no lineal estable.</p>
-<p>Las curvas en escala de probabilidad tienen una forma sigmoide incluso cuando el predictor es lineal en log-odds. Por eso una curva con forma de S no prueba que Logit haya fallado. La superposición entre Logit y GAM penalizado es justamente la consecuencia esperable de edf cercanos a 1. Natural splines se aparta algo más en zonas de menor soporte, especialmente para diferencia de precio, pero esa libertad no mejora las métricas externas.</p>
 <p>La configuración operativa de natural splines vuelve a elegir <code>(4, 3, 3)</code> mediante CV agrupada sobre las 1.070 observaciones. Su log-loss de tuning final, 0,43086, selecciona la base que quedaría disponible para nuevas compras; no reemplaza el log-loss outer-OOF de 0,4168. El GAM final vuelve a seleccionar sus suavidades por REML y termina con los tres edf en 1,0001. Una cifra describe selección operativa y la otra evaluación externa: mezclarlas produciría una comparación artificial.</p>
 <section id="la-mejor-flexibilidad-es-la-que-sabe-retirarse" class="level3 section-box">
 <h3 class="anchored" data-anchor-id="la-mejor-flexibilidad-es-la-que-sabe-retirarse">La mejor flexibilidad es la que sabe retirarse</h3>

@@ -270,13 +270,13 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="el-desafío-combina-alta-dimensión-y-redundancia-extrema">El desafío combina alta dimensión y redundancia extrema</h2>
 <p>El objetivo es predecir nitrógeno total (<code>Nt</code>, en g/kg de suelo seco) a partir de absorbancias medidas entre 1100 y 2498 nm, cada 2 nm. <strong>NIRsoil, del paquete prospectr</strong>, empieza con 825 observaciones; 180 no tienen <code>Nt</code>, por lo que la muestra supervisada es de 645 casos y 700 predictores. La matriz centrada tiene rango 644: sin regularización, el problema lineal no tiene una solución única en el sentido usual.</p>
 <p>Las bandas cercanas son casi copias estadísticas: la correlación mediana entre bandas separadas 2 nm es 0,999999 y sigue en 0,998570 a 100 nm. Por eso «seleccionar variables» no equivale necesariamente a encontrar unas pocas longitudes de onda decisivas. Bandas vecinas pueden sustituirse entre sí sin cambiar mucho el pronóstico.</p>
-<div id="fig-nirsoil-correlacion" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Correlación mediana entre predictores por separación: 2 nm 0,999999; 100 nm 0,998570; 200 nm 0,995985.">
+<div id="fig-nirsoil-correlacion" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nirsoil-correlacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t07_nirsoil_correlacion.svg" class="img-fluid figure-img" style="width:100.0%" alt="Correlación mediana entre predictores por separación: 2 nm 0,999999; 100 nm 0,998570; 200 nm 0,995985.">
+<img src="../assets/ml_t07_03_correlacion_por_distancia_espectral.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nirsoil-correlacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: La correlación entre predictores permanece casi perfecta incluso al aumentar la separación espectral. La distancia identifica columnas del espectro; no es una variable adicional del modelo.
+Figura&nbsp;1: Correlación mediana por distancia espectral, con banda P10–P90 a lo largo de toda la separación disponible.
 </figcaption>
 </figure>
 </div>
@@ -320,6 +320,24 @@ Figura&nbsp;1: La correlación entre predictores permanece casi perfecta incluso
 <p><span class="math inline">\(\lambda\)</span> define cuánto regularizar; <span class="math inline">\(\alpha\)</span> reparte la penalización entre los términos <span class="math inline">\(L_1\)</span> y <span class="math inline">\(L_2\)</span>. No corresponde leer <span class="math inline">\(\alpha=0,90\)</span> como «90 % Lasso»: ambas normas miden objetos distintos, y su efecto depende también del <span class="math inline">\(\lambda\)</span> elegido en la trayectoria propia de cada <span class="math inline">\(\alpha\)</span>.</p>
 <p>La comparación usa cinco folds externos y cinco internos. Dentro de cada entrenamiento externo, Elastic Net recorre seis valores de <span class="math inline">\(\alpha\)</span> interiores (<span class="math inline">\(0,10\)</span> a <span class="math inline">\(0,95\)</span>) y, para cada uno, una trayectoria de 81 valores de <span class="math inline">\(\lambda\)</span>; Ridge y Lasso se evalúan como extremos. Cada () tiene su propia escala de (), de modo que el tuning compara pares ((,)), no valores de () aislados.</p>
 <p>El taller utiliza únicamente la regla de mínimo de CV. No aplica 1SE porque ordenar parsimonia en una superficie que cambia a la vez geometría, intensidad y número de activos exigiría otra decisión. Las medias, desvíos y parámetros se aprenden sin usar la respuesta del fold que se reserva para predecir.</p>
+<div class="figure-panel">
+<div class="figure-panel__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t07_05_error_minimo_cv_por_alpha.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Error mínimo de validación al recorrer alpha.</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-panel__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t07_06_coeficientes_anulados_por_alpha.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Coeficientes anulados al aumentar alpha.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>La predicción <strong>outer-OOF</strong> evalúa la regla completa: «estandarizar → elegir <span class="math inline">\((\alpha,\lambda)\)</span> → reajustar → predecir». Una CV final sobre los 645 casos ocurre después de esa comparación y solo prepara la configuración operativa; no reemplaza la evidencia externa.</p>
 </section>
 <section id="la-mezcla-seleccionada-cambia-con-la-muestra-de-entrenamiento" class="level2">
@@ -451,6 +469,12 @@ Figura&nbsp;3: Elastic Net y Lasso quedan muy próximos; Ridge y la media presen
 </figure>
 </div>
 <p>Elastic Net mejora el MSE aproximadamente 1,35 % frente a Lasso y 17,11 % frente a Ridge. Frente a predecir solo la media, la reducción del MSE es 77,08 %: el espectro contiene mucha señal, aunque dos formas de regularizarla queden casi empatadas. La comparación entre Elastic Net y Lasso exige más cautela: Elastic Net obtiene el menor RMSE global, pero Lasso gana un fold externo y Ridge otro. El resultado apoya Elastic Net para esta muestra y esta grilla, no una superioridad universal.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t07_13_observado_vs_predicho_oof.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Valores observados y predichos OOF, con mayor dificultad en valores altos.</figcaption>
+</figure>
+</div>
 <p>RMSE y MAE también cuentan una parte del problema. El RMSE de Elastic Net equivale aproximadamente al 48 % del desvío estándar de <code>Nt</code>; su MAE de 0,3351 g/kg describe un error absoluto promedio mucho menor. La distancia entre ambas métricas refleja el peso de unas pocas observaciones difíciles en la cola alta de nitrógeno.</p>
 </section>
 <section id="la-configuración-operativa-es-cercana-a-lasso-pero-poco-escasa" class="level2">
@@ -497,6 +521,12 @@ Figura&nbsp;3: Elastic Net y Lasso quedan muy próximos; Ridge y la media presen
 </section>
 <section id="representaciones-distintas-pueden-predecir-casi-igual" class="level2">
 <h2 class="anchored" data-anchor-id="representaciones-distintas-pueden-predecir-casi-igual">Representaciones distintas pueden predecir casi igual</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t07_11_ventana_efecto_agrupamiento.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Efecto de agrupamiento en una ventana de predictores muy correlacionados.</figcaption>
+</figure>
+</div>
 <p>El fold 2 expone el trade-off con especial claridad: Elastic Net conserva 673 predictores y Lasso 319, pero sus RMSE externos son 0,7553 y 0,7557. Los vectores de coeficientes y la cantidad de activos son muy diferentes; las predicciones, casi indistinguibles. En el fold 5, los tres RMSE quedan separados por menos de 0,005.</p>
 <p>Esto es coherente con la redundancia espectral. Si dos columnas son casi copias, cambiar cuál queda activa o cómo se reparte su coeficiente puede modificar mucho la representación sin alterar demasiado (X). La parte <span class="math inline">\(L_2\)</span> de Elastic Net favorece el agrupamiento de predictores correlacionados, mientras <span class="math inline">\(L_1\)</span> puede producir ceros, pero la identidad de una banda activa no equivale a importancia estable ni a mecanismo físico.</p>
 <section id="qué-modelo-usaría-bajo-el-criterio-planteado" class="level3 section-box">

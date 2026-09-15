@@ -270,32 +270,52 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="predecir-precios-exige-una-referencia-fuera-de-muestra">Predecir precios exige una referencia fuera de muestra</h2>
 <p>La tarea es predecir <code>MedHouseVal</code>, el valor mediano de vivienda de cada grupo censal de California, expresado en unidades de USD 100.000, a partir de ocho variables demográficas, habitacionales y geográficas. Una regla que repite para todos la media aprendida en desarrollo entrega el punto de comparación: en el test su MSE es 1,2935 y su RMSE equivale a unos USD 113.733.</p>
 <p>El diseño reserva 4.128 observaciones antes de aprender cualquier estructura. Las otras 16.512 forman desarrollo: allí se crecen árboles, se selecciona la poda por validación cruzada y se elige <code>mtry</code> mediante observaciones <em>out-of-bag</em> (OOB). El test se abre una sola vez para comparar decisiones ya cerradas.</p>
+<div class="figure-panel">
+<div class="figure-panel__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t09a_02_mapa_valor_vivienda_desarrollo.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Geografía del valor mediano de la vivienda en desarrollo.</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-panel__item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t09a_09_mapa_residuos_test_CART_1SE.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Geografía de los residuos del CART-1SE en test.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="un-árbol-convierte-el-espacio-en-reglas-locales" class="level2">
 <h2 class="anchored" data-anchor-id="un-árbol-convierte-el-espacio-en-reglas-locales">Un árbol convierte el espacio en reglas locales</h2>
 <p>CART divide recursivamente el espacio de predictores y asigna a cada hoja la media de los casos que llegan a ella. La primera división resume bien el mecanismo: <code>MedInc &lt; 5,07535</code> separa 13.091 observaciones con valor medio 1,739 de otras 3.421 con media 3,339. El corte reduce el RSS de la raíz en 6.944,0 porque crea dos grupos grandes con respuestas muy distintas.</p>
 <p>Cada predicción puede recorrerse como una secuencia de condiciones, pero dentro de una hoja permanece constante. Esa transparencia tiene un costo: un cambio pequeño en la muestra puede alterar un corte temprano y, por propagación, muchas reglas posteriores.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t09a_07_arbol_CART_1SE_primeros_niveles.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Primeros niveles y reglas del CART-1SE.</figcaption>
+</figure>
+</div>
 </section>
 <section id="crecer-primero-y-podar-después" class="level2">
 <h2 class="anchored" data-anchor-id="crecer-primero-y-podar-después">Crecer primero y podar después</h2>
 <p>Con guardas mínimas fijadas de antemano, el árbol grande <span class="math inline">\(T_0\)</span> alcanza 1.404 hojas y profundidad 23. Su RSS de entrenamiento cae de 22.143,6 a 2.878,9, una mejora que todavía no dice cuánto generaliza. <span class="math inline">\(T_0\)</span> funciona como árbol madre de una ruta de subárboles: la poda elimina ramas que aportan poco ajuste por unidad de complejidad.</p>
 <p>La validación cruzada de cinco folds reconstruye el aprendizaje dentro de cada fold y selecciona sobre MSE. CART-min conserva 375 hojas y logra MSE-CV 0,3688. La regla 1SE acepta MSE-CV 0,3778 —por debajo del umbral 0,3779— y reduce el árbol a 194 hojas. Esa regla formaliza una preferencia por parsimonia; no prueba que ambos riesgos sean iguales.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t09a_05b_cv_poda_zoom_minimo_y_1SE.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Zoom de la validación de poda alrededor del mínimo y la regla 1SE. La figura general citada dentro del gráfico pertenece al informe.</figcaption>
+</figure>
+</div>
 <p>En el test, CART-min obtiene MSE 0,3886. El árbol grande queda apenas detrás, con 0,3959, y CART-1SE llega a 0,4047. La poda mejora modestamente al árbol grande bajo la pérdida usada para seleccionar, mientras que la fuerte simplificación 1SE paga un costo pequeño y visible. Ninguno de esos resultados elimina la inestabilidad estructural de depender de un solo árbol.</p>
 </section>
 <section id="el-ensamble-trata-la-inestabilidad-como-materia-prima" class="level2">
 <h2 class="anchored" data-anchor-id="el-ensamble-trata-la-inestabilidad-como-materia-prima">El ensamble trata la inestabilidad como materia prima</h2>
 <p>Bagging ajusta árboles profundos sobre muestras bootstrap y promedia sus predicciones. Así amortigua las variaciones particulares de cada árbol sin buscar una única estructura definitiva. Random Forest conserva ese promedio y añade otra perturbación: en cada nodo solo deja competir a <code>mtry</code> predictores elegidos al azar.</p>
 <p>Con ocho variables, Bagging corresponde a <span class="math inline">\(m=8\)</span>. La búsqueda OOB del bosque muestra el compromiso completo: restringir demasiado debilita los árboles (<span class="math inline">\(m=1\)</span>, MSE-OOB 0,2828); permitir dos o tres variables reduce con fuerza el error (<span class="math inline">\(m=2\)</span>, 0,2374; <span class="math inline">\(m=3\)</span>, <strong>0,2331</strong>); al acercarse otra vez a Bagging, el error sube (<span class="math inline">\(m=4\)</span>, 0,2377; <span class="math inline">\(m=8\)</span>, 0,2473).</p>
-<div id="fig-california-mtry" class="quarto-float quarto-figure quarto-figure-center anchored" alt="El MSE OOB baja desde mtry 1 a un mínimo de 0,233 en mtry 3 y aumenta gradualmente hasta 0,247 con Bagging mtry 8.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-california-mtry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t09a_california_mtry.png" class="img-fluid figure-img" style="width:100.0%" alt="El MSE OOB baja desde mtry 1 a un mínimo de 0,233 en mtry 3 y aumenta gradualmente hasta 0,247 con Bagging mtry 8.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-california-mtry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Tuning OOB de mtry en desarrollo: el menor MSE aparece con tres predictores candidatos por nodo; m igual a ocho corresponde a Bagging.
-</figcaption>
-</figure>
-</div>
 <p>El mínimo en <span class="math inline">\(m=3\)</span> respalda una combinación concreta: árboles que todavía encuentran cortes informativos, pero que repiten algo menos las mismas jerarquías. El diagnóstico acompaña esa lectura: la correlación media entre predicciones de árboles individuales baja de 0,8797 en Bagging a 0,8730 en Random Forest. La diferencia es moderada; el bosque no necesita árboles independientes para beneficiarse.</p>
 <p>Se utilizaron 1.000 árboles porque las curvas OOB ya estaban estables: entre 500 y 1.000 árboles, el MSE-OOB de RF pasa de 0,2328 a 0,2331 y el de Bagging permanece prácticamente en 0,2473. Esa meseta indica estabilidad del promedio frente a más realizaciones aleatorias; no reemplaza la evaluación externa.</p>
 </section>
@@ -358,13 +378,13 @@ Figura&nbsp;1: Tuning OOB de mtry en desarrollo: el menor MSE aparece con tres p
 </tbody>
 </table>
 </div>
-<div id="fig-california-desempeno" class="quarto-float quarto-figure quarto-figure-center anchored" alt="MSE de test: benchmark 1,294; CART-min 0,389; Bagging 0,260 y Random Forest 0,246.">
+<div id="fig-california-desempeno" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-california-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t09a_california_desempeno.png" class="img-fluid figure-img" style="width:100.0%" alt="MSE de test: benchmark 1,294; CART-min 0,389; Bagging 0,260 y Random Forest 0,246.">
+<img src="../assets/t09a_california_desempeno.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-california-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: MSE de test común para benchmark, CART y ensambles.
+Figura&nbsp;1: MSE de test de CART y los ensambles.
 </figcaption>
 </figure>
 </div>
@@ -374,6 +394,12 @@ Figura&nbsp;2: MSE de test común para benchmark, CART y ensambles.
 <section id="qué-información-usa-el-bosque" class="level2">
 <h2 class="anchored" data-anchor-id="qué-información-usa-el-bosque">Qué información usa el bosque</h2>
 <p>La importancia por permutación del RF coloca primero a <code>MedInc</code>, seguida por <code>Latitude</code>, <code>Longitude</code> y <code>AveOccup</code>. Describe cuánto aumenta el error OOB al romper la información de cada variable. La geografía, por tanto, aporta señal predictiva además del ingreso; no es un simple atributo de visualización.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t09a_13_importancia_permutacion_RF_desarrollo.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Importancia por permutación del Random Forest.</figcaption>
+</figure>
+</div>
 <p>Esa jerarquía no identifica efectos de intervención. Predictores relacionados pueden sustituirse y repartirse importancia, y un bosque no ofrece una regla global única como la de CART. La ganancia de desempeño desplaza la interpretación desde un camino de cortes hacia diagnósticos agregados.</p>
 <section id="decisión-bajo-el-criterio-fijado" class="level3 section-box">
 <h3 class="anchored" data-anchor-id="decisión-bajo-el-criterio-fijado">Decisión bajo el criterio fijado</h3>
