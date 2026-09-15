@@ -27,7 +27,7 @@ Este portal reúne análisis con estructura comparable: pregunta, estrategia de 
 :::
 
 ::: {.econometria-summary}
-29 análisis · 8 áreas
+33 análisis · 9 áreas
 :::
 
 ::: {.econometria-explorer .js-econometria-explorer}
@@ -42,6 +42,7 @@ Este portal reúne análisis con estructura comparable: pregunta, estrategia de 
 <button id="tab-inferencia" class="econometria-tab" type="button" role="tab" aria-controls="area-inferencia">Inferencia y métodos de estimación</button>
 <button id="tab-no-parametricos" class="econometria-tab" type="button" role="tab" aria-controls="area-no-parametricos">Métodos no paramétricos y semiparamétricos</button>
 <button id="tab-cuantiles" class="econometria-tab" type="button" role="tab" aria-controls="area-cuantiles">Cuantiles, distribuciones y descomposiciones</button>
+<button id="tab-series-temporales" class="econometria-tab" type="button" role="tab" aria-controls="area-series-temporales">Series temporales y forecasting</button>
   </div>
 </nav>
 
@@ -56,6 +57,7 @@ Este portal reúne análisis con estructura comparable: pregunta, estrategia de 
     <option value="area-inferencia">Inferencia y métodos de estimación</option>
     <option value="area-no-parametricos">Métodos no paramétricos y semiparamétricos</option>
     <option value="area-cuantiles">Cuantiles, distribuciones y descomposiciones</option>
+    <option value="area-series-temporales">Series temporales y forecasting</option>
   </select>
 </div>
 
@@ -388,6 +390,57 @@ Siete análisis recorren las diferencias entre cuantiles, la selección en la pa
 **Método:** RIF–Oaxaca · DFL
 
 <a class="piece-card__cta" href="piezas/t19_descomposicion_rif.qmd">Abrir análisis →</a>
+:::
+
+:::
+:::
+
+::: {#area-series-temporales .econometria-panel role="tabpanel" aria-labelledby="tab-series-temporales"}
+## Series temporales y forecasting
+
+::: {.section-lead}
+Modelos dinámicos para analizar y predecir series económicas: historia propia, información externa, componentes latentes y relaciones de equilibrio de largo plazo.
+:::
+
+::: {.piece-grid}
+::: {.piece-card}
+### [Forecasting univariado de un producto lácteo](piezas/ts_sarima_producto_lacteo.qmd)
+
+Presupuesto mensual y anual: el mejor SARIMA queda casi empatado con el benchmark estacional.
+
+**Método:** SARIMA · Rupturas · Backtesting temporal
+
+<a class="piece-card__cta" href="piezas/ts_sarima_producto_lacteo.qmd">Abrir análisis →</a>
+:::
+
+::: {.piece-card}
+### [Forecasting de un producto lácteo con información externa](piezas/ts_arimax_producto_lacteo.qmd)
+
+El precio real aporta señal predictiva adicional, aunque la mejora se debilita en algunos horizontes, en los intervalos y en la auditoría posterior.
+
+**Método:** ARIMAX · Regresión dinámica · Forecast del regresor
+
+<a class="piece-card__cta" href="piezas/ts_arimax_producto_lacteo.qmd">Abrir análisis →</a>
+:::
+
+::: {.piece-card}
+### [PIB de Uruguay: componentes latentes y forecasting](piezas/ts_ucm_pib_uruguay.qmd)
+
+Tendencia y estacionalidad adaptables; un ciclo adicional aporta poca señal y no mejora la predicción.
+
+**Método:** Espacio de estados · Kalman · Evaluación pseudo-OOS
+
+<a class="piece-card__cta" href="piezas/ts_ucm_pib_uruguay.qmd">Abrir análisis →</a>
+:::
+
+::: {.piece-card}
+### [Vivienda, salarios y costos: equilibrio de largo plazo y dinámica](piezas/ts_vecm_vivienda_salarios_costos.qmd)
+
+Una relación cointegrante estable y un mecanismo de corrección concentrado en el precio de vivienda.
+
+**Método:** Cointegración · VECM · Dinámica condicional
+
+<a class="piece-card__cta" href="piezas/ts_vecm_vivienda_salarios_costos.qmd">Abrir análisis →</a>
 :::
 
 :::

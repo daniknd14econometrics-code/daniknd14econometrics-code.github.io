@@ -65,7 +65,7 @@ Tres áreas complementarias desde las que abordo problemas de inferencia, predic
 ### [Econometría](econometria/index.qmd)
 :::
 
-Aplicaciones con datos transversales y de panel, modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.
+Aplicaciones con datos transversales, de panel y series temporales; modelos lineales y no lineales, endogeneidad, inferencia y métodos no paramétricos y semiparamétricos.
 
 <a class="cta-link" href="econometria/index.qmd">Explorar Econometría →</a>
 :::
