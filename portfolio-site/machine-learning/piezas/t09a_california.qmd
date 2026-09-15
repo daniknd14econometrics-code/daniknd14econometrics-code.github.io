@@ -86,17 +86,30 @@ La tarea es predecir `MedHouseVal`, el valor mediano de vivienda de cada grupo c
 
 El diseño reserva 4.128 observaciones antes de aprender cualquier estructura. Las otras 16.512 forman desarrollo: allí se crecen árboles, se selecciona la poda por validación cruzada y se elige `mtry` mediante observaciones *out-of-bag* (OOB). El test se abre una sola vez para comparar decisiones ya cerradas.
 
+:::: {.figure-panel}
+::: {.figure-panel__item}
+![Geografía del valor mediano de la vivienda en desarrollo.](../assets/ml_t09a_02_mapa_valor_vivienda_desarrollo.png){width="100%"}
+:::
+::: {.figure-panel__item}
+![Geografía de los residuos del CART-1SE en test.](../assets/ml_t09a_09_mapa_residuos_test_CART_1SE.png){width="100%"}
+:::
+::::
+
 ## Un árbol convierte el espacio en reglas locales
 
 CART divide recursivamente el espacio de predictores y asigna a cada hoja la media de los casos que llegan a ella. La primera división resume bien el mecanismo: `MedInc < 5,07535` separa 13.091 observaciones con valor medio 1,739 de otras 3.421 con media 3,339. El corte reduce el RSS de la raíz en 6.944,0 porque crea dos grupos grandes con respuestas muy distintas.
 
 Cada predicción puede recorrerse como una secuencia de condiciones, pero dentro de una hoja permanece constante. Esa transparencia tiene un costo: un cambio pequeño en la muestra puede alterar un corte temprano y, por propagación, muchas reglas posteriores.
 
+![Primeros niveles y reglas del CART-1SE.](../assets/ml_t09a_07_arbol_CART_1SE_primeros_niveles.png){width="100%"}
+
 ## Crecer primero y podar después
 
 Con guardas mínimas fijadas de antemano, el árbol grande $T_0$ alcanza 1.404 hojas y profundidad 23. Su RSS de entrenamiento cae de 22.143,6 a 2.878,9, una mejora que todavía no dice cuánto generaliza. $T_0$ funciona como árbol madre de una ruta de subárboles: la poda elimina ramas que aportan poco ajuste por unidad de complejidad.
 
 La validación cruzada de cinco folds reconstruye el aprendizaje dentro de cada fold y selecciona sobre MSE. CART-min conserva 375 hojas y logra MSE-CV 0,3688. La regla 1SE acepta MSE-CV 0,3778 —por debajo del umbral 0,3779— y reduce el árbol a 194 hojas. Esa regla formaliza una preferencia por parsimonia; no prueba que ambos riesgos sean iguales.
+
+![Zoom de la validación de poda alrededor del mínimo y la regla 1SE. La figura general citada dentro del gráfico pertenece al informe.](../assets/ml_t09a_05b_cv_poda_zoom_minimo_y_1SE.png){width="100%"}
 
 En el test, CART-min obtiene MSE 0,3886. El árbol grande queda apenas detrás, con 0,3959, y CART-1SE llega a 0,4047. La poda mejora modestamente al árbol grande bajo la pérdida usada para seleccionar, mientras que la fuerte simplificación 1SE paga un costo pequeño y visible. Ninguno de esos resultados elimina la inestabilidad estructural de depender de un solo árbol.
 
@@ -105,8 +118,6 @@ En el test, CART-min obtiene MSE 0,3886. El árbol grande queda apenas detrás, 
 Bagging ajusta árboles profundos sobre muestras bootstrap y promedia sus predicciones. Así amortigua las variaciones particulares de cada árbol sin buscar una única estructura definitiva. Random Forest conserva ese promedio y añade otra perturbación: en cada nodo solo deja competir a `mtry` predictores elegidos al azar.
 
 Con ocho variables, Bagging corresponde a $m=8$. La búsqueda OOB del bosque muestra el compromiso completo: restringir demasiado debilita los árboles ($m=1$, MSE-OOB 0,2828); permitir dos o tres variables reduce con fuerza el error ($m=2$, 0,2374; $m=3$, **0,2331**); al acercarse otra vez a Bagging, el error sube ($m=4$, 0,2377; $m=8$, 0,2473).
-
-![Tuning OOB de mtry en desarrollo: el menor MSE aparece con tres predictores candidatos por nodo; m igual a ocho corresponde a Bagging.](../assets/t09a_california_mtry.png){#fig-california-mtry fig-alt="El MSE OOB baja desde mtry 1 a un mínimo de 0,233 en mtry 3 y aumenta gradualmente hasta 0,247 con Bagging mtry 8." width="100%"}
 
 El mínimo en $m=3$ respalda una combinación concreta: árboles que todavía encuentran cortes informativos, pero que repiten algo menos las mismas jerarquías. El diagnóstico acompaña esa lectura: la correlación media entre predicciones de árboles individuales baja de 0,8797 en Bagging a 0,8730 en Random Forest. La diferencia es moderada; el bosque no necesita árboles independientes para beneficiarse.
 
@@ -125,7 +136,7 @@ Se utilizaron 1.000 árboles porque las curvas OOB ya estaban estables: entre 50
 | Random Forest | **0,2464** | **0,4964** | **0,3222** | **0,8095** |
 :::
 
-![MSE de test común para benchmark, CART y ensambles.](../assets/t09a_california_desempeno.png){#fig-california-desempeno fig-alt="MSE de test: benchmark 1,294; CART-min 0,389; Bagging 0,260 y Random Forest 0,246." width="100%"}
+![MSE de test de CART y los ensambles.](../assets/t09a_california_desempeno.png){#fig-california-desempeno width="100%"}
 
 El salto principal ocurre al agregar árboles: Bagging reduce 33,0 % el MSE de CART-min. Random Forest lleva la reducción a 36,6 % respecto de CART-min y mejora 5,35 % adicional frente a Bagging. La evidencia respalda dos mecanismos distintos: primero promediar estabiliza; después restringir predictores reduce algo más la similitud entre árboles.
 
@@ -134,6 +145,8 @@ La comparación entre $T_0$ y CART-min también evita una lectura demasiado simp
 ## Qué información usa el bosque
 
 La importancia por permutación del RF coloca primero a `MedInc`, seguida por `Latitude`, `Longitude` y `AveOccup`. Describe cuánto aumenta el error OOB al romper la información de cada variable. La geografía, por tanto, aporta señal predictiva además del ingreso; no es un simple atributo de visualización.
+
+![Importancia por permutación del Random Forest.](../assets/ml_t09a_13_importancia_permutacion_RF_desarrollo.png){width="100%"}
 
 Esa jerarquía no identifica efectos de intervención. Predictores relacionados pueden sustituirse y repartirse importancia, y un bosque no ofrece una regla global única como la de CART. La ganancia de desempeño desplaza la interpretación desde un camino de cortes hacia diagnósticos agregados.
 

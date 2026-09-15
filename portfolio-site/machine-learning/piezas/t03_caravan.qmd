@@ -90,6 +90,8 @@ Aquí se estudia KNN en una configuración fija. No hay una competencia extensa 
 
 ## La distancia forma parte del modelo
 
+![Curva de validación cruzada para el número de vecinos.](../assets/ml_t03_02_curva_cv_k.png){width="100%"}
+
 KNN estima $P(\text{compra}\mid X=x)$ como la proporción de compradores entre los $K$ vecinos más cercanos. La distancia euclídea reúne las diferencias entre predictores **estandarizados**. Sin escalado, una variable medida en unidades grandes podría dominar la cercanía por su escala, sin aportar más información.
 
 Estandarizar iguala unidades, pero no garantiza que las 85 coordenadas construyan vecindarios predictivamente útiles. Con $K$ pequeño, la estimación es más local y variable; con $K$ grande, se suaviza y puede aproximarse a la frecuencia de la clase mayoritaria.
@@ -99,6 +101,8 @@ La selección compara los impares $K=1,3,\ldots,101$ mediante **validación cruz
 Todo el preprocesamiento se aprende dentro del entrenamiento de cada nivel. Si una columna tiene varianza nula allí, se descarta solo en ese ajuste; esto ocurre con dos predictores en un entrenamiento externo. La regla no consulta los datos reservados.
 
 ## La matriz de errores revela el resultado
+
+![Riesgo OOF de KNN frente al benchmark mayoritario.](../assets/ml_t03_04_riesgo_oof_knn_vs_baseline.png){width="100%"}
 
 Los tres escenarios fijan umbrales de 1/2, 1/3 y 2/3 para costos iguales, FN doble y FP doble, respectivamente. Un falso negativo omite una compra; un falso positivo anuncia una compra inexistente. En KNN cambia también la selección de $K$ según el costo: no se trata de aplicar tres umbrales a un único vector de probabilidades.
 
@@ -117,6 +121,8 @@ El riesgo es el costo medio de los errores, $(c_{FP}FP+c_{FN}FN)/n$. Se compara 
 ## Las probabilidades tampoco superan la referencia
 
 Anunciar a todos la prevalencia de compra del **entrenamiento externo** produce un log-loss de 0,22634. Las probabilidades KNN evaluadas en esos mismos folds dan:
+
+![Probabilidades OOF de KNN, concentradas en valores bajos.](../assets/ml_t03_07_probabilidades_oof_knn.png){width="100%"}
 
 ::: {.table-box}
 | Criterio utilizado para elegir K | Log-loss externo |

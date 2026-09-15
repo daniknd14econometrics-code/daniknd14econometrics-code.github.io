@@ -8,6 +8,30 @@
   hyphens: none;
 }
 
+/* Paneles editoriales de figuras para las fichas de análisis. */
+#quarto-document-content .figure-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+  align-items: start;
+  margin: 1.5rem 0;
+}
+
+#quarto-document-content .figure-panel > * {
+  min-width: 0;
+}
+
+#quarto-document-content .figure-panel--stacked {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+#quarto-document-content .figure-panel figure,
+#quarto-document-content .figure-panel p,
+#quarto-document-content .figure-panel img {
+  width: 100%;
+  max-width: 100%;
+}
+
 @media (min-width: 1200px) {
   #quarto-content.page-columns {
     grid-template-columns:
@@ -71,6 +95,10 @@
 }
 
 @media (max-width: 600px) {
+  #quarto-document-content .figure-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   #title-block-header .quarto-title-meta {
     grid-template-columns: minmax(0, 1fr) !important;
   }

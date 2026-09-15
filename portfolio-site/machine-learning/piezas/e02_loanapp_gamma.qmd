@@ -59,6 +59,8 @@ observaciones protegidas para test
 
 ## La escala del precio cambia el problema predictivo
 
+![Distribución de `price`: respuesta positiva, asimétrica y con cola derecha extensa.](../assets/ml_e02_01_distribucion_price.png){width="100%"}
+
 La tarea es predecir `price`, el precio de compra de una vivienda medido en miles. En los 1.971 casos completos, la media es 196,65 y la mediana 163; el percentil 95 alcanza 402,5, el 99 llega a 726,5 y el máximo es 1.535. La asimetría muestral, 3,98, confirma que unos pocos precios ocupan una escala muy distinta del centro de la distribución.
 
 El benchmark constante aprende la media de desarrollo, 195,74, y obtiene Gamma deviance 0,2701 en test. MCO en niveles es un segundo comparador familiar: usa los predictores, pero no garantiza positividad ni define por sí mismo qué costo asignar a los errores a distintas escalas. En esta partición concreta todas sus predicciones resultaron positivas; la limitación de soporte existe, aunque no se materializó en el test.
@@ -106,17 +108,26 @@ CART selecciona 11 hojas y deviance CV 0,14275; la regla 1SE baja a 8 hojas con 
 | Media de desarrollo | 0,2701 | 126,20 | 80,11 | 0,0 % |
 :::
 
+:::: {.figure-panel}
+::: {.figure-panel__item}
 ![Comparación de Gamma deviance en el conjunto de test. Random Forest tiene el menor valor, seguido por GAM, splines y CART; los modelos lineales Gamma quedan más lejos.](../assets/e02_deviance.png){#fig-e02-deviance fig-alt="Gráfico de barras de Gamma deviance en test: Random Forest 0,1051; GAM 0,1162; splines 0,1189; CART 0,1240; GLM Gamma 0,1727; Ridge 0,1737; Lasso 0,1736." width="100%"}
+:::
+::: {.figure-panel__item}
+![Comparación de RMSE en el conjunto de test. CART logra el menor RMSE y Random Forest queda muy cerca; la jerarquía no coincide exactamente con la Gamma deviance.](../assets/e02_rmse.png){#fig-e02-rmse fig-alt="Gráfico de barras de RMSE en test: CART 77,77; Random Forest 78,16; GAM 85,21; splines 87,83; Ridge 167,23; Lasso 180,92; GLM Gamma 186,21." width="100%"}
+:::
+::::
 
 Random Forest reduce 61,1 % la deviance del benchmark y 39,1 % la del GLM Gamma. GAM y splines también reducen más de 30 % la pérdida del GLM. Ridge y Lasso quedan levemente peor que el modelo sin penalizar: contraer la misma forma exponencial no corrige su extrapolación.
-
-![Comparación de RMSE en el conjunto de test. CART logra el menor RMSE y Random Forest queda muy cerca; la jerarquía no coincide exactamente con la Gamma deviance.](../assets/e02_rmse.png){#fig-e02-rmse fig-alt="Gráfico de barras de RMSE en test: CART 77,77; Random Forest 78,16; GAM 85,21; splines 87,83; Ridge 167,23; Lasso 180,92; GLM Gamma 186,21." width="100%"}
 
 RMSE cambia el ganador. CART mínimo CV alcanza 77,77 y supera por apenas 0,39 a Random Forest. La diferencia no respalda una superioridad amplia, pero sí muestra que la recomendación depende del costo elegido. CART queda cuarto bajo Gamma deviance y primero bajo RMSE; además, su MAE es peor que el de RF, GAM y splines. Su ventaja cuadrática se concentra en controlar algunos errores grandes, no en mejorar uniformemente cada predicción.
 
 El GLM Gamma expone la tensión extrema: mejora al benchmark bajo deviance, pero su RMSE de 186,21 es incluso peor que el de la media constante. La pérdida relativa y la cuadrática están evaluando consecuencias distintas de la cola alta.
 
 ## Positividad no controla la extrapolación superior
+
+![Perfil de ingreso comparado entre GLM Gamma, Natural Splines y GAM.](../assets/ml_e02_09_perfil_appinc_modelos_suaves.png){width="100%"}
+
+![Calibración de la media por deciles para todos los métodos en test.](../assets/ml_e02_14_calibracion_media_test.png){width="100%"}
 
 El enlace log evita medias negativas, pero una log-media lineal transforma el ingreso en crecimiento exponencial continuo. En un perfil condicionado, el GLM supera 1.300 cuando el ingreso llega al extremo alto, mientras GAM y splines se aplanan o retroceden. En el test, la predicción máxima del GLM alcanza 2.859,87 frente a un máximo observado de 1.450.
 
@@ -133,8 +144,5 @@ Si el objetivo es reducir errores relativos sobre una respuesta positiva, Random
 :::
 
 La evidencia proviene de una única partición con 394 casos de test, por lo que no cuantifica la estabilidad del ranking ante otras divisiones. El mínimo de `mtry` es poco pronunciado; los modelos flexibles subestiman parte de la cola; los perfiles condicionados pueden recorrer combinaciones poco frecuentes. Dos avisos de convergencia de `glmnet` no afectaron las curvas ni predicciones seleccionadas, pero merecerían una auditoría numérica antes de producción. Los resultados e importancias son predictivos, no causales.
-
-::: {.section-box}
-:::
 
 *Fuente: informe curado del Taller E02, `loanapp`. Los resultados son predictivos y se reportan sobre el test protegido del ejercicio.*

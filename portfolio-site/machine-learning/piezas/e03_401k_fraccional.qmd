@@ -57,6 +57,8 @@ predicciones MCO por encima de uno en test
 
 ## El target es una tasa observada, no una etiqueta
 
+![Distribución de la tasa de participación, acotada en [0, 1] y con masa en uno.](../assets/ml_e03_01_distribucion_prate_fraccional.png){width="100%"}
+
 El outcome es `prate / 100`: la fracción de trabajadores elegibles que participa en un plan 401(k). Las 1.534 observaciones están entre 0,03 y 1, con media 0,8736 y mediana 0,957. No hay ceros, pero 682 planes —44,46 %— presentan participación exactamente igual a uno.
 
 Una fila con 0,87 registra una tasa efectivamente observada; no es una clase binaria ni la probabilidad de que esa fila pertenezca a una categoría. El objeto predictivo es $\mu(x)=E(Y\mid X=x)$, una media fraccional. No hay threshold, accuracy ni matriz de confusión.
@@ -114,7 +116,7 @@ CART selecciona seis hojas y deviance CV 0,2102; la regla 1SE reduce el árbol a
 | MCO lineal | 0,2474 | 0,1589 | 0,1233 |
 :::
 
-![La deviance fraccional en test favorece a los métodos flexibles y muestra que MCO, además, deja el soporte de una tasa.](../assets/e03_fraccional_metricas.svg){#fig-e03-deviance fig-alt="Deviance fraccional de test: MCO 0,2474; Fractional Logit 0,2247; CART 0,2169; GAM 0,2131; splines 0,2113; Random Forest 0,2045. MCO emite nueve predicciones mayores a uno." width="100%"}
+![Comparación transversal de la deviance fraccional en test.](../assets/ml_e03_09_comparacion_test_fractional_deviance.png){#fig-e03-deviance width="100%"}
 
 Random Forest mejora 16,69 % la deviance del benchmark y 9,0 % la del Fractional Logit. Natural splines mejora 5,9 % frente a esa referencia acotada. Las ganancias existen, pero parten de un modelo que ya resuelve el soporte y captura buena parte de la señal.
 
@@ -128,9 +130,13 @@ Entre los modelos válidos, el ranking también depende de la pérdida: RF obtie
 
 ## La calibración explica qué corrige la flexibilidad
 
+![Perfil predictivo de `mrate` para los métodos comparados.](../assets/ml_e03_12_perfil_predictivo_mrate.png){width="100%"}
+
+![Calibración de la media por deciles en el test.](../assets/ml_e03_11_calibracion_media_test.png){width="100%"}
+
 Fractional Logit subestima el primer decil de participación —0,729 predicho frente a 0,785 observado— y sobrestima el décimo —0,981 frente a 0,940—. Natural splines sigue la diagonal con mayor regularidad. RF mejora el patrón general, aunque todavía subestima el noveno y décimo decil.
 
-Los perfiles dan una explicación coherente. La media logit lineal aumenta continuamente con `mrate`; splines, GAM y RF encuentran crecimiento, saturación alrededor de 2,6–2,7 y una posible reversión posterior. Con la edad del plan aparece crecimiento con rendimientos decrecientes; con `ltotemp`, una relación negativa cuya intensidad cambia en el rango. Son cortes predictivos condicionados, no efectos de política.
+El perfil de `mrate` da una explicación coherente. La media logit lineal aumenta continuamente con `mrate`; splines, GAM y RF encuentran crecimiento, saturación alrededor de 2,6–2,7 y una posible reversión posterior. Los otros perfiles del informe muestran crecimiento con rendimientos decrecientes para la edad del plan y, con `ltotemp`, una relación negativa cuya intensidad cambia en el rango. Son cortes predictivos condicionados, no efectos de política.
 
 ::: {.section-box}
 ### Decisión bajo la pérdida declarada

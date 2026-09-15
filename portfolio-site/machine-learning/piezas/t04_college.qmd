@@ -84,6 +84,8 @@ QDA: 0,7069; Gaussian Naive Bayes: 0,6434. Menor es mejor.
 
 ¿Las características de una institución permiten clasificarla como privada o no privada? **College, del paquete ISLR2**, permite comparar esta tarea con información sobre admisiones, matrícula, costos, personal académico y resultados institucionales. Los tres métodos reciben los mismos 17 predictores cuantitativos. La clase positiva es privada, que representa 72,72 % de la muestra.
 
+![Outstate y F.Undergrad por clase, con separación y solapamiento.](../assets/ml_t04_02_outstate_fundergrad_por_clase.png){width="100%"}
+
 LDA, QDA y Gaussian Naive Bayes construyen una distribución de los predictores dentro de cada clase y la combinan con la frecuencia previa de esa clase. Mediante Bayes obtienen la **probabilidad posterior de que la institución sea privada dadas sus características**. La posterior todavía no es una decisión.
 
 Los métodos difieren en la estructura de dispersión que permiten:
@@ -95,6 +97,8 @@ Los métodos difieren en la estructura de dispersión que permiten:
 | QDA | Gaussiana con covarianza completa por clase | Cada clase puede tener su propia geometría de dispersión |
 | Gaussian Naive Bayes | Gaussianas por predictor, independientes dentro de cada clase | Varianzas específicas, pero sin covarianzas entre predictores |
 :::
+
+![Estructura de correlaciones de los predictores dentro de cada clase.](../assets/ml_t04_03_correlaciones_por_clase.png){width="100%"}
 
 En la implementación del informe, Gaussian NB equivale a QDA con covarianzas diagonales. Con 17 predictores, LDA estima 153 parámetros de covarianza, QDA 306 y NB 34. Más flexibilidad exige estimar más cantidades; simplificar elimina dependencias que pueden ser informativas. La evaluación decide qué compromiso funciona aquí.
 
@@ -132,7 +136,11 @@ La ROC recorre los intercambios entre verdaderos y falsos positivos al variar el
 | Gaussian NB | 0,9578 | 0,0844 | 0,6434 |
 :::
 
+![AUC, Brier y Log Loss para separar ranking y calidad probabilística.](../assets/ml_t04_09_auc_brier_logloss.png){width="100%"}
+
 QDA y NB conservan AUC próximas a 0,96, pero sus log-loss superan en más de tres veces al de LDA. Un buen ranking puede sobrevivir a probabilidades excesivamente extremas: el orden cambia poco, mientras el costo de equivocarse con mucha seguridad aumenta.
+
+![Calibración OOF de los tres clasificadores.](../assets/ml_t04_07_calibracion_oof.png){width="100%"}
 
 La calibración hace tangible esa diferencia. Entre las instituciones con posterior superior a 0,8, QDA anuncia en promedio 99,07 % de probabilidad de ser privada, pero solo 92,03 % lo son. En LDA, probabilidad media y frecuencia observada están mucho más próximas.
 
@@ -143,6 +151,8 @@ Cada modelo forma su propio grupo: **no son exactamente las mismas instituciones
 ## Cambiar el costo modifica la acción
 
 El informe considera un escenario docente donde omitir una institución privada cuesta el doble que anunciar privada a una no privada. El umbral derivado de esos costos baja de 1/2 a 1/3, **sin reestimar los modelos**.
+
+![Umbrales de LDA y curvas de igual riesgo sobre el espacio ROC.](../assets/ml_t04_10_lda_roc_umbrales_isorriesgo_v3.png){width="100%"}
 
 En LDA, los falsos negativos pasan de 18 a 10 y los falsos positivos de 33 a 44. Se recuperan ocho privadas a cambio de once falsas alarmas adicionales. Bajo esa pérdida, LDA obtiene riesgo 0,0824; QDA y NB, 0,1248. La comparación entre modelos vuelve a favorecer a LDA. No debe compararse 0,0824 con el riesgo simétrico como si conservaran la misma escala de costos.
 

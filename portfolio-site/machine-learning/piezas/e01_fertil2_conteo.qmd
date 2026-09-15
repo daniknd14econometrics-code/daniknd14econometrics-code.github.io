@@ -56,6 +56,8 @@ deviance del GLM Poisson log-lineal
 
 ## Antes del modelo, el outcome ya impone condiciones
 
+![Distribución de `children` en desarrollo: conteo no negativo, masa en cero y cola derecha.](../assets/ml_e01_01_distribucion_children_DESARROLLO.png){width="100%"}
+
 `children` es un conteo entero y no negativo. En desarrollo toma valores entre 0 y 13, tiene media 2,21 y 26,15 % de ceros; su varianza, 4,70, supera ampliamente la media. Una regla constante que predice 2,21 hijos para todos ofrece el benchmark mínimo y alcanza deviance Poisson 2,3302 en el test.
 
 MCO agrega información mediante una media lineal y pérdida cuadrática, pero no garantiza predicciones no negativas ni aprovecha que cero, uno y dos son resultados discretos. El GLM Poisson cambia la formulación:
@@ -111,15 +113,17 @@ La comparación que sí es amplia aparece frente a la forma lineal. Ridge mejora
 
 ## RMSE revela una tensión que no conviene ocultar
 
-![Comparación complementaria de RMSE sobre el mismo test.](../assets/e01_rmse.png){#fig-e01-rmse fig-alt="RMSE de natural splines 1,2927, Random Forest 1,2967, GAM 1,3005 y GLM Poisson 1,4382." width="100%"}
-
 Natural splines también obtiene el menor RMSE y los tres modelos flexibles siguen formando el grupo líder. El orden completo, sin embargo, cambia. MCO truncado presenta RMSE 1,3566: supera al GLM Poisson, a Ridge, Lasso y ambos CART bajo pérdida cuadrática, aunque su deviance 1,5531 es mucho peor.
 
 Ese resultado incómodo importa. MCO produjo 89 predicciones crudas negativas, 10,67 % del test, y debió truncarse en cero antes de calcular las métricas. Un RMSE competitivo no corrige la incompatibilidad de soporte; una buena deviance tampoco garantiza ser la mejor regla si la decisión real penaliza prioritariamente errores absolutos grandes. La métrica define la pregunta y debe fijarse antes de observar el test.
 
 ## La mejora flexible tiene una explicación visible
 
-El GLM obliga a que edad produzca crecimiento multiplicativo continuo de la media. Splines y GAM encuentran crecimiento inicial, una meseta y una leve caída en edades altas. También permiten que la relación con hijos ideales alcance un máximo interior, algo que Ridge y Lasso no pueden crear al limitarse a contraer una pendiente lineal.
+![Perfil de hijos ideales comparado entre GLM Poisson, Natural Splines y GAM.](../assets/ml_e01_13_perfil_idlnchld_poisson_ns_gam.png){width="100%"}
+
+![Calibración por deciles de los métodos comparados en test.](../assets/ml_e01_16_calibracion_deciles_test.png){width="100%"}
+
+El perfil de edad del informe muestra que el GLM obliga a un crecimiento multiplicativo continuo de la media, mientras splines y GAM encuentran crecimiento inicial, una meseta y una leve caída en edades altas. El perfil de hijos ideales aquí mostrado también permite observar un máximo interior, algo que Ridge y Lasso no pueden crear al limitarse a contraer una pendiente lineal.
 
 La calibración por deciles acompaña esa lectura: splines y GAM siguen de cerca las medias observadas, mientras el GLM sobrepredice en grupos bajos, subpredice buena parte de la zona media-alta y vuelve a sobrepredecir arriba. RF también se aproxima bien, aunque en el decil superior predice 5,51 frente a 6,04 observados. Son patrones predictivos condicionados, no mecanismos de fertilidad.
 

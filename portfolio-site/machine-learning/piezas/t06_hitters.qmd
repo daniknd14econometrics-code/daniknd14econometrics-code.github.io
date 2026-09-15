@@ -88,6 +88,8 @@ La pregunta aplicada es sencilla: ¿cuánta complejidad conviene conservar para 
 
 La respuesta no se desprende de un único ajuste ni de una lista de coeficientes. Depende de comparar reglas completas que toman decisiones de complejidad con información de entrenamiento. La cola derecha de `Salary`, que alcanza 2.460, agrega una dificultad práctica: RMSE da mucho peso a los errores sobre los salarios más altos, precisamente donde las predicciones tienden a contraerse hacia el centro.
 
+![Valores observados y predicciones OOF, con contracción en salarios altos.](../assets/ml_t06_15_observado_vs_predicho_oof.png){width="100%"}
+
 Las asociaciones seleccionadas son predictivas dentro de esta muestra. No identifican el efecto causal de una temporada, un equipo o una estadística sobre el salario.
 
 ## Cuatro maneras de controlar la complejidad
@@ -103,7 +105,11 @@ Las asociaciones seleccionadas son predictivas dentro de esta muestra. No identi
 
 Forward y Backward eligen un punto en una trayectoria de subconjuntos anidados. El taller no realiza *best subset*: con 19 predictores implicaría examinar (2^{19}=524.288) combinaciones. Forward agrega en cada paso la variable que más reduce el error de ajuste; Backward comienza con el modelo completo y elimina una por vez. Son búsquedas *greedy*: construyen qué modelo representa cada tamaño y la CV interna decide en qué tamaño detenerse, pero no garantizan el mejor subconjunto global.
 
+![Trayectorias de selección Forward y Backward.](../assets/ml_t06_03_trayectorias_forward_backward.png){width="100%"}
+
 Lasso y Ridge no recorren esa trayectoria discreta: cambian continuamente el tamaño de los coeficientes. Lasso agrega una penalización $L_1$ y puede anular variables; Ridge usa $L_2$ y conserva las 19 columnas mientras estabiliza direcciones mal determinadas. El valor de \(\lambda\) se selecciona después de aprender el escalado dentro de cada entrenamiento; calcular medias y desvíos con casos protegidos contaminaría la comparación.
+
+![Coeficientes estandarizados de MCO, Lasso y Ridge.](../assets/ml_t06_16_coeficientes_estandarizados_mco_lasso_ridge.png){width="100%"}
 
 Esa distinción importa en Hitters. Entre los predictores numéricos hay 23 pares con correlación absoluta superior a 0,80 y 12 por encima de 0,90. Dos especificaciones pueden asignar la señal a variables de carrera distintas y, aun así, entregar pronósticos parecidos.
 
@@ -112,6 +118,15 @@ Esa distinción importa en Hitters. Entre los predictores numéricos hay 23 pare
 Los cinco folds externos son comunes a todos los métodos. En cada vuelta se reserva un fold para predecir. Los cuatro procedimientos que requieren tuning usan los datos restantes para elegir su configuración: $m$ para Forward y Backward; $\lambda$ para Lasso y Ridge. El escalado de los métodos penalizados también se aprende dentro del entrenamiento correspondiente.
 
 Así, cada predicción **outer-OOF** proviene de una vuelta en que el salario del jugador reservado no intervino ni en el ajuste ni en la elección de la configuración que lo predijo. La validación anidada evalúa el procedimiento completo: «construir candidatos → elegir complejidad → reajustar → predecir». MCO no necesita capa interna porque su fórmula ya está fijada, pero recibe la misma evaluación externa.
+
+:::: {.figure-panel}
+::: {.figure-panel__item}
+![Selección de lambda mínimo y regla 1SE para Lasso.](../assets/ml_t06_06_lasso_cv_lambda_min_1se.png){width="100%"}
+:::
+::: {.figure-panel__item}
+![Selección de lambda mínimo y regla 1SE para Ridge.](../assets/ml_t06_09_ridge_cv_lambda_min_1se.png){width="100%"}
+:::
+::::
 
 Las configuraciones elegidas confirman que el tuning forma parte de lo que se evalúa: no aparece un tamaño o una penalización inmutable que pueda decidirse una vez y darse por conocida.
 

@@ -86,7 +86,7 @@ El objetivo es predecir nitrógeno total (`Nt`, en g/kg de suelo seco) a partir 
 
 Las bandas cercanas son casi copias estadísticas: la correlación mediana entre bandas separadas 2 nm es 0,999999 y sigue en 0,998570 a 100 nm. Por eso «seleccionar variables» no equivale necesariamente a encontrar unas pocas longitudes de onda decisivas. Bandas vecinas pueden sustituirse entre sí sin cambiar mucho el pronóstico.
 
-![La correlación entre predictores permanece casi perfecta incluso al aumentar la separación espectral. La distancia identifica columnas del espectro; no es una variable adicional del modelo.](../assets/t07_nirsoil_correlacion.svg){#fig-nirsoil-correlacion fig-alt="Correlación mediana entre predictores por separación: 2 nm 0,999999; 100 nm 0,998570; 200 nm 0,995985." width="100%"}
+![Correlación mediana por distancia espectral, con banda P10–P90 a lo largo de toda la separación disponible.](../assets/ml_t07_03_correlacion_por_distancia_espectral.png){#fig-nirsoil-correlacion width="100%"}
 
 `Nt` es una respuesta positiva y asimétrica. RMSE, MAE y $R^2$ se calculan sobre predicciones externas; los coeficientes sirven para predecir en esta muestra, no para atribuir un efecto causal de una banda sobre el nitrógeno.
 
@@ -105,6 +105,15 @@ $\lambda$ define cuánto regularizar; $\alpha$ reparte la penalización entre lo
 La comparación usa cinco folds externos y cinco internos. Dentro de cada entrenamiento externo, Elastic Net recorre seis valores de $\alpha$ interiores ($0,10$ a $0,95$) y, para cada uno, una trayectoria de 81 valores de $\lambda$; Ridge y Lasso se evalúan como extremos. Cada \(\alpha\) tiene su propia escala de \(\lambda\), de modo que el tuning compara pares \((\alpha,\lambda)\), no valores de \(\alpha\) aislados.
 
 El taller utiliza únicamente la regla de mínimo de CV. No aplica 1SE porque ordenar parsimonia en una superficie que cambia a la vez geometría, intensidad y número de activos exigiría otra decisión. Las medias, desvíos y parámetros se aprenden sin usar la respuesta del fold que se reserva para predecir.
+
+:::: {.figure-panel}
+::: {.figure-panel__item}
+![Error mínimo de validación al recorrer alpha.](../assets/ml_t07_05_error_minimo_cv_por_alpha.png){width="100%"}
+:::
+::: {.figure-panel__item}
+![Coeficientes anulados al aumentar alpha.](../assets/ml_t07_06_coeficientes_anulados_por_alpha.png){width="100%"}
+:::
+::::
 
 La predicción **outer-OOF** evalúa la regla completa: «estandarizar → elegir $(\alpha,\lambda)$ → reajustar → predecir». Una CV final sobre los 645 casos ocurre después de esa comparación y solo prepara la configuración operativa; no reemplaza la evidencia externa.
 
@@ -139,6 +148,8 @@ La predicción **outer-OOF** evalúa la regla completa: «estandarizar → elegi
 
 Elastic Net mejora el MSE aproximadamente 1,35 % frente a Lasso y 17,11 % frente a Ridge. Frente a predecir solo la media, la reducción del MSE es 77,08 %: el espectro contiene mucha señal, aunque dos formas de regularizarla queden casi empatadas. La comparación entre Elastic Net y Lasso exige más cautela: Elastic Net obtiene el menor RMSE global, pero Lasso gana un fold externo y Ridge otro. El resultado apoya Elastic Net para esta muestra y esta grilla, no una superioridad universal.
 
+![Valores observados y predichos OOF, con mayor dificultad en valores altos.](../assets/ml_t07_13_observado_vs_predicho_oof.png){width="100%"}
+
 RMSE y MAE también cuentan una parte del problema. El RMSE de Elastic Net equivale aproximadamente al 48 % del desvío estándar de `Nt`; su MAE de 0,3351 g/kg describe un error absoluto promedio mucho menor. La distancia entre ambas métricas refleja el peso de unas pocas observaciones difíciles en la cola alta de nitrógeno.
 
 ## La configuración operativa es cercana a Lasso, pero poco escasa
@@ -158,6 +169,8 @@ Los RMSE-CV de esta tabla seleccionan una configuración con todos los datos eti
 La pareja debe leerse completa: \(\alpha=0,90\) define una geometría cercana a Lasso, mientras el \(\lambda\) muy pequeño hace débil la intensidad total. Comparar el valor absoluto de $\lambda$ entre distintos $\alpha$ tampoco es adecuado porque cada trayectoria tiene su propio $\lambda_{max}$.
 
 ## Representaciones distintas pueden predecir casi igual
+
+![Efecto de agrupamiento en una ventana de predictores muy correlacionados.](../assets/ml_t07_11_ventana_efecto_agrupamiento.png){width="100%"}
 
 El fold 2 expone el trade-off con especial claridad: Elastic Net conserva 673 predictores y Lasso 319, pero sus RMSE externos son 0,7553 y 0,7557. Los vectores de coeficientes y la cantidad de activos son muy diferentes; las predicciones, casi indistinguibles. En el fold 5, los tres RMSE quedan separados por menos de 0,005.
 

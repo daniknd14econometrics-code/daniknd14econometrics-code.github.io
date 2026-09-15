@@ -67,14 +67,24 @@ body:has(.hero-banner--home) .hero-banner__actions {
   margin-top: 0.65rem;
 }
 
-body:has(.hero-banner--home) .hero-banner__media {
+body:has(.hero-banner--home) .hero-banner--home .hero-banner__media {
+  position: relative;
   width: min(100%, 300px);
   min-height: 0;
   aspect-ratio: 4 / 5;
   justify-self: center;
-  background-size: cover, contain, cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: none;
+  overflow: hidden;
+}
+
+body:has(.hero-banner--home) .hero-banner--home .hero-banner__photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
 }
 
 body:has(.hero-banner--home) .hero-profile-note {
@@ -158,7 +168,7 @@ body:has(.hero-banner--home) .portal-card .cta-link:active {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  body:has(.hero-banner--home) .hero-banner__media,
+  body:has(.hero-banner--home) .hero-banner--home .hero-banner__media,
   body:has(.hero-banner--home) .hero-profile-note {
     width: min(100%, 340px);
   }

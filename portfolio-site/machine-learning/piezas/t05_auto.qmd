@@ -86,6 +86,8 @@ Menor que QDA, 0,6967, pese a tener menos aciertos de clase.
 
 LDA, QDA y Gaussian Naive Bayes utilizan los mismos siete predictores: rendimiento en millas por galón, cilindros, cilindrada, potencia, peso, aceleración y año. El nombre del automóvil queda fuera del ajuste. No se realiza selección de variables, transformación ni regularización de covarianzas.
 
+![Peso y rendimiento por origen, con separación y solapamiento.](../assets/ml_t05_02_weight_mpg_por_origen.png){width="100%"}
+
 La comparación mantiene una lógica generativa gaussiana: LDA comparte una covarianza completa entre orígenes; QDA estima una por origen; NB conserva varianzas por clase, pero supone independencia condicional entre predictores. La pregunta empírica es si representar la dispersión específica de cada origen mejora la clasificación y qué ocurre con sus probabilidades.
 
 ## Evaluar un vector posterior fuera de muestra
@@ -116,9 +118,11 @@ Predecir siempre American alcanzaría 62,50 % de accuracy. Los tres modelos supe
 
 El recall macro promedia la proporción recuperada de cada clase sin ponderar por tamaño. QDA supera a los otros métodos en accuracy en los cinco folds; su ventaja no depende únicamente de una partición favorable o de la mayoría americana.
 
-![QDA conserva la detección de americanos y mejora especialmente la de japoneses frente a LDA. Los europeos siguen siendo la clase con menor recall en esos dos modelos.](../assets/t05_auto_recall.svg){#fig-auto-recall fig-alt="Recall OOF por origen: LDA, QDA y NB. American: 86,12 %, 86,12 %, 71,84 %. European: 47,06 %, 55,88 %, 48,53 %. Japanese: 62,03 %, 77,22 %, 72,15 %." width="100%"}
+![Matrices de confusión y destino concreto de los errores multiclase.](../assets/ml_t05_04_matrices_confusion_01.png){width="100%"}
 
 En QDA, la diagonal de la matriz de confusión reúne 211 americanos, 38 europeos y 61 japoneses: 310 aciertos sobre 392 casos. La lectura por clase revela el límite que ese total oculta. **Treinta de los 68 europeos se asignan a otro origen**, mientras 27 automóviles no europeos se anuncian como europeos. El recall europeo es 55,88 % y la precisión de esas predicciones, 58,46 %.
+
+![QDA conserva la detección de americanos y mejora especialmente la de japoneses frente a LDA. Los europeos siguen siendo la clase con menor recall en esos dos modelos.](../assets/t05_auto_recall.svg){#fig-auto-recall fig-alt="Recall OOF por origen: LDA, QDA y NB. American: 86,12 %, 86,12 %, 71,84 %. European: 47,06 %, 55,88 %, 48,53 %. Japanese: 62,03 %, 77,22 %, 72,15 %." width="100%"}
 
 Entre LDA y QDA, el recall americano queda en 86,12 %. La mejora más marcada aparece en japoneses, de 62,03 % a 77,22 %, y también aumenta el recall europeo, de 47,06 % a 55,88 %. Por tanto, la ganancia global contiene una mejora concreta en las clases minoritarias.
 
@@ -126,11 +130,17 @@ Entre LDA y QDA, el recall americano queda en 86,12 %. La mejora más marcada ap
 
 La evaluación one-vs-rest toma cada origen como positivo y agrupa los otros dos como negativos. QDA obtiene la mayor AUC en los tres contrastes; su AUC macro es 0,9037, frente a 0,8837 de LDA y 0,8424 de NB. Es una evaluación del ordenamiento por clase, no tres clasificadores binarios independientes que sustituyan la decisión multiclase.
 
+![Curvas ROC one-vs-rest para cada clase.](../assets/ml_t05_06_roc_ovr_por_clase.png){width="100%"}
+
 El log-loss pregunta otra cosa: cuánta probabilidad se asignó a la clase que realmente ocurrió. Promedia $-\log\widehat p_{i,Y_i}$ sobre las observaciones externas. Un modelo puede acertar más veces mediante argmax y perder bajo log-loss si sus errores concentran demasiada confianza en una clase equivocada.
+
+![Log Loss multiclase OOF para comparar calidad probabilística.](../assets/ml_t05_10_logloss_multiclase_oof.png){width="100%"}
 
 Eso ocurre en la comparación: **LDA obtiene 0,5571 y QDA 0,6967**. QDA genera posteriores más extremas; las equivocaciones seguras reciben mayor castigo. Gaussian NB queda más lejos, con 1,7322. El informe no estima una curva de calibración multiclase: el menor log-loss respalda mejor calidad probabilística bajo esa métrica, no una afirmación de calibración perfecta.
 
 ## Con costos desiguales, argmax deja de ser la regla adecuada
+
+![Vectores posteriores representados en el simplex multiclase.](../assets/ml_t05_08_simplex_posteriores_oof.png){width="100%"}
 
 El segundo escenario asigna costo 3 a no reconocer un automóvil europeo y costo 1 a los demás errores. Es una matriz docente, no una valoración comercial documentada. Para cada vector posterior se calcula:
 
