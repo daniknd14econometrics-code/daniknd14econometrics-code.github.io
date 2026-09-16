@@ -319,14 +319,14 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>Forward y Backward eligen un punto en una trayectoria de subconjuntos anidados. El taller no realiza <em>best subset</em>: con 19 predictores implicaría examinar (2^{19}=524.288) combinaciones. Forward agrega en cada paso la variable que más reduce el error de ajuste; Backward comienza con el modelo completo y elimina una por vez. Son búsquedas <em>greedy</em>: construyen qué modelo representa cada tamaño y la CV interna decide en qué tamaño detenerse, pero no garantizan el mejor subconjunto global.</p>
+<p>Forward y Backward eligen un punto en una trayectoria de subconjuntos anidados. El taller no realiza <em>best subset</em>: con 19 predictores implicaría examinar <span class="math inline">\(2^{19}=524.288\)</span> combinaciones. Forward agrega en cada paso la variable que más reduce el error de ajuste; Backward comienza con el modelo completo y elimina una por vez. Son búsquedas <em>greedy</em>: construyen qué modelo representa cada tamaño y la CV interna decide en qué tamaño detenerse, pero no garantizan el mejor subconjunto global.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/ml_t06_03_trayectorias_forward_backward.png" class="img-fluid figure-img" style="width:100.0%"></p>
 <figcaption>Trayectorias de selección Forward y Backward.</figcaption>
 </figure>
 </div>
-<p>Lasso y Ridge no recorren esa trayectoria discreta: cambian continuamente el tamaño de los coeficientes. Lasso agrega una penalización <span class="math inline">\(L_1\)</span> y puede anular variables; Ridge usa <span class="math inline">\(L_2\)</span> y conserva las 19 columnas mientras estabiliza direcciones mal determinadas. El valor de () se selecciona después de aprender el escalado dentro de cada entrenamiento; calcular medias y desvíos con casos protegidos contaminaría la comparación.</p>
+<p>Lasso y Ridge no recorren esa trayectoria discreta: cambian continuamente el tamaño de los coeficientes. Lasso agrega una penalización <span class="math inline">\(L_1\)</span> y puede anular variables; Ridge usa <span class="math inline">\(L_2\)</span> y conserva las 19 columnas mientras estabiliza direcciones mal determinadas. El valor de <span class="math inline">\(\lambda\)</span> se selecciona después de aprender el escalado dentro de cada entrenamiento; calcular medias y desvíos con casos protegidos contaminaría la comparación.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/ml_t06_16_coeficientes_estandarizados_mco_lasso_ridge.png" class="img-fluid figure-img" style="width:100.0%"></p>
@@ -415,7 +415,7 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>Forward oscila entre 6 y 18 variables; Backward, entre 6 y 10. Lasso bajo (_{min}) también cambia entre 6 y 18 activos, mientras 1SE permanece entre 4 y 6. Esta variación no invalida la evaluación: muestra cómo responde cada regla cuando cambia la muestra disponible para aprender.</p>
+<p>Forward oscila entre 6 y 18 variables; Backward, entre 6 y 10. Lasso bajo <span class="math inline">\(\lambda_{min}\)</span> también cambia entre 6 y 18 activos, mientras 1SE permanece entre 4 y 6. Esta variación no invalida la evaluación: muestra cómo responde cada regla cuando cambia la muestra disponible para aprender.</p>
 <p>Una CV final posterior puede construir un modelo operativo usando los 263 casos. No es una nueva prueba de generalización: los RMSE que comparan los procedimientos son los externos.</p>
 </section>
 <section id="el-rmse-deja-cerca-a-métodos-muy-distintos" class="level2">
@@ -534,7 +534,7 @@ Figura&nbsp;2: En los cinco entrenamientos externos, la regla 1SE retiene sistem
 <h3 class="anchored" data-anchor-id="qué-dejaría-preparado-para-uso-operativo">Qué dejaría preparado para uso operativo</h3>
 <p>Si el único criterio es RMSE y MCO integra la competencia, MCO es la referencia seleccionada. Si el flujo exige elegir entre procedimientos con tuning, Forward obtiene el menor error externo; una CV final sobre los 263 casos fijaría entonces <span class="math inline">\(m^*=6\)</span> antes de reajustar. En ambos casos, la configuración final sirve para operar, mientras el RMSE outer-OOF conserva la evidencia de generalización disponible.</p>
 </section>
-<p>La CV final de Forward produce un MSE de selección de 114.189,73 para (m=6); no sustituye su MSE outer-OOF de 123.855,83. El primero elige la configuración operativa usando los 263 casos etiquetados; el segundo evalúa la regla completa en observaciones que quedaron fuera de esa selección. Del mismo modo, que Backward tenga un mínimo menor en su propia CV final no cambia que Forward haya generalizado mejor entre los procedimientos con tuning.</p>
+<p>La CV final de Forward produce un MSE de selección de 114.189,73 para <span class="math inline">\(m=6\)</span>; no sustituye su MSE outer-OOF de 123.855,83. El primero elige la configuración operativa usando los 263 casos etiquetados; el segundo evalúa la regla completa en observaciones que quedaron fuera de esa selección. Del mismo modo, que Backward tenga un mínimo menor en su propia CV final no cambia que Forward haya generalizado mejor entre los procedimientos con tuning.</p>
 <p>Comparar varios riesgos outer-OOF y escoger el menor es una regla razonable para decidir, pero ese mínimo no constituye una evaluación adicional e independiente del acto de elegir el algoritmo. Evaluar estrictamente ese meta-procedimiento exigiría reservar otro test o seleccionar conjuntamente algoritmo e hiperparámetro dentro de cada entrenamiento externo.</p>
 <p>Los modelos lineales tampoco imponen soporte positivo. Forward, Lasso mínimo y Ridge mínimo producen una predicción negativa cada uno. No se truncaron retrospectivamente: hacerlo habría agregado una regla no evaluada. Junto con la dificultad sobre salarios altos, este límite recuerda que la comparación responde a la formulación en niveles y a RMSE, no a todas las decisiones posibles sobre una variable salarial.</p>
 <p><a href="../../machine-learning/piezas/t07_nirsoil.html">NIRsoil</a> lleva la misma pregunta a un régimen diferente: <span class="math inline">\(p&gt;n\)</span> y predictores casi duplicados, donde regularizar ya no es solo una opción de parsimonia sino parte de poder ajustar el modelo.</p>
