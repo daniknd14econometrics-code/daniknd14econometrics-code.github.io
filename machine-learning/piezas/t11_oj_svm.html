@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Méndez">
 
-<title>Concreto: cuándo una recta deja resistencia sin explicar – Daniel Méndez</title>
+<title>OJ: cuando una frontera más flexible apenas cambia la decisión – Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -167,12 +167,12 @@ window.Quarto = {
     <h2 id="toc-title">En esta página</h2>
    
   <ul class="collapse">
-  <li><a href="#la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" id="toc-la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" class="nav-link active" data-scroll-target="#la-pregunta-es-cuándo-una-recta-empieza-a-perder-información">La pregunta es cuándo una recta empieza a perder información</a></li>
-  <li><a href="#la-receta-y-no-una-fila-define-la-prueba-externa" id="toc-la-receta-y-no-una-fila-define-la-prueba-externa" class="nav-link" data-scroll-target="#la-receta-y-no-una-fila-define-la-prueba-externa">La receta, y no una fila, define la prueba externa</a></li>
-  <li><a href="#dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" id="toc-dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" class="nav-link" data-scroll-target="#dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación">Dos controles de flexibilidad, una misma disciplina de evaluación</a></li>
-  <li><a href="#la-mejora-aparece-fuera-de-muestra-y-es-material" id="toc-la-mejora-aparece-fuera-de-muestra-y-es-material" class="nav-link" data-scroll-target="#la-mejora-aparece-fuera-de-muestra-y-es-material">La mejora aparece fuera de muestra y es material</a></li>
-  <li><a href="#las-funciones-estimadas-muestran-dónde-estaba-la-restricción" id="toc-las-funciones-estimadas-muestran-dónde-estaba-la-restricción" class="nav-link" data-scroll-target="#las-funciones-estimadas-muestran-dónde-estaba-la-restricción">Las funciones estimadas muestran dónde estaba la restricción</a></li>
-  <li><a href="#la-complejidad-se-aprende-y-se-diagnostica" id="toc-la-complejidad-se-aprende-y-se-diagnostica" class="nav-link" data-scroll-target="#la-complejidad-se-aprende-y-se-diagnostica">La complejidad se aprende y se diagnostica</a></li>
+  <li><a href="#una-frontera-un-margen-y-algunos-casos-decisivos" id="toc-una-frontera-un-margen-y-algunos-casos-decisivos" class="nav-link active" data-scroll-target="#una-frontera-un-margen-y-algunos-casos-decisivos">Una frontera, un margen y algunos casos decisivos</a></li>
+  <li><a href="#cuando-una-recta-puede-no-alcanzar" id="toc-cuando-una-recta-puede-no-alcanzar" class="nav-link" data-scroll-target="#cuando-una-recta-puede-no-alcanzar">Cuando una recta puede no alcanzar</a></li>
+  <li><a href="#la-misma-prueba-para-las-tres-familias" id="toc-la-misma-prueba-para-las-tres-familias" class="nav-link" data-scroll-target="#la-misma-prueba-para-las-tres-familias">La misma prueba para las tres familias</a></li>
+  <li><a href="#la-complejidad-tiene-controles-distintos" id="toc-la-complejidad-tiene-controles-distintos" class="nav-link" data-scroll-target="#la-complejidad-tiene-controles-distintos">La complejidad tiene controles distintos</a></li>
+  <li><a href="#el-test-reduce-la-ventaja-a-una-compra" id="toc-el-test-reduce-la-ventaja-a-una-compra" class="nav-link" data-scroll-target="#el-test-reduce-la-ventaja-a-una-compra">El test reduce la ventaja a una compra</a></li>
+  <li><a href="#score-y-ranking-no-son-probabilidades" id="toc-score-y-ranking-no-son-probabilidades" class="nav-link" data-scroll-target="#score-y-ranking-no-son-probabilidades">Score y ranking no son probabilidades</a></li>
   </ul>
 </nav>
     </div>
@@ -181,8 +181,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Concreto: cuándo una recta deja resistencia sin explicar</h1>
-<p class="subtitle lead">Splines y GAM convierten la no linealidad en una decisión predictiva evaluable</p>
+<h1 class="title">OJ: cuando una frontera más flexible apenas cambia la decisión</h1>
+<p class="subtitle lead">SVM lineal, polinómica y RBF bajo la misma validación muestran que más flexibilidad no garantiza una mejora material fuera de muestra</p>
 </div>
 
 
@@ -199,7 +199,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">4 de septiembre de 2026</p>
+      <p class="date">16 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -211,275 +211,234 @@ window.Quarto = {
 </header>
 
 
-<p><span class="badge">Regresión · Splines · GAM</span></p>
+<p><span class="badge">Clasificación binaria · SVM · Kernels · Decision scores</span></p>
 <div class="hero-box">
 <div class="hero-title">
-<p>Con los mismos ocho predictores, abandonar la recta reduce el RMSE externo de 10,55 a 6,06 MPa. La ganancia aparece porque los datos sostienen formas aditivas no lineales, no porque se agreguen variables.</p>
+<p>Los kernels amplían las fronteras que una SVM puede aprender, pero esa flexibilidad debe justificar su lugar fuera de muestra. En OJ, RBF mejora a la SVM lineal en una sola compra de 183.</p>
 </div>
 <div class="hero-sub">
-<p>Concrete permite responder una pregunta práctica: cuándo la flexibilidad compra predicción real y cómo evitar que una curva que luce convincente sea solo sobreajuste.</p>
+<p>La comparación mantiene información, grupos, folds y test constantes para separar una posibilidad geométrica más amplia de una mejora predictiva material.</p>
 </div>
 </div>
 <div class="metric-grid">
 <div class="metric-card">
 <div class="metric-label">
-<p>Muestra</p>
+<p>Compras</p>
 </div>
 <div class="metric-value">
-<p>1.030</p>
+<p>1.070</p>
 </div>
 <div class="metric-note">
-<p>Mezclas de concreto; siete ingredientes, edad de ensayo y resistencia en MPa.</p>
+<p>653 Citrus Hill y 417 Minute Maid; CH es la clase positiva.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>Unidad protegida</p>
+<p>Grupos protegidos</p>
 </div>
 <div class="metric-value">
-<p>427 recetas</p>
+<p>250</p>
 </div>
 <div class="metric-note">
-<p>181 se repiten: una receta nunca se divide entre entrenamiento y evaluación.</p>
+<p>Combinaciones <code>StoreID × WeekofPurchase</code> mantenidas intactas.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>RMSE MCO</p>
+<p>Error test RBF</p>
 </div>
 <div class="metric-value">
-<p>10,55 MPa</p>
+<p>15,85 %</p>
 </div>
 <div class="metric-note">
-<p>Referencia lineal con los mismos ocho predictores.</p>
+<p>29 errores sobre 183 compras del test protegido.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>RMSE GAM</p>
+<p>Ganancia vs lineal</p>
 </div>
 <div class="metric-value">
-<p>6,06 MPa</p>
+<p>1 / 183</p>
 </div>
 <div class="metric-note">
-<p>66,9 % menos MSE que MCO sobre predicciones externas.</p>
+<p>Una compra adicional correctamente clasificada.</p>
 </div>
 </div>
 </div>
-<section id="la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" class="level2">
-<h2 class="anchored" data-anchor-id="la-pregunta-es-cuándo-una-recta-empieza-a-perder-información">La pregunta es cuándo una recta empieza a perder información</h2>
-<p>El objetivo es predecir la resistencia a compresión de una mezcla de concreto. <strong>Concrete</strong>, del paquete <code>AppliedPredictiveModeling</code>, registra siete ingredientes, la edad del ensayo y la resistencia en MPa. MCO impone que cada predictor tenga una pendiente constante. Esa forma puede ser demasiado restrictiva si, por ejemplo, el aumento de resistencia es rápido al comienzo de la maduración y luego se aplana, o si el agua altera la resistencia con pendientes diferentes según su nivel.</p>
-<p>La comparación mantiene exactamente los mismos ocho predictores y cambia solo la forma funcional. La media del entrenamiento es el benchmark sin información; MCO es el benchmark lineal; natural splines y un GAM penalizado ofrecen dos maneras distintas de introducir curvatura sin abandonar una estructura aditiva interpretable.</p>
-<p>Las curvas describen predicciones condicionales de esta especificación. No son efectos causales de cambiar un ingrediente aislado, ni sustituyen ensayos físicos de formulación.</p>
+<section id="una-frontera-un-margen-y-algunos-casos-decisivos" class="level2">
+<h2 class="anchored" data-anchor-id="una-frontera-un-margen-y-algunos-casos-decisivos">Una frontera, un margen y algunos casos decisivos</h2>
+<p>La tarea es clasificar cada compra de jugo de naranja como <strong>Citrus Hill (CH)</strong> o <strong>Minute Maid (MM)</strong>. Una SVM lineal construye un score <span class="math inline">\(f(x)=\beta_0+\beta^\top x\)</span> y ubica la frontera donde <span class="math inline">\(f(x)=0\)</span>. El signo decide la clase; la magnitud indica posición respecto de esa frontera en la escala interna del clasificador.</p>
+<p>El margen es la banda alrededor de la frontera. Una SVM de margen blando permite que algunas observaciones entren en esa banda o incluso queden del lado incorrecto, pero penaliza esas holguras. <span class="math inline">\(C_{\mathrm{pen}}\)</span> fija cuánto cuesta tolerarlas: un valor muy pequeño regulariza con fuerza y ensancha el margen; uno mayor cobra más por los casos difíciles y permite una frontera más ajustada.</p>
+<p>Los vectores de soporte son las observaciones que participan activamente en definir la solución. No son sinónimo de errores: un caso puede estar bien clasificado y aun así ser soporte por caer sobre el borde o dentro del margen. En los ajustes seleccionados sobre desarrollo hay 480 soportes en la SVM lineal, 569 en la polinómica y 482 en RBF, frente a errores de entrenamiento mucho menores.</p>
 </section>
-<section id="la-receta-y-no-una-fila-define-la-prueba-externa" class="level2">
-<h2 class="anchored" data-anchor-id="la-receta-y-no-una-fila-define-la-prueba-externa">La receta, y no una fila, define la prueba externa</h2>
-<p>Muchas observaciones comparten la misma composición de siete ingredientes y difieren, por ejemplo, en la edad de ensayo. Una partición fila a fila podría dejar una formulación prácticamente idéntica en entrenamiento y evaluación. Para plantear una prueba más exigente, los cinco folds externos se agrupan por receta: una formulación completa queda en un único fold.</p>
-<p>Natural splines selecciona dentro de cada entrenamiento externo los grados de libertad de sus ocho bases mediante CV interna también agrupada por receta. La búsqueda por coordenadas explora <span class="math inline">\(df\in\{3,4,5,6\}\)</span> para cada predictor desde dos puntos iniciales. En cada paso cambia una base y reevalúa el modelo aditivo completo; es una búsqueda operativa, no un recorrido exhaustivo de las 65.536 combinaciones. Los dos inicios y la convergencia rápida —entre dos y tres ciclos en las cinco vueltas— reducen el riesgo de una solución puramente accidental, pero no convierten el procedimiento en una búsqueda global.</p>
-<p>El GAM penalizado parte de bases más amplias y selecciona conjuntamente sus ocho suavidades por GCV dentro del entrenamiento externo. GCV equilibra ajuste y flexibilidad efectiva: una reducción del residuo debe compensar el costo de conservar más curvatura. El fold externo no participa en esa decisión.</p>
-<p>Cada una de las 1.030 predicciones <strong>outer-OOF</strong> se genera para una receta que no participó ni en el ajuste ni en la selección de complejidad que produjo esa predicción. Por eso el RMSE externo evalúa el procedimiento entero, no una curva elegida mirando su propia prueba.</p>
-</section>
-<section id="dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" class="level2">
-<h2 class="anchored" data-anchor-id="dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación">Dos controles de flexibilidad, una misma disciplina de evaluación</h2>
-<div class="table-box">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Modelo</th>
-<th>Cómo permite curvatura</th>
-<th>Cómo limita complejidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>MCO</td>
-<td>No la permite</td>
-<td>Pendiente constante por predictor</td>
-</tr>
-<tr class="even">
-<td>Natural splines</td>
-<td>Bases cúbicas naturales</td>
-<td>Elige <span class="math inline">\(df\)</span> discretos mediante CV interna</td>
-</tr>
-<tr class="odd">
-<td>GAM penalizado</td>
-<td>Bases cúbicas de mayor capacidad</td>
-<td>GCV penaliza rugosidad y deja edf continuos</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Un <code>df</code> mayor agrega capacidad discreta a una base de natural splines. En cambio, el GAM parte de una capacidad nominal y deja que la penalización decida qué fracción queda activa. Sus <strong>grados de libertad efectivos</strong> (edf) no son knots ni un conteo de columnas: resumen la flexibilidad que persiste después de suavizar. Un edf cercano a 1 sería aproximadamente lineal; aquí los edf finales son mucho mayores para la mayoría de los predictores.</p>
-<p>La configuración operativa de natural splines, obtenida después de cerrar la evaluación externa, muestra cómo se distribuye la complejidad discreta:</p>
-<div class="table-box">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Predictor</th>
-<th style="text-align: right;"><code>df</code> final</th>
-<th>Evidencia de estabilidad entre entrenamientos</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Cemento</td>
-<td style="text-align: right;">4</td>
-<td>complejidad variable</td>
-</tr>
-<tr class="even">
-<td>Escoria</td>
-<td style="text-align: right;">4</td>
-<td><code>df = 6</code> en los cinco outer-training; baja en el ajuste final</td>
-</tr>
-<tr class="odd">
-<td>Ceniza volante</td>
-<td style="text-align: right;">3</td>
-<td><code>df = 3</code> en todas las vueltas y en el final</td>
-</tr>
-<tr class="even">
-<td>Agua</td>
-<td style="text-align: right;">3</td>
-<td>base final contenida</td>
-</tr>
-<tr class="odd">
-<td>Superplastificante</td>
-<td style="text-align: right;">5</td>
-<td>curvatura intermedia-alta</td>
-</tr>
-<tr class="even">
-<td>Agregado grueso</td>
-<td style="text-align: right;">5</td>
-<td>curvatura intermedia-alta</td>
-</tr>
-<tr class="odd">
-<td>Agregado fino</td>
-<td style="text-align: right;">6</td>
-<td>extremo superior de la grilla final</td>
-</tr>
-<tr class="even">
-<td>Edad</td>
-<td style="text-align: right;">6</td>
-<td><code>df = 5</code> o <code>6</code> en todas las vueltas</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>La suma final es 36 columnas de base más un intercepto. No debe compararse directamente con la suma de edf del GAM penalizado: natural splines elige una dimensión disponible y luego ajusta sin penalización adicional; el GAM puede utilizar parcialmente cada dirección mediante suavizado continuo.</p>
-</section>
-<section id="la-mejora-aparece-fuera-de-muestra-y-es-material" class="level2">
-<h2 class="anchored" data-anchor-id="la-mejora-aparece-fuera-de-muestra-y-es-material">La mejora aparece fuera de muestra y es material</h2>
-<div class="table-box">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Modelo</th>
-<th style="text-align: right;">MSE</th>
-<th style="text-align: right;">RMSE</th>
-<th style="text-align: right;">MAE</th>
-<th style="text-align: right;"><span class="math inline">\(R^2\)</span> outer-OOF</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GAM penalizado</td>
-<td style="text-align: right;"><strong>36,784</strong></td>
-<td style="text-align: right;"><strong>6,065</strong></td>
-<td style="text-align: right;"><strong>4,713</strong></td>
-<td style="text-align: right;"><strong>0,8681</strong></td>
-</tr>
-<tr class="even">
-<td>Natural splines</td>
-<td style="text-align: right;">45,068</td>
-<td style="text-align: right;">6,713</td>
-<td style="text-align: right;">5,277</td>
-<td style="text-align: right;">0,8384</td>
-</tr>
-<tr class="odd">
-<td>MCO lineal</td>
-<td style="text-align: right;">111,287</td>
-<td style="text-align: right;">10,549</td>
-<td style="text-align: right;">8,363</td>
-<td style="text-align: right;">0,6009</td>
-</tr>
-<tr class="even">
-<td>Media outer-training</td>
-<td style="text-align: right;">281,349</td>
-<td style="text-align: right;">16,773</td>
-<td style="text-align: right;">13,515</td>
-<td style="text-align: right;">−0,0091</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="fig-concrete-desempeno" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-concrete-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08a_concrete_desempeno.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Desempeño predictivo externo de media, MCO, Natural Splines y GAM penalizado.
-</figcaption>
-</figure>
-</div>
-<p>Los predictores ya aportan señal bajo MCO: frente a la media, reducen el MSE 60,45 %. Pero la comparación decisiva es MCO contra formas no lineales. Natural splines reduce su MSE 59,5 % y el GAM penalizado 66,9 %. El GAM también baja el MSE 18,4 % frente a natural splines, equivalente a una reducción de 0,65 MPa —9,7 %— en RMSE. La magnitud y el carácter externo de esa mejora sostienen que la recta dejaba estructura predictiva sin representar.</p>
-<p>La ventaja de los modelos no lineales aparece repetidamente al cambiar las recetas reservadas, no en un único fold conveniente. Esa estabilidad importa porque los folds tienen tamaños distintos: se priorizó mantener recetas completas, no fabricar cinco bloques de filas exactamente iguales.</p>
-</section>
-<section id="las-funciones-estimadas-muestran-dónde-estaba-la-restricción" class="level2">
-<h2 class="anchored" data-anchor-id="las-funciones-estimadas-muestran-dónde-estaba-la-restricción">Las funciones estimadas muestran dónde estaba la restricción</h2>
-<p>Los perfiles son cortes de la superficie aditiva: al variar una variable, las otras siete se fijan en sus medianas. La edad resume el caso más claro: la resistencia aumenta con fuerza a edades bajas y luego se aplana, mientras MCO extiende una pendiente constante. Cemento y escoria muestran pendientes que cambian; agua presenta una relación negativa marcadamente no lineal. Superplastificante y los agregados incorporan zonas débiles o no monotónicas que una única pendiente tampoco puede describir. En los extremos, las marcas de soporte obligan a no sobrerreaccionar a oscilaciones locales.</p>
-<p>La figura también separa dos ideas. Natural splines y GAM pueden producir formas diferentes sin que una deba interpretarse como la función verdadera. Su utilidad aquí proviene de que esa flexibilidad se evaluó sobre recetas reservadas y redujo el error externo, no de que una curva sea visualmente más elaborada.</p>
-<div id="fig-concrete-perfiles" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-concrete-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08a_concrete_perfiles.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Perfiles de predicción de MCO, Natural Splines y GAM penalizado.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="la-complejidad-se-aprende-y-se-diagnostica" class="level2">
-<h2 class="anchored" data-anchor-id="la-complejidad-se-aprende-y-se-diagnostica">La complejidad se aprende y se diagnostica</h2>
-<p>El ajuste operativo final usa <span class="math inline">\(k=20\)</span> para los ingredientes y <span class="math inline">\(k=12\)</span> para edad. Los edf finales son 15,42 para cemento, 16,01 para escoria, 13,08 para ceniza volante, 17,11 para agua, 14,25 para superplastificante, 16,04 para agregado grueso, 15,15 para agregado fino y 10,59 para edad. La capacidad nominal no quedó vacía, y los edf altos son coherentes con la mejora predictiva.</p>
-<p>La figura muestra también que la flexibilidad cambia entre entrenamientos: cemento es el componente más variable —cae a 3,68 edf en un fold y supera 14 en los otros cuatro—, mientras edad permanece cerca de 10,3–10,6. Esa diferencia evita hablar de una complejidad fija aprendida de una vez: GCV vuelve a decidir en cada muestra de entrenamiento.</p>
-<div id="fig-concrete-edf" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-concrete-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08a_concrete_edf.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Rango y estabilidad de los grados de libertad efectivos del GAM.
-</figcaption>
-</figure>
-</div>
-<p><code>k.check()</code> y concurvity son diagnósticos complementarios para revisar si una base quedó demasiado limitada o si smooths distintos comparten patrón. Edad utiliza 10,59 de 11 grados disponibles después de la restricción del smooth y agua 17,11 de 19; son las funciones que más justifican cautela al interpretar detalles finos. Concurvity recuerda además que ingredientes que se mueven conjuntamente pueden compartir señal. Ninguno reordena los modelos: la evidencia principal sigue siendo el error outer-OOF.</p>
-<p>Los residuos externos completan esa lectura. MCO conserva una forma sistemática y comprime parte de las resistencias altas; natural splines elimina buena parte del patrón y el GAM lo reduce todavía más, aunque no desaparece en los extremos. La mejora no autoriza a afirmar que el GAM recuperó la función verdadera: muestra que redujo un sesgo de forma bajo una restricción aditiva todavía exigente.</p>
+<section id="cuando-una-recta-puede-no-alcanzar" class="level2">
+<h2 class="anchored" data-anchor-id="cuando-una-recta-puede-no-alcanzar">Cuando una recta puede no alcanzar</h2>
+<p>Un kernel cambia la geometría disponible sin exigir construir explícitamente todas las nuevas variables. La SVM lineal conserva una frontera plana. El kernel polinómico permite curvaturas estructuradas por grado; RBF combina similitudes locales y puede formar fronteras más flexibles.</p>
+<p>Los microejemplos 2D aíslan esa diferencia: los círculos negros señalan vectores de soporte y el fondo muestra la clase predicha.</p>
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/ml_t08a_07_residuos_outer_oof_comparativos.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>Estructura comparativa de los residuos outer-OOF.</figcaption>
+<p><img src="../assets/ml_t11_01_demo_svm_lineal.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>La SVM lineal no puede seguir una frontera generadora curva.</figcaption>
 </figure>
 </div>
-<section id="qué-decisión-queda-respaldada" class="level3 section-box">
-<h3 class="anchored" data-anchor-id="qué-decisión-queda-respaldada">Qué decisión queda respaldada</h3>
-<p>Para predecir resistencia en nuevas formulaciones, el GAM penalizado es la alternativa mejor respaldada bajo esta arquitectura de validación. Natural splines también mejora de forma grande sobre MCO, por lo que la conclusión robusta es primero que la linealidad era demasiado restrictiva. La ventaja adicional del GAM justifica elegir su suavizado continuo en esta aplicación, no asumir que todo problema de regresión necesita un modelo más flexible.</p>
+</div>
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t11_02_demo_svm_polinomica.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Un kernel polinómico de grado 2 introduce una curvatura estructurada.</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t11_03_demo_svm_rbf.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>RBF aproxima la geometría curva mediante similitudes locales.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Estas figuras son una ilustración conceptual independiente del tuning: no usan OJ ni constituyen evidencia empírica sobre esa aplicación. Muestran capacidad geométrica, no anticipan qué familia generalizará mejor.</p>
 </section>
-<p>La evaluación y la configuración operativa permanecen separadas. Después de comparar las 1.030 predicciones externas, natural splines vuelve a seleccionar su vector de <code>df</code> con una CV agrupada sobre toda la muestra y el GAM vuelve a elegir suavidades por GCV. Esos ajustes preparan una regla para una receta nueva; no producen una segunda estimación independiente de generalización ni reemplazan los RMSE externos.</p>
-<p>La conclusión depende de una pérdida cuadrática, una respuesta en niveles y una estructura aditiva. No se modelan interacciones entre ingredientes; la búsqueda de splines es greedy; y la extrapolación fuera del soporte de recetas observadas requiere cautela. Un mejor ajuste in-sample, por sí solo, no habría resuelto ninguna de esas limitaciones.</p>
-<p><a href="../../machine-learning/piezas/t08b_oj.html">OJ</a> ofrece el contraste: allí el GAM recibe la misma oportunidad de curvar, pero la evidencia externa y los edf indican que la forma simple ya era suficiente.</p>
+<section id="la-misma-prueba-para-las-tres-familias" class="level2">
+<h2 class="anchored" data-anchor-id="la-misma-prueba-para-las-tres-familias">La misma prueba para las tres familias</h2>
+<p>Las tres SVM reciben exactamente los mismos seis bloques de información: <code>LoyalCH</code>, <code>PriceDiff</code>, <code>WeekofPurchase</code>, <code>StoreID</code>, <code>SpecialCH</code> y <code>SpecialMM</code>. Las 250 celdas tienda-semana permanecen completas durante toda la evaluación para evitar que compras del mismo contexto se filtren entre entrenamiento y validación.</p>
+<p>El diseño reserva 183 compras de 43 grupos como test protegido y deja 887 compras de 207 grupos para desarrollo. Dentro de desarrollo, las tres familias comparten una CV agrupada de cinco folds y se seleccionan por error 0-1 agregado por observación.</p>
+<p>Cada training fold reaprende el preprocesamiento: estandariza <code>LoyalCH</code>, <code>PriceDiff</code> y <code>WeekofPurchase</code>, crea las dummies de tienda y conserva los indicadores de promoción en escala 0/1. Así, ni medias, ni escalas, ni niveles de referencia se aprenden con el fold reservado. No hace falta nested CV porque el test independiente evalúa al final las configuraciones ya cerradas.</p>
+</section>
+<section id="la-complejidad-tiene-controles-distintos" class="level2">
+<h2 class="anchored" data-anchor-id="la-complejidad-tiene-controles-distintos">La complejidad tiene controles distintos</h2>
+<p>En la SVM lineal, <span class="math inline">\(C_{\mathrm{pen}}\)</span> controla el compromiso entre margen y holguras. En la polinómica se agregan <span class="math inline">\(\gamma\)</span>, el grado y el término <span class="math inline">\(c=1\)</span>. En RBF, <span class="math inline">\(\gamma\)</span> gobierna la localidad de la similitud: valores muy pequeños producen una representación demasiado global; valores muy grandes vuelven la influencia extremadamente local.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Familia</th>
+<th>Configuración seleccionada</th>
+<th style="text-align: right;">Error CV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lineal</td>
+<td><span class="math inline">\(C_{\mathrm{pen}}=0{,}01\)</span></td>
+<td style="text-align: right;">0,17475</td>
+</tr>
+<tr class="even">
+<td>Polinómica</td>
+<td><span class="math inline">\(C_{\mathrm{pen}}=0{,}1\)</span>; <span class="math inline">\(\gamma=0{,}01\)</span>; grado 4; <span class="math inline">\(c=1\)</span></td>
+<td style="text-align: right;">0,17136</td>
+</tr>
+<tr class="odd">
+<td>RBF</td>
+<td><span class="math inline">\(C_{\mathrm{pen}}=0{,}1\)</span>; <span class="math inline">\(\gamma=0{,}1\)</span></td>
+<td style="text-align: right;"><strong>0,17024</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Las diferencias de CV son pequeñas: entre lineal y RBF median cuatro errores de validación sobre 887. En RBF, el recorrido de <span class="math inline">\(\gamma\)</span> con el <span class="math inline">\(C\)</span> seleccionado presenta la relación tipo U esperada. Una escala intermedia generaliza mejor que similitudes demasiado amplias o demasiado locales.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t11_09_rbf_error_vs_gamma.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Con <span class="math inline">\(C_{\mathrm{pen}}=0{,}1\)</span>, el error CV de RBF es mínimo en una escala intermedia de <span class="math inline">\(\gamma\)</span>.</figcaption>
+</figure>
+</div>
+</section>
+<section id="el-test-reduce-la-ventaja-a-una-compra" class="level2">
+<h2 class="anchored" data-anchor-id="el-test-reduce-la-ventaja-a-una-compra">El test reduce la ventaja a una compra</h2>
+<p>Con la selección cerrada, cada modelo se reajusta sobre las 887 observaciones de desarrollo y el test se abre una sola vez.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">Error CV</th>
+<th style="text-align: right;">Errores test</th>
+<th style="text-align: right;">Error test</th>
+<th style="text-align: right;">Accuracy test</th>
+<th style="text-align: right;">AUC test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SVM lineal</td>
+<td style="text-align: right;">0,17475</td>
+<td style="text-align: right;">30 / 183</td>
+<td style="text-align: right;">0,16393</td>
+<td style="text-align: right;">0,8361</td>
+<td style="text-align: right;"><strong>0,8990</strong></td>
+</tr>
+<tr class="even">
+<td>SVM polinómica</td>
+<td style="text-align: right;">0,17136</td>
+<td style="text-align: right;">32 / 183</td>
+<td style="text-align: right;">0,17486</td>
+<td style="text-align: right;">0,8251</td>
+<td style="text-align: right;">0,8976</td>
+</tr>
+<tr class="odd">
+<td>SVM RBF</td>
+<td style="text-align: right;"><strong>0,17024</strong></td>
+<td style="text-align: right;"><strong>29 / 183</strong></td>
+<td style="text-align: right;"><strong>0,15847</strong></td>
+<td style="text-align: right;"><strong>0,8415</strong></td>
+<td style="text-align: right;">0,8978</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t11_12_comparacion_error_test.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Error 0-1 de las tres SVM en el mismo test protegido.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t11_13_matrices_confusion_test.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Matrices de confusión en el test protegido; las filas indican la clase predicha y las columnas, la clase real.</figcaption>
+</figure>
+</div>
+<p>El test contiene 101 compras CH y 82 MM. Las tres SVM tienen exactamente la misma sensibilidad para CH, 0,8812: registran 89 verdaderos positivos y 12 falsos negativos. Toda la diferencia proviene de unos pocos casos MM. La lineal obtiene 64 verdaderos negativos y 18 falsos positivos; la polinómica, 62 y 20; RBF, 65 y 17.</p>
+<p>En este test protegido, por tanto, RBF clasifica correctamente una compra MM más que la lineal, mientras la polinómica clasifica correctamente dos menos. Eso explica los 29, 30 y 32 errores totales, respectivamente, pero no demuestra una ventaja general de RBF fuera de esta partición.</p>
+<p>La conclusión no es que RBF gane con claridad. Su mejora frente a la frontera lineal equivale a <strong>una sola compra de 183</strong> en esta partición. La pequeña ventaja de desarrollo se conserva de forma mínima para RBF y se revierte para el kernel polinómico.</p>
+</section>
+<section id="score-y-ranking-no-son-probabilidades" class="level2">
+<h2 class="anchored" data-anchor-id="score-y-ranking-no-son-probabilidades">Score y ranking no son probabilidades</h2>
+<p>LIBSVM entrega decision scores. Una vez orientados para que valores mayores indiquen mayor inclinación hacia CH, esos scores permiten ordenar compras y construir una curva ROC. No satisfacen por sí mismos <span class="math inline">\(P(Y=\mathrm{CH}\mid X=x)\)</span> y, sin calibración adicional, no corresponde evaluarlos con log-loss, Brier o gráficos de calibración como si fueran probabilidades.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t11_14_ROC_test_SVM.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Las tres curvas ROC construidas con decision scores tienen un ordenamiento prácticamente idéntico.</figcaption>
+</figure>
+</div>
+<p>La SVM lineal alcanza AUC 0,8990, ligeramente por encima de RBF con 0,8978, aunque RBF tenga menor error 0-1 al umbral implícito. No hay contradicción: el error 0-1 juzga una decisión concreta; AUC evalúa el ranking a través de múltiples umbrales. Clasificación, ranking y probabilidad son objetos relacionados, pero no intercambiables.</p>
+<section id="la-flexibilidad-debe-justificar-su-lugar-fuera-de-muestra" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="la-flexibilidad-debe-justificar-su-lugar-fuera-de-muestra">La flexibilidad debe justificar su lugar fuera de muestra</h3>
+<p>RBF obtiene el menor error bajo el criterio fijado, pero la diferencia frente a la SVM lineal es una observación. La elección práctica puede favorecer RBF si ese pequeño avance compensa su menor transparencia geométrica; también puede favorecer la lineal por parsimonia. La evidencia no respalda una historia de superioridad general de los kernels no lineales.</p>
+</section>
+<p>El alcance se limita a esta partición agrupada, estas seis fuentes de información y costos simétricos. Los grupos tienda-semana protegen dependencia compartida, pero no sustituyen una prueba temporal futura. Las fronteras y sus scores son herramientas predictivas, no identifican efectos causales de cambiar precio, promociones o lealtad.</p>
+<p><a href="../../machine-learning/piezas/t08b_oj.html">OJ con Logit y GAM penalizado</a> plantea la pregunta complementaria: allí la flexibilidad se evalúa por la calidad de probabilidades; aquí, los kernels se comparan por clasificación y ranking sin tratar el decision score como probabilidad.</p>
 <div class="small-note">
-<p><strong>Fuente:</strong> informe curado «Taller 08A: Splines y GAM para regresión con Concrete». Figuras originales del informe convertidas a PNG para este análisis; no se generaron estimaciones nuevas.</p>
+<p><strong>Fuente:</strong> informe final «Taller 11: Support Vector Machines con OJ». Figuras originales del informe reutilizadas en PNG; las cifras se verificaron contra los outputs finales y no se generaron estimaciones nuevas.</p>
 </div>
 
 

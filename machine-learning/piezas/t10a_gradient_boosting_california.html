@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Méndez">
 
-<title>Concreto: cuándo una recta deja resistencia sin explicar – Daniel Méndez</title>
+<title>California Housing: aprender corrigiendo los errores que quedan – Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -167,12 +167,13 @@ window.Quarto = {
     <h2 id="toc-title">En esta página</h2>
    
   <ul class="collapse">
-  <li><a href="#la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" id="toc-la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" class="nav-link active" data-scroll-target="#la-pregunta-es-cuándo-una-recta-empieza-a-perder-información">La pregunta es cuándo una recta empieza a perder información</a></li>
-  <li><a href="#la-receta-y-no-una-fila-define-la-prueba-externa" id="toc-la-receta-y-no-una-fila-define-la-prueba-externa" class="nav-link" data-scroll-target="#la-receta-y-no-una-fila-define-la-prueba-externa">La receta, y no una fila, define la prueba externa</a></li>
-  <li><a href="#dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" id="toc-dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" class="nav-link" data-scroll-target="#dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación">Dos controles de flexibilidad, una misma disciplina de evaluación</a></li>
-  <li><a href="#la-mejora-aparece-fuera-de-muestra-y-es-material" id="toc-la-mejora-aparece-fuera-de-muestra-y-es-material" class="nav-link" data-scroll-target="#la-mejora-aparece-fuera-de-muestra-y-es-material">La mejora aparece fuera de muestra y es material</a></li>
-  <li><a href="#las-funciones-estimadas-muestran-dónde-estaba-la-restricción" id="toc-las-funciones-estimadas-muestran-dónde-estaba-la-restricción" class="nav-link" data-scroll-target="#las-funciones-estimadas-muestran-dónde-estaba-la-restricción">Las funciones estimadas muestran dónde estaba la restricción</a></li>
-  <li><a href="#la-complejidad-se-aprende-y-se-diagnostica" id="toc-la-complejidad-se-aprende-y-se-diagnostica" class="nav-link" data-scroll-target="#la-complejidad-se-aprende-y-se-diagnostica">La complejidad se aprende y se diagnostica</a></li>
+  <li><a href="#la-media-es-punto-de-partida-y-benchmark" id="toc-la-media-es-punto-de-partida-y-benchmark" class="nav-link active" data-scroll-target="#la-media-es-punto-de-partida-y-benchmark">La media es punto de partida y benchmark</a></li>
+  <li><a href="#cada-árbol-corrige-una-parte-del-error-pendiente" id="toc-cada-árbol-corrige-una-parte-del-error-pendiente" class="nav-link" data-scroll-target="#cada-árbol-corrige-una-parte-del-error-pendiente">Cada árbol corrige una parte del error pendiente</a></li>
+  <li><a href="#tres-controles-actúan-en-conjunto" id="toc-tres-controles-actúan-en-conjunto" class="nav-link" data-scroll-target="#tres-controles-actúan-en-conjunto">Tres controles actúan en conjunto</a></li>
+  <li><a href="#la-validación-decide-cuándo-dejar-de-corregir" id="toc-la-validación-decide-cuándo-dejar-de-corregir" class="nav-link" data-scroll-target="#la-validación-decide-cuándo-dejar-de-corregir">La validación decide cuándo dejar de corregir</a></li>
+  <li><a href="#el-test-confirma-una-mejora-grande-frente-a-la-media" id="toc-el-test-confirma-una-mejora-grande-frente-a-la-media" class="nav-link" data-scroll-target="#el-test-confirma-una-mejora-grande-frente-a-la-media">El test confirma una mejora grande frente a la media</a></li>
+  <li><a href="#qué-información-termina-utilizando-el-ensamble" id="toc-qué-información-termina-utilizando-el-ensamble" class="nav-link" data-scroll-target="#qué-información-termina-utilizando-el-ensamble">Qué información termina utilizando el ensamble</a></li>
+  <li><a href="#el-error-conserva-estructura-geográfica" id="toc-el-error-conserva-estructura-geográfica" class="nav-link" data-scroll-target="#el-error-conserva-estructura-geográfica">El error conserva estructura geográfica</a></li>
   </ul>
 </nav>
     </div>
@@ -181,8 +182,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Concreto: cuándo una recta deja resistencia sin explicar</h1>
-<p class="subtitle lead">Splines y GAM convierten la no linealidad en una decisión predictiva evaluable</p>
+<h1 class="title">California Housing: aprender corrigiendo los errores que quedan</h1>
+<p class="subtitle lead">Gradient Boosting construye una predicción secuencial y la validación decide hasta dónde seguir corrigiendo</p>
 </div>
 
 
@@ -199,7 +200,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">4 de septiembre de 2026</p>
+      <p class="date">16 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -211,275 +212,195 @@ window.Quarto = {
 </header>
 
 
-<p><span class="badge">Regresión · Splines · GAM</span></p>
+<p><span class="badge">Regresión · Gradient Boosting · Validación cruzada</span></p>
 <div class="hero-box">
 <div class="hero-title">
-<p>Con los mismos ocho predictores, abandonar la recta reduce el RMSE externo de 10,55 a 6,06 MPa. La ganancia aparece porque los datos sostienen formas aditivas no lineales, no porque se agreguen variables.</p>
+<p>Gradient Boosting no promedia árboles independientes: cada etapa observa el error que todavía queda y añade una corrección pequeña. La validación decide cuándo esa secuencia deja de mejorar fuera de muestra.</p>
 </div>
 <div class="hero-sub">
-<p>Concrete permite responder una pregunta práctica: cuándo la flexibilidad compra predicción real y cómo evitar que una curva que luce convincente sea solo sobreajuste.</p>
+<p>California Housing permite ver por qué número de etapas, learning rate y complejidad del árbol base deben regularizarse en conjunto, sin convertir la configuración ganadora en una receta universal.</p>
 </div>
 </div>
 <div class="metric-grid">
 <div class="metric-card">
 <div class="metric-label">
-<p>Muestra</p>
+<p>Observaciones</p>
 </div>
 <div class="metric-value">
-<p>1.030</p>
+<p>20.640</p>
 </div>
 <div class="metric-note">
-<p>Mezclas de concreto; siete ingredientes, edad de ensayo y resistencia en MPa.</p>
+<p>Grupos censales; ocho predictores y valor mediano de vivienda.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>Unidad protegida</p>
+<p>Test protegido</p>
 </div>
 <div class="metric-value">
-<p>427 recetas</p>
+<p>4.128</p>
 </div>
 <div class="metric-note">
-<p>181 se repiten: una receta nunca se divide entre entrenamiento y evaluación.</p>
+<p>Las otras 16.512 observaciones forman desarrollo.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>RMSE MCO</p>
+<p>MSE test</p>
 </div>
 <div class="metric-value">
-<p>10,55 MPa</p>
+<p>0,2251</p>
 </div>
 <div class="metric-note">
-<p>Referencia lineal con los mismos ocho predictores.</p>
+<p>Frente a 1,2935 al predecir siempre la media de desarrollo.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>RMSE GAM</p>
+<p><span class="math inline">\(R^2\)</span> test</p>
 </div>
 <div class="metric-value">
-<p>6,06 MPa</p>
+<p>0,8259</p>
 </div>
 <div class="metric-note">
-<p>66,9 % menos MSE que MCO sobre predicciones externas.</p>
+<p>Resultado externo de la configuración cerrada en desarrollo.</p>
 </div>
 </div>
 </div>
-<section id="la-pregunta-es-cuándo-una-recta-empieza-a-perder-información" class="level2">
-<h2 class="anchored" data-anchor-id="la-pregunta-es-cuándo-una-recta-empieza-a-perder-información">La pregunta es cuándo una recta empieza a perder información</h2>
-<p>El objetivo es predecir la resistencia a compresión de una mezcla de concreto. <strong>Concrete</strong>, del paquete <code>AppliedPredictiveModeling</code>, registra siete ingredientes, la edad del ensayo y la resistencia en MPa. MCO impone que cada predictor tenga una pendiente constante. Esa forma puede ser demasiado restrictiva si, por ejemplo, el aumento de resistencia es rápido al comienzo de la maduración y luego se aplana, o si el agua altera la resistencia con pendientes diferentes según su nivel.</p>
-<p>La comparación mantiene exactamente los mismos ocho predictores y cambia solo la forma funcional. La media del entrenamiento es el benchmark sin información; MCO es el benchmark lineal; natural splines y un GAM penalizado ofrecen dos maneras distintas de introducir curvatura sin abandonar una estructura aditiva interpretable.</p>
-<p>Las curvas describen predicciones condicionales de esta especificación. No son efectos causales de cambiar un ingrediente aislado, ni sustituyen ensayos físicos de formulación.</p>
+<section id="la-media-es-punto-de-partida-y-benchmark" class="level2">
+<h2 class="anchored" data-anchor-id="la-media-es-punto-de-partida-y-benchmark">La media es punto de partida y benchmark</h2>
+<p>La tarea es predecir <code>MedHouseVal</code>, el valor mediano de vivienda de cada grupo censal de California en unidades de USD 100.000, a partir de ocho variables demográficas, habitacionales y geográficas. Antes de construir árboles, el procedimiento separa 4.128 observaciones como test protegido y reserva 16.512 para aprender la secuencia completa.</p>
+<p>Bajo pérdida cuadrática, el mejor predictor constante dentro de desarrollo es su media:</p>
+<p><span class="math display">\[
+F_0(x)=\bar y_{\mathrm{dev}}=2{,}0705.
+\]</span></p>
+<p>Ese mismo valor cumple dos funciones. Es el punto común desde el que comienza Gradient Boosting y es el benchmark ingenuo que se aplicará sin cambios al test. La comparación final pregunta cuánto valor predictivo agrega corregir sistemáticamente esa constante.</p>
 </section>
-<section id="la-receta-y-no-una-fila-define-la-prueba-externa" class="level2">
-<h2 class="anchored" data-anchor-id="la-receta-y-no-una-fila-define-la-prueba-externa">La receta, y no una fila, define la prueba externa</h2>
-<p>Muchas observaciones comparten la misma composición de siete ingredientes y difieren, por ejemplo, en la edad de ensayo. Una partición fila a fila podría dejar una formulación prácticamente idéntica en entrenamiento y evaluación. Para plantear una prueba más exigente, los cinco folds externos se agrupan por receta: una formulación completa queda en un único fold.</p>
-<p>Natural splines selecciona dentro de cada entrenamiento externo los grados de libertad de sus ocho bases mediante CV interna también agrupada por receta. La búsqueda por coordenadas explora <span class="math inline">\(df\in\{3,4,5,6\}\)</span> para cada predictor desde dos puntos iniciales. En cada paso cambia una base y reevalúa el modelo aditivo completo; es una búsqueda operativa, no un recorrido exhaustivo de las 65.536 combinaciones. Los dos inicios y la convergencia rápida —entre dos y tres ciclos en las cinco vueltas— reducen el riesgo de una solución puramente accidental, pero no convierten el procedimiento en una búsqueda global.</p>
-<p>El GAM penalizado parte de bases más amplias y selecciona conjuntamente sus ocho suavidades por GCV dentro del entrenamiento externo. GCV equilibra ajuste y flexibilidad efectiva: una reducción del residuo debe compensar el costo de conservar más curvatura. El fold externo no participa en esa decisión.</p>
-<p>Cada una de las 1.030 predicciones <strong>outer-OOF</strong> se genera para una receta que no participó ni en el ajuste ni en la selección de complejidad que produjo esa predicción. Por eso el RMSE externo evalúa el procedimiento entero, no una curva elegida mirando su propia prueba.</p>
-</section>
-<section id="dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación" class="level2">
-<h2 class="anchored" data-anchor-id="dos-controles-de-flexibilidad-una-misma-disciplina-de-evaluación">Dos controles de flexibilidad, una misma disciplina de evaluación</h2>
-<div class="table-box">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Modelo</th>
-<th>Cómo permite curvatura</th>
-<th>Cómo limita complejidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>MCO</td>
-<td>No la permite</td>
-<td>Pendiente constante por predictor</td>
-</tr>
-<tr class="even">
-<td>Natural splines</td>
-<td>Bases cúbicas naturales</td>
-<td>Elige <span class="math inline">\(df\)</span> discretos mediante CV interna</td>
-</tr>
-<tr class="odd">
-<td>GAM penalizado</td>
-<td>Bases cúbicas de mayor capacidad</td>
-<td>GCV penaliza rugosidad y deja edf continuos</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Un <code>df</code> mayor agrega capacidad discreta a una base de natural splines. En cambio, el GAM parte de una capacidad nominal y deja que la penalización decida qué fracción queda activa. Sus <strong>grados de libertad efectivos</strong> (edf) no son knots ni un conteo de columnas: resumen la flexibilidad que persiste después de suavizar. Un edf cercano a 1 sería aproximadamente lineal; aquí los edf finales son mucho mayores para la mayoría de los predictores.</p>
-<p>La configuración operativa de natural splines, obtenida después de cerrar la evaluación externa, muestra cómo se distribuye la complejidad discreta:</p>
-<div class="table-box">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Predictor</th>
-<th style="text-align: right;"><code>df</code> final</th>
-<th>Evidencia de estabilidad entre entrenamientos</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Cemento</td>
-<td style="text-align: right;">4</td>
-<td>complejidad variable</td>
-</tr>
-<tr class="even">
-<td>Escoria</td>
-<td style="text-align: right;">4</td>
-<td><code>df = 6</code> en los cinco outer-training; baja en el ajuste final</td>
-</tr>
-<tr class="odd">
-<td>Ceniza volante</td>
-<td style="text-align: right;">3</td>
-<td><code>df = 3</code> en todas las vueltas y en el final</td>
-</tr>
-<tr class="even">
-<td>Agua</td>
-<td style="text-align: right;">3</td>
-<td>base final contenida</td>
-</tr>
-<tr class="odd">
-<td>Superplastificante</td>
-<td style="text-align: right;">5</td>
-<td>curvatura intermedia-alta</td>
-</tr>
-<tr class="even">
-<td>Agregado grueso</td>
-<td style="text-align: right;">5</td>
-<td>curvatura intermedia-alta</td>
-</tr>
-<tr class="odd">
-<td>Agregado fino</td>
-<td style="text-align: right;">6</td>
-<td>extremo superior de la grilla final</td>
-</tr>
-<tr class="even">
-<td>Edad</td>
-<td style="text-align: right;">6</td>
-<td><code>df = 5</code> o <code>6</code> en todas las vueltas</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>La suma final es 36 columnas de base más un intercepto. No debe compararse directamente con la suma de edf del GAM penalizado: natural splines elige una dimensión disponible y luego ajusta sin penalización adicional; el GAM puede utilizar parcialmente cada dirección mediante suavizado continuo.</p>
-</section>
-<section id="la-mejora-aparece-fuera-de-muestra-y-es-material" class="level2">
-<h2 class="anchored" data-anchor-id="la-mejora-aparece-fuera-de-muestra-y-es-material">La mejora aparece fuera de muestra y es material</h2>
-<div class="table-box">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Modelo</th>
-<th style="text-align: right;">MSE</th>
-<th style="text-align: right;">RMSE</th>
-<th style="text-align: right;">MAE</th>
-<th style="text-align: right;"><span class="math inline">\(R^2\)</span> outer-OOF</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GAM penalizado</td>
-<td style="text-align: right;"><strong>36,784</strong></td>
-<td style="text-align: right;"><strong>6,065</strong></td>
-<td style="text-align: right;"><strong>4,713</strong></td>
-<td style="text-align: right;"><strong>0,8681</strong></td>
-</tr>
-<tr class="even">
-<td>Natural splines</td>
-<td style="text-align: right;">45,068</td>
-<td style="text-align: right;">6,713</td>
-<td style="text-align: right;">5,277</td>
-<td style="text-align: right;">0,8384</td>
-</tr>
-<tr class="odd">
-<td>MCO lineal</td>
-<td style="text-align: right;">111,287</td>
-<td style="text-align: right;">10,549</td>
-<td style="text-align: right;">8,363</td>
-<td style="text-align: right;">0,6009</td>
-</tr>
-<tr class="even">
-<td>Media outer-training</td>
-<td style="text-align: right;">281,349</td>
-<td style="text-align: right;">16,773</td>
-<td style="text-align: right;">13,515</td>
-<td style="text-align: right;">−0,0091</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="fig-concrete-desempeno" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-concrete-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08a_concrete_desempeno.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Desempeño predictivo externo de media, MCO, Natural Splines y GAM penalizado.
-</figcaption>
-</figure>
-</div>
-<p>Los predictores ya aportan señal bajo MCO: frente a la media, reducen el MSE 60,45 %. Pero la comparación decisiva es MCO contra formas no lineales. Natural splines reduce su MSE 59,5 % y el GAM penalizado 66,9 %. El GAM también baja el MSE 18,4 % frente a natural splines, equivalente a una reducción de 0,65 MPa —9,7 %— en RMSE. La magnitud y el carácter externo de esa mejora sostienen que la recta dejaba estructura predictiva sin representar.</p>
-<p>La ventaja de los modelos no lineales aparece repetidamente al cambiar las recetas reservadas, no en un único fold conveniente. Esa estabilidad importa porque los folds tienen tamaños distintos: se priorizó mantener recetas completas, no fabricar cinco bloques de filas exactamente iguales.</p>
-</section>
-<section id="las-funciones-estimadas-muestran-dónde-estaba-la-restricción" class="level2">
-<h2 class="anchored" data-anchor-id="las-funciones-estimadas-muestran-dónde-estaba-la-restricción">Las funciones estimadas muestran dónde estaba la restricción</h2>
-<p>Los perfiles son cortes de la superficie aditiva: al variar una variable, las otras siete se fijan en sus medianas. La edad resume el caso más claro: la resistencia aumenta con fuerza a edades bajas y luego se aplana, mientras MCO extiende una pendiente constante. Cemento y escoria muestran pendientes que cambian; agua presenta una relación negativa marcadamente no lineal. Superplastificante y los agregados incorporan zonas débiles o no monotónicas que una única pendiente tampoco puede describir. En los extremos, las marcas de soporte obligan a no sobrerreaccionar a oscilaciones locales.</p>
-<p>La figura también separa dos ideas. Natural splines y GAM pueden producir formas diferentes sin que una deba interpretarse como la función verdadera. Su utilidad aquí proviene de que esa flexibilidad se evaluó sobre recetas reservadas y redujo el error externo, no de que una curva sea visualmente más elaborada.</p>
-<div id="fig-concrete-perfiles" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-concrete-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08a_concrete_perfiles.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-perfiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Perfiles de predicción de MCO, Natural Splines y GAM penalizado.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="la-complejidad-se-aprende-y-se-diagnostica" class="level2">
-<h2 class="anchored" data-anchor-id="la-complejidad-se-aprende-y-se-diagnostica">La complejidad se aprende y se diagnostica</h2>
-<p>El ajuste operativo final usa <span class="math inline">\(k=20\)</span> para los ingredientes y <span class="math inline">\(k=12\)</span> para edad. Los edf finales son 15,42 para cemento, 16,01 para escoria, 13,08 para ceniza volante, 17,11 para agua, 14,25 para superplastificante, 16,04 para agregado grueso, 15,15 para agregado fino y 10,59 para edad. La capacidad nominal no quedó vacía, y los edf altos son coherentes con la mejora predictiva.</p>
-<p>La figura muestra también que la flexibilidad cambia entre entrenamientos: cemento es el componente más variable —cae a 3,68 edf en un fold y supera 14 en los otros cuatro—, mientras edad permanece cerca de 10,3–10,6. Esa diferencia evita hablar de una complejidad fija aprendida de una vez: GCV vuelve a decidir en cada muestra de entrenamiento.</p>
-<div id="fig-concrete-edf" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-concrete-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../assets/t08a_concrete_edf.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-concrete-edf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Rango y estabilidad de los grados de libertad efectivos del GAM.
-</figcaption>
-</figure>
-</div>
-<p><code>k.check()</code> y concurvity son diagnósticos complementarios para revisar si una base quedó demasiado limitada o si smooths distintos comparten patrón. Edad utiliza 10,59 de 11 grados disponibles después de la restricción del smooth y agua 17,11 de 19; son las funciones que más justifican cautela al interpretar detalles finos. Concurvity recuerda además que ingredientes que se mueven conjuntamente pueden compartir señal. Ninguno reordena los modelos: la evidencia principal sigue siendo el error outer-OOF.</p>
-<p>Los residuos externos completan esa lectura. MCO conserva una forma sistemática y comprime parte de las resistencias altas; natural splines elimina buena parte del patrón y el GAM lo reduce todavía más, aunque no desaparece en los extremos. La mejora no autoriza a afirmar que el GAM recuperó la función verdadera: muestra que redujo un sesgo de forma bajo una restricción aditiva todavía exigente.</p>
+<section id="cada-árbol-corrige-una-parte-del-error-pendiente" class="level2">
+<h2 class="anchored" data-anchor-id="cada-árbol-corrige-una-parte-del-error-pendiente">Cada árbol corrige una parte del error pendiente</h2>
+<p>En la primera etapa, cada observación deja un residuo <span class="math inline">\(r_i^{(1)}=y_i-F_0(x_i)\)</span>. Un árbol no memoriza esos residuos uno por uno: aprende regiones del espacio de predictores donde las correcciones se parecen. Su aporte se incorpora con un paso de tamaño <span class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+F_1(x)=F_0(x)+\lambda h_1(x).
+\]</span></p>
+<p>Luego se recalculan residuos contra <span class="math inline">\(F_1\)</span>, otro árbol intenta aproximarlos y la secuencia continúa. La película conceptual es <span class="math inline">\(F_0 \rightarrow\)</span> residuo <span class="math inline">\(\rightarrow\)</span> árbol <span class="math inline">\(\rightarrow\)</span> corrección pequeña <span class="math inline">\(\rightarrow\)</span> nuevo residuo. El bloque demostrativo del informe usa stumps y <span class="math inline">\(\lambda=0{,}10\)</span> para hacer visible ese mecanismo sobre observaciones reales; está separado del tuning final.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/ml_t08a_07_residuos_outer_oof_comparativos.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>Estructura comparativa de los residuos outer-OOF.</figcaption>
+<p><img src="../assets/ml_t10a_02_trayectorias_primeras_etapas.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Seis observaciones parten del mismo <span class="math inline">\(F_0\)</span> y reciben correcciones distintas durante las primeras etapas.</figcaption>
 </figure>
 </div>
-<section id="qué-decisión-queda-respaldada" class="level3 section-box">
-<h3 class="anchored" data-anchor-id="qué-decisión-queda-respaldada">Qué decisión queda respaldada</h3>
-<p>Para predecir resistencia en nuevas formulaciones, el GAM penalizado es la alternativa mejor respaldada bajo esta arquitectura de validación. Natural splines también mejora de forma grande sobre MCO, por lo que la conclusión robusta es primero que la linealidad era demasiado restrictiva. La ventaja adicional del GAM justifica elegir su suavizado continuo en esta aplicación, no asumir que todo problema de regresión necesita un modelo más flexible.</p>
+<p>Esta dependencia entre etapas distingue Boosting de los ensambles de la ficha anterior. En Bagging y Random Forest los árboles pueden construirse esencialmente en paralelo y después agregarse. En Boosting, el árbol <span class="math inline">\(b\)</span> necesita conocer qué error dejó el ensamble hasta <span class="math inline">\(b-1\)</span>.</p>
 </section>
-<p>La evaluación y la configuración operativa permanecen separadas. Después de comparar las 1.030 predicciones externas, natural splines vuelve a seleccionar su vector de <code>df</code> con una CV agrupada sobre toda la muestra y el GAM vuelve a elegir suavidades por GCV. Esos ajustes preparan una regla para una receta nueva; no producen una segunda estimación independiente de generalización ni reemplazan los RMSE externos.</p>
-<p>La conclusión depende de una pérdida cuadrática, una respuesta en niveles y una estructura aditiva. No se modelan interacciones entre ingredientes; la búsqueda de splines es greedy; y la extrapolación fuera del soporte de recetas observadas requiere cautela. Un mejor ajuste in-sample, por sí solo, no habría resuelto ninguna de esas limitaciones.</p>
-<p><a href="../../machine-learning/piezas/t08b_oj.html">OJ</a> ofrece el contraste: allí el GAM recibe la misma oportunidad de curvar, pero la evidencia externa y los edf indican que la forma simple ya era suficiente.</p>
+<section id="tres-controles-actúan-en-conjunto" class="level2">
+<h2 class="anchored" data-anchor-id="tres-controles-actúan-en-conjunto">Tres controles actúan en conjunto</h2>
+<p>La complejidad no se resume en contar árboles. Intervienen tres decisiones relacionadas:</p>
+<ul>
+<li><span class="math inline">\(B\)</span> indica cuántas correcciones se acumulan.</li>
+<li>El learning rate <span class="math inline">\(\lambda\)</span> reduce el tamaño de cada paso; pasos pequeños suelen necesitar más etapas.</li>
+<li><code>interaction.depth</code> determina qué estructura puede capturar cada árbol base: un stump solo introduce una división, mientras árboles más profundos pueden representar interacciones.</li>
+</ul>
+<p>Por eso 19.950 árboles con <span class="math inline">\(\lambda=0{,}02\)</span> no significan lo mismo que 3.150 con <span class="math inline">\(\lambda=0{,}20\)</span>. El tuning compara secuencias completas y selecciona su mejor prefijo mediante CV de cinco folds sobre desarrollo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t10a_05_resumen_tuning_lambda_depth_B.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Cada celda resume el mejor número de etapas para una combinación de learning rate y profundidad.</figcaption>
+</figure>
+</div>
+<p>La configuración seleccionada es <span class="math inline">\(\lambda=0{,}02\)</span>, profundidad 3 y <span class="math inline">\(B=19.950\)</span>, con MSE-CV 0,2102. Pero el ganador exacto vive dentro de una meseta: con profundidad 3, <span class="math inline">\(\lambda=0{,}05\)</span> obtiene 0,2104 y <span class="math inline">\(\lambda=0{,}10\)</span>, 0,2109. Las diferencias son mucho menores que los errores estándar descriptivos cercanos a 0,0042.</p>
+<p>La señal más clara no está en una diezmilésima entre learning rates, sino en la profundidad. Los mejores árboles de profundidad 3 superan a los de profundidad 2, cuyo MSE-CV ronda 0,222, y con mayor claridad a los stumps, alrededor de 0,309-0,311. En esta grilla, cada etapa necesita suficiente capacidad para corregir patrones que una única división no representa.</p>
+</section>
+<section id="la-validación-decide-cuándo-dejar-de-corregir" class="level2">
+<h2 class="anchored" data-anchor-id="la-validación-decide-cuándo-dejar-de-corregir">La validación decide cuándo dejar de corregir</h2>
+<p>El MSE de entrenamiento continúa bajando a medida que se agregan árboles y llega a 0,1103 en <span class="math inline">\(B=20.000\)</span>. Si se eligiera <span class="math inline">\(B\)</span> por ajuste interno, la regla sería seguir sumando etapas dentro del rango explorado. La CV responde una pregunta distinta: hasta dónde las nuevas correcciones todavía ayudan a observaciones que no participaron en construirlas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t10a_06_entrenamiento_vs_CV_config_seleccionada.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>El error de entrenamiento sigue descendiendo, mientras el MSE-CV se aplana cerca del prefijo seleccionado.</figcaption>
+</figure>
+</div>
+<p>El mínimo formal ocurre en 19.950, apenas 50 árboles antes del techo de 20.000. El MSE-CV cambia solo en aproximadamente <span class="math inline">\(5\times10^{-6}\)</span> al llegar a 20.000. Esa planicie importa más que el número exacto: la evidencia respalda una región de aprendizaje lento con profundidad 3, no una cantidad mágica de árboles.</p>
+</section>
+<section id="el-test-confirma-una-mejora-grande-frente-a-la-media" class="level2">
+<h2 class="anchored" data-anchor-id="el-test-confirma-una-mejora-grande-frente-a-la-media">El test confirma una mejora grande frente a la media</h2>
+<p>Una vez cerrados los hiperparámetros, el modelo se reajusta sobre todo desarrollo y el test se abre una sola vez.</p>
+<div class="table-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th style="text-align: right;">MSE test</th>
+<th style="text-align: right;">RMSE test</th>
+<th style="text-align: right;">MAE test</th>
+<th style="text-align: right;"><span class="math inline">\(R^2\)</span> test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Media de desarrollo</td>
+<td style="text-align: right;">1,2935</td>
+<td style="text-align: right;">1,1373</td>
+<td style="text-align: right;">0,8996</td>
+<td style="text-align: right;">-0,0001</td>
+</tr>
+<tr class="even">
+<td>Gradient Boosting</td>
+<td style="text-align: right;"><strong>0,2251</strong></td>
+<td style="text-align: right;"><strong>0,4745</strong></td>
+<td style="text-align: right;"><strong>0,3112</strong></td>
+<td style="text-align: right;"><strong>0,8259</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Gradient Boosting reduce 82,6 % el MSE respecto de repetir la media de desarrollo. El MSE externo es aproximadamente 7,1 % mayor que el MSE-CV usado para seleccionar, una diferencia esperable entre dos objetos distintos: CV elige dentro de desarrollo; test evalúa una configuración ya cerrada.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t10a_09_predicho_vs_observado_GB_test.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Predicción frente a valor observado en el test protegido; la línea roja resume medias por intervalos de predicción.</figcaption>
+</figure>
+</div>
+<p>La mejora es grande en esta partición, pero no constituye una prueba de extrapolación a una región geográfica completamente nueva. Además, <code>MedHouseVal</code> acumula observaciones en su límite superior, una característica visible en el gráfico que condiciona el comportamiento en valores altos.</p>
+</section>
+<section id="qué-información-termina-utilizando-el-ensamble" class="level2">
+<h2 class="anchored" data-anchor-id="qué-información-termina-utilizando-el-ensamble">Qué información termina utilizando el ensamble</h2>
+<p>La importancia relativa del modelo concentra 54,0 % en <code>MedInc</code>. Le siguen <code>Longitude</code> con 14,1 %, <code>AveOccup</code> con 12,5 % y <code>Latitude</code> con 12,1 %; juntas reúnen aproximadamente 92,8 % de la importancia total. La geografía y la ocupación aportan señal predictiva más allá del ingreso.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t10a_07_importancia_relativa_gradient_boosting.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Importancia relativa de los predictores en el modelo final de Gradient Boosting.</figcaption>
+</figure>
+</div>
+<p>Estas importancias describen cuánto utiliza el ensamble cada variable; no son coeficientes ni efectos de intervención. Lo mismo vale para las dependencias parciales del informe: resumen cómo cambia la predicción del modelo al mover un predictor dentro del soporte observado, pero no responden qué ocurriría al intervenir sobre ingreso, localización u ocupación.</p>
+</section>
+<section id="el-error-conserva-estructura-geográfica" class="level2">
+<h2 class="anchored" data-anchor-id="el-error-conserva-estructura-geográfica">El error conserva estructura geográfica</h2>
+<p>Para cada observación del test, el residuo se define como</p>
+<p><span class="math display">\[
+e_i=y_i-\widehat y_i.
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/ml_t10a_11_mapa_residuos_GB_test.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Distribución geográfica de los residuos del modelo final en el test protegido.</figcaption>
+</figure>
+</div>
+<p>Los puntos rojos son residuos positivos —el modelo subpredice— y los azules, residuos negativos —el modelo sobrepredice—. El recorte en el percentil 98 afecta solo la escala cromática del mapa: las métricas se calcularon con los residuos originales, sin recorte.</p>
+<p>Aunque el desempeño agregado es bueno, el mapa muestra agrupaciones locales de errores con signo y magnitud parecidos. <code>Latitude</code> y <code>Longitude</code> forman parte de los predictores, pero una partición aleatoria no es validación espacial: el test evalúa nuevas observaciones de la misma población muestreada, no extrapolación a una zona geográfica nueva. Este es un diagnóstico posterior al test; no intervino en la selección, el tuning ni el reajuste del modelo.</p>
+<section id="una-secuencia-útil-no-un-hiperparámetro-mágico" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="una-secuencia-útil-no-un-hiperparámetro-mágico">Una secuencia útil, no un hiperparámetro mágico</h3>
+<p>La evidencia favorece árboles base de profundidad 3 y una región de learning rates bajos o intermedios con desempeño muy parecido. La validación frena la secuencia en desarrollo y el test confirma una mejora predictiva sustantiva frente a la media. La decisión defendible es adoptar la configuración seleccionada por la regla preestablecida sin atribuir significado especial a 19.950 ni a <span class="math inline">\(\lambda=0{,}02\)</span> por sí solos.</p>
+</section>
+<p>El alcance sigue siendo predictivo: una única partición aleatoria no representa deriva temporal ni una transferencia geográfica completa, los árboles no extrapolan suavemente fuera del soporte y los diagnósticos agregados no identifican mecanismos causales.</p>
+<p><a href="../../machine-learning/piezas/t09a_california.html">California Housing con CART, Bagging y Random Forest</a> muestra la historia complementaria: primero una estructura interpretable y luego árboles construidos esencialmente en paralelo y agregados para estabilizar la predicción.</p>
 <div class="small-note">
-<p><strong>Fuente:</strong> informe curado «Taller 08A: Splines y GAM para regresión con Concrete». Figuras originales del informe convertidas a PNG para este análisis; no se generaron estimaciones nuevas.</p>
+<p><strong>Fuente:</strong> informe final «Taller 10A: California Housing - Gradient Boosting de regresión». Figuras originales del informe reutilizadas en PNG; las cifras se verificaron contra los outputs finales y no se generaron estimaciones nuevas.</p>
 </div>
 
 

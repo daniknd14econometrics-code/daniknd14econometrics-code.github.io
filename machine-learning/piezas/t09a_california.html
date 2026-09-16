@@ -406,7 +406,7 @@ Figura&nbsp;1: MSE de test de CART y los ensambles.
 <p>Random Forest con <code>mtry = 3</code> y 1.000 árboles es la opción preferible si el objetivo es minimizar MSE en observaciones comparables a este test. CART-min conserva valor cuando explicar una regla individual compensa un RMSE mayor: aproximadamente USD 62.340 frente a USD 49.640 del bosque.</p>
 </section>
 <p>La conclusión está condicionada a una única partición aleatoria de grupos censales. La respuesta acumula 965 casos en su máximo observado, el test no representa una región geográfica completamente nueva y los árboles no extrapolan suavemente fuera del soporte. Las métricas y las importancias son predictivas, no causales.</p>
-<p><a href="../../machine-learning/piezas/t09b_spam.html">Spam</a> lleva la misma secuencia a clasificación: allí el score del ensamble debe convertirse explícitamente en una decisión y en tipos de error.</p>
+<p><a href="../../machine-learning/piezas/t10a_gradient_boosting_california.html">Gradient Boosting</a> continúa con la misma base, pero cambia el mecanismo: cada árbol depende de los errores que dejó la secuencia anterior. <a href="../../machine-learning/piezas/t09b_spam.html">Spam</a> lleva los ensambles por agregación a clasificación, donde el score debe convertirse explícitamente en una decisión y en tipos de error.</p>
 <div class="small-note">
 <p><strong>Fuente:</strong> informe curado «Taller 09A: CART, Bagging y Random Forest con California Housing». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.</p>
 </div>
@@ -528,7 +528,8 @@ Figura&nbsp;1: MSE de test de CART y los ensambles.
           "machine-learning/piezas/t02_smarket.html",
           "machine-learning/piezas/t03_caravan.html",
           "machine-learning/piezas/t04_college.html",
-          "machine-learning/piezas/t05_auto.html"
+          "machine-learning/piezas/t05_auto.html",
+          "machine-learning/piezas/t11_oj_svm.html"
         ]),
         ...entriesForArea("seleccion-regularizacion", [
           "machine-learning/piezas/t06_hitters.html",
@@ -540,6 +541,7 @@ Figura&nbsp;1: MSE de test de CART y los ensambles.
         ]),
         ...entriesForArea("arboles", [
           "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t10a_gradient_boosting_california.html",
           "machine-learning/piezas/t09b_spam.html"
         ]),
         ...entriesForArea("outcomes", [
