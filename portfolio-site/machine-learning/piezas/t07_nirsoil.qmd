@@ -102,7 +102,7 @@ Las bandas cercanas son casi copias estadísticas: la correlación mediana entre
 
 $\lambda$ define cuánto regularizar; $\alpha$ reparte la penalización entre los términos $L_1$ y $L_2$. No corresponde leer $\alpha=0,90$ como «90 % Lasso»: ambas normas miden objetos distintos, y su efecto depende también del $\lambda$ elegido en la trayectoria propia de cada $\alpha$.
 
-La comparación usa cinco folds externos y cinco internos. Dentro de cada entrenamiento externo, Elastic Net recorre seis valores de $\alpha$ interiores ($0,10$ a $0,95$) y, para cada uno, una trayectoria de 81 valores de $\lambda$; Ridge y Lasso se evalúan como extremos. Cada \(\alpha\) tiene su propia escala de \(\lambda\), de modo que el tuning compara pares \((\alpha,\lambda)\), no valores de \(\alpha\) aislados.
+La comparación usa cinco folds externos y cinco internos. Dentro de cada entrenamiento externo, Elastic Net recorre seis valores de $\alpha$ interiores ($0,10$ a $0,95$) y, para cada uno, una trayectoria de 81 valores de $\lambda$; Ridge y Lasso se evalúan como extremos. Cada $\alpha$ tiene su propia escala de $\lambda$, de modo que el tuning compara pares $(\alpha,\lambda)$, no valores de $\alpha$ aislados.
 
 El taller utiliza únicamente la regla de mínimo de CV. No aplica 1SE porque ordenar parsimonia en una superficie que cambia a la vez geometría, intensidad y número de activos exigiría otra decisión. Las medias, desvíos y parámetros se aprenden sin usar la respuesta del fold que se reserva para predecir.
 
@@ -120,7 +120,7 @@ La predicción **outer-OOF** evalúa la regla completa: «estandarizar → elegi
 ## La mezcla seleccionada cambia con la muestra de entrenamiento
 
 ::: {.table-box}
-| Fold externo | \(\alpha\) Elastic Net | Activos EN | Activos Lasso | RMSE EN | RMSE Lasso |
+| Fold externo | $\alpha$ Elastic Net | Activos EN | Activos Lasso | RMSE EN | RMSE Lasso |
 |---:|---:|---:|---:|---:|---:|
 | 1 | 0,90 | 667 | 606 | **0,4351** | 0,4423 |
 | 2 | 0,75 | 673 | 319 | **0,7553** | 0,7557 |
@@ -131,7 +131,7 @@ La predicción **outer-OOF** evalúa la regla completa: «estandarizar → elegi
 
 ![Los valores de alfa seleccionados cambian entre los cinco entrenamientos externos; 0,90 es la configuración final posterior a la evaluación, no el valor usado en todos los folds.](../assets/t07_nirsoil_estabilidad.svg){#fig-nirsoil-estabilidad fig-alt="Alfa seleccionado para Elastic Net en los cinco folds externos: 0,90; 0,75; 0,95; 0,10; 0,95. La configuración final posterior es 0,90." width="100%"}
 
-\(\alpha\) recorre casi toda la grilla, de 0,10 a 0,95, y Elastic Net conserva entre 312 y 689 variables. Lasso conserva entre 258 y 632. Esta variación es parte del procedimiento: cada *outer-training* vuelve a decidir con sus propios datos. Los folds comparten observaciones y no son repeticiones independientes, por lo que el rango funciona como diagnóstico de sensibilidad, no como intervalo de incertidumbre.
+$\alpha$ recorre casi toda la grilla, de 0,10 a 0,95, y Elastic Net conserva entre 312 y 689 variables. Lasso conserva entre 258 y 632. Esta variación es parte del procedimiento: cada *outer-training* vuelve a decidir con sus propios datos. Los folds comparten observaciones y no son repeticiones independientes, por lo que el rango funciona como diagnóstico de sensibilidad, no como intervalo de incertidumbre.
 
 ## Elastic Net lidera, pero no por una distancia concluyente
 
@@ -159,14 +159,14 @@ Después de cerrar la evaluación, la CV final sobre las 645 observaciones selec
 ::: {.table-box}
 | Ajuste final | $\alpha$ | $\lambda$ | RMSE-CV de selección | Activos |
 |---|---:|---:|---:|---:|
-| Ridge | 0 | \(1,58\times10^{-3}\) | 0,6284 | 700 |
-| Elastic Net | 0,90 | \(8,71\times10^{-7}\) | **0,5565** | 660 |
-| Lasso | 1 | \(7,84\times10^{-7}\) | 0,5598 | 654 |
+| Ridge | 0 | $1,58\times10^{-3}$ | 0,6284 | 700 |
+| Elastic Net | 0,90 | $8,71\times10^{-7}$ | **0,5565** | 660 |
+| Lasso | 1 | $7,84\times10^{-7}$ | 0,5598 | 654 |
 :::
 
 Los RMSE-CV de esta tabla seleccionan una configuración con todos los datos etiquetados; no actualizan los RMSE outer-OOF de 0,5721, 0,5760 y 0,6284 que evaluaron los procedimientos. Para todos los $\alpha>0$, la CV final escoge el extremo de penalización más débil de la trayectoria disponible. Esa evidencia describe una preferencia por regularización débil dentro de una grilla que ya recorre seis órdenes de magnitud, no un óptimo interior nítido ni una selección drástica.
 
-La pareja debe leerse completa: \(\alpha=0,90\) define una geometría cercana a Lasso, mientras el \(\lambda\) muy pequeño hace débil la intensidad total. Comparar el valor absoluto de $\lambda$ entre distintos $\alpha$ tampoco es adecuado porque cada trayectoria tiene su propio $\lambda_{max}$.
+La pareja debe leerse completa: $\alpha=0,90$ define una geometría cercana a Lasso, mientras el $\lambda$ muy pequeño hace débil la intensidad total. Comparar el valor absoluto de $\lambda$ entre distintos $\alpha$ tampoco es adecuado porque cada trayectoria tiene su propio $\lambda_{max}$.
 
 ## Representaciones distintas pueden predecir casi igual
 
@@ -174,7 +174,7 @@ La pareja debe leerse completa: \(\alpha=0,90\) define una geometría cercana a 
 
 El fold 2 expone el trade-off con especial claridad: Elastic Net conserva 673 predictores y Lasso 319, pero sus RMSE externos son 0,7553 y 0,7557. Los vectores de coeficientes y la cantidad de activos son muy diferentes; las predicciones, casi indistinguibles. En el fold 5, los tres RMSE quedan separados por menos de 0,005.
 
-Esto es coherente con la redundancia espectral. Si dos columnas son casi copias, cambiar cuál queda activa o cómo se reparte su coeficiente puede modificar mucho la representación sin alterar demasiado \(X\widehat\beta\). La parte $L_2$ de Elastic Net favorece el agrupamiento de predictores correlacionados, mientras $L_1$ puede producir ceros, pero la identidad de una banda activa no equivale a importancia estable ni a mecanismo físico.
+Esto es coherente con la redundancia espectral. Si dos columnas son casi copias, cambiar cuál queda activa o cómo se reparte su coeficiente puede modificar mucho la representación sin alterar demasiado $X\widehat\beta$. La parte $L_2$ de Elastic Net favorece el agrupamiento de predictores correlacionados, mientras $L_1$ puede producir ceros, pero la identidad de una banda activa no equivale a importancia estable ni a mecanismo físico.
 
 ::: {.section-box}
 ### Qué modelo usaría bajo el criterio planteado

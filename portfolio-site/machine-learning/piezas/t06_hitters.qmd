@@ -103,11 +103,11 @@ Las asociaciones seleccionadas son predictivas dentro de esta muestra. No identi
 | Ridge | Intensidad $\lambda$ | Todos los predictores, contraídos |
 :::
 
-Forward y Backward eligen un punto en una trayectoria de subconjuntos anidados. El taller no realiza *best subset*: con 19 predictores implicaría examinar (2^{19}=524.288) combinaciones. Forward agrega en cada paso la variable que más reduce el error de ajuste; Backward comienza con el modelo completo y elimina una por vez. Son búsquedas *greedy*: construyen qué modelo representa cada tamaño y la CV interna decide en qué tamaño detenerse, pero no garantizan el mejor subconjunto global.
+Forward y Backward eligen un punto en una trayectoria de subconjuntos anidados. El taller no realiza *best subset*: con 19 predictores implicaría examinar $2^{19}=524.288$ combinaciones. Forward agrega en cada paso la variable que más reduce el error de ajuste; Backward comienza con el modelo completo y elimina una por vez. Son búsquedas *greedy*: construyen qué modelo representa cada tamaño y la CV interna decide en qué tamaño detenerse, pero no garantizan el mejor subconjunto global.
 
 ![Trayectorias de selección Forward y Backward.](../assets/ml_t06_03_trayectorias_forward_backward.png){width="100%"}
 
-Lasso y Ridge no recorren esa trayectoria discreta: cambian continuamente el tamaño de los coeficientes. Lasso agrega una penalización $L_1$ y puede anular variables; Ridge usa $L_2$ y conserva las 19 columnas mientras estabiliza direcciones mal determinadas. El valor de \(\lambda\) se selecciona después de aprender el escalado dentro de cada entrenamiento; calcular medias y desvíos con casos protegidos contaminaría la comparación.
+Lasso y Ridge no recorren esa trayectoria discreta: cambian continuamente el tamaño de los coeficientes. Lasso agrega una penalización $L_1$ y puede anular variables; Ridge usa $L_2$ y conserva las 19 columnas mientras estabiliza direcciones mal determinadas. El valor de $\lambda$ se selecciona después de aprender el escalado dentro de cada entrenamiento; calcular medias y desvíos con casos protegidos contaminaría la comparación.
 
 ![Coeficientes estandarizados de MCO, Lasso y Ridge.](../assets/ml_t06_16_coeficientes_estandarizados_mco_lasso_ridge.png){width="100%"}
 
@@ -140,7 +140,7 @@ Las configuraciones elegidas confirman que el tuning forma parte de lo que se ev
 | 5 | 11 | 10 | 18 | 5 |
 :::
 
-Forward oscila entre 6 y 18 variables; Backward, entre 6 y 10. Lasso bajo \(\lambda_{min}\) también cambia entre 6 y 18 activos, mientras 1SE permanece entre 4 y 6. Esta variación no invalida la evaluación: muestra cómo responde cada regla cuando cambia la muestra disponible para aprender.
+Forward oscila entre 6 y 18 variables; Backward, entre 6 y 10. Lasso bajo $\lambda_{min}$ también cambia entre 6 y 18 activos, mientras 1SE permanece entre 4 y 6. Esta variación no invalida la evaluación: muestra cómo responde cada regla cuando cambia la muestra disponible para aprender.
 
 Una CV final posterior puede construir un modelo operativo usando los 263 casos. No es una nueva prueba de generalización: los RMSE que comparan los procedimientos son los externos.
 
@@ -196,7 +196,7 @@ Conviene separar dos preguntas. La primera es predictiva: cuánto se equivoca el
 Si el único criterio es RMSE y MCO integra la competencia, MCO es la referencia seleccionada. Si el flujo exige elegir entre procedimientos con tuning, Forward obtiene el menor error externo; una CV final sobre los 263 casos fijaría entonces $m^*=6$ antes de reajustar. En ambos casos, la configuración final sirve para operar, mientras el RMSE outer-OOF conserva la evidencia de generalización disponible.
 :::
 
-La CV final de Forward produce un MSE de selección de 114.189,73 para \(m=6\); no sustituye su MSE outer-OOF de 123.855,83. El primero elige la configuración operativa usando los 263 casos etiquetados; el segundo evalúa la regla completa en observaciones que quedaron fuera de esa selección. Del mismo modo, que Backward tenga un mínimo menor en su propia CV final no cambia que Forward haya generalizado mejor entre los procedimientos con tuning.
+La CV final de Forward produce un MSE de selección de 114.189,73 para $m=6$; no sustituye su MSE outer-OOF de 123.855,83. El primero elige la configuración operativa usando los 263 casos etiquetados; el segundo evalúa la regla completa en observaciones que quedaron fuera de esa selección. Del mismo modo, que Backward tenga un mínimo menor en su propia CV final no cambia que Forward haya generalizado mejor entre los procedimientos con tuning.
 
 Comparar varios riesgos outer-OOF y escoger el menor es una regla razonable para decidir, pero ese mínimo no constituye una evaluación adicional e independiente del acto de elegir el algoritmo. Evaluar estrictamente ese meta-procedimiento exigiría reservar otro test o seleccionar conjuntamente algoritmo e hiperparámetro dentro de cada entrenamiento externo.
 
