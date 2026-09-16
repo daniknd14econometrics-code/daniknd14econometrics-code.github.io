@@ -174,7 +174,7 @@ Logit lineal queda apenas por delante en log-loss, Brier y AUC. GAM penalizado l
 
 El alcance es limitado: los modelos son aditivos y no exploran interacciones suaves entre lealtad y precio; el umbral 0,5 no expresa necesariamente el costo comercial correcto; y los grupos tienda–semana no sustituyen una prueba temporal futura. La comparación es predictiva, no causal: no identifica el efecto de modificar un precio o una promoción.
 
-[Concrete](t08a_concrete.qmd) muestra el caso complementario: la misma disciplina de evaluación sí respalda una ganancia material al permitir formas funcionales no lineales.
+[OJ con Support Vector Machines](t11_oj_svm.qmd) usa la misma base para una pregunta complementaria: si ampliar la geometría de la frontera mejora clasificación y ranking, sin tratar el decision score como probabilidad. [Concrete](t08a_concrete.qmd) muestra otro contraste: allí la misma disciplina de evaluación sí respalda una ganancia material al permitir formas funcionales no lineales.
 
 ::: {.small-note}
 **Fuente:** informe curado «Taller 08B: GAM logístico con OJ». Figuras originales del informe convertidas a PNG para este análisis; no se generaron estimaciones nuevas.

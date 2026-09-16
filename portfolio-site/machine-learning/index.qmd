@@ -14,7 +14,7 @@ format:
 # Statistical Machine Learning: de la predicción a la decisión
 
 ::: {.hero-banner__lead}
-Quince análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada análisis parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
+Diecisiete análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada análisis parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
 :::
 
 ::: {.hero-banner__actions}
@@ -27,7 +27,7 @@ Quince análisis organizados en siete áreas conectan problemas predictivos, eva
 :::
 
 ::: {.econometria-summary}
-15 análisis · 7 áreas
+17 análisis · 7 áreas
 :::
 
 ::: {.econometria-explorer .js-econometria-explorer}
@@ -62,7 +62,7 @@ Quince análisis organizados en siete áreas conectan problemas predictivos, eva
 ## Clasificación, probabilidades y decisión
 
 ::: {.section-lead}
-Cinco aplicaciones conectan probabilidades y decisiones: costos de error, validación temporal, eventos raros y comparación de clasificadores binarios y multiclase.
+Seis aplicaciones conectan probabilidades, scores y decisiones: costos de error, validación temporal, eventos raros y comparación de reglas de clasificación binarias y multiclase.
 :::
 
 ::: {.piece-grid}
@@ -104,6 +104,14 @@ Cinco aplicaciones conectan probabilidades y decisiones: costos de error, valida
 **Método:** LDA · QDA · Gaussian Naive Bayes
 
 <a class="piece-card__cta" href="piezas/t05_auto.qmd">Abrir análisis →</a>
+:::
+
+::: {.piece-card}
+### [OJ: cuando una frontera más flexible apenas cambia la decisión](piezas/t11_oj_svm.qmd)
+
+**Método:** SVM lineal · Kernel polinómico · RBF
+
+<a class="piece-card__cta" href="piezas/t11_oj_svm.qmd">Abrir análisis →</a>
 :::
 :::
 :::
@@ -164,7 +172,7 @@ Dos aplicaciones muestran cuándo conviene comprar flexibilidad y cuándo la pen
 ## Árboles y ensambles
 
 ::: {.section-lead}
-Dos problemas muestran qué cambia al pasar de un árbol individual a un promedio de árboles: predecir un valor continuo y clasificar mensajes bajo una regla de decisión.
+Tres problemas recorren distintas formas de aprender con árboles: una estructura individual, ensambles construidos en paralelo y agregados, y correcciones secuenciales guiadas por los errores que todavía quedan.
 :::
 
 ::: {.piece-grid}
@@ -174,6 +182,14 @@ Dos problemas muestran qué cambia al pasar de un árbol individual a un promedi
 **Método:** CART · Bagging · Random Forest
 
 <a class="piece-card__cta" href="piezas/t09a_california.qmd">Abrir análisis →</a>
+:::
+
+::: {.piece-card}
+### [California Housing: aprender corrigiendo los errores que quedan](piezas/t10a_gradient_boosting_california.qmd)
+
+**Método:** Gradient Boosting
+
+<a class="piece-card__cta" href="piezas/t10a_gradient_boosting_california.qmd">Abrir análisis →</a>
 :::
 
 ::: {.piece-card}

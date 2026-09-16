@@ -158,7 +158,7 @@ Random Forest con `mtry = 3` y 1.000 árboles es la opción preferible si el obj
 
 La conclusión está condicionada a una única partición aleatoria de grupos censales. La respuesta acumula 965 casos en su máximo observado, el test no representa una región geográfica completamente nueva y los árboles no extrapolan suavemente fuera del soporte. Las métricas y las importancias son predictivas, no causales.
 
-[Spam](t09b_spam.qmd) lleva la misma secuencia a clasificación: allí el score del ensamble debe convertirse explícitamente en una decisión y en tipos de error.
+[Gradient Boosting](t10a_gradient_boosting_california.qmd) continúa con la misma base, pero cambia el mecanismo: cada árbol depende de los errores que dejó la secuencia anterior. [Spam](t09b_spam.qmd) lleva los ensambles por agregación a clasificación, donde el score debe convertirse explícitamente en una decisión y en tipos de error.
 
 ::: {.small-note}
 **Fuente:** informe curado «Taller 09A: CART, Bagging y Random Forest con California Housing». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.
