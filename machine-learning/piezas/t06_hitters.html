@@ -72,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -108,6 +107,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../econometria/assets/portfolio.css">
 <link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/machine-learning/piezas/t06_hitters.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -538,9 +538,6 @@ Figura&nbsp;2: En los cinco entrenamientos externos, la regla 1SE retiene sistem
 <p>Comparar varios riesgos outer-OOF y escoger el menor es una regla razonable para decidir, pero ese mínimo no constituye una evaluación adicional e independiente del acto de elegir el algoritmo. Evaluar estrictamente ese meta-procedimiento exigiría reservar otro test o seleccionar conjuntamente algoritmo e hiperparámetro dentro de cada entrenamiento externo.</p>
 <p>Los modelos lineales tampoco imponen soporte positivo. Forward, Lasso mínimo y Ridge mínimo producen una predicción negativa cada uno. No se truncaron retrospectivamente: hacerlo habría agregado una regla no evaluada. Junto con la dificultad sobre salarios altos, este límite recuerda que la comparación responde a la formulación en niveles y a RMSE, no a todas las decisiones posibles sobre una variable salarial.</p>
 <p><a href="../../machine-learning/piezas/t07_nirsoil.html">NIRsoil</a> lleva la misma pregunta a un régimen diferente: <span class="math inline">\(p&gt;n\)</span> y predictores casi duplicados, donde regularizar ya no es solo una opción de parsimonia sino parte de poder ajustar el modelo.</p>
-<div class="small-note">
-<p><strong>Fuente:</strong> informe curado «Taller 6: Selección de variables y regularización con Hitters», ISLR2. Las figuras sintetizan resultados y diagnósticos ya reportados; no se generaron estimaciones nuevas.</p>
-</div>
 
 
 </section>
@@ -680,6 +677,9 @@ Figura&nbsp;2: En los cinco entrenamientos externos, la regla 1SE retiene sistem
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -841,7 +841,7 @@ Figura&nbsp;2: En los cinco entrenamientos externos, la regla 1SE retiene sistem
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

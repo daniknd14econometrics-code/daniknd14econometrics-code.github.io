@@ -72,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 <style>
 @media (max-width: 700px) {
   #title-block-header .quarto-title-meta {
@@ -140,6 +139,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../assets/portfolio.css">
 <link rel="stylesheet" href="../assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/econometria/piezas/t04b_conteos_poisson_pml.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -534,7 +534,8 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
           "machine-learning/piezas/t02_smarket.html",
           "machine-learning/piezas/t03_caravan.html",
           "machine-learning/piezas/t04_college.html",
-          "machine-learning/piezas/t05_auto.html"
+          "machine-learning/piezas/t05_auto.html",
+          "machine-learning/piezas/t11_oj_svm.html"
         ]),
         ...entriesForArea("seleccion-regularizacion", [
           "machine-learning/piezas/t06_hitters.html",
@@ -546,6 +547,7 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
         ]),
         ...entriesForArea("arboles", [
           "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t10a_gradient_boosting_california.html",
           "machine-learning/piezas/t09b_spam.html"
         ]),
         ...entriesForArea("outcomes", [
@@ -553,6 +555,9 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -714,7 +719,7 @@ Var(Y_i\mid X_i)=\mu_i+\alpha\mu_i^2.
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -72,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -108,6 +107,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../econometria/assets/portfolio.css">
 <link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/machine-learning/piezas/e02_loanapp_gamma.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -420,7 +420,6 @@ Figura&nbsp;2: Comparación de RMSE en el conjunto de test. CART logra el menor 
 <p>Si el objetivo es reducir errores relativos sobre una respuesta positiva, Random Forest es la opción preferible por Gamma deviance y también obtiene el menor MAE. Si la decisión penaliza especialmente grandes diferencias monetarias en niveles, CART mínimo CV presenta el menor RMSE observado, por un margen muy pequeño frente al bosque. La elección de pérdida forma parte del problema y debe preceder al ranking.</p>
 </section>
 <p>La evidencia proviene de una única partición con 394 casos de test, por lo que no cuantifica la estabilidad del ranking ante otras divisiones. El mínimo de <code>mtry</code> es poco pronunciado; los modelos flexibles subestiman parte de la cola; los perfiles condicionados pueden recorrer combinaciones poco frecuentes. Dos avisos de convergencia de <code>glmnet</code> no afectaron las curvas ni predicciones seleccionadas, pero merecerían una auditoría numérica antes de producción. Los resultados e importancias son predictivos, no causales.</p>
-<p><em>Fuente: informe curado del Taller E02, <code>loanapp</code>. Los resultados son predictivos y se reportan sobre el test protegido del ejercicio.</em></p>
 
 
 </section>
@@ -560,6 +559,9 @@ Figura&nbsp;2: Comparación de RMSE en el conjunto de test. CART logra el menor 
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -721,7 +723,7 @@ Figura&nbsp;2: Comparación de RMSE en el conjunto de test. CART logra el menor 
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

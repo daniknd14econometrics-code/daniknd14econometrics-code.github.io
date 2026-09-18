@@ -72,13 +72,13 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
 
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../econometria/assets/portfolio.css">
 <link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/machine-learning/piezas/t04_college.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -424,9 +424,6 @@ Figura&nbsp;1: En el grupo con probabilidad superior a 0,8, QDA y NB anuncian un
 </section>
 <p>La preferencia práctica por LDA no convierte su riesgo OOF en una nueva evaluación independiente de haberlo escogido entre tres modelos. La conclusión se limita a esta muestra, los 17 predictores y las aproximaciones gaussianas, sin selección de variables ni regularización. Dos porcentajes superiores a 100 se conservaron en la base del informe; una aplicación operativa exigiría aclarar su origen.</p>
 <p><a href="../../machine-learning/piezas/t05_auto.html">Auto</a> extiende la pregunta a tres clases y muestra una diferencia sustantiva: el modelo que clasifica mejor ya no es el que obtiene el mejor log-loss.</p>
-<div class="small-note">
-<p><strong>Fuente:</strong> informe curado «Taller 4: Análisis discriminante binario con College», ISLR2. Tablas seleccionadas de la evaluación OOF; SVG elaborado con el intervalo superior de calibración reportado. No se generaron resultados nuevos.</p>
-</div>
 
 
 </section>
@@ -566,6 +563,9 @@ Figura&nbsp;1: En el grupo con probabilidad superior a 0,8, QDA y NB anuncian un
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -727,7 +727,7 @@ Figura&nbsp;1: En el grupo con probabilidad superior a 0,8, QDA y NB anuncian un
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

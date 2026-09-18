@@ -72,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -108,6 +107,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../econometria/assets/portfolio.css">
 <link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/machine-learning/piezas/e03_401k_fraccional.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -395,7 +395,6 @@ Figura&nbsp;1: Comparación transversal de la deviance fraccional en test.
 <div class="section-box">
 <p><strong>Cambio de objeto:</strong> <a href="../../machine-learning/piezas/q01_401ksubs_quantiles.html">Activos financieros: predecir escenarios, no solo un promedio</a> pasa de una media condicional a cuantiles condicionales.</p>
 </div>
-<p><em>Fuente: informe curado del Taller E03, <code>401k</code>. Los resultados son predictivos y corresponden al test protegido del ejercicio.</em></p>
 
 
 </section>
@@ -535,6 +534,9 @@ Figura&nbsp;1: Comparación transversal de la deviance fraccional en test.
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -696,7 +698,7 @@ Figura&nbsp;1: Comparación transversal de la deviance fraccional en test.
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

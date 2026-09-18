@@ -21,7 +21,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -72,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -109,6 +108,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
 <link rel="stylesheet" href="../assets/ts-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/econometria/piezas/ts_ucm_pib_uruguay.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -129,29 +129,29 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Inicio</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../problemas-negocio.html">
+    <a class="nav-link" href="../../problemas-negocio.html"> 
 <span class="menu-text">Problemas de negocio</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../econometria/index.html">
+    <a class="nav-link" href="../../econometria/index.html"> 
 <span class="menu-text">Econometría</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../causalidad/index.html">
+    <a class="nav-link" href="../../causalidad/index.html"> 
 <span class="menu-text">Causalidad</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../machine-learning/index.html">
+    <a class="nav-link" href="../../machine-learning/index.html"> 
 <span class="menu-text">Machine Learning</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../sobre-mi.html">
+    <a class="nav-link" href="../../sobre-mi.html"> 
 <span class="menu-text">Sobre mí</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -166,7 +166,7 @@ window.Quarto = {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">En esta página</h2>
-
+   
   <ul class="collapse">
   <li><a href="#pregunta-y-datos" id="toc-pregunta-y-datos" class="nav-link active" data-scroll-target="#pregunta-y-datos">Pregunta y datos</a></li>
   <li><a href="#estrategia-declarar-la-dinámica-de-cada-componente" id="toc-estrategia-declarar-la-dinámica-de-cada-componente" class="nav-link" data-scroll-target="#estrategia-declarar-la-dinámica-de-cada-componente">Estrategia: declarar la dinámica de cada componente</a></li>
@@ -197,17 +197,17 @@ window.Quarto = {
              <p>Daniel Méndez </p>
           </div>
   </div>
-
+    
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
       <p class="date">15 de septiembre de 2026</p>
     </div>
   </div>
-
-
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -531,7 +531,8 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
           "machine-learning/piezas/t02_smarket.html",
           "machine-learning/piezas/t03_caravan.html",
           "machine-learning/piezas/t04_college.html",
-          "machine-learning/piezas/t05_auto.html"
+          "machine-learning/piezas/t05_auto.html",
+          "machine-learning/piezas/t11_oj_svm.html"
         ]),
         ...entriesForArea("seleccion-regularizacion", [
           "machine-learning/piezas/t06_hitters.html",
@@ -543,6 +544,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
         ]),
         ...entriesForArea("arboles", [
           "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t10a_gradient_boosting_california.html",
           "machine-learning/piezas/t09b_spam.html"
         ]),
         ...entriesForArea("outcomes", [
@@ -550,6 +552,9 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -649,7 +654,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -669,11 +674,11 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copiado");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -711,7 +716,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -755,7 +760,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -830,7 +835,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -858,7 +863,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -882,7 +887,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -922,7 +927,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -1048,7 +1053,7 @@ y_t=Z_t\alpha_t+\varepsilon_t,\qquad
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>Daniel Méndez</p>
-</div>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>

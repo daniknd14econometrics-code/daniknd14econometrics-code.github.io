@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Méndez">
 
-<title>Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS – Daniel Méndez</title>
+<title>Fallas de discos: predecir cuándo importa más que predecir si ocurre – Daniel Méndez</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,12 +72,43 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
-<link rel="stylesheet" href="../assets/portfolio.css">
-<link rel="stylesheet" href="../assets/t01_palette.css">
+<link rel="stylesheet" href="../../econometria/assets/portfolio.css">
+<link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
+<link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="stylesheet" href="../assets/t12b_survival.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/machine-learning/piezas/t12b_backblaze_supervivencia.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -136,16 +167,15 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">En esta página</h2>
    
-  <ul>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
-  <li><a href="#por-qué-este-problema-importa" id="toc-por-qué-este-problema-importa" class="nav-link" data-scroll-target="#por-qué-este-problema-importa">Por qué este problema importa</a></li>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables">Datos y variables</a></li>
-  <li><a href="#estrategia-empírica" id="toc-estrategia-empírica" class="nav-link" data-scroll-target="#estrategia-empírica">Estrategia empírica</a></li>
-  <li><a href="#qué-pasa-con-un-análisis-ingenuo" id="toc-qué-pasa-con-un-análisis-ingenuo" class="nav-link" data-scroll-target="#qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</a></li>
-  <li><a href="#resultados-principales" id="toc-resultados-principales" class="nav-link" data-scroll-target="#resultados-principales">Resultados principales</a></li>
-  <li><a href="#hallazgos-secundarios-y-contrastes" id="toc-hallazgos-secundarios-y-contrastes" class="nav-link" data-scroll-target="#hallazgos-secundarios-y-contrastes">Hallazgos secundarios y contrastes</a></li>
-  <li><a href="#lectura-profesional-del-caso" id="toc-lectura-profesional-del-caso" class="nav-link" data-scroll-target="#lectura-profesional-del-caso">Lectura profesional del caso</a></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre">Cierre</a></li>
+  <ul class="collapse">
+  <li><a href="#el-problema-no-es-solamente-clasificar" id="toc-el-problema-no-es-solamente-clasificar" class="nav-link active" data-scroll-target="#el-problema-no-es-solamente-clasificar">El problema no es solamente clasificar</a></li>
+  <li><a href="#qué-sabemos-hoy-de-cada-máquina" id="toc-qué-sabemos-hoy-de-cada-máquina" class="nav-link" data-scroll-target="#qué-sabemos-hoy-de-cada-máquina">Qué sabemos hoy de cada máquina</a></li>
+  <li><a href="#la-telemetría-agrega-señal-sobre-la-edad" id="toc-la-telemetría-agrega-señal-sobre-la-edad" class="nav-link" data-scroll-target="#la-telemetría-agrega-señal-sobre-la-edad">¿La telemetría agrega señal sobre la edad?</a></li>
+  <li><a href="#qué-señales-distinguen-mayor-riesgo" id="toc-qué-señales-distinguen-mayor-riesgo" class="nav-link" data-scroll-target="#qué-señales-distinguen-mayor-riesgo">Qué señales distinguen mayor riesgo</a></li>
+  <li><a href="#cómo-aprende-cox-dentro-de-un-conjunto-de-riesgo" id="toc-cómo-aprende-cox-dentro-de-un-conjunto-de-riesgo" class="nav-link" data-scroll-target="#cómo-aprende-cox-dentro-de-un-conjunto-de-riesgo">Cómo aprende Cox dentro de un conjunto de riesgo</a></li>
+  <li><a href="#del-ranking-a-probabilidades-por-horizonte" id="toc-del-ranking-a-probabilidades-por-horizonte" class="nav-link" data-scroll-target="#del-ranking-a-probabilidades-por-horizonte">Del ranking a probabilidades por horizonte</a></li>
+  <li><a href="#una-máquina-concreta-convertir-el-score-en-una-acción-posible" id="toc-una-máquina-concreta-convertir-el-score-en-una-acción-posible" class="nav-link" data-scroll-target="#una-máquina-concreta-convertir-el-score-en-una-acción-posible">Una máquina concreta: convertir el score en una acción posible</a></li>
+  <li><a href="#de-la-predicción-a-una-política-de-mantenimiento" id="toc-de-la-predicción-a-una-política-de-mantenimiento" class="nav-link" data-scroll-target="#de-la-predicción-a-una-política-de-mantenimiento">De la predicción a una política de mantenimiento</a></li>
   </ul>
 </nav>
     </div>
@@ -154,8 +184,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Heterogeneidad inobservable en panel salarial: límites de identificación de pooled OLS</h1>
-<p class="subtitle lead">Benchmark pooled con inferencia clusterizada y limites de identificación frente a c_i no observado</p>
+<h1 class="title">Fallas de discos: predecir cuándo importa más que predecir si ocurre</h1>
+<p class="subtitle lead">Censura, señales SMART y predicción del tiempo hasta falla</p>
 </div>
 
 
@@ -172,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">26 de marzo de 2026</p>
+      <p class="date">17 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -184,165 +214,113 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><span class="badge" style="white-space: normal;">Supervivencia · Tiempo hasta falla · Mantenimiento predictivo</span></p>
 <div class="hero-box">
 <div class="hero-title">
-<p>En este panel salarial, cluster mejora la inferencia del pooled, pero no corrige el sesgo por heterogeneidad inobservable</p>
+<p>¿Podemos utilizar el estado conocido de un disco para estimar cuánto tiempo seguirá funcionando y priorizar las máquinas con mayor riesgo de falla?</p>
 </div>
 <div class="hero-sub">
-<p>El pooled OLS con <code>vce(cluster nr)</code> funciona como benchmark operativo para comparar y reportar, pero no es una solución final de identificación cuando <code>c_i</code> puede estar correlacionado con los regresores.</p>
+<p>En 29.021 discos de Backblaze, la telemetría SMART mejora de forma moderada el ranking fuera de muestra respecto de conocer solamente la edad operativa. El resultado no es una etiqueta aislada: es un score de riesgo y una curva de probabilidad para cada horizonte.</p>
 </div>
 </div>
 <div class="metric-grid">
 <div class="metric-card">
 <div class="metric-label">
-<p>Modelo operativo</p>
+<p>Cohorte landmark</p>
 </div>
 <div class="metric-value">
-<p>Pooled + cluster</p>
+<p>29.021</p>
 </div>
 <div class="metric-note">
-<p><code>reg lwage ... , vce(cluster nr)</code></p>
+<p>Discos <code>ST4000DM000</code> operativos al inicio del seguimiento.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>Coef. <code>educ</code> (benchmark)</p>
+<p>Fallas observadas</p>
 </div>
 <div class="metric-value">
-<p>0.099</p>
+<p>185</p>
 </div>
 <div class="metric-note">
-<p>EE cluster = 0.0089</p>
+<p>0,64 % en aproximadamente 90 días; 28.836 censuras administrativas.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>Problema central</p>
+<p>C-index OOF</p>
 </div>
 <div class="metric-value">
-<p>Sesgo por <code>c_i</code></p>
+<p>0,669</p>
 </div>
 <div class="metric-note">
-<p>Si <code>E(x_it,c_i) != 0</code>, pooled no identifica limpio</p>
+<p>Discriminación del Cox con edad y señales SMART basales.</p>
 </div>
 </div>
 <div class="metric-card">
 <div class="metric-label">
-<p>FD en esta base</p>
+<p>Ganancia vs.&nbsp;edad</p>
 </div>
 <div class="metric-value">
-<p>Capacidad limitada</p>
+<p>+0,0246</p>
 </div>
 <div class="metric-note">
-<p><code>D.educ</code> y <code>D.exper</code> se omiten por colinealidad</p>
+<p>2,46 puntos porcentuales de concordancia entre pares comparables.</p>
 </div>
 </div>
 </div>
-<section id="resumen" class="level2">
-<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
-<p>Este caso separa con claridad dos planos que no conviene mezclar en análisis de panel: (i) inferencia estadística y (ii) sesgo de identificación. La correccion de varianzas con cluster por individuo mejora la inferencia del pooled OLS, pero no resuelve el posible sesgo por heterogeneidad inobservable fija (<code>c_i</code>) correlacionada con los regresores.</p>
+<section id="el-problema-no-es-solamente-clasificar" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema-no-es-solamente-clasificar">El problema no es solamente clasificar</h2>
+<p>Para una decisión fija a 90 días podríamos construir</p>
+<p><span class="math display">\[
+Y_i=\mathbf{1}(T_i\leq 90)
+\]</span></p>
+<p>y entrenar un Logit, KNN, GAM, árbol, Random Forest o Boosting. En esta cohorte sería técnicamente válido: los discos sin falla permanecen observados hasta el cierre y toda la censura es administrativa en el día 90.</p>
+<p>Pero esa etiqueta descarta <strong>cuándo</strong> ocurrió la falla. El día 2 y el día 89 pasan a ser el mismo resultado. Entrenar además modelos separados para 30, 60 y 90 días tampoco garantiza por sí solo una trayectoria temporal coherente. Supervivencia conserva el tiempo exacto, incorpora censura y estima con una sola estructura</p>
+<p><span class="math display">\[
+P(T&gt;t\mid X=x)=S(t\mid x)
+\]</span></p>
+<p>para múltiples horizontes. El complemento <span class="math inline">\(1-S(t\mid x)\)</span> es la probabilidad acumulada de falla antes de <span class="math inline">\(t\)</span>.</p>
+<section id="de-accuracy-puede-no-resolver-nada" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="de-accuracy-puede-no-resolver-nada">99,36 % de accuracy puede no resolver nada</h3>
+<p>Como solamente fallan 185 de 29.021 discos, una regla que siempre respondiera «no falla» acertaría aproximadamente <strong>99,36 %</strong> de las etiquetas a 90 días y no detectaría una sola unidad riesgosa. La métrica debe representar la tarea: aquí importa ordenar tiempos de falla y luego convertir ese ranking en probabilidades por horizonte.</p>
 </section>
-<div class="quick-grid">
-<section id="pregunta" class="level2 section-box">
-<h2 class="anchored" data-anchor-id="pregunta">Pregunta</h2>
-<p>¿Cómo cambia la lectura de una ecuación salarial en panel cuando reconocemos que la heterogeneidad individual no observada puede estar correlacionada con los regresores?</p>
-<div class="small-note">
-<p>Variable dependiente: <code>lwage</code> (log del salario por hora). Regresores centrales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code>.</p>
+</section>
+<section id="qué-sabemos-hoy-de-cada-máquina" class="level2">
+<h2 class="anchored" data-anchor-id="qué-sabemos-hoy-de-cada-máquina">Qué sabemos hoy de cada máquina</h2>
+<p>El diseño utiliza un <strong>landmark</strong> común: el 1 de enero de 2016 se congela la información disponible de cada disco y después se observa su trayectoria hasta el 31 de marzo. Si falla, conocemos el tiempo al evento; si llega operativo al final del trimestre, sabemos que su tiempo de falla excede los 90 días y queda censurado a derecha.</p>
+<div id="fig-t12b-landmark" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Líneas de seguimiento de discos desde un landmark común, con fallas distribuidas durante 90 días y censuras al cierre">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-landmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_01_timeline_landmark.png" class="img-fluid figure-img" style="width:100.0%" alt="Líneas de seguimiento de discos desde un landmark común, con fallas distribuidas durante 90 días y censuras al cierre">
 </div>
-</section>
-<section id="idea-central" class="level2 section-box">
-<h2 class="anchored" data-anchor-id="idea-central">Idea central</h2>
-<p>En T4, el pooled con <code>vce(cluster nr)</code> es un benchmark operativo de inferencia y comparación.<br>
-No es una solución final al problema de identificación cuando <code>c_i</code> no observado puede sesgar coeficientes.</p>
-<p><span class="badge">Portfolio econométrico</span></p>
-</section>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-landmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Cada línea comienza en el landmark. El triángulo marca una falla observada; el círculo al final del trimestre, una censura administrativa.
+</figcaption>
+</figure>
 </div>
-<section id="por-qué-este-problema-importa" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-este-problema-importa">Por qué este problema importa</h2>
-<p>Una ecuación salarial en panel resume como cambian los ingresos laborales cuando cambian características observables del trabajador a lo largo del tiempo. En esa lectura, el objetivo no es solo describir correlaciones, sino separar de forma razonable diferencias permanentes entre personas y cambios dentro de cada trayectoria laboral.</p>
-<p>En este contexto, <code>c_i</code> representa rasgos persistentes no observados o imperfectamente medidos del trabajador. Si esos rasgos se relacionan con <code>educ</code>, <code>union</code> u otras covariables, el pooled OLS puede mezclar asociación estadística con sesgo por variable omitida.</p>
-<p>Corregir la matriz de varianzas con cluster es necesario para no sobreconfiar en la precisión inferencial, pero esa correccion no limpia por si sola el problema de identificación.</p>
+<p>La predicción es de <strong>vida residual desde el landmark, condicional a que el disco llegó operativo hasta esa fecha</strong>. No es vida útil total desde fabricación o instalación. Los discos que habían fallado antes no integran esta población predictiva.</p>
+<p>Las covariables también quedan congeladas en el origen. El modelo principal utiliza edad operativa, temperatura y dos alertas SMART con cobertura y variación suficientes: SMART 187 (<code>reported_uncorrectable</code>) y SMART 188 (<code>command_timeout</code>). La telemetría posterior al 1 de enero no entra como predictor; hacerlo cambiaría el problema a uno con covariables dependientes del tiempo y produciría leakage si se incorporara sin ese diseño.</p>
 </section>
-<section id="datos-y-variables" class="level2">
-<h2 class="anchored" data-anchor-id="datos-y-variables">Datos y variables</h2>
-<p>Se trabaja con un panel balanceado de trabajadores (<code>N = 4360</code>, <code>545</code> individuos, 1980-1987).</p>
+<section id="la-telemetría-agrega-señal-sobre-la-edad" class="level2">
+<h2 class="anchored" data-anchor-id="la-telemetría-agrega-señal-sobre-la-edad">¿La telemetría agrega señal sobre la edad?</h2>
+<p>La comparación predictiva mantiene los mismos cinco folds estratificados por evento para dos reglas preespecificadas:</p>
 <ul>
-<li>Variable dependiente: <code>lwage</code> (log del salario por hora)</li>
-<li>Regressors principales: <code>educ</code>, <code>exper</code>, <code>expersq</code>, <code>union</code>, <code>married</code>, <code>black</code></li>
-<li>Controles temporales evaluados: <code>i.year</code></li>
-<li>Unidad de cluster para inferencia: individuo (<code>nr</code>)</li>
+<li><strong>Benchmark:</strong> Cox con edad operativa.</li>
+<li><strong>Modelo SMART:</strong> Cox con edad, temperatura, SMART 187 y SMART 188 basales.</li>
 </ul>
-</section>
-<section id="estrategia-empírica" class="level2">
-<h2 class="anchored" data-anchor-id="estrategia-empírica">Estrategia empírica</h2>
-<p>La secuencia aplicada en T4 es:</p>
-<ol type="1">
-<li>Estimar pooled OLS en niveles como benchmark.</li>
-<li>Corregir inferencia con <code>vce(cluster nr)</code> para heterocedasticidad y dependencia intraindividuo.</li>
-<li>Evaluar la contribución de controles de tiempo como chequeo de especificación.</li>
-<li>Analizar primeras diferencias como estrategia alternativa para remover <code>c_i</code>, explicitando su capacidad empírica en esta base.</li>
-</ol>
-</section>
-<section id="qué-pasa-con-un-análisis-ingenuo" class="level2">
-<h2 class="anchored" data-anchor-id="qué-pasa-con-un-análisis-ingenuo">Qué pasa con un análisis ingenuo</h2>
-<p>Un análisis ingenuo confunde dos mensajes distintos:</p>
-<ol type="1">
-<li>Inferencia: sin cluster, los errores estándar pueden estar mal calibrados.</li>
-<li>Identificacion: aun con cluster, pooled puede estar sesgado si <code>c_i</code> se correlaciona con <code>x_it</code>.</li>
-</ol>
-<p>La leccion profesional del caso es mantener esa distinción: mejorar inferencia no equivale a resolver sesgo por heterogeneidad inobservable.</p>
-<p>Si pooled OLS se reporta como resultado final sin esta salvedad, puede comunicarse una lectura salarial insuficientemente depurada por heterogeneidad persistente. El riesgo no es “técnico” en abstracto: puede sesgar la interpretación económica de retornos salariales y relaciones laborales relevantes para comparaciones aplicadas.</p>
-</section>
-<section id="resultados-principales" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="resultados-principales">Resultados principales</h2>
-<p>El benchmark pooled con cluster mantiene magnitudes economicas similares a las versiones clásica/robusta, pero con errores estándar más exigentes para inferencia. Esa es una mejora de reporte, no una garantia de identificación.</p>
-<p>En términos aplicados, los coeficientes de la ecuación salarial deben leerse como asociaciones condicionadas al modelo: cuando <code>c_i</code> no está bien tratado, parte de las diferencias persistentes entre trabajadores puede quedar absorbida en esos parámetros.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Modelo</th>
-<th style="text-align: right;">Coef. <code>educ</code></th>
-<th style="text-align: right;">Error estándar</th>
-<th style="text-align: right;">IC 95%</th>
-<th style="text-align: right;">N</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Pooled OLS (clásico)</td>
-<td style="text-align: right;">0.0988</td>
-<td style="text-align: right;">0.0046</td>
-<td style="text-align: right;">[0.0897, 0.1078]</td>
-<td style="text-align: right;">4360</td>
-</tr>
-<tr class="even">
-<td>Pooled OLS + cluster <code>nr</code></td>
-<td style="text-align: right;">0.0988</td>
-<td style="text-align: right;">0.0089</td>
-<td style="text-align: right;">[0.0812, 0.1163]</td>
-<td style="text-align: right;">4360</td>
-</tr>
-<tr class="odd">
-<td>Pooled OLS + <code>i.year</code> + cluster <code>nr</code></td>
-<td style="text-align: right;">0.0907</td>
-<td style="text-align: right;">0.0108</td>
-<td style="text-align: right;">[0.0694, 0.1120]</td>
-<td style="text-align: right;">4360</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="hallazgos-secundarios-y-contrastes" class="level2 table-box">
-<h2 class="anchored" data-anchor-id="hallazgos-secundarios-y-contrastes">Hallazgos secundarios y contrastes</h2>
-<p>Como chequeo de especificación, el test conjunto de dummies de año no rechaza al 5% (<code>F(7,544)=1.34</code>, <code>p=0.2296</code>) en este caso. Por eso, dentro del subbloque pooled, el cierre operativo queda en pooled OLS con <code>vce(cluster nr)</code> sin dummies de año; este cierre no resuelve por sí solo el problema general de identificación frente a <code>c_i</code>.</p>
-<p>En primeras diferencias, la estrategia tiene capacidad empírica limitada en esta base: al diferenciar, <code>D.educ</code> queda omitida por falta de variación temporal útil y <code>D.exper</code> por colinealidad con la constante en diferencias, lo que reduce la identificación de parámetros clave del problema salarial.</p>
+<p>Cada ajuste produce scores para el fold que no participó en su entrenamiento. Harrell C pregunta si, entre pares temporales comparables, el disco con mayor score tiende a fallar antes. Un valor de 0,5 representa un ordenamiento aproximadamente aleatorio.</p>
+<div id="fig-t12b-cindex" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Comparación del C-index en cinco folds entre Cox con edad y Cox con señales SMART">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-cindex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_07_cindex_oof.png" class="img-fluid figure-img" style="width:100.0%" alt="Comparación del C-index en cinco folds entre Cox con edad y Cox con señales SMART">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-cindex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Las líneas conectan ambos modelos dentro del mismo fold; los rombos resumen el C-index OOF agregado por pares comparables.
+</figcaption>
+</figure>
+</div>
+<div class="table-box">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -351,83 +329,217 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Bloque</th>
-<th style="text-align: right;">Resultado</th>
+<th>Modelo</th>
+<th style="text-align: right;">C-index OOF</th>
 <th>Lectura</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Test conjunto <code>d81</code>-<code>d87</code></td>
-<td style="text-align: right;">p = 0.2296</td>
-<td>Hallazgo secundario de especificación</td>
+<td>Cox benchmark: edad</td>
+<td style="text-align: right;">0,6447</td>
+<td>La edad ya ordena riesgo mejor que el azar.</td>
 </tr>
 <tr class="even">
-<td>FD: <code>D.educ</code></td>
-<td style="text-align: right;">Omitida</td>
-<td>Sin variación temporal útil dentro de individuo</td>
+<td>Cox con SMART basal</td>
+<td style="text-align: right;"><strong>0,6693</strong></td>
+<td>La telemetría añade señal de ranking.</td>
 </tr>
 <tr class="odd">
-<td>FD: <code>D.exper</code></td>
-<td style="text-align: right;">Omitida</td>
-<td>Colinealidad en diferencias para esta base</td>
-</tr>
-<tr class="even">
-<td>FD: <code>D.expersq</code></td>
-<td style="text-align: right;">coef. = -0.0058, p &lt; 0.001</td>
-<td>Variable con variación útil en FD</td>
+<td>Diferencia</td>
+<td style="text-align: right;"><strong>+0,0246</strong></td>
+<td>Mejora en 4 de los 5 folds.</td>
 </tr>
 </tbody>
 </table>
-<p>Como objeto final de decisión en T4, la lectura queda en dos niveles:</p>
+</div>
+<p>La mejora es real pero moderada. <strong>+0,0246</strong> significa aproximadamente 2,46 puntos porcentuales adicionales de concordancia entre pares comparables; no son puntos de accuracy ni de probabilidad de falla. Además, el C-index evalúa discriminación —quién debería fallar antes—, no calibración de las probabilidades absolutas.</p>
+</section>
+<section id="qué-señales-distinguen-mayor-riesgo" class="level2">
+<h2 class="anchored" data-anchor-id="qué-señales-distinguen-mayor-riesgo">Qué señales distinguen mayor riesgo</h2>
+<p>Una primera comparación no ajustada separa los discos según presenten al menos una de las alertas SMART retenidas. Las curvas se distancian temprano: a 90 días, la supervivencia estimada es aproximadamente 0,9944 sin alertas y 0,9836 con alguna alerta.</p>
+<div id="fig-t12b-km-smart" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curvas Kaplan-Meier con mayor caída para discos con alerta SMART basal">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-km-smart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_02_km_alerta_smart.png" class="img-fluid figure-img" style="width:100.0%" alt="Curvas Kaplan-Meier con mayor caída para discos con alerta SMART basal">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-km-smart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Kaplan-Meier según presencia de al menos una señal SMART retenida en el landmark. Es una comparación marginal: no ajusta por edad, temperatura ni por cuál alerta está activa.
+</figcaption>
+</figure>
+</div>
+<p>El indicador agregado prepara la pregunta, pero no explica qué señal importa. SMART 187 aparece solamente en 183 discos; 21 fallan antes de 90 días. Su tasa observada es 11,48 %, frente a 0,57 % entre quienes no presentan esa alerta.</p>
+<div class="table-box">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Nivel de decisión</th>
-<th>Veredicto</th>
-<th>Alcance</th>
+<th>Estado de SMART 187 al inicio</th>
+<th style="text-align: right;">Discos</th>
+<th style="text-align: right;">Fallas</th>
+<th style="text-align: right;">Tasa observada a 90 días</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Cierre del subbloque pooled</td>
-<td><code>pooled + cluster</code> sin <code>i.year</code> (test conjunto p = 0.2296)</td>
-<td>Benchmark operativo de inferencia y reporte</td>
+<td>Sin alerta</td>
+<td style="text-align: right;">28.838</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">0,57 %</td>
 </tr>
 <tr class="even">
-<td>Problema general de identificación</td>
-<td>Sigue abierto por posible correlación entre <code>x_it</code> y <code>c_i</code></td>
-<td>El pooled no cierra por sí solo la lectura del caso</td>
-</tr>
-<tr class="odd">
-<td>Contraste en diferencias</td>
-<td>Capacidad limitada (<code>D.educ</code> y <code>D.exper</code> omitidas)</td>
-<td>Aporta diagnóstico, pero no reemplaza el cierre del subbloque pooled</td>
+<td>Con alerta</td>
+<td style="text-align: right;">183</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;"><strong>11,48 %</strong></td>
 </tr>
 </tbody>
 </table>
+</div>
+<p>El Cox multivariado mantiene las demás covariables constantes. Allí SMART 187 domina la separación relativa con <span class="math inline">\(HR\approx15{,}9\)</span>; un año adicional de edad operativa presenta <span class="math inline">\(HR\approx1{,}62\)</span>. Temperatura y SMART 188 aportan bastante menos en esta especificación.</p>
+<div id="fig-t12b-forest" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Forest plot con hazard ratio cercano a 16 para SMART 187 y cercano a 1,6 por año de edad">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-forest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_03_cox_forest_hr.png" class="img-fluid figure-img" style="width:100.0%" alt="Forest plot con hazard ratio cercano a 16 para SMART 187 y cercano a 1,6 por año de edad">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-forest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Hazard ratios del Cox SMART con intervalos de 95 %. La escala logarítmica permite mostrar simultáneamente el efecto moderado de edad y el desplazamiento asociado con SMART 187.
+</figcaption>
+</figure>
+</div>
+<p>Un <span class="math inline">\(HR=15{,}9\)</span> <strong>no</strong> significa 15,9 veces más probabilidad absoluta de fallar en 90 días. Compara tasas instantáneas condicionadas entre discos comparables. Para llegar a una probabilidad necesitamos combinar el score relativo con el riesgo basal. Tampoco hay una lectura causal: estas asociaciones sirven para predecir dentro del entorno observado, no para afirmar qué ocurriría al intervenir sobre una señal SMART.</p>
 </section>
-<p><img src="../assets/t04_decision_secuencial.svg" alt="Síntesis secuencial de trayectoria metodológica en T4: cierre del subbloque pooled, límite por heterogeneidad inobservable y transición metodológica" width="780" style="display:block; max-width:100%; height:auto;"></p>
-<section id="lectura-profesional-del-caso" class="level2">
-<h2 class="anchored" data-anchor-id="lectura-profesional-del-caso">Lectura profesional del caso</h2>
-<p>T4 deja un criterio aplicado claro:</p>
-<ul>
-<li><code>pooled + cluster</code> es un benchmark operativo valido para inferencia y comparación.</li>
-<li>Ese benchmark no resuelve por sí mismo la identificación cuando hay riesgo de <code>c_i</code> correlacionado con regresores.</li>
-<li>Las alternativas que eliminan <code>c_i</code> (como diferencias) pueden tener restricciones de capacidad empírica según la estructura de variación de la base.</li>
-</ul>
-<p>Por eso, el resultado debe comunicarse como evidencia de referencia econométrica, no como conclusión cerrada.</p>
+<section id="cómo-aprende-cox-dentro-de-un-conjunto-de-riesgo" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-aprende-cox-dentro-de-un-conjunto-de-riesgo">Cómo aprende Cox dentro de un conjunto de riesgo</h2>
+<p>Cox asigna a cada disco un predictor lineal <span class="math inline">\(\widehat\eta_i=x_i^\top\widehat\beta\)</span> y lo transforma en un score positivo <span class="math inline">\(e^{\widehat\eta_i}\)</span>. Cuando ocurre una falla, la partial likelihood compara la máquina que falla con todas las que seguían operativas justo antes de ese momento:</p>
+<p><span class="math display">\[
+\frac{e^{\widehat\eta_i}}
+{\sum_{j\in R(t)}e^{\widehat\eta_j}}.
+\]</span></p>
+<p>En el evento ilustrado del día 21 quedan 28.972 discos en riesgo. La máquina que falla tiene <span class="math inline">\(\widehat\eta\approx4{,}283\)</span> y <span class="math inline">\(e^{\widehat\eta}\approx72{,}45\)</span>; el denominador completo es 62.158,26. Su contribución local es aproximadamente 0,00117.</p>
+<div id="fig-t12b-riskset" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histograma de scores de casi 29 mil discos y línea del evento muy desplazada a la derecha">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-riskset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_04_partial_likelihood_riskset.png" class="img-fluid figure-img" style="width:100.0%" alt="Histograma de scores de casi 29 mil discos y línea del evento muy desplazada a la derecha">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-riskset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Distribución del predictor lineal dentro del risk set real del día 21. La línea naranja identifica el disco que falla.
+</figcaption>
+</figure>
+</div>
+<p>El número parece pequeño porque compite contra casi 29 mil alternativas. Si todos fueran indistinguibles, cualquiera recibiría solamente</p>
+<p><span class="math display">\[
+\frac{1}{28.972}\approx3{,}45\times10^{-5}.
+\]</span></p>
+<p>La contribución del disco que falla es unas <strong>33,8 veces</strong> esa referencia uniforme. Esa es la intuición del aprendizaje: dentro de cada conjunto de máquinas todavía operativas, el modelo desplaza más riesgo hacia quienes se parecen a los eventos observados.</p>
 </section>
-<section id="cierre" class="level2">
-<h2 class="anchored" data-anchor-id="cierre">Cierre</h2>
-<p>Este taller consolida una idea central de trabajo profesional en panel: corregir inferencia es necesario, pero no suficiente cuando el problema principal es sesgo por heterogeneidad inobservable.</p>
-<p>El pooled con cluster funciona como punto de partida robusto para reporte comparativo. Como continuidad aplicada natural, el siguiente paso es elegir entre enfoques como FE, RE o CRE según el problema y los supuestos defendibles, para tratar de forma explícita el límite detectado en pooled.</p>
-<p>La decisión final del taller queda explícita: cierre operativo dentro del subbloque pooled y, al mismo tiempo, reconocimiento de que el problema general requiere estrategias adicionales para tratar <code>c_i</code>.</p>
+<section id="del-ranking-a-probabilidades-por-horizonte" class="level2">
+<h2 class="anchored" data-anchor-id="del-ranking-a-probabilidades-por-horizonte">Del ranking a probabilidades por horizonte</h2>
+<p>La partial likelihood aprende el ranking sin fijar la forma del hazard basal. Después, Breslow recupera ese baseline y permite construir una curva para una combinación concreta de covariables:</p>
+<p><span class="math display">\[
+\widehat S(t\mid x)
+=\exp\{-\widehat H_0(t)e^{\widehat\eta(x)}\}.
+\]</span></p>
+<section id="la-cadena-operativa" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="la-cadena-operativa">La cadena operativa</h3>
+<p><span class="math display">\[
+x_{\text{máquina}}
+\longrightarrow \widehat\eta(x)
+\longrightarrow e^{\widehat\eta(x)}
+\longrightarrow \widehat S(t\mid x)
+\longrightarrow 1-\widehat S(t\mid x).
+\]</span></p>
+<p>Las dos primeras cantidades ordenan riesgo relativo. Las dos últimas responden cuál es la probabilidad estimada de seguir operando —o de fallar— antes de cada horizonte.</p>
+</section>
+<p>Tres discos reales del landmark muestran que «perfil» significa un vector <span class="math inline">\(x\)</span> concreto, no una máquina promedio. El primero tiene 0,708 años, 26 °C y ninguna alerta; el segundo, 0,672 años, 26 °C y solamente SMART 188; el tercero, 0,951 años, 27 °C y ambas alertas, incluida SMART 187.</p>
+<div id="fig-t12b-curvas" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Tres curvas Cox: dos cercanas a supervivencia uno y otra con descenso claro cuando SMART 187 está activa">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-curvas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_05_curvas_maquinas_reales.png" class="img-fluid figure-img" style="width:100.0%" alt="Tres curvas Cox: dos cercanas a supervivencia uno y otra con descenso claro cuando SMART 187 está activa">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-curvas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Curvas condicionadas para tres máquinas reales. La separación depende de qué señal está activa, además de edad y temperatura; no del simple conteo de alertas.
+</figcaption>
+</figure>
+</div>
+<p>La máquina con una sola alerta tiene activo SMART 188, cuya contribución incremental es modesta. La de dos alertas incorpora también SMART 187 y recibe una curva muy distinta. Contar alertas sin distinguirlas ocultaría el mecanismo del modelo.</p>
+</section>
+<section id="una-máquina-concreta-convertir-el-score-en-una-acción-posible" class="level2">
+<h2 class="anchored" data-anchor-id="una-máquina-concreta-convertir-el-score-en-una-acción-posible">Una máquina concreta: convertir el score en una acción posible</h2>
+<p>Después de cerrar la evaluación OOF, el mismo Cox SMART se reajusta sobre toda la cohorte. Ese es el modelo operativo: aprovecha todos los datos etiquetados disponibles para generar predicciones futuras.</p>
+<p>La máquina priorizada por mayor score tiene 2,533 años de edad, 28 °C y ambas alertas activas. El refit produce <span class="math inline">\(\widehat\eta(x)=4{,}293\)</span> y <span class="math inline">\(e^{\widehat\eta(x)}=73{,}22\)</span>.</p>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-label">
+<p>Falla antes de 30 días</p>
+</div>
+<div class="metric-value">
+<p>7,3 %</p>
+</div>
+<div class="metric-note">
+<p><span class="math inline">\(1-\widehat S(30\mid x)\)</span></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Falla antes de 60 días</p>
+</div>
+<div class="metric-value">
+<p>14,6 %</p>
+</div>
+<div class="metric-note">
+<p><span class="math inline">\(1-\widehat S(60\mid x)\)</span></p>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">
+<p>Falla antes de 90 días</p>
+</div>
+<div class="metric-value">
+<p>19,7 %</p>
+</div>
+<div class="metric-note">
+<p><span class="math inline">\(1-\widehat S(90\mid x)\)</span></p>
+</div>
+</div>
+</div>
+<div id="fig-t12b-maquina" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curva de supervivencia de una máquina prioritaria que cae hasta cerca de 0,80 a 90 días">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t12b-maquina-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../assets/ml_t12b_06_prediccion_maquina_priorizada.png" class="img-fluid figure-img" style="width:100.0%" alt="Curva de supervivencia de una máquina prioritaria que cae hasta cerca de 0,80 a 90 días">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t12b-maquina-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: Curva del disco priorizado frente a Kaplan-Meier marginal. Las probabilidades provienen del refit de muestra completa; el outcome observado se muestra únicamente como ilustración.
+</figcaption>
+</figure>
+</div>
+<p>El disco efectivamente falla alrededor del día 67. Es un ejemplo operativo memorable, pero no evidencia de generalización: fue seleccionado con el modelo reajustado sobre toda la cohorte.</p>
+<section id="tres-tareas-que-no-deben-mezclarse" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="tres-tareas-que-no-deben-mezclarse">Tres tareas que no deben mezclarse</h3>
+<p><strong>Evaluar el procedimiento</strong> usa predicciones OOF y produce el C-index 0,669. <strong>Entrenar el modelo operativo</strong> reajusta la regla sobre las 29.021 observaciones. <strong>Aplicarlo a una máquina nueva</strong> utiliza únicamente sus features conocidas en una nueva fecha de decisión. El futuro de esa máquina no participa en el cálculo.</p>
+</section>
+</section>
+<section id="de-la-predicción-a-una-política-de-mantenimiento" class="level2">
+<h2 class="anchored" data-anchor-id="de-la-predicción-a-una-política-de-mantenimiento">De la predicción a una política de mantenimiento</h2>
+<p>La salida permite ordenar máquinas por <span class="math inline">\(\widehat\eta(x)\)</span>, priorizar inspecciones, identificar candidatas a reemplazo preventivo y organizar mantenimiento según probabilidades a 30, 60 o 90 días. No determina por sí sola el umbral de intervención.</p>
+<p>Para transformar el 7,3 %, 14,6 % o 19,7 % en «inspeccionar», «reemplazar» o «esperar» faltan costos y restricciones: costo de una falla, inspección y reemplazo preventivo; downtime; criticidad de la unidad; presupuesto y capacidad de mantenimiento. El flujo empresarial completo es</p>
+<p><span class="math display">\[
+\text{predicción}\;\longrightarrow\;\text{priorización}\;\longrightarrow\;
+\text{decisión condicionada por costos}.
+\]</span></p>
+<section id="qué-sostiene-la-evidencia" class="level3 section-box">
+<h3 class="anchored" data-anchor-id="qué-sostiene-la-evidencia">Qué sostiene la evidencia</h3>
+<p>La telemetría SMART basal agrega señal sobre la edad operativa y mejora el ranking en cuatro de cinco folds. Cox entrega además una trayectoria temporal coherente y probabilidades por horizonte para cada máquina. La ganancia es útil, no espectacular: debe alimentar una decisión de mantenimiento, no venderse como certeza de falla.</p>
+</section>
+<p>El alcance permanece acotado. La cohorte está condicionada a haber sobrevivido hasta el landmark; cubre solamente discos <code>ST4000DM000</code> en el entorno operativo de Backblaze y utiliza covariables basales, no SMART dinámicos. Cox impone riesgos proporcionales. El C-index valida discriminación, no calibración probabilística, y la máquina seleccionada no sustituye la evaluación OOF. Trasladar el modelo a otro hardware, período o contexto requiere una validación nueva.</p>
+<div class="small-note">
+<p><strong>Datos:</strong> Backblaze Drive Stats, primer trimestre de 2016.</p>
+</div>
 
 
 </section>
@@ -546,7 +658,8 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
           "machine-learning/piezas/t02_smarket.html",
           "machine-learning/piezas/t03_caravan.html",
           "machine-learning/piezas/t04_college.html",
-          "machine-learning/piezas/t05_auto.html"
+          "machine-learning/piezas/t05_auto.html",
+          "machine-learning/piezas/t11_oj_svm.html"
         ]),
         ...entriesForArea("seleccion-regularizacion", [
           "machine-learning/piezas/t06_hitters.html",
@@ -558,6 +671,7 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
         ]),
         ...entriesForArea("arboles", [
           "machine-learning/piezas/t09a_california.html",
+          "machine-learning/piezas/t10a_gradient_boosting_california.html",
           "machine-learning/piezas/t09b_spam.html"
         ]),
         ...entriesForArea("outcomes", [
@@ -565,6 +679,9 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -726,7 +843,7 @@ No es una solución final al problema de identificación cuando <code>c_i</code>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

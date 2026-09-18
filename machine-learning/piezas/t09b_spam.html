@@ -72,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="robots" content="noindex, nofollow">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -108,6 +107,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../econometria/assets/portfolio.css">
 <link rel="stylesheet" href="../../econometria/assets/t01_palette.css">
 <link rel="stylesheet" href="../../assets/analysis-layout.css">
+<link rel="canonical" href="https://daniknd14econometrics-code.github.io/machine-learning/piezas/t09b_spam.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -496,9 +496,6 @@ Figura&nbsp;2: AUC, Log Loss y Brier de CART y los ensambles.
 </section>
 <p>La conclusión depende de una única partición estratificada y de un corpus cuyo lenguaje puede cambiar con usuarios, idiomas y tiempo. OOB participó en el tuning de <code>mtry</code>, el score de votos no fue calibrado mediante un procedimiento adicional y las diferencias observadas no incluyen inferencia sobre superioridad poblacional. El desempeño y las importancias son predictivos, no causales.</p>
 <p><a href="../../machine-learning/piezas/t09a_california.html">California Housing</a> presenta el mismo mecanismo en regresión: promediar árboles reduce MSE, aunque no exista un umbral de decisión.</p>
-<div class="small-note">
-<p><strong>Fuente:</strong> informe curado «Taller 09B: CART, Bagging y Random Forest con Spam». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.</p>
-</div>
 
 
 </section>
@@ -638,6 +635,9 @@ Figura&nbsp;2: AUC, Log Loss y Brier de CART y los ensambles.
           "machine-learning/piezas/e02_loanapp_gamma.html",
           "machine-learning/piezas/e03_401k_fraccional.html",
           "machine-learning/piezas/q01_401ksubs_quantiles.html"
+        ]),
+        ...entriesForArea("supervivencia", [
+          "machine-learning/piezas/t12b_backblaze_supervivencia.html"
         ])
       ]
     }
@@ -799,7 +799,7 @@ Figura&nbsp;2: AUC, Log Loss y Brier de CART y los ensambles.
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/daniknd14econometrics-code\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
