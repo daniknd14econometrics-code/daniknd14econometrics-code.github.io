@@ -187,7 +187,3 @@ RIF–Oaxaca permite localizar contribuciones de cobertura sindical, educación 
 ## Una progresión de preguntas
 
 [Oaxaca–Blinder](t16_oaxaca_blinder.qmd) aporta el álgebra de una descomposición de medias; [DFL](t17_dfl.qmd), el contrafactual distributivo agregado; [UQR/RIF](t18_uqr_rif.qmd), la transformación que aproxima funcionales marginales. Este análisis combina las tres ideas para obtener detalle y mostrar su costo de aproximación.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 19: Descomposición RIF», replicación de Firpo, Fortin y Lemieux. Figuras y tablas reproducen valores reportados; el detalle principal corresponde a la versión reponderada y la comparación DFL a la RIF estándar. No se redistribuye el residuo ni se fuerza el cierre de cifras redondeadas.
-:::

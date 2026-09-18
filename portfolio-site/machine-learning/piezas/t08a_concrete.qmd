@@ -177,7 +177,3 @@ La evaluación y la configuración operativa permanecen separadas. Después de c
 La conclusión depende de una pérdida cuadrática, una respuesta en niveles y una estructura aditiva. No se modelan interacciones entre ingredientes; la búsqueda de splines es greedy; y la extrapolación fuera del soporte de recetas observadas requiere cautela. Un mejor ajuste in-sample, por sí solo, no habría resuelto ninguna de esas limitaciones.
 
 [OJ](t08b_oj.qmd) ofrece el contraste: allí el GAM recibe la misma oportunidad de curvar, pero la evidencia externa y los edf indican que la forma simple ya era suficiente.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 08A: Splines y GAM para regresión con Concrete». Figuras originales del informe convertidas a PNG para este análisis; no se generaron estimaciones nuevas.
-:::

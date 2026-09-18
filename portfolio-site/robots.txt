@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daniknd14econometrics-code.github.io/sitemap.xml

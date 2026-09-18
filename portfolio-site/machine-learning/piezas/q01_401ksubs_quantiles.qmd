@@ -177,5 +177,3 @@ Q01 estima solo dos cuantiles, no toda la distribución. La cobertura global pue
 ::: {.section-box}
 **Cierre del área:** E01–E03 cambian el soporte del outcome y la pérdida; Q01 cambia directamente el objeto predictivo, de media condicional a escenarios cuantílicos.
 :::
-
-*Fuente: informe actualizado del Taller Q01, `401ksubs`. Los resultados son predictivos y corresponden al test protegido del ejercicio.*

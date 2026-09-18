@@ -147,7 +147,3 @@ En esta muestra, las diferencias observadas de trayectoria laboral tienen un pes
 ## De una media a una distribución
 
 La aditividad de Oaxaca–Blinder descansa en la media de un modelo lineal. [Salarios: apertura arriba, compresión abajo](t17_dfl.qmd) cambia el objeto: construye una distribución contrafactual completa para estudiar cuantiles y desigualdad. [La descomposición RIF](t19_descomposicion_rif.qmd) recupera después una apertura por bloques, con un costo de aproximación que debe hacerse explícito.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 16: Descomposición Oaxaca–Blinder», aplicación NLSY79 utilizada en la replicación de Fortin, Lemieux y Firpo. Figuras elaboradas con las contribuciones y referencias reportadas. La inferencia citada corresponde a la descomposición del informe.
-:::

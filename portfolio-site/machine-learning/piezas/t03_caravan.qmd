@@ -157,7 +157,3 @@ En esta configuración, KNN no mejora la decisión respecto de ignorar los predi
 En ocho de las quince combinaciones fold–pérdida se selecciona $K=101$, el extremo superior de la grilla. Como el desempate elige el mayor $K$ entre mínimos exactos, el patrón es compatible con curvas planas y selección débil. Los valores finales con toda la muestra —13, 17 y 7 según la pérdida— no reemplazan la evaluación externa ni demuestran que el problema haya quedado resuelto.
 
 El resultado se limita a esta representación, distancia, grilla y pérdidas. No prueba una incapacidad universal de KNN, ni que reducir dimensiones por sí solo mejoraría las predicciones. Frente a [Default](t01_default.qmd), muestra un caso donde cambiar costos no recupera eventos; junto con [Smarket](t02_smarket.qmd), subraya que una comparación profesional necesita una referencia mínima y una evaluación adecuada al problema.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 3: Clasificación binaria con Caravan», ISLR2. SVG elaborado con las medianas del diagnóstico geométrico reportado; tablas seleccionadas de la evaluación externa. No se generaron resultados nuevos.
-:::

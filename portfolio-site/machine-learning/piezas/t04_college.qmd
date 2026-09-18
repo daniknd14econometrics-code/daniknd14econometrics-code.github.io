@@ -169,7 +169,3 @@ Comparte una covarianza completa entre clases y logra el mejor resultado agregad
 La preferencia práctica por LDA no convierte su riesgo OOF en una nueva evaluación independiente de haberlo escogido entre tres modelos. La conclusión se limita a esta muestra, los 17 predictores y las aproximaciones gaussianas, sin selección de variables ni regularización. Dos porcentajes superiores a 100 se conservaron en la base del informe; una aplicación operativa exigiría aclarar su origen.
 
 [Auto](t05_auto.qmd) extiende la pregunta a tres clases y muestra una diferencia sustantiva: el modelo que clasifica mejor ya no es el que obtiene el mejor log-loss.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 4: Análisis discriminante binario con College», ISLR2. Tablas seleccionadas de la evaluación OOF; SVG elaborado con el intervalo superior de calibración reportado. No se generaron resultados nuevos.
-:::

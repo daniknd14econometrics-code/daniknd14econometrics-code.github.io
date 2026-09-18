@@ -171,7 +171,3 @@ RBF obtiene el menor error bajo el criterio fijado, pero la diferencia frente a 
 El alcance se limita a esta partición agrupada, estas seis fuentes de información y costos simétricos. Los grupos tienda-semana protegen dependencia compartida, pero no sustituyen una prueba temporal futura. Las fronteras y sus scores son herramientas predictivas, no identifican efectos causales de cambiar precio, promociones o lealtad.
 
 [OJ con Logit y GAM penalizado](t08b_oj.qmd) plantea la pregunta complementaria: allí la flexibilidad se evalúa por la calidad de probabilidades; aquí, los kernels se comparan por clasificación y ranking sin tratar el decision score como probabilidad.
-
-::: {.small-note}
-**Fuente:** informe final «Taller 11: Support Vector Machines con OJ». Figuras originales del informe reutilizadas en PNG; las cifras se verificaron contra los outputs finales y no se generaron estimaciones nuevas.
-:::

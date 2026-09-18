@@ -1,4 +1,6 @@
-﻿:root {
+﻿@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap");
+
+:root {
   --bg: #f1f4f8;
   --surface: #ffffff;
   --surface-soft: #f7f9fc;
@@ -86,6 +88,40 @@ body:has(.hero-banner) a:focus:not(.button-primary):not(.button-secondary):not(.
 .navbar .nav-link:hover,
 .navbar .nav-link:focus {
   color: var(--brand) !important;
+}
+
+/* Mantiene el navbar global en Cosmo cuando una ficha usa Flatly. */
+body.portfolio-piece .navbar {
+  --bs-navbar-padding-y: 0.5rem;
+  --bs-navbar-color: rgb(84.32, 84.66, 85);
+  --bs-navbar-hover-color: rgba(31.2, 77.6, 181.6, 0.8);
+  --bs-navbar-disabled-color: rgba(84.32, 84.66, 85, 0.75);
+  --bs-navbar-active-color: rgb(31.2, 77.6, 181.6);
+  --bs-navbar-brand-color: rgb(84.32, 84.66, 85);
+  --bs-navbar-brand-hover-color: rgb(31.2, 77.6, 181.6);
+  --bs-navbar-toggler-border-color: rgba(84.32, 84.66, 85, 0);
+  color: rgb(84, 85, 85);
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body.portfolio-piece .navbar-brand,
+body.portfolio-piece .navbar .nav-link {
+  color: var(--brand) !important;
+}
+
+body.portfolio-piece .navbar-brand:hover,
+body.portfolio-piece .navbar-brand:focus,
+body.portfolio-piece .navbar .nav-link:hover,
+body.portfolio-piece .navbar .nav-link:focus {
+  color: var(--accent) !important;
+}
+
+body.portfolio-piece .navbar #quarto-search.type-overlay .aa-Autocomplete svg.aa-SubmitIcon {
+  color: rgb(84, 85, 85);
+}
+
+body.portfolio-piece .navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb%2884.32, 84.66, 85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 body:has(.hero-banner) .quarto-title-block .title,

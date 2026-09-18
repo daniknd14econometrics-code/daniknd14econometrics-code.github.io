@@ -165,7 +165,3 @@ Bajo el supuesto de Canay, el perfil de experiencia resulta casi plano después 
 ## Continuar la comparación
 
 [Ingresos más allá del promedio](t13_qr_qte.qmd) introduce la diferencia entre media y cuantiles. [Capacitación, selección y efectos distributivos](t14_qriv_qte_vi.qmd) muestra por qué la endogeneidad necesita una estrategia instrumental específica: controlar diferencias persistentes en panel y utilizar una oferta aleatoria resuelven problemas distintos.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 15: Regresión por cuantiles con datos de panel», aplicación NLS Young Women y estimador de Canay. Figuras elaboradas con los tres cuantiles centrales reportados; la inferencia bootstrap y la sensibilidad se presentan por separado.
-:::

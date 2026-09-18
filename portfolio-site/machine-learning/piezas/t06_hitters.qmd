@@ -203,7 +203,3 @@ Comparar varios riesgos outer-OOF y escoger el menor es una regla razonable para
 Los modelos lineales tampoco imponen soporte positivo. Forward, Lasso mínimo y Ridge mínimo producen una predicción negativa cada uno. No se truncaron retrospectivamente: hacerlo habría agregado una regla no evaluada. Junto con la dificultad sobre salarios altos, este límite recuerda que la comparación responde a la formulación en niveles y a RMSE, no a todas las decisiones posibles sobre una variable salarial.
 
 [NIRsoil](t07_nirsoil.qmd) lleva la misma pregunta a un régimen diferente: $p>n$ y predictores casi duplicados, donde regularizar ya no es solo una opción de parsimonia sino parte de poder ajustar el modelo.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 6: Selección de variables y regularización con Hitters», ISLR2. Las figuras sintetizan resultados y diagnósticos ya reportados; no se generaron estimaciones nuevas.
-:::

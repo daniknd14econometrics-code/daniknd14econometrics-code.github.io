@@ -14,7 +14,7 @@ format:
 # Statistical Machine Learning: de la predicción a la decisión
 
 ::: {.hero-banner__lead}
-Diecisiete análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada análisis parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
+Dieciocho análisis organizados en siete áreas conectan problemas predictivos, evaluación fuera de muestra y decisiones explícitas. Cada análisis parte de la información disponible y muestra qué evidencia permite juzgar si una predicción aporta valor.
 :::
 
 ::: {.hero-banner__actions}
@@ -27,7 +27,7 @@ Diecisiete análisis organizados en siete áreas conectan problemas predictivos,
 :::
 
 ::: {.econometria-summary}
-17 análisis · 7 áreas
+18 análisis · 7 áreas
 :::
 
 ::: {.econometria-explorer .js-econometria-explorer}
@@ -260,11 +260,17 @@ Esta área incorporará análisis sobre representación, estructura latente y ag
 ## Supervivencia y tiempo hasta evento
 
 ::: {.section-lead}
-Esta área incorporará análisis sobre riesgo, censura y evaluación de predicciones a lo largo del tiempo.
+Una aplicación de mantenimiento predictivo conserva el tiempo hasta falla, incorpora censura y transforma señales observadas hoy en ranking de riesgo y probabilidades por horizonte.
 :::
 
-::: {.small-note}
-**En desarrollo.**
+::: {.piece-grid}
+::: {.piece-card}
+### [Fallas de discos: predecir cuándo importa más que predecir si ocurre](piezas/t12b_backblaze_supervivencia.qmd)
+
+**Método:** Cox · Censura · C-index OOF
+
+<a class="piece-card__cta" href="piezas/t12b_backblaze_supervivencia.qmd">Abrir análisis →</a>
+:::
 :::
 :::
 :::

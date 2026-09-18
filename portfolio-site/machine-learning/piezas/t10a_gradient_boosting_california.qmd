@@ -178,7 +178,3 @@ La evidencia favorece árboles base de profundidad 3 y una región de learning r
 El alcance sigue siendo predictivo: una única partición aleatoria no representa deriva temporal ni una transferencia geográfica completa, los árboles no extrapolan suavemente fuera del soporte y los diagnósticos agregados no identifican mecanismos causales.
 
 [California Housing con CART, Bagging y Random Forest](t09a_california.qmd) muestra la historia complementaria: primero una estructura interpretable y luego árboles construidos esencialmente en paralelo y agregados para estabilizar la predicción.
-
-::: {.small-note}
-**Fuente:** informe final «Taller 10A: California Housing - Gradient Boosting de regresión». Figuras originales del informe reutilizadas en PNG; las cifras se verificaron contra los outputs finales y no se generaron estimaciones nuevas.
-:::

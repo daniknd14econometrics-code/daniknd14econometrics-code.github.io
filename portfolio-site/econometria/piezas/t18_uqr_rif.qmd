@@ -160,7 +160,3 @@ CQR describe diferencias entre cuantiles condicionales de trabajadores comparabl
 ## De una respuesta local a una descomposición
 
 [DFL](t17_dfl.qmd) construye una distribución contrafactual ante un cambio global de composición. RIF aproxima un funcional concreto y permite relacionarlo con covariables. [La descomposición RIF](t19_descomposicion_rif.qmd) utiliza esa propiedad para abrir cambios distributivos por bloques, manteniendo visibles las diferencias entre aproximación y contrafactual agregado.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 18: UQR y regresiones RIF», replicación de Firpo, Fortin y Lemieux (2009). Figuras basadas en los coeficientes reportados: seis cuantiles para CQR/UQR y tres puntos de sensibilidad RIF–Logit, estos últimos con el redondeo del informe.
-:::

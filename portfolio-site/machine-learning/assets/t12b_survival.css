@@ -1,0 +1,29 @@
+/* Mantiene legibles los rótulos internos de las figuras densas en móvil. */
+@media (max-width: 600px) {
+  #quarto-document-content .quarto-figure > figure > div[aria-describedby] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0.35rem;
+  }
+
+  #quarto-document-content .quarto-figure > figure > div[aria-describedby] > img {
+    width: 680px !important;
+    min-width: 680px;
+    max-width: none !important;
+  }
+
+  #quarto-document-content .quarto-figure > figure > div[aria-describedby]::after {
+    content: "Desliza el gráfico ↔";
+    position: sticky;
+    left: 0;
+    display: block;
+    width: max-content;
+    padding: 0.25rem 0.45rem;
+    color: #5f6b76;
+    background: rgba(255, 255, 255, 0.94);
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+}

@@ -185,7 +185,3 @@ Si se elige entre los tres regularizados por RMSE outer-OOF, Elastic Net es la o
 Los modelos lineales penalizados no imponen positividad. En la evaluación externa, Elastic Net genera 4 predicciones negativas de 645 y Lasso 3; Ridge no genera ninguna. Es un límite de la especificación en niveles, separado de la decisión de regularización. Tampoco hay interpretación causal de los coeficientes ni evidencia de que esta grilla sea óptima fuera de la muestra estudiada.
 
 [Hitters](t06_hitters.qmd) muestra el régimen complementario: $p\ll n$, donde MCO sigue siendo competitivo y regularizar expresa principalmente una decisión de estabilidad y parsimonia. Aquí $p>n$ hace que regularizar sea parte de la definición del ajuste.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 7: Alta dimensionalidad y Elastic Net con NIRsoil», prospectr. Las figuras sintetizan resultados y diagnósticos ya reportados; no se generaron estimaciones nuevas.
-:::

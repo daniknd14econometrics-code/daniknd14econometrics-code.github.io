@@ -159,7 +159,3 @@ La composición reciente habría elevado los cuantiles bajo la estructura inicia
 ## Del cambio agregado al aporte de cada covariable
 
 [Oaxaca–Blinder](t16_oaxaca_blinder.qmd) organiza una diferencia de medias. DFL amplía el alcance a la distribución completa, pero no entrega automáticamente un desglose aditivo por covariable. [UQR y regresiones RIF](t18_uqr_rif.qmd) introduce la herramienta que permite esa apertura; [la descomposición RIF](t19_descomposicion_rif.qmd) la aplica a estas mismas muestras y períodos.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 17: Reponderación DFL y distribuciones contrafactuales», replicación Fortin–Lemieux–Firpo. Figuras elaboradas con los deciles y rangos reportados, en log puntos. Las pequeñas diferencias entre sumas visibles corresponden al redondeo.
-:::

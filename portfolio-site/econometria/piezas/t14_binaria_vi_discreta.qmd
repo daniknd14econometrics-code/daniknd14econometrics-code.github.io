@@ -3,10 +3,12 @@ title: "Redirección: endogeneidad en modelos binarios"
 format:
   html:
     toc: false
+    canonical-url: false
     include-in-header:
       text: |
+        <meta name="robots" content="noindex, follow">
         <meta http-equiv="refresh" content="0; url=t13_binaria_vi_continua.html">
-        <link rel="canonical" href="t13_binaria_vi_continua.html">
+        <link rel="canonical" href="https://daniknd14econometrics-code.github.io/econometria/piezas/t13_binaria_vi_continua.html">
 ---
 
 <script>window.location.replace("t13_binaria_vi_continua.html");</script>

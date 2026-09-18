@@ -161,7 +161,3 @@ Para esta base, estos predictores y este diseño, Logit es la alternativa mejor 
 La ventaja en error simétrico es modesta y no demuestra superioridad universal de Logit. Tampoco se compararon otras representaciones o distancias para KNN. Después de evaluar, el informe selecciona $K=25$ con toda la muestra bajo pérdida simétrica; su riesgo de tuning de 2,70 % **no sustituye** al 2,85 % externo que evalúa generalización.
 
 La separación entre aprendizaje y evaluación reaparece en [Smarket](t02_smarket.qmd), donde debe respetar el tiempo. [Caravan](t03_caravan.qmd) muestra un límite más fuerte: una alta tasa de aciertos sin recuperar ningún evento positivo.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 1: Clasificación binaria con Default», ISLR2. SVG elaborado con los conteos externos reportados; tablas seleccionadas del informe. No se generaron estimaciones nuevas.
-:::

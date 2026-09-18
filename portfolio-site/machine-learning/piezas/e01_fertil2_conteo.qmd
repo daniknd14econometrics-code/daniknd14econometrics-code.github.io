@@ -142,7 +142,3 @@ Natural splines Poisson es la opción con menor deviance y RMSE observados. GAM 
 El resultado depende de una única partición, de casos completos y de una pérdida predefinida. El GAM conserva una cautela sobre la base de `idlnchld`; RF solo ajusta `mtry`; el ejercicio no construye un modelo operativo posterior al test. Ningún perfil, corte o ranking de importancia admite interpretación causal.
 
 [Loanapp](e02_loanapp_gamma.qmd) muestra el caso continuo positivo: cambiar de soporte discreto a continuo no vuelve automáticamente adecuada la pérdida gaussiana.
-
-::: {.small-note}
-**Fuente:** informe curado «E01: fertil2, conteo y Poisson». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.
-:::

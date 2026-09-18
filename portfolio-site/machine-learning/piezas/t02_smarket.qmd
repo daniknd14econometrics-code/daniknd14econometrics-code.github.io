@@ -153,7 +153,3 @@ Con estos dos rezagos y esta prueba temporal, no hay una mejora convincente sobr
 La conclusión se limita a dos predictores, tres ventanas de validación y una única prueba de 252 días. No demuestra que toda predicción de mercado sea imposible. Tampoco constituye una estrategia de inversión: no se evalúan rendimientos de cartera, costos de transacción ni ejecución; los costos de error son estadísticos y docentes.
 
 Respecto de [Default](t01_default.qmd), cambia la forma de separar aprendizaje y evaluación: aquí la frontera es el tiempo. [Caravan](t03_caravan.qmd) introduce otra exigencia para juzgar el acierto: qué ocurre cuando casi todos los casos pertenecen a la misma clase.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 2: Clasificación binaria con Smarket», ISLR2. SVG adaptado del esquema temporal del informe; métricas y tablas tomadas de sus resultados. No se realizó una actualización posterior a 2005 ni un nuevo análisis.
-:::

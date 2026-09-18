@@ -162,7 +162,3 @@ La media positiva no describe un desplazamiento uniforme: hay menos masa de ingr
 ## Continuar la comparación
 
 [Capacitación laboral: participación, selección y efectos distributivos](t14_qriv_qte_vi.qmd) estudia qué cambia cuando sí existe una oferta aleatoria utilizable como instrumento. [Experiencia y antigüedad](t15_qr_panel.qmd) examina otra fuente de heterogeneidad: las diferencias persistentes entre personas observadas en panel.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 13: Regresión por cuantiles y efectos distributivos». Figuras elaboradas con las proporciones, coeficientes e intervalos reportados; el perfil visual selecciona tres cuantiles, sin interpolar resultados adicionales.
-:::

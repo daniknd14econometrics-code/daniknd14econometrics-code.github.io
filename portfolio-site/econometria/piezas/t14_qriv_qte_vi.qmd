@@ -155,7 +155,3 @@ La gran ventaja observada de quienes se capacitan no puede atribuirse directamen
 ## Continuar la comparación
 
 [Ingresos más allá del promedio](t13_qr_qte.qmd) separa las diferencias observadas de los efectos causales cuando falta la asignación original. [Experiencia y antigüedad](t15_qr_panel.qmd) cambia el problema hacia el control de heterogeneidad individual persistente en un panel.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 14: Regresión cuantílica con variables instrumentales», aplicación JTPA y replicación AAI. Figuras elaboradas con los puntos e intervalos reportados. La línea 2SLS es una referencia de media; no implica una identidad con los coeficientes cuantílicos condicionales.
-:::

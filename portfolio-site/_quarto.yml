@@ -5,12 +5,24 @@
     - "*.qmd"
     - "causalidad/**/*.qmd"
     - "econometria/**/*.qmd"
+    - "!econometria/piezas/t03_panel_qtobin_pooled.qmd"
+    - "!econometria/piezas/t04_panel_pooled_heterogeneidad.qmd"
+    - "!econometria/piezas/t05_panel_re.qmd"
+    - "!econometria/piezas/t06_panel_fe_inicial.qmd"
+    - "!econometria/piezas/t07_panel_fe_completo.qmd"
+    - "!econometria/piezas/t08_panel_fe_patentes.qmd"
+    - "!econometria/piezas/t16_multinomial_base.qmd"
     - "machine-learning/**/*.qmd"
   resources:
     - "assets/CV_Daniel_Mendez_2026_final.pdf"
 
 website:
   title: "Daniel Méndez"
+  site-url: "https://daniknd14econometrics-code.github.io/"
+  draft-mode: unlinked
+  drafts:
+    - "econometria/piezas/t14_binaria_vi_discreta.qmd"
+    - "econometria/piezas/t15_binaria_panel.qmd"
   navbar:
     left:
       - text: "Inicio"
@@ -36,8 +48,7 @@ format:
     toc: false
     smooth-scroll: true
     link-external-newwindow: true
-    include-in-header:
-      - assets/noindex.html
+    canonical-url: true
     include-after-body:
       - assets/portfolio-navigation.html
 

@@ -175,7 +175,3 @@ QDA es la opción mejor respaldada si el criterio es el acierto de clase o el ra
 Las aproximaciones gaussianas no describen literalmente variables discretas como cilindros o año. Además, estimar la covarianza europea descansa en solo 68 casos: la estratificación conserva la composición, pero no iguala la información entre clases. La conclusión pertenece a estos predictores y a esta evaluación, no a una jerarquía universal de métodos.
 
 [College](t04_college.qmd) muestra una preferencia consistente por LDA en dos clases. Auto aporta una historia propia: tres orígenes exigen abrir los errores, evaluar el vector posterior y distinguir el criterio con el que se elige una estrategia.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 5: Análisis discriminante multiclase con Auto», ISLR2. SVG elaborado con el recall OOF por clase; tablas seleccionadas de los resultados reportados. No se generaron estimaciones nuevas.
-:::

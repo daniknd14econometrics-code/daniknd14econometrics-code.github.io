@@ -176,7 +176,3 @@ Random Forest es la opción preferible bajo el umbral y las métricas observadas
 La conclusión depende de una única partición estratificada y de un corpus cuyo lenguaje puede cambiar con usuarios, idiomas y tiempo. OOB participó en el tuning de `mtry`, el score de votos no fue calibrado mediante un procedimiento adicional y las diferencias observadas no incluyen inferencia sobre superioridad poblacional. El desempeño y las importancias son predictivos, no causales.
 
 [California Housing](t09a_california.qmd) presenta el mismo mecanismo en regresión: promediar árboles reduce MSE, aunque no exista un umbral de decisión.
-
-::: {.small-note}
-**Fuente:** informe curado «Taller 09B: CART, Bagging y Random Forest con Spam». Figuras originales del informe convertidas a PNG; no se generaron estimaciones nuevas.
-:::

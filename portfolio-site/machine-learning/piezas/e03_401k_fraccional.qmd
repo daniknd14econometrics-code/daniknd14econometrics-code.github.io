@@ -149,5 +149,3 @@ La evidencia proviene de una única partición de 307 casos y de una muestra muy
 ::: {.section-box}
 **Cambio de objeto:** [Activos financieros: predecir escenarios, no solo un promedio](q01_401ksubs_quantiles.qmd) pasa de una media condicional a cuantiles condicionales.
 :::
-
-*Fuente: informe curado del Taller E03, `401k`. Los resultados son predictivos y corresponden al test protegido del ejercicio.*
