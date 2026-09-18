@@ -15,6 +15,7 @@
     - "machine-learning/**/*.qmd"
   resources:
     - "assets/CV_Daniel_Mendez_2026_final.pdf"
+    - "google4d5ab3668d25c0d4.html"
 
 website:
   title: "Daniel Méndez"
