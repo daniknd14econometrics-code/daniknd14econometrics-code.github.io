@@ -13,7 +13,7 @@ format:
 # Economista cuantitativo
 
 ::: {.hero-banner__lead}
-Soy economista, con Maestría en Economía. Mi recorrido reúne casi siete años de trayectoria profesional: más de seis en una gran empresa, junto con experiencia universitaria e investigación aplicada autónoma. Me especializo en econometría, inferencia causal y Statistical Machine Learning para abordar problemas de modelización, evaluación, predicción y decisión.
+Soy economista, con Maestría en Economía. Mi recorrido reúne más de siete años de trayectoria profesional: más de seis en una gran empresa, junto con experiencia universitaria e investigación aplicada autónoma. Me especializo en econometría, inferencia causal y Statistical Machine Learning para abordar problemas de modelización, evaluación, predicción y decisión.
 :::
 
 ::: {.hero-banner__actions}
