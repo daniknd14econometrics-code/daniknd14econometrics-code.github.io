@@ -43,7 +43,7 @@ El trabajo dio lugar posteriormente, junto con [Adriana Peluffo](https://orcid.o
 
 Una evaluación externa de esa versión señaló como principal desafío la plausibilidad económica de algunas restricciones de exclusión. Esa objeción se convirtió en el punto de partida de una nueva investigación centrada específicamente en identificación causal.
 
-La investigación actual reformula el problema para estudiar separadamente ambas direcciones causales entre productividad y adopción de TIC mediante instrumentos *shift-share*, combinando microdatos empresariales con shocks externos, diagnóstico de instrumentos, inferencia robusta frente a instrumentos potencialmente débiles y análisis de la contribución de los shocks.
+De esa revisión surgió, también junto con Adriana Peluffo, un segundo working paper: [*Productivity and ICT adoption in Uruguayan firms: causal evidence*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7505679), disponible en SSRN. El trabajo estudia por separado ambas direcciones causales entre productividad y adopción de TIC mediante instrumentos *shift-share*, combinando microdatos empresariales con shocks externos, diagnóstico de instrumentos, inferencia robusta frente a instrumentos potencialmente débiles y análisis de la contribución de los shocks.
 
 ::: {.sobre-mi-columns}
 ::: {.sobre-mi-column}
