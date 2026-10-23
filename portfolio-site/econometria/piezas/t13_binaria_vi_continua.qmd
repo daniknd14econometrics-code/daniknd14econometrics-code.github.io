@@ -3,7 +3,7 @@ title: "Endogeneidad en modelos binarios: la estrategia depende de la variable e
 subtitle: "Función de control e IV-probit para una covariable continua; biprobit y eprobit cuando la variable problemática también es binaria"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_analisis: "binaria_endogeneidad_continua_discreta"
 fuentes_origen: ["t13_binaria_vi_continua", "t14_binaria_vi_discreta"]

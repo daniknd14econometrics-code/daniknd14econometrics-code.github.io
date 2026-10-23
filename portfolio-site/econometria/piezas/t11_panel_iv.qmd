@@ -3,7 +3,7 @@ title: "Crimen, arrestos y policía: qué identifica una variable instrumental d
 subtitle: "Efectos fijos, variación within e instrumentos débiles en un panel de condados"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t11_panel_iv"
 date: "2026-08-09"

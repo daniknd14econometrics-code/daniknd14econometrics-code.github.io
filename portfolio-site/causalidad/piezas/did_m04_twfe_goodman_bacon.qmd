@@ -3,7 +3,7 @@ title: "Cuando los tratados se vuelven controles: adopción escalonada y la desc
 subtitle: "Qué comparaciones construyen el coeficiente cuando las unidades adoptan el tratamiento en momentos distintos"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "did_m04_twfe_goodman_bacon"
 date: "2026-08-09"

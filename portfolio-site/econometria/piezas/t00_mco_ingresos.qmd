@@ -3,7 +3,7 @@ title: "Educación e ingresos: qué significa controlar en una regresión lineal
 subtitle: "MCO, transformaciones, FWL e inferencia robusta en una aplicación laboral"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t00_mco_ingresos"
 date: "2026-08-09"

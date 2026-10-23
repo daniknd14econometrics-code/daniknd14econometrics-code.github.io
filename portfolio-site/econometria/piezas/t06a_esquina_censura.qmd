@@ -3,7 +3,7 @@ title: "Ceros reales y datos censurados: dos límites observados, dos problemas 
 subtitle: "Soluciones de esquina, top-coding y qué cambia al modelar el mecanismo de observación"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t06a_esquina_censura"
 date: "2026-08-09"

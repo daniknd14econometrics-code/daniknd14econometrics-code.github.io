@@ -3,7 +3,7 @@ title: "Producción con memoria: por qué un panel dinámico necesita instrument
 subtitle: "Persistencia del valor bruto de producción, sesgo dinámico y disciplina instrumental en un panel corto de firmas uruguayas"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t09b_panel_dinamico"
 date: "2026-08-10"

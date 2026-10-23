@@ -3,7 +3,7 @@ title: "Imputar el contrafactual: Borusyak–Jaravel–Spiess en Difference-in-D
 subtitle: "Cómo separar la construcción de Y(0), los efectos tratados y su agregación bajo adopción escalonada"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "did_m08_bjs_imputacion"
 date: "2026-08-09"

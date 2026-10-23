@@ -3,7 +3,7 @@ title: "Innovación de producto/proceso y mejora ambiental en firmas innovadoras
 subtitle: "Estimación con IPWRA, soporte y balance para un tratamiento multivaluado"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "c06_t6_ipwra_innovacion_ambiental"
 date: "2026-03-30"

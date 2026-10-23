@@ -3,7 +3,7 @@ title: "Diseño de matching primero: soporte, balance y muestra efectiva en micr
 subtitle: "Matching exacto y CEM: comparabilidad, soporte común y costo del coarsening"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "c02_t2_matching_exacto_microcredito"
 date: "2026-03-28"

@@ -3,7 +3,7 @@ title: "Ingresos sin bins: qué revela una densidad kernel y cuánto depende del
 subtitle: "Histogramas, suavizado y cambios distributivos en cortes transversales repetidos de Montevideo"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t10_densidad_marginal"
 date: "2026-08-10"

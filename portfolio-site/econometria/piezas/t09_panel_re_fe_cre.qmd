@@ -3,7 +3,7 @@ title: "Heterogeneidad no observada en panel: cuándo cambia la conclusión"
 subtitle: "Dos aplicaciones muestran por qué FE, RE y CRE deben evaluarse por su sensibilidad empírica, no como una competencia abstracta"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_analisis: "panel_heterogeneidad_lineal_binaria"
 fuentes_origen: ["t09_panel_re_fe_cre", "t15_binaria_panel"]

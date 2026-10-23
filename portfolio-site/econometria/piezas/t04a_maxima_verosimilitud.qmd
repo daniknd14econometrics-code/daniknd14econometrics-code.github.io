@@ -3,7 +3,7 @@ title: "Máxima verosimilitud bajo la lupa: función objetivo, inferencia y QMLE
 subtitle: "Qué exige una distribución completa y qué puede conservarse cuando está mal especificada"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t04a_maxima_verosimilitud"
 date: "2026-08-10"

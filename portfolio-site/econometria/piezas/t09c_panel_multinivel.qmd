@@ -3,7 +3,7 @@ title: "Empresas dentro de sectores: heterogeneidad, ICC y shrinkage en un panel
 subtitle: "Qué se aprende al modelar explícitamente la estructura firma–año–sector"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t09c_panel_multinivel"
 date: "2026-08-10"

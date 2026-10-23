@@ -3,7 +3,7 @@ title: "Rechazo hipotecario: probabilidades, efectos marginales y diagnóstico e
 subtitle: "MLP, logit y probit ante un evento poco frecuente"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t12_binaria_base"
 date: "2026-08-09"

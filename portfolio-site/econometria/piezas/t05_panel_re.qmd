@@ -3,7 +3,7 @@ title: "Efectos aleatorios en panel salarial: eficiencia bajo un supuesto fuerte
 subtitle: "Random effects en salarios: eficiencia, heterogeneidad inobservable y limites de identificación sin contraste RE vs FE"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t05_panel_re"
 date: "2026-03-26"

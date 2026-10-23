@@ -3,7 +3,7 @@ title: "Efectos fijos en panel salarial: qué identifica la variación within y 
 subtitle: "FE en salarios: control de heterogeneidad fija, absorcion de invariantes y lectura metodológica prudente frente a RE"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t06_panel_fe_inicial"
 date: "2026-03-26"

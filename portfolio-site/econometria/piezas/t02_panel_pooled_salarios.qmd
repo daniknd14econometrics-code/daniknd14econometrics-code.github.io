@@ -3,7 +3,7 @@ title: "Impuestos a la cerveza y accidentes: por qué between y within cuentan h
 subtitle: "Cómo cambia la comparación empírica al pasar de diferencias entre estados a variación dentro de cada estado"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t02_panel_between_within_accidentes"
 date: "2026-08-09"

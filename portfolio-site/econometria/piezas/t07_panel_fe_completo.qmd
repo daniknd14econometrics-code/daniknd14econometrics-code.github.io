@@ -3,7 +3,7 @@ title: "Efectos fijos en panel de firmas: identificación within e inferencia ro
 subtitle: "Subsidios de capacitación (`grant`, `grant_1`) y desperdicio productivo (`lscrap`) en un panel corto de plantas"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t07_panel_fe_completo"
 date: "2026-03-26"

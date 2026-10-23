@@ -3,7 +3,7 @@ title: "Estados de actividad en panel: qué cambia entre multinomial pooled y CR
 subtitle: "Lectura aplicada sobre heterogeneidad persistente no observada en escuela, hogar y trabajo"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_analisis: "t18_multinomial_panel_cre"
 date: "2026-08-13"

@@ -3,7 +3,7 @@ title: "Ingreso y consumo sin una forma impuesta: regresión local, ancho de ban
 subtitle: "Nadaraya–Watson y regresión local lineal en una curva de Engel flexible"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t11_regresion_no_parametrica"
 date: "2026-08-10"

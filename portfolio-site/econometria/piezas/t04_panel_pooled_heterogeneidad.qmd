@@ -3,7 +3,7 @@ title: "Heterogeneidad inobservable en panel salarial: límites de identificaci�
 subtitle: "Benchmark pooled con inferencia clusterizada y limites de identificación frente a c_i no observado"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t04_panel_pooled_heterogeneidad"
 date: "2026-03-26"

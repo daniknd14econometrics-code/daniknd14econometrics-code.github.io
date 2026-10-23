@@ -3,7 +3,7 @@ title: "Cuando los leads mezclan efectos pos-tratamiento: contaminación dinámi
 subtitle: "Por qué una etiqueta temporal no basta para interpretar una trayectoria causal bajo adopción escalonada"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "did_m06_event_study_contaminacion"
 date: "2026-08-09"

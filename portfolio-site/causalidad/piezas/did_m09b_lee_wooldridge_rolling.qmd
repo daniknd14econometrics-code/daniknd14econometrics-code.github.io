@@ -3,7 +3,7 @@ title: "Más que el último período pre: Lee–Wooldridge y transformaciones ro
 subtitle: "Cómo transformar la historia pretratamiento, conservar comparaciones limpias y agregar efectos por cohorte y período"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "did_m09b_lee_wooldridge_rolling"
 date: "2026-08-09"

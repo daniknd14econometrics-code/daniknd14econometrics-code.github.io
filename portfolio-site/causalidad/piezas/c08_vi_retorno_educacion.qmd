@@ -3,7 +3,7 @@ title: "Retorno a la educación con IV: cuando una estrategia más rica puede de
 subtitle: "Lectura metodológica cauta del caso Angrist-Krueger en corte transversal"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "c08_t8_vi_retorno_educacion"
 date: "2026-04-02"

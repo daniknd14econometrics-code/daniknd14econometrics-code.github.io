@@ -3,7 +3,7 @@ title: "Microcrédito femenino y gasto per cápita: evidencia con PSM bajo crite
 subtitle: "Estimación del efecto sobre hogares tratados comparables en soporte común"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "c04_t4_psm_microcredito"
 date: "2026-03-30"

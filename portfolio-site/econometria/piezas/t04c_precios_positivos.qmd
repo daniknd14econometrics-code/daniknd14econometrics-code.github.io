@@ -3,7 +3,7 @@ title: "Modelar precios positivos: ajuste distribucional y estabilidad de la med
 subtitle: "Por qué una densidad mejor ajustada puede producir un momento central difícil de sostener"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t04c_precios_positivos"
 date: "2026-08-12"

@@ -74,7 +74,7 @@ Fuera del trabajo, disfruto especialmente la música, el fútbol y el tiempo con
 ## Contacto
 
 ::: {.sobre-mi-contact}
-- **LinkedIn:** [danielméndez-ec](https://www.linkedin.com/in/danielm%C3%A9ndez-ec/)
+- **LinkedIn:** [danielmendez-ec](https://www.linkedin.com/in/danielmendez-ec/)
 - **GitHub:** [daniknd14econometrics-code](https://github.com/daniknd14econometrics-code)
 - **Email:** [daniknd14@gmail.com](mailto:daniknd14@gmail.com)
 :::

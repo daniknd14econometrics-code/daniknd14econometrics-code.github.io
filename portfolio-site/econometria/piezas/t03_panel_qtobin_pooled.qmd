@@ -3,7 +3,7 @@ title: "Inversion y q de Tobin en panel: un benchmark pooled con inferencia robu
 subtitle: "Relacion estimada entre q e inversión con pooled OLS, controles temporales y lectura econométrica prudente"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t03_panel_qtobin_pooled"
 date: "2026-03-26"

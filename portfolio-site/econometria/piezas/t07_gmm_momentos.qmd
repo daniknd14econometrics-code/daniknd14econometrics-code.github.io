@@ -3,7 +3,7 @@ title: "De condiciones de momento a IV-GMM: cuándo ponderar ayuda y cuándo un 
 subtitle: "Un lenguaje común para estimar, diagnosticar y entender qué restricciones sostienen un resultado"
 author: "Daniel Méndez"
 profile: "Economista | Econometría aplicada, causalidad y machine learning"
-linkedin: "https://www.linkedin.com/in/danielm%C3%A9ndez-ec/"
+linkedin: "https://www.linkedin.com/in/danielmendez-ec/"
 email: "daniknd14@gmail.com"
 id_taller: "t07_gmm_momentos"
 date: "2026-08-10"
