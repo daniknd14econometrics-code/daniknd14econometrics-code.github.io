@@ -4228,11 +4228,11 @@
     "text": "Cómo trabajo\n\nCuando abordo un problema cuantitativo, intento mantener alineadas la pregunta, la estrategia metodológica y la decisión que el análisis debe informar.\n\n\n\n01\n\nProblema\nTraducir una pregunta económica o empresarial a un objeto cuantitativo bien definido.\n\n\n\n02\n\nDiseño\nDeterminar qué puede identificarse o predecirse, qué supuestos son necesarios y qué estrategia metodológica corresponde.\n\n\n\n03\n\nEvaluación\nEstimar, diagnosticar, validar, estudiar sensibilidad e incertidumbre y comparar alternativas.\n\n\n\n04\n\nDecisión\nInterpretar los resultados en función del problema real, sus costos, restricciones y consecuencias."
   },
   {
-    "objectID": "index.html#problemas-de-negocio",
-    "href": "index.html#problemas-de-negocio",
+    "objectID": "index.html#proyectos-aplicados",
+    "href": "index.html#proyectos-aplicados",
     "title": "Inicio",
-    "section": "Problemas de negocio",
-    "text": "Problemas de negocio\n\nEl análisis cuantitativo cobra valor cuando ayuda a responder una pregunta concreta y a tomar una decisión. Estos son algunos ejemplos de problemas empresariales que pueden abordarse desde distintas herramientas cuantitativas.\n\n\n\n\n¿A qué precio deberíamos lanzar un producto nuevo?\n\nEconometría Optimización\n\n\n\n¿La campaña realmente aumentó las ventas?\n\nInferencia causal Econometría\n\n\n\n¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?\n\nSeries temporales Econometría Optimización\n\n\n\nExplorar problemas de negocio →"
+    "section": "Proyectos aplicados",
+    "text": "Proyectos aplicados\n\nAdemás de los análisis metodológicos presentados en este portfolio, desarrollo proyectos que integran modelización estadística, gestión de datos y automatización de procesos predictivos.\n\n\n\nForecasting · Series temporales · Automatización\n\nPronóstico automatizado de remisión de leche en Uruguay\nSistema reproducible en R y SQL/SQLite que genera pronósticos a doce meses, evalúa su precisión y automatiza la actualización y publicación de resultados.\nExplorar proyectos →"
   },
   {
     "objectID": "index.html#sobre-los-análisis-del-portfolio",
@@ -4718,108 +4718,10 @@
     "text": "Score y ranking no son probabilidades\nLIBSVM entrega decision scores. Una vez orientados para que valores mayores indiquen mayor inclinación hacia CH, esos scores permiten ordenar compras y construir una curva ROC. No satisfacen por sí mismos \\(P(Y=\\mathrm{CH}\\mid X=x)\\) y, sin calibración adicional, no corresponde evaluarlos con log-loss, Brier o gráficos de calibración como si fueran probabilidades.\n\n\n\nLas tres curvas ROC construidas con decision scores tienen un ordenamiento prácticamente idéntico.\n\n\nLa SVM lineal alcanza AUC 0,8990, ligeramente por encima de RBF con 0,8978, aunque RBF tenga menor error 0-1 al umbral implícito. No hay contradicción: el error 0-1 juzga una decisión concreta; AUC evalúa el ranking a través de múltiples umbrales. Clasificación, ranking y probabilidad son objetos relacionados, pero no intercambiables.\n\nLa flexibilidad debe justificar su lugar fuera de muestra\nRBF obtiene el menor error bajo el criterio fijado, pero la diferencia frente a la SVM lineal es una observación. La elección práctica puede favorecer RBF si ese pequeño avance compensa su menor transparencia geométrica; también puede favorecer la lineal por parsimonia. La evidencia no respalda una historia de superioridad general de los kernels no lineales.\n\nEl alcance se limita a esta partición agrupada, estas seis fuentes de información y costos simétricos. Los grupos tienda-semana protegen dependencia compartida, pero no sustituyen una prueba temporal futura. Las fronteras y sus scores son herramientas predictivas, no identifican efectos causales de cambiar precio, promociones o lealtad.\nOJ con Logit y GAM penalizado plantea la pregunta complementaria: allí la flexibilidad se evalúa por la calidad de probabilidades; aquí, los kernels se comparan por clasificación y ranking sin tratar el decision score como probabilidad."
   },
   {
-    "objectID": "problemas-negocio.html#cuánto-stock-deberíamos-tener-si-quedarse-cortos-cuesta-más-que-excedernos",
-    "href": "problemas-negocio.html#cuánto-stock-deberíamos-tener-si-quedarse-cortos-cuesta-más-que-excedernos",
-    "title": "Problemas de negocio",
-    "section": "¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?",
-    "text": "¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?\n\nLa empresa enfrenta quiebres de stock en algunos productos y acumulación en otros. Al planificar cada reposición, debe equilibrar el costo de perder ventas o clientes frente al costo de almacenar, financiar o liquidar excedentes.\n\n\nDecisión: cantidad a pedir por producto y período, dadas las restricciones operativas.\n\n\nSeries temporales Econometría Optimización"
-  },
-  {
-    "objectID": "problemas-negocio.html#la-automatización-aumentó-realmente-la-productividad-en-las-plantas",
-    "href": "problemas-negocio.html#la-automatización-aumentó-realmente-la-productividad-en-las-plantas",
-    "title": "Problemas de negocio",
-    "section": "¿La automatización aumentó realmente la productividad en las plantas?",
-    "text": "¿La automatización aumentó realmente la productividad en las plantas?\n\nLa tecnología se incorporó en distintas plantas y en momentos diferentes, mientras la productividad también pudo cambiar por otras razones. La empresa necesita distinguir el efecto de la automatización de las diferencias previas y de los cambios generales del período.\n\n\nDecisión: continuar, ampliar o revisar el despliegue de la automatización.\n\n\nInferencia causal Econometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#qué-clientes-tienen-mayor-riesgo-de-mora",
-    "href": "problemas-negocio.html#qué-clientes-tienen-mayor-riesgo-de-mora",
-    "title": "Problemas de negocio",
-    "section": "¿Qué clientes tienen mayor riesgo de mora?",
-    "text": "¿Qué clientes tienen mayor riesgo de mora?\n\nLa empresa debe anticipar qué nuevos clientes podrían incumplir, sabiendo que aprobar un caso de alto riesgo y rechazar a un buen cliente generan pérdidas diferentes. Además de ordenar riesgos, necesita estimaciones confiables para los perfiles que evaluará en el futuro.\n\n\nDecisión: criterios de aprobación, límites y acciones preventivas según el nivel de riesgo.\n\n\nMachine Learning Econometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#a-qué-precio-deberíamos-lanzar-un-producto-nuevo",
-    "href": "problemas-negocio.html#a-qué-precio-deberíamos-lanzar-un-producto-nuevo",
-    "title": "Problemas de negocio",
-    "section": "¿A qué precio deberíamos lanzar un producto nuevo?",
-    "text": "¿A qué precio deberíamos lanzar un producto nuevo?\n\nLa empresa conoce sus costos, el posicionamiento buscado y algunos productos comparables, pero todavía no tiene un historial propio de ventas. Necesita fijar un precio inicial defendible y aprender con rapidez de la respuesta del mercado.\n\n\nDecisión: precio de lanzamiento y estrategia de actualización.\n\n\nEconometría Optimización"
-  },
-  {
-    "objectID": "problemas-negocio.html#qué-plantas-son-realmente-menos-productivas-o-eficientes",
-    "href": "problemas-negocio.html#qué-plantas-son-realmente-menos-productivas-o-eficientes",
-    "title": "Problemas de negocio",
-    "section": "¿Qué plantas son realmente menos productivas o eficientes?",
-    "text": "¿Qué plantas son realmente menos productivas o eficientes?\n\nAlgunas plantas producen menos por trabajador, pero también difieren en escala, capital, insumos y condiciones de operación. Antes de comparar desempeños, la empresa necesita separar esas diferencias y precisar qué significa, en su contexto, “funcionar peor”.\n\n\nDecisión: dónde profundizar el diagnóstico y priorizar acciones de mejora.\n\n\nEconometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#existen-grupos-de-clientes-suficientemente-distintos-como-para-tratarlos-de-forma-diferente",
-    "href": "problemas-negocio.html#existen-grupos-de-clientes-suficientemente-distintos-como-para-tratarlos-de-forma-diferente",
-    "title": "Problemas de negocio",
-    "section": "¿Existen grupos de clientes suficientemente distintos como para tratarlos de forma diferente?",
-    "text": "¿Existen grupos de clientes suficientemente distintos como para tratarlos de forma diferente?\n\nLa empresa observa comportamientos de compra, canales, antigüedad y niveles de gasto, pero no dispone de categorías naturales de clientes. Quiere saber si hay segmentos estables, comprensibles y útiles, no solamente agrupaciones estadísticas.\n\n\nDecisión: diseñar propuestas, comunicaciones o niveles de servicio diferenciados.\n\n\nMachine Learning"
-  },
-  {
-    "objectID": "problemas-negocio.html#si-subimos-el-precio-cuánto-caerán-realmente-las-ventas",
-    "href": "problemas-negocio.html#si-subimos-el-precio-cuánto-caerán-realmente-las-ventas",
-    "title": "Problemas de negocio",
-    "section": "Si subimos el precio, ¿cuánto caerán realmente las ventas?",
-    "text": "Si subimos el precio, ¿cuánto caerán realmente las ventas?\n\nLos precios, las promociones, la competencia y la demanda cambian al mismo tiempo, por lo que una caída observada en ventas no revela por sí sola qué la causó. La empresa necesita aislar la respuesta atribuible al precio antes de proyectar ingresos y márgenes.\n\n\nDecisión: ajuste de precio para un producto existente y margen objetivo.\n\n\nEconometría Inferencia causal Optimización"
-  },
-  {
-    "objectID": "problemas-negocio.html#qué-clientes-tienen-mayor-riesgo-de-irse-y-cuánto-tiempo-podrían-permanecer",
-    "href": "problemas-negocio.html#qué-clientes-tienen-mayor-riesgo-de-irse-y-cuánto-tiempo-podrían-permanecer",
-    "title": "Problemas de negocio",
-    "section": "¿Qué clientes tienen mayor riesgo de irse y cuánto tiempo podrían permanecer?",
-    "text": "¿Qué clientes tienen mayor riesgo de irse y cuánto tiempo podrían permanecer?\n\nAlgunos clientes ya abandonaron y otros continúan activos cuando se cierra la información disponible. La empresa quiere reconocer señales tempranas de salida sin perder de vista que el momento probable del abandono también importa.\n\n\nDecisión: a quién contactar, cuándo hacerlo y cómo priorizar las acciones de retención.\n\n\nMachine Learning Econometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#en-qué-centros-logísticos-conviene-ampliar-la-capacidad",
-    "href": "problemas-negocio.html#en-qué-centros-logísticos-conviene-ampliar-la-capacidad",
-    "title": "Problemas de negocio",
-    "section": "¿En qué centros logísticos conviene ampliar la capacidad?",
-    "text": "¿En qué centros logísticos conviene ampliar la capacidad?\n\nAlgunos centros concentran retrasos, pero no necesariamente son aquellos donde una ampliación produciría la mayor mejora. Con un presupuesto limitado, la empresa debe combinar riesgo operativo, efecto esperable de la inversión, costos y restricciones.\n\n\nDecisión: cartera de ampliaciones y asignación del presupuesto entre centros.\n\n\nMachine Learning Inferencia causal Optimización"
-  },
-  {
-    "objectID": "problemas-negocio.html#qué-proveedores-ofrecen-mejor-desempeño-si-solo-observamos-resultados-de-los-que-contratamos",
-    "href": "problemas-negocio.html#qué-proveedores-ofrecen-mejor-desempeño-si-solo-observamos-resultados-de-los-que-contratamos",
-    "title": "Problemas de negocio",
-    "section": "¿Qué proveedores ofrecen mejor desempeño si solo observamos resultados de los que contratamos?",
-    "text": "¿Qué proveedores ofrecen mejor desempeño si solo observamos resultados de los que contratamos?\n\nLa empresa conoce las ofertas y características de todos los candidatos, pero solo ve la calidad posterior de quienes recibieron contratos. Esa selección puede hacer que el desempeño observado no represente al conjunto de proveedores disponibles.\n\n\nDecisión: criterios de adjudicación y conformación de una cartera de proveedores.\n\n\nEconometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#cómo-pueden-evolucionar-nuestras-ventas-durante-los-próximos-1224-meses",
-    "href": "problemas-negocio.html#cómo-pueden-evolucionar-nuestras-ventas-durante-los-próximos-1224-meses",
-    "title": "Problemas de negocio",
-    "section": "¿Cómo pueden evolucionar nuestras ventas durante los próximos 12–24 meses?",
-    "text": "¿Cómo pueden evolucionar nuestras ventas durante los próximos 12–24 meses?\n\nLas ventas se mueven con su propia historia y con variables como la actividad, el crédito, las tasas o los precios. Finanzas necesita escenarios que reconozcan esas relaciones y hagan visible la incertidumbre del horizonte.\n\n\nDecisión: metas, presupuesto, compras y capacidad para el próximo año o dos.\n\n\nSeries temporales Econometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#la-campaña-funcionó-o-elegimos-clientes-que-ya-iban-a-comprar-más",
-    "href": "problemas-negocio.html#la-campaña-funcionó-o-elegimos-clientes-que-ya-iban-a-comprar-más",
-    "title": "Problemas de negocio",
-    "section": "¿La campaña funcionó o elegimos clientes que ya iban a comprar más?",
-    "text": "¿La campaña funcionó o elegimos clientes que ya iban a comprar más?\n\nMarketing dirigió la acción a los clientes que parecían más prometedores y luego observó que compraron más. El desafío es distinguir el aporte de la campaña de las características que motivaron esa selección inicial.\n\n\nDecisión: mantener, escalar o rediseñar la campaña y su público objetivo.\n\n\nInferencia causal Econometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#cuánta-demanda-estamos-perdiendo-cuando-un-producto-se-queda-sin-stock",
-    "href": "problemas-negocio.html#cuánta-demanda-estamos-perdiendo-cuando-un-producto-se-queda-sin-stock",
-    "title": "Problemas de negocio",
-    "section": "¿Cuánta demanda estamos perdiendo cuando un producto se queda sin stock?",
-    "text": "¿Cuánta demanda estamos perdiendo cuando un producto se queda sin stock?\n\nCuando el inventario se agota, las ventas registradas dejan de mostrar cuánto habrían comprado los clientes con disponibilidad normal. Esa demanda no observada puede llevar a subestimar el mercado y a repetir el faltante en la siguiente planificación.\n\n\nDecisión: corregir la previsión de demanda y ajustar la reposición de los productos afectados.\n\n\nEconometría Series temporales"
-  },
-  {
-    "objectID": "problemas-negocio.html#funcionó-el-programa-que-se-asignó-a-partir-de-un-determinado-puntaje",
-    "href": "problemas-negocio.html#funcionó-el-programa-que-se-asignó-a-partir-de-un-determinado-puntaje",
-    "title": "Problemas de negocio",
-    "section": "¿Funcionó el programa que se asignó a partir de un determinado puntaje?",
-    "text": "¿Funcionó el programa que se asignó a partir de un determinado puntaje?\n\nLa empresa aplicó un programa a quienes quedaron de un lado de un umbral de elegibilidad. Las personas o unidades con puntajes muy próximos al límite pueden ofrecer una comparación especialmente informativa, aunque sus conclusiones no necesariamente representan a todos los participantes.\n\n\nDecisión: sostener o ajustar el programa y revisar su regla de acceso.\n\n\nInferencia causal Econometría"
-  },
-  {
-    "objectID": "problemas-negocio.html#cuánto-gastará-cada-cliente-en-los-próximos-meses",
-    "href": "problemas-negocio.html#cuánto-gastará-cada-cliente-en-los-próximos-meses",
-    "title": "Problemas de negocio",
-    "section": "¿Cuánto gastará cada cliente en los próximos meses?",
-    "text": "¿Cuánto gastará cada cliente en los próximos meses?\n\nEl historial de compras, la frecuencia, el canal y la antigüedad ofrecen señales sobre el gasto futuro, pero los patrones varían mucho entre clientes. La empresa necesita anticipar ese gasto de forma confiable también en períodos futuros y ante cambios de comportamiento.\n\n\nDecisión: priorización comercial, presupuesto de atención y acciones según el valor esperado.\n\n\nMachine Learning Econometría"
+    "objectID": "proyectos-aplicados.html#forecasting-title",
+    "href": "proyectos-aplicados.html#forecasting-title",
+    "title": "Proyectos aplicados",
+    "section": "Pronóstico automatizado de la remisión de leche en Uruguay",
+    "text": "Pronóstico automatizado de la remisión de leche en Uruguay\n\nForecasting Series temporales R SQL / SQLite GitHub Actions\n\n\nEl problema\nAnticipar la evolución de la remisión de leche es relevante para la planificación de la industria láctea. Su marcada estacionalidad, las fluctuaciones interanuales y la incertidumbre sobre los volúmenes futuros plantean un problema de predicción que requiere evaluar tanto la precisión como la estabilidad de los pronósticos.\n\n\nLa solución desarrollada\nDesarrollé un sistema reproducible de forecasting que utiliza datos públicos del INALE para generar pronósticos mensuales de remisión de leche a doce meses.\nEl proyecto integra R y SQL/SQLite, modelización SARIMA mediante la metodología Box–Jenkins, evaluación histórica frente a una referencia estacional y automatización mediante GitHub Actions. El sistema permite actualizar las predicciones cuando se dispone de nuevos datos y conserva las emisiones anteriores para evaluar posteriormente su desempeño.\n\n\nResultados y evaluación\nLa evaluación histórica, realizada sobre 166 orígenes de predicción, mostró que el modelo SARIMA presenta menores errores a horizontes de uno a tres meses, mientras que la referencia estacional obtiene mejores resultados entre cuatro y doce meses.\nEstos resultados muestran la importancia de evaluar la precisión según el horizonte de planificación. La marcada estacionalidad también ayuda a entender por qué el naïve estacional constituye una referencia competitiva.\n\n\nPosible extensión\nComo extensión metodológica futura, se plantea incorporar variables exógenas, particularmente las precipitaciones y el precio de la leche al productor, y evaluar si permiten mejorar la precisión predictiva, especialmente a horizontes medios y largos.\n\n\nExplorar reporte visual Código y documentación en GitHub"
   }
 ]
