@@ -14,7 +14,8 @@
     - "!econometria/piezas/t16_multinomial_base.qmd"
     - "machine-learning/**/*.qmd"
   resources:
-    - "assets/CV_Daniel_Mendez_2026_final.pdf"
+    - "assets/CV_Daniel_Mendez_2026_11.pdf"
+    - "problemas-negocio.html"
     - "google4d5ab3668d25c0d4.html"
 
 website:
@@ -28,8 +29,8 @@ website:
     left:
       - text: "Inicio"
         href: index.qmd
-      - text: "Problemas de negocio"
-        href: problemas-negocio.qmd
+      - text: "Proyectos aplicados"
+        href: proyectos-aplicados.qmd
       - text: "Econometría"
         href: econometria/index.qmd
       - text: "Causalidad"

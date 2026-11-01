@@ -1,3 +1,7 @@
+body:has(.hero-banner--home) main.content {
+  box-sizing: border-box;
+}
+
 body:has(.hero-banner--home) .hero-banner--home {
   grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.75fr);
   column-gap: clamp(1.5rem, 3vw, 2.75rem);

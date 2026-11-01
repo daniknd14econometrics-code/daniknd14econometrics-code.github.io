@@ -4,7 +4,7 @@ format:
   html:
     title-block-style: none
     css:
-      - assets/problemas-negocio.css
+      - assets/proyectos-aplicados.css
       - assets/home.css
 ---
 
@@ -35,7 +35,7 @@ Abordo problemas cuantitativos desde la formulación de la pregunta y el diseño
 ::: {.hero-banner__actions}
 <a class="button-primary" href="#areas-de-trabajo">Explorar análisis →</a>
 <a class="button-secondary" href="/sobre-mi.html">Sobre mí</a>
-<a class="button-secondary" href="/assets/CV_Daniel_Mendez_2026_final.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+<a class="button-secondary" href="assets/CV_Daniel_Mendez_2026_11.pdf" target="_blank" rel="noopener">CV (PDF)</a>
 <a class="button-secondary" href="/sobre-mi.html#contacto">Contacto</a>
 :::
 :::
@@ -135,44 +135,26 @@ Interpretar los resultados en función del problema real, sus costos, restriccio
 :::
 :::
 
-## Problemas de negocio
+## Proyectos aplicados
 
 ::: {.section-lead}
-El análisis cuantitativo cobra valor cuando ayuda a responder una pregunta concreta y a tomar una decisión. Estos son algunos ejemplos de problemas empresariales que pueden abordarse desde distintas herramientas cuantitativas.
+Además de los análisis metodológicos presentados en este portfolio, desarrollo proyectos que integran modelización estadística, gestión de datos y automatización de procesos predictivos.
 :::
 
-::: {.business-teaser}
-::: {.business-teaser-grid}
-::: {.business-teaser-card}
-### ¿A qué precio deberíamos lanzar un producto nuevo?
+::: {.home-project-teaser}
+::: {.home-project-teaser__content}
+<span class="home-project-teaser__eyebrow">Forecasting · Series temporales · Automatización</span>
 
-<div class="method-chips" aria-label="Etiquetas metodológicas">
-<span class="method-chip method-chip--econometrics">Econometría</span>
-<span class="method-chip method-chip--optimization">Optimización</span>
-</div>
+### Pronóstico automatizado de remisión de leche en Uruguay
+
+Sistema reproducible en R y SQL/SQLite que genera pronósticos a doce meses, evalúa su precisión y automatiza la actualización y publicación de resultados.
+
+<a class="cta-link" href="proyectos-aplicados.qmd">Explorar proyectos →</a>
 :::
 
-::: {.business-teaser-card}
-### ¿La campaña realmente aumentó las ventas?
-
-<div class="method-chips" aria-label="Etiquetas metodológicas">
-<span class="method-chip method-chip--causal">Inferencia causal</span>
-<span class="method-chip method-chip--econometrics">Econometría</span>
-</div>
+::: {.home-project-teaser__visual}
+<img src="assets/proyectos/forecasting-remision-leche-portada.svg" alt="Portada del proyecto de pronóstico mensual y seguimiento de la remisión de leche en Uruguay" loading="lazy">
 :::
-
-::: {.business-teaser-card}
-### ¿Cuánto stock deberíamos tener si quedarse cortos cuesta más que excedernos?
-
-<div class="method-chips" aria-label="Etiquetas metodológicas">
-<span class="method-chip method-chip--timeseries">Series temporales</span>
-<span class="method-chip method-chip--econometrics">Econometría</span>
-<span class="method-chip method-chip--optimization">Optimización</span>
-</div>
-:::
-:::
-
-<a class="cta-link" href="problemas-negocio.qmd">Explorar problemas de negocio →</a>
 :::
 
 ::: {.portfolio-note}
